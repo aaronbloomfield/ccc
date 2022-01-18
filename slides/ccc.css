@@ -1,0 +1,290 @@
+/* This file is part of the http://github.com/aaronbloomfield/pdr
+ * repo, and has the same license as the rest of the repo (CC BY-SA)
+ */
+
+/* Fixing some slide formatting to my tastes */
+strong.red {
+  color: #ff0000; 
+}
+li { 
+  text-align: justify;
+}
+p { 
+  text-align: justify;
+}
+p.center { 
+  text-align: center;
+}
+
+/* default tables created by markdown */
+.reveal section table {
+  margin-left: auto;
+  margin-right: auto;
+}
+.reveal table tr:nth-child(even) {
+  background-color: rgb(80,130,190);
+  padding-left: 5px;
+}
+.reveal table tr:nth-child(odd) {
+  background-color: #666666;
+  padding-left: 5px;
+}
+.reveal table th {
+  background-color: rgb(20,60,110);
+  padding: 5px;
+  text-align:center;
+}
+.reveal table tr td {
+  text-align:center;
+  font-size: 80%;
+  line-height: 120%;
+}
+
+/* for when no formatting is desired (such as the CS 2150 roadmap) */
+.reveal table.default tr:nth-child(even) td {
+  background-color: transparent;
+  padding-left: 5px;
+}
+.reveal table.default tr:nth-child(odd) td {
+  background-color: transparent;
+  padding-left: 5px;
+}
+.reveal table.default th {
+  background-color: transparent;
+  padding: 5px;
+}
+
+/* for side-by-side code blocks */
+.reveal table.wide tr { 
+  background-color: transparent;
+  width:100%;
+}
+
+/* make the code blocks bigger */
+.reveal pre {
+  font-size: 25px;
+  margin-right: 80px;
+  margin-left: 20px;
+}
+.reveal pre code { 
+    max-height: 700px;
+    background-color:dimgray;
+    border-radius:7px;
+    box-shadow: 5px 5px 5px black;
+}
+
+/* add spacing below the slide title */
+.reveal h2 {
+  font-variant:small-caps;
+  text-transform:none;
+  /* margin: -50px 0px 50px 0px; */
+}
+
+/* center images on the slide */
+.reveal section img { 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* for hard-coding table alignments */
+td.top {
+  vertical-align: top;
+}
+td.middle {
+  vertical-align: middle;
+}
+.reveal td.middletrans {
+  vertical-align: middle;
+  background-color: transparent;
+}
+.reveal td.trans {
+  background-color: transparent;
+}
+
+/* currently not used anymore, and slated to be removed eventually */
+span.tt { 
+  font-family: monospace;
+}
+
+/* for vertical table memory cells, which need a border */
+td.border {
+  border-width:medium;
+  border-style:solid;
+  border-bottom:medium solid;
+}
+
+/* for horizontal table memory cells, which need a border */
+tr.bordercfifty td {
+  border-width:medium;
+  border-style:solid;
+  text-align:center;
+  width:50px;
+}
+
+/* for a transparent table background */
+.reveal table.transparent tr { 
+  background-color: transparent;
+}
+.reveal table.transparent td { 
+  border-bottom: 0px;
+  background-color: transparent;
+  vertical-align: top;
+}
+.reveal table.transparent th { 
+  text-decoration:underline;
+  background-color: transparent;
+  border-bottom: 0px;
+}
+
+/* for an image without a border */
+.reveal img.plain {
+  border:0px;
+  background:none;
+}
+
+/* smaller lists */
+ul.small {
+    font-size:60%;
+    line-height:120%;
+}
+
+/* for ... */
+.reveal img.print { 
+    border:0px;
+    margin:0px;
+    vertical-align:middle;
+    position:initial;
+  display:inline;
+  top:-11px;
+  left:3px
+}
+
+.reveal sub { 
+  font-size: 20px;
+}
+.reveal sup { 
+  font-size: 20px;
+}
+
+
+p.blankline { height:1em; }
+
+.right-float-img img {
+    float:right;
+    max-width: 50%;
+    margin-left:20px !important;
+    max-height: 600px;
+    margin-top: 0;
+}
+
+.left-float-img img {
+    float:left;
+    max-width: 50%;
+    margin-left:20px !important;
+    max-height: 600px;
+    margin-top: 0;
+}
+
+.big-table-small table {
+  font-size: smaller;
+  
+}
+
+.max-pre-400 pre code {
+    max-height:400px;
+}
+
+.reveal section img {
+    background:white
+}
+
+/* font colors */
+
+span.red { color:red; }
+span.skyblue { color:skyblue; }
+span.pink { color:pink; }
+span.hotpink { color:hotpink; }
+span.blue { color:blue; }
+span.green { color:green; }
+span.lightgreen { color:lightgreen; }
+span.orange { color:orange; }
+span.yellow { color:yellow; }
+
+.max-image-height-200 img {
+    max-height:200px;
+}
+
+.max-image-height-300 img {
+    max-height:300px;
+}
+
+.max-image-height-500 img {
+    max-height:500px;
+}
+
+section.no-white-img-background img {
+    background:none;
+    border:0;
+}
+
+
+/* to color <pre> blocks of code */
+
+.reveal pre.code { 
+    max-height: 700px;
+    background-color:dimgray;
+    border-radius:7px;
+    box-shadow: 5px 5px 5px black;
+    font-family: monospace;
+    padding: 5px;
+    overflow: auto;
+    word-wrap: normal;
+}
+
+.reveal blockquote {
+    border-radius:20px;
+    box-shadow: 10px 10px 2px rgba(0, 0, 0, 0.2);
+}
+
+div.titlesmall p {
+    text-align:center !important;
+    font-size:0.65em;
+    margin-top:0;
+    margin-bottom:0;
+}
+
+p.titlep {
+    margin:0;
+}
+
+.reveal li {
+  font-size:90%;
+  line-height:120%;
+
+}
+
+code.small {
+  scale: 80%;
+  width: 115%;
+  margin-left: -50px;
+  height: 400px;
+  font-size: smaller;
+}
+
+code.longcode {
+  scale: 80%;
+  width: 100%;
+  margin-left: auto;
+  height:auto;
+  font-size:50%;
+  line-height:normal;
+}
+
+/* list left alignment, from https://stackoverflow.com/questions/37652514/left-align-lists-in-reveal-presentations */
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: block;
+  text-align: left;
+  margin: 0 0 0 1em; }
