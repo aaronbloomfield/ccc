@@ -89,7 +89,7 @@ Reveal.initialize({
     // Specify the average time in seconds that you think you will spend
     // presenting each slide. This is used to show a pacing timer in the
     // speaker view
-    defaultTiming: 120,
+    //defaultTiming: 120,
 
     // Enable slide navigation via mouse wheel
     mouseWheel: false,

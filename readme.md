@@ -22,6 +22,6 @@ Students who complete the course will:
 - Understand the basics of blockchain in general, and the details of a selected number of blockchains
 - Understand the uses of cryptocurrency and blockchain beyond that as a form of money
 - Understand the policy, ethical, legal, and tax implications of cryptocurrency
-- Be able to develop programs for a specific Blockchain (likely Ethereum)
+- Be able to develop programs for a specific Blockchain
 - Implement a fully working modern cryptocurrency
 
