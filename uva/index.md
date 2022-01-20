@@ -61,8 +61,8 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 Each day has two lectures to view that day.
 
 1. Wed, Jan 19: [course introduction](introduction.html#/) (completed), [overview](../slides/overview.html#/) (to 4.10)
-2. Mon, Jan 24: likely complete [overview](../slides/overview.html#/) and start [encryption](../slides/encryption.html#/)
-3. Wed, Jan 26: likely continue [encryption](../slides/encryption.html#/)
+2. Mon, Jan 24: will likely complete [overview](../slides/overview.html#/) and start [encryption](../slides/encryption.html#/)
+3. Wed, Jan 26: will likely continue [encryption](../slides/encryption.html#/)
 
 
 ## Legal Issues
