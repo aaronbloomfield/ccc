@@ -24,4 +24,3 @@ Students who complete the course will:
 - Understand the policy, ethical, legal, and tax implications of cryptocurrency
 - Be able to develop programs for a specific Blockchain
 - Implement a fully working modern cryptocurrency
-
