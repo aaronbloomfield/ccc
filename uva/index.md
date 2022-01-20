@@ -46,19 +46,23 @@ Homeworks
 
 Unless otherwise noted, all submissions are due by the end of the day of the due date given -- this means by 11:59:59 pm.  The late policies are discussed in the [homework policies page](hw-policies.html) ([md](hw-policies.md)).  Submission is through the Gradescope Collab tool -- all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.
 
-- ...
+#### Smaller Homeworks
 
+- Due Wed, 1/26: S1: complete the course introduction Google survey (link in Collab)
+- Due late January (date TBA): [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
 
 
 Lecture progress
 ----------------
 
-The list of lecture topics can be found on the [main readme](../readme.html) ([md](../readme.md)).  As the future schedule of lectures in the course is not yet known, this only has a listing of the past lectures.  Recordings for the lectures can be found in the Collab lecture capture tool.
+The list of lecture topics can be found on the [slides page](../slides/index.html) ([md](../slides/index.md)).  As the future schedule of lectures in the course is not yet known, this only has a listing of the past lectures.  Recordings for the lectures can be found in the Collab lecture capture tool.
 
 Each day has two lectures to view that day.
 
-1. Wed, Jan 19: [course introduction](course-introduction.html#/)
+1. Wed, Jan 19: [course introduction](introduction.html#/) (completed), [overview](../slides/overview.html#/) (to 4.10)
+2. Mon, Jan 24: likely complete [overview](../slides/overview.html#/) and start [encryption](../slides/encryption.html#/)
+3. Wed, Jan 26: likely continue [encryption](../slides/encryption.html#/)
 
 
 ## Legal Issues
