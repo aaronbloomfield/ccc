@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <base target="_blank">
     <meta charset="utf-8">
     <title>CCC: Cryptocurrency Course slide set</title>
     <meta name="description" content="A set of slides for a course on Cryptocurrency">
@@ -27,8 +28,8 @@
 	<![endif]-->
     <style>
 .reveal li {
-font-size:90%;
-line-height:120%;
+font-size:70%;
+line-height:115%;
 }
     </style>
   </head>
@@ -58,15 +59,42 @@ line-height:120%;
 	
 	<section>
 
-	  <section id="item1" data-markdown class="center"><textarea>
-# ...
-	  </textarea></section>
+	  <section class="center">
+<h2 class='xkcd'>Blockchain</h2>
+<img src="https://imgs.xkcd.com/comics/blockchain.png" title="Blockchains are like grappling hooks, in that it&#39;s extremely cool when you encounter a problem for which they&#39;re the right solution, but it happens way too rarely in real life." alt="Blockchain" srcset="https://imgs.xkcd.com/comics/blockchain_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2267/'>xkcd # 2267</a></p>
+	  </section>
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 2: Mon, Jan 24th
-- ...
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`35,290; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,448; [ETH gas](https://ethgas.watch/): 92 gwei => `$`4.75
+- About CS 3710: ICS as a pre-req...
+- HW S1: course introduction Google survey due this Wed (Jan 26) by midnight
+  - The link is on the Collab landing page
+- [HW P1: Introductory HW](../hws/intro/index.html) due by the end of the week
+  - When would you all like homeworks due?
+- Upcoming HWs (not yet ready!)
+  - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), possibly due Wed, Feb 2nd
+  - HWs S3 & S4 (& maybe S5) will be on Ethereum and smart contracts
+  - HW P2 will be on encryption
+  - HWs P3 and P4 will be a Bitcoin and its blockchain
+- Today's topics:
+  - Likely finish [cryptocurrency overview](../slides/overview.html#/)
+  - Then start on [encryption](../slides/encryption.html#/)
 </textarea></section>
 
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap: Bitcoin terms
+- Wallet: a set of public/private key pairs
+- Bitcoin address: the public key of one of those key pairs
+- Node: a machine that takes part in the peer-to-peer Bitcoin network
+- Ledger: the transactions that have just occurred, and have not yet become "official"
+- Block: a list of transactions that have occurred "officially", along with the hash of the previous block
+- Blockchain: all the blocks
+  - BTC is at about 720,000 blocks in the blockchain
+  - Ethereum is at about 1.4 million blocks in the blockchain
+- Miner: we'll get to that, but it's typically NOT a node
+</textarea></section>
 	</section>
 
 <!-- ============================================================ -->
