@@ -1,0 +1,354 @@
+# generate a .png of the secp256k1 curve
+a=0;b=7;p=64
+x=-cbrt(7):0.01:5
+xb=0
+yb=sqrt(7)
+xa=-1.75
+ya=sqrt(-1.75*1.75*1.75+7)
+y=sqrt(x.^3+a*x+b)
+z=-y
+plot(x,y,'-.b',x,z,'-.b')
+ylim([-6,6]); xlim([-3,4]); grid on
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+saveas(1,"secp256k1-a.svg")
+
+# put two points on that curve
+plot(x,y,'-b',x,z,'-b',xb,yb,'r*',xa,ya,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+text(-1.7,1,"A"); text(-0.2,3,"B")
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0,1+0.75,"Let A_x= -1.75; thus A_y= sqrt(-1.75^3+7) = 1.2809")
+text(0,0.25+0.75,"Let B_x= 0; thus B_y= sqrt(0^3+7) = 2.6458")
+saveas(1,"secp256k1-b-2points.svg")
+
+# draw the intersecting line of those two points
+line([xb-2*(xa-xb),xa+(xa-xb)],[yb-2*(ya-yb),ya+(ya-yb)],'color','m')
+#text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+#text(0,1,"Let A_x= -1.75; thus A_y= sqrt(-1.75^3+7) = 1.2809")
+#text(0,0.25,"Let B_x= 0; thus B_y= sqrt(0^3+7) = 2.6458")
+text(0,-0.5+0.75,"Line: y = mx+b = 0.78 x + 2.65")
+saveas(1,"secp256k1-c-2points-line.svg")
+
+# find the 3rd intersecting point
+m=(ya-yb)/(xa-xb)
+b=yb-m*xb
+# the cubic root calculator says x=2.35829
+# https://www.calculatorsoup.com/calculators/algebra/cubicequation.php?a=1&b=-0.60830&c=-4.1270&d=0&action=solve
+xc=2.35829
+yc=m*xc+b
+plot(x,y,'-b',x,z,'-b',xb,yb,'r*',xa,ya,'r*',xc,yc,'r*')
+line([xb-2*(xa-xb),xa+(xa-xb)],[yb-2*(ya-yb),ya+(ya-yb)],'color','m')
+ylim([-6,6]); xlim([-3,4]); grid on
+text(-1.7,1,"A"); text(-0.2,3,"B"); text(2.4,4.2,"C")
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0,1+0.75,"Let A_x= -1.75; thus A_y= sqrt(-1.75^3+7) = 1.2809")
+text(0,0.25+0.75,"Let B_x= 0; thus B_y= sqrt(0^3+7) = 2.6458")
+text(0,-0.5+0.75,"Line: y = mx+b = 0.78 x + 2.65")
+text(0,-1.25+0.75,"Put y=0.78x+2.65 into y^2= x^3+7 and solve for 3rd point")
+text(0,-2+0.75,"C = (2.36,4.49)")
+saveas(1,"secp256k1-d-3points-line.svg")
+
+# find the inverse of the intersecting point
+plot(x,y,'-b',x,z,'-b',xb,yb,'r*',xa,ya,'r*',xc,yc,'r*',xc,-yc,'r*')
+line([xb-2*(xa-xb),xa+(xa-xb)],[yb-2*(ya-yb),ya+(ya-yb)],'color','m')
+ylim([-6,6]); xlim([-3,4]); grid on
+text(-1.7,1,"A"); text(-0.2,3,"B"); text(2.4,4.2,"C"); text(2.4,-4.2,["C' " '= A \oplus B'])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0,1+0.75,"Let A_x= -1.75; thus A_y= sqrt(-1.75^3+7) = 1.2809")
+text(0,0.25+0.75,"Let B_x= 0; thus B_y= sqrt(0^3+7) = 2.6458")
+text(0,-0.5+0.75,"Line: y = mx+b = 0.78 x + 2.65")
+text(0,-1.25+0.75,"Put y=0.78x+2.65 into y^2= x^3+7 and solve for 3rd point")
+text(0,-2+0.75,"C = (2.36,4.49)")
+text(0,0.75-2.75,"Reflect across x-axis to find C' = (2.36,-4.49)")
+saveas(1,"secp256k1-e-4points-line.svg")
+
+# showing a point P
+xp=-1
+yp=sqrt(6)
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0,0.75+1,"Let P_x= -1; thus P_y= sqrt(-1^3+7) = 2.45")
+text(-0.95,2.9,"P")
+saveas(1,"secp256k1-f-point-p.svg")
+
+# showing point P with a tangent line
+# derivative of a square root is at https://www.emathzone.com/tutorials/calculus/derivative-of-square-root.html
+m1=3/(2*sqrt(6))
+b1=yp-m1*xp
+line([xp-10,xp+10],[yp-10*m1,yp+10*m1],'color',[0,0.5,0])
+text(0,0.75+0.25,"Compute the tangent via the derivative of y = sqrt(x^3+7)")
+text(0,0.75-0.5,"Tangent line: y = 0.61 x + 3.06")
+saveas(1,"secp256k1-g-point-p-tangent.svg")
+
+# showing point Q
+# the cubic root calculator says x=2.375
+# https://www.calculatorsoup.com/calculators/algebra/cubicequation.php?a=1&b=-0.37500-&c=-3.7500&d=-2.3750&action=solve
+xqp=2.375
+yqp=sqrt(xqp*xqp*xqp+7)
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+line([xp-10,xp+10],[yp-10*m1,yp+10*m1],'color',[0,0.5,0])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0,0.75+1,"Let P_x= -1; thus P_y= sqrt(-1^3+7) = 2.45")
+text(0,0.75+0.25,"Compute the tangent via the derivative of y = sqrt(x^3+7)")
+text(0,0.75-0.5,"Tangent line: y = 0.61 x + 3.06")
+text(0,0.75-1.25,"Put y=0.61x+3.06 into y^2= x^3+7 and solve for 3rd point")
+text(0,0.75-2,"Q = (2.38,4.52)")
+text(-0.95,2.9,"P")
+text(2.4,4.2,"Q")
+saveas(1,"secp256k1-h-points-pq-tangent.svg")
+
+# Showing Q' = 2P
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xqp,-yqp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+line([xp-10,xp+10],[yp-10*m1,yp+10*m1],'color',[0,0.5,0])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0,0.75+1,"Let P_x= -1; thus P_y= sqrt(-1^3+7) = 2.45")
+text(0,0.75+0.25,"Compute the tangent via the derivative of y = sqrt(x^3+7)")
+text(0,0.75-0.5,"Tangent line: y = 0.61 x + 3.06")
+text(0,0.75-1.25,"Put y=0.61x+3.06 into y^2= x^3+7 and solve for 3rd point")
+text(0,0.75-2,"Q = (2.38,4.52)")
+text(0,0.75-2.75,"Reflect across x-axis to find Q' = (2.38,-4.52)")
+text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(-0.95,2.9,"P")
+text(2.4,4.2,"Q")
+saveas(1,"secp256k1-i-points-pq-tangent.svg")
+
+# Showing P and Q' to find 3P
+yqp=-sqrt(xqp*xqp*xqp+7) # negating yqp
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+m2=(yqp-yp)/(xqp-xp)
+b2=yp-m2*xp
+line([xp-2*(xqp-xp),xqp+(xqp-xp)],[yp-2*(yqp-yp),yqp+(yqp-yp)],'color','r')
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(1,1.75,"Repeat procedure with P and Q'")
+text(1,1,"Let P_x= -1; thus P_y= sqrt(-1^3+7) = 2.45")
+text(1,0.25,"Q' = (2.38,-4.52) from before"); text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(-0.95,2.9,"P")
+saveas(1,"secp256k1-j-to-find-3p.svg")
+
+# Showing P and Q' to find 3P; this one shows R
+# the cubic root calculator says the third root is x=2.88485
+# https://www.calculatorsoup.com/calculators/algebra/cubicequation.php?a=1&b=-4.2598&c=1.5916&d=6.8513&action=solve
+xrp=2.88485
+yrp=sqrt(xrp*xrp*xrp+7)
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,-yrp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+m2=(yqp-yp)/(xqp-xp)
+b2=yp-m2*xp
+line([xp-2*(xqp-xp),xqp+(xqp-xp)],[yp-2*(yqp-yp),yqp+(yqp-yp)],'color','r')
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(1,1.75,"Repeat procedure with P and Q'")
+text(1,1,"Let P_x= -1; thus P_y= sqrt(-1^3+7) = 2.45")
+text(1,0.25,"Q' = (2.38,-4.52) from before"); text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(1,-0.5,"Find line equation, solve for third point R")
+text(-0.95,2.9,"P")
+text(3.1,-5.5,"R")
+saveas(1,"secp256k1-k-to-find-3p.svg")
+
+# Showing P and Q' to find 3P; this one shows R'
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,-yrp,'r*',xrp,yrp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+m2=(yqp-yp)/(xqp-xp)
+b2=yp-m2*xp
+line([xp-2*(xqp-xp),xqp+(xqp-xp)],[yp-2*(yqp-yp),yqp+(yqp-yp)],'color','r')
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(1,1.75,"Repeat procedure with P and Q'")
+text(1,1,"Let P_x= -1; thus P_y= sqrt(-1^3+7) = 2.45")
+text(1,0.25,"Q' = (2.38,-4.52) from before"); text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(1,-0.5,"Find line equation, solve for third point R")
+text(1,-1.25,"Reflect across x-axis to find R'")
+text(-0.95,2.9,"P")
+text(3.1,-5.5,"R")
+text(2.8,5,["R'" ' = P \oplus Q' "'"])
+text(3,4.6,['= 3 \otimes P'])
+text(3,4.2,['= P \oplus P \oplus P'])
+saveas(1,"secp256k1-l-found-3p.svg")
+
+# showing just the three points P, Q', and R'
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,yrp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+#m2=(yqp-yp)/(xqp-xp)
+#b2=yp-m2*xp
+#line([xp-2*(xqp-xp),xqp+(xqp-xp)],[yp-2*(yqp-yp),yqp+(yqp-yp)])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+#text(1,1.75,"Repeat procedure with P and Q'")
+#text(1,1,"Let P_x= -1; thus P_y= sqrt(-1^3+7) = 2.45")
+#text(1,0.25,"Q' = (2.38,-4.52) from before"); 
+text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+#text(1,-0.5,"Find line equation, solve for third point R")
+#text(1,-1.25,"Reflect across x-axis to find R'")
+text(-0.95,2.9,"P")
+#text(3.1,-5.5,"R")
+text(2.8,5,["R'" ' = P \oplus Q' "'"])
+text(3,4.6,['= 3 \otimes P'])
+text(3,4.2,['= P \oplus P \oplus P'])
+saveas(1,"secp256k1-m-showing-found-points.svg")
+
+# showing P + R' = S'
+# y = m3 * x + b3 is the line containing P and R'
+m3=(yrp-yp)/(xrp-xp)
+b3=yp-m3*xp
+# the cubic root calculator says the third root is x=-1.24023
+# https://www.calculatorsoup.com/calculators/algebra/cubicequation.php
+xsp=-1.24023
+xs=xsp
+ys=sqrt(xsp*xsp*xsp+7)
+ysp=-ys
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,yrp,'r*',xsp,ysp,'r*',xsp,-ysp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+line([xp-2*(xrp-xp),xrp+(xrp-xp)],[yp-2*(yrp-yp),yrp+(yrp-yp)],'color',[0.59,0.3,0])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0.5,1.75,['P \oplus ' "R' = S'"])
+text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(-0.95,2.9,"P")
+text(-1.4,2.6,"S")
+text(-1.25,-1.8,["S' = Q' " '\oplus Q' "' = " '4 \otimes P = P \oplus P \oplus P \oplus P' ""])
+text(2.8,5,["R'" ' = P \oplus Q'])
+text(3,4.6,['= 3 \otimes P'])
+saveas(1,"secp256k1-n-associative-1.svg")
+
+# showing Q' + Q' = S'
+# y = m3 * x + b3 is the line containing P and R'
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,yrp,'r*',xsp,ysp,'r*',xsp,-ysp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+line([xqp-2*(xs-xqp),xs+(xs-xqp)],[yqp-2*(ys-yqp),ys+(ys-yqp)],'color',[0,0.5,0.5])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0.5,1.75,['P \oplus ' "R' = S'"])
+text(0.5,1,["Q'" ' \oplus ' "Q' = S'"])
+text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(-0.95,2.9,"P")
+text(-1.4,2.6,"S")
+text(-1.25,-1.8,["S' = Q' " '\oplus Q' "' = " '4 \otimes P = P \oplus P \oplus P \oplus P' ""])
+text(2.8,5,["R'" ' = P \oplus Q'])
+text(3,4.6,['= 3 \otimes P'])
+saveas(1,"secp256k1-o-associative-2.svg")
+
+# showing Q' + Q' = S' and also P + R' = S
+# y = m3 * x + b3 is the line containing P and R'
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,yrp,'r*',xsp,ysp,'r*',xsp,-ysp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+line([xp-2*(xrp-xp),xrp+(xrp-xp)],[yp-2*(yrp-yp),yrp+(yrp-yp)],'color',[0.59,0.3,0])
+line([xqp-2*(xs-xqp),xs+(xs-xqp)],[yqp-2*(ys-yqp),ys+(ys-yqp)],'color',[0,0.5,0.5])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0.5,1.75,['P \oplus ' "R' = S'"])
+text(0.5,1,["Q'" ' \oplus ' "Q' = S'"])
+text(0.5,0.25,['Thus, P \oplus ' "R' = Q'" ' \oplus ' "Q' = " 'P \oplus P \oplus P \oplus P = 4 \otimes P'])
+text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(-0.95,2.9,"P")
+text(-1.4,2.6,"S")
+text(-1.25,-1.8,["S' = Q' " '\oplus Q' "' = " '4 \otimes P' " = " 'P \oplus ' "R'"])
+text(2.8,5,["R'" ' = P \oplus Q'])
+text(3,4.6,['= 3 \otimes P'])
+saveas(1,"secp256k1-p-associative-3.svg")
+
+# showing Q' + Q' = S' and also P + R' = S
+# y = m3 * x + b3 is the line containing P and R'
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,yrp,'r*',xsp,ysp,'r*',xsp,-ysp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+#line([xp-2*(xrp-xp),xrp+(xrp-xp)],[yp-2*(yrp-yp),yrp+(yrp-yp)],'color',[0.59,0.3,0])
+#line([xqp-2*(xs-xqp),xs+(xs-xqp)],[yqp-2*(ys-yqp),ys+(ys-yqp)],'color',[0,0.5,0.5])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0.5,1.75,['k = 4, p = 9'])
+text(0.5,1,['k^{-1} = ?'])
+text(0.5,0.25,['r = x_r = -1.2402'])
+#text(2.4,-4.2,["Q'" ' = P \oplus P = 2 \otimes P'])
+text(-0.95,2.9,"P = (-1,2.45)")
+#text(-1.4,2.6,"S")
+text(-1.25,-1.8,["R = " '4 \otimes P = (-1.2402,-2.2566)'])
+#text(2.8,5,["..."])
+#text(3,4.6,['...'])
+saveas(1,"secp256k1-x-signing.svg")
+
+
+
+# generate a zoomed-out view of the secp256k1 curve, positive y-axis only
+a=0;b=7
+x=-2:1:1000
+y=sqrt(x.^3+a*x+b)
+z=-y
+plot(x,y,'-',x,z,'-')
+ylim([0,30000]); xlim([-2,1000]); grid on
+title("secp256k1")
+text(214.3,28000,"secp256k1 eliptic curve: y^2= x^3+7")
+saveas(1,"secp256k1-q-zoomed-out.svg")
+
+# generate a zoomed-out view of the secp256k1 curve, positive y-axis only
+a=0;b=7
+x=-2:1:1000
+y=sqrt(x.^3+a*x+b)
+z=-y
+plot(x,y,'-',x,z,'-')
+x6=400
+x7=950
+y6=sqrt(x6*x6*x6+7)
+y7=sqrt(x7*x7*x7+7)
+line([x6-2*(x7-x6),x7+(x7-x6)],[y6-2*(y7-y6),y7+(y7-y6)])
+ylim([0,30000]); xlim([-2,1000]); grid on
+title("secp256k1")
+text(214.3,28000,"secp256k1 eliptic curve: y^2= x^3+7")
+text(275,2500,"(just a straight line to show the the amount of curvature of y^2= x^3+7)")
+saveas(1,"secp256k1-r-zoomed-out-with-line.svg")
+
+
+
+
+
+# the next three graphs are not correct; see
+# https://bitcoin.stackexchange.com/questions/21907/what-does-the-curve-used-in-bitcoin-secp256k1-look-like
+
+# the curve mod'ed by 97 and only points
+a=0;b=7
+x=-2:1:1000
+y=mod(real(sqrt(x.^3+a*x+b)),97)
+z=-y
+plot(x,y,'.b',x,z,'.b')
+ylim([-100,115]); xlim([-2,1000]); grid on
+title("secp256k1")
+text(10,110,"secp256k1 eliptic curve: y^2= x^3+7 mod 97")
+#saveas(1,"secp256k1-s-points-modded-by-97.svg")
+
+# the curve mod'ed by 101 and only points
+a=0;b=7
+x=-2:1:1000
+y=mod(real(sqrt(x.^3+a*x+b)),101)
+z=-y
+plot(x,y,'.b',x,z,'.b')
+ylim([-100,115]); xlim([-2,1000]); grid on
+title("secp256k1")
+text(10,110,"secp256k1 eliptic curve: y^2= x^3+7 mod 101")
+#saveas(1,"secp256k1-t-points-modded-by-101.svg")
+
+# the curve mod'ed by 103 and only points
+a=0;b=7
+x=-2:1:1000
+y=mod(real(sqrt(x.^3+a*x+b)),103)
+z=-y
+plot(x,y,'.b',x,z,'.b')
+ylim([-100,115]); xlim([-2,1000]); grid on
+title("secp256k1")
+text(10,110,"secp256k1 eliptic curve: y^2= x^3+7 mod 103")
+#saveas(1,"secp256k1-u-points-modded-by-103.svg")
+
+
+xp
+yp
+xsp
+ysp
