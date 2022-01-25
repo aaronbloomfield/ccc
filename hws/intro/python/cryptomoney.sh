@@ -52,3 +52,6 @@ case "$1" in
        ;;
 
 esac
+
+# Without the use of cases
+python3 cmoney.py $@
