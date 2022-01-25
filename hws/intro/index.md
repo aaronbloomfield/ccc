@@ -28,8 +28,8 @@ about requiring an uncommon Python module, Java library, or C/C++
 library, as it still has to run on the submission server. 
 
 One option will be to copy how Bitcoin handles these functions, as
-described in the [Cryptocurrency slide
-set](../slides/cryptocurrency.html#/) slide set.
+described in the [Cryptocurrency overview slide
+set](../../slides/overview.html#/) slide set.
 
 
 ## Languages
@@ -60,8 +60,8 @@ Hashes in Python are in
 part of the Python installation.  To take the SHA-256 hash of a file,
 see [this code on stack
 overflow](https://stackoverflow.com/a/44873382).  You can see some
-example code in the [sample.py](cryptocurrency/sample.py)
-([html](cryptocurrency/sample.py.html)) file for you to use.
+example code in the [sample.py](sample.py)
+([html](sample.py.html)) file for you to use.
 
 
 **Java:** RSA and SHA are already in the standard Java library; you
@@ -74,8 +74,8 @@ about how to sign a message can be found
 [here](https://niels.nu/blog/2016/java-rsa.html).  You may use any of
 the code on those pages for your program.  Note that the Java version
 on the submission server is 1.8.  We provide some methods in the
-[Sample.java](cryptocurrency/Sample.java)
-([html](cryptocurrency/Sample.java.html)) file for you to use.
+[Sample.java](Sample.java)
+([html](Sample.java.html)) file for you to use.
 
 **C/C++:** Boost is installed, as well as the openssl library.  There
 are many great things about C and C++, but we think this will give you
@@ -311,10 +311,10 @@ Since different programming languages can be used, we are going to
 have you submit a shell script called `cryptomoney.sh` that we will
 use to test your code.  It is basically a big case statement for each
 of the 10 functions listed above.  A sample such shell script is
-available for Java: [cryptomoney.sh](cryptocurrency/java/cryptomoney.sh)
-([html](cryptocurrency/java/cryptomoney.sh.html)) and for Python:
-[cryptomoney.sh](cryptocurrency/python/cryptomoney.sh)
-([html](cryptocurrency/python/cryptomoney.sh.html)).  Note that you will
+available for Java: [cryptomoney.sh](java/cryptomoney.sh)
+([html](java/cryptomoney.sh.html)) and for Python:
+[cryptomoney.sh](python/cryptomoney.sh)
+([html](python/cryptomoney.sh.html)).  Note that you will
 have to edit them for your specific implementation.  Also note that
 you will have to run `chmod 755 cryptomoney.sh` before you can run the
 shell script.  This is set up for Java -- for Python, you would
@@ -338,8 +338,8 @@ This is just meant to show the syntax -- it is not meant to be a full
 fledged testing suite of your homework.  However, it does call each of
 the commands listed above. Note that the lines with the equals signs
 are setting variables to be used later on.  The commands used here are
-in the [basic-test.sh](cryptocurrency/basic-test.sh)
-([html](cryptocurrency/basic-test.sh.html)) script.  Note that you
+in the [basic-test.sh](basic-test.sh)
+([html](basic-test.sh.html)) script.  Note that you
 will have to run `chmod 755 basic-test.sh` before you can run the
 shell script.  Also note that this shell script takes the SHA-256 sum
 of one of the block files via the `sha256sum` command -- if you don't
