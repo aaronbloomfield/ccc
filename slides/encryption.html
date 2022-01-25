@@ -873,6 +873,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - Slope is the derivative: $dy/dx = 3x^2/2y$
     - ([reference](https://github.com/mulllhausen/visual-secp256k1/blob/master/grunt.py), line 92)
 - Use the math on the previous slide to determine the resultant point
+  - The slope just computed is $m$ on the previous slide
 
 
 ## Elliptical Curve notes
@@ -904,7 +905,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - We will use the secp256k1 curve
   - Sets $a=0$ and $b=7$, so the curve is $y^2=x^3+7$
     - No $x$ term
-  - secp256k1 defines a pre-defined $n$ (modulus) value
+  - secp256k1 defines a pre-defined $p$ (modulus) value
   - secp256k1 defines a pre-defined $G$ (base point) value
 
 
@@ -913,14 +914,24 @@ Any curve of the form $y^2=x^3+ax+b$
 
 ## secp256k1 curve: modulus
 - secp256k1 curve: $y^2=x^3+7$
-- $n$ is the prime modulus, and is defined as 
-  - $n=2^{256}-2^{32}-977$
-  - $n$ = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF FFFFFFFFFFEFFFFFC2F
-  - $n$ = 115,792,089,237,316,195,423,570,985,008,687,907,853, 269,984,665,640,564,039,457,584,007,908,834,671,663
+- $p$ is the prime modulus, and is defined as 
+  - $p=2^{256}-2^{32}-977$
+  - $p$ = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+  - $p$ = 115,792,089,237,316,195,423,570,985,008,687,907,853,269, 984,665,640,564,039,457,584,007,908,834,671,663
+  - $p \approx 1.16 \* 10^{77}$
+  - Note that $p$ is 256 bits in size (to match SHA-256)
+- Must be prime, and $p$ is
+
+
+## secp256k1 curve: order
+- secp256k1 curve: $y^2=x^3+7$
+- $n$ is the *order*, which is the number of points on the curve
+  - We include the point at infinity in $n$
+  - $n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
+  - $n = 115,792,089,237,316,195,423,570,985,008,687,907,852,837, 564,279,074,904,382,605,163,141,518,161,494,337
   - $n \approx 1.16 \* 10^{77}$
-  - Note that $n$ is 256 bits in size
-- Must be prime, and $n$ is
-- Finite field references call this value $p$; ECDSA references call this value $n$
+  - Which is about the same as $p$
+- Almost all modulo operations in ECDSA are with $n$, not $p$
 
 
 ## secp256k1 curve: base point
@@ -936,16 +947,16 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Base Point properties
-- In order for the base point to be able to generate all the points in the range $[0,n-1]$, $G$ needs to lie on the secp256k1 curve
-- We can verify this in Python:
+- In order for the base point to be able to generate all the points in the range $[0,p-1]$, $G$ needs to lie on the secp256k1 curve
+- We can verify this in Python (here use use $p$, not $n$):
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ python3
->>> n = 2**256 - 2**32 - 977
+>>> p = 2**256 - 2**32 - 977
 >>> x = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
 >>> y = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
->>> y**2 % n == (x**3 + 7) % n
+>>> y**2 % p == (x**3 + 7) % p
 True
->>> (y**2 - x**3 - 7) % n == 0
+>>> (y**2 - x**3 - 7) % p == 0
 True
 >>> exit()
 $
@@ -981,25 +992,29 @@ $
 - Total steps: $\Theta(\log_2k)$ 
 
 
-## ECDSA Key Generation
+## ECDSA Key Generation: setup
 - So we have:
   - Curve parameters $a$ and $b$ (secp256k1: $a=0$ and $b=7$)
-  - Prime modulous $n$ (secp256k1: $n=2^{256}-2^{32}-977$)
+  - Prime modulus $p$ (secp256k1: $n=2^{256}-2^{32}-977$)
     - Size is $b$ bits, selected to match the hash size (for us, $b=256$)
+  - Curve order $n$ (for secp256k1: $n \approx 1.16 \* 10^{77}$)
   - Base point $G$; for secp256k1, $G \approx (5.51 \* 10^{63}, 3.27 \* 10^{63})$
-  - A $b$-bit hash algorithm that we plan on using
+  - A $b$-bit hash algorithm that we plan on using (SHA-256, e.g.)
+
+
+## ECDSA Key Generation
 - Determine a $b$ bit random number $p_{key}$ 
   - This is the private key
 - Compute point $Q=p_{key} \otimes G$
   - Point $Q$ is the public key
   - Note that $p_{key}$ is a number, but $Q$ is a point
-  - It turns out we don't need the $y$ value of $Q$
 
 
 ## Signing an ECDSA message
 - Alice knows:
   - $m$, the message to sign
-  - $n$, the prime modulus
+  - $p$, the prime modulus
+  - $n$, the order of the curve
   - $p_{key}$, her private key (secret!)
   - point $Q$, her public key
   - point $G$, the base point
@@ -1011,7 +1026,7 @@ $
 
 
 ## Signing an ECDSA message
-- Alice knows: $m$, $n$, $p_{key}$, $Q$, and $G$
+- Alice knows: $m$, $p$, $n$, $p_{key}$, $Q$, and $G$
 - Alice generates: $h$, $k$, $k^{-1}$
 - Alice computes $R=k \otimes G$
   - Let $r$ be the $x$ component of $R$
@@ -1023,11 +1038,18 @@ $
   - $s=k^{-1}(h+r*p_{key}) \mod n$
 
 
+## Sanity checks
+- If either $r$ or $s$ are zero, then restart the algorithm
+  - Compute a new $k$
+- This is highly unlikely (although possible!) to occur with the actual values used with secp256k1
+- But is quite likely to occur with the values we will use in our upcoming homework
+
+
 ## Verifying an ECDSA message
-- Bob now has to verify the message
-- Bob knows:
+- Bob has to verify the message; he knows:
   - $m$, the message whose signature is being checked
-  - $n$, the prime modulus
+  - $p$, the prime modulus
+  - $n$, the order of the curve
   - $Q$, Alice's public key
   - $G$, the base point
   - $r$ and $s$, from the signature
@@ -1056,16 +1078,16 @@ $
   <li class="fragment" data-fragment-index="1">Multiply both sides by $s^{-1}$:<br> $1=s^{-1}k^{-1}(h+r \ast p_{key})$ </li>
   <li class="fragment" data-fragment-index="2">Multiply both sides by $k$:<br> $k=s^{-1}(h+r \ast p_{key})$ </li>
   <li class="fragment" data-fragment-index="3">Multiply both sides by $G$:<br> $k \otimes G=s^{-1}(h+r*p_{key}) \otimes G$ </li>
-  <li class="fragment" data-fragment-index="4">Distribute the parenthetical:<br> $k \otimes G = s^{-1} \ast h \otimes G+s^{-1} \ast r \ast p_{key} \otimes G$ </li>
-  <li class="fragment" data-fragment-index="5">The public key is defined as $Q = p_{key} \ast G$:<br> $k \otimes G = s^{-1} \ast h \otimes G+s^{-1} \ast r \otimes Q$ </li>
+  <li class="fragment" data-fragment-index="4">Distribute the parenthetical:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \ast p_{key} \otimes G$ </li>
+  <li class="fragment" data-fragment-index="5">The public key is defined as $Q = p_{key} \ast G$:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
 </ul>
 
 
 ## Verifying an ECDSA message
 
 <ul>
-  <li>The last formula from the previous slide:<br> $k \otimes G = s^{-1} \ast h \otimes G+s^{-1} \ast r \otimes Q$ </li>
-  <li class="fragment" data-fragment-index="1">Point $R$ was computed as: $R=k \otimes G$:<br> $R = s^{-1} \ast h \otimes G+s^{-1} \ast r \otimes Q$ </li>
+  <li>The last formula from the previous slide:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
+  <li class="fragment" data-fragment-index="1">Point $R$ was computed as: $R=k \otimes G$:<br> $R = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
   <li class="fragment" data-fragment-index="2">Bob knows:
 
   - $r$, the $x$ component of $R$, which was part of the signature
@@ -1079,11 +1101,27 @@ $
 </ul>
 
 
-## A point about the points
-- All the computation is only done using the $x$ components of the points
-- Given an $x$ value, we can not (realistically) figure out the y component of $y^2=x^3+7$
-  - That would require a square root, which is a discrete log
-  - Recall that discrete logs are "hard" to compute!
+## A note about the math
+- Given point $P$, and scalars $x$, $y$, and $z$, let
+  - $Q = z \otimes P$
+- We have order of operations:
+  - $x \ast y \ast z \otimes P = (x \ast y \ast z) \otimes P$
+- Given:
+  - $x \ast y \ast z \otimes P$ and $Q = z \otimes P$
+  - We can state: $x \ast y \ast z \otimes P = x  \ast  y \otimes Q$
+- HOWEVER, you should NOT take the mod of $x \ast y \ast z$ (nor $x \ast y$) before you perform the EC multiplication
+
+
+## Don't reflect in the field
+- With EC point addition on the real numbers, you reflect the point across the $y$-axis at the end
+- But this is NOT done when dealing with discrete (integer) values in a field
+
+
+## Useful sites
+- [A gentle introduction to elliptic curve cryptography](https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/)
+  - That site has an online [EC point addition page](https://andrea.corbellini.name/ecc/interactive/modk-add.html) and [EC point multiplication page](https://andrea.corbellini.name/ecc/interactive/modk-mul.html)
+  - And also display the points of the field, and tell you the order of the curve
+  - We are using secp256k1, so set $a=0$ and $b=7$
 
 
 ## Why RSA versus ECDSA?
