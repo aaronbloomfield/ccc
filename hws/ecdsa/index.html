@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>P2: ECDSA Implementation</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="../../markdown.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="p2-ecdsa-implementation">P2: ECDSA Implementation</h1>
+<p><a href="../index.html">Go up to the CCC HW page</a> (<a
+href="../index.md">md</a>)</p>
+<h3 id="overview">Overview</h3>
+<p>In this homework you will implement the ECDSA algorithm.</p>
+<p>The sizes of the numbers we are using will be small – all 1,000 (base
+10) or less. While we are not particularly interested in efficiency,
+your program does have to run in a reasonable amount of time (say, a
+second or less). In particular, your elliptic curve multiplication must
+be a logarithmic time algorithm (relative to <span
+class="math inline"><em>k</em></span>), not a linear time algorithm.</p>
+<p>This assignment to be written in Python, and called ecdsa.py. You may
+use the standard libraries that come with Python, but nothing that is
+installed via pip. In particular, you may NOT use any libraries that
+have cryptographic or hashing functions – this includes hashlib. We
+expect you will only need to use the <code>sys</code> and
+<code>random</code> packages. We realize that Python’s standard
+<code>random</code> package is not a cryptographically secure random
+number generator, but that’s fine for this assignment.</p>
+<p>If you want to use a differnt language, please speak to me first.</p>
+<p>In this homework, it is critical to carefully test each stage of the
+assignment. Each part requires that the previous part works properly –
+and, if it does not, then it will be exceedingly difficult to debug your
+program. If you get stuck, the best way to figure out where the bug is
+is to print out the values at each step, and verify them by hand (or via
+online calculators, linked to below).</p>
+<h3 id="background">Background</h3>
+<p>You will need to be familiar with the <a
+href="../../slides/encryption.html#/">Encryption slide set</a>,
+specifically the three sections that deal with the content in this
+assignment: <a href="../../slides/encryption.html#/elliptic">elliptic
+curves</a>, <a href="../../slides/encryption.html#/fields">finite
+fields</a>, and <a href="../../slides/encryption.html#/ecdsa">ECDSA</a>.
+What this assignment is asking for will make no sense if you are not
+familiar with that material.</p>
+<h3 id="step-1-finite-field-functions">Step 1: Finite Field
+functions</h3>
+<p>The first step is to ensure that you have all the finite field
+arithmetic functions that are necessary. Some of these are easy –
+addition and multiplication, for example. Others are a bit more
+challenging, such as division. You will likely want to reference the <a
+href="../../slides/encryption.html#/fields">finite field section of the
+lecture slides</a>. In addition to the four standard arithmetic
+operations, you will likely also need exponentiation, obtaining the
+additive inverse, and obtaining the multiplicative inverse. Some
+functions will likely use others – division of <span
+class="math inline"><em>a</em></span> by <span
+class="math inline"><em>x</em></span> is just multiplying <span
+class="math inline"><em>a</em></span> by the multiplicative inverse of
+<span class="math inline"><em>x</em></span>, for example.</p>
+<p>The field size should be a parameter to the functions, or a global
+variable, as that will change with different execution runs.</p>
+<p>Test these well to ensure that they work!!!</p>
+<h3 id="step-2-elliptic-curve-point-operations">Step 2: Elliptic Curve
+point operations</h3>
+<p>There are three elliptic curve point operations that will be
+needed:</p>
+<ul>
+<li>Elliptic curve addition of a point to itself: <span
+class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>Q</em></span></li>
+<li>Elliptic curve addition of two different points to each other: <span
+class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>R</em></span></li>
+<li>Elliptic curve multiplication of a point by a scalar value: <span
+class="math inline"><em>P</em> = <em>k</em> ⊗ <em>Q</em></span>. Really
+this is adding that point <span class="math inline"><em>k</em></span>
+times, but we can’t do that many additions (that’s a linear time
+operation relative to <span class="math inline"><em>k</em></span>) –
+instead, this needs to be a logarithmic operation, as discussed in
+lecture.</li>
+</ul>
+<p>Some references from the lecture slides:</p>
+<ul>
+<li>The <a href="../../slides/encryption.html#/elliptic">elliptic curve
+section</a> of the encryption slide set shows how these operations work
+visually (albeit in the real numbers)</li>
+<li>The last few slides in the <a
+href="../../slides/encryption.html#/fields">finite field section</a>
+discusses how to perform this arithmetic in a field. <em>Remember not to
+reflect the point in the field!</em></li>
+</ul>
+<p>You can test your functions by using two websites: one that does <a
+href="https://andrea.corbellini.name/ecc/interactive/modk-add.html">elliptic
+curve addition in a field</a> and one that does <a
+href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html">elliptic
+curve multiplication in a field</a>. The curve we are using is
+secp256k1, which sets <span class="math inline"><em>a</em> = 0</span>
+and <span class="math inline"><em>b</em> = 7</span>. For testing
+purposes, we recommend setting the prime modules <span
+class="math inline"><em>p</em></span> to 43; this will give an curve
+order (<span class="math inline"><em>n</em></span>) value of 31.</p>
+<h3 id="step-3-signature-creation-and-validation">Step 3: Signature
+creation and validation</h3>
+<p>Lastly, you can proceed to generate the signature and then validate
+it; this is discussed in the <a
+href="../../slides/encryption.html#/ecdsa">ECDSA section</a> of the
+encryption slide set.</p>
+<p>We recommend reading through the next section, on input and output,
+before starting the work on this section.</p>
+<p>Your program will need to be able to perform three primary
+functions:</p>
+<ul>
+<li>Key generation: choose a random value <span
+class="math inline"><em>d</em></span>, the private key, such that <span
+class="math inline">1 ≤ <em>d</em> ≤ <em>n</em> − 1</span>, and use that
+to determine the public key, point <span
+class="math inline"><em>Q</em></span>, such that <span
+class="math inline"><em>Q</em> = <em>d</em> ⊗ <em>G</em></span>. The
+values needed for these computations (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, and <span
+class="math inline"><em>G</em></span>) will be provided.</li>
+<li>Signing a message: Given the curve parameters (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, and <span
+class="math inline"><em>G</em></span>), the key pair (<span
+class="math inline"><em>d</em></span> and <span
+class="math inline"><em>Q</em></span>), and the hash (<span
+class="math inline"><em>h</em></span>) of the message to be signed, you
+should generate the <span
+class="math inline">(<em>r</em>,<em>s</em>)</span> ECDSA signature.</li>
+<li>Verifying a message: Given the curve parameters (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, and <span
+class="math inline"><em>G</em></span>), the public key <span
+class="math inline"><em>Q</em></span>, the signature <span
+class="math inline">(<em>r</em>,<em>s</em>)</span>, and the hash <span
+class="math inline"><em>h</em></span>, you should verify that the
+signature is (or is not) valid.</li>
+</ul>
+<p>We will only be using the secp256k1 curve, so you can always assume
+that <span class="math inline"><em>a</em> = 0</span> and <span
+class="math inline"><em>b</em> = 7</span>.</p>
+<h3 id="step-4-ensure-correct-input-and-output">Step 4: Ensure correct
+input and output</h3>
+<p>Your program will take in a number of command line parameters. You
+can always assume that the number and format of command line parameters
+will be correct, as specified below – you do not need to error check the
+parameters (neither the number nor the format). You may also assume that
+any points provided (such as <span class="math inline"><em>G</em></span>
+or <span class="math inline"><em>Q</em></span>) will lie on the curve.
+Your program will only use the secp256k1 curve for all execution runs,
+so you can globally set <span class="math inline"><em>a</em> = 0</span>
+and <span class="math inline"><em>b</em> = 7</span>; these values will
+not be passed to the program.</p>
+<p>Each execution run of the program will take in a string as the first
+command-line parameter; this is the so-called mode. After that will be a
+series of integer command-line parameters. In most of the modes, the
+first four integer parameters will be, in this order: the prime modulus
+<span class="math inline"><em>p</em></span>, the curve order <span
+class="math inline"><em>n</em></span>, and the <span
+class="math inline"><em>x</em></span> and <span
+class="math inline"><em>y</em></span> values for the base point <span
+class="math inline"><em>G</em></span>. All numerical values provided
+will be non-negative integers not greater than 1,000. All numbers
+provided as input parameters, or output by the program, are base-10
+numbers.</p>
+<p>The four required modes of the program are:</p>
+<ul>
+<li><p><code>userid</code> will just print your userid. All lower-case,
+no quotes, and no extra spaces. There will not be any other command-line
+parameters. Below is an execution run. Needless to say, it should print
+out <em>your</em> userid, not ‘mst3k’.</p>
+<pre><code>$ ./ecdsa.py userid
+mst3k
+$</code></pre></li>
+<li><p><code>genkey</code> will generate a (random) primary key <span
+class="math inline"><em>d</em></span> such that <span
+class="math inline">1 ≤ <em>d</em> ≤ <em>n</em> − 1</span>, and use that
+to compute the public key, point <span
+class="math inline"><em>Q</em></span>. The numerical command-line
+parameters are just the four described above (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, <span
+class="math inline"><em>G</em><sub><em>x</em></sub></span>, and <span
+class="math inline"><em>G</em><sub><em>y</em></sub></span>). The output
+should be three integers, one on each line: <span
+class="math inline"><em>d</em></span>, <span
+class="math inline"><em>Q</em><sub><em>x</em></sub></span>, and <span
+class="math inline"><em>Q</em><sub><em>y</em></sub></span>. You can
+verify <a
+href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html">here</a>
+that the values returned are correct (specifically that <span
+class="math inline"><em>Q</em> = <em>d</em> ⊗ <em>G</em></span>). Below
+is a sample execution run, which sets <span
+class="math inline"><em>p</em> = 43</span>, <span
+class="math inline"><em>n</em> = 31</span>, and <span
+class="math inline"><em>G</em> = (25,25)</span>. Since this output is
+based on a random number that is generated (specifically, <span
+class="math inline"><em>d</em></span>), one would expect that your
+output would be different on each execution run.</p>
+<pre><code>$ ./ecdsa.py genkey 43 31 25 25
+22
+2
+12
+$</code></pre></li>
+<li><p><code>sign</code> will sign a message. In addition to the four
+standard numerical parameters (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, <span
+class="math inline"><em>G</em><sub><em>x</em></sub></span>, and <span
+class="math inline"><em>G</em><sub><em>y</em></sub></span>), there will
+be four more provided: <span class="math inline"><em>d</em></span>,
+<span class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
+class="math inline"><em>Q</em><sub><em>y</em></sub></span>, and <span
+class="math inline"><em>h</em></span>. The first three of these (<span
+class="math inline"><em>d</em></span>, <span
+class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
+class="math inline"><em>Q</em><sub><em>y</em></sub></span>) are what was
+output from the <code>genkey</code> mode, above. The last one, <span
+class="math inline"><em>h</em></span>, is meant to represent the hash of
+the message that is being signed – it will be in the range <span
+class="math inline">1 ≤ <em>h</em> ≤ <em>n</em> − 1</span>. To simplify
+this assignment, we are not providing the message <span
+class="math inline"><em>m</em></span> that you are to take the hash of –
+we are just providing the hash value itself. To be clear, the eight
+numerical parameters are, in order: (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, <span
+class="math inline"><em>G</em><sub><em>x</em></sub></span>, <span
+class="math inline"><em>G</em><sub><em>y</em></sub></span>, <span
+class="math inline"><em>d</em></span>, <span
+class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
+class="math inline"><em>Q</em><sub><em>y</em></sub></span>, and <span
+class="math inline"><em>h</em></span>). The output should be two
+integers, one on each line: the <span
+class="math inline"><em>r</em></span> and <span
+class="math inline"><em>s</em></span> values of the signature. Note that
+the generated random <span class="math inline"><em>k</em></span> value
+is <em>not</em> part of the output, as would be expected with a typical
+ECDSA implementation. And if <span class="math inline"><em>r</em></span>
+or <span class="math inline"><em>s</em></span> is zero, your program
+should re-generate <span class="math inline"><em>k</em></span> and try
+again – there should be no apparent difference in the output. Below is a
+sample execution run, which sets <span
+class="math inline"><em>p</em> = 43</span>, <span
+class="math inline"><em>n</em> = 31</span>, <span
+class="math inline"><em>G</em> = (25,25)</span>, <span
+class="math inline"><em>d</em> = 22</span>, <span
+class="math inline"><em>Q</em> = (2,12)</span>, and <span
+class="math inline"><em>h</em> = 30</span>. Since this output is based
+on a random number that is generated (speficially, <span
+class="math inline"><em>k</em></span>), one would expect that your
+output would be different on each execution run.</p>
+<pre><code>$ ./ecdsa.py sign 43 31 25 25 22 2 12 30
+21
+7
+$</code></pre></li>
+<li><p><code>verify</code> will verify a message. In addition to the
+four standard numerical parameters (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, <span
+class="math inline"><em>G</em><sub><em>x</em></sub></span>, and <span
+class="math inline"><em>G</em><sub><em>y</em></sub></span>), there will
+be five more provided. The next two are the public key: <span
+class="math inline"><em>Q</em><sub><em>x</em></sub></span> and <span
+class="math inline"><em>Q</em><sub><em>y</em></sub></span> (the verifier
+does not know the private key!). Following that are the parts of the
+signature, <span class="math inline"><em>r</em></span> and <span
+class="math inline"><em>s</em></span>. Lastly will be the (computed)
+hash of the message that is being verified. To be clear, the nine
+numerical parameters are, in order: (<span
+class="math inline"><em>p</em></span>, <span
+class="math inline"><em>n</em></span>, <span
+class="math inline"><em>G</em><sub><em>x</em></sub></span>, <span
+class="math inline"><em>G</em><sub><em>y</em></sub></span>, <span
+class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
+class="math inline"><em>Q</em><sub><em>y</em></sub></span>, <span
+class="math inline"><em>r</em></span>, <span
+class="math inline"><em>s</em></span>, and <span
+class="math inline"><em>h</em></span>). The output should just be ‘True’
+if the signature matches, and ‘False’ if it does not. Below are two
+sample execution runs, which set <span
+class="math inline"><em>p</em> = 43</span>, <span
+class="math inline"><em>n</em> = 31</span>, <span
+class="math inline"><em>G</em> = (25,25)</span>, <span
+class="math inline"><em>Q</em> = (2,12)</span>, <span
+class="math inline"><em>r</em> = 21</span>, <span
+class="math inline"><em>s</em> = 7</span>, and (<span
+class="math inline"><em>h</em> = 30</span> or <span
+class="math inline"><em>h</em> = 31</span>). This output is not based on
+a random number, so your program should have the same output for these
+two execution runs.</p>
+<pre><code>$ ./ecdsa.py verify 43 31 25 25 2 12 21 7 30
+True
+$ ./ecdsa.py verify 43 31 25 25 2 12 21 7 31
+False
+$</code></pre></li>
+</ul>
+<p>Note: please do not print out any other output for those modes, else
+your program will be marked incorrect by the auto-grader! You are
+welcome to add additional modes that you use for debugging, or that
+perform those functions with verbose output. But the four required modes
+– <code>userid</code>, <code>genkey</code>, <code>sign</code>, and
+<code>verify</code> – should only produce the output shown above.</p>
+<h2 id="submission">Submission</h2>
+<p>There is only one file to submit: ecdsa.py.</p>
+</body>
+</html>

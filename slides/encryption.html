@@ -384,6 +384,20 @@ pow(m, e, n)
 </textarea></section>
 
     <section data-markdown data-separator="^\n$"><textarea data-template>
+## Convert ciphertext to plaintext
+- In RSA, given ciphertext $c$, there are three ways to convert it to plaintext $m$:
+  - Factor $n$ into $p$ and $q$, which would take exponential time
+  - Figure out the discrete log to reverse the discrete exponentiation operation
+    - Specifically, reverse: $c = m^e \text{ mod }n$ 
+    - This is just as hard as factoring $n$ into $p$ and $q$
+  - Use the private key, which is the discrete exponential inverse
+    - Meaning: $m = c^e \text{ mod }n$ 
+<aside data-markdown class="notes">
+  notes...
+</aside>
+</textarea></section>
+
+    <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Signatures
 - To *sign* a message means that you make available:
   1. The plaintext message itself
@@ -745,7 +759,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - Is defined by a (tyipcally prime) value $p$
   - All operations are mod $p$
   - Thus the possible values are the integers $0$ to $p-1$
-  - Denoted as $Z_p$
+  - Denoted as $Z_p$ (and, sometimes, $F_p$)
 
 <aside data-markdown class="notes">
 - a finite field doesn't have to have a prime $p$...
@@ -876,6 +890,25 @@ Any curve of the form $y^2=x^3+ax+b$
   - The slope just computed is $m$ on the previous slide
 
 
+## Elliptical Curve Arithmetic
+- Given a point $P$ on a curve, you can keep ellipticlly adding it to itself to get $R=k \otimes P$
+  - Given $k$ and $P$, it is feasible to determine $R$ -- this is "hard"
+  - But given $R$ and $P$, it is *NOT* feasible to determine $k$
+- Note we can do elliptic curve exponentiation as well:
+  - If $k=2^{10}=1024$, then $R=1024 \otimes P$, then we can compute that in about 10 steps:
+    - $P_2 = 2  \otimes  P=P \oplus P$
+    - $P_4 = 4  \otimes  P=P_2 \oplus P_2$
+    - $P_8 = 8  \otimes  P=P_4 \oplus P_4$
+    - ...
+    - $R=P_{1024} = 1024 \otimes P =P_{512} \oplus P_{512}$
+- Total steps: $\Theta(\log_2k)$ 
+
+
+## Don't reflect in the field
+- With EC point addition on the real numbers, you reflect the point across the $y$-axis at the end
+- But this is NOT done when dealing with discrete (integer) values in a field
+
+
 ## Elliptical Curve notes
 - Even in a finite field, we do not need anything more than the basic arithmetic operations (and exponentiation)
   - Nowhere do we require square root, in particular
@@ -927,11 +960,13 @@ Any curve of the form $y^2=x^3+ax+b$
 - secp256k1 curve: $y^2=x^3+7$
 - $n$ is the *order*, which is the number of points on the curve
   - We include the point at infinity in $n$
-  - $n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
-  - $n = 115,792,089,237,316,195,423,570,985,008,687,907,852,837, 564,279,074,904,382,605,163,141,518,161,494,337
-  - $n \approx 1.16 \* 10^{77}$
-  - Which is about the same as $p$
+  - $n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
+  - $n = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
+  - $n \approx 1.16 \* 10^{77}$, about the same as $p$
 - Almost all modulo operations in ECDSA are with $n$, not $p$
+- How to determine the order?
+  - Count all the points (*very* slow)
+  - [Schoof's algorithm](https://en.wikipedia.org/wiki/Schoof%27s_algorithm) which takes polynomial time
 
 
 ## secp256k1 curve: base point
@@ -978,20 +1013,6 @@ $
     - 33 bytes
 
 
-## Elliptical Curve Arithmetic
-- Given a point $P$ on a curve, you can keep ellipticlly adding it to itself to get $R=k \otimes P$
-  - Given $k$ and $P$, it is feasible to determine $R$ -- this is "hard"
-  - But given $R$ and $P$, it is *NOT* feasible to determine $k$
-- Note we can do elliptic curve exponentiation as well:
-  - If $k=2^{10}=1024$, then $R=1024 \otimes P$, then we can compute that in about 10 steps:
-    - $P_2 = 2  \otimes  P=P \oplus P$
-    - $P_4 = 4  \otimes  P=P_2 \oplus P_2$
-    - $P_8 = 8  \otimes  P=P_4 \oplus P_4$
-    - ...
-    - $R=P_{1024} = 1024 \otimes P =P_{512} \oplus P_{512}$
-- Total steps: $\Theta(\log_2k)$ 
-
-
 ## ECDSA Key Generation: setup
 - So we have:
   - Curve parameters $a$ and $b$ (secp256k1: $a=0$ and $b=7$)
@@ -1003,11 +1024,17 @@ $
 
 
 ## ECDSA Key Generation
-- Determine a $b$ bit random number $p_{key}$ 
+- Determine a $b$ bit random number $d$ such that $1 \le d \le n-1$
   - This is the private key
-- Compute point $Q=p_{key} \otimes G$
+- Compute point $Q=d \otimes G$
   - Point $Q$ is the public key
-  - Note that $p_{key}$ is a number, but $Q$ is a point
+  - Note that $d$ is a number, but $Q$ is a point
+
+<aside data-markdown class="notes">
+- private keys are often called 'd' because they decrypt
+  - although in ECDSA, there isn't much decryption going on
+  - but it's still called that anyway...
+</aside>
 
 
 ## Signing an ECDSA message
@@ -1015,27 +1042,28 @@ $
   - $m$, the message to sign
   - $p$, the prime modulus
   - $n$, the order of the curve
-  - $p_{key}$, her private key (secret!)
+  - $d$ (or $d_A$), her private key (secret!)
   - point $Q$, her public key
   - point $G$, the base point
 - Alice generates:
   - $h$, the hash of the message $m$ being signed
     - Using a $b$-bit hash algorithm
-  - $k$, a $b$-bit one time pad (secret!)
+  - $k$, a $b$-bit one time pad (secret!) such that $1 \le k \le n-1$
   - $k^{-1}$, the inverse mod-$n$ of $k$ (also secret)
 
 
 ## Signing an ECDSA message
-- Alice knows: $m$, $p$, $n$, $p_{key}$, $Q$, and $G$
+- Alice knows: $m$, $p$, $n$, $d$, $Q$, and $G$
 - Alice generates: $h$, $k$, $k^{-1}$
 - Alice computes $R=k \otimes G$
   - Let $r$ be the $x$ component of $R$
-- Alice also computes: $s=k^{-1}(h+r*p_{key}) \mod n$
-  - This computation used the private key ($p_{key}$), the hash ($h$), and $r$ (which needed the the one-time pad $k$ to compute)
+- Alice also computes: $s=k^{-1}(h+r*d) \mod n$
+  - This computation used the private key ($d$), the hash ($h$), and $r$
+    - $r$ needed the the one-time pad $k$ to compute
 - The signature is $(r,s)$
   - Both $r$ and $s$ are $b$ bits in size, so the signature is $2b$ bits
 - To verify, we have to show that formula Alice used holds
-  - $s=k^{-1}(h+r*p_{key}) \mod n$
+  - $s=k^{-1}(h+r*d) \mod n$
 
 
 ## Sanity checks
@@ -1053,7 +1081,7 @@ $
   - $Q$, Alice's public key
   - $G$, the base point
   - $r$ and $s$, from the signature
-- Bob does NOT know $p_{key}$ (Alice's private key) nor $k$ (the one-time pad used)
+- Bob does NOT know $d$ (Alice's private key) nor $k$ (the one-time pad used)
 - Bob generates:
   - $h$, the hash of the message $m$
   - $r^{-1}$, the inverse mod-$n$ of $r$
@@ -1061,9 +1089,9 @@ $
 
 
 ## Verifying an ECDSA message
-- Bob has to verify that the following equation holds: $s=k^{-1}(h+r*p_{key}) \mod n$
+- Bob has to verify that the following equation holds: $s=k^{-1}(h+r*d) \mod n$
   - Using his computation of the hash $h$
-  - But he doesn't know $p_{key}$ nor $k$
+  - But he doesn't know $d$ nor $k$
     - But recall that $r$ is computed using $k$
 - Bob knows: $r$, $s$, $G$, and $Q$
   - Knowing $r$ (the $x$ value) implies knowing $R$ (the point)
@@ -1074,12 +1102,12 @@ $
 ## Verifying an ECDSA message
 
 <ul>
-  <li>The formula Bob has to verify without knowing $p_{key}$ or $k$:<br> $s=k^{-1}(h+r \ast p_{key})$ </li>
-  <li class="fragment" data-fragment-index="1">Multiply both sides by $s^{-1}$:<br> $1=s^{-1}k^{-1}(h+r \ast p_{key})$ </li>
-  <li class="fragment" data-fragment-index="2">Multiply both sides by $k$:<br> $k=s^{-1}(h+r \ast p_{key})$ </li>
-  <li class="fragment" data-fragment-index="3">Multiply both sides by $G$:<br> $k \otimes G=s^{-1}(h+r*p_{key}) \otimes G$ </li>
-  <li class="fragment" data-fragment-index="4">Distribute the parenthetical:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \ast p_{key} \otimes G$ </li>
-  <li class="fragment" data-fragment-index="5">The public key is defined as $Q = p_{key} \ast G$:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
+  <li>The formula Bob has to verify without knowing $d$ or $k$:<br> $s=k^{-1}(h+r \ast d)$ </li>
+  <li class="fragment" data-fragment-index="1">Multiply both sides by $s^{-1}$:<br> $1=s^{-1}k^{-1}(h+r \ast d)$ </li>
+  <li class="fragment" data-fragment-index="2">Multiply both sides by $k$:<br> $k=s^{-1}(h+r \ast d)$ </li>
+  <li class="fragment" data-fragment-index="3">Multiply both sides by $G$:<br> $k \otimes G=s^{-1}(h+r*d) \otimes G$ </li>
+  <li class="fragment" data-fragment-index="4">Distribute the parenthetical:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \ast d \otimes G$ </li>
+  <li class="fragment" data-fragment-index="5">The public key is defined as $Q = d \ast G$:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
 </ul>
 
 
@@ -1110,11 +1138,6 @@ $
   - $x \ast y \ast z \otimes P$ and $Q = z \otimes P$
   - We can state: $x \ast y \ast z \otimes P = x  \ast  y \otimes Q$
 - HOWEVER, you should NOT take the mod of $x \ast y \ast z$ (nor $x \ast y$) before you perform the EC multiplication
-
-
-## Don't reflect in the field
-- With EC point addition on the real numbers, you reflect the point across the $y$-axis at the end
-- But this is NOT done when dealing with discrete (integer) values in a field
 
 
 ## Useful sites

@@ -1,7 +1,7 @@
-ICS: Programming Homework: Cryptocurrency
-==========================================
+P1: Cryptocurrency Introduction
+===============================
 
-[Go up to the ICS HW page](index.html) ([md](index.md))
+[Go up to the CCC HW page](../index.html) ([md](../index.md))
 
 You must design your own cryptocurrency!  Your implementation must be
 secure enough that you could actually use it.
