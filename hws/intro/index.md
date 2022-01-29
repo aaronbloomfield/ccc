@@ -277,6 +277,8 @@ The requirements are:
    transaction *records* in the blocks and the ledger.  The wallet
    address to compute the balance for is provided as an additional
    command line parameter.
+   - **NOTE:** this should ONLY print the balance as a number, and nothing
+       else!
 8. Verify a transaction (`verify`): verify that a given transaction
    statement is valid, which will require checking the signature
    **and** the availability of funds.  Once verified, it should be
@@ -285,6 +287,8 @@ The requirements are:
    (whichever wallet created the transaction) and the transaction
    statement being verified are the additional command line
    parameters.
+   - **NOTE:** this should ONLY print either 'True' or 'False' (if it's valid
+       or not), and nothing else!  Case matters here.
 9. Create, mine, and sign block (`mine`): this will form another block
    in the blockchain.  The ledger will be emptied of transaction
    records, as they will all go into the current block being computed.
@@ -391,15 +395,15 @@ bigfoot transferred 100.0 to d96b71971fbeec39 on Tue Apr 02 23:09:01 EDT 2019
 e1f3ec14abcb45da transferred 12.5 to d96b71971fbeec39 on Tue Apr 02 23:09:02 EDT 2019
 d96b71971fbeec39 transferred 2.5 to e1f3ec14abcb45da on Tue Apr 02 23:09:02 EDT 2019
 $ ./cryptomoney.sh balance $alice
-The balance for wallet e1f3ec14abcb45da is: 90.0
+90.0
 $ ./cryptomoney.sh balance $bob
-The balance for wallet d96b71971fbeec39 is: 110.0
+110.0
 $ ./cryptomoney.sh mine 2
 Ledger transactions moved to block_1.txt and mined with difficulty 2 and nonce 1029
 $ sha256sum block_1.txt
 00cc159f08e9e833d2cc85e8dce788020603346829e86f623e6f3c7e36e34b6c  block_1.txt
 $ ./cryptomoney.sh validate
-The entire blockchain is valid
+True
 $
 ```
 
