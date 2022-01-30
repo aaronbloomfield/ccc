@@ -7,8 +7,7 @@ You must design your own cryptocurrency!  Your implementation must be
 secure enough that you could actually use it.
 
 You may use any programming language for this, but if you want to use
-a language other than C, C++, Java, or Python, please check with us
-first.
+a language other than Java or Python, please check with us first.
 
 ## Overview
 
@@ -24,8 +23,7 @@ can use a shorter SHA hash for this assignment.
 The intent is not for you to write the hashing or encryption /
 decryption routines -- use existing libraries for that.  In
 particular, both Java and Python can do that for you.  Be careful
-about requiring an uncommon Python module, Java library, or C/C++
-library, as it still has to run on the submission server. 
+about requiring an uncommon Python module or Java library, as it still has to run on the submission server. 
 
 One option will be to copy how Bitcoin handles these functions, as
 described in the [Cryptocurrency overview slide
@@ -35,10 +33,7 @@ set](../../slides/overview.html#/) slide set.
 ## Languages
 
 As mentioned above, you may use any programming language for this, but
-if you want to use a language other than C, C++, Java, or Python,
-please check with us first.  We support Go (version 1.10), but we do
-not have any additional information available for it in terms of links
-or supplied functions.
+if you want to use a language other than Java or Python, please check with us first.
 
 For Java and Python, we provide you with the code to convert a hex
 string to an array of bytes, to convert an array of bytes to a hex
@@ -73,13 +68,13 @@ for SHA (and the example
 about how to sign a message can be found
 [here](https://niels.nu/blog/2016/java-rsa.html).  You may use any of
 the code on those pages for your program.  Note that the Java version
-on the submission server is 1.8.  We provide some methods in the
+on the submission server is OpenJDK 1.11.  We provide some methods in the
 [Sample.java](Sample.java)
 ([html](Sample.java.html)) file for you to use.
 
-**C/C++:** Boost is installed, as well as the openssl library.  There
+~~**C/C++:** Boost is installed, as well as the openssl library.  There
 are many great things about C and C++, but we think this will give you
-a real headache if you try to implement it in C or C++.
+a real headache if you try to implement it in C or C++.~~
 
 
 ## File format

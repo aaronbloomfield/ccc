@@ -31,15 +31,15 @@ your program does have to run in a reasonable amount of time (say, a
 second or less). In particular, your elliptic curve multiplication must
 be a logarithmic time algorithm (relative to <span
 class="math inline"><em>k</em></span>), not a linear time algorithm.</p>
-<p>This assignment to be written in Python, and called ecdsa.py. You may
-use the standard libraries that come with Python, but nothing that is
-installed via pip. In particular, you may NOT use any libraries that
-have cryptographic or hashing functions – this includes hashlib. We
-expect you will only need to use the <code>sys</code> and
-<code>random</code> packages. We realize that Python’s standard
-<code>random</code> package is not a cryptographically secure random
-number generator, but that’s fine for this assignment.</p>
-<p>If you want to use a differnt language, please speak to me first.</p>
+<p>You can write this assignment in Java or Python. If you want to use a
+different language, please speak to me first. The intent is for you to
+write all this code yourself – you can NOT use any libraries that do
+field arithmetic, elliptic curve arithmetic, etc. This includes any
+hashing functions (such as hashlib in Python). We expect you to only
+need the most common standard libraries as a result.</p>
+<p>We realize that the default random number generators in most (all?)
+programming languages are not cryptographically secure random number
+generators, but that’s fine for this assignment.</p>
 <p>In this homework, it is critical to carefully test each stage of the
 assignment. Each part requires that the previous part works properly –
 and, if it does not, then it will be exceedingly difficult to debug your
@@ -55,6 +55,22 @@ curves</a>, <a href="../../slides/encryption.html#/fields">finite
 fields</a>, and <a href="../../slides/encryption.html#/ecdsa">ECDSA</a>.
 What this assignment is asking for will make no sense if you are not
 familiar with that material.</p>
+<h3 id="shell-script-and-makefile">Shell script and Makefile</h3>
+<p>We are going to call your program by calling an <code>ecdsa.sh</code>
+shell script. Any parameters passed to the shell script will be passed
+as-is to your program. This is what your ecdsa.sh script should look
+like if you are using Python:</p>
+<pre><code>#!/bin/bash
+python3 ecdsa.py $@</code></pre>
+<p>If you are using Java, it would look like this:</p>
+<pre><code>#!/bin/bash
+java ECDSA $@</code></pre>
+<p>Of course, you should change the second line to match the file/class
+names that you choose.</p>
+<p>You will also have to submit a <code>Makefile</code> that will be
+used to compile your program, if needed. For languages that do not need
+compilation (such as Python), just put in a single <code>echo</code>
+statement so that <code>make</code> still runs properly.</p>
 <h3 id="step-1-finite-field-functions">Step 1: Finite Field
 functions</h3>
 <p>The first step is to ensure that you have all the finite field
@@ -72,7 +88,12 @@ class="math inline"><em>a</em></span> by the multiplicative inverse of
 <span class="math inline"><em>x</em></span>, for example.</p>
 <p>The field size should be a parameter to the functions, or a global
 variable, as that will change with different execution runs.</p>
-<p>Test these well to ensure that they work!!!</p>
+<p>Test these well to ensure that they work! You can test your
+operations by using the arithmetic identities: if <span
+class="math inline"><em>x</em></span> is the multiplicative inverse of
+<span class="math inline"><em>y</em></span>, then <span
+class="math inline"><em>x</em> * <em>y</em> =  = 1</span>, for
+example.</p>
 <h3 id="step-2-elliptic-curve-point-operations">Step 2: Elliptic Curve
 point operations</h3>
 <p>There are three elliptic curve point operations that will be
@@ -80,15 +101,15 @@ needed:</p>
 <ul>
 <li>Elliptic curve addition of a point to itself: <span
 class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>Q</em></span></li>
-<li>Elliptic curve addition of two different points to each other: <span
+<li>Elliptic curve addition of two different points: <span
 class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>R</em></span></li>
 <li>Elliptic curve multiplication of a point by a scalar value: <span
 class="math inline"><em>P</em> = <em>k</em> ⊗ <em>Q</em></span>. Really
-this is adding that point <span class="math inline"><em>k</em></span>
-times, but we can’t do that many additions (that’s a linear time
-operation relative to <span class="math inline"><em>k</em></span>) –
-instead, this needs to be a logarithmic operation, as discussed in
-lecture.</li>
+this is performing elliptic curve addition of that point <span
+class="math inline"><em>k</em></span> times, but we can’t do that many
+additions (that’s a linear time operation relative to <span
+class="math inline"><em>k</em></span>) – instead, this needs to be a
+logarithmic operation, as discussed in lecture.</li>
 </ul>
 <p>Some references from the lecture slides:</p>
 <ul>
@@ -159,16 +180,18 @@ can always assume that the number and format of command line parameters
 will be correct, as specified below – you do not need to error check the
 parameters (neither the number nor the format). You may also assume that
 any points provided (such as <span class="math inline"><em>G</em></span>
-or <span class="math inline"><em>Q</em></span>) will lie on the curve.
-Your program will only use the secp256k1 curve for all execution runs,
-so you can globally set <span class="math inline"><em>a</em> = 0</span>
-and <span class="math inline"><em>b</em> = 7</span>; these values will
-not be passed to the program.</p>
+or <span class="math inline"><em>Q</em></span>) will always lie on the
+curve. Your program will only use the secp256k1 curve for all execution
+runs, so you can globally set <span
+class="math inline"><em>a</em> = 0</span> and <span
+class="math inline"><em>b</em> = 7</span>; these values will not be
+passed to the program.</p>
 <p>Each execution run of the program will take in a string as the first
-command-line parameter; this is the so-called mode. After that will be a
-series of integer command-line parameters. In most of the modes, the
-first four integer parameters will be, in this order: the prime modulus
-<span class="math inline"><em>p</em></span>, the curve order <span
+command-line parameter; this is the so-called <em>mode</em>. After the
+mode will be a series of integer command-line parameters, all of which
+will be integers. In most of the modes, the first four integer
+parameters will be, in this order: the prime modulus <span
+class="math inline"><em>p</em></span>, the curve order <span
 class="math inline"><em>n</em></span>, and the <span
 class="math inline"><em>x</em></span> and <span
 class="math inline"><em>y</em></span> values for the base point <span
@@ -182,7 +205,7 @@ numbers.</p>
 no quotes, and no extra spaces. There will not be any other command-line
 parameters. Below is an execution run. Needless to say, it should print
 out <em>your</em> userid, not ‘mst3k’.</p>
-<pre><code>$ ./ecdsa.py userid
+<pre><code>$ ./ecdsa.sh userid
 mst3k
 $</code></pre></li>
 <li><p><code>genkey</code> will generate a (random) primary key <span
@@ -210,7 +233,7 @@ class="math inline"><em>G</em> = (25,25)</span>. Since this output is
 based on a random number that is generated (specifically, <span
 class="math inline"><em>d</em></span>), one would expect that your
 output would be different on each execution run.</p>
-<pre><code>$ ./ecdsa.py genkey 43 31 25 25
+<pre><code>$ ./ecdsa.sh genkey 43 31 25 25
 22
 2
 12
@@ -247,13 +270,14 @@ class="math inline"><em>h</em></span>). The output should be two
 integers, one on each line: the <span
 class="math inline"><em>r</em></span> and <span
 class="math inline"><em>s</em></span> values of the signature. Note that
-the generated random <span class="math inline"><em>k</em></span> value
-is <em>not</em> part of the output, as would be expected with a typical
-ECDSA implementation. And if <span class="math inline"><em>r</em></span>
-or <span class="math inline"><em>s</em></span> is zero, your program
-should re-generate <span class="math inline"><em>k</em></span> and try
-again – there should be no apparent difference in the output. Below is a
-sample execution run, which sets <span
+the generated random – and secret – value <span
+class="math inline"><em>k</em></span> is <em>not</em> part of the
+output, as would be expected with a typical ECDSA implementation. And if
+<span class="math inline"><em>r</em></span> or <span
+class="math inline"><em>s</em></span> are zero, your program should
+re-generate <span class="math inline"><em>k</em></span> and try again –
+there should be no apparent difference in the output. Below is a sample
+execution run, which sets <span
 class="math inline"><em>p</em> = 43</span>, <span
 class="math inline"><em>n</em> = 31</span>, <span
 class="math inline"><em>G</em> = (25,25)</span>, <span
@@ -263,7 +287,7 @@ class="math inline"><em>h</em> = 30</span>. Since this output is based
 on a random number that is generated (speficially, <span
 class="math inline"><em>k</em></span>), one would expect that your
 output would be different on each execution run.</p>
-<pre><code>$ ./ecdsa.py sign 43 31 25 25 22 2 12 30
+<pre><code>$ ./ecdsa.sh sign 43 31 25 25 22 2 12 30
 21
 7
 $</code></pre></li>
@@ -302,9 +326,9 @@ class="math inline"><em>h</em> = 30</span> or <span
 class="math inline"><em>h</em> = 31</span>). This output is not based on
 a random number, so your program should have the same output for these
 two execution runs.</p>
-<pre><code>$ ./ecdsa.py verify 43 31 25 25 2 12 21 7 30
+<pre><code>$ ./ecdsa.sh verify 43 31 25 25 2 12 21 7 30
 True
-$ ./ecdsa.py verify 43 31 25 25 2 12 21 7 31
+$ ./ecdsa.sh verify 43 31 25 25 2 12 21 7 31
 False
 $</code></pre></li>
 </ul>
@@ -314,7 +338,18 @@ welcome to add additional modes that you use for debugging, or that
 perform those functions with verbose output. But the four required modes
 – <code>userid</code>, <code>genkey</code>, <code>sign</code>, and
 <code>verify</code> – should only produce the output shown above.</p>
-<h2 id="submission">Submission</h2>
-<p>There is only one file to submit: ecdsa.py.</p>
+<h3 id="submission">Submission</h3>
+<p>You have to submit three files:</p>
+<ul>
+<li><code>ecdsa.sh</code>, the shell script that will be called to run
+your program. See above for the format.</li>
+<li>A Makefile that will compile your code when we call
+<code>make</code>, which will be called on submission. For languages
+that do not need compilation (such as Python), just put in a single
+<code>echo</code> statement so that <code>make</code> still runs
+properly.</li>
+<li>The source code itself, likely something like <code>ecdsa.py</code>
+or <code>ECDSA.java</code></li>
+</ul>
 </body>
 </html>

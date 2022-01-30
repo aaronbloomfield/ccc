@@ -11,7 +11,7 @@ You will be bound by the requirements on the [Homeworks policies page](../uva/hw
 These are larger programming homeworks.
 
 - [P1: Introductory homework](intro/index.html) ([md](intro/index.md))
-- P2: ECDSA implementation
+- [P2: ECDSA implementation](ecdsa/index.html) ([md](ecdsa/index.md))
 - P3: Bitcoin blockchain parser
 - P4: Bitcoin scripting
 
@@ -22,4 +22,4 @@ These are larger programming homeworks.
 These are smaller homeworks that take less time.  They are often readings or self-guided tutorials.
 
 - S1: Google course introductory survey: the link for the survey is in the [Collab workspace](https://collab.its.virginia.edu/portal/directtool/7c8e4ae8-4bb5-4d1f-9fd6-9d9323721551/)
-- S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/))
+- S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)

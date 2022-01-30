@@ -36,7 +36,7 @@ Readings
 
 All scholarly articles (such as from the ACM digital library) can be obtained from free from any UVa wireless network.  Some of them you will *NOT* be able to get it for free from your home Internet provider such as Comcast (unless you live in a UVa dorm, of course) without using a UVa VPN.  All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
-- ...
+- Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
 
 
 
@@ -46,10 +46,16 @@ Homeworks
 
 Unless otherwise noted, all submissions are due by the end of the day of the due date given -- this means by 11:59:59 pm.  The late policies are discussed in the [homework policies page](hw-policies.html) ([md](hw-policies.md)).  Submission is through the Gradescope Collab tool -- all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.
 
+
+#### Larger Programming Homeworks
+
+- Due Tue, 2/8, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
+- Due Tue, 2/1, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
+
 #### Smaller Homeworks
 
-- Due Wed, 1/26: S1: complete the course introduction Google survey (link in Collab)
-- Due late January (date TBA): [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
+- Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
+- Due Wed, 1/26: HW S1: complete the course introduction Google survey (link in Collab)
 
 
 
@@ -62,8 +68,9 @@ Each day has two lectures to view that day.
 
 1. Wed, Jan 19: [course introduction](introduction.html#/) (completed), [overview](../slides/overview.html#/) (to 4.10)
 2. Mon, Jan 24: finished [overview](../slides/overview.html#/); [encryption](../slides/encryption.html#/) to slide 3.7
-3. Wed, Jan 26: will likely continue [encryption](../slides/encryption.html#/), and maybe finish it
-4. Mon, Jan 31: will finish [encryption](../slides/encryption.html#/) (if not already finished), and start on [bitcoin](../slides/bitcoin.html#/)
+3. Wed, Jan 26: [encryption](../slides/encryption.html#/) through slide 5.3
+4. Mon, Jan 31: continue with [encryption](../slides/encryption.html#/)
+5. Wed, Feb 2: likely finish [encryption](../slides/encryption.html#/) and start on [bitcoin](../slides/bitcoin.html#/)
 
 ## Legal Issues
 

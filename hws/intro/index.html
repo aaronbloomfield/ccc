@@ -27,8 +27,7 @@ href="../index.md">md</a>)</p>
 <p>You must design your own cryptocurrency! Your implementation must be
 secure enough that you could actually use it.</p>
 <p>You may use any programming language for this, but if you want to use
-a language other than C, C++, Java, or Python, please check with us
-first.</p>
+a language other than Java or Python, please check with us first.</p>
 <h2 id="overview">Overview</h2>
 <p>Your cryptocurrency should have a name – ideally, think of a neat
 name, but make sure it is <a
@@ -41,17 +40,15 @@ you can use a shorter SHA hash for this assignment.</p>
 <p>The intent is not for you to write the hashing or encryption /
 decryption routines – use existing libraries for that. In particular,
 both Java and Python can do that for you. Be careful about requiring an
-uncommon Python module, Java library, or C/C++ library, as it still has
-to run on the submission server.</p>
+uncommon Python module or Java library, as it still has to run on the
+submission server.</p>
 <p>One option will be to copy how Bitcoin handles these functions, as
 described in the <a href="../../slides/overview.html#/">Cryptocurrency
 overview slide set</a> slide set.</p>
 <h2 id="languages">Languages</h2>
 <p>As mentioned above, you may use any programming language for this,
-but if you want to use a language other than C, C++, Java, or Python,
-please check with us first. We support Go (version 1.10), but we do not
-have any additional information available for it in terms of links or
-supplied functions.</p>
+but if you want to use a language other than Java or Python, please
+check with us first.</p>
 <p>For Java and Python, we provide you with the code to convert a hex
 string to an array of bytes, to convert an array of bytes to a hex
 string, getting the SHA-256 hash of a file, and to read and write RSA
@@ -84,13 +81,13 @@ href="https://www.baeldung.com/sha-256-hashing-java">here</a>). An
 example about how to sign a message can be found <a
 href="https://niels.nu/blog/2016/java-rsa.html">here</a>. You may use
 any of the code on those pages for your program. Note that the Java
-version on the submission server is 1.8. We provide some methods in the
-<a href="Sample.java">Sample.java</a> (<a
+version on the submission server is OpenJDK 1.11. We provide some
+methods in the <a href="Sample.java">Sample.java</a> (<a
 href="Sample.java.html">html</a>) file for you to use.</p>
-<p><strong>C/C++:</strong> Boost is installed, as well as the openssl
-library. There are many great things about C and C++, but we think this
-will give you a real headache if you try to implement it in C or
-C++.</p>
+<p><del><strong>C/C++:</strong> Boost is installed, as well as the
+openssl library. There are many great things about C and C++, but we
+think this will give you a real headache if you try to implement it in C
+or C++.</del></p>
 <h2 id="file-format">File format</h2>
 <p><strong>Blockchain</strong></p>
 <p>The blockchain will be in files named <code>block_0.txt</code>,

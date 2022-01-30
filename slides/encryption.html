@@ -736,6 +736,21 @@ Any curve of the form $y^2=x^3+ax+b$
 - We can perform these two with basic arithmetic by:
     1. Being given an initial point on the curve
     2. Taking a formulaic shortcut to find the intersection of a line and the curve
+
+
+## Elliptical Curve Identities
+
+- Multiplication
+  - Generalized: $\sum_{i=1}^{k} P = k \otimes P$
+    - Note that the summation operation is EC point $\oplus$, not scalar $+$
+  - Example: $P \oplus P \oplus P \oplus P  = 4 \otimes P$
+- Notation
+  - Generalized: $k \otimes P = kP$
+- Distributive property
+  - Generalized: $(a+b) \otimes P = (a \otimes P) \oplus (b \otimes P)$
+    - Due to the order of operations ($\otimes$ before $\oplus$), we can rewrite that as:
+    - $(a+b) \otimes P = a \otimes P \oplus b \otimes P$
+  - Example: $(2+2) \otimes P = (2 \otimes P) \oplus (2 \otimes P) = 2P \oplus 2P = 4P$
 </textarea></section>
 
 </section>
