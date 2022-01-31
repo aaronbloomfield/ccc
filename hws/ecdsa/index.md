@@ -61,7 +61,7 @@ There are three elliptic curve point operations that will be needed:
  - The [elliptic curve section](../../slides/encryption.html#/elliptic) of the encryption slide set shows how these operations work visually (albeit in the real numbers)
  - The last few slides in the [finite field section](../../slides/encryption.html#/fields) discusses how to perform this arithmetic in a field.
 
-You can test your functions by using two websites: one that does [elliptic curve addition in a field](https://andrea.corbellini.name/ecc/interactive/modk-add.html) and one that does [elliptic curve multiplication in a field](https://andrea.corbellini.name/ecc/interactive/modk-mul.html).  The curve we are using is secp256k1, which sets $a=0$ and $b=7$.  For testing purposes, we recommend setting the prime modules $p$ to 43; this will give an curve order ($n$) value of 31.
+You can test your functions by using two websites: one that does [elliptic curve addition in a field](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43) and one that does [elliptic curve multiplication in a field](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43).  The curve we are using is secp256k1, which sets $a=0$ and $b=7$.  For testing purposes, we recommend setting the prime modules $p$ to 43; this will give an curve order ($n$) value of 31.
 
 ### Step 3: Signature creation and validation
 
@@ -92,7 +92,7 @@ $ ./ecdsa.sh userid
 mst3k
 $
 ```
-- `genkey` will generate a (random) primary key $d$ such that $1 \le d \le n-1$, and use that to compute the public key, point $Q$.  The numerical command-line parameters are just the four described above ($p$, $n$, $G_x$, and $G_y$).  The output should be three integers, one on each line: $d$, $Q_x$, and $Q_y$.  You can verify [here](https://andrea.corbellini.name/ecc/interactive/modk-mul.html) that the values returned are correct (specifically that $Q=d \otimes G$). Below is a sample execution run, which sets $p=43$, $n=31$, and $G=(25,25)$.  Since this output is based on a random number that is generated (specifically, $d$), one would expect that your output would be different on each execution run.
+- `genkey` will generate a (random) primary key $d$ such that $1 \le d \le n-1$, and use that to compute the public key, point $Q$.  The numerical command-line parameters are just the four described above ($p$, $n$, $G_x$, and $G_y$).  The output should be three integers, one on each line: $d$, $Q_x$, and $Q_y$.  You can verify [here](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43) that the values returned are correct (specifically that $Q=d \otimes G$). Below is a sample execution run, which sets $p=43$, $n=31$, and $G=(25,25)$.  Since this output is based on a random number that is generated (specifically, $d$), one would expect that your output would be different on each execution run.  The result of this execution run is that the private key is $d=16$ and the public key is $Q=(37,36)$.
   ```
 $ ./ecdsa.sh genkey 43 31 25 25
 16
@@ -100,14 +100,14 @@ $ ./ecdsa.sh genkey 43 31 25 25
 36
 $
 ```
-- `sign` will sign a message.  In addition to the four standard numerical parameters ($p$, $n$, $G_x$, and $G_y$), there will be four more provided: $d$, $Q_x$, $Q_y$, and $h$.  The first three of these ($d$, $Q_x$, $Q_y$) are what was output from the `genkey` mode, above.  The last one, $h$, is meant to represent the hash of the message that is being signed -- it will be in the range $1 \le h \le n-1$.  To simplify this assignment, we are not providing the message $m$ that you are to take the hash of -- we are just providing the hash value itself.  To be clear, the eight numerical parameters are, in order: ($p$, $n$, $G_x$, $G_y$, $d$, $Q_x$, $Q_y$, and $h$).  The output should be two integers, one on each line: the $r$ and $s$ values of the signature.  Note that the generated random -- and secret -- value $k$ is *not* part of the output, as would be expected with a typical ECDSA implementation.  And if $r$ or $s$ are zero, your program should re-generate $k$ and try again -- there should be no apparent difference in the output.  Below is a sample execution run, which sets $p=43$, $n=31$, $G=(25,25)$, $d=22$, $Q=(2,12)$, and $h=30$.  Since this output is based on a random number that is generated (speficially, $k$), one would expect that your output would be different on each execution run.
+- `sign` will sign a message.  In addition to the four standard numerical parameters ($p$, $n$, $G_x$, and $G_y$), there will be four more provided: $d$, $Q_x$, $Q_y$, and $h$.  The first three of these ($d$, $Q_x$, $Q_y$) are what was output from the `genkey` mode, above.  The last one, $h$, is meant to represent the hash of the message that is being signed -- it will be in the range $1 \le h \le n-1$.  To simplify this assignment, we are not providing the message $m$ that you are to take the hash of -- we are just providing the hash value itself.  To be clear, the eight numerical parameters are, in order: ($p$, $n$, $G_x$, $G_y$, $d$, $Q_x$, $Q_y$, and $h$).  The output should be two integers, one on each line: the $r$ and $s$ values of the signature.  Note that the generated random -- and secret -- value $k$ is *not* part of the output, as would be expected with a typical ECDSA implementation.  And if $r$ or $s$ are zero, your program should re-generate $k$ and try again -- there should be no apparent difference in the output.  Below is a sample execution run, which sets $p=43$, $n=31$, $G=(25,25)$, $d=16$, $Q=(37,36)$, and $h=30$.  Since this output is based on a random number that is generated (specifically, $k$), one would expect that your output would be different on each execution run. The result of this execution run is that the signature is $(r,s)=(12,24)$.
   ```
 $ ./ecdsa.sh sign 43 31 25 25 16 37 36 30
 12
 24
 $
 ```
-- `verify` will verify a message.  In addition to the four standard numerical parameters ($p$, $n$, $G_x$, and $G_y$), there will be five more provided.  The next two are the public key: $Q_x$ and $Q_y$ (the verifier does not know the private key!).  Following that are the parts of the signature, $r$ and $s$.  Lastly will be the (computed) hash of the message that is being verified.  To be clear, the nine numerical parameters are, in order: ($p$, $n$, $G_x$, $G_y$, $Q_x$, $Q_y$, $r$, $s$, and $h$).  The output should just be 'True' if the signature matches, and 'False' if it does not.  Below are two sample execution runs, which set $p=43$, $n=31$, $G=(25,25)$, $Q=(2,12)$, $r=21$, $s=7$, and ($h=30$ or $h=31$).  This output is not based on a random number, so your program should have the same output for these two execution runs.
+- `verify` will verify a message.  In addition to the four standard numerical parameters ($p$, $n$, $G_x$, and $G_y$), there will be five more parameters provided.  The next two are the public key: $Q_x$ and $Q_y$ (the verifier does not know the private key!).  Following that are the parts of the signature, $r$ and $s$.  Lastly will be the (computed) hash of the message that is being verified.  To be clear, the nine numerical parameters are, in order: ($p$, $n$, $G_x$, $G_y$, $Q_x$, $Q_y$, $r$, $s$, and $h$).  The output should just be 'True' if the signature matches, and 'False' if it does not.  Below are two sample execution runs, which set $p=43$, $n=31$, $G=(25,25)$, $Q=(37,36)$, $(r,s)=(12,24)$, and ($h=30$ or $h=29$).  This output is *not* based on a random number, so your program should have the same output for these two execution runs.
   ```
 $ ./ecdsa.sh verify 43 31 25 25 37 36 12 24 30
 True
@@ -120,20 +120,33 @@ Note: please do not print out any other output for those modes, else your progra
 
 ### Example
 
-To help you understand the previous example, below is the complete formulaic view of the values that were computed above in the three execution runs.  All elliptic point computations can be verified [here for addition](https://andrea.corbellini.name/ecc/interactive/modk-add.html) and [here for multiplication](https://andrea.corbellini.name/ecc/interactive/modk-mul.html).
+To help you understand the previous example, below is the complete formulaic work-up of the values that were computed above in the three execution runs.  All elliptic point computations can be verified [here for addition](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43) and [here for multiplication](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43); verification links are them are also provided below.
+
+To ensure clarity about the operations, the $+$ symbol is *only* used for scalar addition (meaning between two numbers) and the $\ast$ symbol is *only* used for scalar multiplication (meaning between two numbers).  Addition of two elliptic points uses the $\oplus$ symbol, and multiplication of an elliptic point by a scalar uses the $\otimes$ symbol.
 
 We know that the prime modulus $p=43$, the order $n=31$, and the base point $G=(25,25)$, as these were given in the first four numeric command-line parameters.
 
-**Key generation:** The random value for the private key is $d=16$.  Computing $d \otimes G = 16 \otimes (25,25) = (37,36)$.
+**Key generation:** The random value for the private key is $d=16$.  Computing $d \otimes G = 16 \otimes (25,25) = (37,36)$; ([verification](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=16&px=25&py=25)).
 
-**Signing:** The secret $k$ value, which was not shown, was $k=17$.  We compute $R = k \otimes G = 17 \otimes (25,25) = (12,12)$.  The $x$-value of this, 12, is the first part of the signature, and is referred to as lower-case $r$.  We next have to compute $k^{-1}$.  Because $k$ is counting the number of points, the inverse is computed in Z31, NOT in Z43.  Thus, in Z31, $17^{-1} = 11$.  We know via the command-line parameters that $h=30$, and we already know that $d=16$ and $r=12$.  We can then compute $s$, which also is computed in Z31, NOT Z43: $s=k^{−1}(h+r∗d) \mod n = 24$.  Thus, the signature is $(12,24)$.
+**Signing:** The secret $k$ value, which was not shown, was $k=17$.  We compute $R = k \otimes G = 17 \otimes (25,25) = (12,12)$; ([verification](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=17&px=25&py=25)).  The $x$-value of this, 12, is the first part of the signature, and is referred to as lower-case $r$.  We next have to compute $k^{-1}$.  Because $k$ is counting the number of points, the inverse is computed in Z31, NOT in Z43.  Thus, in Z31, $17^{-1} = 11$; ([verification](https://planetcalc.com/3311/?a=17&m=31)).  We know via the command-line parameters that $h=30$ and $d=16$, and we have just computed $r=12$.  We can then compute $s$, which also is computed in Z31, NOT Z43: $s=k^{−1}(h+r∗d) \mod n = 11 \ast (30 + 12 \ast 16) \mod 31 = 24$.  Thus, the signature is $(r,s)=(12,24)$.
 
-**Verification:** We are given the values for $Q=(37,36)$ and the signature $(r,s)=(12,24)$, as well as the hash $h=30$.  As $s$ was computed in Z31 (NOT Z43), we also compute it's inverse in Z31: $24^{-1}=22$ in Z31.  
+**Verification:** We are given the values for $Q=(37,36)$ and the signature $(r,s)=(12,24)$, as well as the hash $h=30$.  As $s$ was computed in Z31 (NOT Z43), we also compute it's inverse in Z31: $24^{-1}=22$ in Z31; ([verification](https://planetcalc.com/3311/?a=24&m=31)).  
 
 To verify this signature, we need to show that 
-$R=s^{−1} \ast h \otimes G \oplus s^{−1} \ast r \otimes Q$ = $660 \otimes G \oplus 264 \otimes Q$.  We can mod those two scalars, but that mod is also in Z31, and yields $R = 9 \otimes G \oplus 16 \otimes Q = (2,31) \oplus (29,31) = (12,12)$.  Because the $x$-value of this computed point equals the provided $r$ value in the signature, it is verified.
+$R=s^{−1} \ast h \otimes G \oplus s^{−1} \ast r \otimes Q$ = $660 \otimes G \oplus 264 \otimes Q$.  We can mod those two scalars, but that mod is also in Z31, and yields $R = 9 \otimes G \oplus 16 \otimes Q = 9 \otimes (25,25) \oplus 16 \otimes (37,36) = (2,31) \oplus (29,31) = (12,12)$; (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=9&px=25&py=25), [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=16&px=37&py=36), and [3](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=2&py=31&qx=29&qy=31)).  Because the $x$-value of this computed point equals the provided $r$ value in the signature, the signature is valid.
 
-The second execution run had the incorrect hash ($h=29$).  The process is the same as the above -- we compute $R=s^{−1} \ast h \otimes G \oplus s^{−1} \ast r \otimes Q$.  As $h$ is different the coefficient in front of $G$ changes: $R = 638 \otimes G \oplus 264 \otimes Q = 18 \otimes G \oplus 16 \otimes Q = (7,36) \oplus (29,31) = (21,18)$.  As the $x$-value of that computed $R$, specifically the value 21, does not equal the $r=12$ provided with the signature, the signature does not verify.
+The second execution run had the incorrect hash ($h=29$).  The process is the same as the above -- we compute $R=s^{−1} \ast h \otimes G \oplus s^{−1} \ast r \otimes Q$.  As $h$ is different the coefficient in front of $G$ changes: $R = 638 \otimes G \oplus 264 \otimes Q = 18 \otimes G \oplus 16 \otimes Q = (7,36) \oplus (29,31) = (21,18)$; (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=18&px=25&py=25), [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=16&px=37&py=36), and [3](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=7&py=36&qx=29&qy=31)).  As the $x$-value of that computed $R$, specifically the value 21, does not equal the $r=12$ provided with the signature, the signature is not valid.
+
+### Testing
+
+One type of test that we are going to perform is whether your program can verify a signature that your code signs, and whether it can indicate as invalid a signature that you did not sign.  We will be trying different prime field sizes.  Here are a few examples you can use.
+
+- $p=43$, $n=31$, $G=(25,25)$
+- $p=79$, $n=67$, $G=(35,8)$
+- $p=127$, $n=127$, $G=(93,33)$
+- $p=733$, $n=691$, $G=(336,170)$
+
+Note that if you enter the curve of $a=0$ and $b=7$ into [this site](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43), and enter a different $p$ value, it will tell you the order below the boxes ("The curve has ... points").  You can pick any valid point on that curve as $G$.
 
 ### Submission
 

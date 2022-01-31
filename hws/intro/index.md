@@ -56,7 +56,7 @@ part of the Python installation.  To take the SHA-256 hash of a file,
 see [this code on stack
 overflow](https://stackoverflow.com/a/44873382).  You can see some
 example code in the [sample.py](sample.py)
-([html](sample.py.html)) file for you to use.
+([html](sample.py.html)) file for you to use.  You can see [here](https://www.tutorialspoint.com/python/python_command_line_arguments.htm) for how to use command-line arguments.
 
 
 **Java:** RSA and SHA are already in the standard Java library; you
@@ -72,9 +72,7 @@ on the submission server is OpenJDK 1.11.  We provide some methods in the
 [Sample.java](Sample.java)
 ([html](Sample.java.html)) file for you to use.
 
-~~**C/C++:** Boost is installed, as well as the openssl library.  There
-are many great things about C and C++, but we think this will give you
-a real headache if you try to implement it in C or C++.~~
+**C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.
 
 
 ## File format

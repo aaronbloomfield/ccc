@@ -761,11 +761,16 @@ Any curve of the form $y^2=x^3+ax+b$
   - Example: $P \oplus P \oplus P \oplus P  = 4 \otimes P$
 - Notation
   - Generalized: $k \otimes P = kP$
+
+
+## Elliptical Curve Identities
 - Distributive property
   - Generalized: $(a+b) \otimes P = (a \otimes P) \oplus (b \otimes P)$
     - Due to the order of operations ($\otimes$ before $\oplus$), we can rewrite that as:
     - $(a+b) \otimes P = a \otimes P \oplus b \otimes P$
   - Example: $(2+2) \otimes P = (2 \otimes P) \oplus (2 \otimes P) = 2P \oplus 2P = 4P$
+- Associative property
+  - $A \oplus B \oplus C = (A \oplus B) \oplus C = A \oplus (B \oplus C)$
 </textarea></section>
 
 </section>
@@ -826,18 +831,28 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Fermat's Little Theorem
-- In $Z_p$, if $p$ is prime, then $a^p-a$ is a multiple of $p$
+<ul>
+  <li>In $Z_p$, if $p$ is prime, then $a^p-a$ is a multiple of $p$
+
   - Rephrased: $a^p-a \mod p = 0$
   - Rephrased: $a^p \equiv a$ (mod $p$)
-- Example: let $a=2$ and $p=7$
+
+</li>
+<li class='fragment'>Example: let $a=2$ and $p=7$
+
   - $a^p-a=a^7-2=128-2=126$
   - $126=7\*18$, so 126 is divisible by 7
-- Rephrased:
+
+</li>
+<li class='fragment'>Rephrased:
+
   - $a^p \equiv a$ (mod $p$)
   - $2^7 \equiv 2$ (mod $7$)
   - Take the mod of both sides...
   - $128 \mod 7 \equiv 2 \mod 7$
   - $2 \equiv 2$
+
+</li></ul>
 
 
 ## Finite Field Mult Inverse
@@ -846,12 +861,19 @@ Any curve of the form $y^2=x^3+ax+b$
 
 <li>Fermat's Little Theorem: $a^p-a \mod p = 0$ 
 
-- Divide both sides by $a$: 
+<li class='fragment'>Divide both sides by $a$:
+
   - $a^{p-1}-1 \mod p = 0$
-- Add 1 to both sides: 
+
+</li>
+<li class='fragment'>Add 1 to both sides: 
+
   - $a^{p-1} \mod p = 1$
   - Example: $2^6 = 64 \mod 7 = 1$
-- Divide both sides by $a$ again: 
+
+</li>
+<li class='fragment'>Divide both sides by $a$ again: 
+
   - $a^{p-2} \mod p = 1/a$
 
 </li>
@@ -888,7 +910,7 @@ Any curve of the form $y^2=x^3+ax+b$
 ## Discrete Elliptic Curves
 - We can perform the four arithmetic operations on a finite field
   - They are "easy" (read: polynomial time)
-- The $x$ value is always an integer between 0 and $p$
+- The $x$ value is always an integer $0 \le x < p$
 - For the algorithm we will study, $p=2^{256}-2^{32}-977$
   - (more on this value later)
 - But we can't take the square root to determine $y$ from $y^2=x^3+7$
@@ -897,7 +919,10 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Elliptical Point Addition
-- Adding two (different) points is the same as before:
+
+<ul>
+<li>Adding two (different) points is the same as before:
+
   - $y=mx+b$ and $m=(y_2-y_1)/(x_2-x_1)$
     - All these operations are done *within the field*
   - Plug it into the equation for the curve: $y=x^3+ax+b$
@@ -905,9 +930,14 @@ Any curve of the form $y^2=x^3+ax+b$
   - $(mx+b)^2 = x^3+ax+b$, then [solve for the three values](https://www.calculatorsoup.com/calculators/algebra/cubicequation.php?) of $x$
     - We know $x_1$ and $x_2$, so we need $x_3$
   - To determine $y_3$, use the formula for the line: $y_3=m\*x_3+b$
-- Shortcut: let $m=(y_2-y_1)/(x_2-x_1)$
-  - $x_3=m^2-x_1-x_2$
-  - $y_3=m(x_1-x_3)-y_1$
+
+</li>
+<li class='fragment'>Shortcut: let $m=(y_2-y_1)/(x_2-x_1)$
+<ul>
+<li>$x_3=m^2-x_1-x_2$</li>
+<li>$y_3=m(x_1-x_3)-y_1$</li>
+</ul>
+</li></ul>
 
 
 ## Elliptical Point Addition
@@ -1197,6 +1227,22 @@ $
   - When computing $s^{-1}$
 - In any elliptic curve multiplication:
   - If computing $R = k \otimes G$, we can mod $k$ by $n$ to get the same result
+
+
+## Computing $k \otimes G$
+- Let $p=43$, $n=31$, $G=(25,25)$, and $k=21$
+- Compute $21 \otimes G$
+  - $21 = 10101_b = 2^4+2^2+2^0 = 16+4+1$
+  - $21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$
+- Compute the powers of $G$:
+  - $1 \otimes G = G = (25,25)$
+  - $2 \otimes G = (1 \otimes G) \oplus (1 \otimes G) = (25,25) \oplus (25,25) = (34,3)$
+  - $4 \otimes G = (2 \otimes G) \oplus (2 \otimes G) = (34,3) \oplus (34,3) = (35,21)$
+  - $8 \otimes G = (4 \otimes G) \oplus (4 \otimes G) = (35,21) \oplus (35,21) = (29,31)$
+  - $16 \otimes G = (8 \otimes G) \oplus (8 \otimes G) = (29,31) \oplus (29,31) = (37,36)$
+- $21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$
+  - $21 \otimes G = (37,36) \oplus (35,21) \oplus (25,25)$
+  - $21 \otimes G = (38,21) \oplus (25,25) = (32,40)$
 
 
 ## Useful sites
