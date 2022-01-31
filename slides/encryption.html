@@ -726,7 +726,22 @@ Any curve of the form $y^2=x^3+ax+b$
 </textarea>
 </section>
 
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-q-point-at-infinity.svg" alt="image secp256k1-q-point-at-infinity.svg" class="stretch">
+<aside data-markdown class="notes">
+- ...
+</aside>
+</textarea>
+</section>
+
     <section data-markdown data-separator="^\n$"><textarea data-template>
+## The Point at Infinity
+- Represented by the digit 0
+- Considered one of the points "on" the curve
+- Considered the identity element: $0 \oplus P = P$
+
+
 ## Elliptical Curve notes
 - Most operations were the standard arithmetic operations  on scalars
   - Given the $y=mx+b$ formula and an $x$ value, finding the corresponding $y$ is easy
@@ -919,9 +934,14 @@ Any curve of the form $y^2=x^3+ax+b$
 - Total steps: $\Theta(\log_2k)$ 
 
 
-## Don't reflect in the field
-- With EC point addition on the real numbers, you reflect the point across the $y$-axis at the end
-- But this is NOT done when dealing with discrete (integer) values in a field
+## Reflections in a field
+- A reflection in a field means using the other point for that $x$-value
+- Consider secp256k1 with the field $Z_{43}$ (i.e., $p=43$)
+- For $x=2$, there are two $y$ values: 12 and 31
+- $(12,31) \oplus (29,31) = (2,12)$
+  - Really it intersects at $(2,31)$, but reflects to $(2,12)$
+  - You can see this [here](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=12&py=31&qx=29&qy=31)
+- The formulas provided herein already handle this reflection
 
 
 ## Elliptical Curve notes

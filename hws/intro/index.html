@@ -262,12 +262,7 @@ signature <strong>and</strong> the availability of funds. Once verified,
 it should be added to the ledger as a transaction record. This is the
 only way that items are added to the ledger. The wallet file name
 (whichever wallet created the transaction) and the transaction statement
-being verified are the additional command line parameters.
-<ul>
-<li><strong>NOTE:</strong> this should ONLY print either ‘True’ or
-‘False’ (if it’s valid or not), and nothing else! Case matters
-here.</li>
-</ul></li>
+being verified are the additional command line parameters.</li>
 <li>Create, mine, and sign block (<code>mine</code>): this will form
 another block in the blockchain. The ledger will be emptied of
 transaction records, as they will all go into the current block being
@@ -285,7 +280,12 @@ through the entire block chain, validating each one. This means that
 starting with block 1 (the block <em>after</em> the genesis block),
 ensure that the hash listed in that file, which is the hash for the
 <em>previous</em> block file, is correct. There are no additional
-command-line parameters for this function.</li>
+command-line parameters for this function.
+<ul>
+<li><strong>NOTE:</strong> this should ONLY print either ‘True’ or
+‘False’ (if it’s valid or not), and nothing else! Case matters
+here.</li>
+</ul></li>
 </ol>
 <h2 id="shell-script">Shell script</h2>
 <p>Since different programming languages can be used, we are going to

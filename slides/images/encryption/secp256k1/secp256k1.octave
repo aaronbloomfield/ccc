@@ -258,6 +258,19 @@ text(2.8,5,["R'" ' = P \oplus Q'])
 text(3,4.6,['= 3 \otimes P'])
 saveas(1,"secp256k1-p-associative-3.svg")
 
+# showing how you can't add a point to itself
+plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xp,-yp,'r*')
+ylim([-6,6]); xlim([-3,4]); grid on
+line([xp,xp],[3*yp,-3*yp],'color',[0,0.5,0.5])
+title("secp256k1")
+text(-1.5,5.2,"secp256k1 eliptic curve: y^2= x^3+7")
+text(0.5,1.75,["Problem adding a point to it's reflection"])
+text(0.5,1,["P" ' \oplus ' "P' = 0"])
+text(0.5,0.25,['0 represents the point at infinity'])
+text(-0.95,2.9,"P")
+text(-0.95,-2.9,"P")
+saveas(1,"secp256k1-q-point-at-infinity.svg")
+
 # showing Q' + Q' = S' and also P + R' = S
 # y = m3 * x + b3 is the line containing P and R'
 plot(x,y,'-b',x,z,'-b',xp,yp,'r*',xqp,yqp,'r*',xrp,yrp,'r*',xsp,ysp,'r*',xsp,-ysp,'r*')

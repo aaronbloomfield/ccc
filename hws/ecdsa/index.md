@@ -59,7 +59,7 @@ There are three elliptic curve point operations that will be needed:
  Some references from the lecture slides:
 
  - The [elliptic curve section](../../slides/encryption.html#/elliptic) of the encryption slide set shows how these operations work visually (albeit in the real numbers)
- - The last few slides in the [finite field section](../../slides/encryption.html#/fields) discusses how to perform this arithmetic in a field.  *Remember not to reflect the point in the field!*
+ - The last few slides in the [finite field section](../../slides/encryption.html#/fields) discusses how to perform this arithmetic in a field.
 
 You can test your functions by using two websites: one that does [elliptic curve addition in a field](https://andrea.corbellini.name/ecc/interactive/modk-add.html) and one that does [elliptic curve multiplication in a field](https://andrea.corbellini.name/ecc/interactive/modk-mul.html).  The curve we are using is secp256k1, which sets $a=0$ and $b=7$.  For testing purposes, we recommend setting the prime modules $p$ to 43; this will give an curve order ($n$) value of 31.
 

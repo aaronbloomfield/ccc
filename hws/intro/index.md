@@ -282,8 +282,6 @@ The requirements are:
    (whichever wallet created the transaction) and the transaction
    statement being verified are the additional command line
    parameters.
-   - **NOTE:** this should ONLY print either 'True' or 'False' (if it's valid
-       or not), and nothing else!  Case matters here.
 9. Create, mine, and sign block (`mine`): this will form another block
    in the blockchain.  The ledger will be emptied of transaction
    records, as they will all go into the current block being computed.
@@ -302,6 +300,8 @@ The requirements are:
     the hash listed in that file, which is the hash for the *previous*
     block file, is correct.  There are no additional command-line
     parameters for this function.
+    - **NOTE:** this should ONLY print either 'True' or 'False' (if it's valid
+       or not), and nothing else!  Case matters here.
 
 
 ## Shell script
