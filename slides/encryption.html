@@ -978,10 +978,10 @@ Any curve of the form $y^2=x^3+ax+b$
   - $n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
   - $n = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
   - $n \approx 1.16 \* 10^{77}$, about the same as $p$
-- Almost all modulo operations in ECDSA are with $n$, not $p$
+- *SOME* modulo operations in ECDSA are with $n$, not $p$
 - How to determine the order?
   - Count all the points (*very* slow)
-  - [Schoof's algorithm](https://en.wikipedia.org/wiki/Schoof%27s_algorithm) which takes polynomial time
+  - [Schoof's algorithm](https://en.wikipedia.org/wiki/Schoof%27s_algorithm), which takes polynomial time
 
 
 ## secp256k1 curve: base point
@@ -1065,6 +1065,7 @@ $
     - Using a $b$-bit hash algorithm
   - $k$, a $b$-bit one time pad (secret!) such that $1 \le k \le n-1$
   - $k^{-1}$, the inverse mod-$n$ of $k$ (also secret)
+    - This is computed in $Z_n$, not $Z_p$!
 
 
 ## Signing an ECDSA message
@@ -1099,8 +1100,8 @@ $
 - Bob does NOT know $d$ (Alice's private key) nor $k$ (the one-time pad used)
 - Bob generates:
   - $h$, the hash of the message $m$
-  - $r^{-1}$, the inverse mod-$n$ of $r$
   - $s^{-1}$, the inverse mod-$n$ of $s$
+    - This is in $Z_n$, not $Z_p$
 
 
 ## Verifying an ECDSA message
@@ -1110,7 +1111,7 @@ $
     - But recall that $r$ is computed using $k$
 - Bob knows: $r$, $s$, $G$, and $Q$
   - Knowing $r$ (the $x$ value) implies knowing $R$ (the point)
-- Bob computed: $h$, $r^{-1}$, and $s^{-1}$
+- Bob computed: $h$ and $s^{-1}$
 - All further steps omit the 'mod $n$' part for clarity
 
 
@@ -1134,7 +1135,7 @@ $
   <li class="fragment" data-fragment-index="2">Bob knows:
 
   - $r$, the $x$ component of $R$, which was part of the signature
-  - $s$ (and can thus compute $s^{-1}$) from the signature
+  - $s$ (and computed $s^{-1}$) from the signature
   - $h$, the computed hash of the message $m$
   - $G$, the base point
   - $Q$, Alice's public key
@@ -1151,8 +1152,31 @@ $
   - $x \ast y \ast z \otimes P = (x \ast y \ast z) \otimes P$
 - Given:
   - $x \ast y \ast z \otimes P$ and $Q = z \otimes P$
-  - We can state: $x \ast y \ast z \otimes P = x  \ast  y \otimes Q$
-- HOWEVER, you should NOT take the mod of $x \ast y \ast z$ (nor $x \ast y$) before you perform the EC multiplication
+  - We can state: $x \ast y \ast z \otimes P = x \ast  y \otimes Q$
+
+
+## When to mod by $n$ versus $p$
+- $p$ is the prime modulus, $n$ is the order (# of points)
+- In general, we mod by $p$
+- Exceptions: when counting the *points*, mod by $n$
+  - Let $p=43$ and $n=31$
+  - Consider: $R=50 \otimes G$
+  - Because this is counting the number of *points*, we mod by $n$, not $p$
+  - So $50 \otimes G = 19 \otimes G$, but $50 \otimes G \ne 7 \otimes G$
+  - Verify this [here](https://andrea.corbellini.name/ecc/interactive/modk-mul.html)
+    - Set $a=0$, $b=7$, $p=43$, and let $P=(25,25)$
+    - The resultant point is the same for $n=50$ and $n=19$
+    - But not the same for $n=50$ and $n=7$
+
+
+## When to mod by $n$ versus $p$
+- In the signing algorithm, we mod by $n$ (instead of by $p$):
+  - When computing $s=k^{-1}(h+r*d) \mod n$
+  - When computing $k^{-1}$
+- In the verification algorithm, we mod by $n$ (instead of by $p$):
+  - When computing $s^{-1}$
+- In any elliptic curve multiplication:
+  - If computing $R = k \otimes G$, we can mod $k$ by $n$ to get the same result
 
 
 ## Useful sites
