@@ -1309,7 +1309,7 @@ $
   - Formal definition shortly, but basically, it produces pseudo-random numbers that appear truly random
 
 
-## Default method: LCG
+## Typical method: LCG
 - The [linear congruential generator (LCG)](https://en.wikipedia.org/wiki/Linear_congruential_generator)
 - $X_{n+1}=(a*X_n+c) \text{ mod } m$
   - $m$ is the modulus, and must be positive
@@ -1324,17 +1324,8 @@ $
 
 ## Typical method: example
 - Let $m=9$, $a=4$, $c=7$
-- We'll arbitrarily decide to start the sequence at 1
-  - Thus, $X_0=1$
-- Will this cycle through all values less than $m$?
-  - $m$ and $c$ are relatively prime: yes, as $\gcd(9,7)=1$
-  - $a-1$ is divisible by all prime factors of $m$: yes, the factors of 9 (3, 3) also divide 3 (which is $a-1$)
-  - $a-1$ is divisible by 4 if $m$ is divisible by 4: not applicable, as 3 (which is $a-1$) is not divisible by 4
-
-
-## Typical method: example
-- Let $m=9$, $a=4$, $c=7$
- - This will cycle through all the values, as shown on the last slide
+ - This will cycle through all the values
+   - Known via magic we won't see here
 - $X_{n+1}=(a*X_n+c) \text{ mod } m$
   - $X_0 = 1$
   - $X_1 = (4*1+7) \text{ mod } 9 = 2$
@@ -1367,7 +1358,9 @@ $
 - CSPRNG = Cryptographically Secure Pseudo-Random Number Generator
 - A CSPRNG needs:
   - A good source of entropy for the seed
-  - A good algorithm whose output appears to be unpredicable
+    - Should appear random
+  - Enough entropy to have an good initial seed
+  - A good algorithm whose output appears to be unpredictable
 
 
 ## Why libc is not cryptographically secure
@@ -1378,18 +1371,7 @@ $
   - A 256-bit ECDSA key takes less than 0.005 seconds to generate
     - 1/20th of the time!
     - To compute all 4.3 billion: 7 months
-- Much faster on a parallel computer...
-
-
-## Solution: more entropy
-- Essentially, have more bits in the seed
-- Typical cyrptocurrency solution: use 128 bits
-  - That's $2^{128}=3.4*10^{38}$ possible keys
-  - Computing that many ECDSA keys would take $4.6*10^{28}$ years
-- Some use 256 bits ($1.1 \ast 10^{77}$ ECDSA keys, $1.6 \ast 10^{67}$ years to generate all)
-- Problem: how to allow the owner to remember 128 (or 256) bits of entropy?
-  - That's a 16 byte (32 digit) hex number
-  - For 256-bit keys, that's a 32 byte (64 digit) hex number
+- Much faster on a parallel computer or a GPU...
 
 
 ## CSPRNG: Entropy sources
@@ -1401,6 +1383,35 @@ $
   - Physical devices designed for this exact purpose
 - Reads from /dev/urandom never block; /dev/random will block until enough entropy is present
   - /dev/urandom is much better...
+
+
+## Use more entropy
+- Essentially, have more bits in the seed
+- Typical cryptocurrency solution: use 128 bits
+  - That's $2^{128}=3.4*10^{38}$ possible keys
+  - Computing that many ECDSA keys would take $4.6*10^{28}$ years
+- Some use 256 bits ($1.1 \ast 10^{77}$ ECDSA keys, $1.6 \ast 10^{67}$ years to generate all)
+- Problem: how to allow the owner to remember 128 (or 256) bits of entropy?
+  - That's a 16 byte (32 digit) hex number
+  - For 256-bit keys, that's a 32 byte (64 digit) hex number
+
+
+## Remembering your seed
+- Imagine a list of $2048=2^{11}$ words
+  - Each word provides 11 bits of entropy
+- Generate a list of 12 of these words
+  - $11 \ast 12=132$; use the last 4 bits as a checksum
+- Or a list of 24 of them (264 bits => 256 bit seed)
+- List is defined in [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
+  - Different versions for different languages including the [English list](https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt)
+  - Implementations in various programming languages are provided as well
+
+
+## Seed phrases
+- Most cryptocurrency wallets use these
+- It only works if the algorithm to compute the keys for the given cryptocurrency is repeatable with the same seed!
+- Then this phrase can be used to re-generate your keys
+- And you can store it in a device like [this](https://www.amazon.com/dp/B07RZW8CWY)
 
 
 ## Cloudflare uses a wall of lava lamps ([source](https://it.slashdot.org/story/17/11/07/1927239/how-cloudflare-uses-lava-lamps-to-encrypt-the-internet))
@@ -1832,6 +1843,42 @@ scale=0
 (prie*pube) % ((p-1)*(q-1))
 
 -->
+
+
+## Openssl to generate and view an ECDSA Key
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ openssl ecparam -out ec_key.pem -name secp256k1 -genkey
+$ cat ec_key.pem 
+-----BEGIN EC PARAMETERS-----
+BgUrgQQACg==
+-----END EC PARAMETERS-----
+-----BEGIN EC PRIVATE KEY-----
+MHQCAQEEIGcgMEVvdpER8E/FsnK2CsUWJWy9X39WLHdDtvFHCx8zoAcGBSuBBAAK
+oUQDQgAE3jzNUf91RHMzRiob3KZLZI3BFcxZMg7UeHrM6ifVAjTNcBi9iqwYlCy8
+LYKcHMYYna0smEOaQL6o0oPDV2hh9w==
+-----END EC PRIVATE KEY-----
+$
+</code></pre>
+
+
+## Openssl to view an ECDSA key
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ cat ec_key.pem
+read EC key
+Private-Key: (256 bit)
+priv:
+    67:20:30:45:6f:76:91:11:f0:4f:c5:b2:72:b6:0a:
+    c5:16:25:6c:bd:5f:7f:56:2c:77:43:b6:f1:47:0b:
+    1f:33
+pub:
+    04:de:3c:cd:51:ff:75:44:73:33:46:2a:1b:dc:a6:
+    4b:64:8d:c1:15:cc:59:32:0e:d4:78:7a:cc:ea:27:
+    d5:02:34:cd:70:18:bd:8a:ac:18:94:2c:bc:2d:82:
+    9c:1c:c6:18:9d:ad:2c:98:43:9a:40:be:a8:d2:83:
+    c3:57:68:61:f7
+ASN1 OID: secp256k1
+$
+</code></pre>
+- Private key (scalar) $d \approx 6.72 \ast 10^{63}$
+- Public key (point) $Q \approx (1.01 \ast 10^{63}, 9.29 \ast 10^{63})$
 
 
 ## C code to generate a RSA key
