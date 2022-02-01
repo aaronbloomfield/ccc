@@ -1,0 +1,100 @@
+digraph A {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [style=invis];
+    1000 [label="block 1000",width=0.8];
+    null -> 1000;
+}
+
+digraph B {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nspend UTXO",width=0.8];
+    null -> 1000;
+    1000 -> 1001;
+}
+digraph C {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+    null [style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nspend UTXO",width=0.8];
+    1002 [label="block 1002\n(conf 1)",width=0.8];
+    1003 [label="block 1003\n(conf 2)",width=0.8];
+    1004 [label="block 1004\n(conf 3)",width=0.8];
+    null -> 1000;
+    1000 -> 1001;
+    1001 -> 1002;
+    1002 -> 1003;
+    1003 -> 1004;
+}
+
+digraph D {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+    null [style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nspend UTXO",width=0.8];
+    1002 [label="block 1002\n(conf 1)",width=0.8];
+    1003 [label="block 1003\n(conf 2)",width=0.8];
+    1004 [label="block 1004\n(conf 3)",width=0.8];
+    bad [label="block 1001'\nspend UTXO\nelsewhere",width=0.8,color=red];
+    null -> 1000;
+    1000 -> 1001;
+    1001 -> 1002;
+    1002 -> 1003;
+    1003 -> 1004;
+    1000 -> bad;
+}
+
+digraph E {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+    null [style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nspend UTXO",width=0.8];
+    1002 [label="block 1002\n(conf 1)",width=0.8];
+    1003 [label="block 1003\n(conf 2)",width=0.8];
+    1004 [label="block 1004\n(conf 3)",width=0.8];
+    a1002 [label="block 1002\nfrom 1001'\n(conf 1)",width=0.8];
+    a1003 [label="block 1003\nfrom 1001'\n(conf 2)",width=0.8];
+    a1004 [label="block 1004\nfrom 1001'\n(conf 3)",width=0.8];
+    a1005 [label="block 1005\nfrom 1001'\n(conf 4)",width=0.8];
+    bad [label="block 1001'\nspend UTXO\nelsewhere",width=0.8,color=red];
+    null -> 1000;
+    1000 -> 1001;
+    1001 -> 1002;
+    1002 -> 1003;
+    1003 -> 1004;
+    1000 -> bad;
+    bad -> a1002;
+    a1002 -> a1003;
+    a1003 -> a1004
+    a1004 -> a1005;
+}
+
+digraph F {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+    null [style=invis];
+    1000 [label="block 1000",width=0.8];
+    a1001 [label="block 1001\nversion 1",width=0.8];
+    b1001 [label="block 1001\nversion 2",width=0.8];
+    a1002 [label="block 1002\nversion 1",width=0.8];
+    b1002 [label="block 1002\nversion 2",width=0.8];
+    null -> 1000;
+    1000 -> a1001;
+    1000 -> b1001;
+    a1001 -> a1002;
+    b1001 -> b1002;
+}

@@ -1,0 +1,25 @@
+graph A {
+	node [shape=record,fontname="Helvetica",width=2];
+	rankdir=LR
+	stack [label="<f0>3|<f1>(pubKey3)|<f2>(pubKey2)|<f3>(pubKey1)|<f4>2|<f5>(sig2)|<f6>(sig1)|<f7>0"];
+}
+graph B {
+	node [shape=record,fontname="Helvetica",width=1];
+	rankdir=LR
+	stack [label="<f0>n -\>|<f1>ikey -\>|<f2>|<f3>|<f4>m -\>|<f5>isig -\>|<f6>|<f7>"];
+}
+graph C {
+	node [shape=record,fontname="Helvetica",width=1];
+	rankdir=LR
+	stack [label="<f0>n -\>|<f1>|<f2>ikey -\>|<f3>|<f4>m -\>|<f5>isig -\>|<f6>|<f7>"];
+}
+graph D {
+	node [shape=record,fontname="Helvetica",width=1];
+	rankdir=LR
+	stack [label="<f0>n -\>|<f1>|<f2>ikey -\>|<f3>|<f4>m -\>|<f5>|<f6>isig -\>|<f7>"];
+}
+graph D {
+	node [shape=record,fontname="Helvetica",width=1];
+	rankdir=LR
+	stack [label="<f0>n -\>|<f1>|<f2>|<f3>ikey -\>|<f4>m -\>|<f5>|<f6>isig -\>|<f7>"];
+}

@@ -1,0 +1,1288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+  </head>
+
+  <body>
+		<div class="reveal">
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Bitcoin
+	</textarea></section>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Merkle Trees](#/merkle)  
+[Data Types Used](#/datatypes)  
+[Blockchain description](#/blockchain)  
+[Bitcoin Concepts and Terminology](#/concepts)  
+[Bitcoin Script](#/script)  
+[Cross-Chain Transactions](#/xchain)  
+[Attacks](#/attacks)  
+</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="difficulty" data-markdown class="center"><textarea>
+# Merkle Trees
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Merkle Trees (aka Hash Trees)
+- A tree, often binary, where each *leaf* node stores the data and a *hash* of that data
+- Each *internal node* stores the hash of the concatenation of the hashes of its children
+  - Can be other operations other than concatenation
+- Purpose: to prevent changing one leaf node without changing all the hashes above it
+
+<aside data-markdown class="notes">
+- It can actually be many operations other than concatenation, but we'll only discuss concatenation
+- Typically presented as an *almost-perfect binary tree*, although that's not strictly required
+- Named after Ralph Merkle, who invented them
+</aside>
+
+
+
+## Merkle Trees (aka Hash Trees)
+<a href='https://en.wikipedia.org/wiki/Merkle_tree'><img src='images/bitcoin/Hash_Tree.svg' alt='Merkle Tree' style='background:white;border-radius:30px'></a>
+
+
+
+## Merkle Trees Uses
+- File transfer, including peer-to-peer
+  - ensure no errors in the transferred file parts
+- File systems
+  - to detect & counter data degradation
+- Git and Mercurial VCS 
+  - the commit hex is a hashed, and kept in an almost-Merkle tree
+- And, not surprisingly, Bitcoin's blockchain
+
+
+
+## Merkle Tree use in practice
+
+<img src='images/bitcoin/Hash_Tree.svg' style="width:300px;float:right;background:white;border-radius:10px">
+<ul class=".reveal" style="width:unset;margin-top:20px">
+<li>No need to actually build the tree</li>
+<li>Pair up leafs to get 2nd level hashes
+  <ul><li>If odd #, then use the leaf hash<br>on the level above</li></ul></li></ul>
+
+&nbsp;
+- Pair up 2nd level hashes for 3rd level hashes
+  - Again, if there is an odd number, then propogate the 2nd level hash directly to the 3rd level
+- Keep repeating until you have the root hash
+
+
+
+<h2>Merkle Tree use in practice</h2>
+<p>Consider an array of 10 leaf elements of a Merkle tree</p>
+<img src='images/bitcoin/merkle/merkle.dot.5.png' class='fragment' data-fragment-index='5'>
+<img src='images/bitcoin/merkle/merkle.dot.4.png' class='fragment' data-fragment-index='4'>
+<img src='images/bitcoin/merkle/merkle.dot.3.png' class='fragment' data-fragment-index='3'>
+<img src='images/bitcoin/merkle/merkle.dot.2.png' class='fragment' data-fragment-index='2'>
+<img src='images/bitcoin/merkle/merkle.dot.1.png'>
+<p class='fragment' data-fragment-index='6'>Requires $n-1$ or $\Theta(n)$ hashes</p>
+
+
+
+## Hash Algorithms Used
+- You can use any [cryptographic hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
+- Bitcoin uses *double* SHA-256:
+  - Take the SHA-256 of the (binary output) of the SHA-256 of the data block
+- All this hashing causes a significant performance hit
+
+
+
+## Problems with Merkle Trees
+- Bitcoin uses the hash functions "to an excessive degree" ([wikipedia](https://en.wikipedia.org/wiki/Merkle_tree))
+- The Merkle Tree construction is thus rather slow
+- Also their use in Bitcoin had a vulnerability: [CVE-2012-2459](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2459)
+  - Problem was with duplicating transactions
+  - Easy solution: ensure that the bitcoin software does not record these duplicate hashes
+  - Harder solution: redesign the Merkle Trees to disallow this
+- Thus, [BIP0098](https://github.com/bitcoin/bips/blob/master/bip-0098.mediawiki) was proposed to use *Fast Merkle Trees*
+
+<aside data-markdown class="notes">
+- If you duplicate transactions in the Merkle tree, then you have duplicate hashes, as you have the same input
+- This is invalid, but if recorded, will prevent recording of data with the same hash
+</aside>
+
+
+
+## Fast Merkle Trees
+- The only difference is that *internal nodes* have their hash computed slightly differently
+  - Concatenate the two (32-byte) hashes of the children
+  - Add a pre-defined *initialization vector* (IV)
+  - Take only *one* SHA-256 hash of that concatenated value
+
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="datatypes" data-markdown class="center"><textarea>
+# Data Types Used
+	  </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Endian-ness
+- Everything in Bitcoin's blockchain is little-Endian
+- The hash for block 1 is:
+    - Little-Endian: 0x6fe28c0ab6f1b372c1a6a246ae63f74f931e836 5e15a089c68d6190000000000
+	- Big-Endian:    0x000000000019d6689c085ae165831e934ff763a e46a2a6c172b3f1b60a8ce26f
+- When presenting hashes:
+    - Either it won't matter the format, or...
+	- We'll carefully specify, or...
+	- You can tell based on which end all the 0x00 bytes are
+
+
+
+## compactSize unsigned integer
+- An unsigned int that can be up to $2^{64}-1$ in size
+- Varies in size from 1-9 bytes
+- Algorithm to decode: read first byte as $b$:
+  - If $0x00 \le b \lt 0xfd$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$0 \le b \lt 253$
+    -  Use that value as-is (range: 0->252)
+  - If $b=0xfd=253$
+    - Read the next two bytes as a (little-Endian) 2-byte unsigned int (a typical `unsigned short`)
+  - If $b=0xfe=254$
+    - Read the next four bytes as a (little-Endian) 4-byte unsigned int (a typical `unsigned int`)
+  - If $b=0xff=255$
+    - Read the next eight bytes as a (little-Endian) 8-byte unsigned int (a typical `unsigned long`)
+
+
+
+## Unix time
+- The number of seconds since January 1st, 1970 UTC
+- Example:
+  - 1,641,013,200 is midnight (0:00:00) on January 1st, 2022 EST
+  - 1,640,995,200 is midnight (0:00:00) on January 1st, 2022 GMT
+  - A difference of 18,000 seconds = 5 hours, as GMT+5 = EST
+- All programming languages have conversion routines
+  - Use those!!!
+- In general, if no timezone was set, it will default to GMT
+
+
+
+## Unix time conversion
+- In Python:
+  ```
+import datetime
+print(datetime.datetime.utcfromtimestamp(1640995200).\
+        strftime('%Y-%m-%d %H:%M:%S'))
+```
+- In Java:
+  ```
+import java.util.Date;
+...
+Date d = new Date(1640995200);
+System.out.println(d);
+```
+- In C/C++:
+  ```
+#include <time.h>
+...
+  time_t t = 1640995200;
+  cout << asctime(gmtime(&t)); // or use printf() in C
+```
+  </textarea></section>
+
+</section>
+  
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="concepts" data-markdown class="center"><textarea>
+# Bitcoin Concepts and Terminology
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Wallets
+- A wallet is one (or more) ECDSA public/private key pairs
+  - Each transaction can have a separate key pair
+- The public key of the key pair is hashed to get the BTC address
+  - This a wallet can have *multiple* BTC addresses
+  - This address is called the *invoice address*
+
+
+
+## Funding
+- Bitcoins are only created by mining
+- Initially 50 BTC per mine
+  - A block is mined every 10 minutes (ideally)
+- Reward halves every 210,000 blocks mined
+  - Current reward: 6.25 BTC
+  - Current circulation: about 19M BTC (90% of final amount)
+- Next halving is expected on March 16, 2024
+- Last halving is in 2140
+  - 128 total halvings by then
+  - Mining reward is thus $\frac{50}{2^{32}}$ = 0.000000011641532 BTC
+- Total (and final!) BTC in circulation will be 21M
+
+
+
+## Transaction
+- Any transaction has one or more inputs...
+  - Where the BTC comes from
+- ... and one or more outputs
+  - Where the money goes
+- Every transaction always spends ALL of the money of the inputs
+  - Any difference is the transaction fee
+  - TXN fee = sum(inputs) - sum(outputs)
+- Only want to spend some of the input(s)?
+  - Send the rest back to yourself as a separate output
+  - This means generate a *new* key pair in your wallet to send the money to
+
+
+
+## UTXO
+- UTXO = Unspent Transaction Output
+- Every transaction specifies which UTXO(s) provides the source of the BTC
+  - Again, all the BTC must be spent else it's a fee
+  - But some of that can go back to the same key pair
+  - But, for security, it usually goes to a separate (and newly created) key pair in the wallet
+- Key pairs (and thus wallets) are funded by one or more UTXOs
+- A UTXO can have the funds separated into different index values
+
+
+
+## Base 64 encoding
+- Given binary data, split it into 6 bit chunks
+- Each 6-bit chunk maps to a given printable letter
+  - 0 -> A ... 25 -> Z
+  - 26 -> a ... 51 -> z
+  - 52 -> 0 ... 61 -> 9
+  - 62 -> +
+  - 63 -> /
+  - = is a pad character if the total number of bits is not evenly divisible by 6
+
+
+
+## Base 64 encoding example
+<pre style="margin:0;width:103%"><code style="font-size:smaller">$ cat lorem-ipsum.txt 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+$ base64 lorem-ipsum.txt 
+TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdCwg
+c2VkIGRvIGVpdXNtb2QgdGVtcG9yCmluY2lkaWR1bnQgdXQgbGFib3JlIGV0IGRvbG9yZSBtYWdu
+YSBhbGlxdWEuIFV0IGVuaW0gYWQgbWluaW0gdmVuaWFtLCBxdWlzCm5vc3RydWQgZXhlcmNpdGF0
+aW9uIHVsbGFtY28gbGFib3JpcyBuaXNpIHV0IGFsaXF1aXAgZXggZWEgY29tbW9kbyBjb25zZXF1
+YXQuCg==
+$ 
+</code></pre>
+
+- Note that this text did not produce a `+` or `/` in the base 64 encoding...
+
+
+
+## Base 58 encoding
+- Convert to a base-58 number, and map each base-58 digit to one of 58 characters
+- Why?  The stated reasons:
+  - Avoid using 0/O and I/l, which look similar in some fonts
+    - That's zero / capital-Oscar and capital-India / lower-Lima
+  - Avoid non-alphanumeric characters, which will cause line-breaks
+  - Double-clicking will select the entire string (not the case with + or /)
+- Base 58 digit conversion:
+  - 0 -> 1 ... 8 -> 9 (skips 0 (zero))
+  - 9 -> A ... 32 -> Z (skips I (India) and O (Oscar))
+  - 33 -> a ... 57 -> z (skips l (Lima))
+- [Reference](https://en.bitcoin.it/wiki/Base58Check_encoding)
+
+
+
+## RIPEMD-160 hash
+- A 160 bit hash that is different in how it works from SHA-256
+
+```
+$ openssl rmd160 lorem-ipsum.txt 
+RIPEMD160(lorem-ipsum.txt)= 
+        495822918fc2fd2cceb626b637da4cca984b39c4
+$
+```
+
+
+
+## Bitcoin Addresses
+- aka "invoice address" or "invoice"
+- Algorithm to compute:
+  1. Given an ECDSA public/private key pair...
+  2. Perform SHA-256 on the public key
+  3. Perform RIPEMD-160 on that SHA-256 result
+  4. Prefix that with the version number (0x00 for the main network)
+  5. Generate the checksum: Perform SHA-256 twice on the RIPEMD-160 result, and take the first 4 bytes
+  6. The key is the version (0x00), the RIPEMD-160 result, and the checksum concatenated together
+  7. Convert to a byte string using base58 encoding
+
+
+
+## Bitcoin Address Example
+Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_version_1_Bitcoin_addresses)
+
+<pre style="margin:0;width:100%"><code style="font-size:smaller"
+>- Given an ECDSA private key:
+  18e14a7b6a307f426a94f8114701e7c8e774e7f9a47e2c2035db29a206321725
+- And an ECDSA public key (0x02 is y-coord, rest is x-coord)
+  0250863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b2352
+- SHA-256 on the public key:
+  0b7c28c9b7290c98d7438e70b3d3f7c848fbd7d1dc194ff83f4f7cc9b1378e98
+- RIPEMD-160 on that: f54a5851e9372b87810a8e60cdd2e7cfd80b6e31
+- Prefix that with 0x00 for the main network:
+  00f54a5851e9372b87810a8e60cdd2e7cfd80b6e31
+- Generate the checksum:
+  - Perform SHA-256 twice on RIPEMD-160 result: 
+    c7f18fe8fcbed6396741e58ad259b5cb16b7fd7f041904147ba1dcffabf747fd
+  - Take the 4 byte prefix: c7f18fe8
+- Concatenate together (spaces for clarity only): 
+  00 f54a5851e9372b87810a8e60cdd2e7cfd80b6e31 c7f18fe8
+- Convert that (binary) hex value to base 58: 
+  1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
+</code></pre>
+  </textarea></section>
+
+</section>
+	
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="blockchain" data-markdown class="center"><textarea>
+# Blockchain Description
+	  </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Blockchain description
+- Primary reference: the [Bitcoin developer wiki](https://developer.bitcoin.org/reference/block_chain.html)
+- Each block has the following sections and parts:
+  - Preamble
+  - Header
+  - Transaction count: *txn_count* (at least 1)
+  - *txn_count* transaction(s)
+    - Among other values, each transaction contains:
+	  - A non-zero number of transaction inputs
+	    - The first transaction in a block contains the coinbase input instead of this
+	  - A non-zero number of transaction outputs
+	    - This will have some number of outpoint sub-sections
+    </textarea></section>
+
+
+  <section>
+
+<table class="transparent">
+  <tr>
+    <td>
+
+<table class="transparent">
+  <tr><td colspan='2'><h2>Overview</h2></td></tr>
+  <tr>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.1.svg" style="border-radius:10px">
+    </td>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.2.svg" class='fragment' data-fragment-index='2' style="border-radius:10px">
+    </td>
+  </tr>
+</table>
+
+</td>
+<td>
+
+<table class='transparent'>
+  <tr>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.3.svg" class='fragment' data-fragment-index='3' style="border-radius:10px">
+      <img src="images/bitcoin/blocks/blocks.dot.4.svg" class='fragment' data-fragment-index='4' style="border-radius:10px">
+    </td>
+  </tr>
+</table>
+
+</td></tr></table>
+
+  </section>
+
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Section: Preamble
+- Size: 8 bytes; how many: 1
+  - Four bytes are the *magic number*
+    - Meant to be able to easily identify the start of a block
+	- Value: 0xd9b4bef9 (0xf9beb4d9 in little-Endian)
+  - Four bytes are the block size
+    - In little-Endian
+- Technically, this is not part of the block itself, but it is before each block in the files that hold all the blocks
+
+
+
+## Section: Header
+Size: 80 bytes; how many: 1
+
+| Bytes | Name | Type | Notes |
+|-|-|-|-|
+| 4 | version | int32_t | The block version number |
+| 32 | prev_header_hash | char[32] | The SHA256(SHA256()) of the previous block's header |
+| 32 | merkle_root_hash | char[32] | The SHA256(SHA256()) of the Merkle Tree root |
+| 4 | time | uint32_t | The Unix time of the block |
+| 4 | nBits | uint32_t | The encoded hash target |
+| 4 | nonce | uint32_t | The nonce |
+
+
+
+## Transaction Count
+- A compactSize unsigned int (1-9 bytes)
+- There must be at least one transaction
+  - The so-called 'coinbase' transaction -- who gets the mining reward
+
+
+
+## Section: Transaction
+Size: varies; how many: txn_count
+
+| Bytes | Name | Type | Notes |
+|-|-|-|-|
+| 4 | version | int32_t | The transaction version number |
+| varies | tx_in_count | csuint | The number of inputs for this transaction |
+| varies | tx_in | (subsection) | The transaction input(s)
+| varies | tx_out_count | csuint | The number of outputs for this transaction |
+| varies | tx_out | (subsection) | The transaction output(s)
+| 4 | lock_time | uint32_t | When UTXO can be spent |
+
+
+
+## Section: Transaction input
+Size: varies; how many: txn_in_count
+
+| Bytes | Name | Type | Notes |
+|-|-|-|-|
+| 32 | hash | char[32] | The TXID of the transaction holding the output to spend |
+| 4 | index | uint32_t | The output index |
+| varies | in_script_bytes | csuint | how many bytes in the script |
+| varies | signature_script | char[] | The script containing the public key |
+| 4 | sequence | uint32_t | Sequence number, usually 0xffffffff |
+
+
+
+## Section: Coinbase input
+Size: varies; how many: 1
+
+| Bytes | Name | Type | Notes |
+|-|-|-|-|
+| 32 | hash(null) | char[32] | 32 null (0x00) bytes |
+| 4 | index | unit32_t | 0xffffffff, since there is no previous outpoint |
+| varies | in_script_bytes | csuint | how many bytes in the script |
+| varies | signature_script | char[] | The script containing the public key |
+| 4 | sequence | uint32_t | Sequence number |
+
+Note that a height field was added in [BIP34](https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki)
+
+
+
+## Section: Transaction output
+Size: varies; how many: txn_out_count
+
+| Bytes | Name | Type | Notes |
+|-|-|-|-|
+| 8 | value | int64_t | How many satoshi's to spend |
+| varies | out_script_bytes | csuint | How many bytes in the script
+| varies | out_script | char[] | The output script |
+
+
+</textarea></section>
+
+</section>
+	
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="script" data-markdown class="center"><textarea>
+# Bitcoin Script
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Overview
+- A Bitcoin transaction contains scripts of various opcodes and values
+  - Uses a stack
+  - Only 1 byte for the opcode, so a max of 256 instructions
+  - This is like [IBCM](https://uva-cs.github.io/pdr/slides/07-ibcm.html#/)!
+- Reference: the [Script page](https://en.bitcoin.it/wiki/Script) of the Bitcoin developer wiki
+
+
+
+## BTC Stack
+- It's like the stack we all know and love, with some differences:
+  - It has *many* more operations
+    - Pop 2, pop second, swap top two, etc.
+  - Each value therein can be a different size
+  - It keeps track of the *type* of each value as well
+
+
+
+## Bitcoin Output Script
+- Each TXN has a *output script*
+  - Specifies the commands that are executed to verify who can spend these coins
+  - The most common states that any transaction that provides a public key that matches the given signature
+  - Typically involves public key *signatures*, not the public keys themselves
+- This is commonly called the *pubkey script*
+  - Because it often (but not always!) states the (hash of the) public key required to spend the TXN
+
+
+
+## Bitcoin Input Script
+- If a TXN's output script says one must provide a public key...
+- ... then we provide it in the *input script*
+- One can provide more than just the keys, though
+- This is commonly called the *sigscript*
+  - Because it provides the key whose signature matches the output script
+
+
+
+## How a Bitcoin TXN is verified
+- To spend a UTXO:
+  - Take the input script (aka sigscript) from the TXN that is trying to spend the UTXO
+  - Take the output script that created the UTXO
+  - Concatenate these together (input script before output script), and execute
+  - If the result of these is true, then the coins can be spent (transferred)
+    - Formally, if the top value on the stack is true
+
+
+
+## Bitcoin TXN verification
+- A Bitcoin transaction is valid ONLY if ALL of the following are true:
+  - The result of executing the concatenated script yields true (1) as the top value of the stack; AND
+  - No opcode that marks the transaction as invalid was executed (such as OP_RETURN); AND
+  - There was no abort() called by any of the script opcodes; AND
+  - There were no invalid (disabled) opcodes attempted to be executed
+- If any one of these are false, the TXN is invalid, and the node will not process it (or add it to a block)
+
+
+
+## Output scripts
+- A typical output script will state:
+  - The redeemer must provide a public key that matches the hash in the output script
+    - Recall that a BTC address is a hashed public key
+  - The redeemer must sign the entire UTXO transaction with that public key
+  - Called the 'pubkey script' because it (typically) requests a public key
+- A typical input script will provide:
+  - The public key that matches the hash in the output script
+  - A signature of the entire transaction
+  - Called the 'sigscript' because it provides the signature of the TXN
+
+
+
+## Input scripts
+- An input script provides the data the output script needs to be valid
+  - Typically that is just two data items:
+- The signature of the *entire* UTXO transaction
+  - Meaning the transaction that created the BTC that is trying to be spent
+  - Created by the private key of the Bitcoin key pair
+  - This is the sender verifying that this transaction really came from the key pair's private key
+- The public key of the sending Bitcoin key pair
+  - The hash of this key is in the UTXO's output script
+  - This will shortly be verified to match with the private key that signed the signature
+
+
+
+## Selected Bitcoin Opcodes
+
+| Hex value(s) | Name | Description |
+|--|--|--|
+| 0 | OP_0 | Push 0 (false) onto the stack |
+| 81-96 | OP_1&nbsp;&rarr;&nbsp;OP_16 | Push that number onto the stack |
+| 1-75 | (push) | Push that many (following) bytes onto the stack |
+| 118&nbsp;=&nbsp;0x76 | OP_DUP | s.push(s.top()) |
+| 169&nbsp;=&nbsp;0xa9 | OP_HASH160 | s.push(RIPEMD160(SHA256(s.pop()))) |
+| 136&nbsp;=&nbsp;0x88 | OP_EQUAL- VERIFY | OP_EQUAL: s.push(s.top()==s.top()); OP_VERIFY: abort if s.top() is false |
+| 172&nbsp;=&nbsp;0xac | OP_CHECKSIG | Check the sig of the *previous* TXN |
+
+
+
+## OP_CHECKSIG
+- It's a signature of the *previous* UTXO transaction, not the current one
+- Pops two values off the stack: first the public key $k_{pub}$ and then the signature $s$
+  - The signature $s$ was by the redeemer: the hash $h'$ of the *previous* UTXO transaction encrypted with the private key $k_{pri}$
+- Hashes the *previous* UTXO transaction to get $h$
+- Decrypts $s$ with $k_{pub}$ to get $h'$
+- Verifies $h == h'$, and pushes result (true (1) or false (0)) onto stack
+- OP_CHECKSIGVERIFY will run OP_VERIFY after
+  - OP_VERIFY: abort if stack top is not true
+
+
+
+## P2PKH example script
+
+This is a standard pay-to-pubkey-hash (P2PKH) script:
+
+```
+  76         A9             14
+OP_DUP   OP_HASH160    Bytes to push
+
+89 AB CD EF AB BA AB BA AB BA AB BA AB BA AB BA AB BA AB BA
+                      Data to push
+
+      88             AC
+OP_EQUALVERIFY    OP_CHECKSIG
+```
+
+Full hex-only script:
+
+```
+76A91489ABCDEFABBAABBAABBAABBAABBAABBAABBAABBA88AC
+```
+
+
+
+## P2PKH example script
+
+This is a standard pay-to-pubkey-hash script:
+
+```
+  76         A9             14
+OP_DUP   OP_HASH160    Bytes to push
+
+89 AB CD EF AB BA AB BA AB BA AB BA AB BA AB BA AB BA AB BA
+                      Data to push
+
+      88             AC
+OP_EQUALVERIFY    OP_CHECKSIG
+```
+
+Another way to render the script:
+
+```
+scriptPubKey: OP_DUP OP_HASH160 <pubKeyHash> 
+              OP_EQUALVERIFY OP_CHECKSIG
+scriptSig: <sig> <pubKey>
+```
+
+
+
+## P2PKH Execution
+- To redeem, the redeemer provides two things:
+  - `<sig>`: a signature of the *entire* transaction
+  - `<pubKey>`: the public key whose hash matches what's in the UTXO's output script
+- Input script concatenated with the output script:
+  - (the horizontal line shows the separator between the two scripts)
+
+```
+<sig>
+<pubKey>
+--------
+OP_DUP
+OP_HASH160
+<pubKeyHash> 
+OP_EQUALVERIFY
+OP_CHECKSIG
+```
+  </textarea></section>
+
+
+
+    <section>
+      <h2>Execution of the P2PKH Script</h2>
+      <p>&nbsp;</p>
+    <table class="transparent">
+      <tr>
+  <td>
+    <!-- stack table -->
+    <table class="transparent">
+      <tr><td><span style="font-size:xx-large">Stack</span></td></tr>
+      <tr>
+        <td style="vertical-align:top">
+          <div style="position:relative;left:0;top:0">
+            <img class="fragment fade-out" data-fragment-index="2" data-fragment-index="2" src="images/bitcoin/p2pkh/p2pkh.dot.1.svg" style="padding-top:20px;margin-left:0">
+            <span class="fragment fade-out" data-fragment-index="4"><img alt="stack animation" class="fragment" data-fragment-index="2" src="images/bitcoin/p2pkh/p2pkh.dot.2.svg" style="position:absolute;left:0;top:0"></span>
+            <span class="fragment fade-out" data-fragment-index="6"><img alt="stack animation" class="fragment" data-fragment-index="4" src="images/bitcoin/p2pkh/p2pkh.dot.3.svg" style="position:absolute;left:0;top:0"></span>
+            <span class="fragment fade-out" data-fragment-index="8"><img alt="stack animation" class="fragment" data-fragment-index="6" src="images/bitcoin/p2pkh/p2pkh.dot.4.svg" style="position:absolute;left:0;top:0"></span>
+            <span class="fragment fade-out" data-fragment-index="10"><img alt="stack animation" class="fragment" data-fragment-index="8" src="images/bitcoin/p2pkh/p2pkh.dot.5.svg" style="position:absolute;left:0;top:0"></span>
+            <span class="fragment fade-out" data-fragment-index="12"><img alt="stack animation" class="fragment" data-fragment-index="10" src="images/bitcoin/p2pkh/p2pkh.dot.6.svg" style="position:absolute;left:0;top:0"></span>
+            <span class="fragment fade-out" data-fragment-index="14"><img alt="stack animation" class="fragment" data-fragment-index="12" src="images/bitcoin/p2pkh/p2pkh.dot.3.svg" style="position:absolute;left:0;top:0"></span>
+            <img alt="stack animation" class="fragment" data-fragment-index="14" src="images/bitcoin/p2pkh/p2pkh.dot.7.svg" style="position:absolute;left:0;top:0">
+          </div>
+        </td>
+      </tr>
+    </table>
+  </td>
+  <td>
+    <small>
+    <table class="transparent">
+      <tr><td><span style="font-size:xx-large">Script</span></td></tr>
+      <tr><td><span style="font-size:xx-large">&nbsp;</span></td></tr>
+      <tr><td style="vertical-align:top">
+        <table class="transparent" style="padding:0;spacing:0;border-spacing:0;border-collapse:collapse">
+          <tr>
+            <td><pre style="margin-top:0px;margin-bottom:0px"><code>&lt;sig&gt;</code></pre></td>
+            <td style='font-size:x-large'><span class="fragment" data-fragment-index="1"><span class="fragment fade-out" data-fragment-index="3">&larr;</span></span></td>
+          </tr>
+          <tr>
+            <td><pre style="margin-top:0px;margin-bottom:0px"><code>&lt;pubKey&gt;</code></pre></td>
+            <td style='font-size:x-large'><span class="fragment" data-fragment-index="3"><span class="fragment fade-out" data-fragment-index="5">&larr;</span></span></td>
+          </tr>
+          <tr>
+            <td><pre style="margin-top:0px;margin-bottom:0px"><code>OP_DUP</code></pre></td>
+            <td style='font-size:x-large'><span class="fragment" data-fragment-index="5"><span class="fragment fade-out" data-fragment-index="7">&larr;</span></span></td>
+          </tr>
+          <tr>
+            <td><pre style="margin-top:0px;margin-bottom:0px"><code>OP_HASH160</code></pre></td>
+            <td style='font-size:x-large'><span class="fragment" data-fragment-index="7"><span class="fragment fade-out" data-fragment-index="9">&larr;</span></span></td>
+          </tr>
+          <tr>
+            <td><pre style="margin-top:0px;margin-bottom:0px"><code>&lt;pubKeyHash&gt;</code></pre></td>
+            <td style='font-size:x-large'><span class="fragment" data-fragment-index="9"><span class="fragment fade-out" data-fragment-index="11">&larr;</span></span></td>
+          </tr>
+          <tr>
+            <td><pre style="margin-top:0px;margin-bottom:0px"><code>OP_EQUALVERIFY</code></pre></td>
+            <td style='font-size:x-large'><span class="fragment" data-fragment-index="11"><span class="fragment fade-out" data-fragment-index="13">&larr;</span></span></td>
+          </tr>
+          <tr>
+            <td><pre style="margin-top:0px;margin-bottom:0px"><code>OP_CHECKSIG</code></pre></td>
+            <td style='font-size:x-large'><span class="fragment" data-fragment-index="13"><span class="fragment fade-out" data-fragment-index="15">&larr;</span></span></td>
+          </tr>
+        </table>
+      </td></tr>
+    </table>
+    </small>
+  </td>
+      </tr>
+    </table>
+    <p class="fragment" data-fragment-index="16">As the top of the stack has true at the end, the script is verified and the transaction is valid</p>
+    </section>
+
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## P2PKH Execution
+
+<div style='font-size:smaller'>
+
+| Stack | Script | Description |
+|--|--|--|
+| (empty) | \<sig\> \<pubKey\> OP_DUP OP_HASH160 \<pubKeyHash\> OP_EQUALVERIFY OP_CHECKSIG | initial state of script |
+| \<sig\>  | \<pubKey\> OP_DUP OP_HASH160 \<pubKeyHash\> OP_EQUALVERIFY OP_CHECKSIG | Constant added to the stack |
+| \<sig\> \<pubKey\> | OP_DUP OP_HASH160 \<pubKeyHash\> OP_EQUALVERIFY OP_CHECKSIG | Constant added to the stack |
+| \<sig\> \<pubKey\> \<pubKey\> | OP_HASH160 \<pubKeyHash\> OP_EQUALVERIFY OP_CHECKSIG | Top stack item is duplicated |
+
+</div>
+
+
+
+## P2PKH Execution
+
+<div style='font-size:smaller'>
+
+| Stack | Script | Description |
+|--|--|--|
+| \<sig\> \<pubKey\> \<pubHashA\> \<pubKeyHash\> | OP_EQUALVERIFY OP_CHECKSIG | Top stack item is hashed |
+| \<sig\> \<pubKey\> \<pubHashA\> \<pubKeyHash\> | OP_EQUALVERIFY OP_CHECKSIG | Constant added |
+| \<sig\> \<pubKey\> | OP_CHECKSIG | Equality is checked between the top two stack items |
+| true (1) | (empty) | Signature is checked for top two stack items |
+
+</div>
+As the top of the stack has true at the end, the script is verified and the transaction is valid
+
+
+
+## OP_CHECKMULTISIG
+- A way to check that one (or more) signatures match one (or more) keys ([reference](https://en.bitcoin.it/wiki/OP_CHECKMULTISIG))
+- Given many public keys, and many signatures, make sure each signature matches one key
+  - But keys are checked in order...
+- On the stack (from top-to-bottom):
+  - The number, $n$, of public keys; can use OP_1, OP_2, OP_3, etc.
+  - That many public keys
+  - The number, $m$, of signatures; can use OP_1, OP_2, OP_3, etc.
+  - That many signatures
+  - Due to a bug, OP_0 must be on the stack also
+</textarea></section>
+
+
+    <section>
+<h2>OP_CHECKMULTISIG Example</h2>
+<p>If the current key matches the current signature, advance both; otherwise, only advance the key index</p>
+<table class='transparent'>
+  <tr>
+    <td style="vertical-align:top;">
+      <div style="position:relative;width:110px;height:260px">
+        <img src='images/bitcoin/multisig/multisig.dot.5.svg' style="position: absolute;z-index:6">
+        <img src='images/bitcoin/multisig/multisig.dot.4.svg' style="position: absolute;z-index:7" class="fragment fade-out" data-fragment-index="13">
+        <img src='images/bitcoin/multisig/multisig.dot.3.svg' style="position: absolute;z-index:8" class="fragment fade-out" data-fragment-index="11">
+        <img src='images/bitcoin/multisig/multisig.dot.2.svg' style="position: absolute;z-index:8" class="fragment fade-out" data-fragment-index="8">
+        <img src='images/bitcoin/multisig/multisig.dot.4.svg' style="position: absolute;z-index:9" class="fragment fade-out" data-fragment-index="5">
+        <img src='images/bitcoin/multisig/multisig.dot.2.svg' style="position: absolute;z-index:10" class="fragment fade-out" data-fragment-index="3">
+      </div>
+    </td>
+    <td style="vertical-align:top;">
+      <div style="position:relative;width:206px;height:260px">
+        <img src='images/bitcoin/multisig/multisig.dot.1.svg' style="position:relative;left:0;top:0px">
+      </div>
+      <p>(<a href='https://en.bitcoin.it/wiki/OP_CHECKMULTISIG'>reference</a>)</p>
+
+    </td>
+    <td style="vertical-align:top;">
+      <ul>
+        <li>Initial state of the stack with indices</li>
+        <li class="fragment" data-fragment-index="1">Does <em>ikey</em> match <em>isig</em>?
+          <ul>
+            <li class="fragment" data-fragment-index="2">If so, advance both indices</li>
+          </ul>
+        </li>
+        <li class="fragment" data-fragment-index="4">Back to start...</li>
+        <li class="fragment" data-fragment-index="6">If <em>ikey</em> does not match <em>isig</em>...
+          <ul>
+            <li class="fragment" data-fragment-index="7">Only advance <em>ikey</em></li>
+          </ul>
+        </li>
+        <li class="fragment" data-fragment-index="9">Pushes true (1) if all signatures match a public key
+          <ul>
+            <li class="fragment" data-fragment-index="11">One possible successful end (assuming pubKey2 matches sig1)</li>
+            <li class="fragment" data-fragment-index="13">Another possible successful end (assuming pubKey1 matches sig1)</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+</section>
+
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Full List of Opcodes
+See the [Script page](https://en.bitcoin.it/wiki/Script) of the Bitcoin developer wiki
+
+
+
+## Obsolete P2PK transaction
+- P2PK; Pay to Public Key
+- Input script: `<sig>`
+  - The signature of the TXN with a given public key
+- Output script from the UTXO: `<pubKey> OP_CHECKSIG`
+- Combined script (with separator):
+
+```
+<sig>
+--------
+<pubKey>
+OP_CHECKSIG
+```
+
+- Problem: the public key needs to be known (and displayed) in advance!
+
+
+
+## Problems with P2PK transactions
+- The public key needs to be known (and displayed) in advance
+  - One could (theoretically) determine the private key with a quantum computer and spend the UTXO
+  - You can't determine the keys from the hash of the keys
+- Public keys are LONG (~100 characters)
+  - ECDSA hashes of public keys are short (~34 characters)
+
+
+
+## Problems with P2PKH transactions
+- Back to the hash version...
+- Problem: once redeemed, the public key is thus known
+  - Once can transfer that to a new address, only specified with the address (hash)
+  - This could also be cracked using a quantum computer
+- Solution: use a different key pair after redeeming a UTXO
+
+
+
+## Provably unspendable
+- Output script: `OP_RETURN`
+- This always marks the transaction as invalid, so such a UTXO could never be spent
+
+
+
+## Lock coins until a future time
+Output script:
+```
+<expiry_time>
+OP_CHECKLOCKTIMEVERIFY
+OP_DROP
+OP_DUP
+OP_HASH160
+<pubKeyHash>
+OP_EQUALVERIFY
+OP_CHECKSIG
+```
+- `OP_CHECKLOCKTIMEVERIFY`: mark TXN as invlalid if top stack item is greater than TXN's time
+  - in nLockTime field
+- `OP_DROP`: pop top element from the stack and discard it
+
+
+
+## Transaction Puzzle
+Output script of [this transaction](https://www.blockchain.com/btc/tx/a4bfa8ab6435ae5f25dae9d89e4eb67dfa94283ca751f393c1ddc5a837bbc31b) from 12/12/2012:
+```
+OP_HASH256
+6fe28c0ab6f1b372c1a6a246ae63f74f931e8365e15a089c68d6190000000000
+OP_EQUAL
+```
+- Input script must provide data that, when hashed with SHA256, equals the provided hash
+- Redeemed the next day by [this transaction](https://www.blockchain.com/btc/tx/09f691b2263260e71f363d1db51ff3100d285956a40cc0e4f8c8c2c4a80559b1)
+  - The data was the [Genesis block](https://en.bitcoin.it/wiki/Genesis_block)
+
+
+
+## Finding hash collisions
+Output script from 2013:
+```
+OP_2DUP OP_EQUAL OP_NOT  OP_VERIFY 
+OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
+```
+- Required input script: `<data1> <data2>`
+- New opcodes:
+  - `OP_2DUP`: duplicate top two items on the stack
+  - `OP_EQUAL`: `s.push(s.top() == s.top())`
+  - `OP_NOT`: If the input is 0 or 1, push the negation; else push 0
+  - `OP_VERIFY`: abort if s.top() is false
+  - `OP_SHA1`: `s.push(SHA1(s.pop()))`
+  - `OP_SWAP`: swap top two items on the stack
+- Redeemed in 2017 for 2.48 BTC
+
+
+
+## Is Bitcoin Script Turing-complete?
+
+  </textarea></section>
+
+
+</section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="xchain" data-markdown class="center"><textarea>
+# Cross-Chain Transactions
+	  </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n" data-transition='none'><textarea>
+## Motivation
+- Alice has $w$ BTC to send to Bob
+  - In exchange, Bob will send $v$ AltCoins to Alice
+- How to do this?
+  - Since AltCoin != BTC, they are on different blockchains
+
+&nbsp;
+
+- Method 1: Central authority
+  - Alice and Bob send to *bank*, and *bank* swaps them and sends back to Bob & Alice
+  - Problem: no central authority in decentralized finance
+  - Problem: can *bank* be trusted?
+
+
+
+## Motivation
+- Alice has $w$ BTC to send to Bob
+  - In exchange, Bob will send $v$ AltCoins to Alice
+- How to do this?
+  - Since AltCoin != BTC, they are on different blockchains
+
+&nbsp;
+
+- Method 2: Trust the other party
+  - Alice sends BTC to Bob
+  - Upon receipt, Bob sends AltCoins to Alice
+  - Problem: what if Bob doesn't send them back and keeps both the BTC and AltCoins?
+
+
+
+## Motivation
+- Alice has $w$ BTC to send to Bob
+  - In exchange, Bob will send $v$ AltCoins to Alice
+- How to do this?
+  - Since AltCoin != BTC, they are on different blockchains
+
+&nbsp;
+
+- Method 3: Cross-chain Atomic Swap
+  - Ensure that *either* the entire transaction completes OR it is fully reversible and refundable
+  - [Reference](https://en.bitcoin.it/wiki/Atomic_swap)
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Cross-chain Atomic Swap
+- Alice generates a secret (random) value $x$, and reveals only $h(x)$ to Bob
+- Alice creates "payment" TXN1: transfer $w$ BTC to Bob if:
+  1. $x$ is known and output TXN is signed by Bob
+  2. OR if the output TXN is signed by both Alice & Bob
+- Formally, TXN1: <span style="color: skyblue">Pay $w$ BTC to \<B's public key\> if ($x$ for $h(x)$ known and signed by B) or (signed by A & B)</span>
+- Alice creates "refund" TXN2: a time-locked TXN to return the coins to herself
+  - Formally, TXN2: <span style="color: skyblue">Pay $w$ BTC from TXN1 to \<A's public key\>, locked 48 hours in the future, signed by A</span>
+  - Alice asks Bob to sign the TXN2 (time-lock one)
+- Alice broadcasts TXN1 (payment one)
+
+
+
+## Cross-chain Atomic Swap
+- Bob creates "payment" TXN3: transfer $v$ AltCoins to Alice if:
+  - $x$ is known and output TXN is signed by Alice
+  - OR if the output TXN is signed by both Alice & Bob
+- Formally, TXN3: <span style="color: skyblue">Pay $v$ alt-coins to \<A-public-key\> if ($x$ for $h(x)$ known and signed by A) or (signed by A & B)</span>
+- Bob creates "refund" TXN4: a time-locked TXN to return the coins to himself
+  - Formally, TXN4: <span style="color: skyblue">Pay $v$ alt-coins from TXN3 to \<B's public key\>, locked 24 hours in the future, signed by B</span>
+  - Bob asks Alice to sign the TXN4 (time-lock one)
+- Bob broadcasts TXN3 (original payment one)
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n" data-transition='none'><textarea>
+## Cross-chain Atomic Swap
+1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
+2. Alice submits TXN1 to the network
+3. Bob creates TXN3 (payment) & A-signed TXN4 (refund)
+4. Bob submits TXN3 to the network
+5. Alice spends TXN3, revealing $x$
+6. Bob, now knowing $x$, spends TXN1 using $x$
+
+<p style="font-size: small">&nbsp;</p>
+
+Is this secure?  Can it be reversed at any step?
+
+
+
+## Cross-chain Atomic Swap
+1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
+2. Alice submits TXN1 to the network
+3. Bob creates TXN3 (payment) & A-signed TXN4 (refund)
+4. Bob submits TXN3 to the network
+5. Alice spends TXN3, revealing $x$
+6. Bob, now knowing $x$, spends TXN1 using $x$
+
+<p style="font-size: small">&nbsp;</p>
+
+Reversibility: Before (2), nothing has been broadcasted, so nothing happens
+
+
+
+## Cross-chain Atomic Swap
+1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
+2. Alice submits TXN1 to the network
+3. Bob creates TXN3 (payment) & A-signed TXN4 (refund)
+4. Bob submits TXN3 to the network
+5. Alice spends TXN3, revealing $x$
+6. Bob, now knowing $x$, spends TXN1 using $x$
+
+<p style="font-size: small">&nbsp;</p>
+
+Reversibility: Between (2) & (4): if Bob doesn't proceed, then he submits nothing to the network, and Alice can use refund TXN2 to get her coins back
+
+
+
+## Cross-chain Atomic Swap
+1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
+2. Alice submits TXN1 to the network
+3. Bob creates TXN3 (payment) & A-signed TXN4 (refund)
+4. Bob submits TXN3 to the network
+5. Alice spends TXN3, revealing $x$
+6. Bob, now knowing $x$, spends TXN1 using $x$
+
+<p style="font-size: small">&nbsp;</p>
+
+Reversibility: Between (4) & (5): If Alice doesn't proceed, Bob can get a refund in 24 hours; Alice has 24 more hours (48 total) to get her refund
+
+
+
+## Cross-chain Atomic Swap
+1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
+2. Alice submits TXN1 to the network
+3. Bob creates TXN3 (payment) & A-signed TXN4 (refund)
+4. Bob submits TXN3 to the network
+5. Alice spends TXN3, revealing $x$
+6. Bob, now knowing $x$, spends TXN1 using $x$
+
+<p style="font-size: small">&nbsp;</p>
+
+Reversibility: After (5): 
+   - Alice must spend her new AltCoins within 24 hours or Bob can claim the refund and get his AltCoins back
+   - Bob must spend his new BTC within 48 hours or Alice can claim the refund and get her BTC back
+
+
+
+## Cross-chain Atomic Swap
+1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
+2. Alice submits TXN1 to the network
+3. Bob creates TXN3 (payment) & A-signed TXN4 (refund)
+4. Bob submits TXN3 to the network
+5. Alice spends TXN3, revealing $x$
+6. Bob, now knowing $x$, spends TXN1 using $x$
+
+<p style="font-size: small">&nbsp;</p>
+
+Either side submitting a refund TXN early: the refund TXNs are time-locked, so the other party has time to submit their own refund TXN
+    </textarea></section>
+
+
+
+</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="attacks" data-markdown class="center"><textarea>
+# Attacks
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Double spending
+- Submit two TXNs spending the same UTXO
+- Prevented by:
+  - The "valid block check" that miners & nodes perform checks for
+
+
+
+<!-- .slide: class="right-float-img" -->
+## 51% attack
+
+<img src='images/bitcoin/attack/attack.dot.1.svg' style='width:130px'>
+
+- Given the initial state in some block, say 1000
+
+
+
+<!-- .slide: class="right-float-img" -->
+## 51% attack
+
+<img src='images/bitcoin/attack/attack.dot.2.svg' style='width:130px'>
+
+- Mallory spends a UTXO
+  - On something that has a quick delivery,<br>such as a digital asset
+
+
+
+<!-- .slide: class="right-float-img" -->
+## 51% attack
+
+<img src='images/bitcoin/attack/attack.dot.3.svg' style='width:130px'>
+
+- Vendor waits some number of confirmations...
+  - Say, 3 (in reality, more like 100)
+- Then assumes the TXN will not change
+  - Because there have been the desired number of confirmations
+- The digital asset is then sent
+
+
+
+<!-- .slide: class="right-float-img" -->
+## 51% attack
+
+<img src='images/bitcoin/attack/attack.dot.4.svg' style='height:773px'>
+
+- The original spender tries to spend the<br>UTXO again
+- But how to make the rest of the network<br>accept it?
+  - Have to mine more than the rest of the<br>network
+  - Thus, must have 51% (or more) of the network mining capability
+  - Hence 51% attack
+- Node adoption policy: longest chain
+  - The longest "chain" of blocks, starting from the genesis block, is the valid chain
+
+
+
+<!-- .slide: class="right-float-img" -->
+## 51% attack
+
+<img src='images/bitcoin/attack/attack.dot.5.svg' style='height:773px'>
+
+- If the attacker...
+  - Who has 51% (or more) of the mining power...
+- Can ever create the longest chain...
+- Then they have double spent the UTXO!
+
+
+
+## 51% attack
+- But is this viable?
+  - As no one person is going to have 51% of the BTC mining / [hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
+- But a mining pool might!
+- Consider the [2miners RVN pool](https://2miners.com/rvn-mining-pool)
+  - As of Feb 1st, 2022, their pool had a 1.44 Th/s hash rate
+    - The network hashrate then was 5.13 Th/s
+  - Thus, they have 1.44/5.13 = 28% of the total hash rate
+- On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
+  - Due to a purchase of hashpower from (likely) Nicehash
+- They have no incentive to perform a 51% attack, by the way...
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Required confirmations
+
+<img src='images/bitcoin/attack/attack.dot.6.svg' style='height:773px'>
+
+- Envision: we have two longest<br>chains, and miners are split<br>between the two
+  - Neither has yet become "longer"
+- What if the miner for block 1001,<br>version 1, were to immediately<br>spend those BTC
+  - And then the version 2 chain were<br>to become the longer (and thus<br>accepted) chain?
+- Solution: wait until $n$ confirmations<br>have occurred before allowing<br>spending the BTC
+
+
+
+## Confirmations
+- Different coins have different confirmations typically required (most from [2miners](https://2miners.com)):
+  - XLM: 0 blocks (5 seconds)
+    - XLM transactions are irreversible, so no confirmations needed
+  - BTC: 6 blocks (about 1 hour) for "standard" transactions
+  - ETH: 120 blocks (about 1 hour)
+  - RVN: 100 blocks (about 2 hours)
+  - FIRO: 100 blocks (about 9 hours)
+  - BTC: 60 blocks (about 10 hours) for "large" transactions
+  - ERG: 720 blocks (about 1 day)
+- This is based on many factors: block speed, overall network hash rate, and the value of the coin
+    </textarea></section>
+
+
+</section>
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+  </body>
+</html>

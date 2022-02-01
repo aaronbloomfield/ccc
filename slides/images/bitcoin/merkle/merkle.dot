@@ -1,0 +1,24 @@
+graph A {
+	node [shape=record,fontname="Helvetica"];
+	stack [label=<x<sub>0</sub><br/>h<sub>0</sub>=h(x<sub>0</sub>)|x<sub>1</sub><br/>h<sub>1</sub>=h(x<sub>1</sub>)|x<sub>2</sub><br/>h<sub>2</sub>=h(x<sub>2</sub>)|x<sub>3</sub><br/>h<sub>3</sub>=h(x<sub>3</sub>)|x<sub>4</sub><br/>h<sub>4</sub>=h(x<sub>4</sub>)|x<sub>5</sub><br/>h<sub>5</sub>=h(x<sub>5</sub>)|x<sub>6</sub><br/>h<sub>6</sub>=h(x<sub>6</sub>)|x<sub>7</sub><br/>h<sub>7</sub>=h(x<sub>7</sub>)|x<sub>8</sub><br/>h<sub>8</sub>=h(x<sub>8</sub>)|x<sub>9</sub><br/>h<sub>9</sub>=h(x<sub>9</sub>)>];
+}
+
+graph B {
+	node [shape=record,fontname="Helvetica"];
+	stack [label=<h<sub>01</sub>=h(h<sub>0</sub>+h<sub>1</sub>)|h<sub>23</sub>=h(h<sub>2</sub>+h<sub>3</sub>)|h<sub>45</sub>=h(h<sub>4</sub>+h<sub>5</sub>)|h<sub>67</sub>=h(h<sub>6</sub>+h<sub>7</sub>)|h<sub>89</sub>=h(h<sub>8</sub>+h<sub>89</sub>)>];
+}
+
+graph C {
+	node [shape=record,fontname="Helvetica"];
+	stack [label=<h<sub>0-3</sub>=h(h<sub>01</sub>+h<sub>23</sub>) | h<sub>4-7</sub>=h(h<sub>45</sub>+h<sub>67</sub>) | h<sub>89</sub>>];
+}
+
+graph D {
+	node [shape=record,fontname="Helvetica"];
+	stack [label=<h<sub>0-7</sub>=h(h<sub>0-3</sub>+h<sub>4-7</sub>) | h<sub>89</sub>>];
+}
+
+graph E {
+	node [shape=record,fontname="Helvetica"];
+	stack [label=<h<sub>all</sub>=h<sub>0-9</sub>=h(h<sub>0-7</sub>+h<sub>89</sub>)>];
+}
