@@ -69,7 +69,7 @@ Each day has two lectures to view that day.
 1. Wed, Jan 19: [course introduction](introduction.html#/) (completed), [overview](../slides/overview.html#/) (to 4.10)
 2. Mon, Jan 24: finished [overview](../slides/overview.html#/); [encryption](../slides/encryption.html#/) to slide 3.7
 3. Wed, Jan 26: [encryption](../slides/encryption.html#/) through slide 5.3
-4. Mon, Jan 31: continue with [encryption](../slides/encryption.html#/)
+4. Mon, Jan 31: [encryption](../slides/encryption.html#/) through slide 7.25
 5. Wed, Feb 2: likely finish [encryption](../slides/encryption.html#/) and start on [bitcoin](../slides/bitcoin.html#/)
 
 ## Legal Issues

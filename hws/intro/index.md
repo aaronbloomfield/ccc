@@ -72,7 +72,7 @@ on the submission server is OpenJDK 1.11.  We provide some methods in the
 [Sample.java](Sample.java)
 ([html](Sample.java.html)) file for you to use.
 
-**C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.
+**C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.  The compiler is `gcc` or `g++`.
 
 
 ## File format

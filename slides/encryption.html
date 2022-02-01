@@ -740,6 +740,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - Represented by the digit 0
 - Considered one of the points "on" the curve
 - Considered the identity element: $0 \oplus P = P$
+- And $P+P'=0$
 
 
 ## Elliptical Curve notes
@@ -789,7 +790,7 @@ Any curve of the form $y^2=x^3+ax+b$
     <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Finite Fields
 - A *field* is just a set of numbers that you can perform the basic arithmetic operations on
-  - The integers are a field, as are the real numbers
+  - The real numbers are also a field (but not integers!)
 - An integer [finite field](https://en.wikipedia.org/wiki/Finite_field):
   - Is defined by a (tyipcally prime) value $p$
   - All operations are mod $p$
@@ -801,6 +802,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - a clock is (almost) a finite field with a non-prime $p$
   - *almost* because it's 1-12, not 0-11
 - but for the elliptic curves, we'll always use a prime $p$ else the math won't work right
+- integers are a ring, not a field, as some operations are not valid therein (7/3, for example)
 </aside>
 
 
@@ -1015,7 +1017,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - $p$ is the prime modulus, and is defined as 
   - $p=2^{256}-2^{32}-977$
   - $p$ = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
-  - $p$ = 115,792,089,237,316,195,423,570,985,008,687,907,853,269, 984,665,640,564,039,457,584,007,908,834,671,663
+  - $p$ = 115,792,089,237,316,195,423,570,985,008,687,907,853, 269,984,665,640,564,039,457,584,007,908,834,671,663
   - $p \approx 1.16 \* 10^{77}$
   - Note that $p$ is 256 bits in size (to match SHA-256)
 - Must be prime, and $p$ is
@@ -1025,10 +1027,11 @@ Any curve of the form $y^2=x^3+ax+b$
 - secp256k1 curve: $y^2=x^3+7$
 - $n$ is the *order*, which is the number of points on the curve
   - We include the point at infinity in $n$
-  - $n = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
-  - $n = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
+  - $n$ = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
+  - $n$ = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
   - $n \approx 1.16 \* 10^{77}$, about the same as $p$
 - *SOME* modulo operations in ECDSA are with $n$, not $p$
+- Also must be prime, and $n$ is
 - How to determine the order?
   - Count all the points (*very* slow)
   - [Schoof's algorithm](https://en.wikipedia.org/wiki/Schoof%27s_algorithm), which takes polynomial time
@@ -1081,7 +1084,7 @@ $
 ## ECDSA Key Generation: setup
 - So we have:
   - Curve parameters $a$ and $b$ (secp256k1: $a=0$ and $b=7$)
-  - Prime modulus $p$ (secp256k1: $n=2^{256}-2^{32}-977$)
+  - Prime modulus $p$ (secp256k1: $p=2^{256}-2^{32}-977$)
     - Size is $b$ bits, selected to match the hash size (for us, $b=256$)
   - Curve order $n$ (for secp256k1: $n \approx 1.16 \* 10^{77}$)
   - Base point $G$; for secp256k1, $G \approx (5.51 \* 10^{63}, 3.27 \* 10^{63})$
@@ -1116,6 +1119,10 @@ $
   - $k$, a $b$-bit one time pad (secret!) such that $1 \le k \le n-1$
   - $k^{-1}$, the inverse mod-$n$ of $k$ (also secret)
     - This is computed in $Z_n$, not $Z_p$!
+
+<aside data-markdown class="notes">
+- because we want to find the multiplicitative inverse of $k$, in order to use Fermat's little theorem, $n$ must be prime
+</aside>
 
 
 ## Signing an ECDSA message
