@@ -100,7 +100,16 @@ point operations</h3>
 needed:</p>
 <ul>
 <li>Elliptic curve addition of a point to itself: <span
-class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>Q</em></span></li>
+class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>Q</em></span>. For
+this operation you will need to determine the slope of the secp256k1
+curve <span
+class="math inline"><em>y</em><sup>2</sup> = <em>x</em><sup>3</sup> + 7</span>;
+that derivative is <span
+class="math inline"><em>d</em><em>y</em>/<em>d</em><em>x</em> = 3<em>x</em><sup>2</sup>/2<em>y</em></span>;
+this is discussed on <a
+href="../../slides/encryption.html#/secp256k1derivative">this slide</a>
+of the <a href="../../slides/encryption.html#/">encryption slide
+set</a>.</li>
 <li>Elliptic curve addition of two different points: <span
 class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>R</em></span></li>
 <li>Elliptic curve multiplication of a point by a scalar value: <span
@@ -341,6 +350,15 @@ welcome to add additional modes that you use for debugging, or that
 perform those functions with verbose output. But the four required modes
 – <code>userid</code>, <code>genkey</code>, <code>sign</code>, and
 <code>verify</code> – should only produce the output shown above.</p>
+<p>Your code may incorrectly verify a invalid signature! The computation
+of <span class="math inline"><em>s</em></span> is computed mod <span
+class="math inline"><em>n</em></span>, which – in this example – is only
+31. This means about 1 in 31 random but invalid signatures would be
+expected to verify as true. (In reality, with secp256k1, <span
+class="math inline"><em>n</em> ≈ 1.16 * 10<sup>77</sup></span>, so the
+chance of an invalid signature returning true is one in in that very
+large number). If you do get an invalid signature (or two or three) to
+return true, just try some other values.</p>
 <h3 id="example">Example</h3>
 <p>To help you understand the previous example, below is the complete
 formulaic work-up of the values that were computed above in the three
@@ -381,8 +399,9 @@ class="math inline"><em>k</em><sup>−1</sup></span>. Because <span
 class="math inline"><em>k</em></span> is counting the number of points,
 the inverse is computed in Z31, NOT in Z43. Thus, in Z31, <span
 class="math inline">17<sup>−1</sup> = 11</span>; (<a
-href="https://planetcalc.com/3311/?a=17&amp;m=31">verification</a>). We
-know via the command-line parameters that <span
+href="https://planetcalc.com/3311/?a=17&amp;m=31">verification</a>; also
+that <span class="math inline">11 * 17 mod  31 = 1</span>). We know via
+the command-line parameters that <span
 class="math inline"><em>h</em> = 30</span> and <span
 class="math inline"><em>d</em> = 16</span>, and we have just computed
 <span class="math inline"><em>r</em> = 12</span>. We can then compute
@@ -398,11 +417,15 @@ the hash <span class="math inline"><em>h</em> = 30</span>. As <span
 class="math inline"><em>s</em></span> was computed in Z31 (NOT Z43), we
 also compute it’s inverse in Z31: <span
 class="math inline">24<sup>−1</sup> = 22</span> in Z31; (<a
-href="https://planetcalc.com/3311/?a=24&amp;m=31">verification</a>).</p>
+href="https://planetcalc.com/3311/?a=24&amp;m=31">verification</a>; also
+that <span class="math inline">22 * 24 mod  31 = 1</span>).</p>
 <p>To verify this signature, we need to show that <span
 class="math inline"><em>R</em> = <em>s</em><sup>−1</sup> * <em>h</em> ⊗ <em>G</em> ⊕ <em>s</em><sup>−1</sup> * <em>r</em> ⊗ <em>Q</em></span>
-= <span class="math inline">660 ⊗ <em>G</em> ⊕ 264 ⊗ <em>Q</em></span>.
-We can mod those two scalars, but that mod is also in Z31, and yields
+= <span class="math inline">660 ⊗ <em>G</em> ⊕ 264 ⊗ <em>Q</em></span>
+(this is an equivalent form of the formula used to sign the signature,
+as shown in the slides starting <a
+href="../../slides/encryption.html#/ecdsaverify">here</a>). We can mod
+those two scalars (660 and 264), but that mod is also in Z31, and yields
 <span
 class="math inline"><em>R</em> = 9 ⊗ <em>G</em> ⊕ 16 ⊗ <em>Q</em> = 9 ⊗ (25,25) ⊕ 16 ⊗ (37,36) = (2,31) ⊕ (29,31) = (12,12)</span>;
 (verifications <a

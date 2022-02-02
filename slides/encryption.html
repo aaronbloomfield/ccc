@@ -149,7 +149,7 @@
 - A secret key encryption/decryption block cipher
   - 64 bits, but only 56 are usable
 - Lots of bit-shifting in rounds to encrypt/decrypt a message
-- Susceptible to brute force attacks ($2^{56} = 7 * 10^{16}$ keys)
+- Susceptible to brute force attacks ($2^{56} = 7 \ast 10^{16}$ keys)
 - Solution: use DES three times => "Triple DES"
   - Use 168 bit keys: three 56 bit keys, and encrypt the message three times, once with each key
 - NIST considers it secure through 2030
@@ -246,7 +246,7 @@ Let $n = 101 = 1\*101$
 ## More on the Fermat primality test
 - Each iteration halves the probability that the number is a composite
   - Probability = $(1/2)^k$
-  - If $k = 100$, the probability it's a composite is $(1/2)^{100} = 1\text{ in }1.2 * 10^{30}$ that the number is composite
+  - If $k = 100$, the probability it's a composite is $(1/2)^{100} = 1\text{ in }1.2 \ast 10^{30}$ that the number is composite
     - Greater chance of having a hardware error!
   - Thus, $k = 100$ is a good value
 </textarea></section>
@@ -308,7 +308,7 @@ Let $n = 101 = 1\*101$
 2. Choose an integer $1 < e < n$ which is relatively prime to $(p-1)(q-1)$
     - $e$ is often the prime 65,537
 3. Compute $d$ such that:
-    - $d * e \equiv 1 (mod (p-1)(q-1))$
+    - $d \ast e \equiv 1 (mod (p-1)(q-1))$
    - Rephrased: $d*e \text{ mod  }(p-1)(q-1) = 1$
 4. Destroy all records of $p$ and $q$
 
@@ -893,7 +893,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - Example: $a=13$, $p=17$
   - $1/13 = 13^{17-2} \mod 17 = 4$
   - Division by 13 is the same as multiplication by 4 in $Z_{17}$
-    - Or: $x/13 = x \* 4$ in $Z_{17}$
+    - Or: $x/13 = x \ast 4$ in $Z_{17}$
   - Verify: $13*4 = 52 \mod 17 = 1$
 
 
@@ -901,9 +901,9 @@ Any curve of the form $y^2=x^3+ax+b$
 - The multiplicative inverse:
   - $1/a = a^{-1} = a^{p-2} \mod p$
 - Division is thus:
-  - $x/a = x\*a^{-1} = x \* a^{p-2} \mod p$
+  - $x/a = x\*a^{-1} = x \ast a^{p-2} \mod p$
 - Example: let $x=13$, $a=5$, and $p=17$
-  - $13/5 = 13 \* 5^{17-2} = 13 \* 5^{15}=6$
+  - $13/5 = 13 \ast 5^{17-2} = 13 \ast 5^{15}=6$
   - Verify: $6*5=30 \mod 17 = 13$
 - ([reference](https://eng.paxos.com/blockchain-101-foundational-math))
 - The net result is that given a value $a$, we can compute $a^{-1}$
@@ -940,8 +940,9 @@ Any curve of the form $y^2=x^3+ax+b$
 <li>$y_3=m(x_1-x_3)-y_1$</li>
 </ul>
 </li></ul>
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$" id="secp256k1derivative"><textarea data-template>
 ## Elliptical Point Addition
 - Adding the same point to itself
   - Curve: $y^2=x^3+7$
@@ -950,8 +951,9 @@ Any curve of the form $y^2=x^3+ax+b$
     - ([reference](https://github.com/mulllhausen/visual-secp256k1/blob/master/grunt.py), line 92)
 - Use the math on the previous slide to determine the resultant point
   - The slope just computed is $m$ on the previous slide
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Elliptical Curve Arithmetic
 - Given a point $P$ on a curve, you can keep ellipticlly adding it to itself to get $R=k \otimes P$
   - Given $k$ and $P$, it is feasible to determine $R$ -- this is "hard"
@@ -1018,7 +1020,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - $p=2^{256}-2^{32}-977$
   - $p$ = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
   - $p$ = 115,792,089,237,316,195,423,570,985,008,687,907,853, 269,984,665,640,564,039,457,584,007,908,834,671,663
-  - $p \approx 1.16 \* 10^{77}$
+  - $p \approx 1.16 \ast 10^{77}$
   - Note that $p$ is 256 bits in size (to match SHA-256)
 - Must be prime, and $p$ is
 
@@ -1029,7 +1031,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - We include the point at infinity in $n$
   - $n$ = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
   - $n$ = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
-  - $n \approx 1.16 \* 10^{77}$, about the same as $p$
+  - $n \approx 1.16 \ast 10^{77}$, about the same as $p$
 - *SOME* modulo operations in ECDSA are with $n$, not $p$
 - Also must be prime, and $n$ is
 - How to determine the order?
@@ -1041,11 +1043,11 @@ Any curve of the form $y^2=x^3+ax+b$
 - The starting point or "base point" $G$
   - $x$ = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2 DCE28D959F2815B16F81798
     - $x$ = 55,066,263,022,277,343,669,578,718,895,168,534,326,250, 603,453,777,594,175,500,187,360,389,116,729,240
-    - $x \approx 5.51 * 10^{63}$
+    - $x \approx 5.51 \ast 10^{63}$
   - y = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A 68554199C47D08FFB10D4B8
     - $y$ = 32,670,510,020,758,816,978,083,085,130,507,043,184,471, 273,380,659,243,275,938,904,335,757,337,482,424
-    - $y \approx 3.27 * 10^{63}$
-- $G \approx (5.51 \* 10^{63}, 3.27 \* 10^{63})$
+    - $y \approx 3.27 \ast 10^{63}$
+- $G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
 - How do you think this was determined?
 
 
@@ -1086,8 +1088,8 @@ $
   - Curve parameters $a$ and $b$ (secp256k1: $a=0$ and $b=7$)
   - Prime modulus $p$ (secp256k1: $p=2^{256}-2^{32}-977$)
     - Size is $b$ bits, selected to match the hash size (for us, $b=256$)
-  - Curve order $n$ (for secp256k1: $n \approx 1.16 \* 10^{77}$)
-  - Base point $G$; for secp256k1, $G \approx (5.51 \* 10^{63}, 3.27 \* 10^{63})$
+  - Curve order $n$ (for secp256k1: $n \approx 1.16 \ast 10^{77}$)
+  - Base point $G$; for secp256k1, $G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
   - A $b$-bit hash algorithm that we plan on using (SHA-256, e.g.)
 
 
@@ -1170,8 +1172,9 @@ $
   - Knowing $r$ (the $x$ value) implies knowing $R$ (the point)
 - Bob computed: $h$ and $s^{-1}$
 - All further steps omit the 'mod $n$' part for clarity
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$" id='ecdsaverify'><textarea data-template>
 ## Verifying an ECDSA message
 
 <ul>
@@ -1182,8 +1185,9 @@ $
   <li class="fragment" data-fragment-index="4">Distribute the parenthetical:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \ast d \otimes G$ </li>
   <li class="fragment" data-fragment-index="5">The public key is defined as $Q = d \ast G$:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
 </ul>
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Verifying an ECDSA message
 
 <ul>
@@ -1324,8 +1328,8 @@ $
 
 ## Typical method: example
 - Let $m=9$, $a=4$, $c=7$
- - This will cycle through all the values
-   - Known via magic we won't see here
+ - This will cycle through all the values $<m$ before repeating
+   - We know that via magic we won't see here
 - $X_{n+1}=(a*X_n+c) \text{ mod } m$
   - $X_0 = 1$
   - $X_1 = (4*1+7) \text{ mod } 9 = 2$
@@ -1466,7 +1470,7 @@ $
 - Hash goals:
   - Changing even a single bit has a dramatic effect on the hash code
 - Pigeon hole principle:
-  - If we use a 128-bit hash, that yields $2^{128} \approx 3.4 \* 10^{38}$ possible values
+  - If we use a 128-bit hash, that yields $2^{128} \approx 3.4 \ast 10^{38}$ possible values
   - If we have files that are 129+ bits, then there will be more possible files than there are hashes
   - Thus, multiple files will provide the same hash
   - This will hold for *all* hashes, as long as the hash code is of a finite length
@@ -1511,15 +1515,15 @@ $
 
 ## Collision resistant hashes
 - Due to the birthday paradox, one will typically have to brute force $2^{n/2}$ attempted values before a collision is found
-  - For MD5 (128 bits): $2^{128/2} = 2^{64} = 1.84 \* 10^{19}$ attempts
-    - Computing 1 million a second takes $5.85 \* 10^{11}$ years
+  - For MD5 (128 bits): $2^{128/2} = 2^{64} = 1.84 \ast 10^{19}$ attempts
+    - Computing 1 million a second takes $5.85 \ast 10^{11}$ years
     - But a better attack can achieve this in under a minute
     - (MD5 is *not* collision resistant, as described later)
 
 
 ## Collision resistant hashes
-- For SHA-256 (256 bits): $2^{256/2} = 2^{128} = 3.40 \* 10^{38}$ attempts
-  - Computing 1 million a second takes $1.08 \* 10^{31}$ years
+- For SHA-256 (256 bits): $2^{256/2} = 2^{128} = 3.40 \ast 10^{38}$ attempts
+  - Computing 1 million a second takes $1.08 \ast 10^{31}$ years
 - [reference](http://en.wikipedia.org/wiki/Collision_resistant )
 
 
@@ -1533,7 +1537,7 @@ $
 
 
 ## MD5: Message Digest 5
-- Produces a 128-bit value ($3.4 * 10^{38}$ possible values)
+- Produces a 128-bit value ($3.4 \ast 10^{38}$ possible values)
   - Expressed as a 32-digit hex number
 - Probably the most widely used algorithm
 - Designed in 1991 when research indicated its predecessor (MD4) was insecure
@@ -1542,15 +1546,8 @@ $
 $ md5sum message1.txt 
 afe68f753a65f773a591bcf6f9ce3c63  message1.txt
 ```
-
-
-## [MD5: Message Digest 5](http://en.wikipedia.org/wiki/Md5)
 - Still widely used for file downloading
   - CERT: "should be considered cryptographically broken and unsuitable for further use"
-- A number of collisions have been found:
-  - 1996: "first" collisions found
-  - 2005: public keys (with associated private keys) could be constructed that have the same MD5 hash
-  - 2008: researchers faked SSL certificate validity by creating keys with desired MD5 hashes
 
 
 ## SHA-0 and SHA-1
@@ -1661,6 +1658,13 @@ From [rossettacode.org](https://rosettacode.org/wiki/SHA-256) -- just call `hash
 </code></pre>
 
 For Java, see [here](https://rosettacode.org/wiki/MD5#Java), but change `MD5` to `SHA-256` ([reference](https://rosettacode.org/wiki/SHA-256#Java))
+
+
+## Calling SHA-256 from the command line
+<pre class="code-wrapper" style="width:95%;margin-left:0"><code class="hljs awk small" style="height:auto">$ sha256sum lorem-ipsum.txt 
+32e7ac08ab60eff44f6f69fcb3ef45713bfdf3338d4e62a725e451f8f0b08eef  lorem-ipsum.txt
+$
+</code></pre>
 </textarea></section>
 
   </section>
