@@ -16,6 +16,7 @@ I realize that nobody reads these through.  So the TL;DR version:
 - Readings will typically have in-class quizzes when they are due
 - Attendance quizzes and reading quizzes are online, so bring a connected device (phone is fine)
 - Due to the size of the course, please contact me via [support request][1]
+- Office hours are posted on the Collab landing page
 - I want you to succeed in this course and enjoy it -- if you are having any problems (personal, academic, what-not) that I can help with, please let me know
 
 And now for the really long-winded version...
@@ -25,8 +26,8 @@ And now for the really long-winded version...
 
 ### Course Staff ###
 
-- [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) / aaron at virginia dot edu.  Office: Rice Hall, room 402.  Office hours TBA
-- TAs: none!  This is going to be fun...
+- [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) / aaron at virginia dot edu.  Office: Rice Hall, room 402.  Office hours are posted on the Collab landing page
+- TA office hours are also posted on the Collab landing page
 
 ### Course Info ###
 
