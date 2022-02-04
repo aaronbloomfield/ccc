@@ -117,20 +117,55 @@
 
 <h2>Merkle Tree use in practice</h2>
 <p>Consider an array of 10 leaf elements of a Merkle tree</p>
-<img src='images/bitcoin/merkle/merkle.dot.5.png' class='fragment' data-fragment-index='5'>
-<img src='images/bitcoin/merkle/merkle.dot.4.png' class='fragment' data-fragment-index='4'>
-<img src='images/bitcoin/merkle/merkle.dot.3.png' class='fragment' data-fragment-index='3'>
-<img src='images/bitcoin/merkle/merkle.dot.2.png' class='fragment' data-fragment-index='2'>
-<img src='images/bitcoin/merkle/merkle.dot.1.png'>
+<img src='images/bitcoin/merkle/merkle.dot.5.svg' class='fragment' data-fragment-index='5'>
+<img src='images/bitcoin/merkle/merkle.dot.4.svg' class='fragment' data-fragment-index='4'>
+<img src='images/bitcoin/merkle/merkle.dot.3.svg' class='fragment' data-fragment-index='3'>
+<img src='images/bitcoin/merkle/merkle.dot.2.svg' class='fragment' data-fragment-index='2'>
+<img src='images/bitcoin/merkle/merkle.dot.1.svg'>
 <p class='fragment' data-fragment-index='6'>Requires $n-1$ or $\Theta(n)$ hashes</p>
 
 
 
+## However...
+Given a Merkle tree:
+
+<img src='images/bitcoin/Hash_Tree.svg' style="width:500px;background:white;border-radius:10px">
+
+- If L1 changes, we only want to change the hashes up to the root
+  - That's a logarithmic length path
+- This means keeping all the others hashes in memory
+</textarea></section>
+
+    <section>
+<h2>Merkle Trees in Arrays</h2>
+<table class="transparent">
+<tr><td class="top"><img alt="heap 8" src="images/bitcoin/merkle/perfect-tree.svg"></td>
+<td>
+<p>Just like binary heaps!</p>
+<p>From node <i>i</i>:</p>
+<ul>
+<li>left child: $2 \ast i$ </li>
+<li>right child: $(2 \ast i)+1$ </li>
+<li>parent: $\lfloor i/2 \rfloor$</li>
+</ul>
+</td></tr></table>
+<p>Array representation:</p>
+
+<div style="scale:60%">
+<table class="transparent compact" style="border-collapse:collapse"><tr class="bordercfifty" style="border-bottom:medium solid;"><td>&empty;</td><td>h(1&#x2011;8)</td><td>h(1&#x2011;4)</td><td>h(5&#x2011;8)</td><td>h(1&#x2011;2)</td><td>h(3&#x2011;4)</td><td>h(5&#x2011;6)</td><td>h(7&#x2011;8)</td><td>h(1)</td><td>h(2)</td><td>h(3)</td><td>h(4)</td><td>h(5)</td><td>h(6)</td><td>h(7)</td><td>h(8)</td></tr>
+<tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+</table>
+</div>
+
+    </section>
+
+<section data-markdown data-separator="^\n\n\n"><textarea>
 ## Hash Algorithms Used
 - You can use any [cryptographic hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
 - Bitcoin uses *double* SHA-256:
   - Take the SHA-256 of the (binary output) of the SHA-256 of the data block
 - All this hashing causes a significant performance hit
+- Ethereum uses a similar tree, and uses SHA-3 (aka Keccak-256)
 
 
 

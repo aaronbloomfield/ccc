@@ -287,4 +287,14 @@ code.longcode {
 .reveal ul {
   display: block;
   text-align: left;
-  margin: 0 0 0 1em; }
+  margin: 0 0 0 1em;
+}
+
+table.compact {
+  transform-origin:left;
+}
+
+table.compact tr td {
+  font-size: 0.5em;
+  padding: 4px;
+}
