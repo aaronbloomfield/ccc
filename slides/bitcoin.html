@@ -106,22 +106,24 @@
 <ul class=".reveal" style="width:unset;margin-top:20px">
 <li>No need to actually build the tree</li>
 <li>Pair up leafs to get 2nd level hashes
-  <ul><li>If odd #, then use the leaf hash<br>on the level above</li></ul></li></ul>
+  <ul><li>If odd #, then concatenate that<br>hash with itself</li></ul></li></ul>
 
 &nbsp;
 - Pair up 2nd level hashes for 3rd level hashes
-  - Again, if there is an odd number, then propogate the 2nd level hash directly to the 3rd level
+  - Again, if there is an odd number, then concatenate that last odd leaf with itself
+  - (Some implementations instead of concatenating an odd leaf with itself, but just propagates it up; Bitcoin does the former)
 - Keep repeating until you have the root hash
 
 
 
 <h2>Merkle Tree use in practice</h2>
+<!-- the SVGs don't render properly, so we have to use PNGs for this slide -->
 <p>Consider an array of 10 leaf elements of a Merkle tree</p>
-<img src='images/bitcoin/merkle/merkle.dot.5.svg' class='fragment' data-fragment-index='5'>
-<img src='images/bitcoin/merkle/merkle.dot.4.svg' class='fragment' data-fragment-index='4'>
-<img src='images/bitcoin/merkle/merkle.dot.3.svg' class='fragment' data-fragment-index='3'>
-<img src='images/bitcoin/merkle/merkle.dot.2.svg' class='fragment' data-fragment-index='2'>
-<img src='images/bitcoin/merkle/merkle.dot.1.svg'>
+<img src='images/bitcoin/merkle/merkle.dot.5.png' class='fragment' data-fragment-index='5'>
+<img src='images/bitcoin/merkle/merkle.dot.4.png' class='fragment' data-fragment-index='4'>
+<img src='images/bitcoin/merkle/merkle.dot.3.png' class='fragment' data-fragment-index='3'>
+<img src='images/bitcoin/merkle/merkle.dot.2.png' class='fragment' data-fragment-index='2'>
+<img src='images/bitcoin/merkle/merkle.dot.1.png'>
 <p class='fragment' data-fragment-index='6'>Requires $n-1$ or $\Theta(n)$ hashes</p>
 
 
@@ -448,18 +450,67 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 
   <section>
 
+<!-- the SVG arrows adapted from https://stackoverflow.com/questions/20037122/draw-an-arrow-between-two-divs -->
+<svg width="1000" height="1000" style="position:absolute;z-index:1;left:0">
+
+<defs>
+  <marker id="arrow" markerWidth="13" markerHeight="13" refx="2" refy="6" orient="auto">
+      <path d="M2,1 L2,10 L10,6 L2,2" style="fill:red;" />
+  </marker>
+</defs>
+
+<path d="M250,150 L220,320"
+      style="stroke:red; stroke-width: 1.25px; fill: none;
+      marker-end: url(#arrow);"
+      class='fragment' data-fragment-index='1'
+/>
+
+<path d="M250,270 L370,140"
+      style="stroke:red; stroke-width: 1.25px; fill: none;
+      marker-end: url(#arrow);"
+      class='fragment' data-fragment-index='2'
+/>
+
+<path d="M580,320 L700,80"
+      style="stroke:red; stroke-width: 1.25px; fill: none;
+      marker-end: url(#arrow);"
+      class='fragment' data-fragment-index='3'
+/>
+    
+<path d="M580,450 L700,450"
+      style="stroke:red; stroke-width: 1.25px; fill: none;
+      marker-end: url(#arrow);"
+      class='fragment' data-fragment-index='4'
+/>
+
+</svg>
+
+
 <table class="transparent">
   <tr>
     <td>
+
+<table class='transparent'>
+  <tr>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.1.svg" style="border-radius:10px;margin-top:0;margin-bottom:0">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.2.svg" class='fragment' data-fragment-index='1' style="border-radius:10px;margin-top:0">
+    </td>
+  </tr>
+</table>
+
+</td>
+<td>
 
 <table class="transparent">
   <tr><td colspan='2'><h2>Overview</h2></td></tr>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.1.svg" style="border-radius:10px">
-    </td>
-    <td>
-      <img src="images/bitcoin/blocks/blocks.dot.2.svg" class='fragment' data-fragment-index='2' style="border-radius:10px">
+      <img src="images/bitcoin/blocks/blocks.dot.3.svg" class='fragment' data-fragment-index='2' style="border-radius:10px">
     </td>
   </tr>
 </table>
@@ -470,8 +521,12 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 <table class='transparent'>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.3.svg" class='fragment' data-fragment-index='3' style="border-radius:10px">
-      <img src="images/bitcoin/blocks/blocks.dot.4.svg" class='fragment' data-fragment-index='4' style="border-radius:10px">
+      <img src="images/bitcoin/blocks/blocks.dot.4.svg" class='fragment' data-fragment-index='3' style="border-radius:10px">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.5.svg" class='fragment' data-fragment-index='4' style="border-radius:10px">
     </td>
   </tr>
 </table>
@@ -542,17 +597,13 @@ Size: varies; how many: txn_in_count
 
 
 ## Section: Coinbase input
-Size: varies; how many: 1
-
-| Bytes | Name | Type | Notes |
-|-|-|-|-|
-| 32 | hash(null) | char[32] | 32 null (0x00) bytes |
-| 4 | index | unit32_t | 0xffffffff, since there is no previous outpoint |
-| varies | in_script_bytes | csuint | how many bytes in the script |
-| varies | signature_script | char[] | The script containing the public key |
-| 4 | sequence | uint32_t | Sequence number |
-
-Note that a height field was added in [BIP34](https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki)
+- Always the first transaction in a block
+- It's the miner who gets the reward
+- Just like a regular transaction input, except...
+  - The TXID hash is null (32 null (0x00) bytes)
+  - Index is 0xffffffff
+- A height field was added in [BIP34](https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki)
+  - Starting with block [227,836](https://www.blockchain.com/btc/block/227836) (March 24, 2013)
 
 
 

@@ -5,20 +5,20 @@ graph A {
 
 graph B {
 	node [shape=record,fontname="Helvetica"];
-	stack [label=<h<sub>01</sub>=h(h<sub>0</sub>+h<sub>1</sub>)|h<sub>23</sub>=h(h<sub>2</sub>+h<sub>3</sub>)|h<sub>45</sub>=h(h<sub>4</sub>+h<sub>5</sub>)|h<sub>67</sub>=h(h<sub>6</sub>+h<sub>7</sub>)|h<sub>89</sub>=h(h<sub>8</sub>+h<sub>89</sub>)>];
+	stack [label=<h<sub>01</sub>=h(h<sub>0</sub>+h<sub>1</sub>)|h<sub>23</sub>=h(h<sub>2</sub>+h<sub>3</sub>)|h<sub>45</sub>=h(h<sub>4</sub>+h<sub>5</sub>)|h<sub>67</sub>=h(h<sub>6</sub>+h<sub>7</sub>)|h<sub>89</sub>=h(h<sub>8</sub>+h<sub>9</sub>)>];
 }
 
 graph C {
 	node [shape=record,fontname="Helvetica"];
-	stack [label=<h<sub>0-3</sub>=h(h<sub>01</sub>+h<sub>23</sub>) | h<sub>4-7</sub>=h(h<sub>45</sub>+h<sub>67</sub>) | h<sub>89</sub>>];
+	stack [label=<h<sub>0-3</sub>=h(h<sub>01</sub>+h<sub>23</sub>) | h<sub>4-7</sub>=h(h<sub>45</sub>+h<sub>67</sub>) | h<sub>89</sub>'=h(h<sub>89</sub>+h<sub>89</sub>)>];
 }
 
 graph D {
 	node [shape=record,fontname="Helvetica"];
-	stack [label=<h<sub>0-7</sub>=h(h<sub>0-3</sub>+h<sub>4-7</sub>) | h<sub>89</sub>>];
+	stack [label=<h<sub>0-7</sub>=h(h<sub>0-3</sub>+h<sub>4-7</sub>) | h<sub>89</sub>''=h(h<sub>89</sub>'+h<sub>89</sub>')>];
 }
 
 graph E {
 	node [shape=record,fontname="Helvetica"];
-	stack [label=<h<sub>all</sub>=h<sub>0-9</sub>=h(h<sub>0-7</sub>+h<sub>89</sub>)>];
+	stack [label=<h<sub>all</sub>=h<sub>0-9</sub>=h(h<sub>0-7</sub>+h<sub>89</sub>'')>];
 }

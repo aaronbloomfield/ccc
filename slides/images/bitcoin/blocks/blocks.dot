@@ -8,6 +8,18 @@ graph block {
 	title [shape=none,label=Block];
 }
 
+graph header {
+	rankdir="LR";
+	node [fontname="Helvetica",width=3];
+	nonce [shape=Mrecord,label="nonce: 4 bytes"]
+	nBits [shape=Mrecord,label="nBits: 4 bytes"]
+	time [shape=Mrecord,label="time: 4 bytes"]
+	merkle_hash [shape=Mrecord,label="1+ transaction inputs"]
+	prev_hash [shape=Mrecord,label="prev hash: 32 bytes"]
+	version [shape=Mrecord,label="version: 4 bytes"];
+	title [shape=none,label=Header];
+}
+
 graph txn {
 	rankdir="LR";
 	node [fontname="Helvetica",width=3];
