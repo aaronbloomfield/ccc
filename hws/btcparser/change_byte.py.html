@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>change_byte.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">#!/usr/bin/python3</font></i>
+<i><font color="#9A1900"># see the homework description for how to use this</font></i>
+<b><font color="#000080">import</font></b> sys
+<b><font color="#0000FF">assert</font></b> <font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)==</font><font color="#993399">3</font><font color="#990000">)</font>
+data <font color="#990000">=</font> <b><font color="#000000">bytearray</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>stdin<font color="#990000">.</font>buffer<font color="#990000">.</font><b><font color="#000000">read</font></b><font color="#990000">())</font>
+data<font color="#990000">[</font><b><font color="#000000">int</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])]</font> <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">])</font>
+sys<font color="#990000">.</font>stdout<font color="#990000">.</font>buffer<font color="#990000">.</font><b><font color="#000000">write</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>data<font color="#990000">))</font>
+</tt></pre>
+</body>
+</html>

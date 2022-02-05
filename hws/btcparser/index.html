@@ -39,6 +39,11 @@ input file name was blk00000.dat, then it will create a JSON file named
 blk00000.dat.json. If there are errors, it is fine to create the JSON
 file or not – it will not be checked. The format of this file is
 described below.</p>
+<p>The Bitcoin block format that is being parsed for this assignment is
+the format of the first many blocks – specifically before any BIPs were
+proposed and enacted. Thus, the blocks will not contain fields such as
+the height number. Furthermore, the blocks use regular Merkle Trees and
+not Fast Merkle Trees (which were proposed later).</p>
 <h3 id="languages">Languages</h3>
 <p>In theory, this can be implemented in any language. In practice,
 though, it needs to be a language that the auto-graders can compile and
@@ -55,27 +60,53 @@ Bitcoin libraries). However, you are welcome to – and probably should –
 use any JSON libraries.</p>
 <h3 id="provided-files">Provided files</h3>
 <p>We have a number of files of the blockchain itself. Blockchain block
-counting is indexed from 0, so a file that contains the first 10 blocks
-will hold blocks 0-9. Block 0 is the genesis block.</p>
+counting is indexed from 0 (the genesis block), so a file that contains
+the first 10 blocks will hold blocks 0-9.</p>
 <ul>
-<li><a href="blk00000-b0.blk">blk00000-b0.blk</a> is just the genesis
-block</li>
+<li>Files with single blocks
+<ul>
+<li><a href="blk00000-b0.blk">blk00000-b0.blk</a> is block 0, the
+genesis block</li>
+<li><a href="blk00000-b29664.blk">blk00000-b29664.blk</a> is block
+29,664, the first block with a compactSize unsigned integer that takes
+up more than one byte – this may help you ensure you are reading those
+values in properly</li>
+<li>A number of individual block files to help you ensure that the
+Merkle tree hashes are computed properly; see below for their purpose.
+Those block files are blocks <a href="blk00000-b170.blk">170</a>, <a
+href="blk00000-b546.blk">546</a>, <a href="blk00000-b586.blk">586</a>,
+<a href="blk00000-b26816.blk">26,816</a>, <a
+href="blk00000-b2812.blk">2812</a>, <a
+href="blk00000-b49820.blk">49,820</a>, and <a
+href="blk00000-b53066.blk">53,066</a></li>
+</ul></li>
+<li>Files with multiple blocks
+<ul>
 <li><a href="blk00000-f10.blk">blk00000-f10.blk</a> (2.3 Kb) contains
 the first 10 blocks</li>
 <li><a href="blk00000-f100.blk">blk00000-f100.blk</a> (24 Kb) contains
 the first 100 blocks</li>
 <li>blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks. Due
-to this file’s size, it is not kept in this repository, but a link to it
-can be found on the Collab landing page.</li>
-<li>Block 29,664 (<a href="blk00000-b29664.blk">blk00000-b2812.blk</a>)
-is the first block with a compactSize unsigned integer that takes up
-more than one byte – this may help you ensure you are reading those
-values in properly.</li>
+to this file’s size, it is not kept in this repository, but can be found
+on Collab in the Resources tool</li>
+</ul></li>
+<li>Helper programs
+<ul>
+<li><a href="check_genesis_json.py.html">check_genesis_json.py</a> (<a
+href="check_genesis_json.py">src</a>) will help you ensure that your
+JSON output is correct – see the comments in the file for a description
+of how to use it</li>
+<li><a href="change_byte.py.html">change_byte.py</a> (<a
+href="change_byte.py">src</a>) will help with checking for blockchain
+errors – see below for how to use it</li>
+</ul></li>
 </ul>
 <h3 id="part-1-reading-in-the-blockchain">Part 1: Reading in the
 blockchain</h3>
-<p>Your program will take one command-line parameter: the file to read
-in. Sample files are provided above – both large and small.</p>
+<p>Your program will take in exactly one command-line parameter: the
+file to read in. You can assume that there will always be one command
+line parameter provided, and that that file will exist. Sample files are
+provided above – both large and small.</p>
 <h4 id="block-group-file-format">Block group file format</h4>
 <p>The blocks to be verified are grouped together in a file – this file
 is from the Bitcoin system, and if you were to download that and have it
@@ -110,7 +141,7 @@ printable characters). You can see, at the bottom of the hexdump display
 above, the text included in the genesis block for Bitcoin. You may want
 to save the hexdump output to a file (<code>hexdump -C blk00000.dat &gt;
 blk00000.dat.txt</code>), but be warned, as this will be a very large
-file (631 Mb).</p>
+file (631 Mb). You can also use the smaller block files as well.</p>
 <p>The first four bytes (<code>f9 be b4 d9</code>) is the so-called
 “magic number” which identifies the start of a block. The value is
 0xd9b4bef9, or 0xf9beb4d9 in little-Endian. The next four bytes (1d 01
@@ -128,16 +159,15 @@ hex) in the file. You can see this later in the hexdump output:</p>
 can be found in the <a href="../../slides/bitcoin.html#/">Bitcoin
 lecture slides</a>, specifically starting <a
 href="../../slides/bitcoin.html#/blockchain">here</a>. You will need to
-read in the file in binary format, and we provide some sample code,
-above, to show you how to read in binary files and convert some of the
-types.</p>
+read in the file in binary format.</p>
 <p>You will likely want to print out the data read in (and the
 associated fields). This will be changed to a different format in part
 3. As you are printing out the values, you can see what they should be
-<a href="https://www.blockchain.com/btc/block/0">here</a> for block 0.
-That site prints the values in big-Endian, which is how we will be
-printing them in this assignment. However, we are going to print out the
-nBits field in hex; that size prints it out in decimal.</p>
+<a href="https://www.blockchain.com/btc/block/0">here</a> for block 0;
+the output is also shown below. That site prints the values in
+big-Endian, which is how we will be printing them in this assignment.
+However, we are going to print out the nBits field in hex; that size
+prints it out in decimal.</p>
 <p>Some useful hints:</p>
 <ul>
 <li>There really are only five different types in the bitcoin
@@ -146,15 +176,15 @@ compactSize unsigned integers, 32-byte hashes, and variable-length
 scripts. That’s it. All of the blockchain is one of these five types –
 so you can reuse your code from reading in one type to read in another.
 <ul>
-<li>While there are only 5 types, they will be formatted in different
-ways – but each programming language can easily print a number in hex or
-decimal.</li>
+<li>While there are only 5 types, we will be outputting them in
+different ways – but each programming language can easily print a number
+in hex or decimal.</li>
 </ul></li>
 <li>Make sure you have a method that reads in compactSize unsigned ints
 properly, as this will cause your program to crash otherwise. In
 particular, remember that if the variable is more than one byte, then
-all the bytes <em>other</em> than the first are in little-Endian format.
-NOT SURE THIS IS THE CASE…</li>
+all the bytes <em>other</em> than the first are in big-Endian
+format.</li>
 </ul>
 <p>If you can read in all of the input files – especially the large one
 – without any errors, then you’ve successfully completed this part. Note
@@ -181,29 +211,36 @@ requirements</a>); this is not checked for the first block in the
 file)</li>
 <li>Invalid transaction version (we are only allowing version 1 for this
 assignment)</li>
-<li>The Merkle tree hash in the header is incorrect</li>
+<li>The Merkle tree hash in the header is incorrect (implement this last
+– see below)</li>
 </ol>
 <p>If an error is found, the output should only be <code>error 5 block
 17</code> with the appropriate error number and block number (remember
-that blocks start at 0, not 1).</p>
+that blocks start at 0, not 1). If no errors are found, then the output
+should only be “no errors X blocks”, where ‘X’ is an integer. (We are
+going to use the plural “blocks” even when there is only 1 block).</p>
 <p>If there are multiple errors, you should report the one found in the
 earlier block. For example, if there is a modification to the Merkle
 hash in block 10, then both block 10 will have an error (#6 – bad Merkle
 hash) as well as block 11 (#3 – bad previous header hash). In this case,
 the error in block 10 should be reported.</p>
 <p>If there are multiple errors in a single block, you can report any of
-them. Because this makes it very difficult to grade, we are not going to
-test this possibility.</p>
+them. Because this makes it very difficult to grade, we are going to
+avoid this possibility when grading your assignment.</p>
 <p>Test this well! We are going to provide all sorts of messed-up files
-to your program as input. The file provided to your program not even be
-a valid blockchain file! You are guaranteed that the following will be
-true:</p>
+to your program as input. The file provided to your program may not even
+be a valid blockchain file! You are guaranteed that the following will
+be true:</p>
 <ul>
-<li>The file will be non-zero in size</li>
-<li>The blocks will be consecutive in the file
+<li>The file name specified as the command-line parameter will exist,
+will be readable, and will be non-zero in size</li>
+<li>The blocks – if they exist – will be consecutive in the file
 <ul>
 <li>This means that the block order will be 0,1,2,3,4,… – not, for
 example 0,2,1,4,3,…</li>
+<li>Formally, this means that the previous header hash for a given block
+will be for the block immediately preceding it in the file (obviously
+this doesn’t apply for the first block in the file)</li>
 <li>Note that the actual Bitcoin block chain files downloaded by the BTC
 client do not assure they are in order!</li>
 </ul></li>
@@ -227,14 +264,15 @@ look like:</p>
 <p>The first line must be there exactly as shown (pound sign, then
 exclamation point, then <code>/bin/bash</code>). For the second line,
 replace <code>./a.out</code> with how to run your (compiled) program:
-<code>java BTCBlockChain</code> or <code>python3 BTCHW</code> (use
-<code>python3</code>, not <code>python</code>). Be sure to put the
+<code>java BTCBlockChain</code> or <code>python3 btc-parse.py</code>
+(use <code>python3</code>, not <code>python</code>). Be sure to put the
 <code>$@</code> on that line as well.</p>
-<p>You should then be able to run your program via: <code>./parse.sh
-blk00000.dat</code>.</p>
+<p>Once created, you will have to ensure it can be executed: <code>chmod
+755 parse.sh</code>. You should then be able to run your program via:
+<code>./parse.sh blk00000.dat</code>.</p>
 <p>The following might be what it would look like for Python:</p>
 <pre><code>#!/bin/bash
-python3 ./btc-parse.py $@</code></pre>
+python3 btc-parse.py $@</code></pre>
 <p>And for Java:</p>
 <pre><code>#!/bin/bash
 java BTCParse $@</code></pre>
@@ -242,31 +280,37 @@ java BTCParse $@</code></pre>
 <p>To test each error, you should try to change one byte in the file –
 specifically, a byte in the particular field you are checking for
 errors. For example, if you want to modify the magic number, you would
-change one of the first 4 bytes (indexed from zero, that’s bytes 0, 1,
-2, or 3). To do that, you can use the following Python program, which
-you can save as <code>change_byte.py</code>:</p>
+change one of the first 4 bytes; bytes are indexed from zero, that’s
+bytes 0, 1, 2, or 3. To do that, you can use the following Python
+program, which you can save as <code>change_byte.py</code>:</p>
 <pre><code>#!/usr/bin/python3
 import sys
 assert (len(sys.argv)==3)
 data = bytearray(sys.stdin.buffer.read())
 data[int(sys.argv[1])] = int(sys.argv[2])
 sys.stdout.buffer.write(bytes(data))</code></pre>
-<p>(Yes, this could be compacted more, but then it would be even more
-unreadable). This program will read in binary data from standard input,
-change one byte, and write the resulting data to standard output. It
-takes in two command-line parameters: the byte number to change, and the
-value to change it to; both are decimal numbers. There is no error
-checking in this program! You would use it as such:</p>
+<p>This can also be downloaded via <a
+href="change_byte.py.html">change_byte.py</a> (<a
+href="change_byte.py">src</a>). Yes, this program could be compacted
+more, but then it would be even more unreadable. This program will read
+in binary data from standard input, change one byte, and write the
+resulting data to standard output. It takes in two command-line
+parameters: the byte number to change, and the value to change it to;
+both are decimal numbers. There is no error checking in this program!
+You would use it as such:</p>
 <pre><code>$ cat blk00000-f10.blk | ./change_byte.py 2 0 &gt; test.blk
 $ ./btc-parse.py test.blk
 error 1 block 0
 $</code></pre>
 <p>The first line may be different on your machine (especially if you
 use Windows), and it may be invoked slightly differently than what is
-shown below. Here are a few more execution runs to show you some other
-errors. You should test it beyond these! We are certainly going to when
-we grade your assignment…</p>
-<pre><code>$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
+shown below. Here are a few more execution runs to show you both
+successful execution runs and runs with some errors. You should test it
+beyond these! We are certainly going to when we grade your
+assignment…</p>
+<pre><code>$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-b1.blk 
+no errors 1 blocks
+$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
 no errors 10 blocks
 $ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-f100.blk 
 no errors 100 blocks
@@ -296,19 +340,31 @@ error 6 block 0
 $</code></pre>
 <p>These test are by no means comprehensive! But they are the ones that
 will be used for the visible tests when you submit the file to
-Gradescope.</p>
+Gradescope. The hidden tests, which your grade will be based on similar
+tests different than the ones shown above.</p>
 <h4 id="merkle-tree-hashes">Merkle Tree hashes</h4>
 <p>This is likely the hardest part of the assignment. Work on this last,
 as you can still get a lot of partial credit if this part is not
-implemented.</p>
+implemented. In particular, you may want to ensure that the JSON output,
+below, is working first before you complete this part.</p>
+<p>The computation of the Merkle tree root hash is <a
+href="../../slides/bitcoin.html#/merkle">discussed in the lecture
+slides</a>. You will need to be familiar with that before proceeding. It
+is expected that you will use the SHA-256 hashing programs that come
+with your programming language; use of these is discssed in the last few
+slides of the <a href="../../slides/encryption.html#/hashing">hashing
+section of the Encryption slide set</a>.</p>
 <p>Some important notes to remember:</p>
 <ul>
-<li>The hashes are concatenated, and then that concatenation is used in
-the level above</li>
+<li>The hashes for the children nodes are concatenated, and then the
+hash of that concatenation is used in the level above</li>
 <li>If there is an odd number of hashes in a given level, then the last
 one is concatenated to itself, and the hash of that is used in the level
 above</li>
 <li>The hashes need to be in binary little-Endian form</li>
+<li>Bitcoin uses a double hashing, so each hash is really the sha256
+hash of the sha256 hash of the data itself</li>
+<li>This program is <em>NOT</em> using Fast Merkle trees</li>
 </ul>
 <p>For testing the Merkle tree hashes, we provide a few particular
 blocks that have a given number of transactions:</p>
@@ -336,45 +392,45 @@ Wikipedia</a>. The format must be as described below, but your
 whitespace doesn’t matter. We are going to check it via a JSON parser.
 Your output should look like the following:</p>
 <pre><code>{
-        &quot;blocks&quot;: [
-            {
-                &quot;height&quot;: 0,
-                &quot;file_position&quot;: 0,
-                &quot;version&quot;: 1,
-                &quot;previous_hash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
-                &quot;merkle_hash&quot;: &quot;4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b&quot;,
-                &quot;timestamp&quot;: 1231006505,
-                &quot;timestamp_readable&quot;: &quot;2009-01-03 13:15:05&quot;,
-                &quot;nbits&quot;: &quot;1d00ffff&quot;,
-                &quot;nonce&quot;: 2083236893,
-                &quot;txn_count&quot;: 1,
-                &quot;tranxactions&quot;: [
-                    {
-                        &quot;version&quot;: 1,
-                        &quot;txn_in_count&quot;: 1,
-                        &quot;txn_inputs&quot;: [
-                            {
-                                &quot;utxo_hash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
-                                &quot;index&quot;: 4294967295,
-                                &quot;input_script_size&quot;: 77,
-                                &quot;input_script_bytes&quot;: &quot;736b6e616220726f662074756f6c69616220646e6f63657320666f206b6e697262206e6f20726f6c6c65636e61684320393030322f6e614a2f33302073656d6954206568544504011d00ffff04&quot;,
-                                &quot;sequence&quot;: 4294967295
-                            }
-                        ],
-                        &quot;txn_out_count&quot;: 1,
-                        &quot;txn_outputs&quot;: [
-                            {
-                                &quot;satoshis&quot;: 5000000000,
-                                &quot;output_script_size&quot;: 67,
-                                &quot;output_script_hex&quot;: &quot;ac5f1df16b2b704c8a578d0bbaf74d385cde12c11ee50455f3c438ef4c3fbcf649b6de611feae06279a60939e028a8d65c10b73071a6f16719274855feb0fd8a670441&quot;
-                            }
-                        ],
-                        &quot;lock_time&quot;: 0
-                    }
-                ]
-            }
+    &quot;blocks&quot;: [
+        {
+            &quot;height&quot;: 0,
+            &quot;file_position&quot;: 0,
+            &quot;version&quot;: 1,
+            &quot;previous_hash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+            &quot;merkle_hash&quot;: &quot;4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b&quot;,
+            &quot;timestamp&quot;: 1231006505,
+            &quot;timestamp_readable&quot;: &quot;2009-01-03 13:15:05&quot;,
+            &quot;nbits&quot;: &quot;1d00ffff&quot;,
+            &quot;nonce&quot;: 2083236893,
+            &quot;txn_count&quot;: 1,
+            &quot;transactions&quot;: [
+                {
+                    &quot;version&quot;: 1,
+                    &quot;txn_in_count&quot;: 1,
+                    &quot;txn_inputs&quot;: [
+                        {
+                            &quot;utxo_hash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+                            &quot;index&quot;: 4294967295,
+                            &quot;input_script_size&quot;: 77,
+                            &quot;input_script_bytes&quot;: &quot;736b6e616220726f662074756f6c69616220646e6f63657320666f206b6e697262206e6f20726f6c6c65636e61684320393030322f6e614a2f33302073656d6954206568544504011d00ffff04&quot;,
+                            &quot;sequence&quot;: 4294967295
+                        }
+                    ],
+                    &quot;txn_out_count&quot;: 1,
+                    &quot;txn_outputs&quot;: [
+                        {
+                            &quot;satoshis&quot;: 5000000000,
+                            &quot;output_script_size&quot;: 67,
+                            &quot;output_script_hex&quot;: &quot;ac5f1df16b2b704c8a578d0bbaf74d385cde12c11ee50455f3c438ef4c3fbcf649b6de611feae06279a60939e028a8d65c10b73071a6f16719274855feb0fd8a670441&quot;
+                        }
+                    ],
+                    &quot;lock_time&quot;: 0
+                }
+            ]
+        }
 
-        &quot;height&quot;: 1
+    &quot;height&quot;: 1
 }</code></pre>
 <p>A bunch of notes:</p>
 <ul>
@@ -382,15 +438,15 @@ Your output should look like the following:</p>
 always the same, and was verified when the blockchain was read in</li>
 <li>Likewise, we don’t need to include the block size, since that’s not
 as important in JSON</li>
-<li>That being said, you can put in additional fields if you would like
-– it’s just that the fields shown above must be there – the one above as
-a ‘timestamp_readable’ and ‘file_position’, which are NOT required
-fields</li>
-<li>all hexadecimal values should NOT have the leading ‘0x’</li>
-<li>integer values should not have quotes around them (that’s a JSON
+<li>You can put in additional fields if you would like – it’s just that
+the fields shown above must be there. In the output above, both
+‘timestamp_readable’ and ‘file_position’ are NOT required fields</li>
+<li>All hexadecimal values should NOT have a leading ‘0x’</li>
+<li>Integer values should not have quotes around them (that’s a JSON
 feature), but all other values should be enclosed in double quotes</li>
-<li>if you have a list if items in an array, JSON is not happy with a
-comma after the last one; you can see this in… FIXME</li>
+<li>Ff you have a list if items in an array, JSON is not happy with a
+comma after the last one; you can see this after the ‘lock_time’ value –
+there is no comma after its value 0.</li>
 <li>You’ll notice that the ‘height’ field is at the end – you won’t
 know, when starting to read the file, how many blocks are therein. So we
 put that at the end.</li>
@@ -402,7 +458,8 @@ base-10.</li>
 <li>All hash values should be printed in big-Endian. Note that they are
 stored in the file in little-Endian!</li>
 <li>The height of the first block in the file should be displayed as 0,
-even if it is not the genesis block</li>
+even if it is not the genesis block; the height increments from
+there.</li>
 </ul>
 <p>In particular, this output need to be written to a file, NOT to
 standard output. So all of the output lines from part 1 (other than
@@ -415,15 +472,22 @@ check it in that case.</p>
 <code>jsonlint-php blk00000-first10.dat.json</code>. This program is
 installed on the Linux VirtualBox image. If you not using VirtualBox,
 you can install it yourself, or use online sites such as <a
-href="https://jsonlint.com/">these</a>. Make sure you test it with
-multiple blocks! However, the online site will probably not like you
-trying to upload a huge JSON file.</p>
-<p>You can use the check_genesis_json.py file to ensure that your JSON
-is in the right format. It just has a bunch of <code>assert()</code>
-calls to ensure that the format is what is shown above. Remember that
-white space doesn’t matter, so you are welcome to use any spacing that
-you want. This program will also be used as one of the visible
-submission tests in Gradescope.</p>
+href="https://jsonlint.com/">these</a>. You can also use a one-line
+Python command to test it:</p>
+<pre><code>$ cat blk00000-b0.blk.json | python3 -c &quot;import json,sys; json.load(sys.stdin)&quot;
+$</code></pre>
+<p>If there is no output (specifically, no error output), then it was
+parsed correctly.</p>
+<p>Make sure you test it with multiple blocks! However, the online site
+will probably not like you trying to upload a huge JSON file.</p>
+<p>You should also use the <a
+href="check_genesis_json.py">check_genesis_json.py</a> program to ensure
+that your JSON is in the right format. This is intended to ensure that
+you have the right fields for when we grade the assignment. It just has
+a bunch of <code>assert()</code> calls to ensure that the format is what
+is shown above. Remember that white space doesn’t matter, so you are
+welcome to use any spacing that you want. This program will also be used
+as one of the visible submission tests in Gradescope.</p>
 <h3 id="deliverables">Deliverables</h3>
 <p>You must submit a minimum of three files; more is fine.</p>
 <ul>
