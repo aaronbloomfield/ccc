@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Bitcoin Blockchain Parser Assignment</title>
+  <title>Bitcoin Blockchain Parser</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -20,8 +20,7 @@
   <![endif]-->
 </head>
 <body>
-<h1 id="bitcoin-blockchain-parser-assignment">Bitcoin Blockchain Parser
-Assignment</h1>
+<h1 id="bitcoin-blockchain-parser">Bitcoin Blockchain Parser</h1>
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a
 href="../index.md">md</a>)</p>
 <h3 id="overview">Overview</h3>
@@ -180,11 +179,17 @@ so you can reuse your code from reading in one type to read in another.
 different ways – but each programming language can easily print a number
 in hex or decimal.</li>
 </ul></li>
-<li>Make sure you have a method that reads in compactSize unsigned ints
-properly, as this will cause your program to crash otherwise. In
-particular, remember that if the variable is more than one byte, then
-all the bytes <em>other</em> than the first are in big-Endian
-format.</li>
+<li>Make sure you have a method that reads in compactSize unsigned
+integers properly, as this will cause your program to crash otherwise.
+In particular, remember that if the variable is more than one byte, then
+all the bytes <em>other</em> than the first are in little-Endian format.
+HOWEVER, some routines that read in the values will swap them for you,
+and some will not. This is explicitly why we provide <a
+href="blk00000-b29664.blk">block 29,664</a> for you – that is the first
+block that has such a value that is more than one byte (the txn_in_count
+for the second transaction is 320); you find see more information about
+that transaction <a
+href="https://blockchair.com/bitcoin/block/29664">here</a>.</li>
 </ul>
 <p>If you can read in all of the input files – especially the large one
 – without any errors, then you’ve successfully completed this part. Note
@@ -299,7 +304,7 @@ parameters: the byte number to change, and the value to change it to;
 both are decimal numbers. There is no error checking in this program!
 You would use it as such:</p>
 <pre><code>$ cat blk00000-f10.blk | ./change_byte.py 2 0 &gt; test.blk
-$ ./btc-parse.py test.blk
+$ ./parse.sh test.blk
 error 1 block 0
 $</code></pre>
 <p>The first line may be different on your machine (especially if you
@@ -308,34 +313,34 @@ shown below. Here are a few more execution runs to show you both
 successful execution runs and runs with some errors. You should test it
 beyond these! We are certainly going to when we grade your
 assignment…</p>
-<pre><code>$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-b1.blk 
+<pre><code>$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-b0.blk 
 no errors 1 blocks
-$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
+$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
 no errors 10 blocks
-$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-f100.blk 
+$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-f100.blk 
 no errors 100 blocks
-$ ./btc-parse.py blk00000.blk 
+$ ./parse.sh blk00000.blk 
 no errors 119341 blocks
 $ cat blk00000-f10.blk | ./change_byte.py 2 0 &gt; test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 1 block 0
 $ cat blk00000-f10.blk | ./change_byte.py 10 7 &gt; test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 2 block 0
 $ cat blk00000-f10.blk | ./change_byte.py 14 3 &gt; test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 3 block 1
 $ cat blk00000-f10.blk | ./change_byte.py 310 23 &gt; test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 3 block 1
 $ cat blk00000-f10.blk | ./change_byte.py 372 0 &gt; test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 4 block 1
 $ cat blk00000-f10.blk | ./change_byte.py 89 17 &gt; test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 5 block 0
 $ cat blk00000-f10.blk | ./change_byte.py 46 3 &gt; test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 6 block 0
 $</code></pre>
 <p>These test are by no means comprehensive! But they are the ones that

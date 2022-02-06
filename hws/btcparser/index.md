@@ -1,5 +1,5 @@
-Bitcoin Blockchain Parser Assignment
-====================================
+Bitcoin Blockchain Parser
+=========================
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
@@ -87,7 +87,7 @@ Some useful hints:
 
 - There really are only five different types in the bitcoin blockchain: 4-byte unsigned integers, 8-byte unsigned integers, compactSize unsigned integers, 32-byte hashes, and variable-length scripts.  That's it.  All of the blockchain is one of these five types -- so you can reuse your code from reading in one type to read in another.
   - While there are only 5 types, we will be outputting them in different ways -- but each programming language can easily print a number in hex or decimal.
-- Make sure you have a method that reads in compactSize unsigned ints properly, as this will cause your program to crash otherwise.  In particular, remember that if the variable is more than one byte, then all the bytes *other* than the first are in big-Endian format.
+- Make sure you have a method that reads in compactSize unsigned integers properly, as this will cause your program to crash otherwise.  In particular, remember that if the variable is more than one byte, then all the bytes *other* than the first are in little-Endian format.  HOWEVER, some routines that read in the values will swap them for you, and some will not.  This is explicitly why we provide [block 29,664](blk00000-b29664.blk) for you -- that is the first block that has such a value that is more than one byte (the txn_in_count for the second transaction is 320); you find see more information about that transaction [here](https://blockchair.com/bitcoin/block/29664).
 
 If you can read in all of the input files -- especially the large one -- without any errors, then you've successfully completed this part.  Note that you may want to redirect your output to a file, since that's a lot of text to be output to the screen.
 
@@ -165,7 +165,7 @@ This can also be downloaded via [change_byte.py](change_byte.py.html) ([src](cha
 
 ```
 $ cat blk00000-f10.blk | ./change_byte.py 2 0 > test.blk
-$ ./btc-parse.py test.blk
+$ ./parse.sh test.blk
 error 1 block 0
 $
 ```
@@ -173,34 +173,34 @@ $
 The first line may be different on your machine (especially if you use Windows), and it may be invoked slightly differently than what is shown below.  Here are a few more execution runs to show you both successful execution runs and runs with some errors.  You should test it beyond these!  We are certainly going to when we grade your assignment...
 
 ```
-$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-b1.blk 
+$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-b0.blk 
 no errors 1 blocks
-$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
+$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
 no errors 10 blocks
-$ ./btc-parse.py ~/Dropbox/git/ccc/hws/btcparser/blk00000-f100.blk 
+$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-f100.blk 
 no errors 100 blocks
-$ ./btc-parse.py blk00000.blk 
+$ ./parse.sh blk00000.blk 
 no errors 119341 blocks
 $ cat blk00000-f10.blk | ./change_byte.py 2 0 > test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 1 block 0
 $ cat blk00000-f10.blk | ./change_byte.py 10 7 > test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 2 block 0
 $ cat blk00000-f10.blk | ./change_byte.py 14 3 > test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 3 block 1
 $ cat blk00000-f10.blk | ./change_byte.py 310 23 > test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 3 block 1
 $ cat blk00000-f10.blk | ./change_byte.py 372 0 > test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 4 block 1
 $ cat blk00000-f10.blk | ./change_byte.py 89 17 > test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 5 block 0
 $ cat blk00000-f10.blk | ./change_byte.py 46 3 > test.blk
-$ ./btc-parse.py test.blk 
+$ ./parse.sh test.blk 
 error 6 block 0
 $
 ```

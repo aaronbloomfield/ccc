@@ -72,6 +72,7 @@
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Merkle Trees (aka Hash Trees)
 - A tree, often binary, where each *leaf* node stores the data and a *hash* of that data
+  - Often an *almost perfect binary tree*, like a binary heap
 - Each *internal node* stores the hash of the concatenation of the hashes of its children
   - Can be other operations other than concatenation
 - Purpose: to prevent changing one leaf node without changing all the hashes above it
@@ -111,7 +112,7 @@
 &nbsp;
 - Pair up 2nd level hashes for 3rd level hashes
   - Again, if there is an odd number, then concatenate that last odd leaf with itself
-  - (Some implementations instead of concatenating an odd leaf with itself, but just propagates it up; Bitcoin does the former)
+  - (Some implementations: instead of concatenating an odd leaf with itself, but just propagates it up; Bitcoin does the former)
 - Keep repeating until you have the root hash
 
 
@@ -147,7 +148,7 @@ Given a Merkle tree:
 <p>From node <i>i</i>:</p>
 <ul>
 <li>left child: $2 \ast i$ </li>
-<li>right child: $(2 \ast i)+1$ </li>
+<li style="text-align:left;">right child: $(2 \ast i)+1$ </li>
 <li>parent: $\lfloor i/2 \rfloor$</li>
 </ul>
 </td></tr></table>
@@ -167,7 +168,7 @@ Given a Merkle tree:
 - Bitcoin uses *double* SHA-256:
   - Take the SHA-256 of the (binary output) of the SHA-256 of the data block
 - All this hashing causes a significant performance hit
-- Ethereum uses a similar tree, and uses SHA-3 (aka Keccak-256)
+- Ethereum uses a somewhat similar tree, and uses SHA-3 (aka Keccak-256)
 
 
 
@@ -208,7 +209,7 @@ Given a Merkle tree:
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Endian-ness
 - Everything in Bitcoin's blockchain is little-Endian
-- The hash for block 1 is:
+- The hash for Bitcoin block 0 is:
     - Little-Endian: 0x6fe28c0ab6f1b372c1a6a246ae63f74f931e836 5e15a089c68d6190000000000
 	- Big-Endian:    0x000000000019d6689c085ae165831e934ff763a e46a2a6c172b3f1b60a8ce26f
 - When presenting hashes:
@@ -279,26 +280,46 @@ System.out.println(d);
     </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
+## History
+- The first viable cryptocurrency, it was created in 2008 by Satoshi Nakamoto
+  - That's a pseudonym; nobody knows who the real person (or group) that created it
+  - Although the person is [likely British](https://en.wikipedia.org/wiki/Satoshi_Nakamoto#Characteristics_and_identity)
+- It is now fully open source
+- It was also one of the first digital-only currencies that didn't bankrupt the creator
+
+
+
+## Symbols and conversions
+- &#8383; is the symbol for BTC
+  - Both &#8383; and 'BTC' are used interchangably
+- A *satoshi* is the smallest amount of BTC that can be transacted
+  - 1 BTC = $10^8$ sat
+  - No standardized symbol for satoshi
+- All BTC transaction amounts are represented as a integer number of satoshis
+  - As an 8-byte little-Endian long int
+
+
+
 ## Wallets
 - A wallet is one (or more) ECDSA public/private key pairs
   - Each transaction can have a separate key pair
 - The public key of the key pair is hashed to get the BTC address
-  - This a wallet can have *multiple* BTC addresses
-  - This address is called the *invoice address*
+  - Thus a wallet can have *multiple* BTC addresses
+  - A single such address is called the *invoice address*
 
 
 
 ## Funding
 - Bitcoins are only created by mining
-- Initially 50 BTC per mine
+- Initially 50 BTC per mined block
   - A block is mined every 10 minutes (ideally)
-- Reward halves every 210,000 blocks mined
+- Reward halves every 210,000 blocks mined (about every 4 years)
   - Current reward: 6.25 BTC
   - Current circulation: about 19M BTC (90% of final amount)
 - Next halving is expected on March 16, 2024
 - Last halving is in 2140
   - 128 total halvings by then
-  - Mining reward is thus $\frac{50}{2^{32}}$ = 0.000000011641532 BTC
+  - Mining reward then will be $\frac{50}{2^{32}}$ = 0.000000011641532 BTC
 - Total (and final!) BTC in circulation will be 21M
 
 
@@ -354,7 +375,7 @@ YXQuCg==
 $ 
 </code></pre>
 
-- Note that this text did not produce a `+` or `/` in the base 64 encoding...
+- Note that this particular text did not produce a `+` or `/` in the base 64 encoding
 
 
 
@@ -374,7 +395,7 @@ $
 
 
 ## RIPEMD-160 hash
-- A 160 bit hash that is different in how it works from SHA-256
+- A 160 bit hash that is different in how it works from SHA-256, but with the same general concepts
 
 ```
 $ openssl rmd160 lorem-ipsum.txt 
@@ -389,10 +410,11 @@ $
 - aka "invoice address" or "invoice"
 - Algorithm to compute:
   1. Given an ECDSA public/private key pair...
-  2. Perform SHA-256 on the public key
-  3. Perform RIPEMD-160 on that SHA-256 result
-  4. Prefix that with the version number (0x00 for the main network)
-  5. Generate the checksum: Perform SHA-256 twice on the RIPEMD-160 result, and take the first 4 bytes
+  2. Perform SHA-256 on the (binary of the) public key
+  3. Perform RIPEMD-160 on that (binary) SHA-256 result
+  4. Prefix that with the version number
+     0 0x00 for the main network
+  5. Generate the checksum: Perform SHA-256 twice on the (binary) RIPEMD-160 result, and take the first 4 bytes
   6. The key is the version (0x00), the RIPEMD-160 result, and the checksum concatenated together
   7. Convert to a byte string using base58 encoding
 
@@ -419,6 +441,15 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
   00 f54a5851e9372b87810a8e60cdd2e7cfd80b6e31 c7f18fe8
 - Convert that (binary) hex value to base 58: 
   1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
+
+
+
+## Confirmations
+- As the blockchain grows, it becomes harder to change transactions many blocks in the past
+- Each additional block since a given transaction is a "confirmation" that the given transaction is "permanent"
+  - Formally: the number of confirmations of a block is the number of successive blocks since then in the blockchain
+- The more confirmations, the more confident you are that the transaction will not change
+  - We'll talk later about how many confirmations, how to attack this, etc.
 </code></pre>
   </textarea></section>
 
@@ -439,7 +470,7 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
   - Preamble
   - Header
   - Transaction count: *txn_count* (at least 1)
-  - *txn_count* transaction(s)
+  - Transaction(s)
     - Among other values, each transaction contains:
 	  - A non-zero number of transaction inputs
 	    - The first transaction in a block contains the coinbase input instead of this
@@ -538,13 +569,17 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Section: Preamble
-- Size: 8 bytes; how many: 1
-  - Four bytes are the *magic number*
-    - Meant to be able to easily identify the start of a block
-	- Value: 0xd9b4bef9 (0xf9beb4d9 in little-Endian)
-  - Four bytes are the block size
-    - In little-Endian
-- Technically, this is not part of the block itself, but it is before each block in the files that hold all the blocks
+Size: 8 bytes; how many: 1
+
+| Bytes | Name | Type | Notes |
+|-|-|-|-|
+| 4 | magic_number | uint32 | 0xf9beb4d9 in little-Endian |
+| 4 | version | uint32 | The block version number |
+
+&nbsp;
+
+- Magic number: meant to be able to easily identify the start of a block
+- Technically, this is not part of the block itself, but it is before each block in the files that hold multiple blocks
 
 
 
@@ -553,12 +588,12 @@ Size: 80 bytes; how many: 1
 
 | Bytes | Name | Type | Notes |
 |-|-|-|-|
-| 4 | version | int32_t | The block version number |
+| 4 | version | int32 | The block version number |
 | 32 | prev_header_hash | char[32] | The SHA256(SHA256()) of the previous block's header |
-| 32 | merkle_root_hash | char[32] | The SHA256(SHA256()) of the Merkle Tree root |
-| 4 | time | uint32_t | The Unix time of the block |
-| 4 | nBits | uint32_t | The encoded hash target |
-| 4 | nonce | uint32_t | The nonce |
+| 32 | merkle_root_hash | char[32] | The Merkle Tree root hash |
+| 4 | time | uint32 | The Unix time of the block |
+| 4 | nBits | uint32 | The encoded hash target |
+| 4 | nonce | uint32 | The nonce |
 
 
 
@@ -574,12 +609,12 @@ Size: varies; how many: txn_count
 
 | Bytes | Name | Type | Notes |
 |-|-|-|-|
-| 4 | version | int32_t | The transaction version number |
+| 4 | version | int32 | The transaction version number |
 | varies | tx_in_count | csuint | The number of inputs for this transaction |
 | varies | tx_in | (subsection) | The transaction input(s)
 | varies | tx_out_count | csuint | The number of outputs for this transaction |
 | varies | tx_out | (subsection) | The transaction output(s)
-| 4 | lock_time | uint32_t | When UTXO can be spent |
+| 4 | lock_time | uint32 | When UTXO can be spent |
 
 
 
@@ -589,10 +624,10 @@ Size: varies; how many: txn_in_count
 | Bytes | Name | Type | Notes |
 |-|-|-|-|
 | 32 | hash | char[32] | The TXID of the transaction holding the output to spend |
-| 4 | index | uint32_t | The output index |
+| 4 | index | uint32 | The output index |
 | varies | in_script_bytes | csuint | how many bytes in the script |
 | varies | signature_script | char[] | The script containing the public key |
-| 4 | sequence | uint32_t | Sequence number, usually 0xffffffff |
+| 4 | sequence | uint32 | Sequence number, usually 0xffffffff |
 
 
 
@@ -643,7 +678,7 @@ Size: varies; how many: txn_out_count
 - It's like the stack we all know and love, with some differences:
   - It has *many* more operations
     - Pop 2, pop second, swap top two, etc.
-  - Each value therein can be a different size
+  - Each value on the stack can be a different size
   - It keeps track of the *type* of each value as well
 
 
@@ -670,10 +705,10 @@ Size: varies; how many: txn_out_count
 ## How a Bitcoin TXN is verified
 - To spend a UTXO:
   - Take the input script (aka sigscript) from the TXN that is trying to spend the UTXO
-  - Take the output script that created the UTXO
+  - Take the output script (aka pubkey script) that created the UTXO
   - Concatenate these together (input script before output script), and execute
   - If the result of these is true, then the coins can be spent (transferred)
-    - Formally, if the top value on the stack is true
+    - Formally, if the top value on the stack is true after execution
 
 
 
@@ -689,10 +724,10 @@ Size: varies; how many: txn_out_count
 
 ## Output scripts
 - A typical output script will state:
-  - The redeemer must provide a public key that matches the hash in the output script
+  - The redeemer must provide a public key that matches the hash listed in the output script
     - Recall that a BTC address is a hashed public key
   - The redeemer must sign the entire UTXO transaction with that public key
-  - Called the 'pubkey script' because it (typically) requests a public key
+  - Called the 'pubkey script' because it (typically) requests a public key (or hash of one)
 - A typical input script will provide:
   - The public key that matches the hash in the output script
   - A signature of the entire transaction
@@ -705,7 +740,7 @@ Size: varies; how many: txn_out_count
   - Typically that is just two data items:
 - The signature of the *entire* UTXO transaction
   - Meaning the transaction that created the BTC that is trying to be spent
-  - Created by the private key of the Bitcoin key pair
+  - The signature is created by the private key of the Bitcoin key pair
   - This is the sender verifying that this transaction really came from the key pair's private key
 - The public key of the sending Bitcoin key pair
   - The hash of this key is in the UTXO's output script
@@ -722,7 +757,7 @@ Size: varies; how many: txn_out_count
 | 1-75 | (push) | Push that many (following) bytes onto the stack |
 | 118&nbsp;=&nbsp;0x76 | OP_DUP | s.push(s.top()) |
 | 169&nbsp;=&nbsp;0xa9 | OP_HASH160 | s.push(RIPEMD160(SHA256(s.pop()))) |
-| 136&nbsp;=&nbsp;0x88 | OP_EQUAL- VERIFY | OP_EQUAL: s.push(s.top()==s.top()); OP_VERIFY: abort if s.top() is false |
+| 136&nbsp;=&nbsp;0x88 | OP_EQUAL_ VERIFY | OP_EQUAL: s.push(s.top()==s.top()); OP_VERIFY: abort if s.top() is false |
 | 172&nbsp;=&nbsp;0xac | OP_CHECKSIG | Check the sig of the *previous* TXN |
 
 
@@ -735,7 +770,7 @@ Size: varies; how many: txn_out_count
 - Decrypts $s$ with $k_{pub}$ to get $h'$
 - Verifies $h == h'$, and pushes result (true (1) or false (0)) onto stack
 - OP_CHECKSIGVERIFY will run OP_VERIFY after
-  - OP_VERIFY: abort if stack top is not true
+  - OP_VERIFY: abort if stack top is not true (1)
 
 
 
@@ -745,10 +780,10 @@ This is a standard pay-to-pubkey-hash (P2PKH) script:
 
 ```
   76         A9             14
-OP_DUP   OP_HASH160    Bytes to push
+OP_DUP   OP_HASH160    Bytes to push (0x14 == 20)
 
 89 AB CD EF AB BA AB BA AB BA AB BA AB BA AB BA AB BA AB BA
-                      Data to push
+                 20 bytes of data to push
 
       88             AC
 OP_EQUALVERIFY    OP_CHECKSIG
@@ -768,10 +803,10 @@ This is a standard pay-to-pubkey-hash script:
 
 ```
   76         A9             14
-OP_DUP   OP_HASH160    Bytes to push
+OP_DUP   OP_HASH160    Bytes to push (0x14 == 20)
 
 89 AB CD EF AB BA AB BA AB BA AB BA AB BA AB BA AB BA AB BA
-                      Data to push
+                 20 bytes of data to push
 
       88             AC
 OP_EQUALVERIFY    OP_CHECKSIG
@@ -792,7 +827,7 @@ scriptSig: <sig> <pubKey>
   - `<sig>`: a signature of the *entire* transaction
   - `<pubKey>`: the public key whose hash matches what's in the UTXO's output script
 - Input script concatenated with the output script:
-  - (the horizontal line shows the separator between the two scripts)
+  - (the horizontal line is just to show the separator between the two scripts)
 
 ```
 <sig>
@@ -999,26 +1034,40 @@ OP_CHECKSIG
 
 
 ## Problems with P2PK transactions
+- This is the public key version, not the hash of the public key version
 - The public key needs to be known (and displayed) in advance
   - One could (theoretically) determine the private key with a quantum computer and spend the UTXO
-  - You can't determine the keys from the hash of the keys
-- Public keys are LONG (~100 characters)
-  - ECDSA hashes of public keys are short (~34 characters)
+  - But you can't determine the keys from the hash of the keys
+- Public keys are longer
+  - A secp256k1 ECDSA public key is 512 bits = 64 bytes
+  - RIPE-160 Hashes of public keys are shorter
+    - 160 bits == 20 bytes
+
+<aside data-markdown class="notes">
+- If both x and y are being encoded in the ECDSA public key, then -- at 32 bytes each -- it's 65 bytes (1 byte for the format)
+- If only x is being encoded, then it's 33 bytes (1 byte for the format)
+- A RIPE-160 hash is 160 bits
+</aside>
 
 
 
 ## Problems with P2PKH transactions
-- Back to the hash version...
-- Problem: once redeemed, the public key is thus known
-  - Once can transfer that to a new address, only specified with the address (hash)
+- Back to the hash of the public key version
+- Problem: once redeemed, the public key for the UTXO is thus known
   - This could also be cracked using a quantum computer
-- Solution: use a different key pair after redeeming a UTXO
+- Solution: if you want to keep funds in the UTXO, transfer that to a new address key pair
+  - Again, only specified with the address (hash)
+
 
 
 
 ## Provably unspendable
-- Output script: `OP_RETURN`
-- This always marks the transaction as invalid, so such a UTXO could never be spent
+- Output script:
+  ```
+OP_RETURN
+```
+- `OP_RETURN` marks the transaction as invalid and terminates
+- Such a UTXO could never be spent
 
 
 
@@ -1034,8 +1083,9 @@ OP_HASH160
 OP_EQUALVERIFY
 OP_CHECKSIG
 ```
-- `OP_CHECKLOCKTIMEVERIFY`: mark TXN as invlalid if top stack item is greater than TXN's time
-  - in nLockTime field
+- `OP_CHECKLOCKTIMEVERIFY`: mark TXN as invalid if top stack item is greater than TXN's time
+  - Really the block's timestamp field
+  - Is compared to the transaction's lock_time field
 - `OP_DROP`: pop top element from the stack and discard it
 
 
@@ -1276,7 +1326,8 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 <img src='images/bitcoin/attack/attack.dot.2.svg' style='width:130px'>
 
 - Mallory spends a UTXO
-  - On something that has a quick delivery,<br>such as a digital asset
+  - On something that has a quick delivery, such as a digital asset
+  - Or a in-person transaction where she takes possession of a physical item
 
 
 
@@ -1285,9 +1336,9 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 <img src='images/bitcoin/attack/attack.dot.3.svg' style='width:130px'>
 
-- Vendor waits some number of confirmations...
+- Seller waits some number of confirmations...
   - Say, 3 (in reality, more like 100)
-- Then assumes the TXN will not change
+- Then the seller assumes the TXN will not change
   - Because there have been the desired number of confirmations
 - The digital asset is then sent
 
@@ -1298,13 +1349,12 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 <img src='images/bitcoin/attack/attack.dot.4.svg' style='height:773px'>
 
-- The original spender tries to spend the<br>UTXO again
-- But how to make the rest of the network<br>accept it?
-  - Have to mine more than the rest of the<br>network
-  - Thus, must have 51% (or more) of the network mining capability
-  - Hence 51% attack
+- The original spender tries to spend the UTXO again
+  - Mine it into a block
 - Node adoption policy: longest chain
   - The longest "chain" of blocks, starting from the genesis block, is the valid chain
+- But how to make the rest of the network accept it?
+  - Make that second TXN part of the new longest chain
 
 
 
@@ -1313,10 +1363,25 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 <img src='images/bitcoin/attack/attack.dot.5.svg' style='height:773px'>
 
+- But how to make the rest of the network accept it?
+  - Make that second TXN part of the new longest chain
+- Solution
+  - Have to mine more than the rest of the network
+  - Thus, must have 51% (or more) of the network mining capability
+    - Hence the name "51% attack"
 - If the attacker...
   - Who has 51% (or more) of the mining power...
-- Can ever create the longest chain...
+- ... can ever create the longest chain...
 - Then they have double spent the UTXO!
+
+
+
+## Longest Chain Adoption Policy
+- Miners are incentivized to always accept the longest chain as the "valid" chain
+  - That chain has the greatest chance of becoming the "accepted" chain
+    - After a certain number of confirmations
+  - Any blocks mined on a different (and shorter) chain yield no reward, since their mined BTC are not part of the longest chain
+    - No reward means no incentive
 
 
 
@@ -1324,8 +1389,8 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 - But is this viable?
   - As no one person is going to have 51% of the BTC mining / [hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
 - But a mining pool might!
-- Consider the [2miners RVN pool](https://2miners.com/rvn-mining-pool)
-  - As of Feb 1st, 2022, their pool had a 1.44 Th/s hash rate
+- Consider the [2miners RVN (Ravencoin) pool](https://2miners.com/rvn-mining-pool)
+  - OnFeb 1st, 2022, their pool had a 1.44 Th/s hash rate
     - The network hashrate then was 5.13 Th/s
   - Thus, they have 1.44/5.13 = 28% of the total hash rate
 - On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
@@ -1339,11 +1404,11 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 <img src='images/bitcoin/attack/attack.dot.6.svg' style='height:773px'>
 
-- Envision: we have two longest<br>chains, and miners are split<br>between the two
+- Envision: we have two longest chains, and miners are split between the two
   - Neither has yet become "longer"
-- What if the miner for block 1001,<br>version 1, were to immediately<br>spend those BTC
-  - And then the version 2 chain were<br>to become the longer (and thus<br>accepted) chain?
-- Solution: wait until $n$ confirmations<br>have occurred before allowing<br>spending the BTC
+- What if the miner for block 1001, version 1, were to immediately spend those mined BTC
+  - And then the version 2 chain were to become the longer (and thus accepted) chain?
+- Solution: wait until $n$ confirmations have occurred before allowing spending the BTC
 
 
 
