@@ -267,6 +267,21 @@ System.out.println(d);
   time_t t = 1640995200;
   cout << asctime(gmtime(&t)); // or use printf() in C
 ```
+
+
+
+## Blockchain types used
+- Bitcoin's blockchain only has 5 types:
+  - 4-byte (mostly) unsigned integers
+    - Some of which are unix timestamps
+  - 8-byte unsigned integers (aka long)
+  - compactSize unsigned integers
+  - 32 byte hashes
+  - variable-length strings
+- That's it!
+- Pretty much everything is little-Endian
+  - But many programming language routines will convert the Endian-ness for you
+    - Some without tell you, others you have to tell it to do so
   </textarea></section>
 
 </section>
@@ -285,6 +300,7 @@ System.out.println(d);
   - That's a pseudonym; nobody knows who the real person (or group) that created it
   - Although the person is [likely British](https://en.wikipedia.org/wiki/Satoshi_Nakamoto#Characteristics_and_identity)
 - It is now fully open source
+  - https://github.com/bitcoin/bitcoin
 - It was also one of the first digital-only currencies that didn't bankrupt the creator
 
 
