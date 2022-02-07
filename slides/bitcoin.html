@@ -349,6 +349,37 @@ System.out.println(d);
 
 
 
+## Voting
+- A mining device is not (necessarily) a node
+  - A node needs to hold the entire blockchain
+  - A miner needs lots of CPU power and only the current UTXOs
+    - aka the DAG
+- A miner batches transactions into blocks, find the right nonce, and then presents the block to the peer-to-peer network
+- The nodes vote on whether to accept the block
+- But what if some nodes are untrustworthy?
+  - This is the issue of consensus
+  - It's a whole lecture in and of itself
+
+
+
+## Peer-to-peer
+- When a node starts up, it connects to some well-known Bitcoin nodes
+  - And uses those to find its peers
+  - It doesn't need those well-known nodes, but it's much faster with them
+- A wallet sends a (signed) transaction to any node
+- That node propogates it to other nodes via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+  - Basically: each node checks it, sends it to a few others, who check it, send it to a few others, etc.
+- Miners get the transactions from either a node or the mining pool
+
+
+
+## Node stats from [bitnodes.io](https://bitnodes.io/)
+- As of Feb 6, 2022, there are 15,252 nodes in the Bitcoin network (but but only 8,698 were "reachable")
+
+![](images/bitcoin/btc-nodes-2022-02-06.png)
+
+
+
 ## Base 64 encoding
 - Given binary data, split it into 6 bit chunks
 - Each 6-bit chunk maps to a given printable letter
@@ -771,9 +802,9 @@ Size: varies; how many: txn_out_count
 - Verifies $h == h'$, and pushes result (true (1) or false (0)) onto stack
 - OP_CHECKSIGVERIFY will run OP_VERIFY after
   - OP_VERIFY: abort if stack top is not true (1)
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n" id='p2pkh'><textarea>
 ## P2PKH example script
 
 This is a standard pay-to-pubkey-hash (P2PKH) script:
@@ -794,9 +825,9 @@ Full hex-only script:
 ```
 76A91489ABCDEFABBAABBAABBAABBAABBAABBAABBAABBA88AC
 ```
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## P2PKH example script
 
 This is a standard pay-to-pubkey-hash script:
@@ -943,9 +974,9 @@ OP_CHECKSIG
 
 </div>
 As the top of the stack has true at the end, the script is verified and the transaction is valid
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n" id='checkmultisig'><textarea>
 ## OP_CHECKMULTISIG
 - A way to check that one (or more) signatures match one (or more) keys ([reference](https://en.bitcoin.it/wiki/OP_CHECKMULTISIG))
 - Given many public keys, and many signatures, make sure each signature matches one key
@@ -1057,10 +1088,9 @@ OP_CHECKSIG
   - This could also be cracked using a quantum computer
 - Solution: if you want to keep funds in the UTXO, transfer that to a new address key pair
   - Again, only specified with the address (hash)
+</textarea></section>
 
-
-
-
+<section data-markdown data-separator="^\n\n\n" id="unspendable"><textarea>
 ## Provably unspendable
 - Output script:
   ```
@@ -1068,9 +1098,9 @@ OP_RETURN
 ```
 - `OP_RETURN` marks the transaction as invalid and terminates
 - Such a UTXO could never be spent
+</textarea></section>
 
-
-
+<section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lock coins until a future time
 Output script:
 ```
