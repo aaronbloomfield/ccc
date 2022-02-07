@@ -14,7 +14,7 @@ graph header {
 	nonce [shape=Mrecord,label="nonce: 4 bytes"]
 	nBits [shape=Mrecord,label="nBits: 4 bytes"]
 	time [shape=Mrecord,label="time: 4 bytes"]
-	merkle_hash [shape=Mrecord,label="1+ transaction inputs"]
+	merkle_hash [shape=Mrecord,label="merkle root hash: 32 bytes"]
 	prev_hash [shape=Mrecord,label="prev hash: 32 bytes"]
 	version [shape=Mrecord,label="version: 4 bytes"];
 	title [shape=none,label=Header];
