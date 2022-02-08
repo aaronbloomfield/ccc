@@ -94,7 +94,7 @@ If you can read in all of the input files -- especially the large one -- without
 
 #### Shell script
 
-As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a `parse.sh` shell script for us to call.  Such a file for C or C++ would look like:
+As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a `parse.sh` shell script for us to call.  Such a file for C or C++ might look like:
 
 ```
 #!/bin/bash
@@ -205,19 +205,19 @@ error 6 block 0
 $
 ```
 
-These test are by no means comprehensive!  But they are the ones that will be used for the visible tests when you submit the file to Gradescope.  The hidden tests, which your grade will be based on similar tests different than the ones shown above.
+These test are by no means comprehensive!  But some of these tests will be used for the visible tests when you submit the file to Gradescope.  The hidden tests, which your grade will be based on similar tests different than the ones shown above.
 
 #### Merkle Tree hashes
 
 This is likely the hardest part of the assignment.  Work on this last, as you can still get a lot of partial credit if this part is not implemented.  In particular, you may want to ensure that the JSON output, below, is working first before you complete this part.
 
-The computation of the Merkle tree root hash is [discussed in the lecture slides](../../slides/bitcoin.html#/merkle).  You will need to be familiar with that before proceeding.  It is expected that you will use the SHA-256 hashing programs that come with your programming language; use of these is discssed in the last few slides of the [hashing section of the Encryption slide set](../../slides/encryption.html#/hashing).
+The computation of the Merkle tree root hash is [discussed in the lecture slides](../../slides/bitcoin.html#/merkle).  You will need to be familiar with that before proceeding.  It is expected that you will use the SHA-256 hashing programs that come with your programming language; use of these is discussed in the last few slides of the [hashing section of the Encryption slide set](../../slides/encryption.html#/hashing).
 
 Some important notes to remember:
 
 - The hashes for the children nodes are concatenated, and then the hash of that concatenation is used in the level above
 - If there is an odd number of hashes in a given level, then the last one is concatenated to itself, and the hash of that is used in the level above
-- The hashes need to be in binary little-Endian form
+- The hashes need to be in binary little-Endian form; the binary form is 32 bytes long
 - Bitcoin uses a double hashing, so each hash is really the sha256 hash of the sha256 hash of the data itself
 - This program is *NOT* using Fast Merkle trees
 
@@ -287,9 +287,9 @@ A bunch of notes:
 - You can put in additional fields if you would like -- it's just that the fields shown above must be there.  In the output above, both 'timestamp_readable' and 'file_position' are NOT required fields
 - All hexadecimal values should NOT have a leading '0x'
 - Integer values should not have quotes around them (that's a JSON feature), but all other values should be enclosed in double quotes
-- Ff you have a list if items in an array, JSON is not happy with a comma after the last one; you can see this after the 'lock_time' value -- there is no comma after its value 0.
-- You'll notice that the 'height' field is at the end -- you won't know, when starting to read the file, how many blocks are therein.  So we put that at the end.
-- For the numerical values, the only ones that are in hex (again, with out the leading '0x') are the hashes (previous header, merkle, and utxo), the scripts (input and output), and nbits.  All other numerical values, including the two times (timestamp and locktime) should be base-10.
+- If you have a list if items in an array, JSON is not happy with a comma after the last one; you can see this after the 'lock_time' value -- there is no comma after its value 0.
+- You'll notice that the 'height' field is at the end -- you won't know, when starting to read the file, how many blocks are therein.  So we put that at the end.  This is just the total number of blocks in the file.
+- For the numerical values, the only ones that are in hex (again, without the leading '0x') are the hashes (previous header, merkle, and utxo), the scripts (input and output), and nbits.  All other numerical values, including the two times (timestamp and locktime) should be base-10.
 - All hash values should be printed in big-Endian.  Note that they are stored in the file in little-Endian!
 - The height of the first block in the file should be displayed as 0, even if it is not the genesis block; the height increments from there.
 

@@ -201,7 +201,7 @@ of text to be output to the screen.</p>
 <p>As we do not know what language your program will be written in, nor
 what you will name your executable, you will need to submit a
 <code>parse.sh</code> shell script for us to call. Such a file for C or
-C++ would look like:</p>
+C++ might look like:</p>
 <pre><code>#!/bin/bash
 ./a.out $@</code></pre>
 <p>The first line must be there exactly as shown (pound sign, then
@@ -346,7 +346,7 @@ $ cat blk00000-f10.blk | ./change_byte.py 46 3 &gt; test.blk
 $ ./parse.sh test.blk 
 error 6 block 0
 $</code></pre>
-<p>These test are by no means comprehensive! But they are the ones that
+<p>These test are by no means comprehensive! But some of these tests
 will be used for the visible tests when you submit the file to
 Gradescope. The hidden tests, which your grade will be based on similar
 tests different than the ones shown above.</p>
@@ -359,9 +359,10 @@ below, is working first before you complete this part.</p>
 href="../../slides/bitcoin.html#/merkle">discussed in the lecture
 slides</a>. You will need to be familiar with that before proceeding. It
 is expected that you will use the SHA-256 hashing programs that come
-with your programming language; use of these is discssed in the last few
-slides of the <a href="../../slides/encryption.html#/hashing">hashing
-section of the Encryption slide set</a>.</p>
+with your programming language; use of these is discussed in the last
+few slides of the <a
+href="../../slides/encryption.html#/hashing">hashing section of the
+Encryption slide set</a>.</p>
 <p>Some important notes to remember:</p>
 <ul>
 <li>The hashes for the children nodes are concatenated, and then the
@@ -369,7 +370,8 @@ hash of that concatenation is used in the level above</li>
 <li>If there is an odd number of hashes in a given level, then the last
 one is concatenated to itself, and the hash of that is used in the level
 above</li>
-<li>The hashes need to be in binary little-Endian form</li>
+<li>The hashes need to be in binary little-Endian form; the binary form
+is 32 bytes long</li>
 <li>Bitcoin uses a double hashing, so each hash is really the sha256
 hash of the sha256 hash of the data itself</li>
 <li>This program is <em>NOT</em> using Fast Merkle trees</li>
@@ -452,14 +454,15 @@ the fields shown above must be there. In the output above, both
 <li>All hexadecimal values should NOT have a leading ‘0x’</li>
 <li>Integer values should not have quotes around them (that’s a JSON
 feature), but all other values should be enclosed in double quotes</li>
-<li>Ff you have a list if items in an array, JSON is not happy with a
+<li>If you have a list if items in an array, JSON is not happy with a
 comma after the last one; you can see this after the ‘lock_time’ value –
 there is no comma after its value 0.</li>
 <li>You’ll notice that the ‘height’ field is at the end – you won’t
 know, when starting to read the file, how many blocks are therein. So we
-put that at the end.</li>
-<li>For the numerical values, the only ones that are in hex (again, with
-out the leading ‘0x’) are the hashes (previous header, merkle, and
+put that at the end. This is just the total number of blocks in the
+file.</li>
+<li>For the numerical values, the only ones that are in hex (again,
+without the leading ‘0x’) are the hashes (previous header, merkle, and
 utxo), the scripts (input and output), and nbits. All other numerical
 values, including the two times (timestamp and locktime) should be
 base-10.</li>
