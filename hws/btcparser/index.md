@@ -16,22 +16,22 @@ The Bitcoin block format that is being parsed for this assignment is the format 
 
 ### Languages
 
-In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Three languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.6.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it and also to generate the skeleton code.
+In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Four languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.6.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it.
 
 This assignment specifically is intended for you to use the default packages that come with the given programming language.  In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries).  However, you are welcome to -- and probably should -- use any JSON libraries.
 
 ### Provided files
 
-We have a number of files of the blockchain itself.  Blockchain block counting is indexed from 0 (the genesis block), so a file that contains the first 10 blocks will hold blocks 0-9.
+We have a number of files of the blockchain itself.  Blockchain block counting is indexed from 0 (the genesis block), so a file that contains the first 10 blocks will contain blocks 0-9.
 
-- Files with single blocks
-    - [blk00000-b0.blk](blk00000-b0.blk) is block 0, the genesis block
-    - [blk00000-b29664.blk](blk00000-b29664.blk) is block 29,664, the first block with a compactSize unsigned integer that takes up more than one byte -- this may help you ensure you are reading those values in properly
-    - A number of individual block files to help you ensure that the Merkle tree hashes are computed properly; see below for their purpose.  Those block files are blocks [170](blk00000-b170.blk), [546](blk00000-b546.blk), [586](blk00000-b586.blk), [26,816](blk00000-b26816.blk), [2812](blk00000-b2812.blk), [49,820](blk00000-b49820.blk), and [53,066](blk00000-b53066.blk)
 - Files with multiple blocks
     - [blk00000-f10.blk](blk00000-f10.blk) (2.3 Kb) contains the first 10 blocks
     - [blk00000-f100.blk](blk00000-f100.blk) (24 Kb) contains the first 100 blocks
     - blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks.  Due to this file's size, it is not kept in this repository, but can be found on Collab in the Resources tool
+- Files with single blocks
+    - [blk00000-b0.blk](blk00000-b0.blk) is block 0, the genesis block
+    - [blk00000-b29664.blk](blk00000-b29664.blk) is block 29,664, the first block with a compactSize unsigned integer that takes up more than one byte -- this may help you ensure you are reading those values in properly; see below for details on where that value is in the block
+    - A number of individual block files to help you ensure that the Merkle tree hashes are computed properly; see below for their purpose.  Those block files are blocks [170](blk00000-b170.blk), [546](blk00000-b546.blk), [586](blk00000-b586.blk), [26,816](blk00000-b26816.blk), [2812](blk00000-b2812.blk), [49,820](blk00000-b49820.blk), and [53,066](blk00000-b53066.blk)
 - Helper programs
     - [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) will help you ensure that your JSON output is correct -- see the comments in the file for a description of how to use it
     - [change_byte.py](change_byte.py.html) ([src](change_byte.py)) will help with checking for blockchain errors -- see below for how to use it
@@ -43,7 +43,7 @@ Your program will take in exactly one command-line parameter: the file to read i
 
 #### Block group file format
 
-The blocks to be verified are grouped together in a file -- this file is from the Bitcoin system, and if you were to download that and have it sync, you would have those files on your machine as well.  The file provided contains block 0 (the genesis block) through block X.
+The blocks to be verified are grouped together in a file -- this file is from the Bitcoin system, and if you were to download that and have it sync, you would have those files on your machine as well.  The file provided contains block 0 (the genesis block) through block 119,341.
 
 To see the contents of a binary file, run it through `hexdump -C`.  This will print a LOT of text, so we will pipe it through `head`, as shown below.  Each block is preceded by 8 bytes of data.  The first 4 bytes are the magic number, and the second four bytes are the block size.  Both are in little-Endian format in the file.  The first 13 lines of this file, when run through `hexdump -C`, are:
 
@@ -65,7 +65,7 @@ $ hexdump -C blk00000.dat | head -10
 $
 ```
 
-Each line displays 16 bytes from the file.  The columns in hexdump shows the address of the first byte (in hex), the hex values of the 16 bytes, and an ASCII representation of those 16 bytes (if they are printable characters).  You can see, at the bottom of the hexdump display above, the text included in the genesis block for Bitcoin.  You may want to save the hexdump output to a file (`hexdump -C blk00000.dat > blk00000.dat.txt`), but be warned, as this will be a very large file (631 Mb).  You can also use the smaller block files as well.
+Each line displays 16 bytes from the file.  The columns in hexdump shows the address of the first byte in the row (in hex), the hex values of the 16 bytes, and an ASCII representation of those 16 bytes (if they are printable characters).  You can see, at the bottom of the hexdump display above, the text included in the genesis block for Bitcoin.  You may want to save the hexdump output to a file (`hexdump -C blk00000.dat > blk00000.dat.txt`), but be warned, as this will be a very large file (631 Mb).  You can also use the smaller block files as well.
 
 The first four bytes (`f9 be b4 d9`) is the so-called "magic number" which identifies the start of a block.  The value is 0xd9b4bef9, or 0xf9beb4d9 in little-Endian.  The next four bytes (1d 01 00 00) are the size.  That's in little-Endian, so converted to big-Endian it's 0x0000011d = 285.  The next 285 bytes are the contents of block 0 (the genesis block).  Block 1 thus starts at byte 285+8=293 (0x125 in hex) in the file.  You can see this later in the hexdump output:
 
@@ -81,49 +81,20 @@ On the second line, the magic number of the second block (block index 1) starts 
 
 Your task is to read in the blockchain.  The format for the blockchain can be found in the [Bitcoin lecture slides](../../slides/bitcoin.html#/), specifically starting [here](../../slides/bitcoin.html#/blockchain).  You will need to read in the file in binary format.
 
-You will likely want to print out the data read in (and the associated fields).  This will be changed to a different format in part 3.  As you are printing out the values, you can see what they should be [here](https://www.blockchain.com/btc/block/0) for block 0; the output is also shown below.  That site prints the values in big-Endian, which is how we will be printing them in this assignment. However, we are going to print out the nBits field in hex; that size prints it out in decimal.
+You will likely want to print out the data read in (and the associated fields).  This will be changed to a different output format in part 3, below.  As you are printing out the values, you can see what they should be [here](https://www.blockchain.com/btc/block/0) for block 0; the output is also shown below.  That site prints the values in big-Endian, which is how we will be printing them in this assignment. However, we are going to print out the nBits field in hex; that size prints it out in decimal.
 
 Some useful hints:
 
 - There really are only five different types in the bitcoin blockchain: 4-byte unsigned integers, 8-byte unsigned integers, compactSize unsigned integers, 32-byte hashes, and variable-length scripts.  That's it.  All of the blockchain is one of these five types -- so you can reuse your code from reading in one type to read in another.
   - While there are only 5 types, we will be outputting them in different ways -- but each programming language can easily print a number in hex or decimal.
-- Make sure you have a method that reads in compactSize unsigned integers properly, as this will cause your program to crash otherwise.  In particular, remember that if the variable is more than one byte, then all the bytes *other* than the first are in little-Endian format.  HOWEVER, some routines that read in the values will swap them for you, and some will not.  This is explicitly why we provide [block 29,664](blk00000-b29664.blk) for you -- that is the first block that has such a value that is more than one byte (the txn_in_count for the second transaction is 320); you find see more information about that transaction [here](https://blockchair.com/bitcoin/block/29664).
+- Make sure you have a method that reads in compactSize unsigned integers properly, as this will cause your program to crash otherwise.  In particular, remember that if the variable is more than one byte, then all the bytes *other* than the first are in little-Endian format.  HOWEVER, some routines that read in the values will swap them for you, and some will not.  This is explicitly why we provide [block 29,664](blk00000-b29664.blk) for you -- that is the first block that has such a value that is more than one byte (the txn_in_count for the second transaction is 320); you can see more information about that transaction [here](https://blockchair.com/bitcoin/block/29664).
 
 If you can read in all of the input files -- especially the large one -- without any errors, then you've successfully completed this part.  Note that you may want to redirect your output to a file, since that's a lot of text to be output to the screen.
 
 
-### Part 2: Validating the blockchain
-
-Now that you can read in valid blockchain, your program should be extended to check for errors in the blockchain.  Once an error is encountered, the program should output the error number and stop.  The errors below are what should be checked for -- note that these are not ALL the possible errors, but a selection of errors to check for on this assignment.
-
-1. Invalid magic number
-2. Invalid header version (we only are allowing version 1 for this assignment)
-3. Invalid previous header hash (this is not checked for the first block in the file, since we don't know the previous block)
-4. Invalid timestamp (it needs to be no earlier than 2 hours before that of the previous block (this is a simplification of the [actual requirements](https://en.bitcoin.it/wiki/Block_timestamp)); this is not checked for the first block in the file)
-5. Invalid transaction version (we are only allowing version 1 for this assignment)
-6. The Merkle tree hash in the header is incorrect (implement this last -- see below)
-
-If an error is found, the output should only be `error 5 block 17` with the appropriate error number and block number (remember that blocks start at 0, not 1).  If no errors are found, then the output should only be "no errors X blocks", where 'X' is an integer.  (We are going to use the plural "blocks" even when there is only 1 block).
-
-If there are multiple errors, you should report the one found in the earlier block.  For example, if there is a modification to the Merkle hash in block 10, then both block 10 will have an error (#6 -- bad Merkle hash) as well as block 11 (#3 -- bad previous header hash).  In this case, the error in block 10 should be reported.
-
-If there are multiple errors in a single block, you can report any of them.  Because this makes it very difficult to grade, we are going to avoid this possibility when grading your assignment.
-
-Test this well!  We are going to provide all sorts of messed-up files to your program as input.  The file provided to your program may not even be a valid blockchain file!  You are guaranteed that the following will be true:
-
-- The file name specified as the command-line parameter will exist, will be readable, and will be non-zero in size
-- The blocks -- if they exist -- will be consecutive in the file
-  - This means that the block order will be 0,1,2,3,4,... -- not, for example 0,2,1,4,3,...
-  - Formally, this means that the previous header hash for a given block will be for the block immediately preceding it in the file (obviously this doesn't apply for the first block in the file)
-  - Note that the actual Bitcoin block chain files downloaded by the BTC client do not assure they are in order!
-- There will be no 'orphan' blocks -- each block will be the successor to the block immediately before it
-  - Obviously that doesn't apply to the first block in the file
-
-Note that if you are printing out the blockchain data to standard output from the previous section, it's fine to just terminate the program with the "no errors X blocks" or "error 5 block 17" line -- we'll get rid of the other output in the next section.
-
 #### Shell script
 
-As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a `parse.sh` for us to call.  Such a file for C or C++ would look like:
+As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a `parse.sh` shell script for us to call.  Such a file for C or C++ would look like:
 
 ```
 #!/bin/bash
@@ -147,6 +118,35 @@ And for Java:
 #!/bin/bash
 java BTCParse $@
 ```
+
+### Part 2: Validating the blockchain
+
+Now that you can read in valid blockchain, your program should be extended to check for errors in the blockchain.  Once an error is encountered, the program should output the error number and stop.  The errors below are what should be checked for -- note that these are not all the possible errors, but a selection of errors to check for on this assignment.
+
+1. Invalid magic number
+2. Invalid header version (we only are allowing version 1 for this assignment)
+3. Invalid previous header hash (this is not checked for the first block in the file, since we don't know the previous block)
+4. Invalid timestamp (it needs to be no earlier than 2 hours before that of the previous block (this is a simplification of the [actual requirements](https://en.bitcoin.it/wiki/Block_timestamp)); this is not checked for the first block in the file)
+5. Invalid transaction version (we are only allowing version 1 for this assignment)
+6. The Merkle tree hash in the header is incorrect (implement this last -- see below)
+
+If an error is found, the output should only be `error 5 block 17` with the appropriate error number and block number (remember that blocks start counting at 0, not 1).  If no errors are found, then the output should only be "no errors X blocks", where 'X' is an integer.  (We are going to use the plural "blocks" even when there is only 1 block).
+
+If there are multiple errors, you should report the one found in the earlier block.  For example, if there is a modification to the Merkle hash in block 10, then both block 10 will have an error (#6 -- bad Merkle hash) as well as block 11 (#3 -- bad previous header hash).  In this case, the error in block 10 should be reported.
+
+If there are multiple errors in a single block, you can report any of them.  Because this makes it very difficult to grade, we are going to avoid this possibility when grading your assignment.
+
+Test this well!  We are going to provide all sorts of messed-up files to your program as input.  The file provided to your program may not even be a valid blockchain file!  You are guaranteed that the following will be true:
+
+- The file name specified as the command-line parameter will exist, will be readable, and will be non-zero in size
+- The blocks -- if they exist -- will be consecutive in the file
+  - This means that the block order will be 0,1,2,3,4,... -- not, for example 0,2,1,4,3,...
+  - Formally, this means that the previous header hash for a given block will be for the block immediately preceding it in the file (obviously this doesn't apply for the first block in the file)
+  - Note that the actual Bitcoin block chain files downloaded by the BTC client do not assure they are in order!
+- There will be no 'orphan' blocks -- each block will be the successor to the block immediately before it
+  - Obviously that doesn't apply to the first block in the file
+
+Note that if you are printing out the blockchain data to standard output from the previous section, it's fine to just terminate the program with the "no errors X blocks" or "error 5 block 17" line -- we'll get rid of the other output in the next section.
 
 #### Testing
 

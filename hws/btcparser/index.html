@@ -46,12 +46,12 @@ not Fast Merkle Trees (which were proposed later).</p>
 <h3 id="languages">Languages</h3>
 <p>In theory, this can be implemented in any language. In practice,
 though, it needs to be a language that the auto-graders can compile and
-run, and that the skeleton code is written for. Three languages that can
+run, and that the skeleton code is written for. Four languages that can
 currently be used: C (using <code>gcc</code>), C++ (using
 <code>g++</code>), Java (using OpenJDK 11), and Python (using Python
 3.6.x). If you want to use a different language, let’s have a chat about
 it, as it will take some time to ensure that the grading system can
-handle it and also to generate the skeleton code.</p>
+handle it.</p>
 <p>This assignment specifically is intended for you to use the default
 packages that come with the given programming language. In particular,
 you may NOT use any cryptocurrency specific libraries (such as the
@@ -60,25 +60,8 @@ use any JSON libraries.</p>
 <h3 id="provided-files">Provided files</h3>
 <p>We have a number of files of the blockchain itself. Blockchain block
 counting is indexed from 0 (the genesis block), so a file that contains
-the first 10 blocks will hold blocks 0-9.</p>
+the first 10 blocks will contain blocks 0-9.</p>
 <ul>
-<li>Files with single blocks
-<ul>
-<li><a href="blk00000-b0.blk">blk00000-b0.blk</a> is block 0, the
-genesis block</li>
-<li><a href="blk00000-b29664.blk">blk00000-b29664.blk</a> is block
-29,664, the first block with a compactSize unsigned integer that takes
-up more than one byte – this may help you ensure you are reading those
-values in properly</li>
-<li>A number of individual block files to help you ensure that the
-Merkle tree hashes are computed properly; see below for their purpose.
-Those block files are blocks <a href="blk00000-b170.blk">170</a>, <a
-href="blk00000-b546.blk">546</a>, <a href="blk00000-b586.blk">586</a>,
-<a href="blk00000-b26816.blk">26,816</a>, <a
-href="blk00000-b2812.blk">2812</a>, <a
-href="blk00000-b49820.blk">49,820</a>, and <a
-href="blk00000-b53066.blk">53,066</a></li>
-</ul></li>
 <li>Files with multiple blocks
 <ul>
 <li><a href="blk00000-f10.blk">blk00000-f10.blk</a> (2.3 Kb) contains
@@ -88,6 +71,24 @@ the first 100 blocks</li>
 <li>blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks. Due
 to this file’s size, it is not kept in this repository, but can be found
 on Collab in the Resources tool</li>
+</ul></li>
+<li>Files with single blocks
+<ul>
+<li><a href="blk00000-b0.blk">blk00000-b0.blk</a> is block 0, the
+genesis block</li>
+<li><a href="blk00000-b29664.blk">blk00000-b29664.blk</a> is block
+29,664, the first block with a compactSize unsigned integer that takes
+up more than one byte – this may help you ensure you are reading those
+values in properly; see below for details on where that value is in the
+block</li>
+<li>A number of individual block files to help you ensure that the
+Merkle tree hashes are computed properly; see below for their purpose.
+Those block files are blocks <a href="blk00000-b170.blk">170</a>, <a
+href="blk00000-b546.blk">546</a>, <a href="blk00000-b586.blk">586</a>,
+<a href="blk00000-b26816.blk">26,816</a>, <a
+href="blk00000-b2812.blk">2812</a>, <a
+href="blk00000-b49820.blk">49,820</a>, and <a
+href="blk00000-b53066.blk">53,066</a></li>
 </ul></li>
 <li>Helper programs
 <ul>
@@ -110,7 +111,7 @@ provided above – both large and small.</p>
 <p>The blocks to be verified are grouped together in a file – this file
 is from the Bitcoin system, and if you were to download that and have it
 sync, you would have those files on your machine as well. The file
-provided contains block 0 (the genesis block) through block X.</p>
+provided contains block 0 (the genesis block) through block 119,341.</p>
 <p>To see the contents of a binary file, run it through <code>hexdump
 -C</code>. This will print a LOT of text, so we will pipe it through
 <code>head</code>, as shown below. Each block is preceded by 8 bytes of
@@ -134,13 +135,14 @@ are:</p>
 000000c0  61 69 6c 6f 75 74 20 66  6f 72 20 62 61 6e 6b 73  |ailout for banks|
 $</code></pre>
 <p>Each line displays 16 bytes from the file. The columns in hexdump
-shows the address of the first byte (in hex), the hex values of the 16
-bytes, and an ASCII representation of those 16 bytes (if they are
-printable characters). You can see, at the bottom of the hexdump display
-above, the text included in the genesis block for Bitcoin. You may want
-to save the hexdump output to a file (<code>hexdump -C blk00000.dat &gt;
-blk00000.dat.txt</code>), but be warned, as this will be a very large
-file (631 Mb). You can also use the smaller block files as well.</p>
+shows the address of the first byte in the row (in hex), the hex values
+of the 16 bytes, and an ASCII representation of those 16 bytes (if they
+are printable characters). You can see, at the bottom of the hexdump
+display above, the text included in the genesis block for Bitcoin. You
+may want to save the hexdump output to a file (<code>hexdump -C
+blk00000.dat &gt; blk00000.dat.txt</code>), but be warned, as this will
+be a very large file (631 Mb). You can also use the smaller block files
+as well.</p>
 <p>The first four bytes (<code>f9 be b4 d9</code>) is the so-called
 “magic number” which identifies the start of a block. The value is
 0xd9b4bef9, or 0xf9beb4d9 in little-Endian. The next four bytes (1d 01
@@ -160,10 +162,10 @@ lecture slides</a>, specifically starting <a
 href="../../slides/bitcoin.html#/blockchain">here</a>. You will need to
 read in the file in binary format.</p>
 <p>You will likely want to print out the data read in (and the
-associated fields). This will be changed to a different format in part
-3. As you are printing out the values, you can see what they should be
-<a href="https://www.blockchain.com/btc/block/0">here</a> for block 0;
-the output is also shown below. That site prints the values in
+associated fields). This will be changed to a different output format in
+part 3, below. As you are printing out the values, you can see what they
+should be <a href="https://www.blockchain.com/btc/block/0">here</a> for
+block 0; the output is also shown below. That site prints the values in
 big-Endian, which is how we will be printing them in this assignment.
 However, we are going to print out the nBits field in hex; that size
 prints it out in decimal.</p>
@@ -187,7 +189,7 @@ HOWEVER, some routines that read in the values will swap them for you,
 and some will not. This is explicitly why we provide <a
 href="blk00000-b29664.blk">block 29,664</a> for you – that is the first
 block that has such a value that is more than one byte (the txn_in_count
-for the second transaction is 320); you find see more information about
+for the second transaction is 320); you can see more information about
 that transaction <a
 href="https://blockchair.com/bitcoin/block/29664">here</a>.</li>
 </ul>
@@ -195,13 +197,35 @@ href="https://blockchair.com/bitcoin/block/29664">here</a>.</li>
 – without any errors, then you’ve successfully completed this part. Note
 that you may want to redirect your output to a file, since that’s a lot
 of text to be output to the screen.</p>
+<h4 id="shell-script">Shell script</h4>
+<p>As we do not know what language your program will be written in, nor
+what you will name your executable, you will need to submit a
+<code>parse.sh</code> shell script for us to call. Such a file for C or
+C++ would look like:</p>
+<pre><code>#!/bin/bash
+./a.out $@</code></pre>
+<p>The first line must be there exactly as shown (pound sign, then
+exclamation point, then <code>/bin/bash</code>). For the second line,
+replace <code>./a.out</code> with how to run your (compiled) program:
+<code>java BTCBlockChain</code> or <code>python3 btc-parse.py</code>
+(use <code>python3</code>, not <code>python</code>). Be sure to put the
+<code>$@</code> on that line as well.</p>
+<p>Once created, you will have to ensure it can be executed: <code>chmod
+755 parse.sh</code>. You should then be able to run your program via:
+<code>./parse.sh blk00000.dat</code>.</p>
+<p>The following might be what it would look like for Python:</p>
+<pre><code>#!/bin/bash
+python3 btc-parse.py $@</code></pre>
+<p>And for Java:</p>
+<pre><code>#!/bin/bash
+java BTCParse $@</code></pre>
 <h3 id="part-2-validating-the-blockchain">Part 2: Validating the
 blockchain</h3>
 <p>Now that you can read in valid blockchain, your program should be
 extended to check for errors in the blockchain. Once an error is
 encountered, the program should output the error number and stop. The
 errors below are what should be checked for – note that these are not
-ALL the possible errors, but a selection of errors to check for on this
+all the possible errors, but a selection of errors to check for on this
 assignment.</p>
 <ol type="1">
 <li>Invalid magic number</li>
@@ -221,9 +245,10 @@ assignment)</li>
 </ol>
 <p>If an error is found, the output should only be <code>error 5 block
 17</code> with the appropriate error number and block number (remember
-that blocks start at 0, not 1). If no errors are found, then the output
-should only be “no errors X blocks”, where ‘X’ is an integer. (We are
-going to use the plural “blocks” even when there is only 1 block).</p>
+that blocks start counting at 0, not 1). If no errors are found, then
+the output should only be “no errors X blocks”, where ‘X’ is an integer.
+(We are going to use the plural “blocks” even when there is only 1
+block).</p>
 <p>If there are multiple errors, you should report the one found in the
 earlier block. For example, if there is a modification to the Merkle
 hash in block 10, then both block 10 will have an error (#6 – bad Merkle
@@ -259,28 +284,6 @@ to the block immediately before it
 output from the previous section, it’s fine to just terminate the
 program with the “no errors X blocks” or “error 5 block 17” line – we’ll
 get rid of the other output in the next section.</p>
-<h4 id="shell-script">Shell script</h4>
-<p>As we do not know what language your program will be written in, nor
-what you will name your executable, you will need to submit a
-<code>parse.sh</code> for us to call. Such a file for C or C++ would
-look like:</p>
-<pre><code>#!/bin/bash
-./a.out $@</code></pre>
-<p>The first line must be there exactly as shown (pound sign, then
-exclamation point, then <code>/bin/bash</code>). For the second line,
-replace <code>./a.out</code> with how to run your (compiled) program:
-<code>java BTCBlockChain</code> or <code>python3 btc-parse.py</code>
-(use <code>python3</code>, not <code>python</code>). Be sure to put the
-<code>$@</code> on that line as well.</p>
-<p>Once created, you will have to ensure it can be executed: <code>chmod
-755 parse.sh</code>. You should then be able to run your program via:
-<code>./parse.sh blk00000.dat</code>.</p>
-<p>The following might be what it would look like for Python:</p>
-<pre><code>#!/bin/bash
-python3 btc-parse.py $@</code></pre>
-<p>And for Java:</p>
-<pre><code>#!/bin/bash
-java BTCParse $@</code></pre>
 <h4 id="testing">Testing</h4>
 <p>To test each error, you should try to change one byte in the file –
 specifically, a byte in the particular field you are checking for
