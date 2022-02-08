@@ -12,7 +12,7 @@ These are larger programming homeworks.
 
 - [P1: Introductory homework](intro/index.html) ([md](intro/index.md))
 - [P2: ECDSA implementation](ecdsa/index.html) ([md](ecdsa/index.md))
-- P3: Bitcoin blockchain parser
+- [P3: BTC parser](btcparser/index.html) ([md](btcparser/index.md))
 - P4: Bitcoin scripting
 
 

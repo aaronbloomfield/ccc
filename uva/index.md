@@ -49,6 +49,7 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Larger Programming Homeworks
 
+- Due Tue, 2/15, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 2/8, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
 - Due Tue, 2/1, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
@@ -69,7 +70,8 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 3. Wed, Jan 26: [encryption](../slides/encryption.html#/) through slide 5.3
 4. Mon, Jan 31: [encryption](../slides/encryption.html#/) through slide 7.25
 5. Wed, Feb 2: [encryption](../slides/encryption.html#/) through slide 9.21
-6. Mon, Feb 7: finish [encryption](../slides/encryption.html#/) and start on [bitcoin](../slides/bitcoin.html#/)
+6. Mon, Feb 7: finished [encryption](../slides/encryption.html#/); started on [bitcoin](../slides/bitcoin.html#/) to slide 5.10
+7. Mon, Feb 9: continue (and likely not finish) [bitcoin](../slides/bitcoin.html#/)
 
 ## Legal Issues
 
