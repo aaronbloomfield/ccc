@@ -509,6 +509,7 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
   - Verify the correct network (first byte)
   - Verify the checksum (last 4 bytes)
 - What's left is the hash of the public key
+  - Formally the RIPEMD160 of the SHA256 of the public key
 
 
 
@@ -707,6 +708,7 @@ Size: varies; how many: txn_in_count
   - Index is 0xffffffff
 - A height field was added in [BIP34](https://github.com/bitcoin/bips/blob/master/bip-0034.mediawiki)
   - Starting with block [227,836](https://www.blockchain.com/btc/block/227836) (March 24, 2013)
+  - This created version 2 of the transaction `version` field
 
 
 

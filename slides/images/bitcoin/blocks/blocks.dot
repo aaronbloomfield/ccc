@@ -25,9 +25,9 @@ graph txn {
 	node [fontname="Helvetica",width=3];
 	lock_time [shape=Mrecord,label="lock time: 4 bytes"]
 	tx_out [shape=Mrecord,label="1+ transaction outputs"]
-	tx_out_count [shape=Mrecord,label="txn out count: 1-5 bytes"]
+	tx_out_count [shape=Mrecord,label="txn out count: 1-9 bytes"]
 	tx_in [shape=Mrecord,label="1+ transaction inputs"]
-	tx_in_count [shape=Mrecord,label="txn in count: 1-5 bytes"]
+	tx_in_count [shape=Mrecord,label="txn in count: 1-9 bytes"]
 	version [shape=Mrecord,label="version: 4 bytes"];
 	title [shape=none,label=Transaction];
 }
@@ -37,7 +37,7 @@ graph txn_in {
 	node [fontname="Helvetica",width=3];
 	sequence [shape=Mrecord,label="sequence: 4 bytes"];
 	script [shape=Mrecord,label="input script"];
-	script_size [shape=Mrecord,label="script size: 1-5 bytes"];
+	script_size [shape=Mrecord,label="script size: 1-9 bytes"];
 	index [shape=Mrecord,label="UTXO index: 4 bytes"];
 	utxo [shape=Mrecord,label="UTXO: 32 bytes"];
 	title [shape=none,label="Transaction Input"];
@@ -47,7 +47,7 @@ graph txn_out {
 	rankdir="LR";
 	node [fontname="Helvetica",width=3];
 	script [shape=Mrecord,label="output script"];
-	script_size [shape=Mrecord,label="script size: 1-5 bytes"];
+	script_size [shape=Mrecord,label="script size: 1-9 bytes"];
 	utxo [shape=Mrecord,label="satoshis: 8 bytes"];
 	title [shape=none,label="Transaction Output"];
 }

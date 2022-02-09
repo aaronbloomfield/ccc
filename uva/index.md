@@ -69,11 +69,13 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 
 1. Wed, Jan 19: [course introduction](introduction.html#/) (completed), [overview](../slides/overview.html#/) (to 4.10)
 2. Mon, Jan 24: finished [overview](../slides/overview.html#/); [encryption](../slides/encryption.html#/) to slide 3.7
-3. Wed, Jan 26: [encryption](../slides/encryption.html#/) through slide 5.3
-4. Mon, Jan 31: [encryption](../slides/encryption.html#/) through slide 7.25
-5. Wed, Feb 2: [encryption](../slides/encryption.html#/) through slide 9.21
+3. Wed, Jan 26: [encryption](../slides/encryption.html#/) to slide 5.3
+4. Mon, Jan 31: [encryption](../slides/encryption.html#/) to slide 7.25
+5. Wed, Feb 2: [encryption](../slides/encryption.html#/) to slide 9.21
 6. Mon, Feb 7: finished [encryption](../slides/encryption.html#/); started on [bitcoin](../slides/bitcoin.html#/) to slide 5.10
-7. Mon, Feb 9: continue (and likely not finish) [bitcoin](../slides/bitcoin.html#/)
+7. Wed, Feb 9: [bitcoin](../slides/bitcoin.html#/) to slide 7.6
+8. Mon, Feb 14: continue (and likely not finish) [bitcoin](../slides/bitcoin.html#/)
+
 
 ## Legal Issues
 
