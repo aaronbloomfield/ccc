@@ -401,8 +401,9 @@ System.out.println(d);
 - Or for email
   - Many email systems can only transmit text, not binary
   - So images need to be suchly encoded
+- Example: the Bitcoin genesis block has hash 0x000000000019d6689c085ae165831e934ff763ae46a2a6 c172b3f1b60a8ce26f
 - Hex encoding: each byte becomes 2 hex digits
-  - Each text character represents 4 bits: 200% the size
+  - Each text character represents 4 bits: 200% increase in size
 
 
 
@@ -415,7 +416,7 @@ System.out.println(d);
   - 62 -> +
   - 63 -> /
   - = is a pad character if the total number of bits is not evenly divisible by 6
-- Each text character represents 6 bits: 133% the size
+- Each text character represents 6 bits: 133% increase in size
 
 
 
@@ -437,7 +438,7 @@ $
 
 
 
-## Base 58 encoding
+## [Base 58 encoding](https://en.bitcoin.it/wiki/Base58Check_encoding)
 - Convert to a base-58 number, and map each base-58 digit to one of 58 characters
 - Why?  The stated reasons:
   - Avoid using 0/O and I/l, which look similar in some fonts
@@ -448,8 +449,7 @@ $
   - 0 -> 1 ... 8 -> 9 (skips 0 (zero))
   - 9 -> A ... 32 -> Z (skips I (India) and O (Oscar))
   - 33 -> a ... 57 -> z (skips l (Lima))
-- Each text character represents 5.86 (!) bits: 137% the size
-- [Reference](https://en.bitcoin.it/wiki/Base58Check_encoding)
+- Each text character represents 5.86 (!) bits: 137% increase in size
 
 
 
@@ -495,11 +495,20 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 - Generate the checksum:
   - Perform SHA-256 twice on RIPEMD-160 result: 
     c7f18fe8fcbed6396741e58ad259b5cb16b7fd7f041904147ba1dcffabf747fd
-  - Take the 4 byte prefix: c7f18fe8
+  - Take the first 4 bytes: c7f18fe8
 - Concatenate together (spaces for clarity only): 
   00 f54a5851e9372b87810a8e60cdd2e7cfd80b6e31 c7f18fe8
 - Convert that (binary) hex value to base 58: 
   1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
+
+
+
+## Bitcoin address -> hash
+- Given a Bitcoin invoice address
+  - Base-58 decode it
+  - Verify the correct network (first byte)
+  - Verify the checksum (last 4 bytes)
+- What's left is the hash of the public key
 
 
 
@@ -684,8 +693,8 @@ Size: varies; how many: txn_in_count
 |-|-|-|-|
 | 32 | hash | char[32] | The TXID of the transaction holding the output to spend |
 | 4 | index | uint32 | The output index |
-| varies | in_script_bytes | csuint | how many bytes in the script |
-| varies | signature_script | char[] | The script containing the public key |
+| varies | in_script_bytes | csuint | Input script size |
+| varies | signature_script | char[] | The input script (aka sig script) |
 | 4 | sequence | uint32 | Sequence number, usually 0xffffffff |
 
 
@@ -707,8 +716,8 @@ Size: varies; how many: txn_out_count
 | Bytes | Name | Type | Notes |
 |-|-|-|-|
 | 8 | value | int64_t | How many satoshi's to spend |
-| varies | out_script_bytes | csuint | How many bytes in the script
-| varies | out_script | char[] | The output script |
+| varies | out_script_bytes | csuint | Output script size |
+| varies | out_script | char[] | The output script (aka pubkey script) |
 
 
 </textarea></section>
@@ -756,14 +765,14 @@ Size: varies; how many: txn_out_count
 - If a TXN's output script says one must provide a public key...
 - ... then we provide it in the *input script*
 - One can provide more than just the keys, though
-- This is commonly called the *sigscript*
-  - Because it provides the key whose signature matches the output script
+- This is commonly called the *sig script*
+  - Because it provides the signature (and public key) required by the output (pubkey) script
 
 
 
 ## How a Bitcoin TXN is verified
 - To spend a UTXO:
-  - Take the input script (aka sigscript) from the TXN that is trying to spend the UTXO
+  - Take the input script (aka sig script) from the TXN that is trying to spend the UTXO
   - Take the output script (aka pubkey script) that created the UTXO
   - Concatenate these together (input script before output script), and execute
   - If the result of these is true, then the coins can be spent (transferred)
@@ -790,7 +799,7 @@ Size: varies; how many: txn_out_count
 - A typical input script will provide:
   - The public key that matches the hash in the output script
   - A signature of the entire transaction
-  - Called the 'sigscript' because it provides the signature of the TXN
+  - Called the 'sig script' because it provides the signature of the TXN
 
 
 
@@ -848,10 +857,10 @@ OP_DUP   OP_HASH160    Bytes to push (0x14 == 20)
 OP_EQUALVERIFY    OP_CHECKSIG
 ```
 
-Full hex-only script:
+Full hex-only script (spaces for clarification only):
 
 ```
-76A91489ABCDEFABBAABBAABBAABBAABBAABBAABBAABBA88AC
+76 A9 14 89ABCDEFABBAABBAABBAABBAABBAABBAABBAABBA 88 AC
 ```
     </textarea></section>
 
@@ -876,17 +885,16 @@ Another way to render the script:
 ```
 scriptPubKey: OP_DUP OP_HASH160 <pubKeyHash> 
               OP_EQUALVERIFY OP_CHECKSIG
-scriptSig: <sig> <pubKey>
 ```
 
 
 
 ## P2PKH Execution
 - To redeem, the redeemer provides two things:
-  - `<sig>`: a signature of the *entire* transaction
+  - `<sig>`: a signature of the *entire* UTXO transaction being redeemed
   - `<pubKey>`: the public key whose hash matches what's in the UTXO's output script
 - Input script concatenated with the output script:
-  - (the horizontal line is just to show the separator between the two scripts)
+  - (the line is just to show the separator between the scripts)
 
 ```
 <sig>
@@ -1076,6 +1084,7 @@ See the [Script page](https://en.bitcoin.it/wiki/Script) of the Bitcoin develope
 
 ## Obsolete P2PK transaction
 - P2PK; Pay to Public Key
+  - From when Bitcoin started in 2009
 - Input script: `<sig>`
   - The signature of the TXN with a given public key
 - Output script from the UTXO: `<pubKey> OP_CHECKSIG`
@@ -1110,12 +1119,159 @@ OP_CHECKSIG
 
 
 
+## Pay to Script Hash (P2SH)
+- From [BIP 0016](https://en.bitcoin.it/wiki/BIP_0016) from 2012 (and [another reference](https://en.bitcoin.it/wiki/Pay_to_script_hash))
+- The third of the "standard" transactions
+  - Along w/P2PK & P2PKH
+- Instead of requiring a hash of the public key, you require a hash of the *sigScript*
+  - Rephrased: The redeemer must provide a script that matches the hash, not just a key that matches the hash
+- Why?
+  - Perhaps you want a specific way to redeem it
+  - Or the redeeming sigScript is known ahead of time and very involved
+- If the private key becomes known, the TXN can't be redeemed (necessarily)
+
+
+
+## P2SH: Simple version:
+- pubKey script:
+  ```
+OP_HASH160 <pubKeyHash> OP_EQUAL
+```
+- sigScript: `<sig>`
+- Combined scripts:
+
+```
+<sig>
+--------
+OP_HASH160
+<pubKeyHash>
+OP_EQUAL
+```
+- This is a *special form*
+  - When miners and nodes see that *exact* pubKey script, they know that the `OP_HASH160` is for the *entire* sigscript, not just the top value
+
+
+
+## P2SH: Complicated version
+- pubKey script:
+  ```
+OP_HASH160 <pubKeyHash> OP_EQUAL
+```
+- sigScript is much more complicated:
+  - Can require that it's redeemed by multiple signatures
+  - Or via a custom script you wrote that you distribute
+  - Or when other conditions are met
+- Combined scripts:
+
+```
+<sig>
+... many more opcodes in this script
+--------
+OP_HASH160
+<pubKeyHash>
+OP_EQUAL
+```
+
+
+
+## Transaction Malleability
+- Problem: a small change to non-important part of the TXN changes the TXN hash
+  - Example: sequence number, output order, etc.
+- Some of these things might change as a transaction is mined into a block
+  - Then the TXID changes!
+  - This doesn't happen often, but it can occur
+- These changeable fields are *malleable*
+- This was used in an [attack in 2015](https://cointelegraph.com/news/the-ongoing-bitcoin-malleability-attack)
+  - If you change the malleable data, it creates a different transaction hash, and then that can be resubmitted and (possibly) double-spent
+
+
+
+## Solution: Witness
+- Defined in [BIP 141](https://en.bitcoin.it/wiki/BIP_0141) from 2015
+ - A *witness* is a new field in all transactions
+- A normal transaction (P2SH or P2PKH) contains the (hash of the) unlocking signature
+  - in the pubKey script
+- This is now removed from the pubKey script, and put into a separate section
+  - Which is called the *witness*
+- This separate section is separate, or segregated, from the rest of the transaction
+  - Called the *segregated witness* or *segwit*
+
+
+
+## Witness structure
+- Current TX hash is:
+  ```
+sha256(sha256(<version><txins><txouts><locktime>))
+```
+  - (assume that tx_in_cout & tx_out_out are in txins / txouts)
+- Transaction *witness hash* is:
+  ```
+sha256(sha256(<version><marker><flag><txins><txouts>
+                <witness><locktime>))
+```
+  - marker: 1 byte, always 0x00
+  - flag: 1 byte, always 0x01
+  - witness: more on that next
+- Each transaction now has two hash IDs!
+
+
+
+## The Witness
+- A witness is not a script, but only data to push onto the stack
+- Witness format:
+  - count: compactSize unsigned int indicating how many data times
+  - for each i in count:
+    - compactSize unsigned int containing the size of the data
+    - that many data bytes
+- Validation:
+  - Witness data is pushed onto the stack
+  - There may or may not be a sigScript
+  - The pubKey script then validates, using the data from the witness
+
+
+
+## Witnesses
+- The hashes of the witnesses of the transactions are kept in a Merkle tree
+- If a transaction's hash changes, the witness hash will stay the same
+  - Thus, we can prevent this type of double spending attack
+- Consider [this Bitcoin transaction from August 2021](https://www.blockchain.com/btc/tx/218f1f03781366e932524007a436024cf9d80ca1681a2ee110636d797ee2959b)
+  - That was for 11,325 BTC, worth `$`430 million at the time
+  - That has a witness field listed
+
+
+
+## Witness transactions
+- This led to...
+  - P2WPKH: Pay to Witness Public Key Hash
+    - Like P2PKH, but the signature and public key hash are taken from the witness
+  - P2WSH: Pay to Witness Script Hash
+    - Like P2SH, but the script hash is taken from the witness
+- The change to include witnesses also increased the block size
+  - Which decreased transaction times
+
+
+
 ## Problems with P2PKH transactions
 - Back to the hash of the public key version
 - Problem: once redeemed, the public key for the UTXO is thus known
   - This could also be cracked using a quantum computer
 - Solution: if you want to keep funds in the UTXO, transfer that to a new address key pair
   - Again, only specified with the address (hash)
+
+
+
+## Bitcoin transaction types
+- Ones we've seen in detail
+  - P2PK (to public key)
+  - P2SH (to script hash)
+  - P2PKH (to public key hash)
+- Witness transaction types
+  - P2WPKH: (to witness public key hash)
+  - P2WSH: (to witness script hash)
+- Others we haven't seen
+  - [P2MS](https://learnmeabitcoin.com/technical/p2ms): Pay to multi-sig
+- And, of course, custom scripts
+
 </textarea></section>
 
 <section data-markdown data-separator="^\n\n\n" id="unspendable"><textarea>
