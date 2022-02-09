@@ -100,13 +100,21 @@ Template for first line:
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Recap
-- Thoughts on the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf))?
 - Some current events:
   - Some lawmakers have introduced the [Crypto Tax Fairness Act](https://tittlepress.com/crypto/1522765/)
     - Encourages using them as a currency; standardizes how gains are taxed
     - This is different than what was mentioned on Monday
 - We were part way through [Bitcoin](../slides/bitcoin.html#/)
+  - We discussed Merkle trees
   - Recall a UTXO: unspent transaction output
+  - Recall a [compactSize unsigned integer](../slides/bitcoin.html#/3/2): 1-9 bytes
+  - Bitcoin's blockchain only has 5 types:
+    - 4 byte (mostly) unsigned ints
+    - 8 byte unsigned long ints
+    - compactSize unsigned integer
+    - 32 byte hash
+    - Variable-length script
+  - Just about everything in Bitcoin's blockchain is in little-Endian form
   - We ended on [Bitcoin slide 5.10](../slides/bitcoin.html#/4/9)
 </textarea></section>
   </section>
