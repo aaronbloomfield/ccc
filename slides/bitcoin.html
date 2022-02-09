@@ -462,9 +462,9 @@ RIPEMD160(lorem-ipsum.txt)=
         495822918fc2fd2cceb626b637da4cca984b39c4
 $
 ```
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n" id="btcaddress"><textarea>
 ## Bitcoin Addresses
 - aka "invoice address" or "invoice"
 - Algorithm to compute:
@@ -476,9 +476,9 @@ $
   5. Generate the checksum: Perform SHA-256 twice on the (binary) RIPEMD-160 result, and take the first 4 bytes
   6. The key is the version (0x00), the RIPEMD-160 result, and the checksum concatenated together
   7. Convert to a byte string using base58 encoding
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Bitcoin Address Example
 Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_version_1_Bitcoin_addresses)
 
@@ -642,7 +642,7 @@ Size: 8 bytes; how many: 1
 | Bytes | Name | Type | Notes |
 |-|-|-|-|
 | 4 | magic_number | uint32 | 0xf9beb4d9 in little-Endian |
-| 4 | version | uint32 | The block version number |
+| 4 | size | uint32 | The size of the upcoming block |
 
 &nbsp;
 
