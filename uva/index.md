@@ -36,8 +36,9 @@ Readings
 
 All scholarly articles (such as from the ACM digital library) can be obtained from free from any UVa wireless network.  Some of them you will *NOT* be able to get it for free from your home Internet provider such as Comcast (unless you live in a UVa dorm, of course) without using a UVa VPN.  All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
+- Due Mon, 2/21: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
 - Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
-
 
 
 
@@ -55,6 +56,7 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Smaller Homeworks
 
+- Due Mon, 2/21: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)); see above (in the Reading section) for what you can skip
 - Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
 - Due Wed, 1/26: HW S1: complete the course introduction Google survey (link in Collab)
 
