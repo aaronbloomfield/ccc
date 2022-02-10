@@ -259,7 +259,7 @@ Lastly, your program must output the blockchain in JSON format.  You can read ab
                             "utxo_hash": "0000000000000000000000000000000000000000000000000000000000000000",
                             "index": 4294967295,
                             "input_script_size": 77,
-                            "input_script_bytes": "736b6e616220726f662074756f6c69616220646e6f63657320666f206b6e697262206e6f20726f6c6c65636e61684320393030322f6e614a2f33302073656d6954206568544504011d00ffff04",
+                            "input_script_bytes": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
                             "sequence": 4294967295
                         }
                     ],
@@ -268,7 +268,7 @@ Lastly, your program must output the blockchain in JSON format.  You can read ab
                         {
                             "satoshis": 5000000000,
                             "output_script_size": 67,
-                            "output_script_hex": "ac5f1df16b2b704c8a578d0bbaf74d385cde12c11ee50455f3c438ef4c3fbcf649b6de611feae06279a60939e028a8d65c10b73071a6f16719274855feb0fd8a670441"
+                            "output_script_bytes": "4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac"
                         }
                     ],
                     "lock_time": 0
@@ -292,6 +292,7 @@ A bunch of notes:
 - For the numerical values, the only ones that are in hex (again, without the leading '0x') are the hashes (previous header, merkle, and utxo), the scripts (input and output), and nbits.  All other numerical values, including the two times (timestamp and locktime) should be base-10.
 - All hash values should be printed in big-Endian.  Note that they are stored in the file in little-Endian!
 - The height of the first block in the file should be displayed as 0, even if it is not the genesis block; the height increments from there.
+- The script data itself should be output in the exact order that it occurs in the file.  You can see what that data is for the genesis block [here](https://en.bitcoin.it/wiki/Genesis_block).
 
 In particular, this output need to be written to a file, NOT to standard output.  So all of the output lines from part 1 (other than reporting the presence of, or lack of, errors) should now be output to a file.  The file name will just append ".json" to the input file name.  If you are writing this file as you go, and you encounter an error, it's fine if you have a partially written JSON file -- we aren't going to check it in that case.
 

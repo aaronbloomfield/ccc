@@ -423,7 +423,7 @@ Your output should look like the following:</p>
                             &quot;utxo_hash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
                             &quot;index&quot;: 4294967295,
                             &quot;input_script_size&quot;: 77,
-                            &quot;input_script_bytes&quot;: &quot;736b6e616220726f662074756f6c69616220646e6f63657320666f206b6e697262206e6f20726f6c6c65636e61684320393030322f6e614a2f33302073656d6954206568544504011d00ffff04&quot;,
+                            &quot;input_script_bytes&quot;: &quot;04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73&quot;,
                             &quot;sequence&quot;: 4294967295
                         }
                     ],
@@ -432,7 +432,7 @@ Your output should look like the following:</p>
                         {
                             &quot;satoshis&quot;: 5000000000,
                             &quot;output_script_size&quot;: 67,
-                            &quot;output_script_hex&quot;: &quot;ac5f1df16b2b704c8a578d0bbaf74d385cde12c11ee50455f3c438ef4c3fbcf649b6de611feae06279a60939e028a8d65c10b73071a6f16719274855feb0fd8a670441&quot;
+                            &quot;output_script_bytes&quot;: &quot;4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac&quot;
                         }
                     ],
                     &quot;lock_time&quot;: 0
@@ -471,6 +471,9 @@ stored in the file in little-Endian!</li>
 <li>The height of the first block in the file should be displayed as 0,
 even if it is not the genesis block; the height increments from
 there.</li>
+<li>The script data itself should be output in the exact order that it
+occurs in the file. You can see what that data is for the genesis block
+<a href="https://en.bitcoin.it/wiki/Genesis_block">here</a>.</li>
 </ul>
 <p>In particular, this output need to be written to a file, NOT to
 standard output. So all of the output lines from part 1 (other than
