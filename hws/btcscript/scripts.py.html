@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>scripts.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">#!/usr/bin/python3</font></i>
+
+<i><font color="#9A1900"># This is the homework file for the BTC Parsing homework, which can be found</font></i>
+<i><font color="#9A1900"># at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That page describes</font></i>
+<i><font color="#9A1900"># how to fill in this program.</font></i>
+
+
+<b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>wallet <b><font color="#000080">import</font></b> CBitcoinAddress<font color="#990000">,</font> CBitcoinSecret
+<b><font color="#000080">from</font></b> bitcoin <b><font color="#000080">import</font></b> SelectParams
+<b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>core <b><font color="#000080">import</font></b> CMutableTransaction
+<b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>core<font color="#990000">.</font>script <b><font color="#000080">import</font></b> <font color="#990000">*</font>
+<b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>core <b><font color="#000080">import</font></b> x
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Do not touch: change nothing in this section!</font></i>
+
+<i><font color="#9A1900"># ensure we are using the bitcoin testnet and not the real bitcoin network</font></i>
+<b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#FF0000">'testnet'</font><font color="#990000">)</font>
+
+<i><font color="#9A1900"># The faucet address that we will pay our tBTC to -- do not change this!</font></i>
+faucet_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB'</font><font color="#990000">)</font>
+
+<i><font color="#9A1900"># The address that we will pay or BCY to -- do not change this!</font></i>
+bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mzvSYQANeVz6ZG2SwJAHj7k5EFy6AoFDy4'</font><font color="#990000">)</font>
+
+<i><font color="#9A1900"># Yes, we want to broadcast transactions</font></i>
+broadcast_transactions <font color="#990000">=</font> True
+
+<i><font color="#9A1900"># Ensure we don't call this directly</font></i>
+<b><font color="#0000FF">if</font></b> __name__ <font color="#990000">==</font> <font color="#FF0000">'__main__'</font><font color="#990000">:</font>
+    <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"This script is not meant to be called directly -- call bitcoinctl.py instead"</font><font color="#990000">)</font>
+    <b><font color="#000000">exit</font></b><font color="#990000">()</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Setup: your information</font></i>
+
+<i><font color="#9A1900"># Your UVA userid</font></i>
+userid <font color="#990000">=</font> <font color="#FF0000">''</font>
+
+<i><font color="#9A1900"># Enter the BTC private key and invoice address from the setup 'Testnet Setup'</font></i>
+<i><font color="#9A1900"># section of the assignment.  </font></i>
+my_private_key_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+my_invoice_address_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># Enter the transaction id (TXID) from the 'Testnet Setup' section of the</font></i>
+<i><font color="#9A1900"># assignment.  This was the transaction that funded your wallet, listed above</font></i>
+<i><font color="#9A1900"># in the `my_invoice_address_str` variable, with tBTC.</font></i>
+txid_initial <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># These conversions are so that you can use them more easily in the functions</font></i>
+<i><font color="#9A1900"># below -- don't change these two lines.</font></i>
+<b><font color="#0000FF">if</font></b> my_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
+    my_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>my_private_key_str<font color="#990000">)</font>
+    my_public_key <font color="#990000">=</font> my_private_key<font color="#990000">.</font>pub
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Utility function(s)</font></i>
+
+<i><font color="#9A1900"># This function will create a signature of a given transaction.  The</font></i>
+<i><font color="#9A1900"># transaction itself is passed in via the first three parameters, and the key</font></i>
+<i><font color="#9A1900"># to sign it with is the last parameter.  The parameters are:</font></i>
+<i><font color="#9A1900"># - txin: the transaction input of the transaction being signed; type: CMutableTxIn</font></i>
+<i><font color="#9A1900"># - txout: the transaction output of the transaction being signed; type: CMutableTxOut</font></i>
+<i><font color="#9A1900"># - txin_scriptPubKey: the pubKey script of the transaction being signed; type: list</font></i>
+<i><font color="#9A1900"># - private_key: the private key to sign the transaction; type: CBitcoinSecret</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> private_key<font color="#990000">):</font>
+    tx <font color="#990000">=</font> <b><font color="#000000">CMutableTransaction</font></b><font color="#990000">([</font>txin<font color="#990000">],</font> <font color="#990000">[</font>txout<font color="#990000">])</font>
+    sighash <font color="#990000">=</font> <b><font color="#000000">SignatureHash</font></b><font color="#990000">(</font><b><font color="#000000">CScript</font></b><font color="#990000">(</font>txin_scriptPubKey<font color="#990000">),</font> tx<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> SIGHASH_ALL<font color="#990000">)</font>
+    <b><font color="#0000FF">return</font></b> private_key<font color="#990000">.</font><b><font color="#000000">sign</font></b><font color="#990000">(</font>sighash<font color="#990000">)</font> <font color="#990000">+</font> <b><font color="#000000">bytes</font></b><font color="#990000">([</font>SIGHASH_ALL<font color="#990000">])</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Testnet Setup: splitting coins</font></i>
+
+<i><font color="#9A1900"># The transaction ID that is to be split -- the assumption is that it is the</font></i>
+<i><font color="#9A1900"># transaction hash, above, that funded your account with tBTC; thus, this</font></i>
+<i><font color="#9A1900"># should not have to change.  It must be paid to the address that corresponds</font></i>
+<i><font color="#9A1900"># to the private key above</font></i>
+split_txid <font color="#990000">=</font> txid_initial
+
+<i><font color="#9A1900"># How much BTC is in that UTXO; the faucet is currently only giving 0.001</font></i>
+<i><font color="#9A1900"># tBTC, so this should not have to change.</font></i>
+split_amount_to_split <font color="#990000">=</font> <font color="#993399">0.001</font>
+
+<i><font color="#9A1900"># How many UTXO indices to split it into.  Note that it will actually split</font></i>
+<i><font color="#9A1900"># into one less, and use the last one as the transaction fee. It will make</font></i>
+<i><font color="#9A1900"># your life SO MUCH EASIER if the split_amount_to_split value, above, is evenly</font></i>
+<i><font color="#9A1900"># divisible by this number.  Setting this to 10 is reasonable.</font></i>
+split_into_n <font color="#990000">=</font> <font color="#993399">10</font>
+
+<i><font color="#9A1900"># The transaction ID obtained after successfully splitting the tBTC.</font></i>
+txid_split <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Global settings: some of these will need to be changed for EACH RUN</font></i>
+
+<i><font color="#9A1900"># The transaction ID that is being redeemed for the various parts herein --</font></i>
+<i><font color="#9A1900"># this should be the result of the split transaction, above; thus, the</font></i>
+<i><font color="#9A1900"># default is probably sufficient.</font></i>
+txid_utxo <font color="#990000">=</font> txid_split
+
+<i><font color="#9A1900"># The index of the UTXO that is being spent -- note that these indices are</font></i>
+<i><font color="#9A1900"># indexed from 0.  Note that you will have to change this for EACH run, as</font></i>
+<i><font color="#9A1900"># once a UTXO index is spent, it can't be spent again.  If there is only one</font></i>
+<i><font color="#9A1900"># index, then this should be set to 0.</font></i>
+utxo_index <font color="#990000">=</font> <font color="#993399">0</font>
+
+<i><font color="#9A1900"># How much tBTC to send -- this should be LESS THAN the amount in that</font></i>
+<i><font color="#9A1900"># particular UTXO index -- if it's not less than the amount in the UTXO, then</font></i>
+<i><font color="#9A1900"># there is no miner fee, and it will not be mined into a block.  Setting it</font></i>
+<i><font color="#9A1900"># to 90% of the value of the UTXO index is reasonable.  Note that the amount</font></i>
+<i><font color="#9A1900"># in a UTXO index is split_amount_to_split / split_into_n.</font></i>
+send_amount <font color="#990000">=</font> <font color="#993399">0.00009</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Part 1: P2PKH transaction</font></i>
+
+<i><font color="#9A1900"># This defines the pubkey script (aka output script) for the transaction you</font></i>
+<i><font color="#9A1900"># are creating.  This should be a standard P2PKH script.  The parameter is:</font></i>
+<i><font color="#9A1900"># - address: the address this transaction is being paid to; type:</font></i>
+<i><font color="#9A1900">#   P2PKHBitcoinAddress</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>address<font color="#990000">):</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
+             <i><font color="#9A1900"># fill this in</font></i>
+           <font color="#990000">]</font>
+
+<i><font color="#9A1900"># This function provides the sigscript (aka input script) for the transaction</font></i>
+<i><font color="#9A1900"># that is being redeemed.  This is for a standard P2PKH script.  The</font></i>
+<i><font color="#9A1900"># parameters are:</font></i>
+<i><font color="#9A1900"># - txin: the transaction input of the UTXO being redeemed; type:</font></i>
+<i><font color="#9A1900">#   CMutableTxIn</font></i>
+<i><font color="#9A1900"># - txout: the transaction output of the UTXO being redeemed; type:</font></i>
+<i><font color="#9A1900">#   CMutableTxOut</font></i>
+<i><font color="#9A1900"># - txin_scriptPubKey: the pubKey script (aka output script) of the UTXO being</font></i>
+<i><font color="#9A1900">#   redeemed; type: list</font></i>
+<i><font color="#9A1900"># - private_key: the private key of the redeemer of the UTXO; type:</font></i>
+<i><font color="#9A1900">#   CBitcoinSecret</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">P2PKH_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> private_key<font color="#990000">):</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
+             <i><font color="#9A1900"># fill this in</font></i>
+           <font color="#990000">]</font>
+
+<i><font color="#9A1900"># The transaction hash received after the successful execution of this part</font></i>
+txid_p2pkh <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Part 2: puzzle transaction</font></i>
+
+<i><font color="#9A1900"># These two values are constants that you should choose -- they should be four</font></i>
+<i><font color="#9A1900"># digits long.  They need to have the same parity -- either both have to be</font></i>
+<i><font color="#9A1900"># even, or both have to be odd.</font></i>
+puzzle_txn_p <font color="#990000">=</font> <font color="#993399">0</font>
+puzzle_txn_q <font color="#990000">=</font> <font color="#993399">0</font>
+
+<i><font color="#9A1900"># These are the solutions to the equations 2x+y=p and x+2y=q.  You can use an</font></i>
+<i><font color="#9A1900"># online linear equation solver to find the solutions.</font></i>
+puzzle_txn_x <font color="#990000">=</font> <font color="#993399">0</font>
+puzzle_txn_y <font color="#990000">=</font> <font color="#993399">0</font>
+
+<i><font color="#9A1900"># This function provides the pubKey script (aka output script) that requres a</font></i>
+<i><font color="#9A1900"># solution to the above equations to redeem this UTXO.</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">puzzle_scriptPubKey</font></b><font color="#990000">():</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
+             <i><font color="#9A1900"># fill this in</font></i>
+           <font color="#990000">]</font>
+
+<i><font color="#9A1900"># This function provides the sigscript (aka input script) for the transaction</font></i>
+<i><font color="#9A1900"># that you are redeeming.  It should only provide the two values x and y, but</font></i>
+<i><font color="#9A1900"># in the order of your choice.</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">puzzle_scriptSig</font></b><font color="#990000">():</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
+             <i><font color="#9A1900"># fill this in</font></i>
+           <font color="#990000">]</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting the first</font></i>
+<i><font color="#9A1900"># transaction above (part 2a)</font></i>
+txid_puzzle_txn1 <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting the second</font></i>
+<i><font color="#9A1900"># transaction above (part 2b)</font></i>
+txid_puzzle_txn2 <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Part 3: Multi-signature transaction</font></i>
+
+<i><font color="#9A1900"># These are the public and private keys that need to be created for alice,</font></i>
+<i><font color="#9A1900"># bob, and charlie</font></i>
+alice_private_key_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+alice_invoice_address_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+bob_private_key_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+bob_invoice_address_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+charlie_private_key_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+charlie_invoice_address_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># These three lines convert the above strings into the type that is usable in</font></i>
+<i><font color="#9A1900"># a script -- you should NOT modify these lines.</font></i>
+<b><font color="#0000FF">if</font></b> alice_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
+    alice_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>alice_private_key_str<font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> bob_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
+    bob_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> charlie_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
+    charlie_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>charlie_private_key_str<font color="#990000">)</font>
+
+<i><font color="#9A1900"># This function provides the pubKey script (aka output script) that will</font></i>
+<i><font color="#9A1900"># require multiple different keys to allow redeeming this UTXO.  It MUST use</font></i>
+<i><font color="#9A1900"># the OP_CHECKMULTISIGVERIFY opcode.  While there are no parameters to the</font></i>
+<i><font color="#9A1900"># function, you should use the keys above for alice, bob, and charlie, as</font></i>
+<i><font color="#9A1900"># well as your own key.</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">multisig_scriptPubKey</font></b><font color="#990000">():</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
+            <i><font color="#9A1900"># fill this in</font></i>
+           <font color="#990000">]</font>
+
+<i><font color="#9A1900"># This function provides the sigScript (aka input script) that can redeem the</font></i>
+<i><font color="#9A1900"># above transaction.  The parameters are the same as for P2PKH_scriptSig(),</font></i>
+<i><font color="#9A1900"># above.  You also will need to use the keys for alice, bob, and charlie, as</font></i>
+<i><font color="#9A1900"># well as you rown key.</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">multisig_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> private_key<font color="#990000">):</font>
+    bank_sig <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> my_private_key<font color="#990000">)</font>
+    alice_sig <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> alice_private_key<font color="#990000">)</font>
+    bob_sig <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> bob_private_key<font color="#990000">)</font>
+    charlie_sig <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> charlie_private_key<font color="#990000">)</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
+             <i><font color="#9A1900"># fill this in</font></i>
+           <font color="#990000">]</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting the first</font></i>
+<i><font color="#9A1900"># transaction above (part 3a)</font></i>
+txid_multisig_txn1 <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting the second</font></i>
+<i><font color="#9A1900"># transaction above (part 3b)</font></i>
+txid_multisig_txn2 <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Part 4: cross-chain transaction</font></i>
+
+<i><font color="#9A1900"># This is the API token obtained after creating an account on</font></i>
+<i><font color="#9A1900"># https://accounts.blockcypher.com/.  This is optional!  But you may want to</font></i>
+<i><font color="#9A1900"># keep it here so that everything is all in once place.</font></i>
+blockcypher_api_token <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># These are the private keys and invoice addresses obtained on the BCY test</font></i>
+<i><font color="#9A1900"># network.</font></i>
+my_private_key_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+my_invoice_address_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+bob_private_key_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+bob_invoice_address_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># This is the transaction hash for the funding transaction for Bob's BCY</font></i>
+<i><font color="#9A1900"># network wallet.</font></i>
+txid_bob_bcy_funding <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># This is the transaction hash for the split transaction for the trasnaction</font></i>
+<i><font color="#9A1900"># above.</font></i>
+txid_bob_bcy_split <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># This is the secret used in this atomic swap.  It needs to be between 1 million</font></i>
+<i><font color="#9A1900"># and 2 billion.</font></i>
+atomic_swap_secret <font color="#990000">=</font> <font color="#993399">0</font>
+
+<i><font color="#9A1900"># This function provides the pubKey script (aka output script) that will set</font></i>
+<i><font color="#9A1900"># up the atomic swap.  This function is run by both Alice (aka you) and Bob,</font></i>
+<i><font color="#9A1900"># but on different networks (tBTC for you/Alice, and BCY for Bob).</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>public_key_sender<font color="#990000">,</font> public_key_recipient<font color="#990000">,</font> hash_of_secret<font color="#990000">):</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
+             <i><font color="#9A1900"># fill this in</font></i>
+           <font color="#990000">]</font>
+
+<i><font color="#9A1900"># This is the ScriptSig that the receiver will use to redeem coins.  It's</font></i>
+<i><font color="#9A1900"># provided in full so that you can write the atomicswap_scriptPubKey()</font></i>
+<i><font color="#9A1900"># function, above.</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">atomcswap_scriptSig_redeem</font></b><font color="#990000">(</font>sig_recipient<font color="#990000">,</font> secret<font color="#990000">):</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font>
+        sig_recipient<font color="#990000">,</font> secret<font color="#990000">,</font> OP_TRUE<font color="#990000">,</font>
+    <font color="#990000">]</font>
+
+<i><font color="#9A1900"># This is the ScriptSig for sending coins back to the sender if unredeemed.</font></i>
+<i><font color="#9A1900"># It's is provided in full so that you can write the atomicswap_scriptPubKey()</font></i>
+<i><font color="#9A1900"># function, above.</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">atomcswap_scriptSig_refund</font></b><font color="#990000">(</font>sig_sender<font color="#990000">,</font> sig_recipient<font color="#990000">):</font>
+    <b><font color="#0000FF">return</font></b> <font color="#990000">[</font>
+        sig_recipient<font color="#990000">,</font> sig_sender<font color="#990000">,</font> OP_FALSE<font color="#990000">,</font>
+    <font color="#990000">]</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting part 4a</font></i>
+txid_atomicswap_alice_send_tbtc <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting part 4b</font></i>
+txid_atomicswap_bob_send_bcy <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting part 4c</font></i>
+txid_atomicswap_alice_redeem_bcy <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+<i><font color="#9A1900"># The transaction hash received after successfully submitting part 4d</font></i>
+txid_atomicswap_bob_redeem_tbtc <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900">#------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># part 5: return everything to the faucet</font></i>
+
+<i><font color="#9A1900"># nothing to fill in here, as we are going to look at the balance of</font></i>
+<i><font color="#9A1900"># `my_invoice_address_str` to verify that you've completed this part.</font></i>
+</tt></pre>
+</body>
+</html>
