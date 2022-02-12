@@ -11,7 +11,7 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 ### Languages
 
-This assignment uses the [Python bitcoin package](https://pypi.org/project/bitcoin/).  Thus, this assignment must be completed in Python.  You can install the package via `pip install bitcoin` (you may need to use `pip3` on your system).
+This assignment uses the [Python bitcoin package](https://pypi.org/project/bitcoin/).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).
 
 
 ### Provided files
@@ -207,10 +207,20 @@ Once you have written the script in the `atomicswap_scriptPubKey()` function, yo
 
 ### Part 5: Pay back the tBTC faucet address
 
-Once you have completed this assignment, you should pay any unspent tBTC UTXOs back to the faucet address.  You can use the script from part 1 for this -- just change the `utxo_index` value and re-run it until all the UTXO indices are spent..  There should not be any unspent UTXOs remaining!  We are going to test this by seeing if the amount of tBTC left in your wallet address is zero.
+Once you have completed this assignment, you should pay any unspent tBTC UTXOs back to the faucet address.  You can use the script from part 1 for this -- just change the `utxo_index` value and re-run it until all the UTXO indices are spent.  If you have any other inputs -- perhaps you used the faucet multiple times -- just change the `txid_split` variable (and the `utxo_index` and the `send_amount`), and then call `./bitcoinctl.py part1`.  But be sure to change those values back!!!
+
+When done, there should not be any unspent UTXOs remaining!  We are going to test this by seeing if the amount of tBTC left in your wallet address is zero.
 
 You do not need to do this for the extra BCY in your account(s).
 
 ### Submission
 
-The only file you need to submit is scripts.py.  There will be a few sanity checks made when you submit it.
+The only file you need to submit is scripts.py.  There will be a few sanity checks made when you submit it.  Those checks are:
+
+- Ensure that the `userid` returns a non-zero length string
+- Ensure that the three values set during setup (`my_private_key_str`, `my_invoice_address_str`, and `txid_initial`)
+- Ensure that all the transaction hashes (all the variables that start with `txid_`) are of the expected length (64 characters)
+- Ensure that the split transaction was split into at least 5 different UTXO indices
+- Ensure that the four parts verify via `VerifyScript()`.  This does NOT mean they work correctly!  It just means that the `VerifyScript()` function did not detect errors.  For one example, the `VerifyScript()` has no way of knowing the actual signature required on the blockchain.  This is the same function that is run before broadcasting the transactions to the network.  The full grading will check what is on the blockchain itself.
+- Ensure that the final balance of the tBTC wallet (from `my_invoice_address_str`) is zero
+

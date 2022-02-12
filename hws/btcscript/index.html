@@ -37,8 +37,8 @@ Script page</a>.</p>
 <p>This assignment uses the <a
 href="https://pypi.org/project/bitcoin/">Python bitcoin package</a>.
 Thus, this assignment must be completed in Python. You can install the
-package via <code>pip install bitcoin</code> (you may need to use
-<code>pip3</code> on your system).</p>
+package via <code>pip install python-bitcoinlib</code> (you may need to
+use <code>pip3</code> on your system).</p>
 <h3 id="provided-files">Provided files</h3>
 <ul>
 <li><a href="scripts.py.html">scripts.py</a> (<a
@@ -600,12 +600,37 @@ tBTC faucet address</h3>
 <p>Once you have completed this assignment, you should pay any unspent
 tBTC UTXOs back to the faucet address. You can use the script from part
 1 for this – just change the <code>utxo_index</code> value and re-run it
-until all the UTXO indices are spent.. There should not be any unspent
-UTXOs remaining! We are going to test this by seeing if the amount of
-tBTC left in your wallet address is zero.</p>
+until all the UTXO indices are spent. If you have any other inputs –
+perhaps you used the faucet multiple times – just change the
+<code>txid_split</code> variable (and the <code>utxo_index</code> and
+the <code>send_amount</code>), and then call <code>./bitcoinctl.py
+part1</code>. But be sure to change those values back!!!</p>
+<p>When done, there should not be any unspent UTXOs remaining! We are
+going to test this by seeing if the amount of tBTC left in your wallet
+address is zero.</p>
 <p>You do not need to do this for the extra BCY in your account(s).</p>
 <h3 id="submission">Submission</h3>
 <p>The only file you need to submit is scripts.py. There will be a few
-sanity checks made when you submit it.</p>
+sanity checks made when you submit it. Those checks are:</p>
+<ul>
+<li>Ensure that the <code>userid</code> returns a non-zero length
+string</li>
+<li>Ensure that the three values set during setup
+(<code>my_private_key_str</code>, <code>my_invoice_address_str</code>,
+and <code>txid_initial</code>)</li>
+<li>Ensure that all the transaction hashes (all the variables that start
+with <code>txid_</code>) are of the expected length (64 characters)</li>
+<li>Ensure that the split transaction was split into at least 5
+different UTXO indices</li>
+<li>Ensure that the four parts verify via <code>VerifyScript()</code>.
+This does NOT mean they work correctly! It just means that the
+<code>VerifyScript()</code> function did not detect errors. For one
+example, the <code>VerifyScript()</code> has no way of knowing the
+actual signature required on the blockchain. This is the same function
+that is run before broadcasting the transactions to the network. The
+full grading will check what is on the blockchain itself.</li>
+<li>Ensure that the final balance of the tBTC wallet (from
+<code>my_invoice_address_str</code>) is zero</li>
+</ul>
 </body>
 </html>
