@@ -1201,6 +1201,24 @@ OP_EQUAL
 
 
 ## Witness structure
+
+<table class='transparent'>
+  <tr>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.3.svg" style="border-radius:10px;margin-top:0;margin-bottom:0;width:80%">
+    </td>
+    <td style="vertical-align: middle;">
+      <p style="text-align: center;">... becomes ...<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>(new parts in red)<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+    </td>
+    <td>
+      <img src="images/bitcoin/blocks/blocks.dot.6.svg" style="border-radius:10px;margin-top:0;width:80%">
+    </td>
+  </tr>
+</table>
+
+
+
+## Witness structure
 - Current TX hash is:
   ```
 sha256(sha256(<version><txins><txouts><locktime>))
@@ -1221,7 +1239,7 @@ sha256(sha256(<version><marker><flag><txins><txouts>
 ## The Witness
 - A witness is not a script, but only data to push onto the stack
 - Witness format:
-  - count: compactSize unsigned int indicating how many data times
+  - count: compactSize unsigned int indicating how many data items
   - for each i in count:
     - compactSize unsigned int containing the size of the data
     - that many data bytes
@@ -1230,6 +1248,17 @@ sha256(sha256(<version><marker><flag><txins><txouts>
   - There may or may not be a sigScript
   - The pubKey script then validates, using the data from the witness
 
+
+
+## Witness Benefits
+- Even if the TX hash changes, the witness hash does not
+  - Miners / nodes do not recompute the witness hash
+- If there are many UTXOs being spent...
+  - ... and all are P2PKH transactions ...
+  - ... then the witness data applies to *each* one
+  - This means each transaction input does not have to list the signature and key separately
+  - This increases the transaction per block by a factor of about 2
+    - And decreased transaction times
 
 
 ## Witnesses
