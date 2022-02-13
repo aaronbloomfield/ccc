@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Mining
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Mining difficulty](#/difficulty)  
+[Environmental issues](#/environment)  
+[Proof-of-$X$](#/proofofx)  
+[DAGs](#/dags)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="difficulty" data-markdown class="center"><textarea>
+# Mining difficulty
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Disclaimer
+- All the numbers shown here were accurate and current as of the time this slide set was written
+  - But they are likely all different now
+- However, they are (generally) consistent throughout the slide set
+  - And the exact numbers don't matter as much to explain the concepts
+
+
+
+## Why a higher difficulty?
+- As more people mine -- to get the reward -- the time between blocks decreases
+  - Each coin is designed to have a fixed time between blocks
+  - Bitcoin: 10 minutes; Ravencoin: 1 minute; Ethereum: 12 seconds
+- Mining too fast will exhaust the available coin and and devalue the coin's value
+
+
+
+## How to make it more difficult
+- Force the hash of the mined block to have a certain number of leading zeros
+- In [Ravencoin block 1,982,745](https://rvnblockexplorer.com/block/1982745):  0000000000004086a8bfcf0a58beb655 039ae52cedcb46d06de147ea0daa5a76
+    - 12 leading hex zeros, 49 leading binary zeros
+- In [Bitcoin block 706,020](https://bitcoinblockexplorers.com/block/706020): 000000000000000000021ec74d219d6d 8857f5408bf09314bd20cbebb71c8d93
+    - 19 leading hex zeros, 78 leading binary zeros
+	- But that was more than the required target; only 76 leading binary zeros were needed
+
+
+
+## Random nonces
+- Consider a random nonce to generate a hash value
+- You would expect that half (50%) would have a leading 0 bit, and the other half would have a leading 1 bit
+  - Expectation is that 1/4 (25%) have two leading 0 bits
+  - Expectation is that 1/8 (12.5%) have three leading 0 bits
+- Expectation is that $1/2^n$ have $n$ leading 0 bits
+- Thus:
+  - $\frac{1}{2^{49}} = \frac{1}{562,949,953,421,312}$, which is 1 in 562.9 trillion ($10^{12}$), would have 49 leading 0 bits
+     - The RVN block example from the last slide
+  - $\frac{1}{2^{76}} = \frac{1}{75,557,863,725,914,323,419,136}$, which is 1 in 75.6 sextillion ($10^{21}$), would have 76 leading 0 bits
+     - The BTC block example from the last slide
+
+
+
+## Bitcoin nonces
+- Consider [The Mystery Of The Bitcoin Nonce Pattern](https://blog.bitmex.com/the-mystery-of-the-bitcoin-nonce-pattern/)
+- and the first answer [here](https://bitcoin.stackexchange.com/questions/36860/bitcoin-and-other-crypto-coins-nonce-loop)
+
+
+
+## Is that BTC number correct?
+- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 147.578 million Th/s
+  - Or $147.6 * 10^{18}$ h/s $= 1.476 * 10^{20}$ h/s $= 147.6$ Eh/s
+- A 10 minute BTC block takes 600 seconds
+  - Or about $88.6$ Zh $= 88.6 * 10^{21}$ h
+- We computed 75.6 Zh
+- That's close enough for government work!
+- The differences were caused by:
+  - A decreasing block time caused by more miners; the difficulty will adjust in a week or so
+  - The numbers being used coming from different sites and slightly different points in time
+
+
+
+## Computing network hash rate
+- We can compute this the other way
+- Consider a Bitcoin that requres 76 leading zero bits (from 2 slides ago)
+  - So we have a 1 in $2^{76}$ or 1 in $75.6*10^{21}$ chance to get a hash
+  - Rephrased: we would expect to get valid nonce after $75.6*10^{21}$ hashes
+- Bitcoin is designed to have 10 minutes per block (600s)
+- Dividing one by the other yields 126 Eh/s
+  - Close enough to 147.578 for a rough estimate!
+- This can be done with any coin when you know the difficulty and block rate
+
+
+
+## When will you get a RVN block?
+- Assume that your graphics card's GPU can compute about 50 Mh/s for kawpow (RVN) ([source](https://2cryptocalc.com/gpu/24h/3090/1))
+  - That's a *very* fast graphics card (Nvidia 3090)
+- We expect to get a block after $562.9 * 10^{12}$ hashes (or 562.9 Th)
+- A 52 Mh/s graphics card will compute 562.9 Th in about 130 days
+- Reward is 5000 RVN (2,500 after the halving in Jan 2022) times 11&cent; per RVN = $550
+  - Or $4.23 per day, on average
+  - Minus electrical costs of about 85&cent; per day yields about a $3.50 / day profit
+
+
+
+## When will you get a BTC block?
+- Assume that your graphics card's GPU can compute about 9,700 Mh/s for SHA-256 (BTC) ([source](https://gist.github.com/Chick3nman/e4fcee00cb6d82874dace72106d73fef))
+  - Again, that's a *very* fast graphics card (Nvidia 3090)
+- We expect to get a block after $75.6 * 10^{21}$ hashes (or 75.6 Zh)
+- A 9,700 Mh/s graphics card will compute 75.6 Zh in about 90,206,185 days (246,971 years!)
+- Reward is <span id='btc_reward_btc'>(undefined)</span> BTC times $<span id='btc_price'>(undefined)</span> per BTC
+  - Which is $<span id='btc_reward_usd'>(undefined)</span> per mined block
+  - Or $1.64 per *year*, on average
+  - Minus electrical costs...
+
+
+
+## When will you get a BTC block with an ASIC?
+- Consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t), as one example, that can compute $75$ Th/s $= 75 * 10^{12}$ h/s
+- We expect to get a block after $75.6 * 10^{21}$ hashes (or 75.6 Zh)
+- A 75 Th/s ASIC will compute 75.6 Zh in about 11,666 days (32 years)
+- Reward is 6.25 BTC times $65,000 per BTC
+  - Which is $406,250 per mined block
+  - Or about $12,720 (0.20 BTC) per *year*
+  - Minus electrical costs...
+
+
+
+## Is an ASIC miner worth it?
+- Again, consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
+- It generates $12,720 per year, and uses 3,420 W of electricity
+  - That's 82 kWh / day
+  - At 11.04&cent; per kWh, that's about $9 per day
+  - Or about $270 per month
+  - Or about $3,300 per year, on average
+- So the profit is really only $9,420 per year
+- At a cost of about $5k, it will pay itself off in about 6 months
+  - Well, maybe...
+
+
+
+## Is an ASIC miner worth it?
+- It will generate a lot of money UNLESS...
+  - The overall hash rate goes up significantly
+    - That miner is then producing a lower percentage of the overall hash rate
+    - And everybody and their siblings are getting into mining these days...
+  - The price of BTC goes down
+  - Electricity costs rise
+  - The miner doesn't actually produce the stated hash rate
+  - The miner breaks -- how will you get it fixed?
+
+
+
+## Is CPU mining worth it for Bitcoin?
+- Assume that your CPU can compute about 65 K hashes per second ([source](https://stackoverflow.com/questions/4764026/how-many-sha256-hashes-can-a-modern-computer-compute))
+  - That's 65 *K* hashes or about 65,000 hashes
+- We expect to get a block after $75.6 * 10^{21}$ hashes (or 75.6 Zh)
+- A 65 K CPU will compute 75.6 Zh in about 878,117,316,473 (878 billion) days
+  - That's 2,404,154,186 (2.4 billion) years
+- You still have to factor in electrical costs!
+- And even if this is off by a factor of 1,000, it's still way to slow
+
+
+
+## Mining: nbits
+- The nbits field is a 8-digit (32-bit) hex number, such as:  0x1b00a908
+  - It's like an enocded floating point number
+- The first 2 digits (1b) is the *exponent*; convert to decimal and subtract 3
+  - $0x1b -3 = 27-3=24$
+  - This means there will be <span class="skyblue">24 *trailing* 0x00 bytes</span> (48 zero hex digits)
+- The last 6 digits of the nbits are the <span class="lightgreen">*mantissa:* 0x00a908</span>
+- We left-fill with 0's to 256 bits (64 hex digits)
+  - With 48 trailing zero digits and 6 exponent digits, that leaves us <span class="pink">10 leading 0x0 hex digits</span> (5 0x00 bytes)
+- This gets us: 0x<span class="pink">0000000000</span><span class="lightgreen">00a908</span><span class="skyblue">00000000000000000 0000000000000000000000000000000</span>
+
+
+
+## Mining: nbits & target
+- An nbits field of 0x1b00a908 thus gets us a *target* of 0x000000000000a908000000000000000 000000000000000000000000000000000
+  - This is from [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364)
+  - The hash value had to be less than that
+- That target requires 12 leading zero hex digits (48 leading binary zero bits)
+    - Chance to find: $1/2^{48}$
+- The first RVN target ([RVN block 1](https://rvnblockexplorer.com/block/1)) was 0x1d00ffff = 0x00000000ffff0000000000000000000000 000000000000000000000000000000
+  - Note that some report it as 0x1e00fff; we'll use 0x1d00ffff
+
+
+
+## Mining: targets & difficulty
+- If you divide the current target by the original target, you get the difficulty
+  - How many times harder the current block is than the original block
+- For [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364), that's about 99,253.60
+- To avoid confusion, I will refer to this as *network difficulty*
+- You can see the current [RVN network difficulty](https://2miners.com/rvn-network-difficulty)
+  - And also the current [BTC network difficulty](https://www.coinwarz.com/mining/bitcoin/difficulty-chart)
+- [This page at the Bitcoin wiki](https://en.bitcoin.it/wiki/Difficulty) describes difficulty computation in more detail (and provides C++ code)
+
+
+
+## bdiff versus pdiff
+- The first RVN & BTC target was 0x1d00ffff = 0x00000000ffff0000000000000000000000 000000000000000000000000000000
+  - This is the exact expansion of the *nbits* value
+  - That yields a difficulty of 99,253.59955
+  - This is *bdiff* (think: bitcoin-diff)
+- Traditionally it was represented as a target of 0x00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  - This is a "non-truncated target", and usually the values used by mining pools
+  - That yields a difficulty of 99,255.11406
+  - This is *pdiff* (think: pool-diff)
+
+
+
+## Miner reported difficulty
+- A mining program will report the difficulty of a *share*
+  - For now, a *share* is a nonce found that has a lot of leading 0's, even if it is not enough to solve the block
+  - "134.25 T", for example
+  - I'll refer to this as the *share difficulty* to avoid confusion
+- If the share had 42 leading zero bits, then it would report a share difficulty of $2^{42} = 4.4$ T
+  - 44 leading zero bits yields a share difficulty of $17.6$ T
+  - The target for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364) needed 48 leading zero bits, so that required a share of about 281.5 T or higher
+
+
+
+## Miner reported difficulty
+- Given *nbits* of 0x1b00a908 for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364), we can compute $b$, the exact number of zero bits needed, via:
+  - Let $m$ be the (base-10) value of the mantissa
+    - $m=0x00a908=43,272$
+  - Let $p$ be the number of hex bytes (not digits) from the power part of *nbits*; this is the power value
+    - $p=0x1b-3=27-3=24$
+  - Let $l_h$ be the leading number of 0 hex digits (not bytes) in the target
+    - $l_h=64-6-2*p=10$
+  - The exact number of zero bits, $b$, needed is then:
+    - $b=4*l_h+24-log2(m) = 48.59885$
+- The minimum required share difficulty, $sd$, is then 2 to that power: $sd=2^b=2^{48.59885} = 426.30$ T
+
+
+
+## Miner reported difficulty
+- Another way to look at it:
+  - Let $nd$ be the network difficulty (say, 113k)
+  - Let $od$ be the original difficulty of block 1 ($2^{32}=4.29G$)
+- The current difficulty, $cd$, is just the product of those two: $cd = nd * od$
+    - For [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364), the network difficulty was 100.3417k
+        - (RVN historical difficulty can be found [here](https://www.coinwarz.com/mining/ravencoin/difficulty-chart)
+    - Making the total difficulty then be: $100k * 4.3G = 4.29T$
+        - Which is quite close to our estimate of 426.3 from the last slide
+
+
+
+## Mining pools
+- The chance of you getting a Bitcoin block is really low
+- But if you team up with other people, you can all contribute, and if the group gets a block the reward is distributed among the members
+- This is a *mining pool*
+- For Proof-of-Work (PoW) coins, members get a percentage of the value of the pooled profit based on the amount of work they put in
+- But how to compute that?
+
+
+
+## Mining shares
+- Any *good* nonce is reported to the mining pool, even if it is not enough to solve the block
+  - Consider the [2miners RVN mining pool](https://rvn.2miners.com/), which has *ldiff* (pool mining difficulty) of 4.295 G
+  - So any nonce found that has a difficulty of $4.295$ G$ = 4.295 * 10^9$ or higher will be reported to the mining pool
+- It is thus expexcted to take $log_2(4.295G) = 2^{32}$ hashes to get a share
+  - So a 50 Mh/s GPU (the Nvidia 3090) would expect to get a share every 85.9 seconds
+- The *ldiff* value keeps the bandwidth to the mining pool down while also allowing an estimate of the work performed
+
+
+
+## Miner reported difficulty
+- The nonce found for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364) generated a hash of 0x0000000000003d7678380e2f25b4a8c 8271b53638d380f761acbf4ee040f325a; what was its share difficulty?
+- Let $l_b$ be the leading number of binary bits in the hash (note that $l_h = l_b*4$):
+  - $l_b = 256 - log_2(hash) = 50.05835$
+- The difficulty with $l_b$ bits is just 
+  - $2^{l_b} = 2^{50.05835} = 1.1724*10^{15} = 1,172.4$ T
+  - But the number reported by the mining software was $541.1$ T, so something is off here...
+
+
+
+## To add in this column...
+- go over the calculations from miner diff to hash (see the "RVN diff" sheet in crypto.ods)
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="environment" data-markdown class="center"><textarea>
+# Environmental Issues
+	  </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## How much is mining killing the Earth?
+- Again, consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
+  - It uses 3,420 W and produces 75 Th/s
+  - That's 21.9 Gh/W, which is pretty efficient (relatively speaking)
+  - 3,420 W for 24 hours/day yields 82.08 kWh
+  - At Charlottesville's electric rates (11.04&cent; per kWh) that's $9.06 per day
+- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 147.578 million Th/s
+  - If it were only Avalon 1166 miners, then we need 1,967,706 such miners, at 75 Th/s, to get 147.578 million Th/s
+  - That's 6.73 GW ($10^{12}$W), or 161.5 GWh per day, or 58,991 GWh per year
+
+
+
+## Death to the Environment!
+- The lower-bound estimate from the last slide is that BTC mining uses 6.73 GW ($10^{12}$W), or 161.5 GWh per day, or 58,991 GWh per year
+- That is more than 170 of the world's 218 countries ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+- That is the equivalent to 15% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+
+
+
+## Death to the Environment!
+- These computations:
+  - Assume that all the BTC mining is as efficient as the Avalon 1166 miner
+  - Do not factor in the other mined coins
+- So perhaps the actual amount is twice our initial estimate?
+  - That is the equivalent to 30% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+
+
+
+## Actual usage
+- 0.08% of worldwide electricity usage as per [here](https://decrypt.co/91824/bitcoin-mining-carbon-emissions-inconsequential-levels-coinshares)
+- take it with a grain of salt: crypto companies saying it's fine for the env is like a cigarette company saying smoking is not unhealthy
+
+
+
+## What about GPU mining?
+- Consider Ravencoin
+  - Total network hashrate of 8 Th/s ([source](https://2miners.com/rvn-network-hashrate))
+  - A Nvidia 3090 computes about 50 Mh/s and consumes about 350 W for about 143 kh/W
+  - And that card is much more efficient
+- That would be 160,000 such GPUs
+  - Or 56 mW
+  - But probably higher due to other GPUs not being as efficient
+</textarea></section>
+
+</section>
+	
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="proofofx" data-markdown class="center"><textarea>
+# Proof-of-$X$
+	  </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Mining
+- In order for mining to occur, there has to be a way for some entity to mine a block
+- But how to decide who gets to mine it?
+  - Since there is a reward involved, everybody wants to be that one entity!
+
+
+
+## Proof of Work (PoW)
+- This is what we've seen so far:
+  - Find a nonce (and transaction order) to get the hash less than the target
+- The successful miner has shown s/he has done the work...
+  - ... or just been lucky enough...
+- ... to "complete" the block
+
+
+
+## Proof of Work (PoW) issues
+- High energy usage
+  - Environmental issues as a result
+  - It's not a "green" solution by any means
+- Can cause bottlenecks when there is a lot of activity
+  - Not a problem for Bitcoin
+  - Bit it's a problem for DeFi that runs on top of Ethereum
+
+
+
+## "Useful" Proof-of-Work (PoW)
+- Use computing power for some "good"
+- Example: Primecoin
+  - https://primecoin.io/bin/primecoin-paper.pdf
+
+
+
+## ASIC mining
+- Some cryptocurrencies use hash algorithms that special-purpose hardware can mine
+  - ASIC = application-specific integrated circuit
+  - Bitcoin, Ethereum (before the ETH2 upgrade)
+
+
+
+## ASIC-resistant mining
+- Consider Ravencoin, which aims for ASIC-resistant mining
+- It uses 16 different hash algorithms
+  - The last 8 bytes of the previous block's hash determine which 8 algorithms to use
+  - That's a *LOT* of hashes, and it is very power-intensive
+- Many are skeptical of it's ASIC-resistance
+  - If it were valuable enough, I'm sure somebody would develop an ASIC for it
+- The developers regularly update the algorithm to try to maintain ASIC-resistance
+  - Original algorithm was [x16r](https://ravencoin.org/assets/documents/X16R-Whitepaper.pdf), then x16rv2, and now kawpow
+
+
+
+## Proof of Stake (PoS)
+- Those with a *stake* in the cryptocurrency...
+  - ... meaning they hold enough of it...
+- Can be the ones to present a mined block to the network
+  - They put their cryptocurrency "on the line" to vouch for the validity of the block
+  - And they get the miner reward
+- But what if the block is invalid?
+  - Then the miner loses some of his cryptocurrency
+    - Called "slashing"
+  - While not unknown, it rarely happens
+- Miners are instead called *validators*
+
+
+
+## Proof of Stake (PoS)
+- The network chooses the validators based on:
+  - Amount of currency held
+  - Length of currency held
+- Implementations vary by cryptocurrency
+  - Presumably there is a way that those with less "stake" will be able to be the validators less often
+- Coins that use this: Tezos, Cosmos, Peercoin, Tendermint, the ETH2 upgrade
+  - ETH2 requires a minimum of 32 ETH to participate in PoS
+
+
+
+## Peercoin
+- See http://www.cs.sjsu.edu/~austin/cs168-fall20/slides/CS168-Day16-AlternateProofSchemes.pdf (last few slides)
+
+
+
+## Tendermint
+- See http://www.cs.sjsu.edu/~austin/cs168-fall20/slides/CS168-Day17-Tendermint.pdf
+
+
+
+## Proof of Stake problems
+- Nothing-at-stake-problem
+- See http://www.cs.sjsu.edu/~austin/cs168-fall20/slides/CS168-Day16-AlternateProofSchemes.pdf slide 14
+
+
+
+## Staking
+- Let's say you wanted to be a validator for a PoS coin
+- If you had more of that coin...
+   - ... you could be "chosen" as the validator more often
+   - ... and thus get more of the validator reward
+- So you might "rent" coins from others to increase your balance
+
+
+
+## Staking
+- If you have some of a coin, you could "loan" it to others so they can better participate in PoS
+  - This is called "staking"
+- Advantages:
+  - You get a payout: maybe 5% of your "loan" per year
+- Disadvantages:
+  - You can't get your "stake" back early
+- A good choice if you definitely are not going to sell in the near future
+
+
+
+## Staking Legality
+- On Feb 3, 2022, the IRS said it will not tax unsold, staked crypto ([source](https://www.forbes.com/sites/kamranrosen/2022/02/02/in-huge-precedent-irs-says-it-will-not-tax-unsold-staked-crypto/?sh=135dbc5f464c))
+  - You still pay when you sell it, of course
+- Such coins are "new property" not "income"
+- Once sold, presumably you would pay taxes on it similar to how you pay taxes on interest
+  - But that was not mentioned in that article...
+
+
+
+## ETH2
+- aka Casper Protocol
+- the 'timebomb' in ETH
+- what the switch will mean
+- when it will happen
+
+
+
+## Proof-of-Capacity
+- aka Proof-of-Storage
+- See https://www.publish0x.com/knowledge-for-cryptocurrency-users/four-proof-of-capacity-coins-xyyypo
+- Example: Permacoin
+
+
+
+## Proof-of-replication (PoRep)
+- Filecoin: https://filecoin.io
+- See https://coinmarketcap.com/alexandria/glossary/proof-of-replication
+
+
+
+## Proof-of-spacetime
+- ???
+- maybe info at http://www.cs.sjsu.edu/~austin/cs168-fall20/greensheet.html
+
+
+
+## "Green" coins
+- See https://investorplace.com/2021/05/green-coins-5-of-the-most-eco-friendly-cryptos-elon-musk-should-consider-now/
+- Sometimes called "greencoins", but there also a [Greencoin (GRE) cyrptocurrency](https://coinmarketcap.com/currencies/greencoin/)
+- See https://www.thetimes.co.uk/money-mentor/article/eco-friendly-cryptocurrencies/
+- talk about Stellar Lumens (XLM), which uses "trusted" nodes rather than proof-of-X
+
+  </textarea></section>
+
+</section>
+	
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="dags" data-markdown class="center"><textarea>
+# DAGs
+	  </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n" data-transition="none" data-transition-speed="fast"><textarea>
+## Consider...
+- The first few blocks of an arbitrary cryptocurrency...
+- Here is the genesis block:
+
+<img src="images/mining/dag/dag.dot.1.svg">
+
+
+
+## The first block mined
+<img src="images/mining/dag/dag.dot.2.svg">
+Block 0 is on the top, block 1 is on the bottom
+
+
+
+## Two blocks mined
+<img src="images/mining/dag/dag.dot.3.svg">
+We've just mined block 2
+
+
+
+## A transaction
+<img src="images/mining/dag/dag.dot.4.svg">
+
+
+
+<img src="images/mining/dag/dag.dot.5.svg">
+
+
+
+<img src="images/mining/dag/dag.dot.6.svg">
+Note that UTXOs are not only in the bottom level
+
+
+
+<img src="images/mining/dag/dag.dot.7.svg">
+
+
+
+<img src="images/mining/dag/dag.dot.8.svg">
+
+
+
+<img src="images/mining/dag/dag.dot.9.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.10.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.11.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.12.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.13.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.14.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.15.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.16.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.17.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.18.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.19.svg" class="stretch">
+
+
+
+<img src="images/mining/dag/dag.dot.20.svg" class="stretch">
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Realism
+- Most (all?) cryptocurrencies are mined by the developers for the first many blocks
+  - Ethereum's first transaction was in block [46,147](https://etherscan.io/block/46147)
+  - Bitcoin only had a few hundred accounts in the first 50,000 (or so) transactions
+- But the previous images of the DAG still show the concepts of having many transactions
+
+
+
+## DAGs
+- The entire transaction list is a directed acyclic graph
+  - aka DAG
+- In order to successfully mine, this has to be kept in memory
+  - as that tells you if a UTXO has already been spent or not
+- Optimization: use hash tables (or similar)
+  - Map a UTXO to the amount it makes available
+  - And only keep track of the unspent UTXOs
+- So not *really* a DAG, then...
+
+
+
+## DAG size
+- You can see DAG sizes at https://minerstat.com/dag-size-calculator
+- Ethereum is over 4 Gb (as of Feb 2022)
+  - This means that graphics cards with less than 4 Gb cannot mine ETH
+- Consider Ravencoin, whose DAG is currently at 3.2 Gb (as of Feb 2022)
+  - Based on the expected DAG growth...
+    - 4 Gb GPUS will no longer be able to mine it around July 2023
+    - 6 Gb GPUS will no longer be able to mine it around Mar 2027
+  - [source](https://minerstat.com/dag-size-calculator)
+  </textarea></section>
+
+</section>
+	
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
