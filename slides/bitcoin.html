@@ -782,16 +782,6 @@ Size: varies; how many: txn_out_count
 
 
 
-## Bitcoin TXN verification
-- A Bitcoin transaction is valid ONLY if ALL of the following are true:
-  - The result of executing the concatenated script yields true (1) as the top value of the stack; AND
-  - No opcode that marks the transaction as invalid was executed (such as OP_RETURN); AND
-  - There was no abort() called by any of the script opcodes; AND
-  - There were no invalid (disabled) opcodes attempted to be executed
-- If any one of these are false, the TXN is invalid, and the node will not process it (or add it to a block)
-
-
-
 ## Output scripts
 - A typical output script will state:
   - The redeemer must provide a public key that matches the hash listed in the output script
@@ -1012,6 +1002,16 @@ OP_CHECKSIG
 
 </div>
 As the top of the stack has true at the end, the script is verified and the transaction is valid
+
+
+
+## Bitcoin TXN verification
+- A Bitcoin transaction is valid ONLY if ALL of the following are true:
+  - The result of executing the concatenated script yields true (1) as the top value of the stack; AND
+  - No opcode that marks the transaction as invalid was executed (such as OP_RETURN); AND
+  - There was no abort() called by any of the script opcodes; AND
+  - There were no invalid (disabled) opcodes attempted to be executed
+- If any one of these are false, the TXN is invalid, and the node will not process it (or add it to a block)
     </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n" id='checkmultisig'><textarea>
@@ -1182,7 +1182,7 @@ OP_EQUAL
 - But Bitcoin currently needs about 200 EH/s $=200 \ast 10^{18}$ H/s
   - In 10 minutes, that's $1.2 \ast 10^{23}$ H/s for a block
 - So other things have to change other than the nonce:
-  - Transaction order: given 3,000 transactions, that's about $2^{3000} = 1.2 \ast 10^{903}$ possible orderings
+  - Transaction order: given 3,000 transactions, that's about $3000! \approx 4.1 \ast 10^{9130}$ possible orderings
   - Transaction input or output ordering
     - This modifies the transaction itself!
       - And thus the transaction hash
