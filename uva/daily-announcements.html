@@ -68,6 +68,62 @@ Template for first line:
   <section>
 
     <section class="center">
+<h2 class='xkcd'>Tractor Beam</h2>
+<img src="https://imgs.xkcd.com/comics/tractor_beam.png" title="Did you base the saucer shape on pop culture depictions of aliens, or was that stuff based on your ships? Does the rotational symmetry help with ... hey, where are you going?" alt="Tractor Beam" srcset="https://imgs.xkcd.com/comics/tractor_beam_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2579/'>xkcd # 2579</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 8: Mon, Feb 14th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
+- Larger programming homeworks
+  - Due tomorrow (Tue, Feb 15th): [HW P3: BTC parser](../hws/btcparser/index.html)
+  - Due Tuesday, Feb 22nd will be [HW P4: Bitcoin scripting](../hws/btcscript/index.html) -- ready by midnight tonight
+  - HWs P5-P8 will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+- Grades
+  - HW S1 (Google survey) grades and any attendance quizzes are in Collab's Posted Feedback tool
+  - HW [P1](../hws/intro/index.html) & [P2](../hws/ecdsa/index.html): grades are on Gradescope; HW P1 test cases in [Piazza post @87](https://piazza.com/class/kyiriw2bvorjd?cid=87)
+  - HW S2 (Bitcoin whitepaper quiz) is being graded
+  - Grade concerns for an auto-graded assignment? Let's meet within the regrade period to chat in person
+- Smaller HWs
+  - Due Monday, Feb 21st by the start of lecture: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
+  - Due Friday, Feb 25th will be HW S4: connect to the private Ethereum blockchain
+  - Due Tuesday, March 14th (right after spring break): HW S5: dApp introduction
+- Midterm is Wednesday, Mar 2nd during lecture
+- Office hours
+  - Mine: M/W/F from 9am - 10am in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will continue with [Bitcoin](../slides/bitcoin.html#/)
+  - Then a slide set on mining (1? lecture), then a slide set on Ethereum/Solidity (3? lectures)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap
+- Bitcoin Whale Watch
+  - Consider [this Bitcoin transaction from Saturday (Feb 12, 2022](https://www.blockchain.com/btc/tx/30c1ed1dd14e2a0efa26f94363ceef55b17fca6b74020ac260901976e580636b)
+  - That was for 30,100 BTC, worth `$`1.3 *billion*
+- We were part way through [Bitcoin](../slides/bitcoin.html#/)
+  - We discussed Merkle trees
+  - Recall a UTXO: unspent transaction output
+  - Recall a [compactSize unsigned integer](../slides/bitcoin.html#/3/2): 1-9 bytes
+  - Bitcoin's blockchain only has 5 types:
+    - 4 byte (mostly) unsigned ints
+    - 8 byte unsigned long ints
+    - compactSize unsigned integer
+    - 32 byte hash
+    - Variable-length script
+  - Just about everything in Bitcoin's blockchain is in little-Endian form
+  - We ended on [Bitcoin slide 7.6](../slides/bitcoin.html#/6/5)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
 <h2 class='xkcd'>Password Strength</h2>
 <img src="https://imgs.xkcd.com/comics/password_strength.png" title="To anyone who understands information theory and security and is in an infuriating argument with someone who does not (possibly involving mixed case), I sincerely apologize." alt="Password Strength"  style="image-orientation:none" >
 <p class='center'><a href='http://xkcd.com/936/'>xkcd # 936</a></p>
