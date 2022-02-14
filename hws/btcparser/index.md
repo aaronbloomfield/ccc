@@ -274,7 +274,7 @@ Because there is only one transaction, the hash of the hash of that transaction 
 $ python3
 >>> # enter txn = ... as above
 >>> from hashlib import sha256 
->>> txn_data = bytes.fromhex(hash) 
+>>> txn_data = bytes.fromhex(txn) 
 >>> hash1 = sha256(txn_data).digest() 
 >>> hash2 = sha256(hash1).hexdigest() 
 >>> hash2 
@@ -382,7 +382,7 @@ If there is no output (specifically, no error output), then it was parsed correc
 
 Make sure you test it with multiple blocks!  However, the online site will probably not like you trying to upload a huge JSON file.
 
-You should also use the [check_genesis_json.py](check_genesis_json.py) program to ensure that your JSON is in the right format.  This is intended to ensure that you have the right fields for when we grade the assignment.  It just has a bunch of `assert()` calls to ensure that the format is what is shown above.  Remember that white space doesn't matter, so you are welcome to use any spacing that you want.  This program will also be used as one of the visible submission tests in Gradescope.
+You should also use the [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) program to ensure that your JSON is in the right format.  This is intended to ensure that you have the right fields for when we grade the assignment.  It just has a bunch of `assert()` calls to ensure that the format is what is shown above.  Remember that white space doesn't matter, so you are welcome to use any spacing that you want.  This program will also be used as one of the visible submission tests in Gradescope.
 
 ### Deliverables
 

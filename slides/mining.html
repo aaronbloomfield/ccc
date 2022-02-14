@@ -106,16 +106,24 @@ line-height:120%;
   - Expectation is that 1/8 (12.5%) have three leading 0 bits
 - Expectation is that $1/2^n$ have $n$ leading 0 bits
 - Thus:
-  - $\frac{1}{2^{49}} = \frac{1}{562,949,953,421,312}$, which is 1 in 562.9 trillion ($10^{12}$), would have 49 leading 0 bits
-     - The RVN block example from the last slide
-  - $\frac{1}{2^{76}} = \frac{1}{75,557,863,725,914,323,419,136}$, which is 1 in 75.6 sextillion ($10^{21}$), would have 76 leading 0 bits
-     - The BTC block example from the last slide
+  - RVN example: $\frac{1}{2^{49}} = \frac{1}{562,949,953,421,312}$, which is 1 in 562.9 trillion ($5.62 \ast 10^{12}$), would have 49 leading 0 bits
+  - BTC example: $\frac{1}{2^{76}} = \frac{1}{75,557,863,725,914,323,419,136}$, which is 1 in 75.6 sextillion ($75.6 \ast 10^{21}$), would have 76 leading 0 bits
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Bitcoin nonces
+
+<a href='https://twitter.com/100trillionUSD/status/1081217034485149697'><img src='images/mining/nonce-tweet.webp' style="width:40%;border-radius:10px"></a>
+
 - Consider [The Mystery Of The Bitcoin Nonce Pattern](https://blog.bitmex.com/the-mystery-of-the-bitcoin-nonce-pattern/)
-- and the first answer [here](https://bitcoin.stackexchange.com/questions/36860/bitcoin-and-other-crypto-coins-nonce-loop)
+  - And the [full image](images/mining/nonce-tweet-graph.webp) ([remote](https://pbs.twimg.com/media/DwFAIi8WoAAyUwq?format=jpg&name=large))
+- Early blocks (left-most) were Satoshi experimenting
+- Possible reasons:
+  - Selection bias ([source](https://bitcoin.stackexchange.com/questions/36860/bitcoin-and-other-crypto-coins-nonce-loop))
+  - How ASICs work ([source](https://blog.bitmex.com/the-mystery-of-the-bitcoin-nonce-pattern/))
+
+
 
 
 
@@ -232,9 +240,9 @@ line-height:120%;
   - This is from [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364)
   - The hash value had to be less than that
 - That target requires 12 leading zero hex digits (48 leading binary zero bits)
-    - Chance to find: $1/2^{48}$
+    - Chance to find: $\approx 1/2^{48}$
 - The first RVN target ([RVN block 1](https://rvnblockexplorer.com/block/1)) was 0x1d00ffff = 0x00000000ffff0000000000000000000000 000000000000000000000000000000
-  - Note that some report it as 0x1e00fff; we'll use 0x1d00ffff
+  - Note that some incorrectly report it as 0x1e00fff
 
 
 

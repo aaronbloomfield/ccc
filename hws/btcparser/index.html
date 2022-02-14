@@ -435,7 +435,7 @@ hash of that data, which we have to convert to binary form first:</p>
 <pre><code>$ python3
 &gt;&gt;&gt; # enter txn = ... as above
 &gt;&gt;&gt; from hashlib import sha256 
-&gt;&gt;&gt; txn_data = bytes.fromhex(hash) 
+&gt;&gt;&gt; txn_data = bytes.fromhex(txn) 
 &gt;&gt;&gt; hash1 = sha256(txn_data).digest() 
 &gt;&gt;&gt; hash2 = sha256(hash1).hexdigest() 
 &gt;&gt;&gt; hash2 
@@ -562,13 +562,14 @@ parsed correctly.</p>
 <p>Make sure you test it with multiple blocks! However, the online site
 will probably not like you trying to upload a huge JSON file.</p>
 <p>You should also use the <a
-href="check_genesis_json.py">check_genesis_json.py</a> program to ensure
-that your JSON is in the right format. This is intended to ensure that
-you have the right fields for when we grade the assignment. It just has
-a bunch of <code>assert()</code> calls to ensure that the format is what
-is shown above. Remember that white space doesn’t matter, so you are
-welcome to use any spacing that you want. This program will also be used
-as one of the visible submission tests in Gradescope.</p>
+href="check_genesis_json.py.html">check_genesis_json.py</a> (<a
+href="check_genesis_json.py">src</a>) program to ensure that your JSON
+is in the right format. This is intended to ensure that you have the
+right fields for when we grade the assignment. It just has a bunch of
+<code>assert()</code> calls to ensure that the format is what is shown
+above. Remember that white space doesn’t matter, so you are welcome to
+use any spacing that you want. This program will also be used as one of
+the visible submission tests in Gradescope.</p>
 <h3 id="deliverables">Deliverables</h3>
 <p>You must submit a minimum of three files; more is fine.</p>
 <ul>
