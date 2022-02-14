@@ -1122,7 +1122,7 @@ OP_CHECKSIG
 
 
 ## Pay to Script Hash (P2SH)
-- From [BIP 0016](https://en.bitcoin.it/wiki/BIP_0016) from 2012 (and [another reference](https://en.bitcoin.it/wiki/Pay_to_script_hash))
+- From [BIP 0016](https://en.bitcoin.it/wiki/BIP_0016) from 2012 (here is [another reference](https://en.bitcoin.it/wiki/Pay_to_script_hash))
 - The third of the "standard" transactions
   - Along w/P2PK & P2PKH
 - Instead of requiring a hash of the public key, you require a hash of the *sigScript*
@@ -1130,7 +1130,7 @@ OP_CHECKSIG
 - Why?
   - Perhaps you want a specific way to redeem it
   - Or the redeeming sigScript is known ahead of time and very involved
-- If the private key becomes known, the TXN can't be redeemed (necessarily)
+- If the private key becomes known, the TXN can't be as easily redeemed (necessarily)
 
 
 
@@ -1176,11 +1176,25 @@ OP_EQUAL
 
 
 
+## Determining nonces
+- The `nonce` is a 32-bit field
+  - Total of $2^{32} \approx 4.3$ billion $=4.3 \ast 10^9$ possibilities
+- But Bitcoin currently needs about 200 EH/s $=200 \ast 10^{18}$ H/s
+  - In 10 minutes, that's $1.2 \ast 10^{23}$ H/s for a block
+- So other things have to change other than the nonce:
+  - Transaction order: given 3,000 transactions, that's about $2^{3000} = 1.2 \ast 10^{903}$ possible orderings
+  - Transaction input or output ordering
+    - This modifies the transaction itself!
+      - And thus the transaction hash
+    - But does not *invalidate* the transaction
+
+
+
 ## Transaction Malleability
 - Problem: a small change to non-important part of the TXN changes the TXN hash
-  - Example: sequence number, output order, etc.
+  - Example: transaction input order or output order
 - Some of these things might change as a transaction is mined into a block
-  - Then the TXID changes!
+  - Then the transaction hash changes!
   - This doesn't happen often, but it can occur
 - These changeable fields are *malleable*
 - This was used in an [attack in 2015](https://cointelegraph.com/news/the-ongoing-bitcoin-malleability-attack)
@@ -1259,6 +1273,7 @@ sha256(sha256(<version><marker><flag><txins><txouts>
   - This means each transaction input does not have to list the signature and key separately
   - This increases the transaction per block by a factor of about 2
     - And decreased transaction times
+
 
 
 ## Witnesses
