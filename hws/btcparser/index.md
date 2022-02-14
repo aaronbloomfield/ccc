@@ -350,7 +350,7 @@ Lastly, your program must output the blockchain in JSON format.  You can read ab
                 }
             ]
         }
-
+    ],
     "height": 1
 }
 ```
