@@ -34,8 +34,8 @@ then output the result in JSON format.</p>
 output: either “no errors X blocks” (case sensitive!) or the specific
 error number (“error 5 block 17”) – we describe the error numbers below.
 In addition, it will create a JSON file if there were no errors – if the
-input file name was blk00000.dat, then it will create a JSON file named
-blk00000.dat.json. If there are errors, it is fine to create the JSON
+input file name was blk00000.blk, then it will create a JSON file named
+blk00000.blk.json. If there are errors, it is fine to create the JSON
 file or not – it will not be checked. The format of this file is
 described below.</p>
 <p>The Bitcoin block format that is being parsed for this assignment is
@@ -119,7 +119,7 @@ data. The first 4 bytes are the magic number, and the second four bytes
 are the block size. Both are in little-Endian format in the file. The
 first 13 lines of this file, when run through <code>hexdump -C</code>,
 are:</p>
-<pre><code>$ hexdump -C blk00000.dat | head -10
+<pre><code>$ hexdump -C blk00000.blk | head -10
 00000000  f9 be b4 d9 1d 01 00 00  01 00 00 00 00 00 00 00  |................|
 00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
 00000020  00 00 00 00 00 00 00 00  00 00 00 00 3b a3 ed fd  |............;...|
@@ -140,7 +140,7 @@ of the 16 bytes, and an ASCII representation of those 16 bytes (if they
 are printable characters). You can see, at the bottom of the hexdump
 display above, the text included in the genesis block for Bitcoin. You
 may want to save the hexdump output to a file (<code>hexdump -C
-blk00000.dat &gt; blk00000.dat.txt</code>), but be warned, as this will
+blk00000.blk &gt; blk00000.blk.txt</code>), but be warned, as this will
 be a very large file (631 Mb). You can also use the smaller block files
 as well.</p>
 <p>The first four bytes (<code>f9 be b4 d9</code>) is the so-called
@@ -212,7 +212,7 @@ replace <code>./a.out</code> with how to run your (compiled) program:
 <code>$@</code> on that line as well.</p>
 <p>Once created, you will have to ensure it can be executed: <code>chmod
 755 parse.sh</code>. You should then be able to run your program via:
-<code>./parse.sh blk00000.dat</code>.</p>
+<code>./parse.sh blk00000.blk</code>.</p>
 <p>The following might be what it would look like for Python:</p>
 <pre><code>#!/bin/bash
 python3 btc-parse.py $@</code></pre>
@@ -550,7 +550,7 @@ you are writing this file as you go, and you encounter an error, it’s
 fine if you have a partially written JSON file – we aren’t going to
 check it in that case.</p>
 <p>You can verify that it works by running it through JSON’s lint:
-<code>jsonlint-php blk00000-first10.dat.json</code>. This program is
+<code>jsonlint-php blk00000-first10.blk.json</code>. This program is
 installed on the Linux VirtualBox image. If you not using VirtualBox,
 you can install it yourself, or use online sites such as <a
 href="https://jsonlint.com/">these</a>. You can also use a one-line

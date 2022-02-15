@@ -9,7 +9,7 @@ In this assignment you will read in, validate, and then output the Bitcoin block
 
 Your program will take in a file that contains one or more blocks from the Bitcoin blockchain; these blocks are in binary format.  Your program must read these blocks in, check the blockchain for errors, and then output the result in JSON format.
 
-Your program will provide exactly one line of output to the standard output: either "no errors X blocks" (case sensitive!) or the specific error number ("error 5 block 17") -- we describe the error numbers below.  In addition, it will create a JSON file if there were no errors -- if the input file name was blk00000.dat, then it will create a JSON file named blk00000.dat.json.  If there are errors, it is fine to create the JSON file or not -- it will not be checked.  The format of this file is described below.
+Your program will provide exactly one line of output to the standard output: either "no errors X blocks" (case sensitive!) or the specific error number ("error 5 block 17") -- we describe the error numbers below.  In addition, it will create a JSON file if there were no errors -- if the input file name was blk00000.blk, then it will create a JSON file named blk00000.blk.json.  If there are errors, it is fine to create the JSON file or not -- it will not be checked.  The format of this file is described below.
 
 The Bitcoin block format that is being parsed for this assignment is the format of the first many blocks -- specifically before any BIPs were proposed and enacted.  Thus, the blocks will not contain fields such as the height number.  Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).
 
@@ -48,7 +48,7 @@ The blocks to be verified are grouped together in a file -- this file is from th
 To see the contents of a binary file, run it through `hexdump -C`.  This will print a LOT of text, so we will pipe it through `head`, as shown below.  Each block is preceded by 8 bytes of data.  The first 4 bytes are the magic number, and the second four bytes are the block size.  Both are in little-Endian format in the file.  The first 13 lines of this file, when run through `hexdump -C`, are:
 
 ```
-$ hexdump -C blk00000.dat | head -10
+$ hexdump -C blk00000.blk | head -10
 00000000  f9 be b4 d9 1d 01 00 00  01 00 00 00 00 00 00 00  |................|
 00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
 00000020  00 00 00 00 00 00 00 00  00 00 00 00 3b a3 ed fd  |............;...|
@@ -65,7 +65,7 @@ $ hexdump -C blk00000.dat | head -10
 $
 ```
 
-Each line displays 16 bytes from the file.  The columns in hexdump shows the address of the first byte in the row (in hex), the hex values of the 16 bytes, and an ASCII representation of those 16 bytes (if they are printable characters).  You can see, at the bottom of the hexdump display above, the text included in the genesis block for Bitcoin.  You may want to save the hexdump output to a file (`hexdump -C blk00000.dat > blk00000.dat.txt`), but be warned, as this will be a very large file (631 Mb).  You can also use the smaller block files as well.
+Each line displays 16 bytes from the file.  The columns in hexdump shows the address of the first byte in the row (in hex), the hex values of the 16 bytes, and an ASCII representation of those 16 bytes (if they are printable characters).  You can see, at the bottom of the hexdump display above, the text included in the genesis block for Bitcoin.  You may want to save the hexdump output to a file (`hexdump -C blk00000.blk > blk00000.blk.txt`), but be warned, as this will be a very large file (631 Mb).  You can also use the smaller block files as well.
 
 The first four bytes (`f9 be b4 d9`) is the so-called "magic number" which identifies the start of a block.  The value is 0xd9b4bef9, or 0xf9beb4d9 in little-Endian.  The next four bytes (1d 01 00 00) are the size.  That's in little-Endian, so converted to big-Endian it's 0x0000011d = 285.  The next 285 bytes are the contents of block 0 (the genesis block).  Block 1 thus starts at byte 285+8=293 (0x125 in hex) in the file.  You can see this later in the hexdump output:
 
@@ -103,7 +103,7 @@ As we do not know what language your program will be written in, nor what you wi
 
 The first line must be there exactly as shown (pound sign, then exclamation point, then `/bin/bash`).  For the second line, replace `./a.out` with how to run your (compiled) program: `java BTCBlockChain` or `python3 btc-parse.py` (use `python3`, not `python`).  Be sure to put the `$@` on that line as well.
 
-Once created, you will have to ensure it can be executed: `chmod 755 parse.sh`.  You should then be able to run your program via: `./parse.sh blk00000.dat`.
+Once created, you will have to ensure it can be executed: `chmod 755 parse.sh`.  You should then be able to run your program via: `./parse.sh blk00000.blk`.
 
 The following might be what it would look like for Python:
 
@@ -371,7 +371,7 @@ A bunch of notes:
 
 In particular, this output need to be written to a file, NOT to standard output.  So all of the output lines from part 1 (other than reporting the presence of, or lack of, errors) should now be output to a file.  The file name will just append ".json" to the input file name.  If you are writing this file as you go, and you encounter an error, it's fine if you have a partially written JSON file -- we aren't going to check it in that case.
 
-You can verify that it works by running it through JSON's lint: `jsonlint-php blk00000-first10.dat.json`.  This program is installed on the Linux VirtualBox image.  If you not using VirtualBox, you can install it yourself, or use online sites such as [these](https://jsonlint.com/).  You can also use a one-line Python command to test it:
+You can verify that it works by running it through JSON's lint: `jsonlint-php blk00000-first10.blk.json`.  This program is installed on the Linux VirtualBox image.  If you not using VirtualBox, you can install it yourself, or use online sites such as [these](https://jsonlint.com/).  You can also use a one-line Python command to test it:
 
 ```
 $ cat blk00000-b0.blk.json | python3 -c "import json,sys; json.load(sys.stdin)"

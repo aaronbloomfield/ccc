@@ -23,7 +23,7 @@ This assignment uses the [Python bitcoin package](https://pypi.org/project/bitco
 
 There are a few really important things to remember in this assignment.
 
-1. After each transaction, there is a place to store the transaction hash.  Be diligent about doing this -- it's really easy to lose track of which of a dozen transaction hashs is which.  Keeping them in the stated variables will help with this.
+1. After each transaction, there is a place to store the transaction hash.  Be diligent about doing this -- it's really easy to lose track of which of a dozen transaction hashes is which.  Keeping them in the stated variables will help with this.
 2. Don't modify the variable or function names in the scripts.py file.  Otherwise the provided functions, and our grading routines, will not work.  You can *add* functions and variables, but don't change the ones currently there.
 3. For *EACH* transaction, you will need to set the `utxo_index` variable -- there is just one such variable in the scripts.py file.  If you get an error stating that the UTXO index is already spent, it's likely that you forgot to set this variable.
 4. Some errors with Bitcoin scripts can be determined prior to broadcasting it on the Bitcoin test network.  This is done by the `VerifyScript()` method, which the provided code base calls for you before any attempted broadcast transaction.  So if you see an error such as, `verifyerror: "bitcoin.core.scripteval.VerifyOpFailedError: EvalScript: OP_EQUALVERIFY failed`, or similar, it means that the Bitcoin library was able to detect that your script would not work, and did not broadcast the transaction.
