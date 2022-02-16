@@ -81,6 +81,20 @@ line-height:120%;
 
 
 
+## Coins we'll study
+- <img src="images/logos/Bitcoin_logo.svg" class="cclogo"> Bitcoin: we all know this <br clear='all'>
+  - Hash algorithm: double SHA-256<br>&nbsp;
+- <img src="images/logos/Ravencoin-logo.png" class="cclogo"> Ravencoin <br clear='all'>
+  - A fork of Bitcoin, so works similarily; focuses on tokens
+  - Designed to be ASIC resistant
+  - Hash algorithm: kawpow (16 different rotating algorithms)<br>&nbsp;
+- <img src="images/logos/Ethereum_logo_translucent.svg" class="cclogo"> Ethereum <br clear='all'>
+  - A generational improvement over Bitcoin
+  - Allows for much more complicated programs
+  - Hash algorithm: Keccak-256 (aka SHA3)
+
+
+
 ## Why a higher difficulty?
 - As more people mine -- to get the reward -- the time between blocks decreases
   - Each coin is designed to have a fixed time between blocks
@@ -91,11 +105,11 @@ line-height:120%;
 
 ## How to make it more difficult
 - Force the hash of the mined block to have a certain number of leading zeros
-- In [Ravencoin block 1,982,745](https://rvnblockexplorer.com/block/1982745):  0000000000004086a8bfcf0a58beb655 039ae52cedcb46d06de147ea0daa5a76
-    - 12 leading hex zeros, 49 leading binary zeros
-- In [Bitcoin block 706,020](https://bitcoinblockexplorers.com/block/706020): 000000000000000000021ec74d219d6d 8857f5408bf09314bd20cbebb71c8d93
-    - 19 leading hex zeros, 78 leading binary zeros
-	- But that was more than the required target; only 76 leading binary zeros were needed
+- In [Ravencoin block 2,150,108](https://rvnblockexplorer.com/block/2150108):  000000000000e1c48b 11f28eaf2cc6e60d345aa4b3cfe12747c0821ff14f6279
+    - 12 leading hex zeros, 48 leading bits
+- In [Bitcoin block 723,457](https://bitcoinblockexplorers.com/block/723457):  000000000000000000 03c75ce11f2d2fcd1f05fe353d3858f529ffcc773d184e
+    - 19 leading hex zeros, 78 leading bits
+    - But only 77 leading bits were required for that hash
 
 
 
@@ -105,9 +119,11 @@ line-height:120%;
   - Expectation is that 1/4 (25%) have two leading 0 bits
   - Expectation is that 1/8 (12.5%) have three leading 0 bits
 - Expectation is that $1/2^n$ have $n$ leading 0 bits
-- Thus:
-  - RVN example: $\frac{1}{2^{49}} = \frac{1}{562,949,953,421,312}$, which is 1 in 562.9 trillion ($5.62 \ast 10^{12}$), would have 49 leading 0 bits
-  - BTC example: $\frac{1}{2^{76}} = \frac{1}{75,557,863,725,914,323,419,136}$, which is 1 in 75.6 sextillion ($75.6 \ast 10^{21}$), would have 76 leading 0 bits
+- Thus...
+<ul>
+  <li class='fragment'> RVN example: $\frac{1}{2^{48}}$, which is 1 in 281 trillion ($2.81 \ast 10^{12}$), would have 48 leading 0 bits </li>
+  <li class='fragment'> BTC example: $\frac{1}{2^{77}}$, which is 1 in 151 sextillion ($151 \ast 10^{21}$), would have 78 leading 0 bits </li>
+</ul>
 
 
 
@@ -128,11 +144,11 @@ line-height:120%;
 
 
 ## Is that BTC number correct?
-- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 147.578 million Th/s
-  - Or $147.6 * 10^{18}$ h/s $= 1.476 * 10^{20}$ h/s $= 147.6$ Eh/s
+- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is about 200 million Th/s
+  - Or $200 * 10^{18}$ h/s $= 2.0 * 10^{20}$ h/s $= 200$ Eh/s
 - A 10 minute BTC block takes 600 seconds
-  - Or about $88.6$ Zh $= 88.6 * 10^{21}$ h
-- We computed 75.6 Zh
+  - Or about $120$ Zh $= 1.2 * 10^{23}$ h
+- We computed 151 Zh
 - That's close enough for government work!
 - The differences were caused by:
   - A decreasing block time caused by more miners; the difficulty will adjust in a week or so
@@ -142,12 +158,12 @@ line-height:120%;
 
 ## Computing network hash rate
 - We can compute this the other way
-- Consider a Bitcoin that requres 76 leading zero bits (from 2 slides ago)
-  - So we have a 1 in $2^{76}$ or 1 in $75.6*10^{21}$ chance to get a hash
-  - Rephrased: we would expect to get valid nonce after $75.6*10^{21}$ hashes
+- Consider a Bitcoin that requires 77 leading zero bits (from earlier)
+  - So we have a 1 in $2^{77}$ or 1 in $151*10^{21}$ chance to get a hash
+  - Rephrased: we would expect to get valid nonce after $151*10^{21}$ hashes (or 151 Zh)
 - Bitcoin is designed to have 10 minutes per block (600s)
-- Dividing one by the other yields 126 Eh/s
-  - Close enough to 147.578 for a rough estimate!
+- Dividing one by the other yields 251 Eh/s
+  - Again, close enough for an estimate
 - This can be done with any coin when you know the difficulty and block rate
 
 
@@ -155,33 +171,33 @@ line-height:120%;
 ## When will you get a RVN block?
 - Assume that your graphics card's GPU can compute about 50 Mh/s for kawpow (RVN) ([source](https://2cryptocalc.com/gpu/24h/3090/1))
   - That's a *very* fast graphics card (Nvidia 3090)
-- We expect to get a block after $562.9 * 10^{12}$ hashes (or 562.9 Th)
-- A 52 Mh/s graphics card will compute 562.9 Th in about 130 days
-- Reward is 5000 RVN (2,500 after the halving in Jan 2022) times 11&cent; per RVN = $550
-  - Or $4.23 per day, on average
-  - Minus electrical costs of about 85&cent; per day yields about a $3.50 / day profit
+- We expect to get a block after $281 * 10^{12}$ hashes (or 281 Th)
+- A 52 Mh/s graphics card will compute 281 Th in about 63 days
+- Reward is 2,500 RVN times 7&cent; per RVN = $175
+  - Or $2.78 per day, on average
+  - Minus electrical costs of about 85&cent; per day yields about a $1.93 / day profit
 
 
 
-## When will you get a BTC block?
+## When will you get a BTC block with a GPU?
 - Assume that your graphics card's GPU can compute about 9,700 Mh/s for SHA-256 (BTC) ([source](https://gist.github.com/Chick3nman/e4fcee00cb6d82874dace72106d73fef))
   - Again, that's a *very* fast graphics card (Nvidia 3090)
-- We expect to get a block after $75.6 * 10^{21}$ hashes (or 75.6 Zh)
-- A 9,700 Mh/s graphics card will compute 75.6 Zh in about 90,206,185 days (246,971 years!)
-- Reward is <span id='btc_reward_btc'>(undefined)</span> BTC times $<span id='btc_price'>(undefined)</span> per BTC
-  - Which is $<span id='btc_reward_usd'>(undefined)</span> per mined block
-  - Or $1.64 per *year*, on average
+- We expect to get a block after $120 * 10^{21}$ hashes (or 120 Zh)
+- A 9,700 Mh/s graphics card will compute 75.6 Zh in about 143,184,420 days (392,017 years!)
+- Reward is 6.25 BTC times `$`44,200 per BTC
+  - Which is `$`276,250 per mined block
+  - Or $0.70 per *year*, on average
   - Minus electrical costs...
 
 
 
 ## When will you get a BTC block with an ASIC?
 - Consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t), as one example, that can compute $75$ Th/s $= 75 * 10^{12}$ h/s
-- We expect to get a block after $75.6 * 10^{21}$ hashes (or 75.6 Zh)
-- A 75 Th/s ASIC will compute 75.6 Zh in about 11,666 days (32 years)
-- Reward is 6.25 BTC times $65,000 per BTC
-  - Which is $406,250 per mined block
-  - Or about $12,720 (0.20 BTC) per *year*
+- We expect to get a block after `$`120 * 10^{21}$ hashes (or 120 Zh)
+- A 75 Th/s ASIC will compute 120 Zh in about 18,517 days (50 years)
+- Reward is 6.25 BTC times `$`44,200 per BTC
+  - Which is $276,250 per mined block
+  - Or about $5,525 (0.20 BTC) per *year*
   - Minus electrical costs...
 
 
@@ -193,8 +209,8 @@ line-height:120%;
   - At 11.04&cent; per kWh, that's about $9 per day
   - Or about $270 per month
   - Or about $3,300 per year, on average
-- So the profit is really only $9,420 per year
-- At a cost of about $5k, it will pay itself off in about 6 months
+- So the profit is really only $2,225 per year
+- At a cost of about $5k, it will pay itself off in about 2 years
   - Well, maybe...
 
 
@@ -214,9 +230,9 @@ line-height:120%;
 ## Is CPU mining worth it for Bitcoin?
 - Assume that your CPU can compute about 65 K hashes per second ([source](https://stackoverflow.com/questions/4764026/how-many-sha256-hashes-can-a-modern-computer-compute))
   - That's 65 *K* hashes or about 65,000 hashes
-- We expect to get a block after $75.6 * 10^{21}$ hashes (or 75.6 Zh)
-- A 65 K CPU will compute 75.6 Zh in about 878,117,316,473 (878 billion) days
-  - That's 2,404,154,186 (2.4 billion) years
+- We expect to get a block after $120 * 10^{21}$ hashes (or 120 Zh)
+- A 65 K CPU will compute 120 Zh in about 1,393,837,010,273 (1.4 *trillion*) days
+  - That's 3.8 *billion* years
 - You still have to factor in electrical costs!
 - And even if this is off by a factor of 1,000, it's still way to slow
 
@@ -242,6 +258,7 @@ line-height:120%;
 - That target requires 12 leading zero hex digits (48 leading binary zero bits)
     - Chance to find: $\approx 1/2^{48}$
 - The first RVN target ([RVN block 1](https://rvnblockexplorer.com/block/1)) was 0x1d00ffff = 0x00000000ffff0000000000000000000000 000000000000000000000000000000
+  - Chance to find: 1 in $2^{32}$ or 1 in 4.3 billion
   - Note that some incorrectly report it as 0x1e00fff
 
 
@@ -332,11 +349,6 @@ line-height:120%;
 - The difficulty with $l_b$ bits is just 
   - $2^{l_b} = 2^{50.05835} = 1.1724*10^{15} = 1,172.4$ T
   - But the number reported by the mining software was $541.1$ T, so something is off here...
-
-
-
-## To add in this column...
-- go over the calculations from miner diff to hash (see the "RVN diff" sheet in crypto.ods)
 </textarea></section>
 
 	</section>
@@ -356,42 +368,46 @@ line-height:120%;
   - That's 21.9 Gh/W, which is pretty efficient (relatively speaking)
   - 3,420 W for 24 hours/day yields 82.08 kWh
   - At Charlottesville's electric rates (11.04&cent; per kWh) that's $9.06 per day
-- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 147.578 million Th/s
-  - If it were only Avalon 1166 miners, then we need 1,967,706 such miners, at 75 Th/s, to get 147.578 million Th/s
-  - That's 6.73 GW ($10^{12}$W), or 161.5 GWh per day, or 58,991 GWh per year
+- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 200 million Th/s (200 Eh/s)
+  - If it were only Avalon 1166 miners, then we need 2,666,666 such miners, at 75 Th/s, to get 200 million Th/s
+  - That's 9.2 GW ($10^{12}$W), or 219 GWh per day, or about 80,000 GWh (80 TWh) per year
 
 
 
 ## Death to the Environment!
-- The lower-bound estimate from the last slide is that BTC mining uses 6.73 GW ($10^{12}$W), or 161.5 GWh per day, or 58,991 GWh per year
-- That is more than 170 of the world's 218 countries ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
-- That is the equivalent to 15% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+- The lower-bound estimate from the last slide is that BTC mining uses 9.2 GW ($10^{12}$W), or 219 GWh per day, or 80 TWh per year
+- That is more than 171 of the world's 218 countries ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+- That is the equivalent to 2% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
 
 
 
 ## Death to the Environment!
 - These computations:
   - Assume that all the BTC mining is as efficient as the Avalon 1166 miner
+    - To little efficiency and money is lost, not gained
   - Do not factor in the other mined coins
 - So perhaps the actual amount is twice our initial estimate?
-  - That is the equivalent to 30% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+  - That is the equivalent to 4% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+  - That's 160 TWh per year
+  - But that's a total guess, though!
+
+
+
+## Worldwide power consumption
+- In 2019, the world used 23,398 TWh of electricity ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+  - The US used 3,990 TWh (17.1% of total)
+  - Only China was higher at 8,313 TWh (35.5% of total)
+- We guessed that mining uses 160 TWh per year
+- That is 0.7% of the worldwide total energy usage
+  - 0.35% for Bitcoin only
 
 
 
 ## Actual usage
-- 0.08% of worldwide electricity usage as per [here](https://decrypt.co/91824/bitcoin-mining-carbon-emissions-inconsequential-levels-coinshares)
-- take it with a grain of salt: crypto companies saying it's fine for the env is like a cigarette company saying smoking is not unhealthy
-
-
-
-## What about GPU mining?
-- Consider Ravencoin
-  - Total network hashrate of 8 Th/s ([source](https://2miners.com/rvn-network-hashrate))
-  - A Nvidia 3090 computes about 50 Mh/s and consumes about 350 W for about 143 kh/W
-  - And that card is much more efficient
-- That would be 160,000 such GPUs
-  - Or 56 mW
-  - But probably higher due to other GPUs not being as efficient
+- Consider: [Bitcoin Mining Carbon Emissions at 'Inconsequential' Levels: CoinShares](https://decrypt.co/91824/bitcoin-mining-carbon-emissions-inconsequential-levels-coinshares)
+  - They estimate that bitcoin mining uses 0.08% of worldwide electricity
+- Take that with a grain of salt, though!
+  - A cryptocurrency company, that makes money off of mining, saying it's fine for the environment is like a cigarette company saying smoking is not unhealthy
 </textarea></section>
 
 </section>
@@ -426,8 +442,9 @@ line-height:120%;
   - Environmental issues as a result
   - It's not a "green" solution by any means
 - Can cause bottlenecks when there is a lot of activity
-  - Not a problem for Bitcoin
-  - Bit it's a problem for DeFi that runs on top of Ethereum
+  - Not (currently) a problem for Bitcoin
+    - It was before witnesses were added, though
+  - Bit it's a problem for "things" that runs on top of Ethereum
 
 
 
@@ -464,7 +481,7 @@ line-height:120%;
   - They put their cryptocurrency "on the line" to vouch for the validity of the block
   - And they get the miner reward
 - But what if the block is invalid?
-  - Then the miner loses some of his cryptocurrency
+  - Then the miner loses some of their cryptocurrency
     - Called "slashing"
   - While not unknown, it rarely happens
 - Miners are instead called *validators*

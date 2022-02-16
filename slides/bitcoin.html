@@ -1383,6 +1383,10 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
 
 ## Is Bitcoin Script Turing-complete?
 
+<ul>
+  <li class='fragment'>What would be required to make it Turing-complete?</li>
+</ul>
+
   </textarea></section>
 
 
@@ -1465,7 +1469,7 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
 - Bob broadcasts TXN3 (original payment one)
     </textarea></section>
 
-  <section data-markdown data-separator="^\n\n\n"><textarea>
+  <section data-markdown data-separator="^\n\n\n" data-transition='none'><textarea>
 ## Cross-chain Atomic Swap
 1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
 2. Alice submits TXN1 to the network
@@ -1568,6 +1572,7 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 - Submit two TXNs spending the same UTXO
 - Prevented by:
   - The "valid block check" that miners & nodes perform checks for
+  - Having a witness hash for a transaction that cannot be changed
 
 
 
@@ -1601,6 +1606,7 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 - Then the seller assumes the TXN will not change
   - Because there have been the desired number of confirmations
 - The digital asset is then sent
+  - Or the physical item changes hands
 
 
 
@@ -1632,7 +1638,8 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 - If the attacker...
   - Who has 51% (or more) of the mining power...
 - ... can ever create the longest chain...
-- Then they have double spent the UTXO!
+- Then they have "double spent" the UTXO!
+  - Not *true* double spending, but close...
 
 
 
@@ -1668,7 +1675,7 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
   - Neither has yet become "longer"
 - What if the miner for block 1001, version 1, were to immediately spend those mined BTC
   - And then the version 2 chain were to become the longer (and thus accepted) chain?
-- Solution: wait until $n$ confirmations have occurred before allowing spending the BTC
+- Solution: wait until $n$ confirmations have occurred before allowing spending of the BTC
 
 
 
