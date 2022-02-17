@@ -58,6 +58,13 @@ are not expected to understand what is in that file.</li>
 <p>There are a few really important things to remember in this
 assignment.</p>
 <ol type="1">
+<li><strong>UTXO indices:</strong> each transaction has one more more
+UTXO indices – each transaction output creates a separate UTXO index. To
+find out what UTXO index you need to use, view the transaction on the
+blockcypher.com website. All UTXO indices start from 0, like arrays. In
+particular, for your funding transaction, your UTXO index will probably
+not be 0. You need to set the <code>utxo_index</code> variable for
+<strong>EACH</strong> transaction to the right UTXO index.</li>
 <li>After each transaction, there is a place to store the transaction
 hash. Be diligent about doing this – it’s really easy to lose track of
 which of a dozen transaction hashes is which. Keeping them in the stated
