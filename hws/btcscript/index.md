@@ -11,7 +11,7 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 ### Languages
 
-This assignment uses the [Python bitcoin package](https://pypi.org/project/bitcoin/).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is NOT installed on the VirtualBox image, so you will have to install it there as well.
+This assignment uses the [Python bitcoin package](https://pypi.org/project/python-bitcoinlib/).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is NOT installed on the VirtualBox image, so you will have to install it there as well.
 
 
 ### Provided files
