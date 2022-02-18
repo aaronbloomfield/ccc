@@ -61,11 +61,12 @@ assignment.</p>
 <ol type="1">
 <li><strong>UTXO indices:</strong> each transaction has one more more
 UTXO indices – each transaction output creates a separate UTXO index. To
-find out what UTXO index you need to use, view the transaction on the
-blockcypher.com website. All UTXO indices start from 0, like arrays. In
-particular, for your funding transaction, your UTXO index will probably
-not be 0. You need to set the <code>utxo_index</code> variable for
-<strong>EACH</strong> transaction to the right UTXO index.</li>
+find out what UTXO index you need to use, <em>view the transaction on
+the blockcypher.com website</em>. All UTXO indices start from 0, like
+arrays. In particular, for your funding transaction, your UTXO index
+will probably not be 0. You need to set the <code>utxo_index</code>
+variable for <strong>EACH</strong> transaction to the right UTXO
+index.</li>
 <li>After each transaction, there is a place to store the transaction
 hash. Be diligent about doing this – it’s really easy to lose track of
 which of a dozen transaction hashes is which. Keeping them in the stated
@@ -351,6 +352,23 @@ test network requires there be <em>some</em> transaction fees, it
 doesn’t seem to care much about how much those fees are, which is
 different than with the real BTC network. This automatic lowering of the
 transaction amount will recur elsewhere in this assignment.</p>
+<p>IMPORTANT NOTE: There is somebody that is redeeming all of our puzzle
+transactions (part 2a) on the Bitcoin test network – they are parsing
+the output script, computing the answers, and redeeming the transaction.
+Because this script does not have a signature, anybody can redeem it. If
+you keep getting oddball errors, and you have set your transaction hash
+and UTXO index correctly, check the transaction page itself to see if
+it’s spent. For the puzzle transactions, blockcyper.com just says
+“unknown script type”, and does not indicate if it’s spent or not.
+blockchain.com does show this – search for the transaction hash, and in
+the outputs section, the Details item (on the right) will indicate if
+it’s spent or not. If it is spent, you can click on the word ‘Spent’ to
+got the transaction that redeemed it. When grading it, we will look at
+(1) if the transaction from part 2a was broadcast, (2) whether it was
+redeemed (by you or somebody else), and (3) whether the two scripts
+verify with each other. Thus, it does not have to be your transaction
+that redeems part 2a in part 2b, but your part 2b does have to verify
+with your part 2a.</p>
 <h3 id="part-3-multi-signature-transaction">Part 3: Multi-signature
 transaction</h3>
 <p>You are going to create a multi-signature transaction, which must use
@@ -430,6 +448,15 @@ there is only one output from the UTXO from the transaction just above.
 You run it via <code>./bitcoinctl.py part3b</code>. Once successful,
 record the transaction hash in the <code>txid_multisig_txn2</code>
 variable in scripts.py.</p>
+<p>IMPORTANT NOTE: For the <code>OP_CHECKMULTISIG</code>, it should have
+ONLY the keys/signatures of Alice, Bob, and Charlie; the bank signature
+should not be in there. Instead, the bank signature should be separate
+and verified with an <code>OP_CHECKSIG</code>. The reason is that if
+everything is in the <code>OP_CHECKMULTISIG</code>, then an empty set of
+signatures and keys will verify correctly. This is relevant because
+there is some user on the Bitcoin test network who is trying to redeem
+your UTXOs. In particular, it has been observed when the UTXO was only
+verified with a single <code>OP_CHECKMULTISIG</code>.</p>
 <h3 id="part-4-cross-chain-transactions">Part 4: Cross-chain
 transactions</h3>
 <p>In this part you will create the scripts for a <a
