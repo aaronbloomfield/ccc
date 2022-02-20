@@ -574,6 +574,10 @@ for <em>h(x)</em> known and signed by A) or (signed by A &amp; B)</li>
 </ul>
 <p>Your script code for this will go into the
 <code>atomicswap_scriptPubKey()</code> function.</p>
+<p><strong>NOTE:</strong> the hash that is used in this part is
+RIPEMD-160, <em>not</em> SHA-256. So be sure to use the
+<code>OP_HASH160</code> opcode to get the hash, and not the
+<code>OP_SHA256</code> opcode.</p>
 <p>To help you with this code, we provide the two redeeming
 functions:</p>
 <ul>

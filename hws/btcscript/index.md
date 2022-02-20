@@ -194,6 +194,8 @@ Because we are swapping between two different Bitcoin test networks, the atomic 
 
 Your script code for this will go into the `atomicswap_scriptPubKey()` function.
 
+**NOTE:** the hash that is used in this part is RIPEMD-160, *not* SHA-256. So be sure to use the `OP_HASH160` opcode to get the hash, and not the `OP_SHA256` opcode.
+
 To help you with this code, we provide the two redeeming functions:
 
 - `atomcswap_scriptSig_redeem()` is when Alice or Bob, knowing the secret, wants to redeem the transaction.  The `OP_TRUE` is for use in an `OP_IF` statement in the script you have to write.
