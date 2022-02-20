@@ -450,8 +450,32 @@ line-height:120%;
 
 ## "Useful" Proof-of-Work (PoW)
 - Use computing power for some "good"
-- Example: Primecoin
-  - https://primecoin.io/bin/primecoin-paper.pdf
+- Example: Primecoin, launched in 2013
+  - Purpose: generate primes for mathematical and scientific study
+  - Currently [worth `$`0.047 per share](https://coinmarketcap.com/currencies/primecoin/)
+  - [Whitepaper](https://primecoin.io/bin/primecoin-paper.pdf)
+  - Time between blocks: 1 minute
+  - Difficulty change is for each block (not 2 weeks)
+  - Generates two types of primes sequences: Cunningham chains and Bi-twin chains
+
+
+
+## Cunningham chain
+- Of the first kind: length $n$ sequence $(p_1, \ldots, p_n)$ such that: $p_{i+1} = 2p_i+1$
+  - Each prime is one *more* than twice the previous
+  - Example: 2, 5, 11, 23, 47
+- Of the second kind: length $n$ sequence $(p_1, \ldots, p_n)$ such that: $p_{i+1} = 2p_i-1$
+  - Each prime is one *less* than twice the previous
+  - Example: 19, 37, 73
+- Generalized:  length $n$ sequence $(p_1, \ldots, p_n)$ such that: $p_{i+1} = a \ast p_i + b$
+
+
+
+## Bi-twin chain
+- A sequence of primes of the form:
+  - $n-1,n+1,2n-1,2n+1,\ldots,2^kn-1,2^kn+1$
+  - Must have an even number of terms
+- All examples are really large numbers...
 
 
 
@@ -499,19 +523,57 @@ line-height:120%;
 
 
 
+## Ethereum and PoS
+- Currently, Ethereum is proof-of-work (hash algorithm: Ethash)
+- It has a [difficulty bomb](https://docs.ethhub.io/questions-about-ethereum/what-is-the-difficulty-bomb/), aka "Ice Age"
+  - At certain block numbers, the difficulty increases significantly
+  - See [this graph](https://i.imgur.com/ac1xV3l.png) from [here](https://docs.ethhub.io/questions-about-ethereum/what-is-the-difficulty-bomb/)
+- Purpose: to force the developers to either:
+  - Migrate it to a later date (as has happened so far)
+  - Change to PoS (in the works for some time now)
+- The new Ethereum PoS proposal is called ETH2
+  - Or the "Casper protocol"
+
+
+
 ## Peercoin
-- See http://www.cs.sjsu.edu/~austin/cs168-fall20/slides/CS168-Day16-AlternateProofSchemes.pdf (last few slides)
+- First impelementation of PoS, from 2012
+  - Currently [worth `$`0.59 per share](https://coinmarketcap.com/currencies/peercoin/)
+  - [Whitepaper](https://whitepaper.io/document/139/peercoin-whitepaper), [source code on github](https://github.com/peercoin/peercoin)
+- Consider *coin age*, measured in *coin-days*
+  - 90 coins held for 10 days is 900 coin-days
+  - Mining a block consumes the coin-days
+    - Thus, those with a lower number of coins will eventually be able to mine a block
 
 
 
-## Tendermint
-- See http://www.cs.sjsu.edu/~austin/cs168-fall20/slides/CS168-Day17-Tendermint.pdf
+## Peercoin
+- Weakness: buy a lot of Peercoin, and wait a long time
+  - You can then mine many successive blocks, using a portion of your coin age each time
+  - Then execute a [51% attack](bitcoin.html#/attacks)
+- Solution: *checkpoints*
+  - Basically a periodic (few times per day) proof-of-work mined block
+  - The nodes all agree on the "offical" blockchain, which then is immutable
 
 
 
-## Proof of Stake problems
-- Nothing-at-stake-problem
-- See http://www.cs.sjsu.edu/~austin/cs168-fall20/slides/CS168-Day16-AlternateProofSchemes.pdf slide 14
+## Nothing-at-stake-problem
+- Consider a fork in the blockchain due to two simultaneously mined blocks
+  - This will happen occasionally!
+- Which one chain should a validator mine for?
+- Ideal strategy: mine both
+  - In PoS, it is not computationally demanding to mine both
+  - This way you don't mine the eventual "wrong" chain, and then not get the reward
+- With PoS, there is nothing at stake to prevent mining both chains
+- This can make double-spend attacks more feasible, as duplicate chains are not removed quickly
+
+
+
+## Nothing-at-stake problem
+- All coins must address this somehow
+- ETH2 / Casper:
+  - Part of your stake is a "deposit" on the validity of the block
+  - If that block does not make it into the full block chain, you lose that deposit
 
 
 
@@ -544,39 +606,34 @@ line-height:120%;
 
 
 
-## ETH2
-- aka Casper Protocol
-- the 'timebomb' in ETH
-- what the switch will mean
-- when it will happen
-
-
-
 ## Proof-of-Capacity
-- aka Proof-of-Storage
-- See https://www.publish0x.com/knowledge-for-cryptocurrency-users/four-proof-of-capacity-coins-xyyypo
-- Example: Permacoin
-
-
-
-## Proof-of-replication (PoRep)
-- Filecoin: https://filecoin.io
-- See https://coinmarketcap.com/alexandria/glossary/proof-of-replication
+- aka Proof-of-replication (PoRep), proof-of-storage, etc.
+- You allocate a certain amount of "capacity" to store the blockchain
+  - Depending on amount, you are likely not holding all of the blockchain
+- But all parts of the blockchain are on many machines
+  - Benefit: in the case of a failure, the "storage" -- in the blockchain -- is replicated
+- You pay to store data in the blockchain
+- Example: Storj ([currently worth `$`0.99 per share](https://coinmarketcap.com/currencies/storj/))
 
 
 
 ## Proof-of-spacetime
-- ???
-- maybe info at http://www.cs.sjsu.edu/~austin/cs168-fall20/greensheet.html
+- Spacetime means allocating space over a period of time
+  - And is not related to Einstein's spacetime from relativity
+- Like proof-of-capacity, but...
+  - Your reward is based on the amount of space dedicated times the amount of time
+- Example: Filecoin ([currently worth `$`19.93 per share](https://coinmarketcap.com/currencies/filecoin/))
 
 
 
 ## "Green" coins
-- See https://investorplace.com/2021/05/green-coins-5-of-the-most-eco-friendly-cryptos-elon-musk-should-consider-now/
-- Sometimes called "greencoins", but there also a [Greencoin (GRE) cyrptocurrency](https://coinmarketcap.com/currencies/greencoin/)
-- See https://www.thetimes.co.uk/money-mentor/article/eco-friendly-cryptocurrencies/
-- talk about Stellar Lumens (XLM), which uses "trusted" nodes rather than proof-of-X
-
+- Generally, any coin that is not proof-of-work
+- Possibilities:
+  - Proof-of-stake, like ETH2 and Peercoin
+  - Proof-of-{capacity, replication, spacetime}, like Storj and Filecoin
+  - Don't have any proofs, such as Stellar Lumens (XLM) ([currently worth `$`0.20 per share](https://coinmarketcap.com/currencies/stellar/))
+- There is also [Greencoin (GRE) cyrptocurrency](https://coinmarketcap.com/currencies/greencoin/) (worth `$`0.0003 per share)
+  - This coin seems to have floundered, and there are other coins with a similar name
   </textarea></section>
 
 </section>
@@ -682,7 +739,7 @@ Note that UTXOs are not only in the bottom level
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Realism
 - Most (all?) cryptocurrencies are mined by the developers for the first many blocks
-  - Ethereum's first transaction was in block [46,147](https://etherscan.io/block/46147)
+  - Ethereum's first non-mining transaction was in block [46,147](https://etherscan.io/block/46147)
   - Bitcoin only had a few hundred accounts in the first 50,000 (or so) transactions
 - But the previous images of the DAG still show the concepts of having many transactions
 

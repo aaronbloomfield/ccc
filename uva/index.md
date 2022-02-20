@@ -75,8 +75,12 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 5. Wed, Feb 2: [encryption](../slides/encryption.html#/) to slide 9.21
 6. Mon, Feb 7: finished [encryption](../slides/encryption.html#/); started on [bitcoin](../slides/bitcoin.html#/) to slide 5.10
 7. Wed, Feb 9: [bitcoin](../slides/bitcoin.html#/) to slide 7.6
-8. Mon, Feb 14: continue (and likely not finish) [bitcoin](../slides/bitcoin.html#/)
-
+8. Mon, Feb 14: [bitcoin](../slides/bitcoin.html#/) to slide 7.36
+9. Wed, Feb 16: finished [bitcoin](../slides/bitcoin.html#/)
+10. Mon, Feb 21: [mining](../slides/mining.html) to ...
+11. Wed, Feb 23: ...
+12: Mon, Feb 28: ...
+13: Wed, Mar 2: midterm
 
 ## Legal Issues
 
