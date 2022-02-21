@@ -118,7 +118,7 @@ line-height:120%;
 - You would expect that half (50%) would have a leading 0 bit, and the other half would have a leading 1 bit
   - Expectation is that 1/4 (25%) have two leading 0 bits
   - Expectation is that 1/8 (12.5%) have three leading 0 bits
-- Expectation is that $1/2^n$ have $n$ leading 0 bits
+- Expectation is that $\frac{1}{2}^n$ have $n$ leading 0 bits
 - Thus...
 <ul>
   <li class='fragment'> RVN example: $\frac{1}{2^{48}}$, which is 1 in 281 trillion ($2.81 \ast 10^{12}$), would have 48 leading 0 bits </li>
@@ -182,7 +182,7 @@ line-height:120%;
 ## When will you get a BTC block with a GPU?
 - Assume that your graphics card's GPU can compute about 9,700 Mh/s for SHA-256 (BTC) ([source](https://gist.github.com/Chick3nman/e4fcee00cb6d82874dace72106d73fef))
   - Again, that's a *very* fast graphics card (Nvidia 3090)
-- We expect to get a block after $120 * 10^{21}$ hashes (or 120 Zh)
+- We expect to get a block after $120 \ast 10^{21}$ hashes (or 120 Zh)
 - A 9,700 Mh/s graphics card will compute 75.6 Zh in about 143,184,420 days (392,017 years!)
 - Reward is 6.25 BTC times `$`44,200 per BTC
   - Which is `$`276,250 per mined block
@@ -193,7 +193,7 @@ line-height:120%;
 
 ## When will you get a BTC block with an ASIC?
 - Consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t), as one example, that can compute $75$ Th/s $= 75 * 10^{12}$ h/s
-- We expect to get a block after `$`120 * 10^{21}$ hashes (or 120 Zh)
+- We expect to get a block after $120 * 10^{21}$ hashes (or 120 Zh)
 - A 75 Th/s ASIC will compute 120 Zh in about 18,517 days (50 years)
 - Reward is 6.25 BTC times `$`44,200 per BTC
   - Which is $276,250 per mined block
@@ -498,6 +498,28 @@ line-height:120%;
 
 
 
+## Lite Hash Rate (LHR)
+- Nvidia makes graphics cards
+  - Well, really only the GPUs...
+- And everybody was buying their cards to mine cryptocurrency
+  - Which priced out their primary market: gamers
+- Nvidia's solution: create LHR cards
+  - Since nobody bothers to mine Bitcoin on GPUs...
+  - Make the card recognize mining of Ethash, and "lock" the GPU for 20 seconds
+- But this only affects Ethash, not any other mining algorithm!
+
+
+
+## Lite Hash Rate (LHR)
+- Nvidia accidentally released a driver that disabled this
+  - So now everybody knows software (firmware) can get around it
+- Mining programs now *dual-mine*
+  - It mines Ethash at half GPU usage
+  - And another coin for the other half
+- See [this dual-mining page for T-rex](https://github.com/trexminer/T-Rex/wiki/Dual-mining), for example
+
+
+
 ## Proof of Stake (PoS)
 - Those with a *stake* in the cryptocurrency...
   - ... meaning they hold enough of it...
@@ -740,7 +762,7 @@ Note that UTXOs are not only in the bottom level
 ## Realism
 - Most (all?) cryptocurrencies are mined by the developers for the first many blocks
   - Ethereum's first non-mining transaction was in block [46,147](https://etherscan.io/block/46147)
-  - Bitcoin only had a few hundred accounts in the first 50,000 (or so) transactions
+  - Bitcoin only had a few hundred accounts in the first 50,000 (or so) blocks
 - But the previous images of the DAG still show the concepts of having many transactions
 
 
