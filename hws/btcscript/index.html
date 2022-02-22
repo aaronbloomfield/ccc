@@ -595,11 +595,12 @@ to implement TXN 2 or TXN 4.</li>
 </ul>
 <p>The last thing to do before you write the
 <code>atomicswap_scriptPubKey()</code> function is to determine what the
-secret is – pick a number between 17 million and 2 billion, and save
-that in <code>atomic_swap_secret</code>. (It needs to be in that range
-to ensure it’s encoded as a 4-byte integer). Keep in mind that this
-secret is only known to Alice initially; Bob is only given the hash of
-the secret (the bitcoinctl.py file handles that part for you).</p>
+secret is – <strong>pick a number between 17 million and 2
+billion</strong>, and save that in <code>atomic_swap_secret</code>. (It
+needs to be in that range to ensure it’s encoded as a 4-byte integer).
+Keep in mind that this secret is only known to Alice initially; Bob is
+only given the hash of the secret (the bitcoinctl.py file handles that
+part for you).</p>
 <p>Once you have written the script in the
 <code>atomicswap_scriptPubKey()</code> function, you can perform your
 cross-chain transaction. This involves four steps, which are outlined
