@@ -122,7 +122,7 @@ line-height:120%;
 - Thus...
 <ul>
   <li class='fragment'> RVN example: $\frac{1}{2^{48}}$, which is 1 in 281 trillion ($2.81 \ast 10^{12}$), would have 48 leading 0 bits </li>
-  <li class='fragment'> BTC example: $\frac{1}{2^{77}}$, which is 1 in 151 sextillion ($151 \ast 10^{21}$), would have 78 leading 0 bits </li>
+  <li class='fragment'> BTC example: $\frac{1}{2^{77}}$, which is 1 in 151 sextillion ($151 \ast 10^{21}$), would have 77 leading 0 bits </li>
 </ul>
 
 
@@ -174,8 +174,8 @@ line-height:120%;
 - We expect to get a block after $281 * 10^{12}$ hashes (or 281 Th)
 - A 52 Mh/s graphics card will compute 281 Th in about 63 days
 - Reward is 2,500 RVN times 7&cent; per RVN = $175
-  - Or $2.78 per day, on average
-  - Minus electrical costs of about 85&cent; per day yields about a $1.93 / day profit
+  - Or `$`2.78 per day, on average
+  - Minus electrical costs of about 85&cent; per day yields about a `$`1.93 / day profit
 
 
 
@@ -186,7 +186,7 @@ line-height:120%;
 - A 9,700 Mh/s graphics card will compute 75.6 Zh in about 143,184,420 days (392,017 years!)
 - Reward is 6.25 BTC times `$`44,200 per BTC
   - Which is `$`276,250 per mined block
-  - Or $0.70 per *year*, on average
+  - Or `$`0.70 per *year*, on average
   - Minus electrical costs...
 
 
@@ -196,21 +196,21 @@ line-height:120%;
 - We expect to get a block after $120 * 10^{21}$ hashes (or 120 Zh)
 - A 75 Th/s ASIC will compute 120 Zh in about 18,517 days (50 years)
 - Reward is 6.25 BTC times `$`44,200 per BTC
-  - Which is $276,250 per mined block
-  - Or about $5,525 (0.20 BTC) per *year*
+  - Which is `$`276,250 per mined block
+  - Or about `$`5,525 (0.20 BTC) per *year*
   - Minus electrical costs...
 
 
 
 ## Is an ASIC miner worth it?
 - Again, consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
-- It generates $12,720 per year, and uses 3,420 W of electricity
+- It generates about `$`5,525 per year, and uses 3,420 W of electricity
   - That's 82 kWh / day
   - At 11.04&cent; per kWh, that's about $9 per day
   - Or about $270 per month
   - Or about $3,300 per year, on average
 - So the profit is really only $2,225 per year
-- At a cost of about $5k, it will pay itself off in about 2 years
+- At a cost of about $4.5k, it will pay itself off in about 2 years
   - Well, maybe...
 
 
@@ -295,8 +295,7 @@ line-height:120%;
   - 44 leading zero bits yields a share difficulty of $17.6$ T
   - The target for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364) needed 48 leading zero bits, so that required a share of about 281.5 T or higher
 
-
-
+<!--
 ## Miner reported difficulty
 - Given *nbits* of 0x1b00a908 for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364), we can compute $b$, the exact number of zero bits needed, via:
   - Let $m$ be the (base-10) value of the mantissa
@@ -308,6 +307,7 @@ line-height:120%;
   - The exact number of zero bits, $b$, needed is then:
     - $b=4*l_h+24-log2(m) = 48.59885$
 - The minimum required share difficulty, $sd$, is then 2 to that power: $sd=2^b=2^{48.59885} = 426.30$ T
+-->
 
 
 
@@ -340,8 +340,7 @@ line-height:120%;
   - So a 50 Mh/s GPU (the Nvidia 3090) would expect to get a share every 85.9 seconds
 - The *ldiff* value keeps the bandwidth to the mining pool down while also allowing an estimate of the work performed
 
-
-
+<!--
 ## Miner reported difficulty
 - The nonce found for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364) generated a hash of 0x0000000000003d7678380e2f25b4a8c 8271b53638d380f761acbf4ee040f325a; what was its share difficulty?
 - Let $l_b$ be the leading number of binary bits in the hash (note that $l_h = l_b*4$):
@@ -349,6 +348,7 @@ line-height:120%;
 - The difficulty with $l_b$ bits is just 
   - $2^{l_b} = 2^{50.05835} = 1.1724*10^{15} = 1,172.4$ T
   - But the number reported by the mining software was $541.1$ T, so something is off here...
+-->
 </textarea></section>
 
 	</section>
