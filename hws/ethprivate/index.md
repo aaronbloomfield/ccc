@@ -45,7 +45,7 @@ Step 2: In that data directory, copy the [genesis.json](genesis.json) file in th
         "gasLimit": "0x8000000",
         "alloc": {},
         "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
-
+}
 ```
 
 Step 3: You have to change the `chainId` value on that line.  The value we are using for our class is listed in the Collab workspace's landing page.  Nothing herein will work properly if you don't change that value!
