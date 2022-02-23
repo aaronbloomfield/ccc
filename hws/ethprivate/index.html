@@ -66,14 +66,17 @@ directory. This file lists the parameters for our private blockchain
         &quot;config&quot;: {
                 &quot;chainId&quot;: 12345678,
                 &quot;homesteadBlock&quot;: 0,
+                &quot;byzantiumBlock&quot;: 0,
+                &quot;constantinopleBlock&quot;: 0,
                 &quot;eip150Block&quot;: 0,
                 &quot;eip155Block&quot;: 0,
                 &quot;eip158Block&quot;: 0
         },
         &quot;difficulty&quot;: &quot;0x400&quot;,
         &quot;gasLimit&quot;: &quot;0x8000000&quot;,
-        &quot;alloc&quot;: {}
-}</code></pre>
+        &quot;alloc&quot;: {},
+        &quot;parentHash&quot;: &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;
+</code></pre>
 <p>Step 3: You have to change the <code>chainId</code> value on that
 line. The value we are using for our class is listed in the Collab
 workspace’s landing page. Nothing herein will work properly if you don’t

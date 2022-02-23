@@ -35,14 +35,17 @@ Step 2: In that data directory, copy the [genesis.json](genesis.json) file in th
         "config": {
                 "chainId": 12345678,
                 "homesteadBlock": 0,
+                "byzantiumBlock": 0,
+                "constantinopleBlock": 0,
                 "eip150Block": 0,
                 "eip155Block": 0,
                 "eip158Block": 0
         },
         "difficulty": "0x400",
         "gasLimit": "0x8000000",
-        "alloc": {}
-}
+        "alloc": {},
+        "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+
 ```
 
 Step 3: You have to change the `chainId` value on that line.  The value we are using for our class is listed in the Collab workspace's landing page.  Nothing herein will work properly if you don't change that value!
