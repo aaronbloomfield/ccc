@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Ethereum
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Introduction](#/intro)  
+[Patricia Trees](#/patricia)  
+[Blockchain](#/blockchain)  
+[Upgrades](#/upgrades)  
+[Applications](#/applications)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="intro" data-markdown class="center"><textarea>
+# Introduction
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Bitcoin
+- Created in 2009
+- Bitcoin script is not Turing-complete
+- Really only for transactions
+  - Tokens possible, but difficult
+  - More complicated TXNs are not enforceable
+
+
+
+
+<!-- .slide: class="right-float-img" -->
+## History
+[![](images/ethereum/VitalikButerinProfile.webp)](https://en.wikipedia.org/wiki/Vitalik_Buterin)
+- Vitalik Buterin in 2013: Bitcoin can do so  much more!
+- Bitcoin devs: meh
+- Vitalik: Fine. I'll do it myself
+- Vitalik then created Ethereum (at age 20)
+  - Now a multi-billionaire
+
+
+
+## Definitions
+- *Ethereum* is the system / blockchain / network
+- *Ether* or *Eth* (symbol: ETH) is the currency
+- *Smart contract* is a program on the Etherem blockchain
+  - Analogous to a Bitcoin script on the blockchain
+- *Solidity* one (of many) programming languages that compile to Etherem bytecode
+
+
+
+## ETH
+- The currency of Ethereum
+- Current value: see [here](https://finance.yahoo.com/quote/ETH-USD)
+- A *wei* is $1/10^{18}$ ETH
+- A *gwei* (giga-wei) is $1/10^9$ ETH
+  - If 1 ETH is worth `$`2,500, then 1 wei is worth `$`0.0000025
+  - Or 400,000 gwei to the dollar
+- TXN fees are typically reported in gwei
+
+
+
+<!-- .slide: class="big-table-small" -->
+## ETH part synonyms ([ref](https://www.languagesandnumbers.com/articles/en/ethereum-ether-units/))
+| Int'l system | Usual name | Effigy |
+|------------|--------|---------|
+| $10^{-18}$ : attoether | wei | Wei Dai |
+| $10^{-15}$ : femtoether | kwei, ada | Ada Lovelace |
+| $10^{-12}$ : picoether | mwei, babbage | Charles Babbage |
+| $10^{-9}$ : nanoether | gwei, shannon | Claude Shannon |
+| $10^{-6}$ : microether | szabo, micro | Nick Szabo |
+| $10^{-3}$ : milliether | finney, milli | Harold Finney |
+| $1$: ether | ether | |
+| $10^{3}$: kiloether | kether, grand, einstein | Albert Einstein |
+| $10^{6}$: megaether | mether | |
+| $10^{9}$: gigaether | gether | |
+| $10^{12}$: teraether | tether | |
+
+
+
+## Change of Perception
+- Think of the Ethereum blockchain as a database...
+  - ...of current accounts, programs, and tokens (NFTs)
+- We can easily (if slowly) search the blockchain for anything
+  - With proper indexing (hash tables!), we can do that in near constant time
+- Blockchains store *all* iterations of a thing (accounts, etc.)
+  - Our index only needs to store the most recent version
+  - And doesn't need to store spent txn outputs
+
+
+
+## Tokens
+- A token is a "thing" on the blockchain that represents an asset
+  - Perhaps a physical asset, like a deed for a car
+     - The legal basis for this is unclear, at best
+  - Perhaps a digital asset, like ownership of an image
+  - Perhaps a blockchain asset, like other cryptocurrency
+- Ethereum implements them as smart contracts
+- Other cryptocurrencies natively support them (Ravencoin)
+- This is a whole separate lecture, coming soon...
+
+
+
+## Account addresses
+- Keypairs use 256-bit ECDSA (with secp256k1); hashing algorithm is SHA3 (aka Keccak-256)
+- Given a 256-bit ECDSA (secp256k1) public/private key pair...
+  - Take the SHA3 (aka Keccak-256) hash of the public key
+  - Take the last 20 bytes (160 bits)
+  - Render that in hexadecimal, and prefix with '0x'
+- Example: 0xb794f5ea0ba39494ce839613fffba74279579268
+- Notably, this address does NOT change like in Bitcoin!
+- This is called an "owned" address
+
+
+
+## Nonce
+- The 'nonce' is an incrementing counter associated with each account
+  - Starts at 0
+  - *Each* transaction uses the nonce and then increments it
+- This is NOT stored in the account address
+  - But it is stored in the blockchain
+  - With proper indexing, finding it is almost $\Theta(1)$
+    - (Assuming that a hash table lookup is almost $\Theta(1)$)
+
+
+
+## Contract addresses
+- Some transactions put a smart contract (program) onto the blockchain
+- Those need a contract address to be called
+- To generate the contract address:
+  - Take the account address of who is executing this transaction
+    - That could be an owned address or a contract address
+  - Append the nonce to that
+  - Take the SHA3 (aka Keccak-256) hash of that
+  - Take the last 20 bytes (160 bits)
+  - Render that in hexadecimal, and prefix with '0x'
+- With proper indexing, finding a contract by address is fast
+- Let's see an example...
+
+
+
+## Byte code
+- Take Bitcoin Script, and add just one opcode: JUMP
+  - Conditional jumps via OP_IF statements
+- Suddenly it's Turing-complete (most likely)
+- Ethereum adds a bunch more...
+  - But really on JUMP is needed
+
+
+
+## Solidity
+- One (of many) programming languages used for Ethereum
+- A Turing-complete programming language
+  - It has loops!  Recursion!  Function calls!
+  - And is object-oriented
+    - It has inheritance!  Visibilities!
+- A Solidity program is called a "smart contract"
+- But how to prevent an infinite loop in a smart contract?
+
+
+
+## Gas
+- Each TXN defines the number of "computational steps" the smart contract is allowed to execute
+  - Gas price: how much to pay, in ETH, per computational step
+  - Gas limit (aka start gas): the maximum amount of gas to pay
+  - Maximum number of allowed steps = gas limit / gas price
+- If your smart contract exceeds the maximum allowed steps, the smart contract is not executed
+  - And you lose all your gas!  [Here](https://ethplorer.io/tx/0x70fc74551a132a301e5b4a6c1c6dbbfe23d4a6479501b60c6468cd2f6ba0cf3b) is such a TXN
+- You can see a [graph of historical gas prices](https://ethereumprice.org/gas/)
+
+
+
+## Gas example
+- Assume that you agree to pay 200 gwei (ether) per gas unit
+  - Each computational step takes some number of gas units
+- And you agree to pay for $g$ gas units, say $g=20,000$
+- To evaluate the transaction:
+  - Buy $g$ gas at 200 gwei; total of 200 * 20,000 gwei = 0.004 ETH
+  - As the script executes, it deducts gas from the 20,000 amount
+  - At the end of execution, any extra gas is refunded to the account
+
+
+
+## Gas examples
+- Simple TXN might use 21,000 gas (the max limit)
+    - [this one](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3), for example
+    - Gas price was ~100 gwei (actually 105.702 gwei)
+    - Total was 2,100,000 gwei = 0.002219732760483 ETH
+    - At $3,045.41 per ETH (at the time)...
+      - That was $6.76 for the TXN
+- A complex TXN could use 1 million gas (~$322 at that price)
+- See the [average ETH TXN fees](https://messari.io/asset/ethereum/chart/txn-fee-avg)
+  - That includes more complex TXNs!
+
+
+
+## Exact gas costs
+- Solidity is compiled down into bytecode
+- Each bytecode opcode costs a different amount of gas
+  - 2-10 gas for simple instructions, but up to 1,000 for complex instructions
+  - See the (older) table [here](https://github.com/djrtwo/evm-opcode-gas-costs/blob/master/opcode-gas-costs_EIP-150_revision-1e18248_2017-04-12.csv)
+  - The exact gas costs are determined from formuals in the [Ethereum yelow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
+- The Ethereum Virtual Machine (EVM) will keep computing until it runs out of gas
+
+
+
+## Exact gas costs
+- The "standard" transaction fee is a startgas of 21,000
+  - This is for a typical transfer of ETH
+  - Nothing is refunded, even if you use less gas!
+  - You can do less, but miners may not include it in their blocks
+- Given the current gas costs [here](https://ethgas.watch/)
+- Transaction cost in USD is:
+  - *eth\_cost\_in\_usd* $\ast$ *gas\_amount* $\ast$ *gas\_price*
+- Assume the "normal" gas costs is 88 gwei per unit of gas
+  - Thus, the amount paid per gas "step": 88 gwei = $88 \ast 10^{-9}$ ETH
+  - A standard transaction uses 21,000 gas: $21,000 \ast 88 \ast 10^{-9} = 1.848 \ast 10^{-3}$ ETH
+  - At a cost of `$`2,500 USD per ETH, the total cost of gas is:
+  - $2,500 \ast 21,000 \ast 88 \ast 10^{-9} =$ `$`4.62 USD
+
+
+
+## Why so high for gas?
+- Supply and demand
+- Ethereum has a block rate fixed by the difficulty (12-15 seconds)
+  - Some transactions are quite large due to the large compiled contracts therein
+- But everybody wants to use it, and it can't process the transactons fast enough
+
+
+
+## Why pay high gas fees?
+- Miners will only choose the most profitable TXNs
+  - There are always more TXNs to mine than can fit in a block
+- If you pay to little for the gas, the miners will pass it by
+- See the [average gas price](https://etherscan.io/chart/gasprice) over time
+- You can add a "tip" to incentivize miners to include your block faster
+- See [differnt gas fee times](https://crypto.com/defi/dashboard/gas-fees)
+  - 200 gwei for gas @ 3k USD / ETH for 21k gas is $12.60
+  - It turns out fee computation is more complex...
+
+
+
+## Messages
+- Like a TXN, but it's one contract calling another
+- It also consumes gas!
+  - That gas is consumed by the original call
+- You call contract A with 1000 gas
+  - That call uses 600 gas
+  - Contract A calls contract B, which uses 300 gas
+  - You only get 100 gas back
+
+
+
+## Transaction fields
+- Pretty much all the fields in Bitcoin
+  - Date, block number, from address, to address, amount to transfer
+- Gas limit (aka start gas): the maximum number of computational steps to take
+- Gas price: how much to pay for each computational step taken
+- A much larger "data" field for the compiled contract
+
+
+
+## Evaluating a TXN
+1. Is TXN well-formed and valid?  If not, error.
+2. Fee starts at *start_gas* $\ast$ *gas_price*
+    - Determine sending address from the signature
+    - Subract fee from sending account; if not enough, error
+3. set *gas* = *start_gas*, and subtract for each step
+4. Xfer TXN value from sender to receiver
+    - If receiver is a contract, execute that code (using gas)
+5. Not enough gas to execute? Revert back to start, but use keep the fees
+6. Else refund unspent gas to sender, send gas consued to miner
+
+
+
+## Ethereum TXNs
+- See them at [ethplorer.io](https://ethplorer.io/last) or [etherscan.io](https://etherscan.io/)
+- [TXN calling a smart contract](https://ethplorer.io/tx/0x1dd8887f7c4283f17ae5d5490f6a0e26302e8e1908cb0a9b59fe709ff54ad850)
+- [Issuing a WETH token](https://ethplorer.io/tx/0x56752aba0ed7e68265576a5205c9228eba926d0d339f83b517d3b520f6d8498d)
+- [Contract for SHIB](https://ethplorer.io/address/0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce#chart=candlestick)
+- [ETH txfer from 2miners](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3)
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="patricia" data-markdown class="center"><textarea>
+# Patricia Trees
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recall: Merkle Trees
+
+<img src='images/bitcoin/Hash_Tree.svg' style="width:300px;float:right;background:white;border-radius:10px">
+<ul class=".reveal" style="width:unset;margin-top:20px">
+<li>...</li>
+<li>...
+  <ul><li>...</li></ul></li></ul>
+
+&nbsp;
+- ...
+  - ...
+- ...
+
+
+
+## Overview
+- From the Ethereum white paper: a Patricia tree includes
+
+> a modification to the Merkle tree concept that allows for
+nodes to be inserted and deleted, and not just changed, efficiently.
+
+
+
+## Trie
+A *trie* is a $k$-ary prefix tree that holds (usually) strings
+[![](images/ethereum/trees/Trie_example.svg)](https://en.wikipedia.org/wiki/Trie#/media/File:Trie_example.svg)
+
+
+
+## Tries
+- The key is the characters on the transitions to the leaf, as well as the characters in the leaf
+  - The values in the leaves just show the values via the path
+- The value is the number by each leaf
+  - Not every node has an associated value!
+- Any node has a common prefix -- the path to the root
+- Reference: Wikipedia's article on [Tries](https://en.wikipedia.org/wiki/Trie)
+
+
+
+## Radix Tree
+A space-optimized Trie
+[![](images/ethereum/trees/Patricia_trie.svg)](https://en.wikipedia.org/wiki/Radix_tree#/media/File:Patricia_trie.svg)
+
+
+
+## Radix Trees
+- Any paths that can be combined, are
+- Reference: Wikipedia's article on [Radix Trees](https://en.wikipedia.org/wiki/Radix_tree)
+
+
+
+## Patricia Trees
+- Reference: [here](https://eth.wiki/fundamentals/patricia-tree)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="blockchain" data-markdown class="center"><textarea>
+# Blockchain
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Slide content here
+- bulleted list
+- Three blank lines separate one slide from another
+
+
+
+## And here
+- And here
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="upgrades" data-markdown class="center"><textarea>
+# Upgrades
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Slide content here
+- bulleted list
+- Three blank lines separate one slide from another
+
+
+
+## London upgrade: Gas fees
+- Before the London upgrade (August 5, 2021), gas fees were computed as described
+- Since London...
+    - There is a [base fee](https://ethereum.org/en/developers/docs/gas/#base-fee) -- a minimum amount to pay
+    - You can add a [priority fee](https://ethereum.org/en/developers/docs/gas/#priority-fee) to incentivize miners to mine your TXN
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="applications" data-markdown class="center"><textarea>
+# Applications
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Slide content here
+- bulleted list
+- Three blank lines separate one slide from another
+
+
+
+## And here
+- And here
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
