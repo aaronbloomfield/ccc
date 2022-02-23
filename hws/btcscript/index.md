@@ -11,7 +11,7 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 ### Languages
 
-This assignment uses the [Python bitcoin package](https://pypi.org/project/python-bitcoinlib/).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is NOT installed on the VirtualBox image, so you will have to install it there as well.
+This assignment uses the [Python bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is NOT installed on the VirtualBox image, so you will have to install it there as well.
 
 
 ### Provided files
@@ -29,7 +29,7 @@ There are a few really important things to remember in this assignment.
 4. For *EACH* transaction, you will need to set the `utxo_index` variable -- there is just one such variable in the scripts.py file.  If you get an error stating that the UTXO index is already spent, it's likely that you forgot to set this variable.
 5. Some errors with Bitcoin scripts can be determined prior to broadcasting it on the Bitcoin test network.  This is done by the `VerifyScript()` method, which the provided code base calls for you before any attempted broadcast transaction.  So if you see an error such as, `verifyerror: "bitcoin.core.scripteval.VerifyOpFailedError: EvalScript: OP_EQUALVERIFY failed`, or similar, it means that the Bitcoin library was able to detect that your script would not work, and did not broadcast the transaction.
 6. We provide you with a `create_CHECKSIG_signature()` function in the scripts.py file -- use it!  See the comments there for details as to how.
-7. To save you the tedious task of having to learn the [Python Bitcoin library](https://pypi.org/project/python-bitcoinlib/) -- which you probably would never use again -- much of the library interaction has been handled for you by the provided code.  But in order for that to work, you have to proceed through this homework in the order written.
+7. To save you the tedious task of having to learn the [Python Bitcoin library](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/)) -- which you probably would never use again -- much of the library interaction has been handled for you by the provided code.  But in order for that to work, you have to proceed through this homework in the order written.
 
 
 ### Testnet Setup
