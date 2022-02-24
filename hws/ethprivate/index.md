@@ -84,6 +84,16 @@ geth attach /path/to/ethprivate/geth.ipc
 
 If you are in the same directory as geth.ipc, you may have to enter `./geth.ipc` as the file name.  Note that this won't work unless the geth node, from the previous step, is running.  You will then get a prompt, which is just a greater-than sign.  This is a JavaScript console.
 
+If you have this installed on Windows, you should try the following command:
+
+```
+geth attach ipc:\\\\.\\pipe\\geth.ipc
+```
+
+That command rendered correctly -- it has three sets of backslahses -- 4, then 2, then 2.  And run it from the directory that your geth.ipc file is in.  As before, note that this won't work unless the geth node, from the previous step, is running.  
+
+In either case, you will then get a prompt, which is just a greater-than sign.  This is a JavaScript console.
+
 First, let's wait for it to sync.  Since you have saved the static-nodes.json file, it will connect to the course server and start downloading all the blocks in the blockchain.  This may take some time, but hopefully less than 5 minutes.
 
 As it is sync'ing, you can try these commands:
