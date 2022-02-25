@@ -84,11 +84,14 @@ geth attach /path/to/ethprivate/geth.ipc
 
 If you are in the same directory as geth.ipc, you may have to enter `./geth.ipc` as the file name.  Note that this won't work unless the geth node, from the previous step, is running.  You will then get a prompt, which is just a greater-than sign.  This is a JavaScript console.
 
-If you have this installed on Windows, you should try the following command:
+If you have this installed on Windows, when you start the geth node, you will see output like [this](geth-on-windows.png) -- the circled command is how you connect to the geth.ipc file (putting `geth attach` before it).  It will likely be one of the following:
 
 ```
+geth attach \\.\pipe\geth.ipc
 geth attach ipc:\\\\.\\pipe\\geth.ipc
 ```
+
+
 
 That command rendered correctly -- it has three sets of backslahses -- 4, then 2, then 2.  And run it from the directory that your geth.ipc file is in.  As before, note that this won't work unless the geth node, from the previous step, is running.  
 

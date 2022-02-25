@@ -122,9 +122,13 @@ Ethereum node. You do this by entering the following command:</p>
 unless the geth node, from the previous step, is running. You will then
 get a prompt, which is just a greater-than sign. This is a JavaScript
 console.</p>
-<p>If you have this installed on Windows, you should try the following
-command:</p>
-<pre><code>geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
+<p>If you have this installed on Windows, when you start the geth node,
+you will see output like <a href="geth-on-windows.png">this</a> – the
+circled command is how you connect to the geth.ipc file (putting
+<code>geth attach</code> before it). It will likely be one of the
+following:</p>
+<pre><code>geth attach \\.\pipe\geth.ipc
+geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
 <p>That command rendered correctly – it has three sets of backslahses –
 4, then 2, then 2. And run it from the directory that your geth.ipc file
 is in. As before, note that this won’t work unless the geth node, from
