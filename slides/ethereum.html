@@ -168,6 +168,55 @@ line-height:120%;
 
 
 
+## Address checksum
+- Originally no built-in checksum like in Bitcoin
+- [EIP-55](https://eips.ethereum.org/EIPS/eip-55) adds one
+- Consider:
+  - Ethereum account address are 40 hex digits
+  - We would expect 37.5% (6/16) of those digits to be the letters a-f
+  - We can represent them as capitals or lower case, allowing 1 bit of a checksum for each letter digit
+  - A 40 digit address would have about 15 lettered digits
+- Benefit: older systems allow for mixed-case addresses, and are thus unaffected
+
+
+
+## Address checksum
+- Equivalent addresses:
+  - 0x858d8f4cf6e8de4e8eba54d853c7d36015e1f36c
+  - 0x858d8F4cF6e8dE4e8Eba54D853C7D36015e1f36C
+- Remix, the Solidity compiler, will insist on the checksummed form
+- Ethereum's 15 bit checksum is less than Bitcoin's 32 bits
+  - A mistyped address will be caught in all but $1/(2^{15}) = 0.3$% of cases
+  - Bitcoin: $1/(2^{32}) = 0.00000002$% of cases
+- Algorithm: if the $i^{th}$ digit is a letter:
+  - Print it in uppercase if the $4 \ast i^{th}$ bit of the hash of the lowercase hexadecimal address is 1
+  - Otherwise print it in lowercase
+
+
+
+## Checksum implementation
+JavaScript implementation from [EIP-55](https://eips.ethereum.org/EIPS/eip-55):
+```
+function toChecksumAddress (address) {
+  address = address.toLowerCase().replace('0x', '')
+  var hash = createKeccakHash('keccak256').
+                      update(address).digest('hex')
+  var ret = '0x'
+
+  for (var i = 0; i < address.length; i++) {
+    if (parseInt(hash[i], 16) >= 8) {
+      ret += address[i].toUpperCase()
+    } else {
+      ret += address[i]
+    }
+  }
+
+  return ret
+}
+```
+
+
+
 ## Nonce
 - The 'nonce' is an incrementing counter associated with each account
   - Starts at 0
@@ -198,8 +247,10 @@ line-height:120%;
 - Take Bitcoin Script, and add just one opcode: JUMP
   - Conditional jumps via OP_IF statements
 - Suddenly it's Turing-complete (most likely)
-- Ethereum adds a bunch more...
+- Ethereum adds a bunch more
   - But really on JUMP is needed
+  - See the full list [here](https://ethereum.org/en/developers/docs/evm/opcodes/)
+    - Better link: [here](https://github.com/wolflo/evm-opcodes)
 
 
 
@@ -228,10 +279,10 @@ line-height:120%;
 ## Gas example
 - Assume that you agree to pay 200 gwei (ether) per gas unit
   - Each computational step takes some number of gas units
-- And you agree to pay for $g$ gas units, say $g=20,000$
-- To evaluate the transaction:
-  - Buy $g$ gas at 200 gwei; total of 200 * 20,000 gwei = 0.004 ETH
-  - As the script executes, it deducts gas from the 20,000 amount
+- And you agree to pay for $g$ gas units, say $g=21,000$
+- Example to evaluate the transaction:
+  - Buy $g$ gas at 200 gwei; total of 200 * 21,000 gwei = 0.0042 ETH
+  - As the script executes, it deducts gas from the 21,000 amount
   - At the end of execution, any extra gas is refunded to the account
 
 
@@ -246,6 +297,7 @@ line-height:120%;
 - A complex TXN could use 1 million gas (~$322 at that price)
 - See the [average ETH TXN fees](https://messari.io/asset/ethereum/chart/txn-fee-avg)
   - That includes more complex TXNs!
+- Also see the [average gas costs](https://ethgas.watch/)
 
 
 
@@ -254,7 +306,7 @@ line-height:120%;
 - Each bytecode opcode costs a different amount of gas
   - 2-10 gas for simple instructions, but up to 1,000 for complex instructions
   - See the (older) table [here](https://github.com/djrtwo/evm-opcode-gas-costs/blob/master/opcode-gas-costs_EIP-150_revision-1e18248_2017-04-12.csv)
-  - The exact gas costs are determined from formuals in the [Ethereum yelow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
+  - The exact gas costs are determined from formulas in the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
 - The Ethereum Virtual Machine (EVM) will keep computing until it runs out of gas
 
 
@@ -264,7 +316,11 @@ line-height:120%;
   - This is for a typical transfer of ETH
   - Nothing is refunded, even if you use less gas!
   - You can do less, but miners may not include it in their blocks
-- Given the current gas costs [here](https://ethgas.watch/)
+- Consider the current gas costs [here](https://ethgas.watch/)
+
+
+
+## Exact gas costs
 - Transaction cost in USD is:
   - *eth\_cost\_in\_usd* $\ast$ *gas\_amount* $\ast$ *gas\_price*
 - Assume the "normal" gas costs is 88 gwei per unit of gas
@@ -296,7 +352,10 @@ line-height:120%;
 
 
 ## Messages
-- Like a TXN, but it's one contract calling another
+- We have two known types of transactions so far:
+  - That transfer ether from one account to another
+  - That deploy a smart contract
+- A message is another type of transaction, but it's one contract calling another
 - It also consumes gas!
   - That gas is consumed by the original call
 - You call contract A with 1000 gas
@@ -321,7 +380,7 @@ line-height:120%;
     - Determine sending address from the signature
     - Subract fee from sending account; if not enough, error
 3. set *gas* = *start_gas*, and subtract for each step
-4. Xfer TXN value from sender to receiver
+4. Transfer TXN value from sender to receiver
     - If receiver is a contract, execute that code (using gas)
 5. Not enough gas to execute? Revert back to start, but use keep the fees
 6. Else refund unspent gas to sender, send gas consued to miner
@@ -333,7 +392,7 @@ line-height:120%;
 - [TXN calling a smart contract](https://ethplorer.io/tx/0x1dd8887f7c4283f17ae5d5490f6a0e26302e8e1908cb0a9b59fe709ff54ad850)
 - [Issuing a WETH token](https://ethplorer.io/tx/0x56752aba0ed7e68265576a5205c9228eba926d0d339f83b517d3b520f6d8498d)
 - [Contract for SHIB](https://ethplorer.io/address/0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce#chart=candlestick)
-- [ETH txfer from 2miners](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3)
+- [ETH trasnfer from 2miners](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3)
 </textarea></section>
 
 	</section>
@@ -376,11 +435,13 @@ A *trie* is a $k$-ary prefix tree that holds (usually) strings
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Tries
+[![](images/ethereum/trees/Trie_example.svg)](https://en.wikipedia.org/wiki/Trie#/media/File:Trie_example.svg)
 - The key is the characters on the transitions to the leaf, as well as the characters in the leaf
-  - The values in the leaves just show the values via the path
+  - The values in the leaves just show the values via the path so far
 - The value is the number by each leaf
-  - Not every node has an associated value!
+  - Some internal nodes may not have an associated value!
 - Any node has a common prefix -- the path to the root
 - Reference: Wikipedia's article on [Tries](https://en.wikipedia.org/wiki/Trie)
 
@@ -388,18 +449,69 @@ A *trie* is a $k$-ary prefix tree that holds (usually) strings
 
 ## Radix Tree
 A space-optimized Trie
-[![](images/ethereum/trees/Patricia_trie.svg)](https://en.wikipedia.org/wiki/Radix_tree#/media/File:Patricia_trie.svg)
 
+<a href='https://en.wikipedia.org/wiki/Radix_tree#/media/File:Patricia_trie.svg'><img src="images/ethereum/trees/Patricia_trie.svg" style="width:650px"></a>
 
-
-## Radix Trees
 - Any paths that can be combined, are
 - Reference: Wikipedia's article on [Radix Trees](https://en.wikipedia.org/wiki/Radix_tree)
 
 
 
-## Patricia Trees
-- Reference: [here](https://eth.wiki/fundamentals/patricia-tree)
+## Binary Radix Tree
+- Like a Radix tree, but any node can have at most 2 children
+  - Left child is a 0 bit, right child is a 1 bit
+- Used to store binary values (hashes, etc.)
+  - Not great for dictionaries of ASCII characters
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Example Binary Radix Tree
+[![](images/ethereum/tries/tries.dot.1.svg)](images/ethereum/tries/tries.dot.1.svg)
+- We store the hex digits 3, 7, e, and f
+- The bit transitions are on the edges
+- In each node:
+  - The path so far is in curly brackets (not actually stored)
+  - `h(L+R)` means hash of left child and right child
+    - Or hash of the concatenation if only one child
+  - The leaves show the hex values
+
+
+
+<!-- .slide: class="img-max-height-500" -->
+## Insert into a Binary Radix Tree
+[![](images/ethereum/tries/tries.dot.2.svg)](images/ethereum/tries/tries.dot.2.svg)
+- Insertion of hex value b (1011) into the tree
+- Notice that we had to add 3 nodes
+
+
+
+<!-- .slide: class="img-max-height-500" -->
+## Insert into a Binary Radix Tree
+- What about the compact form of the tree?
+[![](images/ethereum/tries/tries.dot.3.svg)](images/ethereum/tries/tries.dot.3.svg)
+
+
+
+<!-- .slide: class="img-max-height-500" -->
+## Insert into a Binary Radix Tree
+- Insert hex b (1011) into the tree; still have to add 2 nodes
+[![](images/ethereum/tries/tries.dot.4.svg)](images/ethereum/tries/tries.dot.4.svg)
+
+
+
+## PATRICIA Trees
+- Reference: [this wiki page](https://eth.wiki/fundamentals/patricia-tree) and the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
+- PATRICIA stands for Practical Algorithm To Retrieve Information Coded In Alphanumeric ([original paper](http://dl.acm.org/citation.cfm?id=321481))
+- Design goals:
+  - Any insert of a value creates exactly one new node
+  - Storage is compact as possible
+- Has 3 types of nodes: extension node, branch node, and leaf node
+- The image on the next slide is from [this stackoverflow post](https://ethereum.stackexchange.com/questions/6415/eli5-how-does-a-merkle-patricia-trie-tree-work), and [released under a CC BY-SA license](https://stackoverflow.com/help/licensing)
+
+
+
+[![](images/ethereum/patricia.webp)](images/ethereum/patricia.webp)
 </textarea></section>
 
   </section>

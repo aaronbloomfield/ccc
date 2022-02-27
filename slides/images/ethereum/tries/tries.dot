@@ -1,0 +1,262 @@
+digraph A {
+	graph [fontname = "Helvetica"];
+	node [fontname = "Helvetica",shape=circle,width=0.6];
+	edge [fontname = "Helvetica"];
+
+	n [label="{}\nh(L+R)"];
+	n0 [label="{0}\nh(L+R)"];
+	n1 [label="{1}\nh(L+R)"];
+
+	n00 [label="{00}\nh(L+R)"];
+	n001 [label="{001}\nh(L+R)"];
+	n0011 [label="{0011}\n\"3\"\nh(3)"];
+
+	n01 [label="{01}\nh(L+R)"];
+	n011 [label="{011}\nh(L+R)"];
+	n0111 [label="{0111}\n\"7\"\nh(7)"];
+
+	n11 [label="{11}\nh(L+R)"];
+	n111 [label="{111}\nh(L+R)"];
+	n1111 [label="{1111}\n\"f\"\nh(f)"];
+
+	n1110 [label="{1110}\n\"e\"\nh(e)"];
+
+	n -> n0 [label="0"];
+	mA [label="", width=0.1, style=invis];
+	n -> mA [style=invis];
+	n -> n1 [label="1"];
+	{rank=same n0 -> mA -> n1 [style=invis]};
+
+	n0 -> n00 [label="0"];
+	mn0 [label="", width=0.1, style=invis];
+	n0 -> mn0 [style=invis];
+	n0 -> n01 [label="1"];
+	{rank=same n00 -> mn0 -> n01 [style=invis]};
+
+	n10 [label="", width=0.1, style=invis];
+	n1 -> n10 [style=invis];
+	mn1 [label="", width=0.1, style=invis];
+	n1 -> mn1 [style=invis];
+	n1 -> n11 [label="1"];
+	{rank=same n10 -> mn1 -> n11 [style=invis]};
+
+	n000 [label="", width=0.1, style=invis];
+	n00 -> n000  [style=invis];
+	mn00 [label="", width=0.1, style=invis];
+	n00 -> mn00 [style=invis];
+	n00 -> n001 [label="1"];
+	{rank=same n000 -> mn00 -> n001 [style=invis]};
+
+	n010 [label="", width=0.1, style=invis];
+	n01 -> n010  [style=invis];
+	mn01 [label="", width=0.1, style=invis];
+	n01 -> mn01 [style=invis];
+	n01 -> n011 [label="1"];
+	{rank=same n010 -> mn01 -> n011 [style=invis]};
+
+	n110 [label="", width=0.1, style=invis];
+	n11 -> n110  [style=invis];
+	mn11 [label="", width=0.1, style=invis];
+	n11 -> mn11 [style=invis];
+	n11 -> n111 [label="1"];
+	{rank=same n110 -> mn11 -> n111 [style=invis]};
+
+	n0010 [label="", width=0.1, style=invis];
+	n001 -> n0010  [style=invis];
+	mn001 [label="", width=0.1, style=invis];
+	n001 -> mn001 [style=invis];
+	n001 -> n0011 [label="1"];
+	{rank=same n0010 -> mn001 -> n0011 [style=invis]};
+
+	n0110 [label="", width=0.1, style=invis];
+	n011 -> n0110  [style=invis];
+	mn011 [label="", width=0.1, style=invis];
+	n011 -> mn011 [style=invis];
+	n011 -> n0111 [label="1"];
+	{rank=same n0110 -> mn011 -> n0111 [style=invis]};
+
+	n111 -> n1110 [label="0"];
+	mn111 [label="", width=0.1, style=invis];
+	n111 -> mn111 [style=invis];
+	n111 -> n1111 [label="1"];
+	{rank=same n1110 -> mn111 -> n1111 [style=invis]};
+}
+
+digraph B {
+	graph [fontname = "Helvetica"];
+	node [fontname = "Helvetica",shape=circle,width=0.6];
+	edge [fontname = "Helvetica"];
+
+	n [label="{}\nh(L+R)"];
+	n0 [label="{0}\nh(L+R)"];
+	n1 [label="{1}\nh(L+R)"];
+
+	n00 [label="{00}\nh(L+R)"];
+	n10 [label="{10}\nh(L+R)",color=red];
+	n001 [label="{001}\nh(L+R)"];
+	n0011 [label="{0011}\n\"3\"\nh(3)"];
+
+	n101 [label="{101}\nh(L+R)",color=red];
+	n1011 [label="{1011}\n\"b\"\nh(b)",color=red];
+
+
+	n01 [label="{01}\nh(L+R)"];
+	n011 [label="{011}\nh(L+R)"];
+	n0111 [label="{0111}\n\"7\"\nh(7)"];
+
+	n11 [label="{11}\nh(L+R)"];
+	n111 [label="{111}\nh(L+R)"];
+	n1111 [label="{1111}\n\"f\"\nh(f)"];
+
+	n1110 [label="{1110}\n\"e\"\nh(e)"];
+
+	n -> n0 [label="0"];
+	mA [label="", width=0.1, style=invis];
+	n -> mA [style=invis];
+	n -> n1 [label="1"];
+	{rank=same n0 -> mA -> n1 [style=invis]};
+
+	n0 -> n00 [label="0"];
+	mn0 [label="", width=0.1, style=invis];
+	n0 -> mn0 [style=invis];
+	n0 -> n01 [label="1"];
+	{rank=same n00 -> mn0 -> n01 [style=invis]};
+
+	n1 -> n10 [color=red];
+	mn1 [label="", width=0.1, style=invis];
+	n1 -> mn1 [style=invis];
+	n1 -> n11 [label="1"];
+	{rank=same n10 -> mn1 -> n11 [style=invis]};
+
+	n000 [label="", width=0.1, style=invis];
+	n00 -> n000  [style=invis];
+	mn00 [label="", width=0.1, style=invis];
+	n00 -> mn00 [style=invis];
+	n00 -> n001 [label="1"];
+	{rank=same n000 -> mn00 -> n001 [style=invis]};
+
+	n010 [label="", width=0.1, style=invis];
+	n01 -> n010  [style=invis];
+	mn01 [label="", width=0.1, style=invis];
+	n01 -> mn01 [style=invis];
+	n01 -> n011 [label="1"];
+	{rank=same n010 -> mn01 -> n011 [style=invis]};
+
+	n110 [label="", width=0.1, style=invis];
+	n11 -> n110  [style=invis];
+	mn11 [label="", width=0.1, style=invis];
+	n11 -> mn11 [style=invis];
+	n11 -> n111 [label="1"];
+	{rank=same n110 -> mn11 -> n111 [style=invis]};
+
+	n100 [label="", width=0.1, style=invis];
+	n10 -> n100  [style=invis];
+	mn10 [label="", width=0.1, style=invis];
+	n10 -> mn10 [style=invis];
+	n10 -> n101 [label="1",color=red];
+	{rank=same n100 -> mn10 -> n101 [style=invis]};
+
+	n0010 [label="", width=0.1, style=invis];
+	n001 -> n0010  [style=invis];
+	mn001 [label="", width=0.1, style=invis];
+	n001 -> mn001 [style=invis];
+	n001 -> n0011 [label="1"];
+	{rank=same n0010 -> mn001 -> n0011 [style=invis]};
+
+	n0110 [label="", width=0.1, style=invis];
+	n011 -> n0110  [style=invis];
+	mn011 [label="", width=0.1, style=invis];
+	n011 -> mn011 [style=invis];
+	n011 -> n0111 [label="1"];
+	{rank=same n0110 -> mn011 -> n0111 [style=invis]};
+
+	n1010 [label="", width=0.1, style=invis];
+	n101 -> n1010  [style=invis];
+	mn101 [label="", width=0.1, style=invis];
+	n101 -> mn101 [style=invis];
+	n101 -> n1011 [label="1",color=red];
+	{rank=same n1010 -> mn101 -> n1011 [style=invis]};
+
+	n111 -> n1110 [label="0"];
+	mn111 [label="", width=0.1, style=invis];
+	n111 -> mn111 [style=invis];
+	n111 -> n1111 [label="1"];
+	{rank=same n1110 -> mn111 -> n1111 [style=invis]};
+}
+
+digraph C {
+	graph [fontname = "Helvetica"];
+	node [fontname = "Helvetica",shape=circle,width=0.6];
+	edge [fontname = "Helvetica"];
+
+	n [label="{}\nh(L+R)"];
+	n0 [label="{0}\nh(L+R)"];
+	
+	n0011 [label="{0011}\n\"3\"\nh(3)"];
+
+	n0111 [label="{0111}\n\"7\"\nh(7)"];
+
+	n111 [label="{111}\nh(L+R)"];
+	n1111 [label="{1111}\n\"f\"\nh(f)"];
+
+	n1110 [label="{1110}\n\"e\"\nh(e)"];
+
+	n -> n0 [label="0"];
+	mA [label="", width=0.1, style=invis];
+	n -> mA [style=invis];
+	n -> n111 [label="111"];
+	{rank=same n0 -> mA -> n111 [style=invis]};
+
+	n0 -> n0011 [label="011"];
+	mn0 [label="", width=0.1, style=invis];
+	n0 -> mn0 [style=invis];
+	n0 -> n0111 [label="111"];
+	{rank=same n0011 -> mn0 -> n0111 [style=invis]};
+
+	n111 -> n1110 [label="0"];
+	mn111 [label="", width=0.1, style=invis];
+	n111 -> mn111 [style=invis];
+	n111 -> n1111 [label="1"];
+	{rank=same n1110 -> mn111 -> n1111 [style=invis]};
+}
+
+digraph D {
+	graph [fontname = "Helvetica"];
+	node [fontname = "Helvetica",shape=circle,width=0.6];
+	edge [fontname = "Helvetica"];
+
+	n [label="{}\nh(L+R)"];
+	n0 [label="{0}\nh(L+R)"];
+	n1 [label="{1}\nh(L+R)",color=red];
+	n0011 [label="{0011}\n\"3\"\nh(3)"];
+	n1011 [label="{1011}\n\"b\"\nh(b)",color=red];
+	n0111 [label="{0111}\n\"7\"\nh(7)"];
+	n111 [label="{111}\nh(L+R)"];
+	n1111 [label="{1111}\n\"f\"\nh(f)"];
+	n1110 [label="{1110}\n\"e\"\nh(e)"];
+
+	n -> n0 [label="0"];
+	mA [label="", width=0.1, style=invis];
+	n -> mA [style=invis];
+	n -> n1 [label="1"];
+	{rank=same n0 -> mA -> n1 [style=invis]};
+
+	n0 -> n0011 [label="011"];
+	mn0 [label="", width=0.1, style=invis];
+	n0 -> mn0 [style=invis];
+	n0 -> n0111 [label="111"];
+	{rank=same n0011 -> mn0 -> n0111 [style=invis]};
+
+	n1 -> n1011 [label="011",color=red];
+	mn1 [label="", width=0.1, style=invis];
+	n1 -> mn1 [style=invis];
+	n1 -> n111 [label="11"];
+	{rank=same n1011 -> mn1 -> n111 [style=invis]};
+
+	n111 -> n1110 [label="0"];
+	mn111 [label="", width=0.1, style=invis];
+	n111 -> mn111 [style=invis];
+	n111 -> n1111 [label="1"];
+	{rank=same n1110 -> mn111 -> n1111 [style=invis]};
+}
+
