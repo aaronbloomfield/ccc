@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CC BY-SA
 // This file is part of the https://github.com/aaronbloomfield/ccc repo
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.7;
 
 contract Choices {
 

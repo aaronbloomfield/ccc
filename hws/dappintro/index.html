@@ -256,7 +256,13 @@ interact with geth (and, eventually, deploy to the blockchain)</li>
 <li><code>--http.corsdomain="https://remix.ethereum.org"</code>: This
 allows that particular site to connect to the HTTP-RPC server. Normally
 all sites are blocked for security reasons, so we have to specifically
-grant permission for individual sites to connect.</li>
+grant permission for individual sites to connect.
+<ul>
+<li><strong>NOTE:</strong> if you are using the Remix IDE, you will have
+to enter some other value instead of
+<code>https://remix.ethereum.org</code>; the pop-up window in Remix will
+tell you what it is.</li>
+</ul></li>
 <li><code>--http.api web3,eth,debug,personal,net</code>: These are the
 APIs that are made available on the HTTP-RPC server. For example, by
 enabling <code>eth</code> (one of the ones listed), then

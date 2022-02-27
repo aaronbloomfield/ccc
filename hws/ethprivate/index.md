@@ -123,7 +123,7 @@ Once it is sync'ed, here are some commands for you to try out:
 - Let that run for a little while -- say 10 seconds or so -- and then run `miner.stop()`
     - YOU CANNOT LEAVE THE MINER RUNNING ON THE DEPARTMENTAL MACHINES
     - Note that each successfully mined block adds 2 (fake) ETH to your account
-- **DO NOT MINE EXCESSIVELY!!!**  You don't need very much (fake) ETH for this course.  100 (fake) ETH or so is more that enough.  It's okay if you have more, but I don't want to see any accounts with thousands or millions of (fake) ETH; that will make me very cranky.  The reason is that if you mine excessively, two bad things will happen:
+- **DO NOT MINE EXCESSIVELY!!!**  You don't need very much (fake) ETH for this course.  10 (fake) ETH or so is more that enough.  It's okay if you have more, but I don't want to see any accounts with thousands or millions of (fake) ETH; that will make me very cranky.  The reason is that if you mine excessively, two bad things will happen:
   1. The block chain will dramatically increase in size, which will just make it take longer for everybody else to sync, and is unnecessary
   2. The difficulty will go up, which will make it harder for everybody else to mine
 - Check your balance again -- it will list some insanely high number, such as 80000000000000000000.  You are rich!!!

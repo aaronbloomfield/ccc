@@ -77,6 +77,7 @@ We need to start geth, as we did in the [connecting to the private Ethereum bloc
 
 - `--http`: This enables the HTTP-RPC server (the RPC stands for Remote Procedure Call).  What this means is that it will open a port (8545) that programs -- in our case, Remix -- can connect to to interact with geth (and, eventually, deploy to the blockchain)
 - `--http.corsdomain="https://remix.ethereum.org"`: This allows that particular site to connect to the HTTP-RPC server.  Normally all sites are blocked for security reasons, so we have to specifically grant permission for individual sites to connect.
+    - **NOTE:** if you are using the Remix IDE, you will have to enter some other value instead of `https://remix.ethereum.org`; the pop-up window in Remix will tell you what it is.
 - `--http.api web3,eth,debug,personal,net`: These are the APIs that are made available on the HTTP-RPC server.  For example, by enabling `eth` (one of the ones listed), then `eth.blockNumber` can be called.  This is only for the HTTP-RPC server; an attached geth node has access to everything.
 - `--vmdebug`: This records information useful for debugging, which is an option that Remix will allow us to do.
 - `--allow-insecure-unlock`: This will allow us to unlock our `eth.coinbase` account (via `personal.unlockAccount()`).  Normally this is disabled if the HTTP-RPC server is enabled.  Our particular configuration does not allow any *other* machines to connect to the HTTP-RPC server, and our (fake) ETH is not worth any money, so it is safe enough for us to use for this course.
