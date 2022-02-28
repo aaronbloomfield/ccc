@@ -100,7 +100,7 @@ line-height:120%;
 - *Ether* or *Eth* (symbol: ETH) is the currency
 - *Smart contract* is a program on the Etherem blockchain
   - Analogous to a Bitcoin script on the blockchain
-- *Solidity* one (of many) programming languages that compile to Etherem bytecode
+- *Solidity* one (of many) programming languages that compiles to Etherem bytecode
 
 
 
@@ -108,8 +108,9 @@ line-height:120%;
 - The currency of Ethereum
 - Current value: see [here](https://finance.yahoo.com/quote/ETH-USD)
 - A *wei* is $1/10^{18}$ ETH
+  - Amounts on the blockchain are speified as an integer number of wei
 - A *gwei* (giga-wei) is $1/10^9$ ETH
-  - If 1 ETH is worth `$`2,500, then 1 wei is worth `$`0.0000025
+  - If 1 ETH is worth `$`2,500, then 1 gwei is worth `$`0.0000025
   - Or 400,000 gwei to the dollar
 - TXN fees are typically reported in gwei
 
@@ -165,6 +166,7 @@ line-height:120%;
 - Example: 0xb794f5ea0ba39494ce839613fffba74279579268
 - Notably, this address does NOT change like in Bitcoin!
 - This is called an "owned" address
+  - ... because a person owns it
 
 
 
@@ -172,7 +174,7 @@ line-height:120%;
 - Originally no built-in checksum like in Bitcoin
 - [EIP-55](https://eips.ethereum.org/EIPS/eip-55) adds one
 - Consider:
-  - Ethereum account address are 40 hex digits
+  - Ethereum account address are 40 hex digits (20 bytes)
   - We would expect 37.5% (6/16) of those digits to be the letters a-f
   - We can represent them as capitals or lower case, allowing 1 bit of a checksum for each letter digit
   - A 40 digit address would have about 15 lettered digits
@@ -217,7 +219,7 @@ function toChecksumAddress (address) {
 
 
 
-## Nonce
+## Account Nonce
 - The 'nonce' is an incrementing counter associated with each account
   - Starts at 0
   - *Each* transaction uses the nonce and then increments it
@@ -225,12 +227,13 @@ function toChecksumAddress (address) {
   - But it is stored in the blockchain
   - With proper indexing, finding it is almost $\Theta(1)$
     - (Assuming that a hash table lookup is almost $\Theta(1)$)
+- There is also a (separate) nonce in the block header, like in Bitcoin
 
 
 
 ## Contract addresses
 - Some transactions put a smart contract (program) onto the blockchain
-- Those need a contract address to be called
+  - Those need a contract address to be called
 - To generate the contract address:
   - Take the account address of who is executing this transaction
     - That could be an owned address or a contract address
@@ -239,7 +242,6 @@ function toChecksumAddress (address) {
   - Take the last 20 bytes (160 bits)
   - Render that in hexadecimal, and prefix with '0x'
 - With proper indexing, finding a contract by address is fast
-- Let's see an example...
 
 
 
@@ -277,7 +279,7 @@ function toChecksumAddress (address) {
 
 
 ## Gas example
-- Assume that you agree to pay 200 gwei (ether) per gas unit
+- Assume that you agree to pay 200 gwei per gas unit
   - Each computational step takes some number of gas units
 - And you agree to pay for $g$ gas units, say $g=21,000$
 - Example to evaluate the transaction:
@@ -288,8 +290,8 @@ function toChecksumAddress (address) {
 
 
 ## Gas examples
-- Simple TXN might use 21,000 gas (the max limit)
-    - [this one](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3), for example
+- Simple TXN might use 21,000 gas (the typical amount)
+    - [This one](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3), for example
     - Gas price was ~100 gwei (actually 105.702 gwei)
     - Total was 2,100,000 gwei = 0.002219732760483 ETH
     - At $3,045.41 per ETH (at the time)...
@@ -304,7 +306,7 @@ function toChecksumAddress (address) {
 ## Exact gas costs
 - Solidity is compiled down into bytecode
 - Each bytecode opcode costs a different amount of gas
-  - 2-10 gas for simple instructions, but up to 1,000 for complex instructions
+  - 2-10 gas for simple instructions, but up to 1,000 for complex instructions (such as hashes)
   - See the (older) table [here](https://github.com/djrtwo/evm-opcode-gas-costs/blob/master/opcode-gas-costs_EIP-150_revision-1e18248_2017-04-12.csv)
   - The exact gas costs are determined from formulas in the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
 - The Ethereum Virtual Machine (EVM) will keep computing until it runs out of gas
@@ -315,7 +317,7 @@ function toChecksumAddress (address) {
 - The "standard" transaction fee is a startgas of 21,000
   - This is for a typical transfer of ETH
   - Nothing is refunded, even if you use less gas!
-  - You can do less, but miners may not include it in their blocks
+  - You can offer less startgas, but miners may not include it in their blocks
 - Consider the current gas costs [here](https://ethgas.watch/)
 
 
@@ -356,6 +358,7 @@ function toChecksumAddress (address) {
   - That transfer ether from one account to another
   - That deploy a smart contract
 - A message is another type of transaction, but it's one contract calling another
+  - Invoking a smart contract's methods
 - It also consumes gas!
   - That gas is consumed by the original call
 - You call contract A with 1000 gas
@@ -408,16 +411,7 @@ function toChecksumAddress (address) {
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Recall: Merkle Trees
 
-<img src='images/bitcoin/Hash_Tree.svg' style="width:300px;float:right;background:white;border-radius:10px">
-<ul class=".reveal" style="width:unset;margin-top:20px">
-<li>...</li>
-<li>...
-  <ul><li>...</li></ul></li></ul>
-
-&nbsp;
-- ...
-  - ...
-- ...
+![](images/bitcoin/Hash_Tree.svg)
 
 
 
