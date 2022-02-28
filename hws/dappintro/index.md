@@ -11,7 +11,7 @@ Giving credit where credit is due: The particular smart contract being used here
 
 ### Pre-requisites
 
-You will have had to complete the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You should have a few (fake) ETH.  For one of the parts below you will need to launch your geth node, connecting to the course server, and start up a geth JavaScript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.
+You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You should have a few (fake) ETH.  For one of the parts below you will need to launch your geth node, connecting to the course server, and start up a geth JavaScript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.
 
 If you have not successfully completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment then you will not be able to complete this assignment.
 
@@ -145,8 +145,7 @@ logs: 0 hash: 0x123...bcdef"
 
 As the last part of this task, we wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The Javascript of the web page uses the web3 library that you have been using above.  It connects to a node running geth, just like how Truffle did in the above example.  The URL for this web page is on the Collab landing page -- once there, enter the address (with the leading `0x`) for your smart contract, and it will display the choices.
 
-How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  One can also have the web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that later as well.
-
+How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  Feel free to look over the JavaScript code in that web page -- the only other component is that a local geth node has to be running with a few specific flags to enable the web page to connect to it.  One can also have the web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that later as well; that requires a browser plugin, such as [MetaMask](https://metamask.io/), that allows for posting of transactions from a web page.
 
 
 

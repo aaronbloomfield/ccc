@@ -1,4 +1,4 @@
-/* This file is part of the http://github.com/aaronbloomfield/pdr
+/* This file is part of the http://github.com/aaronbloomfield/ccc
  * repo, and has the same license as the rest of the repo (CC BY-SA)
  */
 
@@ -191,7 +191,6 @@ p.blankline { height:1em; }
 
 .big-table-small table {
   font-size: smaller;
-  
 }
 
 .max-pre-400 pre code {
@@ -313,4 +312,13 @@ img.cclogo {
 .normal-slide-size li {
   font-size:90% !important;
   line-height:120% !important;
+}
+
+code.notworking {
+  background-color: #292929;
+  border-radius: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border: 1px solid black;
+  box-shadow: 2px 2px 2px black;
 }

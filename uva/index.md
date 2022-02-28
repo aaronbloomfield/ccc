@@ -57,6 +57,7 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Smaller Homeworks
 
+- Due Fri, 2/25: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html)
 - Due Mon, 2/21: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)); see above (in the Reading section) for what you can skip
 - Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
 - Due Wed, 1/26: HW S1: complete the course introduction Google survey (link in Collab)
@@ -77,10 +78,10 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 7. Wed, Feb 9: [bitcoin](../slides/bitcoin.html#/) to slide 7.6
 8. Mon, Feb 14: [bitcoin](../slides/bitcoin.html#/) to slide 7.36
 9. Wed, Feb 16: finished [bitcoin](../slides/bitcoin.html#/)
-10. Mon, Feb 21: [mining](../slides/mining.html) to ...
-11. Wed, Feb 23: ...
-12: Mon, Feb 28: ...
-13: Wed, Mar 2: midterm
+10. Mon, Feb 21: [mining](../slides/mining.html) to slide 4.6
+11. Wed, Feb 23: finished [mining](../slides/mining.html) to slide 4.6
+12. Mon, Feb 28: [Ethereum](../slides/ethereum.html) to ...
+13. Wed, Mar 2: midterm
 
 ## Legal Issues
 
