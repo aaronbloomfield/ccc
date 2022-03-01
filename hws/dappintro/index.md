@@ -45,7 +45,7 @@ Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix mak
 1. Load up Remix.  The far left column has four icons at the top -- the Remix logo (<img src="img/remixLogo.webp" class='icon'>), the file explorer icon (<img src="img/fileManager.webp" class='icon'>), the compilation icon (<img src="img/solidityLogo.webp" class='icon'>), and the deploy & run icon (<img src="img/deployAndRun.webp" class='icon'>).  On the bottom are two more icons -- the plugin manager (<img src="img/pluginManager.webp" class='icon'>) and settings (<img src="img/settings.webp" class='icon'>).
 2. Click on the file explorer icon (<img src="img/fileManager.webp" class='icon'>), right click on the contracts folder, and select 'New File' -- name it 'Choices.sol'.  Copy and paste the [Choices.sol](Choices.sol) program there.
 3. Next we are going to compile it -- click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>).  You may notice a green check mark on the compilation icon -- it might compile it as you type (this does not seem to be consistent across all platforms).  Click on the compilation icon, and click "Compile Choices.sol".  It should compile without errors.
-4. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>).  For the Environment, we will stay with "Javascript VM (London)", which means that Remix will simulate an Ethereum blockchain and 10 accounts for us.  You can see the accounts in the 'Account' drop-down list.
+4. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>).  For the Environment, we will stay with "Javascript VM (London)", which means that Remix will simulate, in JavaScript, an Ethereum blockchain and 10 accounts for us.  You can see the accounts in the 'Account' drop-down list.
 5. Click the orange "Deploy" button.  It's now running on the (simulated) Ethereum blockchain, deployed from the selected (and also simulated) account shown in the "Account" drop-down list.
 6. Test out the deployment
     - Look under "Deployed Contracts", below the "Deploy" button -- click on the arrow to the left of "Choices at ...".  It will show you various buttons to test out your smart contract.
@@ -77,7 +77,7 @@ We need to start geth, as we did in the [connecting to the private Ethereum bloc
 
 - `--http`: This enables the HTTP-RPC server (the RPC stands for Remote Procedure Call).  What this means is that it will open a port (8545) that programs -- in our case, Remix -- can connect to to interact with geth (and, eventually, deploy to the blockchain)
 - `--http.corsdomain="https://remix.ethereum.org"`: This allows that particular site to connect to the HTTP-RPC server.  Normally all sites are blocked for security reasons, so we have to specifically grant permission for individual sites to connect.
-    - **NOTE:** if you are using the Remix IDE, you will have to enter some other value instead of `https://remix.ethereum.org`; the pop-up window in Remix will tell you what it is.
+    - **NOTE:** if you are using the Remix IDE -- described below -- you will have to enter some other value instead of `https://remix.ethereum.org`; the pop-up window in Remix (also described below) will tell you what it is.  For now, use the remix.ethereum.org for this value, and if you end up using the IDE, you can restart geth with the new value.
 - `--http.api web3,eth,debug,personal,net`: These are the APIs that are made available on the HTTP-RPC server.  For example, by enabling `eth` (one of the ones listed), then `eth.blockNumber` can be called.  This is only for the HTTP-RPC server; an attached geth node has access to everything.
 - `--vmdebug`: This records information useful for debugging, which is an option that Remix will allow us to do.
 - `--allow-insecure-unlock`: This will allow us to unlock our `eth.coinbase` account (via `personal.unlockAccount()`).  Normally this is disabled if the HTTP-RPC server is enabled.  Our particular configuration does not allow any *other* machines to connect to the HTTP-RPC server, and our (fake) ETH is not worth any money, so it is safe enough for us to use for this course.
@@ -102,7 +102,9 @@ You should have Choices.sol loaded into Remix, and you should have made the modi
 Read these instructions through before starting them!
 
 1. Change to the Remix deployment tab.
-    - Under 'Environment' select "Web3 Provider".  The pop-up window will tell you the options to run geth with, and you have already done that, above.  Ensure that the "Web3 Provider Endpoint", in the pop-up box, says `http://127.0.0.1:8545`.  Click OK.
+    - Under 'Environment' select "Web3 Provider".  The pop-up window will tell you the options to run geth with, and you have already done that, above.  Ensure that the "Web3 Provider Endpoint", in the pop-up box, says `http://127.0.0.1:8545`.
+        - If you are using the Remix IDE, the pop-up window in Remix will tell you what you should use as your endpoint value (meaning what value to put after the `--http.corsdomain` flag).  You should restart the geth node with that flag.
+        - Click OK to close that pop-up window
     - Underneath the "Environment" drop-down box, it should now say, "Custom (12345678) network", with the chain number of our private blockchain.
     - You should see your account address(es) populated in the "Account" drop-down box, with your `eth.coinbase` one selected
 2. Unlock your account in geth
@@ -119,7 +121,7 @@ Read these instructions through before starting them!
     - Mine it into the blockchain via `miner.start()` and then `miner.stop()`
         - Make sure that the block number has increased via your mining -- if the difficulty is too high, then it may take a bit longer to mine
 5. See what happened
-    - Look at your new balance via `web3.fromWei(eth.getBalance(eth.coinbase), "ether")` -- you will notice that it deducted some gas fees
+    - Look at your new balance via `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`.  One would normally expect that gas fees are deducted.  However, our gas is set so low (possibly to zero), and you are mining to get it into the blockchain, that you balance will actually have gone *up*.
 		- Look back at the Remix console -- it will say something like, "[block:12345 txIndex:0] from: 0x123...bcdef to: Choices.(constructor) value: 0 wei data: 0x608...57221
 logs: 0 hash: 0x123...bcdef"
 				- Save the block number (shown in the previous line as 12345), as you will need to submit that
@@ -143,7 +145,7 @@ logs: 0 hash: 0x123...bcdef"
 
 ### Task 3: View a web page
 
-As the last part of this task, we wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The Javascript of the web page uses the web3 library that you have been using above.  It connects to a node running geth, just like how Truffle did in the above example.  The URL for this web page is on the Collab landing page -- once there, enter the address (with the leading `0x`) for your smart contract, and it will display the choices.
+As the last part of this task, we wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The Javascript of the web page uses the web3 library that you have been using above.  It connects to a node running geth.  The URL for this web page is on the Collab landing page -- once there, enter the address (with the leading `0x`) for your deployed smart contract, and it will display the choices.
 
 How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  Feel free to look over the JavaScript code in that web page -- the only other component is that a local geth node has to be running with a few specific flags to enable the web page to connect to it.  One can also have the web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that later as well; that requires a browser plugin, such as [MetaMask](https://metamask.io/), that allows for posting of transactions from a web page.
 
@@ -155,7 +157,7 @@ I have loaded the Choices smart contract onto our private Ethereum blockchain, a
 
 In Remix, you can call a different contract *with the same codebase*.  In particular, it has to have the same ABI.  On the Collab landing page is the address of a deployed Choices contract -- copy that address.  In Remix, above the "Deployed contracts" list is a blue "At Address" button -- copy the contract address there, and click that button.  This now gives us a connection to a different Choices contract.  Use this to vote.  Remember that you have to mine your vote to the blockchain for it to take effect.
 
-The assumption is that the account you will vote with is your `eth.coinbase` account.  As your account information will be in the `voters` mapping, we will be able to determine who has voted and who has not.  We won't know who voted for what, though, since that information is not kept by this smart contract.
+The assumption is that the account you will vote with is your `eth.coinbase` account.  As your account information will be in the `voters` mapping, we will be able to determine who has voted and who has not.  We won't know who voted for what, though, since that information is not kept by this smart contract.  (Well, mostly.  We could look up who voted for what, since it's on the blockchain, but we aren't going to.  You get credit for this part as along as you vote, not on what you vote for.)
 
 
 

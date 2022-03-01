@@ -147,8 +147,8 @@ without errors.</li>
 <li>Click on the “deploy &amp; run” icon
 (<img src="img/deployAndRun.webp" class='icon'>). For the Environment,
 we will stay with “Javascript VM (London)”, which means that Remix will
-simulate an Ethereum blockchain and 10 accounts for us. You can see the
-accounts in the ‘Account’ drop-down list.</li>
+simulate, in JavaScript, an Ethereum blockchain and 10 accounts for us.
+You can see the accounts in the ‘Account’ drop-down list.</li>
 <li>Click the orange “Deploy” button. It’s now running on the
 (simulated) Ethereum blockchain, deployed from the selected (and also
 simulated) account shown in the “Account” drop-down list.</li>
@@ -258,10 +258,12 @@ allows that particular site to connect to the HTTP-RPC server. Normally
 all sites are blocked for security reasons, so we have to specifically
 grant permission for individual sites to connect.
 <ul>
-<li><strong>NOTE:</strong> if you are using the Remix IDE, you will have
-to enter some other value instead of
-<code>https://remix.ethereum.org</code>; the pop-up window in Remix will
-tell you what it is.</li>
+<li><strong>NOTE:</strong> if you are using the Remix IDE – described
+below – you will have to enter some other value instead of
+<code>https://remix.ethereum.org</code>; the pop-up window in Remix
+(also described below) will tell you what it is. For now, use the
+remix.ethereum.org for this value, and if you end up using the IDE, you
+can restart geth with the new value.</li>
 </ul></li>
 <li><code>--http.api web3,eth,debug,personal,net</code>: These are the
 APIs that are made available on the HTTP-RPC server. For example, by
@@ -314,7 +316,14 @@ constructor. You should have compiled it WITHOUT optimizations.</p>
 <li>Under ‘Environment’ select “Web3 Provider”. The pop-up window will
 tell you the options to run geth with, and you have already done that,
 above. Ensure that the “Web3 Provider Endpoint”, in the pop-up box, says
-<code>http://127.0.0.1:8545</code>. Click OK.</li>
+<code>http://127.0.0.1:8545</code>.
+<ul>
+<li>If you are using the Remix IDE, the pop-up window in Remix will tell
+you what you should use as your endpoint value (meaning what value to
+put after the <code>--http.corsdomain</code> flag). You should restart
+the geth node with that flag.</li>
+<li>Click OK to close that pop-up window</li>
+</ul></li>
 <li>Underneath the “Environment” drop-down box, it should now say,
 “Custom (12345678) network”, with the chain number of our private
 blockchain.</li>
@@ -363,8 +372,10 @@ the difficulty is too high, then it may take a bit longer to mine</li>
 <li>See what happened
 <ul>
 <li>Look at your new balance via
-<code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code> – you
-will notice that it deducted some gas fees
+<code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code>. One
+would normally expect that gas fees are deducted. However, our gas is
+set so low (possibly to zero), and you are mining to get it into the
+blockchain, that you balance will actually have gone <em>up</em>.
 <ul>
 <li>Look back at the Remix console – it will say something like,
 “[block:12345 txIndex:0] from: 0x123…bcdef to: Choices.(constructor)
@@ -423,11 +434,10 @@ task 4, below</li>
 <p>As the last part of this task, we wanted to show you that you can
 create a web page to interact with a smart contract on the blockchain.
 The Javascript of the web page uses the web3 library that you have been
-using above. It connects to a node running geth, just like how Truffle
-did in the above example. The URL for this web page is on the Collab
-landing page – once there, enter the address (with the leading
-<code>0x</code>) for your smart contract, and it will display the
-choices.</p>
+using above. It connects to a node running geth. The URL for this web
+page is on the Collab landing page – once there, enter the address (with
+the leading <code>0x</code>) for your deployed smart contract, and it
+will display the choices.</p>
 <p>How this all works is beyond the scope of this assignment, but will
 be something we will be going over later in the semester. Feel free to
 look over the JavaScript code in that web page – the only other
@@ -456,7 +466,10 @@ blockchain for it to take effect.</p>
 <code>eth.coinbase</code> account. As your account information will be
 in the <code>voters</code> mapping, we will be able to determine who has
 voted and who has not. We won’t know who voted for what, though, since
-that information is not kept by this smart contract.</p>
+that information is not kept by this smart contract. (Well, mostly. We
+could look up who voted for what, since it’s on the blockchain, but we
+aren’t going to. You get credit for this part as along as you vote, not
+on what you vote for.)</p>
 <h3 id="closing-down">Closing down</h3>
 <p>Please turn off your geth node when you are done with this
 assignment. You can always turn it back on again when needed.</p>
