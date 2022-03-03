@@ -57,7 +57,8 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Smaller Homeworks
 
-- Due Fri, 2/25: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html)
+- Due Tue, 3/15: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
+- Due Fri, 2/25: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html) ([md](../hws/ethprivate/index.md))
 - Due Mon, 2/21: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)); see above (in the Reading section) for what you can skip
 - Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
 - Due Wed, 1/26: HW S1: complete the course introduction Google survey (link in Collab)
