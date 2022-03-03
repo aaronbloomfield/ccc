@@ -15,6 +15,8 @@ You will have to have completed the [connecting to the private Ethereum blockcha
 
 If you have not successfully completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment then you will not be able to complete this assignment.
 
+Warning to Mac OS X users: there is one part in this assignment that Safari seems to have issues with.  This part is incidated when you get to it, and you may have to switch to a different brwoser (Firefox or Chrome) to complete that part.
+
 
 ### Introduction
 
@@ -31,9 +33,9 @@ The same process described herein can be used to deploy on the real Ethereum blo
 
 ### Code base
 
-For this assignment we will be providing the Solidity code to use: [Choices.sol](Choices.sol).  The code will allow voting for *something* via the blockchain -- an election, your favorite color, or anything else.  Election dApps are fairly common as first examples of Solidity programs.  Note that while you should be able to gain a rough idea of what is going on in the code, the tasks herein are not to understand the code, but to be able to compile and deploy it.  Understanding the code, and writing your own, is in the next assignment and upcoming course lectures (one of the lectures will even go over this exact code base).
+For this assignment we will be providing the Solidity code to use: [Choices.sol](Choices.sol.html) ([src](Choices.sol)).  The code will allow voting for *something* via the blockchain -- an election, your favorite color, or anything else.  Election dApps are fairly common as first examples of Solidity programs.  Note that while you should be able to gain a rough idea of what is going on in the code, the tasks herein are not to understand the code, but to be able to compile and deploy it.  Understanding the code, and writing your own, is in the next assignment and upcoming course lectures (one of the lectures will even go over this exact code base).
 
-That being said, you will need to make a small modification to the code.  Edit the [Choices.sol](Choices.sol) file to add your own Choices.  In particular, you should ONLY change the `addChoices()` calls in the constructor -- you can add more or take some away, as needed.  It is important that you do not change any other code in the contract, else it will not work properly when we are testing and grading it!  Please choose something that is not controversial -- there are many great ways to fight for, and to voice opinions for, things that others may find controversial.  Our private Ethereum blockchain for this course is not one of them.
+That being said, you will need to make a small modification to the code.  Edit the [Choices.sol](Choices.sol.html) ([src](Choices.sol)) file to add your own Choices.  In particular, you should ONLY change the `addChoices()` calls in the constructor -- you can add more or take some away, as needed.  It is important that you do not change any other code in the contract, else it will not work properly when we are testing and grading it!  Please choose something that is not controversial -- there are many great ways to fight for, and to voice opinions for, things that others may find controversial.  Our private Ethereum blockchain for this course is not one of them.
 
 
 ### Task 1: Use Remix
@@ -41,7 +43,7 @@ That being said, you will need to make a small modification to the code.  Edit t
 Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix provides easy to read compiler error messages and makes it really easy to test your smart contract as you are developing it.  You can either use the online editor at [remix.ethereum.org](http://remix.ethereum.org) or you can install it locally via the [Remix download page](https://github.com/ethereum/remix-desktop/releases).  It is already installed on the VirtualBox image.  The web interface on [remix.ethereum.org](http://remix.ethereum.org) is designed to look just like the IDE, and you are welcome to use either -- the directions herein apply the same to both.  However, if you do use the web interface, make sure you save your text file back to your computer.
 
 1. Load up Remix.  The far left column has four icons at the top -- the Remix logo (<img src="img/remixLogo.webp" class='icon'>), the file explorer icon (<img src="img/fileManager.webp" class='icon'>), the compilation icon (<img src="img/solidityLogo.webp" class='icon'>), and the deploy & run icon (<img src="img/deployAndRun.webp" class='icon'>).  At various times in this tutorial, you may see a debugging icon (<img src="img/debuggerLogo.webp" class='icon'>) beneath these four, but we are not going to focus on the debugger in this assignment.  On the bottom are two more icons -- the plugin manager (<img src="img/pluginManager.webp" class='icon'>) and settings (<img src="img/settings.webp" class='icon'>).
-2. Click on the file explorer icon (<img src="img/fileManager.webp" class='icon'>), right click on the contracts folder, and select 'New File' -- name it 'Choices.sol'.  Copy and paste the [Choices.sol](Choices.sol) program there.
+2. Click on the file explorer icon (<img src="img/fileManager.webp" class='icon'>), right click on the contracts folder, and select 'New File' -- name it 'Choices.sol'.  Copy and paste the [Choices.sol](Choices.sol.html) ([src](Choices.sol)) program there.
 3. Next we are going to compile it -- click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>).  You may notice a green check mark on the compilation icon -- it might automatically compile it as you type (this does not seem to be consistent across all platforms).  Click on the compilation icon, and click "Compile Choices.sol".  It should compile without errors.
 4. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>).  For the Environment, we will stay with "Javascript VM (London)", which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us.  You can see the accounts in the 'Account' drop-down list.
 5. Click the orange "Deploy" button.  It's now running on the (simulated) Ethereum blockchain, deployed from the selected (and also simulated) account shown in the "Account" drop-down list.
@@ -103,6 +105,7 @@ Read these instructions through before starting them!
     - Under 'Environment' select "Web3 Provider".  The pop-up window will tell you the options to run geth with, and you have already done that, above.  Ensure that the "Web3 Provider Endpoint", in the pop-up box, says `http://127.0.0.1:8545`.
         - If you are using the Remix IDE, the pop-up window in Remix will tell you what you should use as your endpoint value (meaning what value to put after the `--http.corsdomain` flag).  You should restart the geth node with that flag.
         - Click OK to close that pop-up window
+        - Note to Mac OS X users: if you are doing this assignment on remix.etherem.org in Safari, then this is the part that Safari seems to have issues with.  If it is not working for you, then please switch to a different browser (Firefox or Chrome both seem to work fine).  You can then cut-and-paste your code from Remix in Safari to remix in Firefox / Chrome.
     - Underneath the "Environment" drop-down box, it should now say, "Custom (12345678) network", with the chain number of our private blockchain instead of 12345678.
     - You should see your geth account address(es) populated in the "Account" drop-down box, with your `eth.coinbase` one selected
     - If there are any entries listed under "Deployed contracts" (in the left-hand pane), you can delete them -- this way we won't mix up any previous deployments with the one we are about to do
@@ -158,6 +161,8 @@ I have loaded the Choices smart contract onto our private Ethereum blockchain, a
 
 In Remix, you can call a different contract *with the same codebase*.  In particular, it has to have the same ABI.  On the Collab landing page is the address of a deployed Choices contract -- copy that address.  In Remix, above the "Deployed contracts" list is a blue "At Address" button -- copy the contract address there, and click that button.  This now gives us a connection to a different Choices contract.  Use this to vote.  Remember that you have to mine your vote to the blockchain for it to take effect.
 
+Note that Remix may complain that the address is not [checksummed](../../slides/ethereum.html#/checksum).  This is a warning, not an error, and it should still work fine.  Remix will provide, in the warning, the checksummed address -- you are welcome to use that instead to silence this warning.
+
 The assumption is that the account you will vote with is your `eth.coinbase` account.  (It's fine if you want to use a different account, but when you submit your information at the end of this assignment, be sure to submit the account that you used for the deployment and voting.) As your account information will be in the `voters` mapping, we will be able to determine who has voted and who has not.  We won't know who voted for what, though, since that information is not kept by this smart contract.  (Well, mostly.  We could look up who voted for what, since it's on the blockchain, but that's a hassle we aren't going to do that.)  You get credit for this part as along as you vote on my smart contract; it does not matter what you vote for.
 
 
@@ -176,7 +181,7 @@ You will need to submit your information via a Google form, the link to which is
 - Your account number from `eth.coinbase`.  The assumption is that you did your tasks from this account (deployed your contract, the votes, etc.); if you did it from a different account, submit that account address.
 - From task 2, you should submit information about the smart contract you deployed.  If you mined it to the blockchain multiple times, that's fine -- pick the most recent one (where you voted), and submit that one.  You should submit:
     - The transaction hash of the contract transaction 
-    - The contract address for the contract
+    - The contract address for the contract (this can be the checksummed version or all lower-case)
     - The block number where this transaction was mined
 - Also from task 2, the transaction hash and the block number where you voted on YOUR Choices contract
 - From task 4, the transaction hash and the block number where you voted for MY Choices contract

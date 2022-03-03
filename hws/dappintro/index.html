@@ -48,6 +48,10 @@ which is also described in the that assignment.</p>
 href="../ethprivate/index.html">connecting to the private Ethereum
 blockchain</a> assignment then you will not be able to complete this
 assignment.</p>
+<p>Warning to Mac OS X users: there is one part in this assignment that
+Safari seems to have issues with. This part is incidated when you get to
+it, and you may have to switch to a different brwoser (Firefox or
+Chrome) to complete that part.</p>
 <h3 id="introduction">Introduction</h3>
 <p>To deploy and run a smart contract, you need to be able to the
 standard development tasks – editing, compilation, and testing. The last
@@ -97,25 +101,26 @@ connect to the real Ethereum blockchain, rather than our private course
 blockchain. Everything else stays the same.</p>
 <h3 id="code-base">Code base</h3>
 <p>For this assignment we will be providing the Solidity code to use: <a
-href="Choices.sol">Choices.sol</a>. The code will allow voting for
-<em>something</em> via the blockchain – an election, your favorite
-color, or anything else. Election dApps are fairly common as first
-examples of Solidity programs. Note that while you should be able to
-gain a rough idea of what is going on in the code, the tasks herein are
-not to understand the code, but to be able to compile and deploy it.
-Understanding the code, and writing your own, is in the next assignment
-and upcoming course lectures (one of the lectures will even go over this
-exact code base).</p>
+href="Choices.sol.html">Choices.sol</a> (<a href="Choices.sol">src</a>).
+The code will allow voting for <em>something</em> via the blockchain –
+an election, your favorite color, or anything else. Election dApps are
+fairly common as first examples of Solidity programs. Note that while
+you should be able to gain a rough idea of what is going on in the code,
+the tasks herein are not to understand the code, but to be able to
+compile and deploy it. Understanding the code, and writing your own, is
+in the next assignment and upcoming course lectures (one of the lectures
+will even go over this exact code base).</p>
 <p>That being said, you will need to make a small modification to the
-code. Edit the <a href="Choices.sol">Choices.sol</a> file to add your
-own Choices. In particular, you should ONLY change the
-<code>addChoices()</code> calls in the constructor – you can add more or
-take some away, as needed. It is important that you do not change any
-other code in the contract, else it will not work properly when we are
-testing and grading it! Please choose something that is not
-controversial – there are many great ways to fight for, and to voice
-opinions for, things that others may find controversial. Our private
-Ethereum blockchain for this course is not one of them.</p>
+code. Edit the <a href="Choices.sol.html">Choices.sol</a> (<a
+href="Choices.sol">src</a>) file to add your own Choices. In particular,
+you should ONLY change the <code>addChoices()</code> calls in the
+constructor – you can add more or take some away, as needed. It is
+important that you do not change any other code in the contract, else it
+will not work properly when we are testing and grading it! Please choose
+something that is not controversial – there are many great ways to fight
+for, and to voice opinions for, things that others may find
+controversial. Our private Ethereum blockchain for this course is not
+one of them.</p>
 <h3 id="task-1-use-remix">Task 1: Use Remix</h3>
 <p>Remix is the IDE for developing Ethereum smart contracts in Solidity.
 Remix provides easy to read compiler error messages and makes it really
@@ -146,7 +151,8 @@ bottom are two more icons – the plugin manager
 <li>Click on the file explorer icon
 (<img src="img/fileManager.webp" class='icon'>), right click on the
 contracts folder, and select ‘New File’ – name it ‘Choices.sol’. Copy
-and paste the <a href="Choices.sol">Choices.sol</a> program there.</li>
+and paste the <a href="Choices.sol.html">Choices.sol</a> (<a
+href="Choices.sol">src</a>) program there.</li>
 <li>Next we are going to compile it – click on the compilation icon
 (<img src="img/solidityLogo.webp" class='icon'>). You may notice a green
 check mark on the compilation icon – it might automatically compile it
@@ -334,6 +340,12 @@ you what you should use as your endpoint value (meaning what value to
 put after the <code>--http.corsdomain</code> flag). You should restart
 the geth node with that flag.</li>
 <li>Click OK to close that pop-up window</li>
+<li>Note to Mac OS X users: if you are doing this assignment on
+remix.etherem.org in Safari, then this is the part that Safari seems to
+have issues with. If it is not working for you, then please switch to a
+different browser (Firefox or Chrome both seem to work fine). You can
+then cut-and-paste your code from Remix in Safari to remix in Firefox /
+Chrome.</li>
 </ul></li>
 <li>Underneath the “Environment” drop-down box, it should now say,
 “Custom (12345678) network”, with the chain number of our private
@@ -499,6 +511,11 @@ Address” button – copy the contract address there, and click that
 button. This now gives us a connection to a different Choices contract.
 Use this to vote. Remember that you have to mine your vote to the
 blockchain for it to take effect.</p>
+<p>Note that Remix may complain that the address is not <a
+href="../../slides/ethereum.html#/checksum">checksummed</a>. This is a
+warning, not an error, and it should still work fine. Remix will
+provide, in the warning, the checksummed address – you are welcome to
+use that instead to silence this warning.</p>
 <p>The assumption is that the account you will vote with is your
 <code>eth.coinbase</code> account. (It’s fine if you want to use a
 different account, but when you submit your information at the end of
@@ -535,7 +552,8 @@ fine – pick the most recent one (where you voted), and submit that one.
 You should submit:
 <ul>
 <li>The transaction hash of the contract transaction</li>
-<li>The contract address for the contract</li>
+<li>The contract address for the contract (this can be the checksummed
+version or all lower-case)</li>
 <li>The block number where this transaction was mined</li>
 </ul></li>
 <li>Also from task 2, the transaction hash and the block number where
