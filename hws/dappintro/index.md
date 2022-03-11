@@ -15,7 +15,7 @@ You will have to have completed the [connecting to the private Ethereum blockcha
 
 If you have not successfully completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment then you will not be able to complete this assignment.
 
-Warning to Mac OS X users: there is one part in this assignment that Safari seems to have issues with.  This part is incidated when you get to it, and you may have to switch to a different brwoser (Firefox or Chrome) to complete that part.
+Warning to Mac OS X users: there is one part in this assignment that Safari seems to have issues with.  This part is indicated when you get to it, and you may have to switch to a different browser (Firefox or Chrome) to complete that part.
 
 
 ### Introduction
@@ -45,6 +45,7 @@ Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix pro
 1. Load up Remix.  The far left column has four icons at the top -- the Remix logo (<img src="img/remixLogo.webp" class='icon'>), the file explorer icon (<img src="img/fileManager.webp" class='icon'>), the compilation icon (<img src="img/solidityLogo.webp" class='icon'>), and the deploy & run icon (<img src="img/deployAndRun.webp" class='icon'>).  At various times in this tutorial, you may see a debugging icon (<img src="img/debuggerLogo.webp" class='icon'>) beneath these four, but we are not going to focus on the debugger in this assignment.  On the bottom are two more icons -- the plugin manager (<img src="img/pluginManager.webp" class='icon'>) and settings (<img src="img/settings.webp" class='icon'>).
 2. Click on the file explorer icon (<img src="img/fileManager.webp" class='icon'>), right click on the contracts folder, and select 'New File' -- name it 'Choices.sol'.  Copy and paste the [Choices.sol](Choices.sol.html) ([src](Choices.sol)) program there.
 3. Next we are going to compile it -- click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>).  You may notice a green check mark on the compilation icon -- it might automatically compile it as you type (this does not seem to be consistent across all platforms).  Click on the compilation icon, and click "Compile Choices.sol".  It should compile without errors.
+    - Remix does allow for compiler optimizations, but we are not going to explore them in this assignment.  For now, don't select any optimizations (meaning leave it as the default options).
 4. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>).  For the Environment, we will stay with "Javascript VM (London)", which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us.  You can see the accounts in the 'Account' drop-down list.
 5. Click the orange "Deploy" button.  It's now running on the (simulated) Ethereum blockchain, deployed from the selected (and also simulated) account shown in the "Account" drop-down list.
 6. Test out the deployment
@@ -75,7 +76,8 @@ At this point we can edit, compile, and test our program on Remix.  We have also
 
 We need to start geth, as we did in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  However, we need to add a few more command-line parameters:
 
-- `--http`: This enables the HTTP-RPC server (the RPC stands for Remote Procedure Call).  What this means is that it will open a port (8545) that programs -- in our case, Remix -- can connect to to interact with geth (and, eventually, deploy to the blockchain)
+- `--http`: This enables the HTTP-RPC server.  What this means is that it will open a port (8545) that programs -- in our case, Remix -- can connect to to interact with geth (and, eventually, deploy to the blockchain)
+    - RPC stands for Remote Procedure Call.  It's a way for one program to call a procedure running in some other program.  In this case, the client is trying to call the procedure, and the geth node is receiving, and then executing, the procedure call.
 - `--http.corsdomain="https://remix.ethereum.org"`: This allows that particular site to connect to the HTTP-RPC server.  Normally all sites are blocked for security reasons, so we have to specifically grant permission for individual sites to connect.
     - **NOTE:** if you are using the Remix IDE, you will have to enter some other value instead of `https://remix.ethereum.org`; the pop-up window in Remix (that pop-up window is described below) will tell you what the value is.  For now, use the the flag as specified here, and know that you will have to make a change to it below; the assignment steps below will tell you when and how.
 - `--http.api web3,eth,debug,personal,net`: These are the APIs that are made available on the HTTP-RPC server.  For example, by enabling `eth` (one of the ones listed), then `eth.blockNumber` can be called.  This is only for the HTTP-RPC server; an attached geth node has access to all the APIs.

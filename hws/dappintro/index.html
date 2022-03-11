@@ -49,8 +49,8 @@ href="../ethprivate/index.html">connecting to the private Ethereum
 blockchain</a> assignment then you will not be able to complete this
 assignment.</p>
 <p>Warning to Mac OS X users: there is one part in this assignment that
-Safari seems to have issues with. This part is incidated when you get to
-it, and you may have to switch to a different brwoser (Firefox or
+Safari seems to have issues with. This part is indicated when you get to
+it, and you may have to switch to a different browser (Firefox or
 Chrome) to complete that part.</p>
 <h3 id="introduction">Introduction</h3>
 <p>To deploy and run a smart contract, you need to be able to the
@@ -158,7 +158,12 @@ href="Choices.sol">src</a>) program there.</li>
 check mark on the compilation icon – it might automatically compile it
 as you type (this does not seem to be consistent across all platforms).
 Click on the compilation icon, and click “Compile Choices.sol”. It
-should compile without errors.</li>
+should compile without errors.
+<ul>
+<li>Remix does allow for compiler optimizations, but we are not going to
+explore them in this assignment. For now, don’t select any optimizations
+(meaning leave it as the default options).</li>
+</ul></li>
 <li>Click on the “deploy &amp; run” icon
 (<img src="img/deployAndRun.webp" class='icon'>). For the Environment,
 we will stay with “Javascript VM (London)”, which means that Remix will
@@ -264,10 +269,16 @@ href="../ethprivate/index.html">connecting to the private Ethereum
 blockchain</a> assignment. However, we need to add a few more
 command-line parameters:</p>
 <ul>
-<li><code>--http</code>: This enables the HTTP-RPC server (the RPC
-stands for Remote Procedure Call). What this means is that it will open
-a port (8545) that programs – in our case, Remix – can connect to to
-interact with geth (and, eventually, deploy to the blockchain)</li>
+<li><code>--http</code>: This enables the HTTP-RPC server. What this
+means is that it will open a port (8545) that programs – in our case,
+Remix – can connect to to interact with geth (and, eventually, deploy to
+the blockchain)
+<ul>
+<li>RPC stands for Remote Procedure Call. It’s a way for one program to
+call a procedure running in some other program. In this case, the client
+is trying to call the procedure, and the geth node is receiving, and
+then executing, the procedure call.</li>
+</ul></li>
 <li><code>--http.corsdomain="https://remix.ethereum.org"</code>: This
 allows that particular site to connect to the HTTP-RPC server. Normally
 all sites are blocked for security reasons, so we have to specifically
