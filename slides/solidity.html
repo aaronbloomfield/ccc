@@ -1,0 +1,1593 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Solidity
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Types](#/types)  
+[Concepts](#/concepts)  
+[Choices Example](#/choices)  
+[Debtor's Example](#/debtor)  
+[Testing & Debugging](#/debugging)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="types" data-markdown class="center"><textarea>
+# Types
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Sources
+- The main reference is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
+  - URL: https://docs.soliditylang.org/en/latest/index.html
+- This section is the [Types section therein](https://docs.soliditylang.org/en/latest/types.html)
+  - https://docs.soliditylang.org/en/latest/types.html
+  - Many of the examples herein are from there
+- Also some code examples from the [Choices.sol](../hws/dappintro/Choices.sol.html) contract from the [dApp introduction](../hws/dappintro/index.html) assignment
+
+
+
+## A note about these slides
+- These slides are meant as a explanation
+  - You are not expected to remember everything!
+- You can come back to use this as a reference later
+
+
+
+## Value types: integers
+- Signed and unsigned ints from 8 bits (1 byte) to 256 bits (32 bytes) in size
+  - In all byte sizes between
+- Unsigned: `uint8`, `uint16`, `uint24`, ... `uint256`
+  - `uint` is an alias for `uint256`
+- Signed: `int8`, `int16`, `int24`, ..., `int256`
+  - `int` is an alias for `int256`
+- Standard operations (arithmetic, comparisons, bit operators, shift operators)
+  - Exponentiation is $\ast \ast$
+- `type(int256).max` and `type(uint160).min` for min/max
+
+
+
+
+## Value types: integers
+- Most used: `uint` (aka `uint256`) and `uint8`
+- Warning: a subtraction into a `uint` that is negative will cause a revert
+  - A revert is basically an abort -- more on this later
+  - And will not give a useful error message indicating so!
+
+
+
+## Integer literals
+- Scientific notation: `1e12` equals $10^{12}$
+  - `3.4e8` equals $3.4 \ast 10^8$
+- Underscores separate digits for readability
+  - 0x12345678 == 0x1234_5678
+
+
+
+## Other value types
+- Booleans: type is `bool`, values are `true` and `false`
+- All comparisons evaluate to a Boolean
+- Fixed point numbers: not yet fully supported
+  - Types are `fixed` and `ufixed`
+  - But don't use them!
+- No floating point numbers!
+
+
+
+## Addresses
+- Types are `address` and `address payable`
+- It's just a number: a 160-bit (20 byte) Ethereum address
+  - Allows standard comparison operators
+- Used for:
+  - Keeping track of who is the contract initiator
+  - Addresses of other contracts to call
+- Can convert between `address` and: `uint160` or `bytes20`
+- The address of a caller of a function is in `msg.sender`
+
+
+
+## Address examples
+- You can convert to a payable address:
+  ```
+address a;
+address payable b = payable(a);
+```
+- Conversions:
+```
+uint160 b = uint160(msg.sender);
+bytes20 c = bytes20(msg.sender);
+```
+- More examples:
+```
+if ( a == address(0) ) { ... }
+address initiator = msg.sender;
+```
+
+
+
+## Address fields
+- Although a primitive type, it has fields and methods:
+  - `balance`: the balance, in wei, for that address
+    ```
+address payable x = payable(0x123);
+address myAddress = address(this);
+if (x.balance < 10 && myAddress.balance >= 10) {...}
+```
+- Others we won't see in this course: 
+  - `transfer()` to send wei (requires a `receive()` function on the receiving contract)
+  - `send()`: low-level and not safe version of `transfer()`
+  - `call()`, `delegatecall()`, and `staticcall()`: calling a contract with an unknown ABI
+  - `code()` and `codehash()` to get the bytecode of the contract
+
+
+
+## Fixed-sized Arrays
+- Fixed sized array of bytes: `bytes1`, `bytes2`, up to `bytes32`
+  - The size is the integer in the type name; max of 32 bytes
+  - `.length` to get the length
+  - Indexing with `[]`
+- Operators:
+  - Comparisons, bit operators, shift operators
+  - Treats the byte array like a uint when performing the operation
+
+
+
+## Dynamically-sized arrays
+- `bytes`: dynamically sized array of bytes
+- `string`: dynamically sized array of UTF-8 characters
+  - We'll see string functions in a bit...
+
+
+
+## String literals
+- Strings can be enclosed in single quotes or double quotes
+- Can use the backslash for escape characters
+- Two strings next to each other is concatenation:
+  ```
+string s = "CS" '4501'; // equals "CS4501"
+```
+
+
+
+## More general arrays
+- We can create arrays of any type:
+  ```
+uint8[6] memory p = [ 1, 2, 3, 4, 5, 6 ];
+```
+  - We'll see the `memory` keyword shortly...
+
+
+
+## Enums
+- Enumerated type, which is mapped to a `uint`
+```
+enum ActionChoices { GoLeft, GoRight, 
+                       GoStraight, SitStill }
+//
+ActionChoices choice;
+ActionChoices constant default = ActionChoices.GoLeft;
+//
+function setGoStraight() public {
+    choice = ActionChoices.GoStraight;
+}
+```
+
+
+
+## Mappings
+- An associative array (like a hash table) that holds a key-value pair
+```
+mapping (address => bool) public voters;
+mapping (uint => Choice) public choices;
+```
+  - We'll talk about `public` visibility later
+- To add to a mapping:
+```
+voters[msg.sender] = true;
+```
+
+
+
+## Mapping keys
+- The keys are actually the *hash* of the key you provide
+  - If you provide the character `1` as the key, the actual key is the Keccak256 hash of that
+  - Or 0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cd cb4c672f298b8bc6
+- In every mapping, *all* $2^{256}$ keys exist
+  - Anything not explicitly set returns 0 / false / all zero's
+  - So no point in getting a mapping's size!
+
+
+
+## Is an element in a mapping?
+- Consider:
+```
+mapping (address => bool) public voters;
+mapping (uint => Choice) public choices;
+// this next one was not in the original Choices.sol:
+mapping (address => bool) public how_voted;
+```
+- The `voters` tells if an address has voted
+  - If they haven't, then that key will return 0 (false)
+- The `how_voted` will tell what they voted for
+
+
+
+
+## Structs
+- Like a class without methods
+```
+struct Choice {
+        uint id;
+        string name;
+        uint votes;
+}
+```
+  - They can contain mappings as well
+- They are often kept in a mapping:
+```
+mapping (uint => Choice) public choices;
+```
+- If you put the same `Choice` struct into different mappings, you now have *two* copies of that struct!
+
+
+
+## Time
+- All time is kept as a UNIX timestamp
+  - The number of seconds since January 1st, 1970
+  - This is how it's kept in the blockchain as well
+- Only time available in a contract is the timestamp of the block
+  - Via `block.timestamp`
+- Can use `seconds`, `minutes`, `hours`, `days`, and `weeks` as time units
+  - They are always pluralized
+  - But the number before each must be a literal, not a variable!
+  - Example on the next slide
+
+
+
+## Time units example
+```
+uint a = 1;
+uint b = 5;
+uint c = 2;
+
+// valid:
+uint endTime = block.timestamp + 
+               1 seconds + 5 minutes + 2 days;
+
+// not valid:
+uint endTime = block.timestamp +
+               a seconds + b minutes + c days;
+
+// valid:
+uint endTime = block.timestamp + 
+               a * 1 seconds + b * 1 minutes + c * 1 days;
+```
+
+
+
+## Ether units
+- Can convert ether units as well
+- All convert to wei (recall that 1 ether is $10^{18}$ wei)
+```
+assert(1 wei == 1);
+assert(1 gwei == 1e9);
+assert(1 ether == 1e18);
+```
+
+
+
+
+## Reference types
+- Reference types are: strings, arrays, mappings, and structs
+- Like Java and Python, the language often hides that it's a reference
+
+
+
+
+
+## Memory locations
+- All reference types must specify a memory location
+  - `storage`: for all state variables, it is stored on the blockchain
+    - statically allocated, like the stack on x86
+    - two sub-types:
+      - local storage (local subroutine variable)
+      - state storage (state/class variable on the blockchain)
+  - `memory`: a local variable, it only exists while the subroutine is executing
+    - dynamically allocated, like the heap in x86
+  - `calldata`: read-only, used for function parameters
+
+
+
+## Assignments of references
+- If you assign one reference type to another, what happens depends on where the data is stored:
+
+| To (lhs) | From (rhs) | Result |
+|--|--|--|
+| memory | memory | reference aliasing |
+| memory | any storage | full copy |
+| memory | calldata | full copy |
+| any storage | memory | full copy |
+| any storage | calldata | full copy |
+| local storage | any storage | reference aliasing |
+| state storage | any storage | full copy |
+| calldata | (any) | not allowed |
+
+
+
+## Assignments of references
+- How to remember:
+  - You can't ever write to `calldata`
+  - Anything assigned between *different* types of memory is always a copy, as references can't point from one memory type to another
+  - State storage, which is on the blockchain, never stores references -- so anything copied to state storage is always a full copy
+  - Reference aliasing works in the 2 cases when the memory types are the same and it's not going into state storage: memory to memory, and any storage to local storage
+
+
+
+## String functions
+- No (direct) string comparison!
+  - Reasons:
+    - It is difficult / expensive to compare across memory locations
+  - Instead, compare their hashes: `keccak256(x) == keccak256(y)`
+    - Note that `keccak256()` uses a lot of gas
+- Can concatenate two strings:
+  ```
+string memory s = string.concat(s1, s2);
+```
+  - Only returns a `string memory`
+- There are 3rd party string function libraries
+
+
+
+<h2>Code Example</h2>
+
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;">// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.5.0 <0.9.0;
+
+contract C {
+  // The data location of x is storage; this is the 
+  // only place where the data location can be omitted
+  uint[] x;
+
+  // The data location of memoryArray is memory.
+  function f(uint[] memory memoryArray) public {
+    x = memoryArray; // works, copies the whole array to storage
+    uint[] storage y = x; // works, assigns a pointer, y's location is storage
+    y[7]; // fine, returns the 8th element
+    y.pop(); // fine, modifies x through y
+    delete x; // fine, clears the array, also modifies y
+    // The following doesn't work; it would need to create a new temporary /
+    // unnamed array in storage, but storage is "statically" allocated:
+    // y = memoryArray;
+    // This does not work either, since it would "reset" the pointer, 
+    // but there is no sensible location it could point to.
+    // delete y;
+    g(x); // calls g, handing over a reference to x
+    h(x); // calls h and creates an independent, temporary copy in memory
+  }
+
+  function g(uint[] storage) internal pure {}
+  function h(uint[] memory) public pure {}
+}
+</code></pre>
+
+
+
+## Even more...
+- There are a lot of types we are skipping
+- See them all at https://docs.soliditylang.org/en/latest/types.html
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="concepts" data-markdown class="center"><textarea>
+# Concepts
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Learning Solidity
+- The easy part: learning the language
+  - It's just an OO language with familiar syntax
+- The hard part is understanding:
+  - The restrictions that blockchain programs have (no time or random numbers, e.g.)
+  - How to best interact with the blockchain
+  - What the heck do you do with it?
+- The easy part will be done in the next 20 minutes
+- The hard part will be the rest of this course
+
+
+
+## Sources
+- The main reference is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
+  - URL: https://docs.soliditylang.org/en/latest/index.html
+- [Ethereum developer resources](https://ethereum.org/en/developers/)
+  - URL: https://ethereum.org/en/developers/
+- [Solidity reference](https://docs.soliditylang.org)
+  - URL: https://docs.soliditylang.org
+- [Remix documentation](https://remix-ide.readthedocs.io/en/latest/) (the Solidity IDE)
+  - URL: https://remix-ide.readthedocs.io/en/latest/
+
+
+
+
+## License identifier
+- All Solidity smart contracts should have a license line as the first line
+  - SPDX is the [Software Package Development Exchange](https://spdx.dev/)
+- Examples:
+```
+// SPDX-License-Identifier: MIT
+```
+```
+// SPDX-License-Identifier: CC BY-SA
+```
+```
+// SPDX-License-Identifier: Apache
+```
+- A compiler will issue a warning if it's not there
+- The actual license type is not checked, so you can also use:
+```
+// SPDX-License-Identifier: Unlicensed
+```
+
+
+
+## Pragma
+- We'll only use the following Solidity version pragma:
+```
+pragma solidity ^0.8.7;
+```
+- The three numbers are: major version, minor version, bugfix version
+- By default, it forces a compiler error if the wrong compiler version is being used
+  - Some platforms, such as Truffle or Remix, will try to find the right compiler version
+- This will only compile with version 0.8.7 or later
+  - But will NOT allow compilation with version 0.9.0 or later
+- Note that breaking changes (very few!) are only (intentionally) introduced on major versions
+
+
+
+## Pragma
+- More complicated examples are possible:
+
+```
+pragma solidity >=0.4.0 <0.6.0;
+```
+
+- One to avoid: note there is no carat before the version number
+  - Reason: a later bugfix version, 0.8.12, will not compile this program
+
+```
+pragma solidity 0.8.11;
+```
+
+- In this course, we'll use ONLY the following:
+  - As this will compile on all of the platforms we will be using
+
+```
+pragma solidity ^0.8.7;
+```
+
+
+
+## Comments
+- C++ and Java style comments
+
+```
+// this is a comment
+
+/* this is a
+   multi-line
+   comment
+ */
+
+/* this is a
+ * multi-line
+ * comment with better
+ * formatting
+ */
+ ```
+
+
+
+## Import
+- Default import statement:
+```
+import "filename.sol";
+```
+  - Note that this will pollute the namespace
+- We can also use:
+```
+import * as symbolName from "filename.sol";
+```
+  - All names from the file can be accessed via `symbolName.thing`
+  - An equivalent version of this is:
+```
+import "filename.sol" as symbolName;
+```
+- Naming collision?  Then rename it upon import:
+```
+import {symbol1 as alias, symbol2} from "filename.sol";
+```
+
+
+
+## High-level "things"
+- `contract`
+  - Essentially an OO class
+- `interface`
+  - Just like interfaces in Java, or pure abstract classes in C++
+- `library`
+  - Can contain ONLY functions that do not access state
+    - Meaning no contract field access
+    - Specifically, they can only contain `pure` functions (we'll see `pure` shortly)
+
+
+
+## Inheritance
+- Contracts can inherit from interfaces and other contracts
+  - Interfaces can inherit from (only) other interfaces
+  - Via the `is` keyword
+- The super-class (or super-interface) must be defined above or `import`'ed
+```
+contract Student is Person {
+  // ...
+}
+```
+```
+interface Foo is Bar {
+  // ...
+}
+```
+
+
+
+## Inheritance
+- `virtual`: if a *thing* (function, field, etc.) in a contract can be overridden
+  - All function prototypes in interfaces are assumed to be `virtual`
+- `override`: when a sub-class is replacing an inherited function
+  - If the function is multiply inherited, you have to specify which (or all) that it overrides:
+    - `... override(ERC721, IERC165) ...`
+
+
+
+## What we have so far
+```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+interface IERC165 {
+  // ...
+}
+
+interface IERC721 is IERC165 {
+  // ...
+}
+
+contract ERC721 is IERC721 {
+  // ...
+}
+
+library Address {
+  // ...
+}
+```
+
+
+
+## Visibilities
+- `public`: like any other OO language, it can be called by anybody or anyone
+  - For fields, this is only the *readability* of the field; only contract functions can *write* to the field
+- `private`: like any other OO language, it can be called only by code in that class
+- `internal`: like `protected` in other OO languages: it can be called by that class or it's sub-classes
+- `external`: like `public`, but can ONLY be called by code *outside* the contract; code in the contract can not call an `external` function
+  - Functions in interfaces must be declared `external`
+
+
+
+## Visibilities
+- The stated visibility in an interface can be expanded (only) in the contract
+  - Example: if an interface specifies a function as `external`...
+    - Then the implementing contract can specify it either as `external` or `public`
+      - As `public` is *more* visible than `external`
+- Anything field defined as `public` has a getter function defined for it
+  - If you have `uint public k`, then you can call the `k()` getter function to access its value
+- The default, if unspecified, is `public`
+  - But without a getter function
+- Note that all data is still visible on the blockchain, even for `private` fields!
+
+
+
+## Qualifiers
+- `view`: this function does not *modify* the state of the contract
+  - It can read state variables, but not write to any state variables
+  - It can write to local variables, of course
+  - Like `const` in C++
+- `pure`: this function does not *read or write* the state of the contract
+  - Any function in a `library` must be `pure`
+  - `view` and `pure` are mutually exclusive
+- Using these qualifiers allows calls without having to make a transaction
+  - And *may* allow optimizations which reduce contract size and gas costs
+
+
+
+## Declarations for fields
+- Format:
+  ```
+<type> <visibility?> <override?> <name> [= <value>];
+```
+- Examples:
+```
+uint public duration = 86400;
+uint public override k;
+uint l;
+address public override initiator;
+mapping (address => uint) internal override values;
+```
+- Local variables are similar
+  - But without the visibility and `override` qualifiers
+
+
+
+## Declarations for functions
+- Format:
+```
+function <name> ([<parameter_list>]) <visibility?> 
+                <qualifiers> [returns (<list>)] {
+```
+- Examples:
+```
+function addChoice (string memory _name) public {
+//
+function unnecessaryFunction() public view 
+                returns (string memory) {
+//
+function overridePureFunction() external pure 
+                override returns (uint,bool) {
+```
+
+
+
+## Require and revert
+- A reversion means the transaction method fails, and all state is rolled back to before it started
+  - Still costs gas fees!
+- `revert()` will do this
+- Also:
+  - `require(a>0);` will revert if $a$ is not greater than zero
+  - Better to use the two-parameter version:
+  - `require(a>0,"a must be greater than zero");`
+    - Now, if/when it reverts, it will tell you why
+  - Use this liberally!!!
+
+
+
+## Receiving ether
+- The `payable` qualifier means the function can accept ether as part of the call
+- The amount of ether received is in `msg.value`
+  - And is added to the contract's balance
+    - ... assuming it doesn't revert
+
+
+
+## Constructors
+- Syntax:
+```
+constructor() {
+    // ...
+}
+```
+- No `function` keyword, no return type
+- Default, if not specified, is an empty body
+- Can take parameters:
+```
+constructor(uint foo) {
+    // ...
+}
+```
+
+
+
+## Destructor
+- `selfdesctruct()`
+  - Only if enabled
+  - Caller claims the ether balance
+
+
+
+## Events & emit
+- An *event* is when something happens
+- Allows for logging of what has happened to a contract
+- They are declared in contracts or interfaces:
+```
+event votedEvent (uint indexed _id);
+event choiceAddedEvent (uint indexed _id);
+```
+  - The `indexed` keyword allows for searching the event log by that value
+- Events are called via `emit`:
+```
+emit choiceAddedEvent(num_choices);
+emit votedEvent(_id);
+```
+
+
+
+## Most useful global variables
+From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.html)
+
+- block.timestamp (uint)
+  - current block timestamp as seconds since unix epoch
+- block.difficulty (uint)
+  - current block difficulty
+- msg.sender (address)
+  - sender of the message (current call)
+- msg.value (uint)
+  - number of wei sent with the message
+- this
+  - the current contract (example: address(this).balance)
+
+
+
+## Other global variables
+- block.basefee (uint): current block’s base fee (EIP-3198 and EIP-1559)
+- block.chainid (uint): current chain id
+- block.coinbase (address payable): current block miner’s address
+- block.gaslimit (uint): current block gaslimit
+- block.number (uint): current block number
+- gasleft() returns (uint256): remaining gas
+- msg.data (bytes calldata): complete calldata
+- msg.sig (bytes4): first four bytes of the calldata (i.e. function identifier)
+- tx.gasprice (uint): gas price of the transaction
+- tx.origin (address): sender of the transaction (full call chain)
+
+
+
+## Global functions
+- blockhash(uint blockNumber) returns (bytes32)
+  - hash of the given block when blocknumber is one of the 256 most recent blocks; otherwise returns zero
+
+
+
+## Solidity bytecode
+Consider the following Solidity smart contract:
+```
+pragma solidity ^0.8.7;
+contract MyContract {
+    uint i = 1 + 2 * 3 - 4;
+}
+```
+To see the bytecode:
+- Got to [remix.ethereum.org](http://remix.ethereum.org), create a new contract file, and enter the text
+- Select the compiler icon on the left, and click 'compile'
+- Select 'compilation details', the 'Assembly' at the bottom
+
+
+
+## Solidity bytecode
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
+>.code
+  PUSH 80         contract MyContract {\n    uin...
+  PUSH 40         contract MyContract {\n    uin...
+  MSTORE          contract MyContract {\n    uin...
+  PUSH 3          1 + 2 * 3 - 4
+  PUSH 0          uint i = 1 + 2 * 3 - 4
+  SSTORE          uint i = 1 + 2 * 3 - 4
+  CALLVALUE       contract MyContract {\n    uin...
+  DUP1            contract MyContract {\n    uin...
+  ISZERO          contract MyContract {\n    uin...
+  PUSH [tag] 1    contract MyContract {\n    uin...
+  JUMPI           contract MyContract {\n    uin...
+  PUSH 0          contract MyContract {\n    uin...
+  DUP1            contract MyContract {\n    uin...
+  REVERT          contract MyContract {\n    uin...
+tag 1             contract MyContract {\n    uin...
+  JUMPDEST        contract MyContract {\n    uin...
+  POP             contract MyContract {\n    uin...
+  PUSH #[$] 0000000000000000000000000000000000000000000000000000000000000000
+                  // contract MyContract {\n    uin...
+  DUP1            contract MyContract {\n    uin...
+  PUSH [$]  0000000000000000000000000000000000000000000000000000000000000000
+                  // contract MyContract {\n    uin...
+  PUSH 0          contract MyContract {\n    uin...
+  CODECOPY        contract MyContract {\n    uin...
+  PUSH 0          contract MyContract {\n    uin...
+  RETURN          contract MyContract {\n    uin...
+.data
+  0:
+    .code
+      PUSH 80     contract MyContract {\n    uin...
+      PUSH 40     contract MyContract {\n    uin...
+      MSTORE      contract MyContract {\n    uin...
+      PUSH 0      contract MyContract {\n    uin...
+      DUP1        contract MyContract {\n    uin...
+      REVERT      contract MyContract {\n    uin...
+    .data
+</code></pre>
+
+
+
+## Solidity hex bytecode
+- That bytecode is compiled into hex (binary):
+```
+60806040526003600055348015601457600080fd5b50603f80
+60226000396000f3fe6080604052600080fdfea26469706673
+58221220332ec7c6c4346f275b4aa81ab96bdd2f2ef3f03aa7
+90bcd131b849930bbaba9964736f6c634300080c0033
+```
+- This hex code will show up in the blockchain Ethereum explorer
+  - In the "input" field
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="choices" data-markdown class="center"><textarea>
+# Choices Example
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Choices Example
+- This is the [Choices.sol](../hws/dappintro/Choices.sol.html) smart contract from the the [dApp Introduction](../hws/dappintro/index.html) assignment
+  - Shown in full on the next slide
+
+
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: CC BY-SA
+// This file is part of the https://github.com/aaronbloomfield/ccc repo
+
+pragma solidity ^0.8.7;
+
+contract Choices {
+
+  struct Choice {
+    uint id;
+    string name;
+    uint votes;
+  }
+
+  mapping (address => bool) public voters;
+  mapping (uint => Choice) public choices;
+  uint public num_choices;
+
+  event votedEvent (uint indexed _id);
+
+  constructor() {
+    addChoice("red");
+    addChoice("orange");
+    addChoice("yellow");
+    addChoice("green");
+    addChoice("blue");
+    addChoice("purple");
+  }
+
+  function addChoice (string memory _name) private {
+    choices[num_choices] = Choice(num_choices, _name, 0);
+    num_choices++;
+  }
+
+  function vote (uint _id) public {
+    require(!voters[msg.sender]);
+    require(_id >= 0 && _id < num_choices);
+    voters[msg.sender] = true;
+    choices[_id].votes++;
+    emit votedEvent(_id);
+  }
+
+}
+
+</code></pre>
+
+
+
+## Choices ABI
+
+<pre class="code-wrapper" style="height:550px"><code class="hljs awk small">[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "votedEvent",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "choices",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "votes",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "num_choices",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "voters",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
+</code></pre>
+
+
+
+## Compiled bytecode
+<pre class="code-wrapper" style="height:500px"><code class="hljs awk small"
+>608060405234801561001057600080fd5b506100556040518060400160405280600381526020
+017f726564000000000000000000000000000000000000000000000000000000000081525061
+01ae60201b60201c565b6100996040518060400160405280600681526020017f6f72616e6765
+00000000000000000000000000000000000000000000000000008152506101ae60201b60201c
+565b6100dd6040518060400160405280600681526020017f79656c6c6f770000000000000000
+0000000000000000000000000000000000008152506101ae60201b60201c565b610121604051
+8060400160405280600581526020017f677265656e0000000000000000000000000000000000
+000000000000000000008152506101ae60201b60201c565b6101656040518060400160405280
+600481526020017f626c75650000000000000000000000000000000000000000000000000000
+00008152506101ae60201b60201c565b6101a96040518060400160405280600681526020017f
+707572706c6500000000000000000000000000000000000000000000000000008152506101ae
+60201b60201c565b6103b6565b60405180606001604052806002548152602001828152602001
+6000815250600160006002548152602001908152602001600020600082015181600001556020
+820151816001019080519060200190610207929190610230565b506040820151816002015590
+5050600260008154809291906102289061030c565b919050555050565b82805461023c906103
+84565b90600052602060002090601f01602090048101928261025e57600085556102a5565b82
+601f1061027757805160ff19168380011785556102a5565b828001600101855582156102a557
+9182015b828111156102a4578251825591602001919060010190610289565b5b5090506102b2
+91906102b6565b5090565b5b808211156102cf5760008160009055506001016102b7565b5090
+565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052
+601160045260246000fd5b6000819050919050565b600061031782610302565b91507fffffff
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff82141561034a576103
+496102d3565b5b600182019050919050565b7f4e487b71000000000000000000000000000000
+00000000000000000000000000600052602260045260246000fd5b6000600282049050600182
+168061039c57607f821691505b602082108114156103b0576103af610355565b5b5091905056
+5b610622806103c56000396000f3fe608060405234801561001057600080fd5b506004361061
+004c5760003560e01c80630121b93f14610051578063251760b71461006d578063a3ec138d14
+61008b578063f6fd7fde146100bb575b600080fd5b61006b6004803603810190610066919061
+0324565b6100ed565b005b610075610211565b6040516100829190610360565b604051809103
+90f35b6100a560048036038101906100a091906103d9565b610217565b6040516100b2919061
+0421565b60405180910390f35b6100d560048036038101906100d09190610324565b61023756
+5b6040516100e4939291906104d5565b60405180910390f35b6000803373ffffffffffffffff
+ffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260
+200190815260200160002060009054906101000a900460ff161561014357600080fd5b600081
+10158015610155575060025481105b61015e57600080fd5b60016000803373ffffffffffffff
+ffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152
+60200190815260200160002060006101000a81548160ff021916908315150217905550600160
+0082815260200190815260200160002060020160008154809291906101dc90610542565b9190
+505550807ffff3c900d938d21d0990d786e819f29b8d05c1ef587b462b939609625b684b1660
+405160405180910390a250565b60025481565b60006020528060005260406000206000915054
+906101000a900460ff1681565b60016020528060005260406000206000915090508060000154
+90806001018054610260906105ba565b80601f01602080910402602001604051908101604052
+8092919081815260200182805461028c906105ba565b80156102d95780601f106102ae576101
+008083540402835291602001916102d9565b820191906000526020600020905b815481529060
+0101906020018083116102bc57829003601f168201915b505050505090806002015490508356
+5b600080fd5b6000819050919050565b610301816102ee565b811461030c57600080fd5b5056
+5b60008135905061031e816102f8565b92915050565b60006020828403121561033a57610339
+6102e9565b5b60006103488482850161030f565b91505092915050565b61035a816102ee565b
+82525050565b60006020820190506103756000830184610351565b92915050565b600073ffff
+ffffffffffffffffffffffffffffffffffff82169050919050565b60006103a68261037b565b
+9050919050565b6103b68161039b565b81146103c157600080fd5b50565b6000813590506103
+d3816103ad565b92915050565b6000602082840312156103ef576103ee6102e9565b5b600061
+03fd848285016103c4565b91505092915050565b60008115159050919050565b61041b816104
+06565b82525050565b60006020820190506104366000830184610412565b92915050565b6000
+81519050919050565b600082825260208201905092915050565b60005b838110156104765780
+8201518184015260208101905061045b565b83811115610485576000848401525b5050505056
+5b6000601f19601f8301169050919050565b60006104a78261043c565b6104b1818561044756
+5b93506104c1818560208601610458565b6104ca8161048b565b840191505092915050565b60
+006060820190506104ea6000830186610351565b81810360208301526104fc818561049c565b
+905061050b6040830184610351565b949350505050565b7f4e487b7100000000000000000000
+000000000000000000000000000000000000600052601160045260246000fd5b600061054d82
+6102ee565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ffff8214156105805761057f610513565b5b600182019050919050565b7f4e487b7100000000
+000000000000000000000000000000000000000000000000600052602260045260246000fd5b
+600060028204905060018216806105d257607f821691505b602082108114156105e6576105e5
+61058b565b5b5091905056fea26469706673582212204d9f3220868d641179070bffad35e35c
+edf3889770f2f741db5af6ae70ffe89464736f6c634300080c0033
+</code></pre>
+
+Got all that?  See it on the blockchain explorer as well.
+
+
+
+## Bytecode Opcodes
+<pre class="code-wrapper" style="height:550px"><code class="hljs awk small"
+>PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0
+DUP1 REVERT JUMPDEST POP PUSH2 0x55 PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD
+PUSH1 0x40 MSTORE DUP1 PUSH1 0x3 DUP2 MSTORE PUSH1 0x20 ADD PUSH32
+0x7265640000000000000000000000000000000000000000000000000000000000 DUP2
+MSTORE POP PUSH2 0x1AE PUSH1 0x20 SHL PUSH1 0x20 SHR JUMP JUMPDEST PUSH2 0x99
+PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD PUSH1 0x40 MSTORE DUP1 PUSH1 0x6 DUP2
+MSTORE PUSH1 0x20 ADD PUSH32
+0x6F72616E67650000000000000000000000000000000000000000000000000000 DUP2
+MSTORE POP PUSH2 0x1AE PUSH1 0x20 SHL PUSH1 0x20 SHR JUMP JUMPDEST PUSH2 0xDD
+PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD PUSH1 0x40 MSTORE DUP1 PUSH1 0x6 DUP2
+MSTORE PUSH1 0x20 ADD PUSH32
+0x79656C6C6F770000000000000000000000000000000000000000000000000000 DUP2
+MSTORE POP PUSH2 0x1AE PUSH1 0x20 SHL PUSH1 0x20 SHR JUMP JUMPDEST PUSH2
+0x121 PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD PUSH1 0x40 MSTORE DUP1 PUSH1 0x5
+DUP2 MSTORE PUSH1 0x20 ADD PUSH32
+0x677265656E000000000000000000000000000000000000000000000000000000 DUP2
+MSTORE POP PUSH2 0x1AE PUSH1 0x20 SHL PUSH1 0x20 SHR JUMP JUMPDEST PUSH2
+0x165 PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD PUSH1 0x40 MSTORE DUP1 PUSH1 0x4
+DUP2 MSTORE PUSH1 0x20 ADD PUSH32
+0x626C756500000000000000000000000000000000000000000000000000000000 DUP2
+MSTORE POP PUSH2 0x1AE PUSH1 0x20 SHL PUSH1 0x20 SHR JUMP JUMPDEST PUSH2
+0x1A9 PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD PUSH1 0x40 MSTORE DUP1 PUSH1 0x6
+DUP2 MSTORE PUSH1 0x20 ADD PUSH32
+0x707572706C650000000000000000000000000000000000000000000000000000 DUP2
+MSTORE POP PUSH2 0x1AE PUSH1 0x20 SHL PUSH1 0x20 SHR JUMP JUMPDEST PUSH2
+0x3B6 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 PUSH1 0x60 ADD PUSH1 0x40 MSTORE
+DUP1 PUSH1 0x2 SLOAD DUP2 MSTORE PUSH1 0x20 ADD DUP3 DUP2 MSTORE PUSH1 0x20
+ADD PUSH1 0x0 DUP2 MSTORE POP PUSH1 0x1 PUSH1 0x0 PUSH1 0x2 SLOAD DUP2 MSTORE
+PUSH1 0x20 ADD SWAP1 DUP2 MSTORE PUSH1 0x20 ADD PUSH1 0x0 KECCAK256 PUSH1 0x0
+DUP3 ADD MLOAD DUP2 PUSH1 0x0 ADD SSTORE PUSH1 0x20 DUP3 ADD MLOAD DUP2 PUSH1
+0x1 ADD SWAP1 DUP1 MLOAD SWAP1 PUSH1 0x20 ADD SWAP1 PUSH2 0x207 SWAP3 SWAP2
+SWAP1 PUSH2 0x230 JUMP JUMPDEST POP PUSH1 0x40 DUP3 ADD MLOAD DUP2 PUSH1 0x2
+ADD SSTORE SWAP1 POP POP PUSH1 0x2 PUSH1 0x0 DUP2 SLOAD DUP1 SWAP3 SWAP2
+SWAP1 PUSH2 0x228 SWAP1 PUSH2 0x30C JUMP JUMPDEST SWAP2 SWAP1 POP SSTORE POP
+POP JUMP JUMPDEST DUP3 DUP1 SLOAD PUSH2 0x23C SWAP1 PUSH2 0x384 JUMP JUMPDEST
+SWAP1 PUSH1 0x0 MSTORE PUSH1 0x20 PUSH1 0x0 KECCAK256 SWAP1 PUSH1 0x1F ADD
+PUSH1 0x20 SWAP1 DIV DUP2 ADD SWAP3 DUP3 PUSH2 0x25E JUMPI PUSH1 0x0 DUP6
+SSTORE PUSH2 0x2A5 JUMP JUMPDEST DUP3 PUSH1 0x1F LT PUSH2 0x277 JUMPI DUP1
+MLOAD PUSH1 0xFF NOT AND DUP4 DUP1 ADD OR DUP6 SSTORE PUSH2 0x2A5 JUMP
+JUMPDEST DUP3 DUP1 ADD PUSH1 0x1 ADD DUP6 SSTORE DUP3 ISZERO PUSH2 0x2A5
+JUMPI SWAP2 DUP3 ADD JUMPDEST DUP3 DUP2 GT ISZERO PUSH2 0x2A4 JUMPI DUP3
+MLOAD DUP3 SSTORE SWAP2 PUSH1 0x20 ADD SWAP2 SWAP1 PUSH1 0x1 ADD SWAP1 PUSH2
+0x289 JUMP JUMPDEST JUMPDEST POP SWAP1 POP PUSH2 0x2B2 SWAP2 SWAP1 PUSH2
+0x2B6 JUMP JUMPDEST POP SWAP1 JUMP JUMPDEST JUMPDEST DUP1 DUP3 GT ISZERO
+PUSH2 0x2CF JUMPI PUSH1 0x0 DUP2 PUSH1 0x0 SWAP1 SSTORE POP PUSH1 0x1 ADD
+PUSH2 0x2B7 JUMP JUMPDEST POP SWAP1 JUMP JUMPDEST PUSH32
+0x4E487B7100000000000000000000000000000000000000000000000000000000 PUSH1 0x0
+MSTORE PUSH1 0x11 PUSH1 0x4 MSTORE PUSH1 0x24 PUSH1 0x0 REVERT JUMPDEST PUSH1
+0x0 DUP2 SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0x317 DUP3
+PUSH2 0x302 JUMP JUMPDEST SWAP2 POP PUSH32
+0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP3 EQ
+ISZERO PUSH2 0x34A JUMPI PUSH2 0x349 PUSH2 0x2D3 JUMP JUMPDEST JUMPDEST PUSH1
+0x1 DUP3 ADD SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH32
+0x4E487B7100000000000000000000000000000000000000000000000000000000 PUSH1 0x0
+MSTORE PUSH1 0x22 PUSH1 0x4 MSTORE PUSH1 0x24 PUSH1 0x0 REVERT JUMPDEST PUSH1
+0x0 PUSH1 0x2 DUP3 DIV SWAP1 POP PUSH1 0x1 DUP3 AND DUP1 PUSH2 0x39C JUMPI
+PUSH1 0x7F DUP3 AND SWAP2 POP JUMPDEST PUSH1 0x20 DUP3 LT DUP2 EQ ISZERO
+PUSH2 0x3B0 JUMPI PUSH2 0x3AF PUSH2 0x355 JUMP JUMPDEST JUMPDEST POP SWAP2
+SWAP1 POP JUMP JUMPDEST PUSH2 0x622 DUP1 PUSH2 0x3C5 PUSH1 0x0 CODECOPY PUSH1
+0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2
+0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2
+0x4C JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x121B93F EQ
+PUSH2 0x51 JUMPI DUP1 PUSH4 0x251760B7 EQ PUSH2 0x6D JUMPI DUP1 PUSH4
+0xA3EC138D EQ PUSH2 0x8B JUMPI DUP1 PUSH4 0xF6FD7FDE EQ PUSH2 0xBB JUMPI
+JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x6B PUSH1 0x4 DUP1
+CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH2 0x66 SWAP2 SWAP1 PUSH2 0x324 JUMP
+JUMPDEST PUSH2 0xED JUMP JUMPDEST STOP JUMPDEST PUSH2 0x75 PUSH2 0x211 JUMP
+JUMPDEST PUSH1 0x40 MLOAD PUSH2 0x82 SWAP2 SWAP1 PUSH2 0x360 JUMP JUMPDEST
+PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH2 0xA5 PUSH1 0x4
+DUP1 CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH2 0xA0 SWAP2 SWAP1 PUSH2 0x3D9 JUMP
+JUMPDEST PUSH2 0x217 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH2 0xB2 SWAP2 SWAP1
+PUSH2 0x421 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN
+JUMPDEST PUSH2 0xD5 PUSH1 0x4 DUP1 CALLDATASIZE SUB DUP2 ADD SWAP1 PUSH2 0xD0
+SWAP2 SWAP1 PUSH2 0x324 JUMP JUMPDEST PUSH2 0x237 JUMP JUMPDEST PUSH1 0x40
+MLOAD PUSH2 0xE4 SWAP4 SWAP3 SWAP2 SWAP1 PUSH2 0x4D5 JUMP JUMPDEST PUSH1 0x40
+MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x0 DUP1 CALLER PUSH20
+0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND PUSH20
+0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND DUP2 MSTORE PUSH1 0x20 ADD
+SWAP1 DUP2 MSTORE PUSH1 0x20 ADD PUSH1 0x0 KECCAK256 PUSH1 0x0 SWAP1 SLOAD
+SWAP1 PUSH2 0x100 EXP SWAP1 DIV PUSH1 0xFF AND ISZERO PUSH2 0x143 JUMPI PUSH1
+0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 DUP2 LT ISZERO DUP1 ISZERO PUSH2 0x155
+JUMPI POP PUSH1 0x2 SLOAD DUP2 LT JUMPDEST PUSH2 0x15E JUMPI PUSH1 0x0 DUP1
+REVERT JUMPDEST PUSH1 0x1 PUSH1 0x0 DUP1 CALLER PUSH20
+0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND PUSH20
+0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND DUP2 MSTORE PUSH1 0x20 ADD
+SWAP1 DUP2 MSTORE PUSH1 0x20 ADD PUSH1 0x0 KECCAK256 PUSH1 0x0 PUSH2 0x100
+EXP DUP2 SLOAD DUP2 PUSH1 0xFF MUL NOT AND SWAP1 DUP4 ISZERO ISZERO MUL OR
+SWAP1 SSTORE POP PUSH1 0x1 PUSH1 0x0 DUP3 DUP2 MSTORE PUSH1 0x20 ADD SWAP1
+DUP2 MSTORE PUSH1 0x20 ADD PUSH1 0x0 KECCAK256 PUSH1 0x2 ADD PUSH1 0x0 DUP2
+SLOAD DUP1 SWAP3 SWAP2 SWAP1 PUSH2 0x1DC SWAP1 PUSH2 0x542 JUMP JUMPDEST
+SWAP2 SWAP1 POP SSTORE POP DUP1 PUSH32
+0xFFF3C900D938D21D0990D786E819F29B8D05C1EF587B462B939609625B684B16 PUSH1 0x40
+MLOAD PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 LOG2 POP JUMP JUMPDEST PUSH1 0x2
+SLOAD DUP2 JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 MSTORE DUP1 PUSH1 0x0 MSTORE
+PUSH1 0x40 PUSH1 0x0 KECCAK256 PUSH1 0x0 SWAP2 POP SLOAD SWAP1 PUSH2 0x100
+EXP SWAP1 DIV PUSH1 0xFF AND DUP2 JUMP JUMPDEST PUSH1 0x1 PUSH1 0x20 MSTORE
+DUP1 PUSH1 0x0 MSTORE PUSH1 0x40 PUSH1 0x0 KECCAK256 PUSH1 0x0 SWAP2 POP
+SWAP1 POP DUP1 PUSH1 0x0 ADD SLOAD SWAP1 DUP1 PUSH1 0x1 ADD DUP1 SLOAD PUSH2
+0x260 SWAP1 PUSH2 0x5BA JUMP JUMPDEST DUP1 PUSH1 0x1F ADD PUSH1 0x20 DUP1
+SWAP2 DIV MUL PUSH1 0x20 ADD PUSH1 0x40 MLOAD SWAP1 DUP2 ADD PUSH1 0x40
+MSTORE DUP1 SWAP3 SWAP2 SWAP1 DUP2 DUP2 MSTORE PUSH1 0x20 ADD DUP3 DUP1 SLOAD
+PUSH2 0x28C SWAP1 PUSH2 0x5BA JUMP JUMPDEST DUP1 ISZERO PUSH2 0x2D9 JUMPI
+DUP1 PUSH1 0x1F LT PUSH2 0x2AE JUMPI PUSH2 0x100 DUP1 DUP4 SLOAD DIV MUL DUP4
+MSTORE SWAP2 PUSH1 0x20 ADD SWAP2 PUSH2 0x2D9 JUMP JUMPDEST DUP3 ADD SWAP2
+SWAP1 PUSH1 0x0 MSTORE PUSH1 0x20 PUSH1 0x0 KECCAK256 SWAP1 JUMPDEST DUP2
+SLOAD DUP2 MSTORE SWAP1 PUSH1 0x1 ADD SWAP1 PUSH1 0x20 ADD DUP1 DUP4 GT PUSH2
+0x2BC JUMPI DUP3 SWAP1 SUB PUSH1 0x1F AND DUP3 ADD SWAP2 JUMPDEST POP POP POP
+POP POP SWAP1 DUP1 PUSH1 0x2 ADD SLOAD SWAP1 POP DUP4 JUMP JUMPDEST PUSH1 0x0
+DUP1 REVERT JUMPDEST PUSH1 0x0 DUP2 SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST
+PUSH2 0x301 DUP2 PUSH2 0x2EE JUMP JUMPDEST DUP2 EQ PUSH2 0x30C JUMPI PUSH1
+0x0 DUP1 REVERT JUMPDEST POP JUMP JUMPDEST PUSH1 0x0 DUP2 CALLDATALOAD SWAP1
+POP PUSH2 0x31E DUP2 PUSH2 0x2F8 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP
+JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0x33A JUMPI
+PUSH2 0x339 PUSH2 0x2E9 JUMP JUMPDEST JUMPDEST PUSH1 0x0 PUSH2 0x348 DUP5
+DUP3 DUP6 ADD PUSH2 0x30F JUMP JUMPDEST SWAP2 POP POP SWAP3 SWAP2 POP POP
+JUMP JUMPDEST PUSH2 0x35A DUP2 PUSH2 0x2EE JUMP JUMPDEST DUP3 MSTORE POP POP
+JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 ADD SWAP1 POP PUSH2 0x375 PUSH1 0x0
+DUP4 ADD DUP5 PUSH2 0x351 JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST
+PUSH1 0x0 PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP3 AND SWAP1
+POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0x3A6 DUP3 PUSH2 0x37B JUMP
+JUMPDEST SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0x3B6 DUP2 PUSH2 0x39B
+JUMP JUMPDEST DUP2 EQ PUSH2 0x3C1 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP
+JUMP JUMPDEST PUSH1 0x0 DUP2 CALLDATALOAD SWAP1 POP PUSH2 0x3D3 DUP2 PUSH2
+0x3AD JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20
+DUP3 DUP5 SUB SLT ISZERO PUSH2 0x3EF JUMPI PUSH2 0x3EE PUSH2 0x2E9 JUMP
+JUMPDEST JUMPDEST PUSH1 0x0 PUSH2 0x3FD DUP5 DUP3 DUP6 ADD PUSH2 0x3C4 JUMP
+JUMPDEST SWAP2 POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2
+ISZERO ISZERO SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH2 0x41B DUP2 PUSH2
+0x406 JUMP JUMPDEST DUP3 MSTORE POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20
+DUP3 ADD SWAP1 POP PUSH2 0x436 PUSH1 0x0 DUP4 ADD DUP5 PUSH2 0x412 JUMP
+JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 MLOAD SWAP1 POP
+SWAP2 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 DUP3 DUP3 MSTORE PUSH1 0x20 DUP3 ADD
+SWAP1 POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 JUMPDEST DUP4 DUP2 LT
+ISZERO PUSH2 0x476 JUMPI DUP1 DUP3 ADD MLOAD DUP2 DUP5 ADD MSTORE PUSH1 0x20
+DUP2 ADD SWAP1 POP PUSH2 0x45B JUMP JUMPDEST DUP4 DUP2 GT ISZERO PUSH2 0x485
+JUMPI PUSH1 0x0 DUP5 DUP5 ADD MSTORE JUMPDEST POP POP POP POP JUMP JUMPDEST
+PUSH1 0x0 PUSH1 0x1F NOT PUSH1 0x1F DUP4 ADD AND SWAP1 POP SWAP2 SWAP1 POP
+JUMP JUMPDEST PUSH1 0x0 PUSH2 0x4A7 DUP3 PUSH2 0x43C JUMP JUMPDEST PUSH2
+0x4B1 DUP2 DUP6 PUSH2 0x447 JUMP JUMPDEST SWAP4 POP PUSH2 0x4C1 DUP2 DUP6
+PUSH1 0x20 DUP7 ADD PUSH2 0x458 JUMP JUMPDEST PUSH2 0x4CA DUP2 PUSH2 0x48B
+JUMP JUMPDEST DUP5 ADD SWAP2 POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1
+0x0 PUSH1 0x60 DUP3 ADD SWAP1 POP PUSH2 0x4EA PUSH1 0x0 DUP4 ADD DUP7 PUSH2
+0x351 JUMP JUMPDEST DUP2 DUP2 SUB PUSH1 0x20 DUP4 ADD MSTORE PUSH2 0x4FC DUP2
+DUP6 PUSH2 0x49C JUMP JUMPDEST SWAP1 POP PUSH2 0x50B PUSH1 0x40 DUP4 ADD DUP5
+PUSH2 0x351 JUMP JUMPDEST SWAP5 SWAP4 POP POP POP POP JUMP JUMPDEST PUSH32
+0x4E487B7100000000000000000000000000000000000000000000000000000000 PUSH1 0x0
+MSTORE PUSH1 0x11 PUSH1 0x4 MSTORE PUSH1 0x24 PUSH1 0x0 REVERT JUMPDEST PUSH1
+0x0 PUSH2 0x54D DUP3 PUSH2 0x2EE JUMP JUMPDEST SWAP2 POP PUSH32
+0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP3 EQ
+ISZERO PUSH2 0x580 JUMPI PUSH2 0x57F PUSH2 0x513 JUMP JUMPDEST JUMPDEST PUSH1
+0x1 DUP3 ADD SWAP1 POP SWAP2 SWAP1 POP JUMP JUMPDEST PUSH32
+0x4E487B7100000000000000000000000000000000000000000000000000000000 PUSH1 0x0
+MSTORE PUSH1 0x22 PUSH1 0x4 MSTORE PUSH1 0x24 PUSH1 0x0 REVERT JUMPDEST PUSH1
+0x0 PUSH1 0x2 DUP3 DIV SWAP1 POP PUSH1 0x1 DUP3 AND DUP1 PUSH2 0x5D2 JUMPI
+PUSH1 0x7F DUP3 AND SWAP2 POP JUMPDEST PUSH1 0x20 DUP3 LT DUP2 EQ ISZERO
+PUSH2 0x5E6 JUMPI PUSH2 0x5E5 PUSH2 0x58B JUMP JUMPDEST JUMPDEST POP SWAP2
+SWAP1 POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x4D SWAP16
+ORIGIN KECCAK256 DUP7 DUP14 PUSH5 0x1179070BFF 0xAD CALLDATALOAD 0xE3 0x5C
+0xED RETURN DUP9 SWAP8 PUSH17 0xF2F741DB5AF6AE70FFE89464736F6C6343 STOP
+ADDMOD 0xC STOP CALLER </code></pre>
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="debtor" data-markdown class="center"><textarea>
+# Debtor's Example
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## A Circle of Debt
+- A bunch of friends always pay for each other
+- They want a way to resolve these debts
+- Example:
+  - Alice pays `$`5 to cover Bob
+  - Bob pays `$`5 to cover Charlie
+  - Charlie pays `$`10 to cover Alice
+  - The net result is that Alice owes `$`5 to Charlie; all other debts cancel out
+- We'll implement this as a smart contract in Solidity on Ethereum
+
+
+
+## Design considerations
+- The blockchain will hold the history of who owes who
+- Nobody wants to remember people by their Ethereum address
+  - So we will use an *alias*, which is a string ("alice", "bob", etc.) that corresponds to an address
+  - It has an optional *name* field as well
+- The group of friends all trust each other, so either side can enter a debt
+  - But Alice cannot enter a debt between Bob and Charlie
+
+
+
+## Insight
+- The key insight is that if Alice pays Bob $x$, then Alice's balance goes *up* by $x$, and Bob's goes *down* by $x$
+  - A negative balance means you owe money
+  - A positive balance means you are owed money
+- The system will keep track of how much one owes or is owed, but not necessarily who to
+
+
+
+## Development
+- Let's jointly live develop it on [remix.ethereum.org](https://remix.ethereum.org/)
+
+
+
+## Deployment
+- A request: please do not go ahead of me in the following deployment steps
+- This has already been deployed on our private Ethereum blockchain
+  - But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the [dApp Introduction](../hws/dappintro/index.html) assignment
+- I've added a few aliases, but not for any of you
+- On the Collab landing page are the relevant block numbers
+- Look at the Blockchain Explorer
+  - The smart contract was deployed in a specific block
+  - The adding of some aliases was in a specific block
+
+
+
+## Interacting via geth
+- You should all start up your geth node via:
+  ```
+geth --datadir /path/to/ethprivate \
+     --networkid 12345678 --maxpeers 1
+```
+  - Change `/path/to/ethprivate` and the numerical network ID, of course
+- Once done, you should start a geth terminal in a *new* window/tab:
+```
+geth attach /path/to/ethprivate/geth.ipc
+```
+
+
+
+## Relevant information
+- On the Collab landing page, at the bottom, are a few pieces of information we will need:
+  - The ABI for this smart contract -- you will need to copy that shortly
+  - A link to a web page to view who owes who money
+  - The smart contract address
+  - A link to this part of the slide set so you can copy-and-paste some of the code
+
+
+
+## Transactions from geth
+- We are going to call the smart contract directly from geth
+- First, save the smart contract address in a variable:
+  ```
+var debtSCaddr = "0xffffffffffffffffffffffffffffffffffffffff";
+```
+  - But use the actual address, not that address!
+- Next we have to save the ABI:
+  ```
+var debtABI = [...];
+```
+  - Copy-and-paste the ABI from the Collab landing page into that command
+  - Notice no quotes around the variable's value!
+  - It should present that same ABI back to you, but nicely formatted
+
+
+
+## Transactions from geth
+- Next we have to have geth create a contract object for us:
+  ```
+var debtContractInterface = eth.contract(debtABI);
+```
+- Lastly, we need to link that to the specific contract address that we are going to be using:
+  ```
+var contract = debtContractInterface.at(debtSCaddr);
+```
+
+
+
+## Geth read transactions
+- We can call read-only transactions (views) via the `.call()` method
+- To read a variable:
+  ```
+contract.num_aliases.call()
+```
+- To read a mapping:
+  ```
+contract.entities.call(3)
+```
+- To get a name from a mapping:
+  ```
+contract.entities.call(3)[2]
+```
+- To call a method:
+  ```
+contract.thisMethodDoesNotExist.call()
+```
+
+
+
+## Geth write transactions
+- First, unlock your account:
+  ```
+personal.unlockAccount(eth.coinbase,"password",0)
+```
+- You do not have to start and stop the miner, as I am doing that for you
+- And the blockchain explorer is now updating every 1 minute
+
+
+
+## Adding an alias
+- You have to add yourself as an alias
+- Request: please use your UVA userid as the alias itself
+  - If you don't want to use your own, make up a believable fake one
+- Remember: please don't start the miner!  I'm doing that for you.
+
+
+
+## Adding an alias
+- Transactions that write to the blockchain use the `.sendTransaction()` method
+  ```
+contract.addAlias.sendTransaction("mst3k", 
+         "Your Name", eth.coinbase, 
+         {from:eth.coinbase, gas:1000000})
+```
+- Notice, in the value printed after that call, the transaction hash
+  - Make a note of that, and search for it in the Blockchain Explorer
+  - It may take a minute or two for that to refresh...
+- Now view the web page for this exercise that lists the current balances
+  - The URL is on the Collab landing page
+
+
+
+## Pay off some debts!
+- You can now enter some debts:
+  ```
+contract.payToAlias.sendTransaction("mst3k",123456,
+               {from:eth.coinbase, gas:1000000});
+```
+- Note that this is entering that the other person owes *you* money
+  - If you owe them money, you would enter a negative value
+- And, again, view the web page for this exercise that lists the current balances
+- You can also see those transactions in the blockchain explorer
+  - Note the transaction hash when you enter that command
+
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="debugging" data-markdown class="center"><textarea>
+# Testing & Debugging
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Use `require()` with 2 parameters
+
+- Consider:
+  ```
+require (value > 0);
+```
+- If this reverts, all Remix will state is that the contract reverted, but not where or why
+- Instead, use:
+  ```
+require (value > 0, "value must be > 0 in foo()");
+```
+- Now Remix will report that specific string if/when it reverts
+
+
+
+## Use `require()` to assure the correct state
+- Using `require()` a lot to make sure that the variables are in the state you expect them to be
+```
+require (msg.value > 0,
+           "must transfer ether with this transaction");
+require (from_address != address(0), 
+           "must specify a non-null from address");
+require (to_address != address(0), 
+           "must specify a non-null to address");
+// and so on...
+```
+
+
+
+## Capturing intermediate state
+- We don't have print statements to ensure that our intermediate values are correct
+- So instead we save those values in state variables
+- Make sure those variables are `public`!!!
+- Once the function is run, you can view those variables in Remix
+
+
+
+## Capturing intermediate state
+```
+contract Test {
+  uint public debug1;
+  uint public debug2;
+
+  function whyDontYouWork(uint a, uint b, uint c) 
+                          public returns (uint) {
+    uint x = 10**a;
+    debug1 = x;
+    x = x / b + c;
+    debug2 = x;
+    return x*123;
+  }
+}
+
+
+
+## Managing setup
+- Some projects will require multiple contracts working together
+- We can create a third contract to manage all this setup
+
+
+
+## Managing setup
+```
+contract Test {
+  address erc20 = 0x123456...;
+  address tokenUser = 0x123456...;
+  function setup() {
+    IERC20(erc20).callFunction(param1,2,3);
+    tokenUser.setERC20(erc20);
+    // ... and so on
+  }
+}
+```
+
+
+
+## Still stuck?
+- Try adding in more `require()` statements
+- Note that a subtraction on a uint that causes a negative number will revert the call
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>

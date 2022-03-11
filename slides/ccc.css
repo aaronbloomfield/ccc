@@ -272,6 +272,7 @@ code.small {
   margin-left: -50px;
   height: 400px;
   font-size: smaller;
+  transform-origin: top;
 }
 
 code.longcode {
@@ -321,4 +322,8 @@ code.notworking {
   padding-right: 3px;
   border: 1px solid black;
   box-shadow: 2px 2px 2px black;
+}
+
+pre.code-wrapper {
+  box-shadow: none;
 }
