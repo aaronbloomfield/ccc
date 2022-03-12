@@ -238,10 +238,28 @@ mapping (address => bool) public voters;
 mapping (uint => Choice) public choices;
 ```
   - We'll talk about `public` visibility later
-- To add to a mapping:
+- To access a mapping value:
+```
+if ( voters[msg.sender] ) { ... }
+```
+- To write to a mapping:
 ```
 voters[msg.sender] = true;
 ```
+
+
+
+## Mappings of mappings
+- You can have mappings to mappings:
+```
+mapping (uint => mapping(string => address) ) 
+              public twodmap;
+```
+- It's just like a 2-dimensional array:
+```
+twodmap[3]["foo"]
+```
+
 
 
 
@@ -641,19 +659,38 @@ library Address {
 - `internal`: like `protected` in other OO languages: it can be called by that class or it's sub-classes
 - `external`: like `public`, but can ONLY be called by code *outside* the contract; code in the contract can not call an `external` function
   - Functions in interfaces must be declared `external`
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n" id="getters"><textarea>
 ## Visibilities
 - The stated visibility in an interface can be expanded (only) in the contract
   - Example: if an interface specifies a function as `external`...
     - Then the implementing contract can specify it either as `external` or `public`
       - As `public` is *more* visible than `external`
-- Anything field defined as `public` has a getter function defined for it
+- Anything field defined as `public` has a getter function defined for it -- see the next slide
   - If you have `uint public k`, then you can call the `k()` getter function to access its value
 - The default, if unspecified, is `public`
   - But without a getter function
 - Note that all data is still visible on the blockchain, even for `private` fields!
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Getter functions
+- The following code:
+```
+uint public num_assignments;
+mapping (address => string memory) public aliases;
+mapping (uint => mapping(string => address) ) 
+              public twodmap;
+```
+- Creates the following getter functions:
+```
+function num_assignments() public returns (uint);
+function aliases(address a) public 
+                  returns (string memory);
+function twodmap(uint id, string s) public
+                  returns (address);
+```
 
 
 
@@ -1469,7 +1506,7 @@ contract.payToAlias.sendTransaction("mst3k",123456,
 # Testing & Debugging
     </textarea></section>
 
-    <section data-markdown data-separator="^\n\n\n"><textarea>
+    <section data-markdown data-separator="^\n\n\n" id='require'><textarea>
 ## Use `require()` with 2 parameters
 
 - Consider:
@@ -1482,9 +1519,9 @@ require (value > 0);
 require (value > 0, "value must be > 0 in foo()");
 ```
 - Now Remix will report that specific string if/when it reverts
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Use `require()` to assure the correct state
 - Using `require()` a lot to make sure that the variables are in the state you expect them to be
 ```
