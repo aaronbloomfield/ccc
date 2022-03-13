@@ -75,7 +75,7 @@ line-height:120%;
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Sources
-- The main reference is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
+- The main reference for this slide set is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
   - URL: https://docs.soliditylang.org/en/latest/index.html
 - This section is the [Types section therein](https://docs.soliditylang.org/en/latest/types.html)
   - https://docs.soliditylang.org/en/latest/types.html
@@ -87,13 +87,14 @@ line-height:120%;
 ## A note about these slides
 - These slides are meant as a explanation
   - You are not expected to remember everything!
+- Since you all know OOP, it's just showing what is different in Solidity
 - You can come back to use this as a reference later
 
 
 
 ## Value types: integers
 - Signed and unsigned ints from 8 bits (1 byte) to 256 bits (32 bytes) in size
-  - In all byte sizes between
+  - And in all byte sizes between
 - Unsigned: `uint8`, `uint16`, `uint24`, ... `uint256`
   - `uint` is an alias for `uint256`
 - Signed: `int8`, `int16`, `int24`, ..., `int256`
@@ -109,14 +110,14 @@ line-height:120%;
 - Most used: `uint` (aka `uint256`) and `uint8`
 - Warning: a subtraction into a `uint` that is negative will cause a revert
   - A revert is basically an abort -- more on this later
-  - And will not give a useful error message indicating so!
+  - And it will not give a useful error message indicating so!
 
 
 
 ## Integer literals
 - Scientific notation: `1e12` equals $10^{12}$
   - `3.4e8` equals $3.4 \ast 10^8$
-- Underscores separate digits for readability
+- Underscores separate digits for readability, but do not affect its value
   - 0x12345678 == 0x1234_5678
 
 
@@ -170,7 +171,7 @@ address payable x = payable(0x123);
 address myAddress = address(this);
 if (x.balance < 10 && myAddress.balance >= 10) {...}
 ```
-- Others we won't see in this course: 
+- Other methods we won't see in this course: 
   - `transfer()` to send wei (requires a `receive()` function on the receiving contract)
   - `send()`: low-level and not safe version of `transfer()`
   - `call()`, `delegatecall()`, and `staticcall()`: calling a contract with an unknown ABI
@@ -185,7 +186,7 @@ if (x.balance < 10 && myAddress.balance >= 10) {...}
   - Indexing with `[]`
 - Operators:
   - Comparisons, bit operators, shift operators
-  - Treats the byte array like a uint when performing the operation
+  - Treats the byte array like a similiarly sized `uint` when performing the operation
 
 
 
@@ -282,7 +283,7 @@ mapping (uint => Choice) public choices;
 mapping (address => bool) public how_voted;
 ```
 - The `voters` tells if an address has voted
-  - If they haven't, then that key will return 0 (false)
+  - If they haven't, then that key's value will be 0 (false)
 - The `how_voted` will tell what they voted for
 
 
@@ -292,12 +293,12 @@ mapping (address => bool) public how_voted;
 - Like a class without methods
 ```
 struct Choice {
-        uint id;
-        string name;
-        uint votes;
+    uint id;
+    string name;
+    uint votes;
 }
 ```
-  - They can contain mappings as well
+  - Structs can contain mappings as well
 - They are often kept in a mapping:
 ```
 mapping (uint => Choice) public choices;
@@ -399,7 +400,7 @@ assert(1 ether == 1e18);
 
 
 ## String functions
-- No (direct) string comparison!
+- No (direct) built-in string comparison!
   - Reasons:
     - It is difficult / expensive to compare across memory locations
   - Instead, compare their hashes: `keccak256(x) == keccak256(y)`
@@ -410,6 +411,7 @@ string memory s = string.concat(s1, s2);
 ```
   - Only returns a `string memory`
 - There are 3rd party string function libraries
+  - Which contain comparisons, among other functions
 
 
 
@@ -449,7 +451,8 @@ contract C {
 
 ## Even more...
 - There are a lot of types we are skipping
-- See them all at https://docs.soliditylang.org/en/latest/types.html
+- See them all in the [Solidity types reference](https://docs.soliditylang.org/en/latest/types.html)
+  - https://docs.soliditylang.org/en/latest/types.html
 
 </textarea></section>
 
@@ -468,7 +471,9 @@ contract C {
 - The easy part: learning the language
   - It's just an OO language with familiar syntax
 - The hard part is understanding:
-  - The restrictions that blockchain programs have (no time or random numbers, e.g.)
+  - The restrictions that blockchain programs have
+    - No time or random numbers
+    - No print statements!
   - How to best interact with the blockchain
   - What the heck do you do with it?
 - The easy part will be done in the next 20 minutes
@@ -616,6 +621,7 @@ interface Foo is Bar {
   // ...
 }
 ```
+- Any contract that inherits from an interface, but does not implement all the methods, must be declared `abstract`
 
 
 
@@ -624,7 +630,7 @@ interface Foo is Bar {
   - All function prototypes in interfaces are assumed to be `virtual`
 - `override`: when a sub-class is replacing an inherited function
   - If the function is multiply inherited, you have to specify which (or all) that it overrides:
-    - `... override(ERC721, IERC165) ...`
+    - `function foo() public override(ERC721, IERC165) {`
 
 
 
@@ -790,6 +796,59 @@ constructor(uint foo) {
 
 
 
+## Contract elements
+- A contract can have:
+  - Fields
+  - Functions
+  - A constructor and a `selfdestruct()` method
+  - A few other special-purpose methods we won't see here
+  - Modifiers
+
+
+
+## Modifiers
+- A modifier changes how a function works
+- You put in conditions (or whatever) and then indicate where the function body goes
+- That indication is with the underscore
+  ```
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+```
+
+
+
+## Modifiers
+- This code adapted from [here](https://solidity-by-example.org/function-modifier/)
+
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
+>contract Modifiers {
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+
+    modifier validAddress(address _addr) {
+        require(_addr != address(0), "Not valid address");
+        _;
+    }
+
+    function changeOwner(address _newOwner) public onlyOwner 
+                                            validAddress(_newOwner) {
+        owner = _newOwner;
+    }
+}
+</code></pre>
+
+
+
 ## Events & emit
 - An *event* is when something happens
 - Allows for logging of what has happened to a contract
@@ -804,6 +863,8 @@ event choiceAddedEvent (uint indexed _id);
 emit choiceAddedEvent(num_choices);
 emit votedEvent(_id);
 ```
+- Events can be "watched" for (or "subscribed to")
+  - We'll see this later this semester
 
 
 
@@ -824,9 +885,9 @@ From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.
 
 
 ## Other global variables
-- block.basefee (uint): current block’s base fee (EIP-3198 and EIP-1559)
+- block.basefee (uint): current block's base fee (EIP-3198 and EIP-1559)
 - block.chainid (uint): current chain id
-- block.coinbase (address payable): current block miner’s address
+- block.coinbase (address payable): current block miner's address
 - block.gaslimit (uint): current block gaslimit
 - block.number (uint): current block number
 - gasleft() returns (uint256): remaining gas
@@ -1314,6 +1375,11 @@ SWAP1 POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x4D SWAP16
 ORIGIN KECCAK256 DUP7 DUP14 PUSH5 0x1179070BFF 0xAD CALLDATALOAD 0xE3 0x5C
 0xED RETURN DUP9 SWAP8 PUSH17 0xF2F741DB5AF6AE70FFE89464736F6C6343 STOP
 ADDMOD 0xC STOP CALLER </code></pre>
+
+
+
+## Security holes
+- Did you notice the (intentional) security holes in the Choices contract?
 
 </textarea></section>
 
