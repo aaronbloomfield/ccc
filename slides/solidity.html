@@ -901,6 +901,13 @@ From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.
 ## Global functions
 - blockhash(uint blockNumber) returns (bytes32)
   - hash of the given block when blocknumber is one of the 256 most recent blocks; otherwise returns zero
+- keccak256(bytes memory) returns (bytes32)
+
+
+
+## Solidity cheat sheet
+- See the one at https://docs.soliditylang.org/en/latest/cheatsheet.html
+- In PDF form in the repo as [doc/solidity_cheatsheet.pdf](../doc/solidity_cheatsheet.pdf)
 
 
 
@@ -1468,12 +1475,12 @@ geth attach /path/to/ethprivate/geth.ipc
 - We are going to call the smart contract directly from geth
 - First, save the smart contract address in a variable:
   ```
-var debtSCaddr = "0xffffffffffffffffffffffffffffffffffffffff";
+var addr = "0xffffffffffffffffffffffffffffffffffffffff";
 ```
   - But use the actual address, not that address!
 - Next we have to save the ABI:
   ```
-var debtABI = [...];
+var abi = [...];
 ```
   - Copy-and-paste the ABI from the Collab landing page into that command
   - Notice no quotes around the variable's value!
@@ -1484,11 +1491,11 @@ var debtABI = [...];
 ## Transactions from geth
 - Next we have to have geth create a contract object for us:
   ```
-var debtContractInterface = eth.contract(debtABI);
+var interface = eth.contract(abi);
 ```
 - Lastly, we need to link that to the specific contract address that we are going to be using:
   ```
-var contract = debtContractInterface.at(debtSCaddr);
+var contract = interface.at(addr);
 ```
 
 
