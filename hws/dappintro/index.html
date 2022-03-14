@@ -292,6 +292,7 @@ to enter some other value instead of
 For now, use the the flag as specified here, and know that you will have
 to make a change to it below; the assignment steps below will tell you
 when and how.</li>
+<li>We do NOT recommend using the <code>--dev console</code> flags</li>
 </ul></li>
 <li><code>--http.api web3,eth,debug,personal,net</code>: These are the
 APIs that are made available on the HTTP-RPC server. For example, by
@@ -349,8 +350,9 @@ above. Ensure that the “Web3 Provider Endpoint”, in the pop-up box, says
 <ul>
 <li>If you are using the Remix IDE, the pop-up window in Remix will tell
 you what you should use as your endpoint value (meaning what value to
-put after the <code>--http.corsdomain</code> flag). You should restart
-the geth node with that flag.</li>
+put after the <code>--http.corsdomain</code> flag). See a screen shot of
+that value <a href="remix-cors.webp">here</a>. You should restart the
+geth node with that flag.</li>
 <li>Click OK to close that pop-up window</li>
 <li>Note to Mac OS X users: if you are doing this assignment on
 remix.etherem.org in Safari, then this is the part that Safari seems to

@@ -80,6 +80,7 @@ We need to start geth, as we did in the [connecting to the private Ethereum bloc
     - RPC stands for Remote Procedure Call.  It's a way for one program to call a procedure running in some other program.  In this case, the client is trying to call the procedure, and the geth node is receiving, and then executing, the procedure call.
 - `--http.corsdomain="https://remix.ethereum.org"`: This allows that particular site to connect to the HTTP-RPC server.  Normally all sites are blocked for security reasons, so we have to specifically grant permission for individual sites to connect.
     - **NOTE:** if you are using the Remix IDE, you will have to enter some other value instead of `https://remix.ethereum.org`; the pop-up window in Remix (that pop-up window is described below) will tell you what the value is.  For now, use the the flag as specified here, and know that you will have to make a change to it below; the assignment steps below will tell you when and how.
+    - We do NOT recommend using the `--dev console` flags
 - `--http.api web3,eth,debug,personal,net`: These are the APIs that are made available on the HTTP-RPC server.  For example, by enabling `eth` (one of the ones listed), then `eth.blockNumber` can be called.  This is only for the HTTP-RPC server; an attached geth node has access to all the APIs.
 - `--vmdebug`: This records information useful for debugging, which is an option that Remix will allow us to do.
 - `--allow-insecure-unlock`: This will allow us to unlock our `eth.coinbase` account via `personal.unlockAccount()`.  Normally this is disabled if the HTTP-RPC server is enabled.  Our particular configuration does not allow any *other* machines to connect to the HTTP-RPC server, and our (fake) ETH is not worth any money, so it is safe enough for us to use for this course.
@@ -105,7 +106,7 @@ Read these instructions through before starting them!
 
 1. Change to the Remix deployment tab.
     - Under 'Environment' select "Web3 Provider".  The pop-up window will tell you the options to run geth with, and you have already done that, above.  Ensure that the "Web3 Provider Endpoint", in the pop-up box, says `http://127.0.0.1:8545`.
-        - If you are using the Remix IDE, the pop-up window in Remix will tell you what you should use as your endpoint value (meaning what value to put after the `--http.corsdomain` flag).  You should restart the geth node with that flag.
+        - If you are using the Remix IDE, the pop-up window in Remix will tell you what you should use as your endpoint value (meaning what value to put after the `--http.corsdomain` flag).  See a screen shot of that value [here](remix-cors.webp).  You should restart the geth node with that flag.
         - Click OK to close that pop-up window
         - Note to Mac OS X users: if you are doing this assignment on remix.etherem.org in Safari, then this is the part that Safari seems to have issues with.  If it is not working for you, then please switch to a different browser (Firefox or Chrome both seem to work fine).  You can then cut-and-paste your code from Remix in Safari to remix in Firefox / Chrome.
     - Underneath the "Environment" drop-down box, it should now say, "Custom (12345678) network", with the chain number of our private blockchain instead of 12345678.
