@@ -129,6 +129,7 @@ line-height:120%;
   - Types are `fixed` and `ufixed`
   - But don't use them!
 - No floating point numbers!
+- Note that all variables have an initial value of 0
 
 
 
@@ -303,7 +304,7 @@ struct Choice {
 ```
 mapping (uint => Choice) public choices;
 ```
-- If you put the same `Choice` struct into different mappings, you now have *two* copies of that struct!
+- If you put the same `Choice` struct into different mappings, you *might* now have *two* copies of that struct!
 
 
 
@@ -403,7 +404,10 @@ assert(1 ether == 1e18);
 - No (direct) built-in string comparison!
   - Reasons:
     - It is difficult / expensive to compare across memory locations
-  - Instead, compare their hashes: `keccak256(x) == keccak256(y)`
+  - Instead, compare their hashes: 
+    ```
+if ( keccak256(x) == keccak256(y) ) { ... }
+```
     - Note that `keccak256()` uses a lot of gas
 - Can concatenate two strings:
   ```
@@ -505,7 +509,7 @@ contract C {
 // SPDX-License-Identifier: CC BY-SA
 ```
 ```
-// SPDX-License-Identifier: Apache
+// SPDX-License-Identifier: GPL
 ```
 - A compiler will issue a warning if it's not there
 - The actual license type is not checked, so you can also use:
@@ -700,7 +704,7 @@ function twodmap(uint id, string s) public
 
 
 
-## Qualifiers
+## Function Qualifiers
 - `view`: this function does not *modify* the state of the contract
   - It can read state variables, but not write to any state variables
   - It can write to local variables, of course
@@ -1508,11 +1512,11 @@ contract.num_aliases.call()
 ```
 - To read a mapping:
   ```
-contract.entities.call(3)
+contract.entities.call(2)
 ```
 - To get a name from a mapping:
   ```
-contract.entities.call(3)[2]
+contract.entities.call(2)[2]
 ```
 - To call a method:
   ```
@@ -1543,8 +1547,7 @@ personal.unlockAccount(eth.coinbase,"password",0)
 - Transactions that write to the blockchain use the `.sendTransaction()` method
   ```
 contract.addAlias.sendTransaction("mst3k", 
-         "Your Name", eth.coinbase, 
-         {from:eth.coinbase, gas:1000000})
+         "Your Name", {from:eth.coinbase, gas:1000000})
 ```
 - Notice, in the value printed after that call, the transaction hash
   - Make a note of that, and search for it in the Blockchain Explorer
@@ -1557,11 +1560,13 @@ contract.addAlias.sendTransaction("mst3k",
 ## Pay off some debts!
 - You can now enter some debts:
   ```
-contract.payToAlias.sendTransaction("mst3k",123456,
+contract.payToAlias.sendTransaction("mst3k",17,
                {from:eth.coinbase, gas:1000000});
 ```
+- Don't use mst3k!  Use the userid of the other person
 - Note that this is entering that the other person owes *you* money
   - If you owe them money, you would enter a negative value
+- The amount must be between -100 and 100, inclusive
 - And, again, view the web page for this exercise that lists the current balances
 - You can also see those transactions in the blockchain explorer
   - Note the transaction hash when you enter that command

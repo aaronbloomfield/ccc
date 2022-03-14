@@ -67,6 +67,61 @@ Template for first line:
   
   <section>
 
+    <section class="center">
+<h2 class='xkcd'>For the Sake of Simplicity</h2>
+<img src="https://imgs.xkcd.com/comics/for_the_sake_of_simplicity.png" title="For the sake of simplicity, gardeners are assumed to move through Euclidean space--neglecting the distortion from general relativity--unless they are in the vicinity of a Schwarzschild Orchid." alt="For the Sake of Simplicity" srcset="https://imgs.xkcd.com/comics/for_the_sake_of_simplicity_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2587/'>xkcd # 2587</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 14: Mon, March 14th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`38,594; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,526; [ETH gas](https://ethgas.watch/): 44 gwei => `$`2.59
+- Midterm last Wednesday!  How was it?
+  - We are going to go over it, but not today
+  - It's 96% graded, and will be back before Wednesday's lecture
+- Upcoming schedule
+  - HW [S5: dApp introduction](../hws/dappintro/index.html) is due tomorrow by midnight
+  - We are going to have HWs due each Tuesday for the rest of the semester
+    - Smart contracts (gradebook, tokens, auction, DEX), one on zero-knowledge proofs, then two on Web3
+- Grades
+  - Everything returned so far, other than the midterm
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request
+    - Exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402; but Friday 2-3 this week
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Please bring your computers on Wednesday
+  - The ones that you have geth installed and configured
+  - We are going to do a live coding exercise
+- Today we will start on [Solidity](../slides/solidity.html#/)
+  - And come back later to the rest of [Ethereum](../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../slides/ethereum.html#/2/26))
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## Recap
+- Ethereum round-up: we ended on [slide 3.27](../slides/ethereum.html#/2/26)
+  - Ethereum is the network, ether (or ETH) is the currency
+    - One wei is $10^{-18}$ ETH; one giga-wei (aka gwei) is $10^{-9}$ ETH
+  - Account address is the first 20 bytes of the Keccak-256 hash of the ECDSA key
+  - An Ethereum transaction can hold a program, called a smart contract, which is compiled into bytecode
+    - That program has a *contract address* to find it
+    - Formed by taking the hash of the account address and nonce++
+  - Fees are called *gas*
+    - You specify how much gas you are willing to spend (aka startgas)
+    - And how much you are willing to pay for gas
+    - Different instructions use different amounts of gas
+  - Messages: calling a function (method) on a smart contract
+- Today: programming in [Solidity](../slides/solidity.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Midterm Today (March 2, 2022)
 

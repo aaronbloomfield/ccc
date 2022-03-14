@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Debts.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: CC BY-SA</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
+
+<font color="#008080">contract</font> Debts <font color="#FF0000">{</font>
+
+	<b><font color="#0000FF">struct</font></b> <font color="#008080">Entry</font> <font color="#FF0000">{</font>
+		<font color="#008080">uint</font> id<font color="#990000">;</font>
+		<font color="#008080">string</font> thealias<font color="#990000">;</font>
+		<font color="#008080">string</font> name<font color="#990000">;</font>
+		<font color="#008080">address</font> addr<font color="#990000">;</font>
+		<font color="#009900">int</font> balance<font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+	<i><font color="#9A1900">// a mapping has all keys, so we can't call `keys()` (or similar)</font></i>
+	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>string <font color="#990000">=&gt;</font> uint<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> findByAlias<font color="#990000">;</font>
+	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> findByAddress<font color="#990000">;</font>
+	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>string <font color="#990000">=&gt;</font> <font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#0000FF">public</font></b> hasEntry<font color="#990000">;</font>
+	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>uint <font color="#990000">=&gt;</font> Entry<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> entries<font color="#990000">;</font>
+	uint <font color="#008080">public</font> num_aliases<font color="#990000">;</font>
+
+	<b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
+		<i><font color="#9A1900">// go over initialization here to save time with later transactions</font></i>
+		<i><font color="#9A1900">// address checksum issues</font></i>
+	<font color="#FF0000">}</font>
+
+	<font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
+		<b><font color="#000000">addAlias</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>_name<font color="#990000">,</font>msg<font color="#990000">.</font>sender<font color="#990000">);</font>
+	<font color="#FF0000">}</font>
+
+	<font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">,</font> <font color="#008080">address</font> _account<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#FF0000">{</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(!</font>hasEntry<font color="#990000">[</font>_alias<font color="#990000">]);</font>
+		findByAlias<font color="#990000">[</font>_alias<font color="#990000">]</font> <font color="#990000">=</font> num_aliases<font color="#990000">;</font>
+		findByAddress<font color="#990000">[</font>_account<font color="#990000">]</font> <font color="#990000">=</font> num_aliases<font color="#990000">;</font>
+		hasEntry<font color="#990000">[</font>_alias<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+		entries<font color="#990000">[</font>num_aliases<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Entry</font></b><font color="#990000">(</font>num_aliases<font color="#990000">,</font>_alias<font color="#990000">,</font>_name<font color="#990000">,</font>_account<font color="#990000">,</font><font color="#993399">0</font><font color="#990000">);</font>
+		num_aliases<font color="#990000">++;</font>
+	<font color="#FF0000">}</font>
+
+	<font color="#008080">function</font> <b><font color="#000000">payToAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#009900">int</font> amount<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
+		<i><font color="#9A1900">// limit amounts</font></i>
+		<b><font color="#000000">require</font></b> <font color="#990000">(</font>amount <font color="#990000">&gt;=</font> <font color="#990000">-</font><font color="#993399">100</font> <font color="#990000">&amp;&amp;</font> amount <font color="#990000">&lt;=</font> <font color="#993399">100</font><font color="#990000">,</font> <font color="#FF0000">"Amounts must be between -100 and 100"</font><font color="#990000">);</font>
+		<i><font color="#9A1900">// get who it's from, make sure they have an alias/entry</font></i>
+		<font color="#008080">uint</font> from <font color="#990000">=</font> findByAddress<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">];</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(</font>msg<font color="#990000">.</font>sender <font color="#990000">==</font> entries<font color="#990000">[</font>from<font color="#990000">].</font>addr<font color="#990000">);</font>
+		<i><font color="#9A1900">// get who it's to, make sure they have an alias/entry</font></i>
+		<font color="#008080">uint</font> to <font color="#990000">=</font> findByAlias<font color="#990000">[</font>_alias<font color="#990000">];</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">keccak256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>_alias<font color="#990000">))</font> <font color="#990000">==</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>entries<font color="#990000">[</font>to<font color="#990000">].</font>thealias<font color="#990000">)));</font> <i><font color="#9A1900">// go over the lack of string comparison</font></i>
+		<i><font color="#9A1900">// adjust amounts</font></i>
+		entries<font color="#990000">[</font>from<font color="#990000">].</font>balance <font color="#990000">+=</font> amount<font color="#990000">;</font>
+		entries<font color="#990000">[</font>to<font color="#990000">].</font>balance <font color="#990000">-=</font> amount<font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
+</body>
+</html>
