@@ -279,14 +279,18 @@ twodmap[3]["foo"]
 - Consider:
 ```
 mapping (address => bool) public voters;
-mapping (uint => Choice) public choices;
 // this next one was not in the original Choices.sol:
-mapping (address => bool) public how_voted;
+mapping (address => uint) public how_voted;
+//
+// or:
+//
+mapping (uint => Choice) public choices;
+uint public num_choices;
 ```
 - The `voters` tells if an address has voted
   - If they haven't, then that key's value will be 0 (false)
-- The `how_voted` will tell what they voted for
-
+  - The `how_voted` will tell what they voted for
+- For the Choices, the uint tells how many keys there are
 
 
 
@@ -1549,8 +1553,10 @@ personal.unlockAccount(eth.coinbase,"password",0)
 contract.addAlias.sendTransaction("mst3k", 
          "Your Name", {from:eth.coinbase, gas:1000000})
 ```
+- Don't use mst3k!  Use your userid and name
+  - Possibly fake, but make it realistic
 - Notice, in the value printed after that call, the transaction hash
-  - Make a note of that, and search for it in the Blockchain Explorer
+  - Search for the address in the Blockchain Explorer
   - It may take a minute or two for that to refresh...
 - Now view the web page for this exercise that lists the current balances
   - The URL is on the Collab landing page

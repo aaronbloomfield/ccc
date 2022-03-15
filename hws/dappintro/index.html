@@ -210,7 +210,7 @@ that the number of votes is now 1.</li>
 console states that “The transaction has been reverted to the initial
 state”. This particular smart contract prevents double-voting. It does
 this by keeping track of who has voted (in the <code>voters</code>
-mapping on line 14), and then ensuring that the current voter has not
+mapping on line 19), and then ensuring that the current voter has not
 already voted (the first line of the <code>vote()</code> method via a
 <code>require()</code> call). If a <code>require()</code> call fails,
 then the state of everything is reverted back to what it was before the

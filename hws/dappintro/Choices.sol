@@ -3,7 +3,6 @@
 
 pragma solidity ^0.8.7;
 
-
 // a smart contract to allow voting on something
 contract Choices {
 

@@ -79,10 +79,11 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 7. Wed, Feb 9: [bitcoin](../slides/bitcoin.html#/) to slide 7.6
 8. Mon, Feb 14: [bitcoin](../slides/bitcoin.html#/) to slide 7.36
 9. Wed, Feb 16: finished [bitcoin](../slides/bitcoin.html#/)
-10. Mon, Feb 21: [mining](../slides/mining.html) to slide 4.6
-11. Wed, Feb 23: finished [mining](../slides/mining.html) to slide 4.6
-12. Mon, Feb 28: [Ethereum](../slides/ethereum.html) to slide 3.27
+10. Mon, Feb 21: [mining](../slides/mining.html#/) to slide 4.6
+11. Wed, Feb 23: finished [mining](../slides/mining.html#/) to slide 4.6
+12. Mon, Feb 28: [Ethereum](../slides/ethereum.html#/) to slide 3.27
 13. Wed, Mar 2: midterm
+14. Mon, Mar 14: [Solidity](../slides/solidity.html#/) to slide 5.3
 
 ## Legal Issues
 

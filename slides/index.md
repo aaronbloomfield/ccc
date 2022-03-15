@@ -14,6 +14,7 @@ Slide sets, in the intended order to be presented in lecture, are below (if a li
 - [Bitcoin](bitcoin.html#/)
 - [Mining](mining.html#/)
 - [Ethereum](ethereum.html#/)
+- [Solidity](solidity.html#/)
 
 After spring break there will be a number of topics that will be gone over.  This list is subject to change, and the order is not yet set.  Some of these topics will be merged together into a single lecture presentation.
 
