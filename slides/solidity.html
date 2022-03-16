@@ -264,7 +264,6 @@ twodmap[3]["foo"]
 
 
 
-
 ## Mapping keys
 - The keys are actually the *hash* of the key you provide
   - If you provide the character `1` as the key, the actual key is the Keccak256 hash of that
@@ -1410,7 +1409,7 @@ ADDMOD 0xC STOP CALLER </code></pre>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## A Circle of Debt
-- A bunch of friends always pay for each other
+- A group of friends always cover each other for expenses
 - They want a way to resolve these debts
 - Example:
   - Alice pays `$`5 to cover Bob
@@ -1449,7 +1448,7 @@ ADDMOD 0xC STOP CALLER </code></pre>
 - This has already been deployed on our private Ethereum blockchain
   - But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the [dApp Introduction](../hws/dappintro/index.html) assignment
 - I've added a few aliases, but not for any of you
-- On the Collab landing page are the relevant block numbers
+- On the Collab landing page is the relevant contract address (and other information)
 - Look at the Blockchain Explorer
   - The smart contract was deployed in a specific block
   - The adding of some aliases was in a specific block
@@ -1516,11 +1515,11 @@ contract.num_aliases.call()
 ```
 - To read a mapping:
   ```
-contract.entities.call(2)
+contract.entities.call(0)
 ```
 - To get a name from a mapping:
   ```
-contract.entities.call(2)[2]
+contract.entities.call(0)[2]
 ```
 - To call a method:
   ```
@@ -1563,6 +1562,11 @@ contract.addAlias.sendTransaction("mst3k",
 
 
 
+## View the list of debts
+- We have a web page that allows you to view all the entered aliases and who owes what
+
+
+
 ## Pay off some debts!
 - You can now enter some debts:
   ```
@@ -1577,6 +1581,12 @@ contract.payToAlias.sendTransaction("mst3k",17,
 - You can also see those transactions in the blockchain explorer
   - Note the transaction hash when you enter that command
 
+
+
+## The result...
+... how much do I owe???
+
+Also, we have the source code available
 
 </textarea></section>
 
