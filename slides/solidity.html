@@ -1447,7 +1447,7 @@ ADDMOD 0xC STOP CALLER </code></pre>
 - A request: please do not go ahead of me in the following deployment steps
 - This has already been deployed on our private Ethereum blockchain
   - But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the [dApp Introduction](../hws/dappintro/index.html) assignment
-- I've added a few aliases, but not for any of you
+- I've added an alias for me, but not for any of you
 - On the Collab landing page is the relevant contract address (and other information)
 - Look at the Blockchain Explorer
   - The smart contract was deployed in a specific block
@@ -1471,9 +1471,8 @@ geth attach /path/to/ethprivate/geth.ipc
 
 ## Relevant information
 - On the Collab landing page, at the bottom, are a few pieces of information we will need:
-  - The ABI for this smart contract -- you will need to copy that shortly
-  - A link to a web page to view who owes who money
   - The smart contract address
+  - The ABI for this smart contract -- you will need to copy that shortly
   - A link to this part of the slide set so you can copy-and-paste some of the code
 
 
@@ -1533,7 +1532,7 @@ contract.thisMethodDoesNotExist.call()
   ```
 personal.unlockAccount(eth.coinbase,"password",0)
 ```
-- You do not have to start and stop the miner, as I am doing that for you
+- You do not have to start and stop the miner, as I will do that for you
 - And the blockchain explorer is now updating every 1 minute
 
 
@@ -1557,13 +1556,12 @@ contract.addAlias.sendTransaction("mst3k",
 - Notice, in the value printed after that call, the transaction hash
   - Search for the address in the Blockchain Explorer
   - It may take a minute or two for that to refresh...
-- Now view the web page for this exercise that lists the current balances
-  - The URL is on the Collab landing page
 
 
 
 ## View the list of debts
 - We have a web page that allows you to view all the entered aliases and who owes what
+- The URL is...
 
 
 
@@ -1573,7 +1571,7 @@ contract.addAlias.sendTransaction("mst3k",
 contract.payToAlias.sendTransaction("mst3k",17,
                {from:eth.coinbase, gas:1000000});
 ```
-- Don't use mst3k!  Use the userid of the other person
+- Don't use mst3k!  Use the userid of the *other* person
 - Note that this is entering that the other person owes *you* money
   - If you owe them money, you would enter a negative value
 - The amount must be between -100 and 100, inclusive
