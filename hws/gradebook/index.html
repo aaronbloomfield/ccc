@@ -28,19 +28,18 @@ href="../index.md">md</a>)</p>
 programs are just not doing the job anymore. So I’ve decided to keep
 everybody’s grades in a public blockchain. Your task is to implement
 this gradebook for me.</p>
-<p>Note: I’m going to to keep <em>real</em> grades in the gradebook. In
-addition to the fact that doing so would violate your privacy, it would
-also be a violation of <a
+<p>Note: I’m not going to to keep <em>real</em> grades in the gradebook.
+In addition to the fact that doing so would violate your privacy, it
+would also be a violation of <a
 href="https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html">FERPA</a>.
-So only fake grades will be kept herein. And this is really a ridiculous
-use of gas.</p>
+So only fake grades will be kept herein.</p>
 <p>Admittedly, a gradebook of private grades being kept on a public
 blockchain is not the most realistic use of smart contracts. But it will
-introduce you to developing smart contracts. And there are many very
-similar applications that would only require a few tweaks to the
-gradebook contract. There are organizations that coordinate through
-blockchains, and they have to keep some information on members; while
-not grades, it is the same concepts.</p>
+introduce you to the concepts involved in developing smart contracts.
+And there are many very similar applications that would only require a
+few tweaks to the gradebook contract. There are organizations that
+coordinate through blockchains, and they have to keep some information
+on members; while not grades, it involves the same concepts.</p>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Writing this homework will require completion of the following
 assignments:</p>
@@ -80,6 +79,8 @@ below.</p>
 <pre><code>// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
+// See the actual Gradebook.sol file, linked to above, for much more detailed comments
+
 interface Gradebook {
 
     event assignmentCreationEvent (uint indexed _id);
@@ -117,28 +118,34 @@ interface Gradebook {
 <ul>
 <li>Students are all identified by a single string; we’ll use UVA
 userids</li>
-<li>All grades are (unsigned) integers</li>
+<li>All entered grades are (unsigned) integers</li>
 <li>One cannot have a grade higher than the max score; this should be
 checked via a <code>require()</code></li>
 <li>While averages can be non-integers, we will return the (truncated)
 integer value that is 100 times the average. So if somebody’s average
 was 86.265%, the returned average would be 8626.</li>
-<li>The only task the constructor needs to do is set the instructor
-field to <code>msg.sender</code></li>
+<li>The only task the constructor needs to do is set the
+<code>instructor</code> field to <code>msg.sender</code></li>
 <li>Your contract opening line MUST be: <code>contract CourseGradebook
 is Gradebook {</code></li>
 <li>All of your methods and fields will have to have the
 <code>override</code> qualifier, since they are overriding what is
 specified in the <code>Gradebook</code> interface</li>
 </ul>
-<p>The first six methods are getter functions. As long as you set the
-visibility of the field in the contract as <code>public</code>, then the
-getter method is created for you, as <a
+<p>The first six methods (after the two events) are getter functions. As
+long as you set the visibility of the field in the contract as
+<code>public</code>, then the getter method is created for you, as <a
 href="../../slides/solidity.html#/getters">discussed in the lecture
 slides</a>. For example, for the getter function <code>function
 num_assignments() external returns (uint)</code>, the appropriate field
 declaration would be <code>uint public override num_assignments;</code>.
 The lecture slide details this a bit more.</p>
+<p>The two events, listed at the top of the interface, should be emitted
+at the appropriate time. The <code>addAssignment()</code> function
+should emit <code>assignmentCreatedEvent()</code> event, and the
+<code>addGrade()</code> function should emit the
+<code>gradeEntryEvent()</code> event. Be sure to emit the events
+<em>after</em> any <code>require()</code> calls!</p>
 <h4 id="testing">Testing</h4>
 <p>You will invariably run into issues testing and debugging your code.
 We have a few tips and tricks.</p>
@@ -158,11 +165,9 @@ save you time</p>
 addAssignment(&quot;HW1&quot;,10);
 addAssignment(&quot;HW2&quot;,10);
 addGrade(&quot;mst3k&quot;,0,5);
-addGrade(&quot;mst3k&quot;,1,10);</code></pre>
-<ul>
-<li><strong>BE SURE</strong> to remove those lines once you are finished
-testing it and prior to submission</li>
-</ul></li>
+addGrade(&quot;mst3k&quot;,1,10);</code></pre></li>
+<li><p><strong>BE SURE</strong> to remove those lines once you are
+finished testing it and prior to submission</p></li>
 </ul>
 <h4 id="deployment">Deployment</h4>
 <p>Once done, you will need to deploy your CoruseGradebook smart
@@ -192,11 +197,14 @@ interface. That interface file will be placed in the same directory on
 Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot
 test this assignment, as it does not have access to the private
 blockchain. So it can only check that the right file was submitted and
-that it compiles.</p>
+that it compiles. Thus, you should ignore any score that Gradescope
+presents, as it is not running any actual tests other than
+compilation.</p>
 <p>Submission 2: You must deploy your smart contract to our private
 Ethereum blockchain – this was probably done above. It’s fine if you
-deploy it a few times to test it. But the final deployment should not
-have any data other than the call to <code>designateTA()</code>.</p>
+deploy it a few times because you were testing it, screwed something up,
+or whatever. But the final deployment should not have any data other
+than the one call to <code>designateTA()</code>.</p>
 <p>Submission 3: You will need to submit your information via a Google
 form, the link to which is on the Collab landing page. You will need to
 submit the following items:</p>

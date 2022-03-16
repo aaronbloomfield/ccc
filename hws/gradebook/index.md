@@ -9,9 +9,9 @@ Gradebook Smart Contract
 
 I need a new gradebook!  Because Collab and my favorite spreadsheet programs are just not doing the job anymore.  So I've decided to keep everybody's grades in a public blockchain.  Your task is to implement this gradebook for me.
 
-Note: I'm going to to keep *real* grades in the gradebook.  In addition to the fact that doing so would violate your privacy, it would also be a violation of [FERPA](https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html).  So only fake grades will be kept herein.  And this is really a ridiculous use of gas.
+Note: I'm not going to to keep *real* grades in the gradebook.  In addition to the fact that doing so would violate your privacy, it would also be a violation of [FERPA](https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html).  So only fake grades will be kept herein.
 
-Admittedly, a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts.  But it will introduce you to developing smart contracts.  And there are many very similar applications that would only require a few tweaks to the gradebook contract.  There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it is the same concepts.
+Admittedly, a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts.  But it will introduce you to the concepts involved in developing smart contracts.  And there are many very similar applications that would only require a few tweaks to the gradebook contract.  There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.
 
 
 ### Pre-requisites
@@ -44,6 +44,8 @@ Formally, your contract will need to be named `CourseGradebook`, and saved in a 
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
+
+// See the actual Gradebook.sol file, linked to above, for much more detailed comments
 
 interface Gradebook {
 
@@ -83,14 +85,16 @@ interface Gradebook {
 #### Implementation details
 
 - Students are all identified by a single string; we'll use UVA userids
-- All grades are (unsigned) integers
+- All entered grades are (unsigned) integers
 - One cannot have a grade higher than the max score; this should be checked via a `require()`
 - While averages can be non-integers, we will return the (truncated) integer value that is 100 times the average.  So if somebody's average was 86.265%, the returned average would be 8626.
-- The only task the constructor needs to do is set the instructor field to `msg.sender`
+- The only task the constructor needs to do is set the `instructor` field to `msg.sender`
 - Your contract opening line MUST be: `contract CourseGradebook is Gradebook {`
 - All of your methods and fields will have to have the `override` qualifier, since they are overriding what is specified in the `Gradebook` interface
 
-The first six methods are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide details this a bit more.
+The first six methods (after the two events) are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide details this a bit more.
+
+The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit `assignmentCreatedEvent()` event, and the `addGrade()` function should emit the `gradeEntryEvent()` event.  Be sure to emit the events *after* any `require()` calls!
 
 
 #### Testing
@@ -107,7 +111,7 @@ addAssignment("HW2",10);
 addGrade("mst3k",0,5);
 addGrade("mst3k",1,10);
 ```
-    - **BE SURE** to remove those lines once you are finished testing it and prior to submission
+- **BE SURE** to remove those lines once you are finished testing it and prior to submission
 
 #### Deployment
 
@@ -125,9 +129,9 @@ I've deployed a gradebook with your (fake) grades.  The address for that smart c
 
 There are *three* forms of submission for this assignment; you must do all three.
 
-Submission 1: You should submit your `CourseGradebook.sol` file, and ONLY that file, to Gradescope.  All your code should be in that file, and you should specifically import the `Gradebook` interface.  That interface file will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot test this assignment, as it does not have access to the private blockchain. So it can only check that the right file was submitted and that it compiles.
+Submission 1: You should submit your `CourseGradebook.sol` file, and ONLY that file, to Gradescope.  All your code should be in that file, and you should specifically import the `Gradebook` interface.  That interface file will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot test this assignment, as it does not have access to the private blockchain. So it can only check that the right file was submitted and that it compiles.  Thus, you should ignore any score that Gradescope presents, as it is not running any actual tests other than compilation.
 
-Submission 2:  You must deploy your smart contract to our private Ethereum blockchain -- this was probably done above.  It's fine if you deploy it a few times to test it.  But the final deployment should not have any data other than the call to `designateTA()`.
+Submission 2:  You must deploy your smart contract to our private Ethereum blockchain -- this was probably done above.  It's fine if you deploy it a few times because you were testing it, screwed something up, or whatever.  But the final deployment should not have any data other than the one call to `designateTA()`.
 
 Submission 3: You will need to submit your information via a Google form, the link to which is on the Collab landing page. You will need to submit the following items:
 
