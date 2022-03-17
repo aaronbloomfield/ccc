@@ -94,7 +94,7 @@ interface Gradebook {
 
 The first six methods (after the two events) are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide details this a bit more.
 
-The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit `assignmentCreatedEvent()` event, and the `addGrade()` function should emit the `gradeEntryEvent()` event.  Be sure to emit the events *after* any `require()` calls!
+The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit `assignmentCreationEvent()` event, and the `addGrade()` function should emit the `gradeEntryEvent()` event.  Be sure to emit the events *after* any `require()` calls!
 
 
 #### Testing
