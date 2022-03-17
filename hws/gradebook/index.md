@@ -103,15 +103,15 @@ You will invariably run into issues testing and debugging your code.  We have a 
 
 - Use `require()`.  A lot.  And be sure to use the [two-parameter version of `require()`](../../slides/solidity.html#/require).
 - Keep in mind the [Solidity testing & debugging ideas](../../slides/solidity.html#/debugging) from the lecture slides
-- In Remix you are going to end up calling a bunch of functions to initialize your smart contract for testing -- for example, to create a few assignments, add some scores, etc.  Once you know those functions work properly, you can put them in the constructor, as such.  This will save you time 
-  ```
+- In Remix you are going to end up calling a bunch of functions to initialize your smart contract for testing -- for example, to create a few assignments, add some scores, etc.  Once you know those functions work properly, you can put them in the constructor, as such.  This will save you time, but **BE SURE** to remove those lines once you are finished testing it and prior to submission.
+
+```
 designateTA(0x0123456789abcdef0123456789abcdef01234567);
 addAssignment("HW1",10);
 addAssignment("HW2",10);
 addGrade("mst3k",0,5);
 addGrade("mst3k",1,10);
 ```
-- **BE SURE** to remove those lines once you are finished testing it and prior to submission
 
 #### Deployment
 

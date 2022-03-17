@@ -142,7 +142,7 @@ declaration would be <code>uint public override num_assignments;</code>.
 The lecture slide details this a bit more.</p>
 <p>The two events, listed at the top of the interface, should be emitted
 at the appropriate time. The <code>addAssignment()</code> function
-should emit <code>assignmentCreatedEvent()</code> event, and the
+should emit <code>assignmentCreationEvent()</code> event, and the
 <code>addGrade()</code> function should emit the
 <code>gradeEntryEvent()</code> event. Be sure to emit the events
 <em>after</em> any <code>require()</code> calls!</p>
@@ -150,25 +150,24 @@ should emit <code>assignmentCreatedEvent()</code> event, and the
 <p>You will invariably run into issues testing and debugging your code.
 We have a few tips and tricks.</p>
 <ul>
-<li><p>Use <code>require()</code>. A lot. And be sure to use the <a
+<li>Use <code>require()</code>. A lot. And be sure to use the <a
 href="../../slides/solidity.html#/require">two-parameter version of
-<code>require()</code></a>.</p></li>
-<li><p>Keep in mind the <a
+<code>require()</code></a>.</li>
+<li>Keep in mind the <a
 href="../../slides/solidity.html#/debugging">Solidity testing &amp;
-debugging ideas</a> from the lecture slides</p></li>
-<li><p>In Remix you are going to end up calling a bunch of functions to
+debugging ideas</a> from the lecture slides</li>
+<li>In Remix you are going to end up calling a bunch of functions to
 initialize your smart contract for testing – for example, to create a
 few assignments, add some scores, etc. Once you know those functions
 work properly, you can put them in the constructor, as such. This will
-save you time</p>
+save you time, but <strong>BE SURE</strong> to remove those lines once
+you are finished testing it and prior to submission.</li>
+</ul>
 <pre><code>designateTA(0x0123456789abcdef0123456789abcdef01234567);
 addAssignment(&quot;HW1&quot;,10);
 addAssignment(&quot;HW2&quot;,10);
 addGrade(&quot;mst3k&quot;,0,5);
-addGrade(&quot;mst3k&quot;,1,10);</code></pre></li>
-<li><p><strong>BE SURE</strong> to remove those lines once you are
-finished testing it and prior to submission</p></li>
-</ul>
+addGrade(&quot;mst3k&quot;,1,10);</code></pre>
 <h4 id="deployment">Deployment</h4>
 <p>Once done, you will need to deploy your CoruseGradebook smart
 contract to our private Ethereum blockchain. Save the contract address,
