@@ -36,7 +36,7 @@ contract Debts {
 	mapping (address => uint) public findByAddress;
 
 	// how many alias exist in the 'entries' mapping
-	uint public num_aliases;
+	uint public num_entries;
 
 
 	constructor() {
@@ -44,11 +44,6 @@ contract Debts {
 
 
 	function addAlias (string memory _alias, string memory _name) public {
-		addAlias(_alias,_name,msg.sender);
-	}
-
-
-	function addAlias (string memory _alias, string memory _name, address _account) private {
 		// ensure that the alias name does not already exist
 		require(!aliasHasEntry[_alias], "string entry name already exists");
 		// ensure that the sender doesn't already have an alias
@@ -58,13 +53,13 @@ contract Debts {
 		// add an entry in the mapping of whether a given account address has an alias
 		addressHasEntry[msg.sender] = true;
 		// add an entry in the mapping from alias strings to alias indices
-		findByAlias[_alias] = num_aliases;
+		findByAlias[_alias] = num_entries;
 		// add an entry in the mapping from account addresses to alias indices
-		findByAddress[_account] = num_aliases;
+		findByAddress[msg.sender] = num_entries;
 		// add the alias entry itself
-		entries[num_aliases] = Entry(num_aliases,_alias,_name,_account,0);
+		entries[num_entries] = Entry(num_entries,_alias,_name,msg.sender,0);
 		// increment the number of aliases so far
-		num_aliases++;
+		num_entries++;
 		// emit the event
 		emit aliasAddedEvent();
 	}
@@ -87,4 +82,5 @@ contract Debts {
 		// emit the event
 		emit paidEvent();
 	}
+
 }

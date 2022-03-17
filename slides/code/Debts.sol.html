@@ -47,7 +47,7 @@ http://www.gnu.org/software/src-highlite">
     <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> findByAddress<font color="#990000">;</font>
 
     <i><font color="#9A1900">// how many alias exist in the 'entries' mapping</font></i>
-    uint <font color="#008080">public</font> num_aliases<font color="#990000">;</font>
+    uint <font color="#008080">public</font> num_entries<font color="#990000">;</font>
 
 
     <b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
@@ -55,11 +55,6 @@ http://www.gnu.org/software/src-highlite">
 
 
     <font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
-        <b><font color="#000000">addAlias</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>_name<font color="#990000">,</font>msg<font color="#990000">.</font>sender<font color="#990000">);</font>
-    <font color="#FF0000">}</font>
-
-
-    <font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">,</font> <font color="#008080">address</font> _account<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#FF0000">{</font>
         <i><font color="#9A1900">// ensure that the alias name does not already exist</font></i>
         <b><font color="#000000">require</font></b><font color="#990000">(!</font>aliasHasEntry<font color="#990000">[</font>_alias<font color="#990000">],</font> <font color="#FF0000">"string entry name already exists"</font><font color="#990000">);</font>
         <i><font color="#9A1900">// ensure that the sender doesn't already have an alias</font></i>
@@ -69,13 +64,13 @@ http://www.gnu.org/software/src-highlite">
         <i><font color="#9A1900">// add an entry in the mapping of whether a given account address has an alias</font></i>
         addressHasEntry<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <i><font color="#9A1900">// add an entry in the mapping from alias strings to alias indices</font></i>
-        findByAlias<font color="#990000">[</font>_alias<font color="#990000">]</font> <font color="#990000">=</font> num_aliases<font color="#990000">;</font>
+        findByAlias<font color="#990000">[</font>_alias<font color="#990000">]</font> <font color="#990000">=</font> num_entries<font color="#990000">;</font>
         <i><font color="#9A1900">// add an entry in the mapping from account addresses to alias indices</font></i>
-        findByAddress<font color="#990000">[</font>_account<font color="#990000">]</font> <font color="#990000">=</font> num_aliases<font color="#990000">;</font>
+        findByAddress<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">]</font> <font color="#990000">=</font> num_entries<font color="#990000">;</font>
         <i><font color="#9A1900">// add the alias entry itself</font></i>
-        entries<font color="#990000">[</font>num_aliases<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Entry</font></b><font color="#990000">(</font>num_aliases<font color="#990000">,</font>_alias<font color="#990000">,</font>_name<font color="#990000">,</font>_account<font color="#990000">,</font><font color="#993399">0</font><font color="#990000">);</font>
+        entries<font color="#990000">[</font>num_entries<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Entry</font></b><font color="#990000">(</font>num_entries<font color="#990000">,</font>_alias<font color="#990000">,</font>_name<font color="#990000">,</font>msg<font color="#990000">.</font>sender<font color="#990000">,</font><font color="#993399">0</font><font color="#990000">);</font>
         <i><font color="#9A1900">// increment the number of aliases so far</font></i>
-        num_aliases<font color="#990000">++;</font>
+        num_entries<font color="#990000">++;</font>
         <i><font color="#9A1900">// emit the event</font></i>
         <font color="#008080">emit</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">();</font>
     <font color="#FF0000">}</font>
@@ -98,6 +93,7 @@ http://www.gnu.org/software/src-highlite">
         <i><font color="#9A1900">// emit the event</font></i>
         <font color="#008080">emit</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">();</font>
     <font color="#FF0000">}</font>
+
 <font color="#FF0000">}</font></tt></pre>
 </body>
 </html>
