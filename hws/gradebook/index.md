@@ -125,6 +125,8 @@ You need to designate me as a TA for your gradebook.  The address to designate i
 I've deployed a gradebook with your (fake) grades.  The address for that smart contract is on the Collab landing page.  You will need to find out your overall average as well as a few other items of information.  Your scores are kept by your UVA userid.  These scores are fake, and were randomly generated, so don't feel bad if your score(s) are low.
 
 
+There are two ways you can access the gradebook on the blockchain.  One is through Remix, like was done in the [dApp introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md)) -- you load the Gradebook.sol interface, and then enter the address of the deployed Gradebook contract into the 'At Address' text box in the deployment window.  The other way is through geth, like we did in the [live coding example in class](../../slides/solidity.html#/debtor) -- the geth commands start about 8 slides down in that column.  For this you will also need the ABI.  You can compile the Gradebook.sol interface, and then copy the ABI -- after you compile it, the copy ABI link is at the very bottom of the compilation pane.  Note that you may have to reformat that ABI a bit -- what you copy is on many lines, and you may have to reformat it to one line.
+
 ### Submission
 
 There are *three* forms of submission for this assignment; you must do all three.
