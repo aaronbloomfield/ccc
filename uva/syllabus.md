@@ -57,7 +57,7 @@ And now for the really long-winded version...
 
 **Availability:** It is important to me to be available to my students, and to address their concerns. If you cannot meet with me during office hours, e-mail (or, ideally, submit a support request) and I will try to find the time to meet. That being said, like everybody else I am quite busy, so it may take a day or more to find a time to meet. And if you have any comments on the course - what is working, what is not working, what can be done better, etc. - I am very interested in hearing about them. There is an [anonymous feedback tool through Collab][2], or you can send me an e-mail (please do NOT email the TAs directly). I tend to get bogged down by e-mail as the semester progresses, so seeing me "in person" (during office hours or right after class) is often a good way to get a more immediate response.
 
-**Prerequisites:** CS 3710 (Introduction to Cybersecurity) with a grade of C- or above.  This implies CS 2150 (Program and Data Representation) with a grade of C- or above.  As per departmental policy, this pre-req will be checked, and if it is not met, you will be de-registered from the course.
+**Prerequisites:** CS 2150 (Program and Data Representation) or CS 3100 (Data Structures and Algorithms 2) with a grade of C- or above.  As per departmental policy, this pre-req will be checked, and if it is not met, you will be de-registered from the course.
 
 **Grades:** Grades will be calculated by the following formula:
 
