@@ -19,25 +19,25 @@ interface Gradebook {
     
     // Returns whether the passed address has been designated as a
     // teaching assistant
-    function tas(address ta) external returns (bool);
+    function tas(address ta) external view returns (bool);
 
     // Returns the max score for the given assignment
-    function max_scores(uint id) external returns (uint);
+    function max_scores(uint id) external view returns (uint);
 
     // Returns the name of the given assignment
-    function assignment_names(uint id) external returns (string memory);
+    function assignment_names(uint id) external view returns (string memory);
 
     // Returns the score for the given assignment ID and the given
     // student
-    function scores(uint id, string memory userid) external returns (uint);
+    function scores(uint id, string memory userid) external view returns (uint);
 
     // Returns how many assignments there are; the assignments are
     // assumed to be indexed from 0
-    function num_assignments() external returns (uint);
+    function num_assignments() external view returns (uint);
 
     // Returns the address of the instructor, who is the person who
     // deployed this smart contract
-    function instructor() external returns (address);
+    function instructor() external view returns (address);
 
     //------------------------------------------------------------
     // The following four functions are ones you must implement

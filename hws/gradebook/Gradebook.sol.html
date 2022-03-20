@@ -30,25 +30,25 @@ http://www.gnu.org/software/src-highlite">
     
     <i><font color="#9A1900">// Returns whether the passed address has been designated as a</font></i>
     <i><font color="#9A1900">// teaching assistant</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">tas</font></b><font color="#990000">(</font><font color="#008080">address</font> ta<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">tas</font></b><font color="#990000">(</font><font color="#008080">address</font> ta<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">// Returns the max score for the given assignment</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">max_scores</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">max_scores</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Returns the name of the given assignment</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">assignment_names</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">assignment_names</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Returns the score for the given assignment ID and the given</font></i>
     <i><font color="#9A1900">// student</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">scores</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">,</font> string <font color="#008080">memory</font> userid<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">scores</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">,</font> string <font color="#008080">memory</font> userid<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Returns how many assignments there are; the assignments are</font></i>
     <i><font color="#9A1900">// assumed to be indexed from 0</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">num_assignments</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">num_assignments</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Returns the address of the instructor, who is the person who</font></i>
     <i><font color="#9A1900">// deployed this smart contract</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">instructor</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">instructor</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// The following four functions are ones you must implement</font></i>
