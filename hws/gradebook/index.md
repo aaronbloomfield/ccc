@@ -103,6 +103,7 @@ You will invariably run into issues testing and debugging your code.  We have a 
 
 - Use `require()`.  A lot.  And be sure to use the [two-parameter version of `require()`](../../slides/solidity.html#/require).
 - Keep in mind the [Solidity testing & debugging ideas](../../slides/solidity.html#/debugging) from the lecture slides
+- Once you have tested it in the Javascript deployment environment, you will want to interact with our private blockchain, as described in the [dApp introduction](../dappintro/index.html) assignment.  Remember that, in Remix, when you initiate a transaction (orange button) -- rather than a call (blue button) -- you will have to mine it into the blockchain.  Via a `geth attach` terminal, run `miner.start()` and then `miner.stop()`.
 - In Remix you are going to end up calling a bunch of functions to initialize your smart contract for testing -- for example, to create a few assignments, add some scores, etc.  Once you know those functions work properly, you can put them in the constructor, as such.  This will save you time, but **BE SURE** to remove those lines once you are finished testing it and prior to submission.
 
 ```

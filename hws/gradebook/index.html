@@ -156,6 +156,13 @@ href="../../slides/solidity.html#/require">two-parameter version of
 <li>Keep in mind the <a
 href="../../slides/solidity.html#/debugging">Solidity testing &amp;
 debugging ideas</a> from the lecture slides</li>
+<li>Once you have tested it in the Javascript deployment environment,
+you will want to interact with our private blockchain, as described in
+the <a href="../dappintro/index.html">dApp introduction</a> assignment.
+Remember that, in Remix, when you initiate a transaction (orange button)
+– rather than a call (blue button) – you will have to mine it into the
+blockchain. Via a <code>geth attach</code> terminal, run
+<code>miner.start()</code> and then <code>miner.stop()</code>.</li>
 <li>In Remix you are going to end up calling a bunch of functions to
 initialize your smart contract for testing – for example, to create a
 few assignments, add some scores, etc. Once you know those functions
