@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Tokens
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Introduction](#/intro)  
+[ERC-165 Interface](#/erc165) (supportsInterface())  
+[ERC-20 Tokens](#/erc20) (FTs)  
+[ERC-721 Tokens](#/erc721) (NFTs)  
+[ERC-777 Tokens](#/erc777) (FTs++)  
+[ERC-1155 Tokens](#/erc1155) (NFTs++)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="intro" data-markdown class="center"><textarea>
+# Introduction
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## What is a Token
+- A *token* is an *entry* on a blockchain that represents *something* other than a "monetary" transaction
+  - Entry:
+    - In Ethereum, this would be a smart contract
+    - Other blockchains (Tezos, Ravencoin) have native support for tokens
+  - The *something* that it represents could be:
+    - Ownership of a single item (physical or digital)
+    - Membership in some organization
+    - Amount of votes one has
+    - Shares of an equity, such as another cryptocurrency 
+
+
+
+
+## E-Z Tokens
+- This would do it:
+```
+contract EZTokens {
+    mapping (address => uint) public ownership;
+    function addQuantity(address,uint) public { ... }
+    function removeQuantity(address, uint) public { ... }
+}
+```
+- This provides:
+  - The ability to see how much an address owns
+  - The ability to add or remove quantity
+- Obviously we want a more robust contract...
+
+
+
+## Anybody can make a token
+- With the ABI and the contract address, any *programmer* can interact with one
+- But how to ensure that non-programmers can?
+  - And that wallets can?
+- The Ethereum solution: create a standard way to interact with them
+  - Via an `interface`
+- Other cryptocurrencies:
+  - Either have the equivalent of standard interfaces
+  - Or natively support them on the blockchain
+- Then any wallet software can interact with tokens
+
+
+
+## Ethereum Improvement Proposals
+- [ethereum.org](https://ethereum.org/en/) allows submissions of EIPs
+  - EIP = Ethereum Improvement Proposal
+- There are three types (as described by [EIP-1](https://eips.ethereum.org/EIPS/eip-1))
+  - Standards track EIP, which has 4 categories:
+    - Core: changes to Ethereum itself, requiring a consensus fork
+    - Networking, such as the P2P aspect of Ethereum
+    - Interface, such as of the ABI (*not* Solidity interfaces)
+    - ERC: Ethereum Request for Comments: contract interfaces and code
+  - Meta EIP: a change to a process, such as governance
+  - Informational EIP: educational
+
+
+
+## List of EIPs / ERCs
+- See https://eips.ethereum.org/erc
+- We'll be covering 5 of those in this lecture
+
+
+
+## OpenZeppelin
+- [OpenZeppelin](https://openzeppelin.com/) is a source for freely available implementations of many ERCs
+  - All code released under the MIT license
+    - Which means you can use it for both commercial and non-commercial purposes
+- Available in their [github repo](https://github.com/OpenZeppelin/openzeppelin-contracts)
+- We'll use this code in our assignments
+  - No need to reinvent the wheel!
+- See the [OpenZeppelin ERC-20 code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol)
+
+
+
+## Trust
+- Anybody can download the OpenZeppelin code
+  - And then compile it to see the bytecode
+  - And then compare it to what is on the blockchain
+- Thus, with the original source we can verify that a given smart contract on the blockchain is a known contract
+- If we make a new one, and we want people to trust it, we likely will have to release the source code
+
+
+
+## Fungability
+
+<table class="transparent" style="width:100%">
+  <tr>
+    <td><img src="images/tokens/dollar-bill.webp" style="width:500px"></td>
+    <td style="width:10px;background-color:white;padding:0;border-radius:5px;"></td>
+    <td style="width:350px">
+      <img src="images/tokens/quarter.webp" style="background:transparent;width:150px;float:left;margin:0">
+      <img src="images/tokens/quarter.webp" style="background:transparent;width:150px;float:right;margin:0">
+      <br>
+      <img src="images/tokens/quarter.webp" style="background:transparent;width:150px;float:left;margin:0">
+      <img src="images/tokens/quarter.webp" style="background:transparent;width:150px;float:right;margin:0">
+  </tr></table>
+
+- Which is worth more?
+  - Other than convenience
+- Images from [wikipedia](https://en.wikipedia.org/wiki/United_States_dollar)
+
+
+
+##  Fungibility
+
+> fungible (adj): being something (such as money or a commodity) of such a nature that one part or quantity may be replaced by another equal part or quantity in paying a debt or settling an account
+
+> fungibility: the state of being fungible
+
+
+
+## Fungible tokens
+- A *fungible* token can be exchanged for an equal amount of the same token
+  - Examples: tokens that represent cryptocurrencies, shares of a *thing*, or weight of votes
+- A *non-fungible* token cannot be split; it's atomic
+  - Examples: tokens that represent real-world items (artwork), digital assets, etc.
+
+
+
+## Transaction types
+- I claim there are four overall types of transactions:
+  - Unofficial transactions where there is no receipt needed
+    - One individual selling something to another, bartering, cash payments, illegal transactions, etc.
+  - Buying something from a business
+    - A receipt is generated, possibly electronically
+  - Buying items with special tax status
+    - Houses, cars, boats, planes, equities
+  - Buying a digital asset
+    - A digital image, etc.
+- The first three either already have or don't need receipts, and so have no need for an NFT
+  - NFTs thus only are be used for the last one
+
+
+
+## How buy an NFT
+- OpenSea at [opensea.io](https://opensea.io)
+- Let's take a look!
+- We'll be seeing MetaMask later this semester...
+
+
+
+## What does an NFT give you?
+- So unclear
+- Anybody can download the image
+- But you "own" the "thing"
+- There is no legal basis for recognizing "ownership" of a thing based on an NFT
+  - You could take them to court and claim that since you paid for it, you now own it
+  - You'd probably win, after a court battle
+- So what does an NFT give you?
+
+
+
+## What does ownership mean?
+
+
+
+## Jet pack analogy
+
+
+
+## Scams
+
+https://www.reddit.com/r/KotakuInAction/comments/ritysg/twitter_sadly_im_going_to_have_to_completely_shut/
+
+https://twitter.com/liamrsharp/status/1471940531554959360?lang=en
+
+https://www.vice.com/en/article/epxkmk/roblox-mine-robux-cryptocurrency?utm_source=reddit.com
+
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="erc165" data-markdown class="center"><textarea>
+# ERC-165 Interface
+### `supportsInterface()`
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## What type of smart contract is that?
+- With the proliferation of deployed smart contracts on the Ethereum blockchain, how do you tell which ones are of which type?
+  - Once you know the type, you can interact with it via the standardized interface
+- The solution: you ask it, as defined in ERC-165
+  - Created in 2018
+
+
+
+## Function selector
+- We specify to call contract function as: `transfer(address,uint256)`
+  - But the function is listed in the contract as 0xa9059cbb
+  - This 4-byte value is the *function selector*
+  - The ABI and the various libraries we use allow the calling routines to call the function selector given the function name and parameters
+  - To determine the function selector:
+    - Enter "transfer(address,uint256)" into an [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html)
+    - Take the first 4 byte (8 digits)
+- [Reference](https://solidity-by-example.org/function-selector/)
+
+
+
+## Solidity Type Information
+- Given a type `T`, a contract 'C', or an interface 'I', you can get information about that type:
+  - `type(T).min`: the minimum value
+  - `type(T).max`: the maximum value
+  - `type(C).name`: the name of the contract
+  - `type(I).interfaceId`
+    - A `bytes4` value that is the xor of the function selectors of the (non-inherited) functions in the interface
+  - (two others we won't see here)
+- Reference is from [this page](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#meta-type) of the [Solidity programming reference](https://docs.soliditylang.org/en/latest/)
+
+
+
+## ERC-165 Code
+- The interface:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>interface IERC165 {
+    function supportsInterface(bytes4 interfaceID) external view returns (bool);
+}
+</code></pre>
+
+- The contract implementation:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>function supportsInterface(bytes4 interfaceId) external pure override 
+            returns (bool) {
+  
+  return interfaceId == type(IERC721).interfaceId ||
+         interfaceId == type(IERC165).interfaceId;
+}
+</code></pre>
+
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="erc20" data-markdown class="center"><textarea>
+# ERC-20 Tokens
+### Fungible Tokens (FTs)
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Overview
+- Created in 2015, this standard allows for creating *fungible* tokens
+  - Shares in a cryptocurrency, voting power, membership level, equity amount, etc.
+  - See [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#introduction) for other uses
+- Notably, it's *before* ERC-165
+  - So it does *not* have the `supportsInterface()` function
+- Reference: [ERC-20 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) from [ethereum.org](https://ethereum.org/)
+
+
+
+## ERC-20 Interface
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>interface IERC20 {
+
+    function totalSupply() external view returns (uint);
+
+    function balanceOf (address account) external view returns (uint);
+
+    function transfer (address recipient, uint amount) external returns (bool);
+
+    function allowance (address owner, address spender) external view 
+                    returns (uint);
+
+    function approve (address spender, uint amount) external returns (bool);
+
+    function transferFrom (address sender, address recipient, uint amount) 
+                    external returns (bool);
+
+    event Transfer(address indexed from, address indexed to, uint value);
+
+    event Approval(address indexed owner, address indexed spender, uint value);
+
+}
+</code></pre>
+
+
+
+## ERC-20 Optional Interface
+- There are three *optional* functions, as described [here](https://eips.ethereum.org/EIPS/eip-20)
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>    function name() external view returns (string);
+
+    function symbol() external view returns (string);
+
+    function decimals() external view returns (uint8);
+</code></pre>
+
+
+
+## Our Usage
+- For an upcoming assignment, we will use:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>interface IERC20full is IERC20, IERC165 {
+
+    function name() external view returns (string);
+
+    function symbol() external view returns (string);
+
+    function decimals() external view returns (uint8);
+
+    // this inherits the one function from IERC165 (supportsInterface())
+
+    // this inherits the 6 functions and 2 events from IERC20
+
+}
+</code></pre>
+
+
+
+## Starting Source Code
+- We will all start with the freely available implementation by [OpenZeppelin](https://openzeppelin.com/)
+- Specifically that for ERC-20 tokens:
+  - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol
+- Let's go over that code...
+
+
+
+## Token Cryptocurrencies
+- Easy to create; from [solidity-by-example.com](https://solidity-by-example.org/app/erc20/):
+
+```
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.10;
+
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol";
+
+contract MyToken is ERC20 {
+    constructor(string memory name, string memory symbol)
+                ERC20(name, symbol) {
+        _mint(msg.sender, 100 * 10**uint(decimals()));
+    }
+}
+```
+- The hard part: getting other people to want it, and be willing to trade other cryptocurrencies for it
+
+
+
+## Token Cryptocurrencies
+- See a list at https://erc-tokens.com/
+- Consider [Atomic Wallet](https://atomicwallet.io/)
+  - A wallet that can store (as of March 2022):
+    - 52 blockchain cryptocurrencies
+    - Over 120 token cryptocurrencies
+  - You can see the list on the next slide
+- We'll be creating one in an upcoming homework
+
+
+
+<img src="images/tokens/atomic-wallet.webp" class="stretch">
+
+
+
+## Consider [SHIB](https://coinmarketcap.com/currencies/shiba-inu/)
+- As of March 20, 2022:
+  - SHIB's value is `$`0.00002305 (43,384 per USD)
+  - ETH's value is `$`2,851
+  - Ethereum gas is 50 gwei, which means `$`3 per transaction
+- To buy SHIB, you have to spend `$`3 for transaction fees
+  - Or over 130,000 SHIB
+- All token cryptocurrency exchanges with the ERC-20 contract have to pay the Ethereum fees!
+- Exchanges such as Coinbase do it differently...
+
+
+
+## DAI / WETH Example
+- The code for this is [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#web3py-example)
+  - And reproduced on the next slide
+- Due to a bug in the library, it runs into a parse error
+- [DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/): An Ethereum token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
+  - When new DAI are minted, the cryptocurrencies used to exchange for them are put into 'vaults' to help DAI retain it's value
+- [WETH](https://coinmarketcap.com/currencies/weth/), for "Wrapped ETH", has a 1-to-1 value with regular ETH
+  - But it follows the ERC-20 standard, so can be used in lieu of ETH
+
+
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:130%"
+>from web3 import Web3
+
+w3 = Web3(Web3.HTTPProvider("https://cloudflare-eth.com"))
+
+dai_token_addr = "0x6B175474E89094C44Da98b954EedeAC495271d0F"     # DAI
+weth_token_addr = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"    # Wrapped ether (WETH)
+
+acc_address = "0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11"        # Uniswap V2: DAI 2
+
+# This is a simplified Contract Application Binary Interface (ABI) of an ERC-20 Token Contract.
+# It will expose only the methods: balanceOf(address), decimals(), symbol() and totalSupply()
+simplified_abi = [
+    {
+        'inputs': [{'internalType': 'address', 'name': 'account', 'type': 'address'}],
+        'name': 'balanceOf',
+        'outputs': [{'internalType': 'uint256', 'name': '', 'type': 'uint256'}],
+        'stateMutability': 'view', 'type': 'function', 'constant': True
+    },
+    {
+        'inputs': [],
+        'name': 'decimals',
+        'outputs': [{'internalType': 'uint8', 'name': '', 'type': 'uint8'}],
+        'stateMutability': 'view', 'type': 'function', 'constant': True
+    },
+    {
+        'inputs': [],
+        'name': 'symbol',
+        'outputs': [{'internalType': 'string', 'name': '', 'type': 'string'}],
+        'stateMutability': 'view', 'type': 'function', 'constant': True
+    },
+    {
+        'inputs': [],
+        'name': 'totalSupply',
+        'outputs': [{'internalType': 'uint256', 'name': '', 'type': 'uint256'}],
+        'stateMutability': 'view', 'type': 'function', 'constant': True
+    }
+]
+
+dai_contract = w3.eth.contract(address=w3.toChecksumAddress(dai_token_addr), abi=simplified_abi)
+symbol = dai_contract.functions.symbol().call()
+decimals = dai_contract.functions.decimals().call()
+totalSupply = dai_contract.functions.totalSupply().call() / 10**decimals
+addr_balance = dai_contract.functions.balanceOf(acc_address).call() / 10**decimals
+
+#  DAI
+print("===== %s =====" % symbol)
+print("Total Supply:", totalSupply)
+print("Addr Balance:", addr_balance)
+
+weth_contract = w3.eth.contract(address=w3.toChecksumAddress(weth_token_addr), abi=simplified_abi)
+symbol = weth_contract.functions.symbol().call()
+decimals = weth_contract.functions.decimals().call()
+totalSupply = weth_contract.functions.totalSupply().call() / 10**decimals
+addr_balance = weth_contract.functions.balanceOf(acc_address).call() / 10**decimals
+
+#  WETH
+print("===== %s =====" % symbol)
+print("Total Supply:", totalSupply)
+print("Addr Balance:", addr_balance)
+</code></pre>
+
+
+
+## Attacks
+- Consider [this attack](https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/):
+  1. Alice allows Bob to transfer $n>0$ tokens via `approve()`
+  2. Later, Alice changes that to $m>0$
+  3. Bob notices (2) in the mempool, and quickly spends all $n$ tokens
+  4. Alice's transaction from (2) goes through, allowing Bob to transfer $m$ more tokens
+- Thus, Bob controlled $n+m$ of Alice's tokens, which was never her intent
+- Solutions:
+  - Alice makes 2 transactions: first change Bob's approval to zero then to $m$
+  - Change the ERC-20 standard such that the new approval only happens if the current approval is not yet spent
+
+
+
+## Upcoming Assignments
+- In the Tokens assignment, you will be creating a token cryptocurrency
+  - With a name, symbol, and logo
+- In the DEX (Decentralized Exchange) assignment, you will be creating an smart contract to exchange your cryptocurrency for our (fake) ETH
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="erc721" data-markdown class="center"><textarea>
+# ERC-721 Tokens
+### Non-Fungible Tokens (NFTs)
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Overview
+- Created in 2018, this standard allows for creating *non-fungible* tokens
+  - Membership in an organization, a representation of a physical or digital asset, etc.
+  - See [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/#popular-nfts) for other uses
+- Notably, it's *after* ERC-165
+  - So it *does* have the `supportsInterface()` function
+- Reference: [ERC-721 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/) from [ethereum.org](https://ethereum.org/)
+
+
+
+
+## ERC-721 Interface
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>interface IERC721 is IERC165 {
+
+    function balanceOf(address owner) external view returns (uint balance);
+
+    function ownerOf (uint tokenId) external view returns (address owner);
+
+    function safeTransferFrom (address from, address to, uint tokenId) external;
+
+    function safeTransferFrom (address from,address to, uint tokenId, 
+                               bytes calldata data) external;
+
+    function transferFrom (address from, address to, uint tokenId) external;
+
+    function approve (address to, uint tokenId) external;
+
+    function getApproved (uint tokenId) external view returns (address operator);
+
+    function setApprovalForAll (address operator, bool _approved) external;
+
+    function isApprovedForAll (address owner, address operator) 
+              external view returns (bool);
+}
+</code></pre>
+
+
+
+## ERC-721 Optional Interface
+- There are three *optional* metadata functions, as described [here](https://eips.ethereum.org/EIPS/eip-721)
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>interface IERC721Metadata is IERC721 {
+
+    function name() external view returns (string _name);
+
+    function symbol() external view returns (string _symbol);
+
+    function tokenURI(uint256 _tokenId) external view returns (string);
+}
+</code></pre>
+
+
+
+## Our Usage
+- For an upcoming assignment, we will use:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>interface IERC721full is IERC721Metadata {
+
+    function mintWithURI(address _to, uint _tokenId, string memory _uri) 
+                  external;
+
+    // implementing contracts have to implement the one function from IERC165
+    // (supportsInterface())
+
+    // implementing contracts have to implement the 6 functions and 2 events
+    // from IERC20
+
+    // implementing contracts have to implement the 3 functions from
+    // IERC721Metadata
+}
+</code></pre>
+
+
+
+## Starting Source Code
+- We will all start with the freely available implementation by [OpenZeppelin](https://openzeppelin.com/)
+- Specifically that for ERC-721 tokens:
+  - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol
+- Let's go over that code...
+
+
+
+## Token NFTs
+
+
+
+## Upcoming Assignments
+- In the Tokens assignment, you will be creating an NFT manager
+  - This is in addition to the cryptocurrency part of this assignment
+- In the Auction assignment, you will be creating an auction smart contract to allow bidding on your NFTs
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="erc777" data-markdown class="center"><textarea>
+# ERC-777 Tokens
+### Improved Fungible Tokens (FTs++)
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Overview
+- Created in 2017, this standard improves upon the ERC-20 (FT) standard
+- They can be written to be backwards-compatible, so any such ERC-777 token fulfills the ERC-20 token interface
+- Notably, it's *after* ERC-165
+  - So it *does* have the `supportsInterface()` function
+- Reference: [ERC-777 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-777/) from [ethereum.org](https://ethereum.org/)
+
+
+
+## Improvements: decimals
+- `decimals()`
+  - This was optional in ERC-20
+  - If not included, how many decimals to use?  The standard defaulted to 18, but the standard implied 0 was also acceptable
+- For ERC-20 backward compatibility, an ERC-777 token's `decimals()` *must* return 18
+
+
+
+## Improvements: hooks
+- A hook is a function that is triggered when a token is sent or received
+  - They are registered and discovered as described in [ERC-1820](https://eips.ethereum.org/EIPS/eip-1820)
+    - We won't see that ERC in this course
+  - They can even reject transactions
+- Example usage:
+  - In pure ERC-20, sending tokens to a contract and then notifying said contract was two steps (`approve()` then `trasnferFrom()`)
+  - With a hook in an ERC-777 token, this is a single call
+    - Saves gas!
+
+
+
+## ERC-777 Interface
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.1 (token/ERC777/IERC777.sol)
+
+pragma solidity ^0.8.0;
+
+interface IERC777 {
+
+    function name() external view returns (string memory);
+
+    function symbol() external view returns (string memory);
+
+    function granularity() external view returns (uint256);
+
+    function totalSupply() external view returns (uint256);
+
+    function balanceOf(address owner) external view returns (uint256);
+
+    function send(address recipient, uint256 amount, bytes calldata data) external;
+
+    function burn(uint256 amount, bytes calldata data) external;
+
+    function isOperatorFor(address operator, address tokenHolder) external view returns (bool);
+
+    function authorizeOperator(address operator) external;
+
+    function revokeOperator(address operator) external;
+
+    function defaultOperators() external view returns (address[] memory);
+
+    function operatorSend (address sender, address recipient, uint256 amount, bytes calldata data, bytes calldata operatorData ) external;
+
+    function operatorBurn (address account, uint256 amount, bytes calldata data, bytes calldata operatorData ) external;
+
+    event Sent (address indexed operator, address indexed from, address indexed to, uint256 amount, bytes data, bytes operatorData);
+
+    event Minted (address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
+
+    event Burned (address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
+
+    event AuthorizedOperator (address indexed operator, address indexed tokenHolder);
+
+    event RevokedOperator (address indexed operator, address indexed tokenHolder);
+}</code></pre>
+
+
+
+## Backwards compatibility
+- To make it backwards compatible, just have it implement the ERC-20 interface also:
+
+```
+contract FTplusplus is IERC777, IERC165, IERC20 {
+  // ...
+}
+```
+
+
+
+## OpenZeppelin Implementation
+- OpenZeppelin [code for ERC-777](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC777/ERC777.sol)
+- We won't go over that in detail, though
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="erc1155" data-markdown class="center"><textarea>
+# ERC-1155 Tokens
+### Improved Non-Fungible Tokens (NFTs++)
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Overview
+- Created in 2018, this standard improves upon the ERC-721 (NFT) standard
+- They can be written to be backwards-compatible, so any such ERC-1155 token fulfills the ERC-721 token interface
+  - The function names are all different
+- Notably, it's *after* ERC-165
+  - So it *does* have the `supportsInterface()` function
+- Reference: [ERC-1155 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/) from [ethereum.org](https://ethereum.org/)
+
+
+
+
+## Improvements
+(from the [ERC-1155 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/))
+- Batch Transfer: Transfer multiple assets in a single call
+- Batch Balance: Get the balances of multiple assets in a single call
+- Batch Approval: Approve all tokens to an address
+- Hooks: Receive tokens hook
+- NFT Support: If supply is only 1, treat it as NFT
+- Safe Transfer Rules: Set of rules for secure transfer
+
+
+
+## ERC-1155 Interface
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.1 (token/ERC777/IERC777.sol)
+
+pragma solidity ^0.8.0;
+
+interface IERC1155 is IERC165 {
+
+    event TransferSingle(address indexed operator, address indexed from, 
+                         address indexed to, uint256 id, uint256 value);
+
+    event TransferBatch(address indexed operator, address indexed from, 
+                        address indexed to, uint256[] ids, uint256[] values );
+
+    event ApprovalForAll(address indexed account, address indexed operator, 
+                        bool approved);
+
+    event URI(string value, uint256 indexed id);
+
+    function balanceOf(address account, uint256 id) external view 
+                        returns (uint256);
+
+    function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids) 
+                        external view returns (uint256[] memory);
+
+    function setApprovalForAll(address operator, bool approved) external;
+
+    function isApprovedForAll(address account, address operator) external view 
+                        returns (bool);
+
+    function safeTransferFrom( address from, address to, uint256 id, 
+                        uint256 amount, bytes calldata data ) external;
+
+    function safeBatchTransferFrom( address from, address to, 
+                        uint256[] calldata ids, uint256[] calldata amounts, 
+                        bytes calldata data ) external;
+}
+</code></pre>
+
+
+
+## Backwards compatibility
+- To make it backwards compatible, just have it implement the ERC-721 interface also:
+
+```
+contract NFTplusplus is IERC1155, IERC165, IERC721 {
+  // ...
+}
+```
+
+
+
+## OpenZeppelin Implementation
+- OpenZeppelin [code for ERC-1155](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol)
+- We won't go over that in detail, though
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
