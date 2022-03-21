@@ -105,14 +105,14 @@ contract EZTokens {
 
 
 
-## Anybody can make a token
+## Anybody can use a token
 - With the ABI and the contract address, any *programmer* can interact with one
 - But how to ensure that non-programmers can?
   - And that wallets can?
 - The Ethereum solution: create a standard way to interact with them
   - Via an `interface`
 - Other cryptocurrencies:
-  - Either have the equivalent of standard interfaces
+  - Either have the equivalent of a standard interface
   - Or natively support them on the blockchain
 - Then any wallet software can interact with tokens
 
@@ -134,7 +134,12 @@ contract EZTokens {
 
 ## List of EIPs / ERCs
 - See https://eips.ethereum.org/erc
-- We'll be covering 5 of those in this lecture
+- We'll be covering 5 of those in this lecture:
+  - ERC-165: `supportsInterface()`
+  - ERC-20: fungible tokens
+  - ERC-721: non-fungible tokens
+  - ERC-777: improved fungible tokens
+  - ERC-1155: improved non-fungible tokens
 
 
 
@@ -145,7 +150,6 @@ contract EZTokens {
 - Available in their [github repo](https://github.com/OpenZeppelin/openzeppelin-contracts)
 - We'll use this code in our assignments
   - No need to reinvent the wheel!
-- See the [OpenZeppelin ERC-20 code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol)
 
 
 
@@ -155,6 +159,7 @@ contract EZTokens {
   - And then compare it to what is on the blockchain
 - Thus, with the original source we can verify that a given smart contract on the blockchain is a known contract
 - If we make a new one, and we want people to trust it, we likely will have to release the source code
+  - Otherwise a call to `selfdestruct()` would allow us to steal all the ETH that the contract holds
 
 
 
@@ -179,7 +184,6 @@ contract EZTokens {
 
 
 ##  Fungibility
-
 > fungible (adj): being something (such as money or a commodity) of such a nature that one part or quantity may be replaced by another equal part or quantity in paying a debt or settling an account
 
 > fungibility: the state of being fungible
@@ -190,7 +194,7 @@ contract EZTokens {
 - A *fungible* token can be exchanged for an equal amount of the same token
   - Examples: tokens that represent cryptocurrencies, shares of a *thing*, or weight of votes
 - A *non-fungible* token cannot be split; it's atomic
-  - Examples: tokens that represent real-world items (artwork), digital assets, etc.
+  - Examples: tokens that represent real-world items (artwork), digital assets, membership in an organization, etc.
 
 
 
@@ -205,7 +209,7 @@ contract EZTokens {
   - Buying a digital asset
     - A digital image, etc.
 - The first three either already have or don't need receipts, and so have no need for an NFT
-  - NFTs thus only are be used for the last one
+  - NFTs thus are only useful for the last one
 
 
 
@@ -228,21 +232,32 @@ contract EZTokens {
 
 
 ## What does ownership mean?
+- I suppose you have the rights to publish that picture
+  - But how many people who buy NFTs want to do that?
+- Sports networks want to sell NFTs for "moments" in a game
+  - I can't imagine they are going to give up broadcasting rights to that "moment"
 
 
 
 ## Jet pack analogy
+[![jet pack](https://upload.wikimedia.org/wikipedia/commons/e/e7/Jetlev_Jetpack.jpg)](https://commons.wikimedia.org/wiki/File:Jetlev_Jetpack.jpg)
 
 
 
 ## Scams
+- Consider DeviantArt user LiamRSharp
+  - He had to shut down [his DeviantArt gallery](https://www.deviantart.com/liamrsharp) because of NFT theft
+  - See [this twitter post](https://twitter.com/liamrsharp/status/1471940531554959360?lang=en) and [this reddit post](https://www.reddit.com/r/KotakuInAction/comments/ritysg/twitter_sadly_im_going_to_have_to_completely_shut/)
+- What prevents somebody from selling an NFT multiple times?
+  - Or making minor modifications and re-selling it?
+  - *Some* auction sites check for this, but not all, and not reliably
 
-https://www.reddit.com/r/KotakuInAction/comments/ritysg/twitter_sadly_im_going_to_have_to_completely_shut/
 
-https://twitter.com/liamrsharp/status/1471940531554959360?lang=en
 
-https://www.vice.com/en/article/epxkmk/roblox-mine-robux-cryptocurrency?utm_source=reddit.com
-
+## The future for NFTs
+- They could have a real role to play in the future
+- But laws and policy would have to support their use
+- But not if their perception is poisoned by all these scams
 </textarea></section>
 
 	</section>

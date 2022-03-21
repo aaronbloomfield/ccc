@@ -75,8 +75,8 @@ Template for first line:
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 15: Mon, March 21st
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
-- [Midterm](../exams/exam1-s22.pdf) is all graded; we'll go over it today
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`41,047; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,917; [ETH gas](https://ethgas.watch/): 47 gwei => `$`2.88
+- The [midterm](../exams/exam1-s22.pdf) is all graded; we'll go over it today
   - Average was 40.5/60 (67.5%) with a standard deviation of 7.3/60 (12.2%)
   - I have to handle the too long answer issue
   - Yes, there will be a curve, but I don't know how much yet until I resolve the previous bullet point
@@ -99,8 +99,31 @@ Template for first line:
 
 
 
+## Geth issues
+- Some are having problems with it connecting; try adding `--syncmode "full"` to the flags
+  <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>geth --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 \
+                --syncmode "full"
+</code></pre>
+  - You may have to delete the /path/to/ethprivate/geth directory and restart it
+    - First, copy /path/to/ethprivate/geth/static-nodes.json somewhere
+  - For example:
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>cd /path/to/ethprivate
+cp geth/static-nodes.json .
+/bin/rm -rf ./geth
+geth --identity "mst3k" --datadir ./ init ./genesis.json
+cp static-nodes.json geth/
+geth --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 \
+                --syncmode "full"
+</code></pre>
+
+
+
 <!-- .slide: class="normal-slide-size" -->
-## Recap
+## News and Recap
+- Game mining crypto is continuing...
+  - See [Roblox Players Are Mining Crypto Just to Get Robux](https://www.vice.com/en/article/epxkmk/roblox-mine-robux-cryptocurrency)
 - We went through a live coding exercise of Solidity
 - We saw the geth transactions to the Debts smart contract change the web page in real time
   - But those changes weren't preserved!
