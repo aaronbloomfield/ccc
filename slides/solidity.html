@@ -692,7 +692,7 @@ library Address {
 - The following code:
 ```
 uint public num_assignments;
-mapping (address => string memory) public aliases;
+mapping (address => string) public aliases;
 mapping (uint => mapping(string => address) ) 
               public twodmap;
 ```
@@ -1757,6 +1757,8 @@ contract.payToAlias.sendTransaction("mst3k",17,
 ... how much do I owe???
 
 Also, we have the source code available
+
+The code is in [slides/code/Debt.sol](code/Debts.sol.html) ([src](code/Debts.sol))
 
 </textarea></section>
 

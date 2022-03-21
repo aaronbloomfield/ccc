@@ -76,15 +76,18 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 3. Wed, Jan 26: [encryption](../slides/encryption.html#/) to slide 5.3
 4. Mon, Jan 31: [encryption](../slides/encryption.html#/) to slide 7.25
 5. Wed, Feb 2: [encryption](../slides/encryption.html#/) to slide 9.21
-6. Mon, Feb 7: finished [encryption](../slides/encryption.html#/); started on [bitcoin](../slides/bitcoin.html#/) to slide 5.10
-7. Wed, Feb 9: [bitcoin](../slides/bitcoin.html#/) to slide 7.6
-8. Mon, Feb 14: [bitcoin](../slides/bitcoin.html#/) to slide 7.36
-9. Wed, Feb 16: finished [bitcoin](../slides/bitcoin.html#/)
+6. Mon, Feb 7: finished [encryption](../slides/encryption.html#/); started on [Bitcoin](../slides/bitcoin.html#/) to slide 5.10
+7. Wed, Feb 9: [Bitcoin](../slides/bitcoin.html#/) to slide 7.6
+8. Mon, Feb 14: [Bitcoin](../slides/bitcoin.html#/) to slide 7.36
+9. Wed, Feb 16: finished [Bitcoin](../slides/bitcoin.html#/)
 10. Mon, Feb 21: [mining](../slides/mining.html#/) to slide 4.6
 11. Wed, Feb 23: finished [mining](../slides/mining.html#/) to slide 4.6
 12. Mon, Feb 28: [Ethereum](../slides/ethereum.html#/) to slide 3.27
 13. Wed, Mar 2: midterm
 14. Mon, Mar 14: [Solidity](../slides/solidity.html#/) to slide 5.3
+15. Wed, Mar 16: finished [Solidity](../slides/solidity.html#/)
+16. Wed, Mar 21: [Tokens](../slides/tokens.html#/) to ...
+
 
 ## Legal Issues
 
