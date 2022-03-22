@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Address.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Collection of functions related to the address type</font></i>
+<i><font color="#9A1900"> */</font></i>
+<font color="#008080">library</font> Address <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns true if `account` is a contract.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * [IMPORTANT]</font></i>
+<i><font color="#9A1900">     * ====</font></i>
+<i><font color="#9A1900">     * It is unsafe to assume that an address for which this function returns</font></i>
+<i><font color="#9A1900">     * false is an externally-owned account (EOA) and not a contract.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Among others, `isContract` will return false for the following</font></i>
+<i><font color="#9A1900">     * types of addresses:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     *  - an externally-owned account</font></i>
+<i><font color="#9A1900">     *  - a contract in construction</font></i>
+<i><font color="#9A1900">     *  - an address where a contract will be created</font></i>
+<i><font color="#9A1900">     *  - an address where a contract lived, but was destroyed</font></i>
+<i><font color="#9A1900">     * ====</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">isContract</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// This method relies on extcodesize, which returns 0 for contracts in</font></i>
+        <i><font color="#9A1900">// construction, since the code is only stored at the end of the</font></i>
+        <i><font color="#9A1900">// constructor execution.</font></i>
+
+        <font color="#008080">uint256</font> size<font color="#990000">;</font>
+        <i><font color="#9A1900">// solhint-disable-next-line no-inline-assembly</font></i>
+        assembly <font color="#FF0000">{</font> size <font color="#990000">:=</font> <b><font color="#000000">extcodesize</font></b><font color="#990000">(</font>account<font color="#990000">)</font> <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> size <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Replacement for Solidity's `transfer`: sends `amount` wei to</font></i>
+<i><font color="#9A1900">     * `recipient`, forwarding all available gas and reverting on errors.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-1884</font></u><i><font color="#9A1900">[EIP1884] increases the gas cost</font></i>
+<i><font color="#9A1900">     * of certain opcodes, possibly making contracts go over the 2300 gas limit</font></i>
+<i><font color="#9A1900">     * imposed by `transfer`, making them unable to receive funds via</font></i>
+<i><font color="#9A1900">     * `transfer`. {sendValue} removes this limitation.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * </font></i><u><font color="#0000FF">https://diligence.consensys.net/posts/2019/09/stop-using-soliditys-transfer-now/</font></u><i><font color="#9A1900">[Learn more].</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * IMPORTANT: because control is transferred to `recipient`, care must be</font></i>
+<i><font color="#9A1900">     * taken to not create reentrancy vulnerabilities. Consider using</font></i>
+<i><font color="#9A1900">     * {ReentrancyGuard} or the</font></i>
+<i><font color="#9A1900">     * </font></i><u><font color="#0000FF">https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html</font></u><i><font color="#9A1900">#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">sendValue</font></b><font color="#990000">(</font>address <font color="#008080">payable</font> recipient<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> internal <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&gt;=</font> amount<font color="#990000">,</font> <font color="#FF0000">"Address: insufficient balance"</font><font color="#990000">);</font>
+
+        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls, avoid-call-value</font></i>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#990000">)</font> <font color="#990000">=</font> recipient<font color="#990000">.</font>call<font color="#FF0000">{</font> value<font color="#990000">:</font> amount <font color="#FF0000">}</font><font color="#990000">(</font><font color="#FF0000">""</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font> <font color="#FF0000">"Address: unable to send value, recipient may have reverted"</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Performs a Solidity function call using a low level `call`. A</font></i>
+<i><font color="#9A1900">     * plain`call` is an unsafe replacement for a function call: use this</font></i>
+<i><font color="#9A1900">     * function instead.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * If `target` reverts with a revert reason, it is bubbled up by this</font></i>
+<i><font color="#9A1900">     * function (like regular Solidity function calls).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Returns the raw returned data. To convert to the expected return value,</font></i>
+<i><font color="#9A1900">     * use </font></i><u><font color="#0000FF">https://solidity.readthedocs.io/en/latest/units-and-global-variables.html</font></u><i><font color="#9A1900">?highlight=abi.decode#abi-encoding-and-decoding-functions[`abi.decode`].</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `target` must be a contract.</font></i>
+<i><font color="#9A1900">     * - calling `target` with `data` must not revert.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.1._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+      <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCall</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> <font color="#FF0000">"Address: low-level call failed"</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-Address-functionCall-address-bytes-}[`functionCall`], but with</font></i>
+<i><font color="#9A1900">     * `errorMessage` as a fallback revert reason when `target` reverts.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.1._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],</font></i>
+<i><font color="#9A1900">     * but also transferring `value` wei to `target`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - the calling contract must have an ETH balance of at least `value`.</font></i>
+<i><font color="#9A1900">     * - the called Solidity function must be `payable`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.1._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> value<font color="#990000">,</font> <font color="#FF0000">"Address: low-level call with value failed"</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-Address-functionCallWithValue-address-bytes-uint256-}[`functionCallWithValue`], but</font></i>
+<i><font color="#9A1900">     * with `errorMessage` as a fallback revert reason when `target` reverts.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.1._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&gt;=</font> value<font color="#990000">,</font> <font color="#FF0000">"Address: insufficient balance for call"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">isContract</font></b><font color="#990000">(</font>target<font color="#990000">),</font> <font color="#FF0000">"Address: call to non-contract"</font><font color="#990000">);</font>
+
+        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls</font></i>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font>call<font color="#FF0000">{</font> value<font color="#990000">:</font> value <font color="#FF0000">}</font><font color="#990000">(</font>data<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font>success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],</font></i>
+<i><font color="#9A1900">     * but performing a static call.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.3._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionStaticCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionStaticCall</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> <font color="#FF0000">"Address: low-level static call failed"</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-Address-functionCall-address-bytes-string-}[`functionCall`],</font></i>
+<i><font color="#9A1900">     * but performing a static call.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.3._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionStaticCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">isContract</font></b><font color="#990000">(</font>target<font color="#990000">),</font> <font color="#FF0000">"Address: static call to non-contract"</font><font color="#990000">);</font>
+
+        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls</font></i>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font><b><font color="#000000">staticcall</font></b><font color="#990000">(</font>data<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font>success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],</font></i>
+<i><font color="#9A1900">     * but performing a delegate call.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.4._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionDelegateCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionDelegateCall</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> <font color="#FF0000">"Address: low-level delegate call failed"</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-Address-functionCall-address-bytes-string-}[`functionCall`],</font></i>
+<i><font color="#9A1900">     * but performing a delegate call.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v3.4._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionDelegateCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">isContract</font></b><font color="#990000">(</font>target<font color="#990000">),</font> <font color="#FF0000">"Address: delegate call to non-contract"</font><font color="#990000">);</font>
+
+        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls</font></i>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font><b><font color="#000000">delegatecall</font></b><font color="#990000">(</font>data<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font>success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <font color="#008080">function</font> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b><font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> returndata<font color="#990000">;</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// Look for revert reason and bubble it up if present</font></i>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <i><font color="#9A1900">// The easiest way to bubble the revert reason is using memory via assembly</font></i>
+
+                <i><font color="#9A1900">// solhint-disable-next-line no-inline-assembly</font></i>
+                assembly <font color="#FF0000">{</font>
+                    <font color="#008080">let</font> returndata_size <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>returndata<font color="#990000">)</font>
+                    <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> returndata<font color="#990000">),</font> returndata_size<font color="#990000">)</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+                <b><font color="#000000">revert</font></b><font color="#990000">(</font>errorMessage<font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

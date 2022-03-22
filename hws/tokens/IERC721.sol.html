@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>IERC721.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts v4.4.1 (token/ERC721/IERC721.sol)</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Required interface of an ERC721 compliant contract.</font></i>
+<i><font color="#9A1900"> */</font></i>
+interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when `tokenId` token is transferred from `from` to `to`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> from<font color="#990000">,</font> address <font color="#008080">indexed</font> to<font color="#990000">,</font> uint256 <font color="#008080">indexed</font> tokenId<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when `owner` enables `approved` to manage the `tokenId` token.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">Approval</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> owner<font color="#990000">,</font> address <font color="#008080">indexed</font> approved<font color="#990000">,</font> uint256 <font color="#008080">indexed</font> tokenId<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">ApprovalForAll</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> owner<font color="#990000">,</font> address <font color="#008080">indexed</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> approved<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the number of tokens in ``owner``'s account.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> balance<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the owner of the `tokenId` token.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `tokenId` must exist.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">ownerOf</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients</font></i>
+<i><font color="#9A1900">     * are aware of the ERC721 protocol to prevent tokens from being forever locked.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `from` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `tokenId` token must exist and be owned by `from`.</font></i>
+<i><font color="#9A1900">     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.</font></i>
+<i><font color="#9A1900">     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> from<font color="#990000">,</font>
+        <font color="#008080">address</font> to<font color="#990000">,</font>
+        uint256 tokenId
+    <font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Transfers `tokenId` token from `from` to `to`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `from` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `tokenId` token must be owned by `from`.</font></i>
+<i><font color="#9A1900">     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> from<font color="#990000">,</font>
+        <font color="#008080">address</font> to<font color="#990000">,</font>
+        uint256 tokenId
+    <font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Gives permission to `to` to transfer `tokenId` token to another account.</font></i>
+<i><font color="#9A1900">     * The approval is cleared when the token is transferred.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - The caller must own the token or be an approved operator.</font></i>
+<i><font color="#9A1900">     * - `tokenId` must exist.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits an {Approval} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the account approved for `tokenId` token.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `tokenId` must exist.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">getApproved</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Approve or remove `operator` as an operator for the caller.</font></i>
+<i><font color="#9A1900">     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - The `operator` cannot be the caller.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits an {ApprovalForAll} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">setApprovalForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> _approved<font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns if the `operator` is allowed to manage all of the assets of `owner`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * See {setApprovalForAll}</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">isApprovedForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Safely transfers `tokenId` token from `from` to `to`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `from` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `tokenId` token must exist and be owned by `from`.</font></i>
+<i><font color="#9A1900">     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.</font></i>
+<i><font color="#9A1900">     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> from<font color="#990000">,</font>
+        <font color="#008080">address</font> to<font color="#990000">,</font>
+        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
+        bytes calldata data
+    <font color="#990000">)</font> external<font color="#990000">;</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>ERC20.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./IERC20full.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Implementation of the {IERC20} interface.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * This implementation is agnostic to the way tokens are created. This means</font></i>
+<i><font color="#9A1900"> * that a supply mechanism has to be added in a derived contract using {_mint}.</font></i>
+<i><font color="#9A1900"> * For a generic mechanism see {ERC20PresetMinterPauser}.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * TIP: For a detailed writeup see our guide</font></i>
+<i><font color="#9A1900"> * </font></i><u><font color="#0000FF">https://forum.zeppelin.solutions/t/how-to-implement-erc20-supply-mechanisms/226</font></u><i><font color="#9A1900">[How</font></i>
+<i><font color="#9A1900"> * to implement supply mechanisms].</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * We have followed general OpenZeppelin guidelines: functions revert instead</font></i>
+<i><font color="#9A1900"> * of returning `false` on failure. This behavior is nonetheless conventional</font></i>
+<i><font color="#9A1900"> * and does not conflict with the expectations of ERC20 applications.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * Additionally, an {Approval} event is emitted on calls to {transferFrom}.</font></i>
+<i><font color="#9A1900"> * This allows applications to reconstruct the allowance for all accounts just</font></i>
+<i><font color="#9A1900"> * by listening to said events. Other implementations of the EIP may not emit</font></i>
+<i><font color="#9A1900"> * these events, as it isn't required by the specification.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * Finally, the non-standard {decreaseAllowance} and {increaseAllowance}</font></i>
+<i><font color="#9A1900"> * functions have been added to mitigate the well-known issues around setting</font></i>
+<i><font color="#9A1900"> * allowances. See {IERC20-approve}.</font></i>
+<i><font color="#9A1900"> */</font></i>
+contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20full <font color="#FF0000">{</font>
+    <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint256<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> _balances<font color="#990000">;</font>
+
+    <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint256<font color="#990000">))</font> <b><font color="#0000FF">private</font></b> _allowances<font color="#990000">;</font>
+
+    <font color="#008080">uint256</font> <b><font color="#0000FF">private</font></b> _totalSupply<font color="#990000">;</font>
+
+    <font color="#008080">string</font> <b><font color="#0000FF">private</font></b> _name<font color="#990000">;</font>
+    <font color="#008080">string</font> <b><font color="#0000FF">private</font></b> _symbol<font color="#990000">;</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets the values for {name} and {symbol}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * The defaut value of {decimals} is 18. To select a different value for</font></i>
+<i><font color="#9A1900">     * {decimals} you should overload it.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * All three of these values are immutable: they can only be set once during</font></i>
+<i><font color="#9A1900">     * construction.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <b><font color="#000000">constructor</font></b> <font color="#990000">(</font>string <font color="#008080">memory</font> name_<font color="#990000">,</font> string <font color="#008080">memory</font> symbol_<font color="#990000">)</font> <font color="#FF0000">{</font>
+        _name <font color="#990000">=</font> name_<font color="#990000">;</font>
+        _symbol <font color="#990000">=</font> symbol_<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the name of the token.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> override view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> _name<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the symbol of the token, usually a shorter version of the</font></i>
+<i><font color="#9A1900">     * name.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> override view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> _symbol<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the number of decimals used to get its user representation.</font></i>
+<i><font color="#9A1900">     * For example, if `decimals` equals `2`, a balance of `505` tokens should</font></i>
+<i><font color="#9A1900">     * be displayed to a user as `5,05` (`505 / 10 ** 2`).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Tokens usually opt for a value of 18, imitating the relationship between</font></i>
+<i><font color="#9A1900">     * Ether and Wei. This is the value {ERC20} uses, unless this function is</font></i>
+<i><font color="#9A1900">     * overloaded;</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This information is only used for _display_ purposes: it in</font></i>
+<i><font color="#9A1900">     * no way affects any of the arithmetic of the contract, including</font></i>
+<i><font color="#9A1900">     * {IERC20-balanceOf} and {IERC20-transfer}.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">decimals</font></b><font color="#990000">()</font> external override view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">18</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-totalSupply}.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">totalSupply</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <b><font color="#0000FF">virtual</font></b> <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> _totalSupply<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-balanceOf}.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <b><font color="#0000FF">virtual</font></b> <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> _balances<font color="#990000">[</font>account<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-transfer}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `recipient` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - the caller must have a balance of at least `amount`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> recipient<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">_transfer</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> recipient<font color="#990000">,</font> amount<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-allowance}.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <b><font color="#0000FF">virtual</font></b> <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> _allowances<font color="#990000">[</font>owner<font color="#990000">][</font>spender<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-approve}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `spender` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">_approve</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> spender<font color="#990000">,</font> amount<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-transferFrom}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits an {Approval} event indicating the updated allowance. This is not</font></i>
+<i><font color="#9A1900">     * required by the EIP. See the note at the beginning of {ERC20}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `sender` and `recipient` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `sender` must have a balance of at least `amount`.</font></i>
+<i><font color="#9A1900">     * - the caller must have allowance for ``sender``'s tokens of at least</font></i>
+<i><font color="#9A1900">     * `amount`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> sender<font color="#990000">,</font> <font color="#008080">address</font> recipient<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">_transfer</font></b><font color="#990000">(</font>sender<font color="#990000">,</font> recipient<font color="#990000">,</font> amount<font color="#990000">);</font>
+
+        <font color="#008080">uint256</font> currentAllowance <font color="#990000">=</font> _allowances<font color="#990000">[</font>sender<font color="#990000">][</font><b><font color="#000000">_msgSender</font></b><font color="#990000">()];</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>currentAllowance <font color="#990000">&gt;=</font> amount<font color="#990000">,</font> <font color="#FF0000">"ERC20: transfer amount exceeds allowance"</font><font color="#990000">);</font>
+        <b><font color="#000000">_approve</font></b><font color="#990000">(</font>sender<font color="#990000">,</font> <b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> currentAllowance <font color="#990000">-</font> amount<font color="#990000">);</font>
+
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Atomically increases the allowance granted to `spender` by the caller.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * This is an alternative to {approve} that can be used as a mitigation for</font></i>
+<i><font color="#9A1900">     * problems described in {IERC20-approve}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits an {Approval} event indicating the updated allowance.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `spender` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">increaseAllowance</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> addedValue<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">_approve</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> spender<font color="#990000">,</font> _allowances<font color="#990000">[</font><b><font color="#000000">_msgSender</font></b><font color="#990000">()][</font>spender<font color="#990000">]</font> <font color="#990000">+</font> addedValue<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Atomically decreases the allowance granted to `spender` by the caller.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * This is an alternative to {approve} that can be used as a mitigation for</font></i>
+<i><font color="#9A1900">     * problems described in {IERC20-approve}.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits an {Approval} event indicating the updated allowance.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `spender` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `spender` must have allowance for the caller of at least</font></i>
+<i><font color="#9A1900">     * `subtractedValue`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">decreaseAllowance</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> subtractedValue<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#008080">uint256</font> currentAllowance <font color="#990000">=</font> _allowances<font color="#990000">[</font><b><font color="#000000">_msgSender</font></b><font color="#990000">()][</font>spender<font color="#990000">];</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>currentAllowance <font color="#990000">&gt;=</font> subtractedValue<font color="#990000">,</font> <font color="#FF0000">"ERC20: decreased allowance below zero"</font><font color="#990000">);</font>
+        <b><font color="#000000">_approve</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> spender<font color="#990000">,</font> currentAllowance <font color="#990000">-</font> subtractedValue<font color="#990000">);</font>
+
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves tokens `amount` from `sender` to `recipient`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * This is internal function is equivalent to {transfer}, and can be used to</font></i>
+<i><font color="#9A1900">     * e.g. implement automatic token fees, slashing mechanisms, etc.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `sender` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `recipient` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `sender` must have a balance of at least `amount`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> sender<font color="#990000">,</font> <font color="#008080">address</font> recipient<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>sender <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC20: transfer from the zero address"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>recipient <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC20: transfer to the zero address"</font><font color="#990000">);</font>
+
+        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>sender<font color="#990000">,</font> recipient<font color="#990000">,</font> amount<font color="#990000">);</font>
+
+        <font color="#008080">uint256</font> senderBalance <font color="#990000">=</font> _balances<font color="#990000">[</font>sender<font color="#990000">];</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>senderBalance <font color="#990000">&gt;=</font> amount<font color="#990000">,</font> <font color="#FF0000">"ERC20: transfer amount exceeds balance"</font><font color="#990000">);</font>
+        _balances<font color="#990000">[</font>sender<font color="#990000">]</font> <font color="#990000">=</font> senderBalance <font color="#990000">-</font> amount<font color="#990000">;</font>
+        _balances<font color="#990000">[</font>recipient<font color="#990000">]</font> <font color="#990000">+=</font> amount<font color="#990000">;</font>
+
+        <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>sender<font color="#990000">,</font> recipient<font color="#990000">,</font> amount<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/** </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Creates `amount` tokens and assigns them to `account`, increasing</font></i>
+<i><font color="#9A1900">     * the total supply.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event with `from` set to the zero address.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_mint</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>account <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC20: mint to the zero address"</font><font color="#990000">);</font>
+
+        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> account<font color="#990000">,</font> amount<font color="#990000">);</font>
+
+        _totalSupply <font color="#990000">+=</font> amount<font color="#990000">;</font>
+        _balances<font color="#990000">[</font>account<font color="#990000">]</font> <font color="#990000">+=</font> amount<font color="#990000">;</font>
+        <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> account<font color="#990000">,</font> amount<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Destroys `amount` tokens from `account`, reducing the</font></i>
+<i><font color="#9A1900">     * total supply.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event with `to` set to the zero address.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `account` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `account` must have at least `amount` tokens.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_burn</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>account <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC20: burn from the zero address"</font><font color="#990000">);</font>
+
+        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>account<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> amount<font color="#990000">);</font>
+
+        <font color="#008080">uint256</font> accountBalance <font color="#990000">=</font> _balances<font color="#990000">[</font>account<font color="#990000">];</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>accountBalance <font color="#990000">&gt;=</font> amount<font color="#990000">,</font> <font color="#FF0000">"ERC20: burn amount exceeds balance"</font><font color="#990000">);</font>
+        _balances<font color="#990000">[</font>account<font color="#990000">]</font> <font color="#990000">=</font> accountBalance <font color="#990000">-</font> amount<font color="#990000">;</font>
+        _totalSupply <font color="#990000">-=</font> amount<font color="#990000">;</font>
+
+        <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>account<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> amount<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets `amount` as the allowance of `spender` over the `owner` s tokens.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * This internal function is equivalent to `approve`, and can be used to</font></i>
+<i><font color="#9A1900">     * e.g. set automatic allowances for certain subsystems, etc.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits an {Approval} event.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `owner` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `spender` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_approve</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>owner <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC20: approve from the zero address"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>spender <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC20: approve to the zero address"</font><font color="#990000">);</font>
+
+        _allowances<font color="#990000">[</font>owner<font color="#990000">][</font>spender<font color="#990000">]</font> <font color="#990000">=</font> amount<font color="#990000">;</font>
+        <font color="#008080">emit</font> <b><font color="#000000">Approval</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> spender<font color="#990000">,</font> amount<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called before any transfer of tokens. This includes</font></i>
+<i><font color="#9A1900">     * minting and burning.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Calling conditions:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - when `from` and `to` are both non-zero, `amount` of ``from``'s tokens</font></i>
+<i><font color="#9A1900">     * will be to transferred to `to`.</font></i>
+<i><font color="#9A1900">     * - when `from` is zero, `amount` tokens will be minted for `to`.</font></i>
+<i><font color="#9A1900">     * - when `to` is zero, `amount` of ``from``'s tokens will be burned.</font></i>
+<i><font color="#9A1900">     * - `from` and `to` are never both zero.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

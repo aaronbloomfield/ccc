@@ -376,6 +376,17 @@ contract EZTokens {
 
 
 
+## Why `approve()` and `transferFrom()`?
+- Imagine you wanted to transfer both ETH and a token cryptocurrency
+  - This is how you add "liquidity" to a decentralized exchange (DEX)
+- You could do it in two multiple transactions
+- Or you could:
+  - `approve()` the DEX for a certain amount (say, $x$) of the cryptocurrency
+  - Send *one* transaction to the DEX that also contains ETH
+    - The parameters in that transaction include the transferred cryptocurrency info
+
+
+
 ## ERC-20 Optional Interface
 - There are three *optional* functions, as described [here](https://eips.ethereum.org/EIPS/eip-20)
 

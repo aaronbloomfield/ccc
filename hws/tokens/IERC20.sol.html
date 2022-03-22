@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>IERC20.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.5.0) (token/ERC20/IERC20.sol)</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Interface of the ERC20 standard as defined in the EIP.</font></i>
+<i><font color="#9A1900"> */</font></i>
+<font color="#008080">interface</font> IERC20 <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the amount of tokens in existence.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">totalSupply</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the amount of tokens owned by `account`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves `amount` tokens from the caller's account to `to`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Returns a boolean value indicating whether the operation succeeded.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the remaining number of tokens that `spender` will be</font></i>
+<i><font color="#9A1900">     * allowed to spend on behalf of `owner` through {transferFrom}. This is</font></i>
+<i><font color="#9A1900">     * zero by default.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * This value changes when {approve} or {transferFrom} are called.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets `amount` as the allowance of `spender` over the caller's tokens.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Returns a boolean value indicating whether the operation succeeded.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * IMPORTANT: Beware that changing an allowance with this method brings the risk</font></i>
+<i><font color="#9A1900">     * that someone may use both the old and the new allowance by unfortunate</font></i>
+<i><font color="#9A1900">     * transaction ordering. One possible solution to mitigate this race</font></i>
+<i><font color="#9A1900">     * condition is to first reduce the spender's allowance to 0 and set the</font></i>
+<i><font color="#9A1900">     * desired value afterwards:</font></i>
+<i><font color="#9A1900">     * </font></i><u><font color="#0000FF">https://github.com/ethereum/EIPs/issues/20</font></u><i><font color="#9A1900">#issuecomment-263524729</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits an {Approval} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves `amount` tokens from `from` to `to` using the</font></i>
+<i><font color="#9A1900">     * allowance mechanism. `amount` is then deducted from the caller's</font></i>
+<i><font color="#9A1900">     * allowance.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Returns a boolean value indicating whether the operation succeeded.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> from<font color="#990000">,</font>
+        <font color="#008080">address</font> to<font color="#990000">,</font>
+        uint256 amount
+    <font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when `value` tokens are moved from one account (`from`) to</font></i>
+<i><font color="#9A1900">     * another (`to`).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Note that `value` may be zero.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> from<font color="#990000">,</font> address <font color="#008080">indexed</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when the allowance of a `spender` for an `owner` is set by</font></i>
+<i><font color="#9A1900">     * a call to {approve}. `value` is the new allowance.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">Approval</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> owner<font color="#990000">,</font> address <font color="#008080">indexed</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

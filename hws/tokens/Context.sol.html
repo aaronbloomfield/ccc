@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Context.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900"> * @dev Provides information about the current execution context, including the</font></i>
+<i><font color="#9A1900"> * sender of the transaction and its data. While these are generally available</font></i>
+<i><font color="#9A1900"> * via msg.sender and msg.data, they should not be accessed in such a direct</font></i>
+<i><font color="#9A1900"> * manner, since when dealing with meta-transactions the account sending and</font></i>
+<i><font color="#9A1900"> * paying for execution may not be the actual sender (as far as an application</font></i>
+<i><font color="#9A1900"> * is concerned).</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * This contract is only required for intermediate, library-like contracts.</font></i>
+<i><font color="#9A1900"> */</font></i>
+abstract <font color="#008080">contract</font> Context <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_msgSender</font></b><font color="#990000">()</font> internal view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> msg<font color="#990000">.</font>sender<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <font color="#008080">function</font> <b><font color="#000000">_msgData</font></b><font color="#990000">()</font> internal view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> calldata<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">this</font></b><font color="#990000">;</font> <i><font color="#9A1900">// silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691</font></i>
+        <b><font color="#0000FF">return</font></b> msg<font color="#990000">.</font>data<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>
