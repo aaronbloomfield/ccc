@@ -267,7 +267,8 @@ p.titlep {
 }
 
 code.small {
-  scale: 80%;
+  /*scale: 80%;*/
+  transform: scale(0.8,0.8);
   width: 115%;
   margin-left: -50px;
   height: 400px;
@@ -276,7 +277,8 @@ code.small {
 }
 
 code.longcode {
-  scale: 80%;
+  /*scale: 80%;*/
+  transform: scale(0.8,0.8);
   width: 100%;
   margin-left: auto;
   height:auto;
@@ -326,4 +328,8 @@ code.notworking {
 
 pre.code-wrapper {
   box-shadow: none;
+}
+
+.reveal pre {
+  box-shadow: none
 }

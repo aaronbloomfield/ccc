@@ -11,8 +11,6 @@ interface IERC20full is IERC20 {
 
     function decimals() external view returns (uint8);
 
-    // this inherits the one function from IERC165 (supportsInterface())
-
-    // this inherits the 6 functions and 2 events from IERC20
+    // this must implement the 6 functions from IERC20
 
 }

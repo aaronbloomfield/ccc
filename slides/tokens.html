@@ -277,6 +277,7 @@ contract EZTokens {
   - Once you know the type, you can interact with it via the standardized interface
 - The solution: you ask it, as defined in ERC-165
   - Created in 2018
+- Reference: the formal [ERC-165 EIP](https://eips.ethereum.org/EIPS/eip-165)
 
 
 
@@ -346,6 +347,7 @@ contract EZTokens {
 - Notably, it was written *before* ERC-165
   - So it does *not* have the `supportsInterface()` function
 - Reference: [ERC-20 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) from [ethereum.org](https://ethereum.org/)
+  - And the formal [ERC-20 EIP](https://eips.ethereum.org/EIPS/eip-20)
 
 
 
@@ -397,13 +399,13 @@ contract EZTokens {
 
     function decimals() external view returns (uint8);
 </code></pre>
+    </textarea></section>
 
-
-
-## Our Usage
-- For the Tokens assignment, we will use:
-
-<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+    <section>
+<h2>Our Usage</h2>
+<ul>
+  <li>For the Tokens assignment, we will use:
+<pre class="code-wrapper" style="margin-bottom:-20px"><code class="hljs awk small" style="height:auto;width:120%"
 >interface IERC20full is IERC20 {
 
     function name() external view returns (string memory);
@@ -412,15 +414,23 @@ contract EZTokens {
 
     function decimals() external view returns (uint8);
 
-    // this inherits the one function from IERC165 (supportsInterface())
-
-    // this inherits the 6 functions and 2 events from IERC20
-
+    // this must implement the 6 functions from IERC20
 }
 </code></pre>
+</li>
+<li>Our ERC20 code contract line will be:
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>contract ERC20 is Context, IERC20full {
+</code></pre>
+</li>
+<li>Our TokenCC contract line will be:
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>contract TokenCC is ERC20, IERC165 {
+</code></pre>
+</li></ul>
+</section>
 
-
-
+   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Starting Source Code
 - We will all start with the freely available implementation by [OpenZeppelin](https://openzeppelin.com/)
 - Specifically that for ERC-20 tokens:
@@ -469,8 +479,8 @@ contract MyToken is ERC20 {
 - As of March 20, 2022:
   - SHIB's value is `$`0.00002305 (43,384 per USD)
   - ETH's value is `$`2,851
-  - Ethereum gas is 50 gwei, which means `$`3 per transaction
-- To buy SHIB, you have to spend `$`3 for transaction fees
+  - [ETH gas](https://ethgas.watch/) is 50 gwei, which means `$`3.00 per transaction
+- To buy SHIB, you have to spend `$`3.00 for transaction fees
   - Or over 130,000 SHIB
 - All token cryptocurrency exchanges with the ERC-20 contract have to pay the Ethereum fees!
 - Exchanges such as Coinbase do it differently...
@@ -488,7 +498,7 @@ contract MyToken is ERC20 {
 
 
 
-<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:130%"
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;height:120%"
 >from web3 import Web3
 
 w3 = Web3(Web3.HTTPProvider("https://cloudflare-eth.com"))
@@ -568,6 +578,7 @@ print("Addr Balance:", addr_balance)
 ## Upcoming Assignments
 - In the Tokens assignment, you will be creating a token cryptocurrency
   - With a name, symbol, and logo
+  - You have to design the logo via [GIMP](https://www.gimp.org/) or similar
 - In the DEX (Decentralized Exchange) assignment, you will be creating an smart contract to exchange your cryptocurrency for our (fake) ETH
 </textarea></section>
 
@@ -590,7 +601,7 @@ print("Addr Balance:", addr_balance)
 - Notably, it was written *after* ERC-165
   - So it *does* have the `supportsInterface()` function
 - Reference: [ERC-721 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/) from [ethereum.org](https://ethereum.org/)
-
+  - And the formal [ERC-721 EIP](https://eips.ethereum.org/EIPS/eip-721)
 
 
 
@@ -635,7 +646,7 @@ print("Addr Balance:", addr_balance)
     function tokenURI(uint256 _tokenId) external view returns (string);
 }
 </code></pre>
-- Note that ERC-721 is more of a token manager rather than just the token itself
+- Note that ERC-721 is more of a token *manager* rather than just the token itself
 
 
 
@@ -674,6 +685,7 @@ print("Addr Balance:", addr_balance)
 - In the Tokens assignment, you will be creating an NFT manager
   - This is in addition to the cryptocurrency part of this assignment
 - In the Auction assignment, you will be creating an auction smart contract to allow bidding on your NFTs
+- We'll look at the [Tokens assignment](../hws/tokens/index.html)
 </textarea></section>
 
   </section>
@@ -690,10 +702,12 @@ print("Addr Balance:", addr_balance)
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Overview
 - Created in 2017, this standard improves upon the ERC-20 (FT) standard
+  - That was 2 years after the ERC-20 standard
 - They can be written to be backwards-compatible, so any such ERC-777 token fulfills the ERC-20 token interface
 - Notably, it was written *after* ERC-165
   - So it *does* have the `supportsInterface()` function
 - Reference: [ERC-777 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-777/) from [ethereum.org](https://ethereum.org/)
+  - And the formal [ERC-777 EIP](https://eips.ethereum.org/EIPS/eip-777)
 
 
 
@@ -778,7 +792,9 @@ contract FTplusplus is IERC777, IERC165, IERC20 {
 
 
 ## OpenZeppelin Implementation
-- OpenZeppelin [code for ERC-777](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC777/ERC777.sol)
+- OpenZeppelin code for:
+  - [IERC777.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC777/IERC777.sol): the interface
+  - [ERC777.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC777/ERC777.sol): the implementation
 - We won't go over that in detail, though
 </textarea></section>
 
@@ -796,23 +812,24 @@ contract FTplusplus is IERC777, IERC165, IERC20 {
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Overview
 - Created in 2018, this standard improves upon the ERC-721 (NFT) standard
+  - That was half a year after the ERC-721 standard
 - They can be written to be backwards-compatible, so any such ERC-1155 token fulfills the ERC-721 token interface
   - The function names between the two are all different
 - Notably, it was written *after* ERC-165
   - So it *does* have the `supportsInterface()` function
 - Reference: [ERC-1155 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/) from [ethereum.org](https://ethereum.org/)
-
+  - And the formal [ERC-1155 EIP](https://eips.ethereum.org/EIPS/eip-1155)
 
 
 
 ## Improvements
 (from the [ERC-1155 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/))
-- Batch Transfer: Transfer multiple assets in a single call
-- Batch Balance: Get the balances of multiple assets in a single call
-- Batch Approval: Approve all tokens to an address
-- Hooks: Receive tokens hook
-- NFT Support: If supply is only 1, treat it as NFT
-- Safe Transfer Rules: Set of rules for secure transfer
+- Batch transfer: transfer multiple assets in a single call
+- Batch balance: get the balances of multiple assets in a single call
+- Batch approval: approve all tokens to an address
+- Hooks: receive tokens hook
+- NFT support: if supply is only 1, treat it as NFT
+- Safe transfer rules: set of rules for secure transfer
 
 
 
@@ -870,7 +887,9 @@ contract NFTplusplus is IERC1155, IERC165, IERC721 {
 
 
 ## OpenZeppelin Implementation
-- OpenZeppelin [code for ERC-1155](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol)
+- OpenZeppelin code for:
+  - [IERC1155.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/IERC1155.sol): the interface
+  - [ERC1155.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol): the implementation
 - We won't go over that in detail, though
 </textarea></section>
 
