@@ -49,15 +49,15 @@ The included code is:
 - [Context.sol](Context.sol.html) ([src](Context.sol)) is a better way to get the context rather than `msg.sender` and `msg.data`
 - [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)), as [discussed in lecture](../../tokens.html#/erc165)
 - [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)), as [discussed in lecture](../../tokens.html#/erc20)
-- [IERC20full.sol](IERC20full.sol.html) ([src](IERC20full.sol)), as [discussed in lecture](../../tokens.html#/erc20)
+- [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)), as [discussed in lecture](../../tokens.html#/erc20)
 - [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)), which is the [OpenZeppelin ERC-20 implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol).
 
 
 There were a few changes made to the [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)) file from the [OpenZeppelin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol):
 
 - The `import` lines were modified so that they include everything from this directory
-- The `ERC20` contract now inherits from `IERC20full` rather than `IERC20`, as we want to ensure it has the `name()`, `symbol()`, and `decimals()` methods in the [IERC20full.sol](IERC20full.sol.html) ([src](IERC20full.sol)) file
-- As those three methods (`name()`, `symbol()`, and `decimals()`) are now overriding from the `IERC20full` contract, the `override` qualifier was added
+- The `ERC20` contract now inherits from `IERC20Metadata` rather than `IERC20`, as we want to ensure it has the `name()`, `symbol()`, and `decimals()` methods in the [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)) file
+- As those three methods (`name()`, `symbol()`, and `decimals()`) are now overriding from the `IERC20Metadata` contract, the `override` qualifier was added
 - The `decimals()` visibility was lowered to `external` to allow us to easily override it
 
 You should look over and familiarize yourself with all this code.
@@ -71,9 +71,9 @@ There are some very strict submission requirements for this submission so that w
 
 1. Your contract MUST be in a file called `TokenCC.sol`
 2. You must put your name and userid as the second line of the file (right after the SPDX line)
-3. Your contract opening line MUST be: `contract TokenCC is ERC20, IERC165 {`; this will inherit the other contracts (Context, IERC20 and IERC20full)
+3. Your contract opening line MUST be: `contract TokenCC is ERC20, IERC165 {`; this will inherit the other contracts (Context, IERC20 and IERC20Metadata)
 4. The pragma line should be: `pragma solidity ^0.8.7;`
-5. You are NOT to submit any of the *files* for the interfaces above (Context.sol, IERC20.sol, IERC20full.sol, or IERC165.sol), nor the ERC20.sol file.  And don't include the code from those files in your TokenCC.sol file.  You should `import` them in `TokenCC.sol` as such: `import "./IERC165.sol";` and `import "./ERC20.sol";` -- those two files import all the other contracts.  The necessary files will be put into the appropriate directory on Gradescope when it attempts to compile your program.
+5. You are NOT to submit any of the *files* for the interfaces above (Context.sol, IERC20.sol, IERC20Metadata.sol, or IERC165.sol), nor the ERC20.sol file.  And don't include the code from those files in your TokenCC.sol file.  You should `import` them in `TokenCC.sol` as such: `import "./IERC165.sol";` and `import "./ERC20.sol";` -- those two files import all the other contracts.  The necessary files will be put into the appropriate directory on Gradescope when it attempts to compile your program.
 6. You cannot include any files other than the ones in the list above; any other code must be in your `TokenCC.sol` file
 7. You cannot edit the [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)) file -- any changes have to go into your `TokenCC.sol` file
 
@@ -82,7 +82,7 @@ Your task is to create a `TokenCC.sol` file with a `TokenCC` contract.  Some not
 - You have to define the name and symbol when the constructor is called -- you can do this by calling the base class (`ERC20`) constructor that takes two parameters -- to see how to do this, look at [this lecture slide](../../slides/tokens.html#/erc20constructor) and the [Arguments for Base Constructors](https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors) section of the Solidity language reference.
 - Keep in mind that, because the `_mint()` function is `internal`, it can only be called from code you write.  So your constructor should mint for you a reasonable amount of the cryptocurrency.  
 - To override the `decimals()` function, you can just create an appropriate variable.  Be sure to make those three fields `public` and `override`!
-- You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *four* interfaces: `Context`, `IERC165`, `IERC20`, and `IERC20full`
+- You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *four* interfaces: `Context`, `IERC165`, `IERC20`, and `IERC20Metadata`
 
 Minting considerations:
 

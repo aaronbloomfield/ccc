@@ -50,7 +50,8 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Larger Programming Homeworks
 
-- Due Tue, 3/22, by midnight: [P5: dApp Gradebook](../gradebook/index.html) ([md](../gradebook/index.md))
+- Due Tue, 3/29, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
+- Due Tue, 3/22, by midnight: [HW P5: dApp Gradebook](../hws/gradebook/index.html) ([md](../hws/gradebook/index.md))
 - Due Tue, 2/22, by midnight: [HW P4: Bitcoin scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
 - Due Tue, 2/15, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 2/8, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
@@ -86,7 +87,8 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 13. Wed, Mar 2: midterm
 14. Mon, Mar 14: [Solidity](../slides/solidity.html#/) to slide 5.3
 15. Wed, Mar 16: finished [Solidity](../slides/solidity.html#/)
-16. Wed, Mar 21: [Tokens](../slides/tokens.html#/) to ...
+16. Mon, Mar 21: [Tokens](../slides/tokens.html#/) to 5.3
+17. Wed, Mar 23: [Tokens](../slides/tokens.html#/) to 6.7
 
 
 ## Legal Issues

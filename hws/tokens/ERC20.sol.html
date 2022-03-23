@@ -13,7 +13,7 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
-import <font color="#FF0000">"./IERC20full.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC20Metadata.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
@@ -40,7 +40,7 @@ import <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font
 <i><font color="#9A1900"> * functions have been added to mitigate the well-known issues around setting</font></i>
 <i><font color="#9A1900"> * allowances. See {IERC20-approve}.</font></i>
 <i><font color="#9A1900"> */</font></i>
-contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20full <font color="#FF0000">{</font>
+contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20Metadata <font color="#FF0000">{</font>
     <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint256<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> _balances<font color="#990000">;</font>
 
     <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint256<font color="#990000">))</font> <b><font color="#0000FF">private</font></b> _allowances<font color="#990000">;</font>

@@ -117,8 +117,8 @@ href="../../tokens.html#/erc165">discussed in lecture</a></li>
 <li><a href="IERC20.sol.html">IERC20.sol</a> (<a
 href="IERC20.sol">src</a>), as <a
 href="../../tokens.html#/erc20">discussed in lecture</a></li>
-<li><a href="IERC20full.sol.html">IERC20full.sol</a> (<a
-href="IERC20full.sol">src</a>), as <a
+<li><a href="IERC20Metadata.sol.html">IERC20Metadata.sol</a> (<a
+href="IERC20Metadata.sol">src</a>), as <a
 href="../../tokens.html#/erc20">discussed in lecture</a></li>
 <li><a href="ERC20.sol.html">ERC20.sol</a> (<a
 href="ERC20.sol">src</a>), which is the <a
@@ -134,15 +134,15 @@ implementation</a>:</p>
 <li>The <code>import</code> lines were modified so that they include
 everything from this directory</li>
 <li>The <code>ERC20</code> contract now inherits from
-<code>IERC20full</code> rather than <code>IERC20</code>, as we want to
-ensure it has the <code>name()</code>, <code>symbol()</code>, and
+<code>IERC20Metadata</code> rather than <code>IERC20</code>, as we want
+to ensure it has the <code>name()</code>, <code>symbol()</code>, and
 <code>decimals()</code> methods in the <a
-href="IERC20full.sol.html">IERC20full.sol</a> (<a
-href="IERC20full.sol">src</a>) file</li>
+href="IERC20Metadata.sol.html">IERC20Metadata.sol</a> (<a
+href="IERC20Metadata.sol">src</a>) file</li>
 <li>As those three methods (<code>name()</code>, <code>symbol()</code>,
 and <code>decimals()</code>) are now overriding from the
-<code>IERC20full</code> contract, the <code>override</code> qualifier
-was added</li>
+<code>IERC20Metadata</code> contract, the <code>override</code>
+qualifier was added</li>
 <li>The <code>decimals()</code> visibility was lowered to
 <code>external</code> to allow us to easily override it</li>
 </ul>
@@ -163,11 +163,11 @@ submission so that we can grade it in a sane manner:</p>
 (right after the SPDX line)</li>
 <li>Your contract opening line MUST be: <code>contract TokenCC is ERC20,
 IERC165 {</code>; this will inherit the other contracts (Context, IERC20
-and IERC20full)</li>
+and IERC20Metadata)</li>
 <li>The pragma line should be: <code>pragma solidity ^0.8.7;</code></li>
 <li>You are NOT to submit any of the <em>files</em> for the interfaces
-above (Context.sol, IERC20.sol, IERC20full.sol, or IERC165.sol), nor the
-ERC20.sol file. And don’t include the code from those files in your
+above (Context.sol, IERC20.sol, IERC20Metadata.sol, or IERC165.sol), nor
+the ERC20.sol file. And don’t include the code from those files in your
 TokenCC.sol file. You should <code>import</code> them in
 <code>TokenCC.sol</code> as such: <code>import "./IERC165.sol";</code>
 and <code>import "./ERC20.sol";</code> – those two files import all the
@@ -203,7 +203,7 @@ fulfill the requirements of the <a
 href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>)
 contract; remember that your code supports <em>four</em> interfaces:
 <code>Context</code>, <code>IERC165</code>, <code>IERC20</code>, and
-<code>IERC20full</code></li>
+<code>IERC20Metadata</code></li>
 </ul>
 <p>Minting considerations:</p>
 <ul>

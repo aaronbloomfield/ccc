@@ -3,7 +3,7 @@ pragma solidity ^0.8.7;
 
 import "./IERC20.sol";
 
-interface IERC20full is IERC20 {
+interface IERC20Metadata is IERC20 {
 
     function name() external view returns (string memory);
 

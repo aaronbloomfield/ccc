@@ -406,7 +406,7 @@ contract EZTokens {
 <ul>
   <li>For the Tokens assignment, we will use:
 <pre class="code-wrapper" style="margin-bottom:-20px"><code class="hljs awk small" style="height:auto;width:120%"
->interface IERC20full is IERC20 {
+>interface IERC20Metadata is IERC20 {
 
     function name() external view returns (string memory);
 
@@ -418,10 +418,7 @@ contract EZTokens {
 }
 </code></pre>
 </li>
-<li>Our ERC20 code contract line will be:
-<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
->contract ERC20 is Context, IERC20full {
-</code></pre>
+<li>Our ERC20 code contract will implement that interface
 </li>
 <li>Our TokenCC contract line will be:
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
@@ -440,7 +437,7 @@ contract EZTokens {
 
     <section data-markdown data-separator="^\n\n\n" id="erc20constructor"><textarea>
 ### Token Cryptocurrencies
-- Easy to create; from [solidity-by-example.com](https://solidity-by-example.org/app/erc20/):
+- Easy to create; this is adapted from from [solidity-by-example.com](https://solidity-by-example.org/app/erc20/):
 
 ```
 // SPDX-License-Identifier: MIT
@@ -450,8 +447,7 @@ pragma solidity ^0.8.10;
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol";
 
 contract MyToken is ERC20 {
-    constructor(string memory name, string memory symbol)
-                ERC20(name, symbol) {
+    constructor() ERC20("AaronDollar(TM)", "AD") {
         _mint(msg.sender, 100 * 10**uint(decimals()));
     }
 }
@@ -498,6 +494,7 @@ contract MyToken is ERC20 {
 
 
 
+## Python code for DAI & WETH
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;height:120%"
 >from web3 import Web3
 
