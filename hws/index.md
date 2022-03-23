@@ -15,7 +15,7 @@ These are larger programming homeworks.
 - [P3: BTC parser](btcparser/index.html) ([md](btcparser/index.md))
 - [P4: Bitcoin scripting](btcscript/index.html) ([md](btcscript/index.md))
 - [P5: dApp Gradebook](gradebook/index.html) ([md](gradebook/index.md))
-- P6: dApp Tokens
+- [P6: dApp Tokens](tokens/index.html) ([md](tokens/index.md))
 
 
 ### Smaller homeworks

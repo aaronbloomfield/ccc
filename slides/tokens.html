@@ -343,7 +343,7 @@ contract EZTokens {
 - Created in 2015, this standard allows for creating *fungible* tokens
   - Shares in a cryptocurrency, voting power, membership level, equity amount, etc.
   - See [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#introduction) for other uses
-- Notably, it's *before* ERC-165
+- Notably, it was written *before* ERC-165
   - So it does *not* have the `supportsInterface()` function
 - Reference: [ERC-20 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) from [ethereum.org](https://ethereum.org/)
 
@@ -401,14 +401,14 @@ contract EZTokens {
 
 
 ## Our Usage
-- For an upcoming assignment, we will use:
+- For the Tokens assignment, we will use:
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
->interface IERC20full is IERC20, IERC165 {
+>interface IERC20full is IERC20 {
 
-    function name() external view returns (string);
+    function name() external view returns (string memory);
 
-    function symbol() external view returns (string);
+    function symbol() external view returns (string memory);
 
     function decimals() external view returns (uint8);
 
@@ -426,10 +426,10 @@ contract EZTokens {
 - Specifically that for ERC-20 tokens:
   - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol
 - Let's go over that code...
+   </textarea></section>
 
-
-
-## Token Cryptocurrencies
+    <section data-markdown data-separator="^\n\n\n" id="erc20constructor"><textarea>
+### Token Cryptocurrencies
 - Easy to create; from [solidity-by-example.com](https://solidity-by-example.org/app/erc20/):
 
 ```
@@ -447,10 +447,10 @@ contract MyToken is ERC20 {
 }
 ```
 - The hard part: getting other people to want it, and be willing to trade other cryptocurrencies for it
+   </textarea></section>
 
-
-
-## Token Cryptocurrencies
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+### Token Cryptocurrencies
 - See a list at https://erc-tokens.com/
 - Consider [Atomic Wallet](https://atomicwallet.io/)
   - A wallet that can store (as of March 2022):
@@ -480,11 +480,11 @@ contract MyToken is ERC20 {
 ## DAI / WETH Example
 - The code for this is [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#web3py-example)
   - And reproduced on the next slide
-- Due to a bug in the library, it runs into a parse error
+  - Due to a bug in the library, it runs into a parse error
 - [DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/): An Ethereum token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
   - When new DAI are minted, the cryptocurrencies used to exchange for them are put into 'vaults' to help DAI retain it's value
-- [WETH](https://coinmarketcap.com/currencies/weth/), for "Wrapped ETH", has a 1-to-1 value with regular ETH
-  - But it follows the ERC-20 standard, so can be used in lieu of ETH
+- [WETH](https://coinmarketcap.com/currencies/weth/), for "Wrapped ETH", has a 1-to-1 exchange value with regular ETH
+  - But it follows the ERC-20 standard, so can be used in lieu of ETH when an ERC-20 token cryptocurrency is needed
 
 
 
@@ -587,7 +587,7 @@ print("Addr Balance:", addr_balance)
 - Created in 2018, this standard allows for creating *non-fungible* tokens
   - Membership in an organization, a representation of a physical or digital asset, etc.
   - See [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/#popular-nfts) for other uses
-- Notably, it's *after* ERC-165
+- Notably, it was written *after* ERC-165
   - So it *does* have the `supportsInterface()` function
 - Reference: [ERC-721 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/) from [ethereum.org](https://ethereum.org/)
 
@@ -623,7 +623,7 @@ print("Addr Balance:", addr_balance)
 
 
 ## ERC-721 Optional Interface
-- There are three *optional* metadata functions, as described [here](https://eips.ethereum.org/EIPS/eip-721)
+- There are three *optional* metadata functions, as described [here](https://eips.ethereum.org/EIPS/eip-721) and defined in the `IERC721Metadata` interface:
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
 >interface IERC721Metadata is IERC721 {
@@ -635,6 +635,7 @@ print("Addr Balance:", addr_balance)
     function tokenURI(uint256 _tokenId) external view returns (string);
 }
 </code></pre>
+- Note that ERC-721 is more of a token manager rather than just the token itself
 
 
 
@@ -655,8 +656,9 @@ print("Addr Balance:", addr_balance)
 
     // implementing contracts have to implement the 3 functions from
     // IERC721Metadata
-}
-</code></pre>
+}</code></pre>
+
+- There is quite the inheritance tree here...
 
 
 
@@ -665,10 +667,6 @@ print("Addr Balance:", addr_balance)
 - Specifically that for ERC-721 tokens:
   - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol
 - Let's go over that code...
-
-
-
-## Token NFTs
 
 
 
@@ -693,7 +691,7 @@ print("Addr Balance:", addr_balance)
 ## Overview
 - Created in 2017, this standard improves upon the ERC-20 (FT) standard
 - They can be written to be backwards-compatible, so any such ERC-777 token fulfills the ERC-20 token interface
-- Notably, it's *after* ERC-165
+- Notably, it was written *after* ERC-165
   - So it *does* have the `supportsInterface()` function
 - Reference: [ERC-777 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-777/) from [ethereum.org](https://ethereum.org/)
 
@@ -704,6 +702,7 @@ print("Addr Balance:", addr_balance)
   - This was optional in ERC-20
   - If not included, how many decimals to use?  The standard defaulted to 18, but the standard implied 0 was also acceptable
 - For ERC-20 backward compatibility, an ERC-777 token's `decimals()` *must* return 18
+- If you don't want it to be backward compatible, make it any (reasonable) value
 
 
 
@@ -798,8 +797,8 @@ contract FTplusplus is IERC777, IERC165, IERC20 {
 ## Overview
 - Created in 2018, this standard improves upon the ERC-721 (NFT) standard
 - They can be written to be backwards-compatible, so any such ERC-1155 token fulfills the ERC-721 token interface
-  - The function names are all different
-- Notably, it's *after* ERC-165
+  - The function names between the two are all different
+- Notably, it was written *after* ERC-165
   - So it *does* have the `supportsInterface()` function
 - Reference: [ERC-1155 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/) from [ethereum.org](https://ethereum.org/)
 

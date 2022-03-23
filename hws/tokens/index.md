@@ -79,7 +79,7 @@ There are some very strict submission requirements for this submission so that w
 
 Your task is to create a `TokenCC.sol` file with a `TokenCC` contract.  Some notes:
 
-- You have to define the name and symbol when the constructor is called -- you can do this by calling the base class (`ERC20`) constructor that takes two parameters -- to see how to do this, look at the [Arguments for Base Constructors](https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors) section of the Solidity language reference.
+- You have to define the name and symbol when the constructor is called -- you can do this by calling the base class (`ERC20`) constructor that takes two parameters -- to see how to do this, look at [this lecture slide](../../slides/tokens.html#/erc20constructor) and the [Arguments for Base Constructors](https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors) section of the Solidity language reference.
 - Keep in mind that, because the `_mint()` function is `internal`, it can only be called from code you write.  So your constructor should mint for you a reasonable amount of the cryptocurrency.  
 - To override the `decimals()` function, you can just create an appropriate variable.  Be sure to make those three fields `public` and `override`!
 - You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *four* interfaces: `Context`, `IERC165`, `IERC20`, and `IERC20full`
@@ -173,6 +173,7 @@ The following are the functional requirements for the development of this contra
 	- Note the first parameter is *just* the filename (`mst3k_foo.jpg`), not the full URI
   	- It should only allow minting by the deployer of the contract
   	- A duplicate URI should cause a reversion
+  	- This *returns* the token ID of the newly minted NFT
 - Implementation of the `supportsInterface()` function for *five* interfaces -- `Context`, the three ERC721 interfaces (`IERC721`, `IERC721Metadata`, and `IERC721full`), and also `IERC165`
   	- Because of the inheritance tree, you will have to specify that it is overriding *all* of the `supportsInterface()` methods; see the lecture slides for details
 - Implementation of `tokenURI()`, which is inherited from `ERC721`
@@ -181,6 +182,7 @@ The following are the functional requirements for the development of this contra
 	- This URL base should be hard-coded into the contract itself
 	- You can override the `_baseURI()` function from `ERC721`, and use that in a similar fashion to what is shown in the `tokenURI()` function in `ERC721`
 
+In theory, you should be able to call `mintWithURI()` and capture the return value for the token ID.  While this return value is properly captured when called from another smart contract, Remix does not always report it.  You are allowed to create a `uint public lastCreatedTokenID` (or similar) variable which holds the token ID of the last created token -- what should have been returned by `mintWithURI()`.  THIS WOULD NEVER WORK IN PRACTICE, as it would create a horrible race condition.  But it will work for our purposes, and allows us to get around this apparent but in Remix.
 
 When you are ready to deploy this token manager, be sure to select the appropriate contract ("NFTmanager") from the Contract down-down list in Remix.
 

@@ -185,7 +185,8 @@ href="ERC20.sol">src</a>) file – any changes have to go into your
 <li>You have to define the name and symbol when the constructor is
 called – you can do this by calling the base class (<code>ERC20</code>)
 constructor that takes two parameters – to see how to do this, look at
-the <a
+<a href="../../slides/tokens.html#/erc20constructor">this lecture
+slide</a> and the <a
 href="https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors">Arguments
 for Base Constructors</a> section of the Solidity language
 reference.</li>
@@ -399,6 +400,7 @@ this contract:</p>
 (<code>mst3k_foo.jpg</code>), not the full URI</li>
 <li>It should only allow minting by the deployer of the contract</li>
 <li>A duplicate URI should cause a reversion</li>
+<li>This <em>returns</em> the token ID of the newly minted NFT</li>
 </ul></li>
 <li>Implementation of the <code>supportsInterface()</code> function for
 <em>five</em> interfaces – <code>Context</code>, the three ERC721
@@ -422,6 +424,15 @@ is what was passed into <code>mintWithURI()</code></li>
 in the <code>tokenURI()</code> function in <code>ERC721</code></li>
 </ul></li>
 </ul>
+<p>In theory, you should be able to call <code>mintWithURI()</code> and
+capture the return value for the token ID. While this return value is
+properly captured when called from another smart contract, Remix does
+not always report it. You are allowed to create a <code>uint public
+lastCreatedTokenID</code> (or similar) variable which holds the token ID
+of the last created token – what should have been returned by
+<code>mintWithURI()</code>. THIS WOULD NEVER WORK IN PRACTICE, as it
+would create a horrible race condition. But it will work for our
+purposes, and allows us to get around this apparent but in Remix.</p>
 <p>When you are ready to deploy this token manager, be sure to select
 the appropriate contract (“NFTmanager”) from the Contract down-down list
 in Remix.</p>
