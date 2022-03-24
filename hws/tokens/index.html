@@ -384,8 +384,8 @@ IERC721full {</code>; recall that the IERC721 interface already inherits
 from the IERC165 interface</li>
 <li>The pragma line should be: <code>pragma solidity ^0.8.7;</code></li>
 <li>You are NOT to include any of the <em>files</em> for the interfaces
-above (ERC721, IERC721, IERC721enhanced, or IERC165.sol), nor include
-that code in your file. You should <code>import</code> them in
+above (ERC721, IERC721, IERC721full, or IERC165.sol), nor include that
+code in your file. You should <code>import</code> them in
 <code>NFTmanager.sol</code>; they will be put into the appropriate
 directory on Gradescope when it attempts to compile your program</li>
 <li>You cannot include any files other than the ones in the list above;
@@ -396,7 +396,7 @@ this contract:</p>
 <ul>
 <li>Implementation of the <code>mintWithURI()</code> function
 <ul>
-<li>Note the first parameter is <em>just</em> the filename
+<li>Note the second parameter is <em>just</em> the filename
 (<code>mst3k_foo.jpg</code>), not the full URI</li>
 <li>It should only allow minting by the deployer of the contract</li>
 <li>A duplicate URI should cause a reversion</li>

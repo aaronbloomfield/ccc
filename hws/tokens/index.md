@@ -164,13 +164,13 @@ There are some very strict submission requirements for this submission so that w
 2. Your contract MUST be in a file called `NFTmanager.sol` -- note the capitalization!
 3. Your contract line MUST be: `contract NFTmanager is ERC721, IERC721full {`; recall that the IERC721 interface already inherits from the IERC165 interface
 4. The pragma line should be: `pragma solidity ^0.8.7;`
-5. You are NOT to include any of the *files* for the interfaces above (ERC721, IERC721, IERC721enhanced, or IERC165.sol), nor include that code in your file.  You should `import` them in `NFTmanager.sol`; they will be put into the appropriate directory on Gradescope when it attempts to compile your program
+5. You are NOT to include any of the *files* for the interfaces above (ERC721, IERC721, IERC721full, or IERC165.sol), nor include that code in your file.  You should `import` them in `NFTmanager.sol`; they will be put into the appropriate directory on Gradescope when it attempts to compile your program
 6. You cannot include any files other than the ones in the list above; any other code must be in your `NFTmanager.sol` file
 
 The following are the functional requirements for the development of this contract:
 
 - Implementation of the `mintWithURI()` function
-	- Note the first parameter is *just* the filename (`mst3k_foo.jpg`), not the full URI
+	- Note the second parameter is *just* the filename (`mst3k_foo.jpg`), not the full URI
   	- It should only allow minting by the deployer of the contract
   	- A duplicate URI should cause a reversion
   	- This *returns* the token ID of the newly minted NFT
