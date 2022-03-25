@@ -1,0 +1,40 @@
+digraph A {
+    context [label="contract\nContext"];
+    ierc165 [label="interface\nIERC165"];
+    ierc20 [label="interface\nIERC20"];
+    ierc20metadata [label="interface\nIERC20Metadata"];
+    erc20 [label="contract\nERC20"];
+    tokencc [label="contract\nTokenCC"];
+
+    // super class -> sub class
+    ierc20 -> ierc20metadata;
+    context -> erc20;
+    ierc20metadata -> erc20;
+    erc20 -> tokencc;
+    ierc165 -> tokencc;
+}
+
+digraph B { // byzantine.dot..svg
+    address [label="library\nAddress"];
+    strings [label="library\nStrings"];
+    ierc721 [label="interface\nIERC721"];
+    ierc165 [label="interface\nIERC165"];
+    erc721 [label="contract\nERC721"];
+    context [label="contract\nContext"];
+    ierc721metadata [label="interface\nIERC721Metadata"];
+    ierc721full [label="interface\nIERC721full"];
+    ierc721receiver [label="interface\nIERC721Receiver"];
+    nftmanager [label="NFTmanager"];
+    erc165 [label="contract\nERC165"];
+
+    // super class -> sub class
+    ierc165 -> ierc721;
+    ierc165 -> erc165;
+    context -> erc721;
+    erc165 -> erc721;
+    ierc721 -> erc721;
+    ierc721metadata -> erc721;
+    ierc721metadata -> ierc721full;
+    erc721 -> nftmanager;
+    ierc721full -> nftmanager;
+}

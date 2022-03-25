@@ -146,7 +146,9 @@ qualifier was added</li>
 <li>The <code>decimals()</code> visibility was lowered to
 <code>external</code> to allow us to easily override it</li>
 </ul>
-<p>You should look over and familiarize yourself with all this code.</p>
+<p>You should look over and familiarize yourself with all this code. The
+inheritance hierarchy of this code is shown below.</p>
+<p><img src="inheritance.dot.1.svg" /></p>
 <h4 id="part-1-task-4-develop-the-smart-contract">Part 1, task 4:
 Develop the smart contract</h4>
 <p>You will need to develop the smart contract for your cryptocurrency,
@@ -201,9 +203,14 @@ create an appropriate variable. Be sure to make those three fields
 <li>You have to implement the <code>supportsInterface()</code> method to
 fulfill the requirements of the <a
 href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>)
-contract; remember that your code supports <em>four</em> interfaces:
-<code>Context</code>, <code>IERC165</code>, <code>IERC20</code>, and
-<code>IERC20Metadata</code></li>
+contract; remember that your code supports <em>three</em> interfaces:
+<code>IERC165</code>, <code>IERC20</code>, and
+<code>IERC20Metadata</code>
+<ul>
+<li>It also extends <code>Context</code>, but there are no
+<code>external</code> or <code>public</code> methods in
+<code>Context</code>, so there is no interface there to support.</li>
+</ul></li>
 </ul>
 <p>Minting considerations:</p>
 <ul>
@@ -351,7 +358,12 @@ them as-is without modifications. Three of the files are utilities
 we need, and the ERC721.sol is the implementation itself. We realize
 that’s a lot of files to use, but that’s why there are so many of
 them.</p>
-<p>You should look over and familiarize yourself with this code.</p>
+<p>You should look over and familiarize yourself with this code. The
+inheritance hierarchy of this code is shown below. Note that two of the
+entries (<code>Address</code> and <code>Strings</code>) are type
+substitutions in <code>ERC721.sol</code>. The last one,
+<code>IERC721Recevier</code> is used as a casting type.</p>
+<p><img src="inheritance.dot.2.svg" /></p>
 <h4 id="part-2-task-3-compile-and-test-the-smart-contract">Part 2, task
 3: Compile and test the smart contract</h4>
 <p>You will need to develop the smart contract for your cryptocurrency,

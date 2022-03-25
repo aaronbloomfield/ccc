@@ -60,7 +60,9 @@ There were a few changes made to the [ERC20.sol](ERC20.sol.html) ([src](ERC20.so
 - As those three methods (`name()`, `symbol()`, and `decimals()`) are now overriding from the `IERC20Metadata` contract, the `override` qualifier was added
 - The `decimals()` visibility was lowered to `external` to allow us to easily override it
 
-You should look over and familiarize yourself with all this code.
+You should look over and familiarize yourself with all this code.  The inheritance hierarchy of this code is shown below.
+
+![](inheritance.dot.1.svg)
 
 
 #### Part 1, task 4: Develop the smart contract
@@ -82,7 +84,8 @@ Your task is to create a `TokenCC.sol` file with a `TokenCC` contract.  Some not
 - You have to define the name and symbol when the constructor is called -- you can do this by calling the base class (`ERC20`) constructor that takes two parameters -- to see how to do this, look at [this lecture slide](../../slides/tokens.html#/erc20constructor) and the [Arguments for Base Constructors](https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors) section of the Solidity language reference.
 - Keep in mind that, because the `_mint()` function is `internal`, it can only be called from code you write.  So your constructor should mint for you a reasonable amount of the cryptocurrency.  
 - To override the `decimals()` function, you can just create an appropriate variable.  Be sure to make those three fields `public` and `override`!
-- You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *four* interfaces: `Context`, `IERC165`, `IERC20`, and `IERC20Metadata`
+- You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *three* interfaces: `IERC165`, `IERC20`, and `IERC20Metadata`
+    - It also extends `Context`, but there are no `external` or `public` methods in `Context`, so there is no interface there to support.
 
 Minting considerations:
 
@@ -143,7 +146,9 @@ In addition to some of the files used above (IERC165.sol. ERC165.sol, and Contex
 
 Why so many files?  Three of the interfaces (IERC165, IERC721, and IERC721Metadata) are Ethereum standards, and the practice is to include them as-is without modifications.  Three of the files are utilities (Address, Context, and Strings).  The IERC721full adds one function that we need, and the ERC721.sol is the implementation itself.  We realize that's a lot of files to use, but that's why there are so many of them.
 
-You should look over and familiarize yourself with this code.
+You should look over and familiarize yourself with this code. The inheritance hierarchy of this code is shown below.  Note that two of the entries (`Address` and `Strings`) are type substitutions in `ERC721.sol`.  The last one, `IERC721Recevier` is used as a casting type.
+
+![](inheritance.dot.2.svg)
 
 
 #### Part 2, task 3: Compile and test the smart contract
