@@ -175,8 +175,8 @@ TokenCC.sol file. You should <code>import</code> them in
 and <code>import "./ERC20.sol";</code> – those two files import all the
 other contracts. The necessary files will be put into the appropriate
 directory on Gradescope when it attempts to compile your program.</li>
-<li>You cannot include any files other than the ones in the list above;
-any other code must be in your <code>TokenCC.sol</code> file</li>
+<li>You cannot submit any files other than the <code>TokenCC.sol</code>
+file; all your code must be in that <code>TokenCC.sol</code> file</li>
 <li>You cannot edit the <a href="ERC20.sol.html">ERC20.sol</a> (<a
 href="ERC20.sol">src</a>) file – any changes have to go into your
 <code>TokenCC.sol</code> file</li>
@@ -347,7 +347,9 @@ one is the URI (aka URL) of the image that the NFT represents</li>
 href="IERC721full.sol">src</a>): this adds one more function on top of
 the IERC721Metadata interface: <code>mintWithURI()</code>, which allows
 creation of an NFT, and setting it’s image URI (aka URL) in one function
-call</li>
+call. Note that the <code>mintWithURI()</code> function will return a
+token ID, which is just a <code>uint</code> that is used to identify
+(and find) that particular NFT in your token manager.</li>
 <li><a href="IERC721Receiver.sol.html">IERC721Receiver.sol</a> (<a
 href="IERC721Receiver.sol">src</a>): this allows notification that an
 NFT has been transferred; we won’t be using this interface in this
@@ -367,26 +369,24 @@ entries (<code>Address</code> and <code>Strings</code>) are type
 substitutions in <code>ERC721.sol</code>. The last one,
 <code>IERC721Recevier</code> is used as a casting type.</p>
 <p><img src="inheritance.dot.2.svg" /></p>
-<h4 id="part-2-task-3-compile-and-test-the-smart-contract">Part 2, task
-3: Compile and test the smart contract</h4>
-<p>You will need to develop the smart contract for your cryptocurrency,
-and deploy it to our private Ethereum blockchain. Your code will use the
-files listed above and a few in the previous part.</p>
+<h4 id="part-2-task-3-compile-and-test-the-provided-code">Part 2, task
+3: Compile and test the provided code</h4>
 <p>You should compile the <a href="ERC721.sol.html">ERC721.sol</a> (<a
 href="ERC721.sol">src</a>) code in Remix. Deploy it to the Javascript
 environment and play with the various functions. Note that you need to
-understand what the code in that smart contract does!</p>
+understand what the code in that smart contract does! As this is the
+provided code, and does not have all the features that we need
+(yet).</p>
 <h4 id="part-2-task-4-create-an-nft-manager-for-images">Part 2, task 4:
 Create an NFT manager for images</h4>
 <p>We are going to assemble all this code together to create an NFT
 manager. Most of the code is already done in the <a
 href="ERC721.sol.html">ERC721.sol</a> (<a href="ERC721.sol">src</a>). We
 are going to create a smart contract called <code>NFTmanager</code> that
-will work for images (or any other string data). The updated smart
-contract will implement the <a
-href="IERC721full.sol.html">IERC721full.sol</a> (<a
-href="IERC721full.sol">src</a>) interface (and, though inheritance, a
-number of other interfaces).</p>
+will work for image URLs (or any other URL). The updated smart contract
+will implement the <a href="IERC721full.sol.html">IERC721full.sol</a>
+(<a href="IERC721full.sol">src</a>) interface (and, though inheritance,
+a number of other interfaces).</p>
 <p>There are some very strict submission requirements for this
 submission so that we can grade it in a sane manner:</p>
 <ol type="1">
@@ -398,12 +398,12 @@ note the capitalization!</li>
 IERC721full {</code>; recall that the IERC721 interface already inherits
 from the IERC165 interface</li>
 <li>The pragma line should be: <code>pragma solidity ^0.8.7;</code></li>
-<li>You are NOT to include any of the <em>files</em> for the interfaces
-above (ERC721, IERC721, IERC721full, or IERC165.sol), nor include that
-code in your file. You should <code>import</code> them in
+<li>You are NOT to submit any of the <em>files</em> for the interfaces
+above (ERC721, IERC721, IERC721full, or IERC165.sol), nor copy-and-paste
+that code in your file. You should <code>import</code> them in
 <code>NFTmanager.sol</code>; they will be put into the appropriate
 directory on Gradescope when it attempts to compile your program</li>
-<li>You cannot include any files other than the ones in the list above;
+<li>You cannot submit any files other than the ones in the list above;
 any other code must be in your <code>NFTmanager.sol</code> file</li>
 </ol>
 <p>The following are the functional requirements for the development of
@@ -415,7 +415,9 @@ this contract:</p>
 (<code>mst3k_foo.jpg</code>), not the full URI</li>
 <li>It should only allow minting by the deployer of the contract</li>
 <li>A duplicate URI should cause a reversion</li>
-<li>This <em>returns</em> the token ID of the newly minted NFT</li>
+<li>This <em>returns</em> the token ID of the newly minted NFT; the
+function itself determines what that ID is (likely the next integer in
+sequence)</li>
 </ul></li>
 <li>Implementation of the <code>supportsInterface()</code> function for
 <em>five</em> interfaces – <code>Context</code>, the three ERC721
