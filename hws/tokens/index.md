@@ -35,7 +35,7 @@ Following in the precedent for currently existing cryptocurrencies, abbreviation
 
 #### Part 1, task 2: Create a logo
 
-You will need to create a logo for your cryptocurrency.  The logo that you submit should be 128x128 pixels in size.  Use a fun color!  Create a neat logo!  But please make sure the logo is appropriate.  You can look at the types of logos on a site such as [gate.io](https://www.gate.io/en/marketlist?tab=usdt) for ideas.
+You will need to create a logo for your cryptocurrency.  The logo that you submit should be 512x512 pixels in size.  Use a fun color!  Create a neat logo!  But please make sure the logo is appropriate.  You can look at the types of logos on a site such as [gate.io](https://www.gate.io/en/marketlist?tab=usdt) for ideas.
 
 The logo itself should be a circular logo with a transparent background outside the circle (just like what is on gate.io).  Note that your logo must be readable if the size were reduced to a 32x32 pixel version.  The submission must be a .png file, and it will have to be named `logo.png`.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  You can use this [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background.
 
