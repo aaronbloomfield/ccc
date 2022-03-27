@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Consensus
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Nakamoto Consensus](#/satoshi)  
+[Two Generals Problem](#/2gen)  
+[Byzantine Generals Problem](#/byz)  
+[Three Generals Problem](#/3gen)  
+[Oral Messages Algorithm](#/om)  
+[Signed Messages Algorithm](#/sm)  
+[Tendermint](#/tendermint)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="satoshi" data-markdown class="center"><textarea>
+# Nakamoto Consensus
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Nakamoto Consensus
+- Named for Satoshi Nakamoto, the creator of Bitcoin
+- Proof of Work consensus algorithm
+- A miner find a block, and sends it to a node that propagates it to other nodes via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+  - Basically: each node checks it, sends it to a few others, who check it, send it to a few others, etc.
+- Honest nodes agree a block is valid if:
+  - It is correctly formed (valid transactions, parses correctly, timely, etc.)
+  - It's hash is less than the target
+  - It extends the (or a) longest chain
+
+
+
+## Breaking Nakamoto Consensus
+- If each node gets one vote, then we need a strict majority ($>$50%) to vote against a block
+- Thus, this algorithm can be contravened if an attacker controls a majority of the nodes
+  - There are currently about 15k nodes as per [bitnodes.io](https://bitnodes.io/)
+- But if an attacker controlled that many...
+  - ... they could likely make more money by playing "by the rules"
+
+
+
+## Consensus Properties
+- Any consensus algorithm must guarantee:
+  - Consistency: honest nodes do not contradict each other
+  - Liveliness: blockchain progress is made (regular block completion)
+
+
+
+## Nakamoto Consensus and PoS
+- The Nakamoto Consensus algorithm was designed for a proof-of-work coin
+- It does not work for other proof-of-$X$ types
+
+
+  </textarea></section>
+</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="2gen" data-markdown class="center"><textarea>
+# Two Generals Problem
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Distributed System Failures
+- Could be caused by:
+  - Flaky, slow, or malicious nodes
+  - Flaky, slow, or malicious communication links
+- Used in:
+  - B777 & B787 flight controls
+
+
+
+## Two Generals Problem
+<img src="images/consensus/2gen/2gen-map.svg" style="background-color:transparent;width:75%">
+
+
+
+## Two Generals Problem
+- Armies A & B, each led by generals, want to attack army C
+  - They have to decide whether to both attack (they will win)
+  - Or both retreat (not ideal, but acceptable)
+  - If only one attacks, they will lose: a military disaster (rout)
+- Messages are via couriers who travel through army C's territory
+  - So the messages are unreliable
+- How does general A communicate s/he wants to attack to general B?
+  - Knowing that the messages could be intercepted
+- In this example, the *generals* are loyal, and their means of communication is unreliable
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n" data-transition="fade" data-transition-speed="fast"><textarea>
+## Communication protocol
+![](images/consensus/2gen/2gen-communication-0.svg)
+
+## Communication protocol
+![](images/consensus/2gen/2gen-communication-1.svg)
+
+## Communication protocol
+![](images/consensus/2gen/2gen-communication-2.svg)
+
+## Communication protocol
+![](images/consensus/2gen/2gen-communication-3.svg)
+
+## Communication protocol
+![](images/consensus/2gen/2gen-communication-4.svg)
+
+## Communication protocol
+![](images/consensus/2gen/2gen-communication.svg)
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## A better protocol
+- A decides to attack and sends 100 couriers to B to notify this
+  - If only one gets through, then B attacks
+- This would work well in practice, but is not guaranteed!
+- But what if all 100 are stopped?
+- Ultimately:
+
+> If there is a complete failure in your communication system, then there is no way to achieve a consensus
+
+
+
+## In practice
+- This type of problem assumes that the communication mode is unreliable, not malicious
+- If it's malicious, then we can help solve that with digital signatures
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="byz" data-markdown class="center"><textarea>
+# Byzantine Generals Problem
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Byzantine Generals Problem
+- We assume that the network is reliable, and the nodes (generals) themselves can get corrupted
+  - Meaning any individual general can be a traitor
+- A group of generals need to decide whether to attack a fortress
+- This problem is The Byzantine General's Problem
+  - Based on a [paper of the same name from 1982](https://lamport.azurewebsites.net/pubs/byz.pdf)
+- If a system has *Byzantine Fault Tolerance* then it has solved this problem
+
+
+
+## Byzantine Generals Problem
+<img src="images/consensus/Byzantine_Generals.webp" style="border-radius:10px">
+
+
+
+## Byzantine Generals Problem
+- A group of generals have to decide whether to attack or retreat
+  - Some are loyal and some are traitors
+  - Loyal generals may still disagree
+- The *communication lines* are generally sound
+  - Any fault or malice in the communication lines can be modeled by a malicious general
+  - However, there are no digital signatures (yet)
+- Goal: for the *loyal* generals to all agree on a strategy
+
+
+
+## Traitorous complications
+- Imagine a group of 9 generals
+  - 4 want to attack
+  - 4 want to retreat
+  - 1 is a traitor
+- The traitor could cast *different* votes to the different groups, causing a rout
+  - In electronics, voltage fluctuations could cause differing results to different parties
+
+
+
+## Byzantine Fault Tolerance
+- All *loyal* generals must agree on what the other *loyal* generals say
+  - But keep in mind that traitorous generals can give different answers to different generals
+- It doesn't matter what the traitorous generals think everybody says
+  - Nor does it matter what the loyal generals think the traitorous generals say
+
+
+
+## Messages may not arrive
+- Either because of a communication failure or a node maliciously not sending such a message
+  - The former can be modeled by the latter
+  - So we'll assume that the communication lines are reliable
+- This is represented as *null* or the empty set symbol: $\emptyset$
+- The generals have pre-agreed that a majority of non-votes has a *default action*
+  - We'll assume a majority of $\emptyset$ votes means retreat
+- Thus, messages are one of three values: {$A,R,\emptyset$}
+
+
+
+## Toward a solution
+- The generals are numbered 0 to $n-1$
+- Each has an array $v$ that holds the opinion of each of the generals
+- Byzantine fault tolerance requires that all loyal generals (nodes, etc.) take the same action
+  - Remember: messages are (currently) "oral" with no digital signatures
+
+
+
+## Insight
+- If we can solve the *communication* problem...
+  - Specifically if we can ensure that all loyal generals agree on the same values in the array $v$
+- Then we can solve the Byzantine Generals Problem
+  - Just take the majority vote
+- So how can one general get his/her vote to the other generals?
+
+
+
+## Traitor tolerance
+- The algorithm must be able to withstand some number of traitors
+- How many traitors can exist while allowing correct communication among the loyal nodes?
+- Consider one general communicating his/her intentions to the other generals
+  - We will call the "receiving" generals here lieutenants
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="3gen" data-markdown class="center"><textarea>
+# Three Generals Problem
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## The Problem
+- There is one general who needs to communicate his/her orders to $n-1$ lieutenants
+  - We'll focus on $n=3$, hence the name "Three Generals Problem"
+  - But $n$ can be any positive integer
+- Some number $m$ of participants are traitors
+  - Maybe the general too!
+- This is solving a *communication* problem, which will be used to solve the overall Byzantine Generals Problem
+
+
+
+## Base cases
+- $n=1$: If there is only one Byzantine general, then whatever s/he thinks is the consensus
+  - Since s/he is the only one voting!
+- $n=2$: If there are two generals:
+  - If both agree, at which point there is consensus
+  - Or they disagree, at which point no consensus can be had
+    - They may disagree because one is a traitor or because loyal generals can disagree
+- Thus, we need to consider cases of three or more generals
+  - $n \ge 3$
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Communication
+<img src="images/consensus/bgp/3gen.svg" style="width:45%;padding:10px;border-radius:10px">
+
+- One general needs to communicate his/her opinion to the other generals
+  - In the full BGP, all generals have to do this with all the others
+- Here, the receiving generals are called lieutenants for this
+- After hearing an order from the general, each lieutenant will *verify* it with each other lieutenant
+
+
+
+## How many traitors?
+- How many traitors can an algorithm withstand and still work?
+
+> Hypothesis: this communication must have less than 1/3 be traitors
+
+- Rephrased: given $m$ traitors, there must be at least $3m+1$ total participants
+- First, show that 1 traitor out of 3 generals will not succeed
+  - Or, if $m=1$, then $3m$ generals is insufficient, and we need *more* than $3m$ generals
+- It analogizes attacking or retreating to message communication
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Three Generals Problem
+![](images/consensus/3gen/3gen.dot.1.svg)
+- A general sends a message to his two lieutenants:
+  - The message is either "Attack" (A) or "Retreat" (R)
+  - The "lieutenants" are just the two receiving the message, but could also be generals in the full BGP
+- Lieutenant 1 checks the validity of that message by asking lieutenant 2 what the general said
+- But somebody could be a traitor!
+- There are 8 possibilities: messages a, b, and c can each be one of A (attack) or R (retreat)
+
+
+
+## Three Generals Problem
+- Assumptions:
+  - Both lieutenants should take the same action, else it's a military disaster (rout)
+  - *Loyal* lieutenants always obey the general's order
+  - *Traitorous*  lieutenants take the action that will lead to a disaster
+  - Messages are "oral" and cannot be verified
+    - No digital signatures (yet)
+- The requirements for this to succeed are:
+  1. All loyal lieutenants obey the same order
+  2. If the general is loyal, then every loyal lieutenant obeys the same order
+
+
+
+## Analogies
+- The full Byzantine Generals Problem wants all loyal generals to take the same action
+- The Three Generals problem is only modeling their communication, and only wants the *lieutenants* to take the same action
+
+
+
+## Three Generals Problem
+- Question: can this work if there is exactly one traitor?
+![](images/consensus/3gen/3gen.dot.1.svg)
+- We thus are not considering the scenarios where all are loyal or two (or more) are traitors
+- This is from the point of lieutenant 1, who is assumed to be loyal
+  - Since we are considering the case when there is only one traitor, lieutenants 1 and 2 cannot *both* be traitors; thus assume lieutenant 1 is the loyal one
+
+
+
+## Three Generals Problem
+- Two of the eight cases are when all messages are communicated properly:
+
+<table class="transparent"><tr>
+<td><img src="images/consensus/3gen/3gen.dot.2.svg"></td>
+<td><img src="images/consensus/3gen/3gen.dot.9.svg"></td>
+</tr></table>
+
+- The general sent the same message, so must be loyal
+- Lieutenant 2 sent the received message, so must be loyal
+- This is the everybody-is-loyal case, which we not considering here
+  - But everybody takes the same action, so it's a success
+
+
+
+## Three Generals Problem
+- Two of the eight cases are where there are two traitors:
+
+<table class="transparent"><tr>
+<td><img src="images/consensus/3gen/3gen.dot.4.svg"></td>
+<td><img src="images/consensus/3gen/3gen.dot.7.svg"></td>
+</tr></table>
+
+- The general sent different messages, so must be a traitor
+- Lieutenant 2 changed the message, so must be a traitor
+  - If lieutenant 2 is a traitor and did *not* change the message, it is the same as the two cases on the next slide
+- This is the two traitors case, which we are not considering
+  - But the two lieutenants take different actions, which is a disaster
+
+
+
+## Three Generals Problem
+- Two of the eight cases are where the general is a traitor:
+
+<table class="transparent"><tr>
+<td><img src="images/consensus/3gen/3gen.dot.5.svg"></td>
+<td><img src="images/consensus/3gen/3gen.dot.6.svg"></td>
+</tr></table>
+
+- The general sent different messages, so must be a traitor
+- Lieutenant 2 sent the received message, so must be loyal
+  - Or was a traitor, but still sent the received message
+- Lieutenants 1 and 2 received *different* messages
+  - As they are both loyal, they take the action received from the general
+  - Since they are different actions, it's a disaster
+
+
+
+## Three Generals Problem
+- Two of the eight cases are where there lieutenant 2 is a traitor:
+
+<table class="transparent"><tr>
+<td><img src="images/consensus/3gen/3gen.dot.3.svg"></td>
+<td><img src="images/consensus/3gen/3gen.dot.8.svg"></td>
+</tr></table>
+
+- The general sent the same message, so must be loyal
+- Lieutenant 2 changed the message, so must be a traitor
+- Lieutenant 1, being loyal, takes the action received from the general
+- Lieutenant 2, being a traitor, takes the opposite action
+- As they are different actions, it's a disaster
+
+
+
+
+## Result
+
+> It is impossible to solve the 3 generals, 1 traitor case of the Three Generals Problem
+
+This implies:
+
+> It is also impossible to solve the 3 generals, 1 traitor case of the *Byzantine* Generals Problem
+
+
+
+## Mapping back to Byzantine Generals
+- Three Generals Problem:
+  - If a lieutenant hears *different* messages from the general and the other lieutenant, then it's a disaster
+- Byzantine Generals Problem, specifically the communication therein:
+  - If there are three generals communicating, and one hears *different* vote results from the other two about a given general's opinion, s/he cannot determine the correct value for that vote
+
+
+
+## Generalized claim
+- We know there is no solution for the 3 generals, 1 traitor problem
+  - What about with more generals?
+
+> Claim: There is no solution for $3m+1$ generals with $>m$ traitors
+
+- We will prove this by contradiction
+  - Assume you *do* have such a solution for, say, $m=4$
+  - Meaning you have found a way, with 12 generals and 4 traitors, to solve the Byzantine Generals Problem
+
+
+
+## Generalized claim
+- Proof by contradiction; assume you can solve the 12 generals, 4 traitors case
+- Take the 3 generals, 1 traitor case and let each general delegate his/her role to 4 colonels each
+  - We know the 3 generals, 1 traitor case has no solution
+  - Each delegated colonels is of the same loyalty as the general that delegated to him/her
+  - We now have 12 colonels, 4 of which are traitors
+
+
+
+## Generalized claim
+- Those 12 colonels run the proposed solution among themselves
+  - Since there is a claimed solution, the 8 loyal colonels will come to a consensus and report that back to their respective generals
+- Thus, we could use such a solution to solve the 3 generals, 1 traitor case
+  - Which we know cannot be solved
+  - Hence a contradiction; such a generalized solution cannot then exist
+
+
+
+## Generalized claim
+> Proven: There is no solution for $3m+1$ generals with $>m$ traitors
+- We've only shown that we can't have *more than* $m$ traitors
+- But is there a solution for $3m+1$ generals and exactly $m$ traitors?
+  - Or less than $m$ traitors?
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="om" data-markdown class="center"><textarea>
+# Oral Messages Algorithm
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Assumptions
+- Messages are communicated "orally"; this means:
+  - If A tells B a message...
+  - And B tells C what A said...
+  - Then there is no way for C to verify that A really said that
+- In other words, no digital signatures!
+- Formally, we assume:
+  1. Every message that is sent is delivered correctly
+  2. The receiver of a message knows who sent it
+  3. The absence of a message can be detected
+
+
+
+## Oral Messages Algorithm
+- Referred to as $OM(m)$, this is a solution for the Byzantine Generals Problem
+  - $m$ is the maximum number of traitors that can be tolerated
+  - Must have strictly less than 1/3 traitors
+    - So $OM(1)$ must have at least 4 generals
+    - $OM(2)$ at least 7
+    - $OM(m)$ must have at least $3m+1$ generals
+
+
+
+## Oral Messages Algorithm
+- Referred to as $OM(m)$, where $m$ is the maximum number of traitors allowed where it will still operate correctly
+- Algorithm:
+  - The general sends messages to each lieutenant
+  - Lieutenants:
+    - Records order received
+    - Uses $OM(m-1)$ to tell the other lieutenants what the general said
+    - The lieutenants follow `majority()` order
+      - A tie has a pre-determined default action, say, retreat
+- Recall the goal: for the *loyal* generals to all agree on a strategy
+
+
+
+## `majority()` function
+- Empty values count as a default action (say, retreat)
+- If a tie, then choose default action (say, retreat)
+- Two possible versions:
+  1. If a majority exists, then choose that action
+  2. Choose the median value (if from an ordered set)
+- We'll assume the first, but either would be correct
+
+
+
+## Missing Messages
+- A missing message could be because of a communication issue or a traitor not sending a message
+  - Their appearance is the same, so we'll model the former with the latter
+- All missing messages have a default value, say, retreat
+- Because of the default value, we can model missing messages with retreat orders
+  - And thus ignore missing messages
+</textarea></section>
+
+    <section data-markdown data-separator="^\n" data-transition="fade" data-transition-speed="fast"><textarea>
+## Showing $OM(0)$
+<img src="images/consensus/bgp/om0.svg" style="width:45%;padding:10px;border-radius:10px">
+
+## Showing $OM(1)$, step 1
+<img src="images/consensus/bgp/om1-a.svg" style="width:45%;padding:10px;border-radius:10px">
+
+## Showing $OM(1)$, step 2
+<img src="images/consensus/bgp/om1-b.svg" style="width:45%;padding:10px;border-radius:10px">
+
+## Showing $OM(1)$, step 3
+<img src="images/consensus/bgp/om1-c.svg" style="width:45%;padding:10px;border-radius:10px">
+
+## Showing $OM(1)$, step 4
+<img src="images/consensus/bgp/om1-d.svg" style="width:45%;padding:10px;border-radius:10px">
+
+## Showing $OM(1)$ traitor case 1
+<img src="images/consensus/bgp/om1-e.svg" style="width:45%;padding:10px;border-radius:10px">
+
+## Showing $OM(1)$ traitor case 2
+<img src="images/consensus/bgp/om1-f.svg" style="width:45%;padding:10px;border-radius:10px">
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
+## $OM(0)$ Running time
+
+<img src="images/consensus/bgp/om0.svg" style="width:35%;padding:10px;border-radius:10px">
+
+- If there were really no traitors, then the lieutenants would not need to communicate with each other
+- The general communicates with his/her $n-1$ lieutenants, so it's $\Theta(n)$
+- In practice, this is treated as $OM(1)$ for communication purposes
+
+
+
+<!-- .slide: class="right-float-img" -->
+## $OM(1)$ Running time
+
+<img src="images/consensus/bgp/om1-d.svg" style="width:35%;padding:10px;border-radius:10px">
+
+- Each of the $n-1$ lieutenants performs $OM(0)$ with the other $n-2$ lieutenants
+  - And we have established that $OM(0)$ is $\Theta(n)$
+- Thus, it's $\Theta(n^2)$
+
+
+
+## $OM(1)$
+- Just to repeat: 
+- $OM(1)$ guarantees that, with at least 4 participants and at most one traitor, then all the *loyal* lieutenants will agree a course of action
+  - Even if the general gave conflicting orders
+
+
+
+## What about $OM(2)$?
+- This is the 7 generals, 2 traitors problem
+- Three cases:
+  1. The general and one lieutenant are traitors
+  2. The general is loyal, and two lieutenants are traitors
+  3. Fewer than 2 are traitors
+      - But that's really the $OM(1)$ or $OM(0)$ case, so we'll ignore it here
+- This is all from the point of view of a loyal lieutenant
+
+
+
+## Showing $OM(2)$, case 1
+<img src="images/consensus/bgp/om2-a.svg" style="width:70%;padding:10px;border-radius:10px">
+
+
+
+<!-- .slide: class="right-float-img" -->
+## $OM(2)$, case 1
+
+<img src="images/consensus/bgp/om2-a.svg" style="width:30%;padding:10px;border-radius:10px">
+
+- The general and one lieutenant are traitors
+- The general will give varying orders
+- Each lieutenant will perform $OM(1)$ to get their array $v$ of messages
+  - And we know $OM(1)$ works (in $\Theta(n^2)$ time)
+- If $n-1$ lieutenants perform an $\Theta(n^2)$ operation (i.e., $OM(1)$), then the total running time is $\Theta(n^3)$
+
+
+
+<img src="images/consensus/bgp/om2-b.svg" style="width:60%;padding:10px;border-radius:10px">
+
+
+
+<img src="images/consensus/bgp/om2-c.svg" style="width:60%;padding:10px;border-radius:10px">
+
+
+
+## Recall $OM(1)$
+- $OM(1)$ means all *loyal* lieutenants will agree a single course of action based on what the general said
+  - Whether attack or retreat
+- When the traitor is sending out his/her vote, s/he is using $OM(1)$, so all the loyal lieutenants will agree on a single course of action based on what the traitor said
+  - This means that we won't have some loyal lieutenants thinking one thing and others something different for the traitor's message
+- Thus, the bottom row in the previous (and next) slide must all have the same values!
+
+
+
+<img src="images/consensus/bgp/om2-d.svg" style="width:60%;padding:10px;border-radius:10px">
+
+
+
+<img src="images/consensus/bgp/om2-e.svg" style="width:60%;padding:10px;border-radius:10px">
+
+
+
+## Showing $OM(2)$, case 2
+<img src="images/consensus/bgp/om2-f.svg" style="width:70%;padding:10px;border-radius:10px">
+
+
+
+<!-- .slide: class="right-float-img" -->
+## $OM(2)$, case 2
+
+<img src="images/consensus/bgp/om2-f.svg" style="width:30%;padding:10px;border-radius:10px">
+
+- The general is loyal and two lieutenants are traitors
+  - The general will the same order to all
+- Each lieutenant will perform $OM(1)$ to send out their message
+  - And we know $OM(1)$ works (in $\Theta(n^2)$ time)
+- Even though there are two traitors, the loyal lieutenants all received the same message
+  - And they are in the majority
+  - So they will all agree on the same decision
+- If $n-1$ lieutenants perform an $\Theta(n^2)$ operation (i.e., $OM(1)$), then the total running time is $\Theta(n^3)$
+
+
+
+<img src="images/consensus/bgp/om2-g.svg" style="width:60%;padding:10px;border-radius:10px">
+
+
+
+
+<img src="images/consensus/bgp/om2-h.svg" style="width:60%;padding:10px;border-radius:10px">
+
+
+
+<!-- .slide: class="right-float-img" -->
+## $OM(2)$, case 2
+
+<img src="images/consensus/bgp/om2-h.svg" style="width:40%;padding:10px;border-radius:10px">
+
+- The messages the loyal lieutenants receive from the traitors may not all be the same!
+  - Since $OM(1)$ does not work with 2 traitors
+- But their majority vote will still be attack
+- So the overall $OM(2)$ algorithm still works in this case
+
+
+
+## Message communication
+
+| $m$ | Msgs sent |
+|--------|--------|
+| 0 | $\Theta(n)$ |
+| 1 | $\Theta(n^2)$ |
+| 2 | $\Theta(n^3)$ |
+| 3 | $\Theta(n^4)$ |
+
+&nbsp;  
+
+- Or $\Theta(n^{m+1})$
+- This is a very expensive algorithm!
+- Try to keep $m$ and $n$ small
+- While inefficient, we have found a solution!
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="sm" data-markdown class="center"><textarea>
+# Signed Messages Algorithm
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Problems with $OM(m)$
+- It's *very* expensive
+- The lieutenants can lie
+- Let's change that:
+  - When A sends a message to B, and B tells that to C, B cannot lie
+- In practice, this is implemented with digital signatures
+  - Non-digitally, it's via handwritten signatures, signet rings, etc.
+
+
+
+## Assumptions
+- Recall that messages always arrive correctly
+- Messages can now be verified
+  - Meaning: if A tells B a message, and B tells C what A said, there *is* a way way for C to verify that A really said that
+- Formally, we assumed:
+  1. Every message that is sent is delivered correctly
+  2. The receiver of a message knows who sent it
+  3. The absence of a message can be detected
+- We now add an additional assumption:
+  4. The signatures, which has 3 parts:
+      - A loyal general's signature cannot be forged
+      - Any alteration of a loyal general's message can be detected
+      - Anybody can verify the authenticity of a general's signature
+
+
+
+## Notation and notes
+- Each lieutenant will have an array *V* (capital *V*)
+- A message will be lower-case *v*
+- A signed message will list all the signatories:
+  - *v:0* means it was signed by person 0 (the general)
+  - *v:0:1:3* means it was signed by the general and lieutenants 1 and 3
+- Recall the goal: for the *loyal* generals to all agree on a strategy
+
+
+
+## Signed Messages Algorithm
+- Referred to as $SM(m)$, where $m$ is the maximum number of traitors allowed where it will still operate correctly
+- Algorithm:
+  - The general sends *signed* messages to each lieutenant
+  - For each lieutenant *i*:
+    - If the message is *v:0* (meaning from the general), then:
+      - Verifies authenticity and records order received in *V[i]=v*
+      - Signs that message to create *v:0:i*, and send to every other lieutenant
+    - If the message is of the form *v:0:j<sub>1</sub>:j<sub>k</sub>*, then:
+      - If *v* is not in set *V*, add it
+      - If *k*$<$*m* (meaning the message was signed by less than *m* lieutenants), sign it and sent to everybody
+    - When there will be no more messages, select `choice(V)`
+
+
+
+## Function `choice()`
+- Recall that lieutenants can no longer forge the general's orders
+- If the general sent different messages to different lieutenants, then take a default action (say, retreat)
+  - Meaning if $|V|>1$
+- Otherwise, follow the general's signed orders
+
+
+
+## How many times to resend?
+- $SM(m)$ says resend it if the signature has $<$*m* signatures
+- This means that each lieutenant will receive *m+1$ confirmations
+  - The message that has *m* signatures and his/her own
+- If the general is are *m* traitors, then at least one of the *m+1* 
+
+
+
+## Showing $SM(1)$
+<img src="images/consensus/bgp/sm1-a.svg" style="width:45%;padding:10px;border-radius:10px">
+Not much to do if there are no traitors
+
+
+
+## Showing $SM(1)$, case 1
+<img src="images/consensus/bgp/sm1-b.svg" style="width:45%;padding:10px;border-radius:10px">
+
+The general is a traitor, and sends out different messages
+
+
+
+<!-- .slide: class="right-float-img" -->
+## $SM(1)$, case 1
+<img src="images/consensus/bgp/sm1-b.svg" style="width:40%;padding:10px;border-radius:10px">
+
+- Each lieutenant broadcasts the message the general send to them
+  - As our communication is reliable, each broadcast is received by all the other lieutenants
+- Thus, if the general sends out different messages, everybody will know
+  - And the loyal lieutenants will take the default action
+
+
+
+## Showing $SM(1)$, case 2
+<img src="images/consensus/bgp/sm1-c.svg" style="width:45%;padding:10px;border-radius:10px">
+
+Lieutenant 2 (on the right) is a traitor, but cannot change the general's signed order
+
+
+
+<!-- .slide: class="right-float-img" -->
+## $SM(1)$, case 2
+<img src="images/consensus/bgp/sm1-c.svg" style="width:40%;padding:10px;border-radius:10px">
+
+- Lieutenant 2 (on the right) cannot force the general's signature, so must send the general's original message
+- The message sent along contains the general's original order
+  - Which matches the one received by lieutenant 1
+
+
+
+## Showing $SM(1)$, case 3
+<img src="images/consensus/bgp/sm1-d.svg" style="width:45%;padding:10px;border-radius:10px">
+
+Lieutenant 2 (on the right) is a traitor, and does not send a message to lieutenant 1
+
+
+
+<!-- .slide: class="right-float-img" -->
+## $SM(1)$, case 3
+<img src="images/consensus/bgp/sm1-d.svg" style="width:40%;padding:10px;border-radius:10px">
+
+- Lieutenant 2 (on the right) opts not to send a message
+- The algorithm requires that *m* messages are received
+  - For a total of *m+1* messages from the general: the one the lieutenant received directly, and the other *m* broadcast messages
+- If *m* traitors and *m+1* messages, the loyal lieutenant still has received on (valid) message
+  - And takes the correct action
+
+
+
+## How many traitors?
+- We just say that the 3 general, 1 traitor version has a solution
+- In fact, $SM(m)$ only needs $m+2$ (or more) participants
+ - Proof omitted from this slide set
+  - But the [original paper](https://lamport.azurewebsites.net/pubs/byz.pdf) describes it
+
+
+
+## Running time
+- Is broadcast $\Theta(1)$ or $\Theta(n)$?
+  - We'll assume $\Theta(n)$
+- Each of the $n-1$ lieutenants has to send messages to $n-2$ others
+  - Those $n-2$ send messages to $n-3$ others
+- Running time is: $(n-1)\ast(n-2)\ast \ldots \(n-m+1)$
+  - Or $\Theta(n^{m+1})$, just like $OM(m)$
+- Our running time did not get any better, but we can withstand many more traitors
+
+
+
+## Complications and Optimizations
+- Optimizations
+  - We can have "sub-groups" that communicate among themselves to lower the running time
+- Complications
+  - What if not all generals can communicate with all other generals?
+  - What if the communication medium is not synchronous?
+
+
+
+## Practical Byzantine Fault Tolerance (PBFT)
+- A [1999 paper](https://www.scs.stanford.edu/nyu/03sp/sched/bfs.pdf) by Miguel Castro and Barbara Liskov
+- Goal: to provide an efficient means to be Byzantine Fault Tolerant
+  - And work in an asynchronous environment like the Internet
+  - And include many optimizations
+- One network service (NFS), when implemented with PBFT, was only 3% slower than without
+
+
+
+## PBFT Overview
+- Overview (where $m$ is the maximum number of traitors):
+  - One node is selected as the leader (primary node), the others are followers (secondary nodes)
+  - Client sends request to the leader
+  - Leader broadcasts that to all the secondary nodes
+  - Secondary nodes perform the action requested, then send back the response to the leader
+  - Once $m+1$ replies have come back, the leader sends the response to the client
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="tendermint" data-markdown class="center"><textarea>
+# Tendermint
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Slide content here
+- bulleted list
+- Three blank lines separate one slide from another
+
+
+
+## And here
+- And here
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
