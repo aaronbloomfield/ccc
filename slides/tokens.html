@@ -278,9 +278,9 @@ contract EZTokens {
 - The solution: you ask it, as defined in ERC-165
   - Created in 2018
 - Reference: the formal [ERC-165 EIP](https://eips.ethereum.org/EIPS/eip-165)
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n" id='funcsel'><textarea>
 ## Function selector
 - We specify to call contract function as: `transfer(address,uint256)`
   - But the function is listed in the contract as 0xa9059cbb
@@ -290,9 +290,9 @@ contract EZTokens {
     - Enter "transfer(address,uint256)" into an [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html)
     - Take the first 4 byte (8 digits)
 - [Reference](https://solidity-by-example.org/function-selector/)
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Solidity Type Information
 - Given a type `T`, a contract 'C', or an interface 'I', you can get information about that type:
   - `type(T).min`: the minimum value
