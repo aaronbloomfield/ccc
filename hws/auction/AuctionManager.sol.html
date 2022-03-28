@@ -43,6 +43,9 @@ interface AuctionManager <font color="#008080">is</font> IERC165<font color="#99
     <i><font color="#9A1900">// from a public variable</font></i>
     <font color="#008080">function</font> <b><font color="#000000">num_auctions</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
+    <i><font color="#9A1900">// gets the ID of any auction that is active with the provided data string</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">active_auction</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> data<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
     <i><font color="#9A1900">// gets the auction struct for the given acution; this can just be via the</font></i>
     <i><font color="#9A1900">// getter method from a public mapping</font></i>
     <font color="#008080">function</font> <b><font color="#000000">auctions</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Auction</font> memory<font color="#990000">);</font>

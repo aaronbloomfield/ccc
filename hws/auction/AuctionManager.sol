@@ -32,6 +32,9 @@ interface AuctionManager is IERC165, IERC721Receiver {
     // from a public variable
     function num_auctions() external view returns (uint);
 
+    // gets the ID of any auction that is active with the provided data string
+    function active_auction(string memory data) external view returns (uint);
+
     // gets the auction struct for the given acution; this can just be via the
     // getter method from a public mapping
     function auctions(uint _id) external view returns (Auction memory);

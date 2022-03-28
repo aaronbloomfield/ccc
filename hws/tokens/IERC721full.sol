@@ -12,7 +12,7 @@ interface IERC721full is IERC721Metadata {
     // (supportsInterface())
 
     // implementing contracts have to implement the 6 functions and 2 events
-    // from IERC20
+    // from IERC721
 
     // implementing contracts have to implement the 3 functions from
     // IERC721Metadata

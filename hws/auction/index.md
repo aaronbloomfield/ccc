@@ -92,6 +92,8 @@ interface AuctionManager is IERC165, IERC721Receiver {
 
     function num_auctions() external view returns (uint);
 
+    function active_auction(string memory data) external view returns (uint);
+
     function auctions(uint _id) external view returns (Auction memory);
     
     function createAuction(uint m, uint h, uint d, string memory _data, uint _reserve) external returns (uint);
