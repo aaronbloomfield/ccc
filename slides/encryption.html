@@ -42,7 +42,7 @@
 <p class='titlep'>&nbsp;</p>
 <div class="titlesmall"><p>
 <a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
-<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle;padding:0;border-radius:0"></a>
 </p></div>
 <p class='titlep'>&nbsp;</p>
 
@@ -131,15 +131,15 @@
 	  <section>
 	    <h2>Re-using a one-time pad</h2>
 <table class="transparent">
-  <tr><td>Use an OTP:&nbsp;</td><td><img alt="re-using OTP" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-1.png"> &oplus;
-  <img alt="re-using OTP" style="vertical-align:middle;display:initial;border:2px solid green" src="images/encryption/otp/otp.png"> =
-  <img alt="re-using OTP" style="vertical-align:middle;display:initial;border:2px solid red" src="images/encryption/otp/otp-1e.png"></td></tr>
-  <tr class="fragment"><td>Re-use the<br>same OTP:&nbsp;</td><td><img alt="re-using OTP" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-2.png"> &oplus;
-  <img alt="re-using OTP" style="vertical-align:middle;display:initial;border:2px solid green" src="images/encryption/otp/otp.png"> =
-  <img alt="re-using OTP" style="vertical-align:middle;display:initial;border:2px solid blue" src="images/encryption/otp/otp-2e.png"></td></tr>
-<tr class="fragment"><td>Extract<br>the images:&nbsp;</td><td><img alt="re-using OTP" style="vertical-align:middle;display:initial;border:2px solid red" src="images/encryption/otp/otp-1e.png"> &oplus;
-  <img alt="re-using OTP" style="vertical-align:middle;display:initial;border:2px solid blue" src="images/encryption/otp/otp-2e.png"> =
-  <img alt="re-using OTP" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-ans.png"></td></tr>
+  <tr><td>Use an OTP:&nbsp;</td><td><img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-1.png"> &oplus;
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid green" src="images/encryption/otp/otp.png"> =
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid red" src="images/encryption/otp/otp-1e.png"></td></tr>
+  <tr class="fragment"><td>Re-use the<br>same OTP:&nbsp;</td><td><img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-2.png"> &oplus;
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid green" src="images/encryption/otp/otp.png"> =
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid blue" src="images/encryption/otp/otp-2e.png"></td></tr>
+<tr class="fragment"><td>Extract<br>the images:&nbsp;</td><td><img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid red" src="images/encryption/otp/otp-1e.png"> &oplus;
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid blue" src="images/encryption/otp/otp-2e.png"> =
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-ans.png"></td></tr>
 </table>
 <p>This example from <a href="https://crypto.stackexchange.com/questions/59/taking-advantage-of-one-time-pad-key-reuse">StackExchange</a></p>
 	    </section>
@@ -467,13 +467,13 @@ pow(m, e, n)
 
 	  <section class='rsa-anim'>
 <h2>"Normal" RSA communication</h2>
-<img alt="rsa communication bars" src="images/encryption/mitm/rsa-com-1-top.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 1a"  src="images/encryption/mitm/rsa-com-1-a.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 1b"  src="images/encryption/mitm/rsa-com-1-b.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 1c"  src="images/encryption/mitm/rsa-com-1-c.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 1d"  src="images/encryption/mitm/rsa-com-1-d.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 1e"  src="images/encryption/mitm/rsa-com-1-e.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 1f"  src="images/encryption/mitm/rsa-com-1-f.png" style="margin-bottom:0;margin-top:0">
+<img alt="rsa communication bars" src="images/encryption/mitm/rsa-com-1-top.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 1a"  src="images/encryption/mitm/rsa-com-1-a.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 1b"  src="images/encryption/mitm/rsa-com-1-b.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 1c"  src="images/encryption/mitm/rsa-com-1-c.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 1d"  src="images/encryption/mitm/rsa-com-1-d.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 1e"  src="images/encryption/mitm/rsa-com-1-e.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 1f"  src="images/encryption/mitm/rsa-com-1-f.png"  class="nopad" style="margin-bottom:0;margin-top:0">
 	  </section>
 
     <section data-markdown data-separator="^\n$"><textarea data-template>
@@ -486,13 +486,13 @@ pow(m, e, n)
 
 	  <section class='rsa-anim'>
 <h2>MITM RSA communication</h2>
-<img alt="rsa communication bars" src="images/encryption/mitm/rsa-com-2-top.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 2a"  src="images/encryption/mitm/rsa-com-2-a.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 2b"  src="images/encryption/mitm/rsa-com-2-b.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 2c"  src="images/encryption/mitm/rsa-com-2-c.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 2d"  src="images/encryption/mitm/rsa-com-2-d.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 2e"  src="images/encryption/mitm/rsa-com-2-e.png" style="margin-bottom:0;margin-top:0">
-<img  alt="rsa communication 2f"  src="images/encryption/mitm/rsa-com-2-f.png" style="margin-bottom:0;margin-top:0">
+<img alt="rsa communication bars" src="images/encryption/mitm/rsa-com-2-top.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 2a"  src="images/encryption/mitm/rsa-com-2-a.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 2b"  src="images/encryption/mitm/rsa-com-2-b.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 2c"  src="images/encryption/mitm/rsa-com-2-c.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 2d"  src="images/encryption/mitm/rsa-com-2-d.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 2e"  src="images/encryption/mitm/rsa-com-2-e.png"  class="nopad" style="margin-bottom:0;margin-top:0">
+<img  alt="rsa communication 2f"  src="images/encryption/mitm/rsa-com-2-f.png"  class="nopad" style="margin-bottom:0;margin-top:0">
 	  </section>
 
 	  <section data-markdown data-separator="^\n$"><textarea data-template>
@@ -1426,7 +1426,8 @@ $
 
 
 ## Cloudflare uses a wall of lava lamps ([source](https://it.slashdot.org/story/17/11/07/1927239/how-cloudflare-uses-lava-lamps-to-encrypt-the-internet))
-![](http://blog.cloudflare.com/content/images/2017/11/lava-lamps.jpg)
+
+<img src="http://blog.cloudflare.com/content/images/2017/11/lava-lamps.jpg" style="padding:0">
 
 
 ## CSPRNG: Algorithms
