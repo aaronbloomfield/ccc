@@ -420,9 +420,11 @@ function itself determines what that ID is (likely the next integer in
 sequence)</li>
 </ul></li>
 <li>Implementation of the <code>supportsInterface()</code> function for
-<em>five</em> interfaces – <code>Context</code>, the three ERC721
-interfaces (<code>IERC721</code>, <code>IERC721Metadata</code>, and
-<code>IERC721full</code>), and also <code>IERC165</code>
+<em>four</em> interfaces – the three ERC721 interfaces
+(<code>IERC721</code>, <code>IERC721Metadata</code>, and
+<code>IERC721full</code>) and <code>IERC165</code> (<code>Context</code>
+has no <code>external</code> or <code>public</code> members, so it’s not
+needed in this list)
 <ul>
 <li>Because of the inheritance tree, you will have to specify that it is
 overriding <em>all</em> of the <code>supportsInterface()</code> methods;

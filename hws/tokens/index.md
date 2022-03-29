@@ -179,7 +179,7 @@ The following are the functional requirements for the development of this contra
   	- It should only allow minting by the deployer of the contract
   	- A duplicate URI should cause a reversion
   	- This *returns* the token ID of the newly minted NFT; the function itself determines what that ID is (likely the next integer in sequence)
-- Implementation of the `supportsInterface()` function for *five* interfaces -- `Context`, the three ERC721 interfaces (`IERC721`, `IERC721Metadata`, and `IERC721full`), and also `IERC165`
+- Implementation of the `supportsInterface()` function for *four* interfaces -- the three ERC721 interfaces (`IERC721`, `IERC721Metadata`, and `IERC721full`) and `IERC165` (`Context` has no `external` or `public` members, so it's not needed in this list)
   	- Because of the inheritance tree, you will have to specify that it is overriding *all* of the `supportsInterface()` methods; see the lecture slides for details
 - Implementation of `tokenURI()`, which is inherited from `ERC721`
 	- It should revert if an invalid token ID is provided
