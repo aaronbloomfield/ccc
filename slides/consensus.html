@@ -48,7 +48,7 @@ line-height:120%;
 <p class='titlep'>&nbsp;</p>
 <div class="titlesmall"><p>
 <a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
-<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle;padding:0;border-radius:0"></a>
 </p></div>
 <p class='titlep'>&nbsp;</p>
 
@@ -309,7 +309,7 @@ line-height:120%;
 
 <!-- .slide: class="right-float-img" -->
 ## Communication
-<img src="images/consensus/bgp/2gen.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/2gen.svg" style="width:45%">
 
 - One general needs to communicate his/her opinion to the other generals
   - In the full BGP, all generals have to do this with all the others
@@ -526,7 +526,6 @@ This implies:
 
 
 ## Oral Messages Algorithm
-- Referred to as $OM(m)$, where $m$ is the maximum number of traitors allowed where it will still operate correctly
 - Algorithm:
   - The general sends messages to each lieutenant
   - Lieutenants:
@@ -558,32 +557,32 @@ This implies:
 
     <section data-markdown data-separator="^\n" data-transition="fade" data-transition-speed="fast"><textarea>
 ## Showing $OM(0)$
-<img src="images/consensus/bgp/om0.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om0.svg" style="width:45%">
 
 ## Showing $OM(1)$, step 1
-<img src="images/consensus/bgp/om1-a.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om1-a.svg" style="width:45%">
 
 ## Showing $OM(1)$, step 2
-<img src="images/consensus/bgp/om1-b.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om1-b.svg" style="width:45%">
 
 ## Showing $OM(1)$, step 3
-<img src="images/consensus/bgp/om1-c.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om1-c.svg" style="width:45%">
 
 ## Showing $OM(1)$, step 4
-<img src="images/consensus/bgp/om1-d.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om1-d.svg" style="width:45%">
 
-## Showing $OM(1)$ traitor case 1
-<img src="images/consensus/bgp/om1-e.svg" style="width:45%;padding:10px;border-radius:10px">
+## $OM(1)$ traitor case 1
+<img src="images/consensus/bgp/om1-e.svg" style="width:45%">
 
-## Showing $OM(1)$ traitor case 2
-<img src="images/consensus/bgp/om1-f.svg" style="width:45%;padding:10px;border-radius:10px">
+## $OM(1)$ traitor case 2
+<img src="images/consensus/bgp/om1-f.svg" style="width:45%">
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="right-float-img" -->
 ## $OM(0)$ Running time
 
-<img src="images/consensus/bgp/om0.svg" style="width:35%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om0.svg" style="width:35%">
 
 - If there were really no traitors, then the lieutenants would not need to communicate with each other
 - The general communicates with his/her $n-1$ lieutenants, so it's $\Theta(n)$
@@ -594,7 +593,7 @@ This implies:
 <!-- .slide: class="right-float-img" -->
 ## $OM(1)$ Running time
 
-<img src="images/consensus/bgp/om1-d.svg" style="width:35%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om1-d.svg" style="width:35%">
 
 - Each of the $n-1$ lieutenants performs $OM(0)$ with the other $n-2$ lieutenants
   - And we have established that $OM(0)$ is $\Theta(n)$
@@ -621,14 +620,14 @@ This implies:
 
 
 ## Showing $OM(2)$, case 1
-<img src="images/consensus/bgp/om2-a.svg" style="width:70%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-a.svg" style="width:70%">
 
 
 
 <!-- .slide: class="right-float-img" -->
 ## $OM(2)$, case 1
 
-<img src="images/consensus/bgp/om2-a.svg" style="width:30%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-a.svg" style="width:30%">
 
 - The general and one lieutenant are traitors
 - The general will give varying orders
@@ -638,11 +637,11 @@ This implies:
 
 
 
-<img src="images/consensus/bgp/om2-b.svg" style="width:60%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-b.svg" style="width:60%">
 
 
 
-<img src="images/consensus/bgp/om2-c.svg" style="width:60%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-c.svg" style="width:60%">
 
 
 
@@ -655,23 +654,23 @@ This implies:
 
 
 
-<img src="images/consensus/bgp/om2-d.svg" style="width:60%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-d.svg" style="width:60%">
 
 
 
-<img src="images/consensus/bgp/om2-e.svg" style="width:60%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-e.svg" style="width:60%">
 
 
 
 ## Showing $OM(2)$, case 2
-<img src="images/consensus/bgp/om2-f.svg" style="width:70%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-f.svg" style="width:70%">
 
 
 
 <!-- .slide: class="right-float-img" -->
 ## $OM(2)$, case 2
 
-<img src="images/consensus/bgp/om2-f.svg" style="width:30%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-f.svg" style="width:30%">
 
 - The general is loyal and two lieutenants are traitors
   - The general will the same order to all
@@ -684,19 +683,19 @@ This implies:
 
 
 
-<img src="images/consensus/bgp/om2-g.svg" style="width:60%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-g.svg" style="width:60%">
 
 
 
 
-<img src="images/consensus/bgp/om2-h.svg" style="width:60%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-h.svg" style="width:60%">
 
 
 
 <!-- .slide: class="right-float-img" -->
 ## $OM(2)$, case 2
 
-<img src="images/consensus/bgp/om2-h.svg" style="width:40%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/om2-h.svg" style="width:40%">
 
 - The messages the loyal lieutenants receive from the traitors may not all be the same!
   - Since $OM(1)$ does not work with 2 traitors
@@ -786,6 +785,7 @@ This implies:
 
 ## Function `choice()`
 - Recall that lieutenants can no longer forge the general's orders
+- If insufficient messages ($<$*m+1*) are received, take the default action
 - If the general sent different messages to different lieutenants, then take a default action (say, retreat)
   - Meaning if $|V|>1$
 - Otherwise, follow the general's signed orders
@@ -794,20 +794,21 @@ This implies:
 
 ## How many times to resend?
 - $SM(m)$ says resend it if the signature has $<$*m* signatures
-- This means that each lieutenant will receive *m+1$ confirmations
-  - The message that has *m* signatures and his/her own
-- If the general is are *m* traitors, then at least one of the *m+1* 
+- This means that each lieutenant will receive *m+1* confirmations
+  - The one from the general
+  - And *m* more from lieutenants
+- If there are *m* traitors, then at least one of the *m+1* messages is from a loyal participant
 
 
 
 ## Showing $SM(1)$
-<img src="images/consensus/bgp/sm1-a.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/sm1-a.svg" style="width:45%">
 Not much to do if there are no traitors
 
 
 
 ## Showing $SM(1)$, case 1
-<img src="images/consensus/bgp/sm1-b.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/sm1-b.svg" style="width:45%">
 
 The general is a traitor, and sends out different messages
 
@@ -815,17 +816,17 @@ The general is a traitor, and sends out different messages
 
 <!-- .slide: class="right-float-img" -->
 ## $SM(1)$, case 1
-<img src="images/consensus/bgp/sm1-b.svg" style="width:40%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/sm1-b.svg" style="width:40%">
 
 - Each lieutenant broadcasts the message the general send to them
   - As our communication is reliable, each broadcast is received by all the other lieutenants
 - Thus, if the general sends out different messages, everybody will know
-  - And the loyal lieutenants will take the default action
+  - It's a tie, so the loyal lieutenants will take the (same) default action
 
 
 
 ## Showing $SM(1)$, case 2
-<img src="images/consensus/bgp/sm1-c.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/sm1-c.svg" style="width:45%">
 
 Lieutenant 2 (on the right) is a traitor, but cannot change the general's signed order
 
@@ -833,16 +834,17 @@ Lieutenant 2 (on the right) is a traitor, but cannot change the general's signed
 
 <!-- .slide: class="right-float-img" -->
 ## $SM(1)$, case 2
-<img src="images/consensus/bgp/sm1-c.svg" style="width:40%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/sm1-c.svg" style="width:40%">
 
 - Lieutenant 2 (on the right) cannot force the general's signature, so must send the general's original message
 - The message sent along contains the general's original order
   - Which matches the one received by lieutenant 1
+- Both the loyal participants (general and lieutenant 1) take the same action
 
 
 
 ## Showing $SM(1)$, case 3
-<img src="images/consensus/bgp/sm1-d.svg" style="width:45%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/sm1-d.svg" style="width:45%">
 
 Lieutenant 2 (on the right) is a traitor, and does not send a message to lieutenant 1
 
@@ -850,18 +852,20 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 
 <!-- .slide: class="right-float-img" -->
 ## $SM(1)$, case 3
-<img src="images/consensus/bgp/sm1-d.svg" style="width:40%;padding:10px;border-radius:10px">
+<img src="images/consensus/bgp/sm1-d.svg" style="width:40%">
 
 - Lieutenant 2 (on the right) opts not to send a message
-- The algorithm requires that *m* messages are received
-  - For a total of *m+1* messages from the general: the one the lieutenant received directly, and the other *m* broadcast messages
-- If *m* traitors and *m+1* messages, the loyal lieutenant still has received on (valid) message
-  - And takes the correct action
+- The algorithm requires that *m+1* messages are received
+  - The one from the general
+  - And *m* more from lieutenants
+- Here *m=1*, and since $<$*m+1* messages have been received, the default action is taken
+- In general, if *m* traitors and *m+1* messages, the loyal lieutenant still has received one (valid) message
+  - And all can take the same action
 
 
 
 ## How many traitors?
-- We just say that the 3 general, 1 traitor version has a solution
+- We just saw that the 3 general, 1 traitor version has a solution
 - In fact, $SM(m)$ only needs $m+2$ (or more) participants
  - Proof omitted from this slide set
   - But the [original paper](https://lamport.azurewebsites.net/pubs/byz.pdf) describes it
@@ -917,14 +921,126 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-## Slide content here
-- bulleted list
-- Three blank lines separate one slide from another
+## Overview
+- [Tendermint whitepaper](https://tendermint.com/static/docs/tendermint.pdf) in 2014 by Jae Kwon
+  - First stable release: 2016
+  - Later expanded into the Cosmos "ecosystem"
+  - Tendermint later renamed to Ignite
+- Coin is Cosmos ([ATOM](https://coinmarketcap.com/currencies/cosmos/)), worth $30.82 as of March 29, 2022
+- Pure proof-of-stake coin
+  - Influential in later PoS designs
 
 
 
-## And here
-- And here
+## Overview
+- Clients *bond* coins for right to mint new blocks
+  - Round-robin algorithm to determine next miner
+  - Weighted by amount of bonded coins
+- On malicious activity, loss of some (all?) of the bonded coins
+- Consensus achieved after every block
+  - A series of rounds with votes among the nodes holding the bonded coins
+
+
+
+## Byzantine Fault Tolerance
+- Solve the Byzantine Generals Problem!
+  - Assuming strictly less than 1/3 of the nodes are malicious (or flaky)
+- Miners lose coins if they are malicious
+  - So there is no incentive to be a traitor general
+- It uses an algorithm from the paper [Consensus in the Presence of Partial Synchrony](https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf)
+  - Partial synchrony: the clocks of the nodes in sync within some finite delta value
+  - For our purposes, it will use the $SM(m)$ algorithm for communication, and adapted as described in this section
+
+
+
+## Block structure
+
+<img src="images/consensus/tendermint/tendermint-1.png" style="width:65%">
+
+
+
+## Bonding
+- Clients *bond* coins
+  - This locks them so that they can't be spent
+  - Coins are sacrificed on malicious activity
+  - They are then one of the *validators*
+    - Those who participate in the mining and voting process
+- When one wants to spend them...
+  - They enter an *unbonding period*
+    - A lock to prevent malicious activity and then immediate spending
+  - Once unbonded, they can be spent
+    - But have to be re-bonded to provide stake for validation
+
+
+
+## Tendermint State Machine
+
+<img src="images/consensus/tendermint/tendermint-3.png" style="width:75%">
+
+
+
+## Propose step
+- This is the start of a round
+- Round-robin algorithm to determine the next proposer, weighted by amount of bonded coins
+- Designated proposer sends a proposal to all the peers via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+-  Proposal structure:
+
+<img src="images/consensus/tendermint/tendermint-4.png" style="width:40%">
+
+
+
+## Prevote
+- Each validator makes a decision about that proposed block
+  - And sends a *prevote* for or against
+  - Null prevote if the validator never received a proposed block
+- Prevotes are spread throughout the network via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+- Vote (& prevote) structure:
+
+<img src="images/consensus/tendermint/tendermint-2.png" style="width:40%">
+
+
+
+## Precommit
+- If a validator received more than 2/3 prevotes for a block, then it signs and sends a *precommit* for that block
+  - Precommits are spread throughout the network via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+  - If it has not received greater than 2/3 prevotes for a block, it takes no action
+- Once it has $>$2/3 prevotes, it *locks* onto that block, and releases any prior lock
+  - Can only lock onto one node at a time
+- When locking...
+  - It gathers prevotes for that block, and packages them into a *proof-of-lock*
+
+
+
+## Precommit
+- At the end of this step, did it receive (via the gossip protocol) more than 2/3 *precommits* for that block?
+  - Not prevotes this time...
+- If so, it proceeds to the Commit step
+- Otherwise, it loops back to the Propose step and starts a new round
+
+
+
+## Commit
+- At this point, $>$2/3 of the nodes have sent precommits for the proposed block
+  - Each of those nodes sent a precommit because they received $>$2/3 prevotes for the block
+- Any node can enter the Commit step if:
+  - It has received a given proposed block
+  - It has received $>$2/3 precommits for that block
+- The commit is broadcast from each node via the gossip protocol
+- Once all nodes have received $>$2/3 commits, the block is considered mined
+
+
+
+## Tendermint State Machine
+
+<img src="images/consensus/tendermint/tendermint-3.png" style="width:75%">
+
+
+
+## Conclusion
+
+The *entire* conclusion section from the [Tendermint whitepaper](https://tendermint.com/static/docs/tendermint.pdf):
+
+> Tendermint is awesome. The future is now.
 </textarea></section>
 
   </section>
