@@ -192,13 +192,9 @@ interface AuctionManager is IERC165, IERC721Receiver {
 
     function num_auctions() external view returns (uint);
 
-    function active_auction(string memory data) external view returns (uint);
-
     function auctions(uint _id) external view returns (Auction memory);
     
     function createAuction(uint m, uint h, uint d, string memory _data, uint _reserve) external returns (uint);
-
-    function getPendingAuctionID(address) external view returns (uint);
 
     function cancelAuction(uint id);
 
@@ -222,8 +218,10 @@ href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>)
 interface, which requires the <code>supportsInterface()</code> function
 – your Auctioneer class supports three interfaces (AuctionManager,
 IERC165, and IERC721Receiver). You will also need to use the <a
+href="IERC721Metadata.sol.html">IERC721Metadata.sol</a> (<a
+href="IERC721Metadata.sol">src</a>) interface (and thus the <a
 href="IERC721.sol.html">IERC721.sol</a> (<a href="IERC721.sol">src</a>)
-interface, as you will be calling a method on the NFT manager, which
+interface), as you will be calling methods on the NFT manager, which
 implements that interface.</p>
 <p>The contract also extends the <a
 href="IERC721Receiver.sol.html">IERC721Receiver.sol</a> (<a
@@ -267,6 +265,11 @@ transferred along with the function call. If the call reverts, then you
 get that money back (minus the gas fees). If you have a mistake in your
 function code, you will likely lose that ETH – this is why we are
 practicing on a private blockchain where the ETH has no value.</p>
+<p>Some people are having problems in Remix with determining the return
+value of a transaction – if this is happening to you, you can create a
+function such as <code>getPendingAuctionID()</code> that, given an
+address, returns the pending (but not yet started) auction ID for that
+address.</p>
 <p>Test all this thoroughly in Remix! You will need to deploy both your
 NFTManager contract and also your Auctioneer contract in Remix’s
 Javascript environment to test them working together. Recall that you

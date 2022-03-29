@@ -92,13 +92,9 @@ interface AuctionManager is IERC165, IERC721Receiver {
 
     function num_auctions() external view returns (uint);
 
-    function active_auction(string memory data) external view returns (uint);
-
     function auctions(uint _id) external view returns (Auction memory);
     
     function createAuction(uint m, uint h, uint d, string memory _data, uint _reserve) external returns (uint);
-
-    function getPendingAuctionID(address) external view returns (uint);
 
     function cancelAuction(uint id);
 
@@ -117,8 +113,7 @@ interface AuctionManager is IERC165, IERC721Receiver {
 }
 ```
 
-This interface is provided in the [AuctionManager.sol](AuctionManager.sol.html) ([src](AuctionManager.sol)) file.  This interface extends the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) interface, which requires the `supportsInterface()` function -- your Auctioneer class supports three interfaces (AuctionManager, IERC165, and IERC721Receiver).  You will also need to use the [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)) interface, as you will be calling a method on the NFT manager, which implements that interface.
-
+This interface is provided in the [AuctionManager.sol](AuctionManager.sol.html) ([src](AuctionManager.sol)) file.  This interface extends the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) interface, which requires the `supportsInterface()` function -- your Auctioneer class supports three interfaces (AuctionManager, IERC165, and IERC721Receiver).  You will also need to use the [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)) interface (and thus the [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)) interface), as you will be calling methods on the NFT manager, which implements that interface.
 
  The contract also extends the [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)) interface:
 
@@ -139,6 +134,8 @@ interface IERC721Receiver {
 The `onERC721Received()` function is called when an ERC721 token is transferred to the smart contract.  This was done in the [ERC721.sol](../tokens/ERC721.sol.html) ([src](../tokens/ERC721.sol)) code that your NFTmanager.sol file extended.  The `operator` parameter is the NFT manager smart contract, the `from` is who actually owns the NFT (meaning the entity starting the auction), the `tokenId` is the token number in that NFT manager, and you can ignore the `data` parameter (it's to send extra data if desired).  It is by the call to this function that your Auctioneer knows an NFT has been transferred to it, and can start an auction.  If the NFT is unknown, then a reversion will cancel the entire NFT transfer.  This function needs to return a confirmation that it acknowledges the receipt of the NFT -- to do this, have the last line of your function return the [function selector](../../slides/tokens.html#/funcsel) for that function -- the line for that is: `return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));`.
 
 As you are testing it, you will notice in Remix that the button for `placeBid()` is red -- that is because this is a `payable` function.  When you call this function, after setting the correct auction ID as the parameter, you will need to transfer some ETH along with the call.  In the deployment pane in Remix, just enter a numerical value in the 'Value' box, and select the right denomination (wei, gwei, ether, etc.).  That amount of ETH will be transferred along with the function call.  If the call reverts, then you get that money back (minus the gas fees).  If you have a mistake in your function code, you will likely lose that ETH -- this is why we are practicing on a private blockchain where the ETH has no value.
+
+Some people are having problems in Remix with determining the return value of a transaction -- if this is happening to you, you can create a function such as `getPendingAuctionID()` that, given an address, returns the pending (but not yet started) auction ID for that address.
 
 Test all this thoroughly in Remix!  You will need to deploy both your NFTManager contract and also your Auctioneer contract in Remix's Javascript environment to test them working together.  Recall that you have to select the right contract to deploy in the "Contract" list, else Remix may not know which one to deploy.  ***We are going to try to break your contract.***  So you will need to spend some time thinking about all the things that you should be checking for, and also testing it out as much as you can.
 
