@@ -48,7 +48,7 @@ line-height:115%;
 <p class='titlep'>&nbsp;</p>
 <div class="titlesmall"><p>
 <a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
-<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle" class="nopad"></a>
 </p></div>
 <p class='titlep'>&nbsp;</p>
 
@@ -62,6 +62,59 @@ Template for first line:
 - [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
 
 -->
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Spacecraft Debris Odds Ratio</h2>
+<img src="https://imgs.xkcd.com/comics/spacecraft_debris_odds_ratio.png" title="You say this daily walk will reduce my risk of death from cardiovascular disease by 30%, but also increase my risk of death by bear attack by 300%? That&#39;s a 280% increased! I&#39;m not a sucker; I&#39;m staying inside." alt="Spacecraft Debris Odds Ratio" srcset="https://imgs.xkcd.com/comics/spacecraft_debris_odds_ratio_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2599/'>xkcd # 2599</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 18: Wed, March 30th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`47,375; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,411; [ETH gas](https://ethgas.watch/): 112 gwei => `$`8.02
+- The [midterm](../exams/exam1-s22.pdf)'s grading problem is fixed; regrades are open until Fri
+  - Average was 40.5/60 (67.5%) with a standard deviation of 7.3/60 (12.2%)
+- Homeworks
+  - [HW P6: dApp tokens](../hws/tokens/index.html) was due yesterday by midnight
+    - Average hours spent: 4.2
+    - We'll take a look at the CC logos and NFTs (I reduced some resolutions)
+  - Out today will HW P7: a smart contract auction for your NFTs
+  - Upcoming: smart contracts on a DEX, 1 on zero-knowledge proofs, then 2 on Web3
+- The requests for your UVA CS server accounts has been sent in
+  - Have you received responses?
+- The blockchain explorer is having issues...
+- Grades: 
+  - HW S6 (dApp gradebook) grades on on Collab's Posted Feedback
+    - If you messed up the hashes, please re-submit the Google form then submit a support request asking for a regrade
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request; exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will continue with [Consensus](../slides/consensus.html#/)
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Last time we started talking about [Consensus](../slides/consensus.html#/)
+  - I flubbed the explanation of the [last case of the Three Generals problem](../slides/consensus.html#/5/12) because I had incorrectly not listed [requirement 3 for such](../slides/consensus.html#/5/6)
+- We discussed:
+  - The [Two Generals Problem](../slides/consensus.html#/3/2) (how do they communicate?)
+  - [The Byzantine Generals Problem](../slides/consensus.html#/4/2) (BGP)
+  - The [Three Generals Problem](../slides/consensus.html#/5/3)
+    - This is modelling communication in the overall BGP
+    - We showed does not work with 3 generals, 1 of which is a traitor
+    - Nor does it work with 1/3 or more traitors
+  - We ended on [slide 6.19](../slides/consensus.html#/5/18), and will start today on [slide 7.1](../slides/consensus.html#/om)
+- At some point we still have to come back to the rest of [Ethereum](../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../slides/ethereum.html#/2/26))
+</textarea></section>
+  </section>
 
 <!-- ============================================================ -->
   
