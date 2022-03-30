@@ -20,7 +20,7 @@ Writing this homework will require completion of the following assignments:
 
 Note that this assignment requires that your [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment is working properly.  If you did not get it working properly, then see the next section.
 
-You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), and the [Token slide set](../../slides/tokens.html#/)
+You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), and the [Tokens slide set](../../slides/tokens.html#/)
 
 
 ### Task 1: Create some NFT images in your NFTmanager
@@ -29,13 +29,9 @@ You should use your NFT manager that you wrote and deployed in the [Ethereum Tok
 
 You will need to submit the contract address of your NFT manager, and the transaction hash that deployed it, at the end of this assignment.
 
-You will need to create a few NFTs, all of which are tagged to images.   You are welcome to use anything in the public domain, including memes.  But nothing inappropriate or otherwise offensive.  As before, in this course, owning the NFT does NOT imply ownership of the image.  The assumption is that you don't actually own the original image, since it's in the public domain.  You will need three different NFT images, and you can reuse the ones you used in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.
+You will need to have *three* images for NFTs to be used in this assignment.  You can reuse the ones you created for the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  As with that assignment, you are welcome to use anything in the public domain, including memes.  But nothing inappropriate or otherwise offensive.  As before, in this course, owning the NFT does NOT imply ownership of the image -- the assumption is that you don't actually own the original image, since it's in the public domain.
 
-As with the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, the images should be in the `ipfs/` directory in the Collab Resources tool. Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Collab, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Collab workspace, only those in the class can view those files -- but that means anybody in the class can view it.
-
-All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You are going to be uploading multiple image files in a future assignment, so please plan your file naming scheme appropriately.  As long as it starts with your userid and an underscore, we don't really care what the rest of the file name is.  Only JPEG and PNG images, please.
-
-You will need three such images to create NFTs for.  Make them interesting!  But they must all be different.  You can re-use some or all of your NFT images from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  For those three images, you can re-use the images you used in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.
+As with the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, the images should be in the `ipfs/` directory in the Collab Resources tool. Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Collab, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Collab workspace, only those in the class can view those files -- but that means anybody in the class can view it.  All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  As long as it starts with your userid and an underscore, we don't really care what the rest of the file name is.  Only JPEG and PNG images, please.  Make the images interesting!
 
 Not surprisingly, you will then need to create NFTs for each of your images in your deployed `NFTmanager` smart contract -- you are welcome to do that later as they are needed.
 
@@ -44,20 +40,23 @@ Not surprisingly, you will then need to create NFTs for each of your images in y
 
 The contract you will be creating will allow for a decentralized auction for NFTs.  The intended flow is as follows:
 
-- Anybody can create an auction -- this involves setting the auction duration, reserve (minimum) price, etc.  This does not *start* the auction just yet, but configures all the information for it.
+- Anybody can create an auction -- this is via the `createAuction()` function, and involves setting the auction duration, reserve (minimum) price, and various other parameters.  This does not *start* the auction just yet, but configures all the information for it.
     - The person who started the auction is called the 'initiator'
-    - There cannot be two auctions of the same NFT going on at the same time -- the contract should revert in this case
+    - There cannot be two *active* auctions of the same NFT going on at the same time -- the contract should check for this and revert in this case
 - Once ownership of the NFT is transferred to the auction contract, the auction begins -- the length was specified in the previous step.
-    - In the situation where somebody creates a second auction before the first auction has started (meaning calling `createAuction()` twice without transferring the NFT to the auction manager between the two calls), then the second call to `createAuction()` should revert.
-- Anybody can bid on the auction -- a bid is placed by transferring ether to the auction contract, and specifying which auction it is for
+    - In the situation where somebody creates a second auction before the first auction has started (meaning calling `createAuction()` twice without transferring the NFT to the auction manager between the two calls), then the second call to `createAuction()` should revert
+- Anybody can bid on the auction -- a bid is placed by transferring ether to the auction contract via a call to `placeBid()`, and specifying which auction it is for via a parameter to that function call
     - If the amount bid is less than the reserve price, then the bid still goes through -- however, this is not a winning bid, as described below
-    - If the amount bid is less than or equal to the current maximum bid, then it also fails via a `require()` or `revert()`
+    - If the amount bid is less than or equal to the current maximum bid, then it fails via a `require()` or `revert()`
     - If the amount bid is (strictly) higher than the previously highest bid, then the sender is the new winning bidder; the previously highest winning bidder is refunded his/her ether
-- Once we are past the auction end time, the auction can be closed
-    - If there are no bids, then the NFT is transferred back to the initiator
+- Once we are past the auction end time, the auction can be closed via a call to `closeAuction()`
+    - If there are no bids, then NFT ownership is transferred back to the initiator
     - If the highest bid is less than the reserve price, then that bidder is refunded his/her money, and the NFT is transferred back to the initiator
-    - If the highest bid is above the reserve price, then the NFT is transferred to the winning bidder, and the ether is transferred to the initiator
+    - If the highest bid is above the reserve price, then the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator
     - Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created
+- The auction contract will keep a fee of 1% of the value of a *winning* bid
+    - Any auction that does not succeed -- is canceled, no bids, or does not meet the reserve price -- does not collect a fee
+    - The deployer of the auction smart contract, and ONLY that address, can view those fees via a call to `fees()` and collect those fees via a call to `collectFees()`
 - There are three events that must be emitted at the appropriate times:
     - `auctionStartEvent()`: when the NFT is transferred to the smart contract and the auction starts (*NOT* when `createAuction()` is called)
     - `auctionEndEvent()`: when `closeAuction()` successfully closes an auction
@@ -75,7 +74,6 @@ import "./IERC721Receiver.sol";
 
 interface AuctionManager is IERC165, IERC721Receiver {
 
-    // holds the information for each auction
     struct Auction {
         uint id;            // the auction id
         uint num_bids;      // how many bids have been placed
@@ -91,6 +89,10 @@ interface AuctionManager is IERC165, IERC721Receiver {
     }
 
     function num_auctions() external view returns (uint);
+
+    function fees() external view returns (uint);
+
+    function collectFees() external;
 
     function auctions(uint _id) external view returns (Auction memory);
     
@@ -113,9 +115,11 @@ interface AuctionManager is IERC165, IERC721Receiver {
 }
 ```
 
-This interface is provided in the [AuctionManager.sol](AuctionManager.sol.html) ([src](AuctionManager.sol)) file.  This interface extends the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) interface, which requires the `supportsInterface()` function -- your Auctioneer class supports three interfaces (AuctionManager, IERC165, and IERC721Receiver).  You will also need to use the [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)) interface (and thus the [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)) interface), as you will be calling methods on the NFT manager, which implements that interface.
+This interface is provided in the [AuctionManager.sol](AuctionManager.sol.html) ([src](AuctionManager.sol)) file.  This interface extends the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) interface, which requires the `supportsInterface()` function -- your Auctioneer class supports three interfaces (AuctionManager, IERC165, and IERC721Receiver).  
 
- The contract also extends the [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)) interface:
+You will also need to use the [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)) interface (and thus the [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)) interface), as you will be calling methods on the NFT manager, which implements that interface.  For example, if you have saved an address of a NFT manager into an `addr` field, you call that contract and get it's name via `IERC721Metadata(addr).name()`.
+
+ The `Auctioneer` contract will also need to extend the [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)) interface:
 
 ```
 // SPDX-License-Identifier: MIT
@@ -131,11 +135,11 @@ interface IERC721Receiver {
 }
 ```
 
-The `onERC721Received()` function is called when an ERC721 token is transferred to the smart contract.  This was done in the [ERC721.sol](../tokens/ERC721.sol.html) ([src](../tokens/ERC721.sol)) code that your NFTmanager.sol file extended.  The `operator` parameter is the NFT manager smart contract, the `from` is who actually owns the NFT (meaning the entity starting the auction), the `tokenId` is the token number in that NFT manager, and you can ignore the `data` parameter (it's to send extra data if desired).  It is by the call to this function that your Auctioneer knows an NFT has been transferred to it, and can start an auction.  If the NFT is unknown, then a reversion will cancel the entire NFT transfer.  This function needs to return a confirmation that it acknowledges the receipt of the NFT -- to do this, have the last line of your function return the [function selector](../../slides/tokens.html#/funcsel) for that function -- the line for that is: `return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));`.
+The `onERC721Received()` function is called when an ERC721 token is transferred to the smart contract.  This was done in the [ERC721.sol](../tokens/ERC721.sol.html) ([src](../tokens/ERC721.sol)) code that your NFTmanager.sol file extended.  The `operator` parameter is the NFT manager smart contract, the `from` is who actually owns the NFT (meaning the entity starting the auction), the `tokenId` is the token number in that NFT manager, and you can ignore the `data` parameter (it's to send extra data if desired).  It is by the call to this function that your Auctioneer knows an NFT has been transferred to it, and can start an auction.  If the owner of the NFT is unknown -- meaning that address has not called `createAuction()` -- then a reversion will cancel the entire NFT transfer.  This function needs to return a confirmation that it acknowledges the receipt of the NFT -- to do this, have the last line of your function return the [function selector](../../slides/tokens.html#/funcsel) for that function -- the line for that is: `return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));`.
 
-As you are testing it, you will notice in Remix that the button for `placeBid()` is red -- that is because this is a `payable` function.  When you call this function, after setting the correct auction ID as the parameter, you will need to transfer some ETH along with the call.  In the deployment pane in Remix, just enter a numerical value in the 'Value' box, and select the right denomination (wei, gwei, ether, etc.).  That amount of ETH will be transferred along with the function call.  If the call reverts, then you get that money back (minus the gas fees).  If you have a mistake in your function code, you will likely lose that ETH -- this is why we are practicing on a private blockchain where the ETH has no value.
+As you are testing it, you will notice in Remix that the button for `placeBid()` is red -- that is because this is a `payable` function.  When you call this function, after setting the correct auction ID as the parameter, you will need to transfer some ETH along with the call.  In the deployment pane in Remix, just enter a numerical value in the 'Value' box, and select the right denomination (wei, gwei, ether, etc.).  That amount of ETH will be transferred along with the function call.  If the call reverts, then you get that money back (minus the fees).  If you have a mistake in your function code, you will likely lose that ETH -- this is why we are developing this on the Javascript deployment environment in Remix and then on a private blockchain where the ETH has no value.
 
-Some people are having problems in Remix with determining the return value of a transaction -- if this is happening to you, you can create a function such as `getPendingAuctionID()` that, given an address, returns the pending (but not yet started) auction ID for that address.
+Some people are having problems in Remix with determining the return value of a transaction -- if this is happening to you, you can create a function such as `getPendingAuctionID()` that, given an address, returns the pending (but not yet started) auction ID for that address.  We will not check for this function.
 
 Test all this thoroughly in Remix!  You will need to deploy both your NFTManager contract and also your Auctioneer contract in Remix's Javascript environment to test them working together.  Recall that you have to select the right contract to deploy in the "Contract" list, else Remix may not know which one to deploy.  ***We are going to try to break your contract.***  So you will need to spend some time thinking about all the things that you should be checking for, and also testing it out as much as you can.
 
@@ -150,27 +154,27 @@ Note that you can perform these calls through Remix (via calling an external con
 
 #### Auction 1
 
-The first one should be an auction that has ended by the time you turn in your assignment.  Basically, we want it to be an expired auction.  There should be a few bids on this auction.  You can create multiple accounts for this -- just call `personal.newAccount()` a few more times -- each account is in the `eth.accounts` list, and you will have to unlock each one with `personal.unlockAccount()`.  To get ether into those other accounts you can:
+The first one should be an auction that has ended by due date/time of the assignment.  Basically, we want it to be an expired auction.  There should be a few bids on this auction.  You can create multiple accounts for this -- just call `personal.newAccount()` a few more times -- each account is in the `eth.accounts` list, and you will have to unlock each one with `personal.unlockAccount()`.  To get ether into those other accounts you can:
 
 - Transfer ETH to that account (see the [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment for how to do that) 
-- Mine to that account (something like `miner.setEtherbase(eth.accounts[1])` -- but be sure to change it back!)
+- Mine to that account (set the mining destination account: `miner.setEtherbase(eth.accounts[1])` -- but be sure to change it back!)
 
-You can also get classmates to bid on your auction.  This auction will use the first of your (three) NFTs.  The contract address for your NFTmanager will be submitted as part of the task 2 requirements, above.  You must also submit the auction ID for this auction.
+You can also get classmates to bid on your auction.  This auction will use the first of your (three) NFTs.  The contract address for your NFTmanager will be submitted as part of the task 2 requirements, above.  You must also submit the auction ID for this auction as well as the NFT token ID.
 
 You *SHOULD* call `closeAuction()` on this auction.
 
 #### Auction 2
 
-The second auction should end *two weeks* after the assignment is due.  Just get it on the day two weeks later -- we don't really care about the time, as long as the date is 14 days after the assignment due date.  Basically, we want to see an active auction.  This, also, should have a few bids on it.  This auction use the second of your (three) NFTs.  The contract address for your NFTmanager will be submitted as part of the task 2 requirements, above.  You must also submit the auction ID for this auction.
+The second auction should end *two weeks* after the assignment is due.  Just get it on the day two weeks later -- we don't really care about the time, as long as the date is 14 days after the assignment due date.  Basically, we want to see an active auction.  This, also, should have a few bids on it.  This auction use the second of your (three) NFTs.  The contract address for your NFTmanager will be submitted as part of the task 2 requirements, above.  You must also submit the auction ID for this auction as well as the NFT token ID.
 
 
 ### Task 4: Participate in a class-wide auction manager
 
 We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
 
-You should use the third of your (three) NFTs.  You must use ***YOUR*** NFTmanager.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the transaction hash from when you call `createAuction()`, as well as the auction ID from the auction you created.
+You should use the third of your (three) NFTs.  You must use ***YOUR*** NFTmanager.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the transaction hash from when you call `createAuction()`, as well as the auction ID from the auction you created as well as the NFT token ID.
 
-Lastly, bid on at least *three* auctions that are not your own.  Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on.  That's fine -- you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids.  We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the bids.  We are going to check whether you bid on the auctions by looking if your `eth.coinbase` account, the address of which you will submit below, initiated bids on any one of your classmate's submitted NFT manager addresses by a few days after the due date.
+Lastly, bid on at least *three* auctions that are not your own.  Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on.  That's fine -- you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids.  We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the bids.  We are going to check whether you bid on the auctions by looking if your `eth.coinbase` account, the address of which you will submit below, initiated bids on any one of your classmate's submitted NFT manager addresses by a few days after the due date.  Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 
 **MAKE YOUR BIDS REASONABLE!!!**  If the current highest bid is 0.5 ETH, don't suddenly bid 5,000 ETH.  Doing so is going to require others who need to bid on that NFT to have to mine a lot more ETH, which will increase the blockchain size and the difficulty, which will make it harder for everybody else in the class.  This will make me very cranky.  Any successive bid should be no more than about 1 ETH more than the previous bid.
 

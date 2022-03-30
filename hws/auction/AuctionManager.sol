@@ -53,6 +53,16 @@ interface AuctionManager is IERC165, IERC721Receiver {
     // getter method from a public variable.
     function num_auctions() external view returns (uint);
 
+    // How much fees, in wei, have been collected so far -- the auction
+    // collects 1% fees of *successful* auctions
+    function fees() external view returns (uint);
+
+    // The deployer of the contract, and ONLY that address, can collect the
+    // fees that this auction contract has accumulated; a call to this by any
+    // other address should revert.  This causes the fees to be paid to the
+    // deployer.
+    function collectFees() external;
+
     // Gets the auction struct for the passed acution id.
     function auctions(uint _id) external view returns (Auction memory);
     
@@ -75,6 +85,8 @@ interface AuctionManager is IERC165, IERC721Receiver {
     // This closes out the auction, the ID of which is passed in as a
     // parameter, but is only valid after the auction end time.  It will
     // handle the transfer of the ETH (if any bids were placed) and the NFT.
+    // Note that anybody can call this function, although it will only close
+    // auctions whose time has expired.
     function closeAuction(uint _id) external;
 
     // When one wants to submit a bid on a NFT; the ID of the auction is

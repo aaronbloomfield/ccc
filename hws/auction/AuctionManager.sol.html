@@ -64,6 +64,16 @@ interface AuctionManager <font color="#008080">is</font> IERC165<font color="#99
     <i><font color="#9A1900">// getter method from a public variable.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">num_auctions</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
+    <i><font color="#9A1900">// How much fees, in wei, have been collected so far -- the auction</font></i>
+    <i><font color="#9A1900">// collects 1% fees of *successful* auctions</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">fees</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// The deployer of the contract, and ONLY that address, can collect the</font></i>
+    <i><font color="#9A1900">// fees that this auction contract has accumulated; a call to this by any</font></i>
+    <i><font color="#9A1900">// other address should revert.  This causes the fees to be paid to the</font></i>
+    <i><font color="#9A1900">// deployer.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">collectFees</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
+
     <i><font color="#9A1900">// Gets the auction struct for the passed acution id.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">auctions</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Auction</font> memory<font color="#990000">);</font>
     
@@ -86,6 +96,8 @@ interface AuctionManager <font color="#008080">is</font> IERC165<font color="#99
     <i><font color="#9A1900">// This closes out the auction, the ID of which is passed in as a</font></i>
     <i><font color="#9A1900">// parameter, but is only valid after the auction end time.  It will</font></i>
     <i><font color="#9A1900">// handle the transfer of the ETH (if any bids were placed) and the NFT.</font></i>
+    <i><font color="#9A1900">// Note that anybody can call this function, although it will only close</font></i>
+    <i><font color="#9A1900">// auctions whose time has expired.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">closeAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// When one wants to submit a bid on a NFT; the ID of the auction is</font></i>
