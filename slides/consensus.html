@@ -602,6 +602,9 @@ This implies:
 
 ## $OM(1)$ traitor case 2
 <img src="images/consensus/bgp/om1-f.svg" style="width:45%">
+
+## $OM(1)$ traitor case 2
+<img src="images/consensus/bgp/om1-g.svg" style="width:45%">
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -696,25 +699,25 @@ This implies:
   - And they are in the majority
   - So they will all agree on the same decision
 - If $n-1$ lieutenants perform an $\Theta(n^2)$ operation (i.e., $OM(1)$), then the total running time is $\Theta(n^3)$
+</textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n" data-transition="fade" data-transition-speed="fast"><textarea>
 <img src="images/consensus/bgp/om2-g.svg" style="width:60%">
-
-
-
 
 <img src="images/consensus/bgp/om2-h.svg" style="width:60%">
 
+<img src="images/consensus/bgp/om2-i.svg" style="width:60%">
+</textarea></section>
 
-
+    <section data-markdown data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="right-float-img" -->
 ## $OM(2)$, case 2
 
-<img src="images/consensus/bgp/om2-h.svg" style="width:40%">
+<img src="images/consensus/bgp/om2-i.svg" style="width:40%">
 
 - The messages the loyal lieutenants receive from the traitors may not all be the same!
   - Since $OM(1)$ does not work with 6 generals, 2 traitors
+  - These are the blue-circled values
 - But their majority vote will still be attack
 - So the overall $OM(2)$ algorithm still works in this case
 
