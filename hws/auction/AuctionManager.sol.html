@@ -102,7 +102,8 @@ interface AuctionManager <font color="#008080">is</font> IERC165<font color="#99
 
     <i><font color="#9A1900">// When one wants to submit a bid on a NFT; the ID of the auction is</font></i>
     <i><font color="#9A1900">// passed in as a parameter, and some amount of ETH is transferred with</font></i>
-    <i><font color="#9A1900">// this function call.</font></i>
+    <i><font color="#9A1900">// this function call.  If a bid is attempted to be placed on an inactive</font></i>
+    <i><font color="#9A1900">// auction or after the close time, then this function should revert.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">placeBid</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> <font color="#008080">payable</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// The time left (in seconds) for the given auction, the ID of which is</font></i>

@@ -91,7 +91,8 @@ interface AuctionManager is IERC165, IERC721Receiver {
 
     // When one wants to submit a bid on a NFT; the ID of the auction is
     // passed in as a parameter, and some amount of ETH is transferred with
-    // this function call.
+    // this function call.  If a bid is attempted to be placed on an inactive
+    // auction or after the close time, then this function should revert.
     function placeBid(uint _id) payable external;
 
     // The time left (in seconds) for the given auction, the ID of which is
