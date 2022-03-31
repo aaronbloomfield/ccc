@@ -57,10 +57,12 @@ The contract you will be creating will allow for a decentralized auction for NFT
 - The auction contract will keep a fee of 1% of the value of a *winning* bid
     - Any auction that does not succeed -- is canceled, no bids, or does not meet the reserve price -- does not collect a fee
     - The deployer of the auction smart contract, and ONLY that address, can view those fees via a call to `fees()` and collect those fees via a call to `collectFees()`
-- There are three events that must be emitted at the appropriate times:
+- There are five events that must be emitted at the appropriate times; for each, the parameter is the auction ID:
+    - `auctionCreateEvent()`: when `createAuction()` is successfully called
     - `auctionStartEvent()`: when the NFT is transferred to the smart contract and the auction starts (*NOT* when `createAuction()` is called)
-    - `auctionEndEvent()`: when `closeAuction()` successfully closes an auction
-    - `higherBidEvent()`: when a new (and higher) bid is placed on an NFT
+    - `auctionCloseEvent()`: when `closeAuction()` is successfully called
+    - `auctionCancelEvent()`: when `cancelAuction()` is successfully called
+    - `higherBidEvent ()`: when a new (and higher) bid is placed on an NFT via `placebid()`
 
 Formally the task is to develop an `Auctioneer` contract that implements the following `AuctionManager` interface below.  The provided [AuctionManager.sol](AuctionManager.sol.html) ([src](AuctionManager.sol)) file has more comments for this interface.
 
@@ -107,9 +109,13 @@ interface AuctionManager is IERC165, IERC721Receiver {
     function auctionTimeLeft(uint _id) external view returns (uint);
 
 
+    event auctionCreateEvent(uint indexed _id);
+
     event auctionStartEvent(uint indexed _id);
 
-    event auctionEndEvent(uint indexed _id);
+    event auctionCloseEvent(uint indexed _id);
+
+    event auctionCancelEvent(uint indexed _id);
 
     event higherBidEvent (uint indexed _id);
 }
@@ -172,7 +178,7 @@ The second auction should end *two weeks* after the assignment is due.  Just get
 
 We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
 
-You should use the third of your (three) NFTs.  You must use ***YOUR*** NFTmanager.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the transaction hash from when you call `createAuction()`, as well as the auction ID from the auction you created as well as the NFT token ID.
+You should use the third of your (three) NFTs.  You must use ***YOUR*** NFTmanager.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the transaction hash from when you call `createAuction()`, as well as the auction ID from the auction you created as well as the NFT token ID.  ***YOUR RESERVE*** should be no higher than 5 ETH.
 
 Lastly, bid on at least *three* auctions that are not your own.  Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on.  That's fine -- you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids.  We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the bids.  We are going to check whether you bid on the auctions by looking if your `eth.coinbase` account, the address of which you will submit below, initiated bids on any one of your classmate's submitted NFT manager addresses by a few days after the due date.  Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 

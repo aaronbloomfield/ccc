@@ -98,13 +98,22 @@ interface AuctionManager is IERC165, IERC721Receiver {
     // passed in as a parameter.
     function auctionTimeLeft(uint _id) external view returns (uint);
 
+    // This is emitted when an auction is configured in createAuction(); the
+    // ID is the auction ID.
+    event auctionCreateEvent(uint indexed _id);
+
     // This is emitted when an auction starts (meaning when the NFT is
-    // transfered); the ID is the auction ID.
+    // transfered); the ID is the auction ID.  It's emitted by the
+    // onERC721Received() function.
     event auctionStartEvent(uint indexed _id);
 
-    // This is emitted when an auction ends (in closeAuction() but not
-    // cancelAuction()); the ID is the auction ID.
-    event auctionEndEvent(uint indexed _id);
+    // This is emitted when an auction ends in closeAuction(); the ID is the
+    // auction ID.
+    event auctionCloseEvent(uint indexed _id);
+
+    // This is emitted when an auction is canceled in cancelAuction(); the ID
+    // is the auction ID.
+    event auctionCancelEvent(uint indexed _id);
 
     // This is emitted when a new bid is placed that is higher than the
     // existing highest bid; the ID is the auction ID.
