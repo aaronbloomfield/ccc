@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Blockchain Applications
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Decentralized Exchanges (DEXs)](#/dexs)  
+[Decentralized Autonomous Organizations (DAOs)](#/daos)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="dexs" data-markdown class="center"><textarea>
+# Decentralized Exchanges (DEXs)
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Definitions
+> Liquidity: the efficiency or ease with which an asset or security can be converted into ready cash without affecting its market price. The most liquid asset of all is cash itself.  ([ref](https://www.investopedia.com/terms/l/liquidity.asp))
+
+> Liquidity pool: a pool of tokens that are locked by a smart contract ([ref](https://cryptodefinitions.com/dictionary/liquidity-pool/))
+
+
+
+## Order Book Method
+- To buy: state how much you want to buy at the current market price, and put in an order ("market order")
+  - Possibility an upper limit ("limit order")
+- Then give your money to the centralized exchange
+- The exchange tries to pair up your order to buy with somebody who is selling and willing to accept those prices/amounts
+  - Really both are just exchanging commodities
+
+
+
+## Order Book Method
+- Example: [gate.io](https://www.gate.io/)
+  - See the USDT orders for [BTC](https://www.gate.io/trade/BTC_USDT), [ETH](https://www.gate.io/trade/ETH_USDT), and [RVN](https://www.gate.io/trade/RVN_USDT)
+  - The red values are those that are selling RVN for USDT
+  - The green values are those that are buying RVN for USDT
+- Discuss "makers" and "takers"
+
+
+
+## Order Book Method
+- This is what all stock markets use
+- Disadvantages:
+  - A single centralized authority
+  - Typically takes (relatively) high fees
+  - You have to either wait until somebody agrees to your exchange terms
+    - Or set a low price to sell immediately
+  - Your funds are "locked" up until either the exchange happens or you cancel the order
+- Very few Decentralized Exchanges use this
+
+
+
+## Liquidity Pool
+- A liquidity pool starts off with a specific ratio of tokens
+  - 50%:50%, for example
+  - The ratio is the *dollar value*, not the number of tokens
+- One can add to the pool by putting in an equal *value* of each token
+  - One earns fees on your contribution; more later
+- But how to determine the price?
+  - Most pools use the Constant Product Automated Market Maker method
+
+
+
+## Automated Market Maker Method (AMM)
+- Basic idea: as you buy more of token A, by selling token B...
+  - The price of token A goes up (since there is less in the pool, it must be more in demand)
+  - The price of token B goes down (since there is more in the pool, it must be less in demand)
+- To keep the 50:50 ratio constant...
+  - It has to raise the price of one and lower the price of the other
+
+
+
+## AMM Example
+- Assume we have fETH (fake ETH) at $1 per coin
+- Assume we have TC (TokenCoin) at $0.1 per coin
+- The pool has:
+  - 100 fETH valued at `$`100
+  - 1,000 TC valued at `$`100
+  - Exchange rate: 1 fETH = 10 TC
+  - Total pool value: `$`200
+- 25 fETH are exchanged for 250 TC (both are worth $25)
+  - Minus a (small) fee: perhaps 0.3%; we'll ignore this
+- The pool now has 75 fETH and 1,250 TC
+  - Exchange rate: 1 fETH = $16\frac{2}{3}$ TC
+- ... but what is this worth in USD?
+
+
+
+## Value in USD
+- A decentralized exchange only determines the *exchange ratio* between the tokens in its liquidity pool
+  - 1 fETH for 10 TC, for example
+- The *market value* is how much each is worth in USD
+  - This is determined by external factors
+- But we can estimate it...
+
+
+
+## Estimated value in USD
+- The pool now has 75 fETH and 1,250 TC
+- Assume the USD value of the entire pool remains the same
+  - And each commodity is worth exactly half of that
+  - We are ignoring market fluctuations for now
+- `$`200 was put in: `$`100 as 100 fETH and `$`100 as 1,000 TC
+- The pool is still worth `$`200, half to each commodity
+  - The 75 fETH is worth `$`$100/75=$ `$`1.33 in USD
+    - Instead of the initial `$`1 it was worth
+  - The 1,250 TC is worth `$`$100/1,250=$ `$`0.08 in USD
+    - Instead of the initial `$`0.10 it was worth
+
+
+
+## AMM Example
+- Imagine a pool with a much more liquidity
+  - 100,000 fETH valued at $100,000
+  - 1,000,000 TC valued at $100,000
+  - Exchange rate: 1 fETH = 10 TC
+  - Total pool value: `$`200,000
+- 25 fETH are exchanged for 250 TC (both are worth $25)
+  - Minus a (small) fee
+- The pool now has 99,975 fETH and 1,000,250 TC
+  - Exchange rate: 1 fETH = 10.005 TC
+  - The more liquidity in a pool, the less the price changes with each exchange
+
+
+
+## Problem with AMM
+- Given the initial pool of 100 fETH and 1,000 TC
+  - Exchange rate: 1 fETH = 10 TC
+- We start with (only) 100 fETH
+- We buy 990 TC for 99 fETH, as per the exchange rate
+  - We now have 1 fETH and 990 TC
+  - We are ignoring fees
+  - The exchange has 199 fETH and 10 TC
+- New exchange rate: 199 fETH and 10 TC: 1 fETH $\approx$ 0.05 TC
+- We then buy our 99 fETH back for $99 \ast 0.05$ TC $= 4.95$ TC
+- We now have:
+  - Our original 100 fETH
+  - 990 TC - 4.95 TC $\approx$ 985 TC
+- So clearly this is not viable...
+
+
+
+## Constant Product AMM (CPAMM)
+- Given $x$ of one commodity and $y$ of another commodity
+  - Invariant: $x \ast y = k$ for some constant $k$
+- Given the initial pool of $x=100$ fETH and $y=1,000$ TC
+  - $x \ast y = 100 \ast 1,000 = 100,000$, so $k=100,000$
+- You want to exchange 50 fETH for TC
+  - If you put 25 fETH into the pool, $x$ is now 125
+  - Invariant is $x \ast y = 100,000$ and now $x=125$
+  - Determine the value of $y$ to keep this invariant
+    - $y = 100,000 / 125 = 800$
+- You get $1,000 - 800 = 200$ TC for your 25 ETH
+  - As the pool had 1,000 TC to start
+
+
+
+## Example
+- Consider an exchange with $k=120$
+  - Perhaps it was created with 20 fETH and 6 TC
+  - Or 6 fETH and 20 TC
+- This is too low a liqudity to be viable
+  - But it makes the graphs easy to interpret
+- These examples are all the person *buying* 10 fETH for some amount of TC
+  - The DEX's ETH balance decreases by 10
+</textarea></section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast" data-separator="^\n"><textarea>
+<img src='images/applications/graphs/cpamm-price-curve-a.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-b.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-c.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-d.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-e.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-f.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-g.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-h.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-i.svg' class='stretch'>
+
+<img src='images/applications/graphs/cpamm-price-curve-j.svg' class='stretch'>
+</textarea></section>
+
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Same problem with CPAMM?
+- You exchanged 25 fETH for 200 TC
+- The pool now has 125 fETH and 800 TC
+- Exchange it back:
+  - You put 200 TC into the pool
+  - Invariant is $x \ast y = 100,000$ and now $y=1,000$
+  - Determine the value of $x$ to keep this invariant
+  - Not surprisingly, it's $x=100$
+- You get $125-100=25$ fETH for your 200 TC
+  - Minus fees  
+- So you can't abuse it in the same way
+
+
+
+## Exchange rates
+- They are only a snapshot; they change as the currencies are bought or sold
+- Assume $x$ of currency A and $y$ of currency B
+  - And that $x \ast y = k$
+- $x$ of coin A for $y$ of coin B
+  - Exchange rate: $x/y$ of A for 1 B
+- $y$ of coin B for $x$ of coin A
+  - Exchange rate: $y/x$ of B for 1 A
+
+
+
+## Price Impact
+- How much does a purchase affect the price (or exchange rate) of the currencies?
+  - Small liquidity pool: a lot
+  - Large liquidity pool: a little
+
+
+
+## Arbitrage Trading
+- What if the price (or exchange ratio) of fETH goes down in one pool?
+  - And other pools have a better exchange rate?
+  - Then somebody is going to trade between the pools
+- Scenario: DEX A exchange rate: 1 fETH <=> 10 TC
+  - DEX B exchange rate: 1 fETH <=> 20 TC
+- This is an *arbitrage opportunity*
+- To make a profit:
+  - Exchange 1 fETH for 20 TC via DEX B
+  - Exchange that 20 TC for 2 fETH via DEX A
+- This is called *Arbitrage Trading*
+- This helps equalize exchange rates between DEXs
+  - And fees are paid for each exchange
+
+
+
+## Liquidity Provider
+- Some entity that puts money into a liquidity pool
+- The fees generated go to the liquidity providers
+  - Your percentage of the fees depends on the percentage of your liquidity in the pool
+- Some pools are offering APR of 500%
+  - Yes, *five hundred* percent per year
+- As more people join the pool, your cut is less and less
+
+
+
+## Adding liquidity to a pool
+- Two competing invariants:
+  - $x \ast y = k$
+  - Ratios are $x/y$ and $y/x$
+- Solution: keep the ratio the same, and adjust $k$
+  - If adding $a$ of the first commodity, add $a \ast y/x$ of the second
+  - This keeps the ratios (and the exchange rate) the same
+- Then recompute $k$ based on the new $x$ and $y$ values
+
+
+
+## Adding liquidity example
+- Assume the pool has 100 fETH and 1,000 TC
+  - Constant $k=100,000$
+  - Exchange rate: 1 fETH = 10 TC
+  - So for every 1 fETH we add, we have to add 10 TC
+- We thus add 10 fETH and 100 TC
+  - Pool now has 110 fETH and 1,100 TC
+  - Exchange rate is still 1 fETH = 10 TC
+- Compute new constant $k$
+  - $k = 110 * 1,100 = 121,000$
+
+
+
+## What about one token to another?
+- What if you wanted to exchange TokenCoin (TC) for some OtherCoin (OC)?
+  - Assume both TC and OC are tokens on a (fake) Ethereum blockchain
+- Most DEXs only deal with one token and (fake) ETH
+- But most DEXs will connect to another DEX / liquidity pool
+  - The first exchanges TC for fETH...
+  - ... then sends it to the second, which exchanges the fETH for OC
+- This is called *Routing*
+
+
+
+## Know Your Customer (KYC)
+- Governments require all entities they can control....
+  - Coinbase, binance.us (*not* binance.com)
+- To know their customer
+  - To report on gains for tax issues!
+- This requires submitting:
+  - Identification (pictures, ID such as a drivers license)
+  - Tax information (social security number, etc.)
+- And requires formal human approval (behind the scenes)
+
+
+
+## Joining a liquidity pool
+- With a 500% APR, why doesn't everybody partake in a liquidity pool?
+- Two reasons:
+  - Impermanent loss (aka Divergence Loss)
+  - Rug pulls
+
+
+
+## Impermanent loss
+- Basic idea: consider how much you would have made if you did not invest in a liquidity pool
+- If that amount is less than the liquidity pool, then the difference is your *impermanent loss*
+  - Impermanent because it is not permanent until you sell
+- This happens when one of the commodities changes price differently than the other
+  - Reason: arbitrage traders take *value* out of a liquidity pool when equalizing exchange rates
+  - Or the prices *diverge* -- this is also called *divergence loss*
+- Analogy: "paper loss" when a stock price goes down
+  - But if you wait, you can reverse that loss
+
+
+
+## Impermanent loss example
+- Consider ETH and a stablecoin such as USDT
+  - Let the market rate be 1 ETH = `$`1,000
+  - And 1 USDT is always `$`1
+- We put into our liquidity pool:
+  - 10 ETH = `$`10,000 (so $x=10$)
+  - 10,000 USDT = `$`10,000 (so $y=10,000$)
+  - Total pool value is `$`20,000
+  - $k = x \ast y = 10 \ast 10,000 = 100,000$
+
+
+
+## Impermanent loss example 1, part 1
+- Our pool: 10 ETH and 10,000 USDT; $k=100,000$
+- Imagine the price of ETH drops to `$`800
+- An arbitrage trader buys 2 ETH for `$`800 each from Coinbase
+- And exchanges it with our DEX for USDT
+  - As per AMM, they get 1,667 (rounded) USDT
+    - They paid `$`800 for those 2 ETH, so they made `$`67
+  - Our DEX now has 12 ETH and 8,333 USDT, so $k$ is the same
+
+
+
+## Impermanent loss example 1, part 2
+- Current price of ETH is `$`800
+- Our DEX has 12 ETH and 8,333 USDT
+  - Current value: 12 $\ast$ `$`800 + `$`8,333 = `$`17,933
+- What if we had not invested in the liquidity pool?
+  - We would have our original 10 ETH plus 10,000 USDT
+  - Value would have been: 10 $\ast$ `$`800 + `$`10,000 = `$`18,000
+  - That's `$`67 more!
+- Our impermanent loss was `$`67
+
+
+
+## Impermanent loss example 2, part 1
+- Our pool: 10 ETH and 10,000 USDT; $k=100,000$
+- Imagine the price of ETH rises to `$`1,300
+- An arbitrage trader exchanges USDT for 2 ETH from our DEX
+  - As per AMM, they pay 2,500 USDT
+  - Our DEX now has 8 ETH and 12,500 USDT, so $k$ is the same
+- And sells the 2 ETH to Coinbase for `$`2,600
+  - They made `$`100 profit
+
+
+
+## Impermanent loss example 2, part 2
+- Current price of ETH is `$`1,300
+- Our DEX has 8 ETH and 12,500 USDT
+  - Current value: 8 $\ast$ `$`1,300 + `$`12,500 = `$`22,900
+- What if we had not invested in the liquidity pool?
+  - We would have our original 10 ETH plus 10,000 USDT
+  - Value would have been: 10 $\ast$ `$`1,300 + `$`10,000 = `$`23,000
+  - That's `$`100 more!
+- Our impermanent loss was `$`100
+
+
+
+## Impermanent loss
+- How much of a loss is this?
+- The formula is:
+
+$loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
+
+- We are skipping the derivation of this, but you can see details of that derivation [here](https://dappgrid.com/what-is-impermanent-loss/)
+
+
+
+<img src='images/applications/graphs/impermanent-loss.svg' class='stretch'>
+
+
+
+## Impermanent loss
+- Caused by arbitrage trading
+- Impermanent loss increases when the prices of the commodities diverge
+  - With a stablecoin and a volatile coin
+- More pronounced with two volatile coins that move in different directions
+- It's not a problem when the two coins grow at the same rate
+
+
+
+## Rug Pulls
+- When the DEX owner runs off with your coins
+
+
+
+## Sources
+- Much of the DEX slides were generated after learning about it from [Whiteboard crypto videos](https://www.youtube.com/c/WhiteboardCrypto/videos)
+  - [DEX intro](https://www.youtube.com/watch?v=2tTVJL4bpTU)
+  - [Liquidity pools](https://www.youtube.com/watch?v=dVJzcFDo498)
+  - [Automated Market Makers](https://www.youtube.com/watch?v=1PbZMudPP5E)
+  - [impermanent loss](https://www.youtube.com/watch?v=_m6Mowq3Ptk)
+  - Not yet watched:
+  - [Rug pulls](https://www.youtube.com/watch?v=YFaqng3YESE)
+  - blockchain bridges
+  - sushiswap
+  - how to reduce risk as a liquidity provider
+
+
+
+- A Decentralized Exchange (DEX) is just a smart contract that allows exchanging between two cryptocurrencies
+  - But they must be on the same blockchain!
+  - So between Ethereum and an Ethereum token cryptocurrency, for example
+
+
+
+## Benefits & Drawbacks
+- Benefits
+  - No KYC, since it's decentralized
+  - It's open source, so anybody can check the code; thus, more trust
+  - Much faster than centralized exchanges, and have a much smaller fee
+- Drawbacks
+  - No customer support
+    - Maybe community forums
+  - Send to the wrong contract address?  Tough luck, your cryptocurrency is lost
+  - Have to use a hot storage device -- a wallet connected to the Internet
+  - May have low liquidity
+  - Open source: one could find a vulnerability
+
+
+
+## Examples
+- Uniswap: exchange between Ethereum and an Ethereum token cryptocurrency
+- Bancor: ...
+- SushiSwap: operates on many blockchains
+  - But cannot swap between different blockchains
+- Three blank lines separate one slide from another
+- Balancer: allows up to 8 assets in a liquidity pool
+  - Has *very* complicated algorithms to manage this
+
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="daos" data-markdown class="center"><textarea>
+# Decentralized Autonomous Organizations (DAOs)
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>

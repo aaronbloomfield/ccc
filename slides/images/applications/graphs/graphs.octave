@@ -1,0 +1,242 @@
+# impermanent loss graph
+x=0:0.01:5
+y=sqrt(x)*2./(x+1)-1
+plot(x,y,'-','color','r')
+xlim([0,5])
+grid minor
+ylim([-1,0])
+title("Losses to liquidity providers due to price variation",'fontsize',20)
+ylabel("Change in liquidity value as a % of initial liquidity",'fontsize',16)
+xlabel("Current price as a % of initial price",'fontsize',16)
+xticklabels({'0%','100%','200%','300%','400%','500%'})
+yticklabels({'-100%','-80%','-60%','-40%','-20%','0%'})
+saveas(1,"impermanent-loss.svg")
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r')
+xlim([0,32])
+ylim([0,32])
+grid minor
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+saveas(1,"cpamm-price-curve-a.svg")
+
+# 3 graphs showing exchanging 10 ETH for 6 TC
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',20,6,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: balanced",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(20,8.5,"Initial DEX state",'fontsize',14)
+text(20,7,"20 ETH, 6 TC",'fontsize',14)
+saveas(1,"cpamm-price-curve-b.svg")
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',20,6,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: balanced",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(20,8.5,"Initial DEX state",'fontsize',14)
+text(20,7,"20 ETH, 6 TC",'fontsize',14)
+# for the annotations,
+# y=12 is at 0.435
+# y=6  is at 0.273
+# x=10 is at 0.388
+# x=20 is at 0.647
+a = annotation ("arrow", [.615 .37],[.262 .262], "linewidth", 1)
+text(11,5,"ETH decrease by 10",'fontsize',14)
+saveas(1,"cpamm-price-curve-c.svg")
+delete(a)
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',10,12,'r*',20,6,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: balanced",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(20,8.5,"Initial DEX state",'fontsize',14)
+text(20,7,"20 ETH, 6 TC",'fontsize',14)
+# for the annotations,
+# y=12 is at 0.435
+# y=6  is at 0.273
+# x=10 is at 0.388
+# x=20 is at 0.647
+a = annotation ("arrow", [.615 .37],[.262 .262], "linewidth", 1)
+b = annotation ("arrow", [.372 .372],[.26 .41], "linewidth", 1)
+text(11,5,"ETH decrease by 10",'fontsize',14)
+text(7.75,10.5,"TC",'fontsize',14)
+text(7.75,9,"inc.",'fontsize',14)
+text(7.75,7.5,"by 6",'fontsize',14)
+saveas(1,"cpamm-price-curve-d.svg")
+delete(a)
+delete(b)
+
+# 3 graphs showing exchanging 10 ETH for 2 TC
+
+# cpamm graph
+delete(findall(gcf,'type','annotation'))
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',30,4,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: high ETH, low TC",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(24.5,7.5,"Initial DEX state",'fontsize',14)
+text(24.5,6,"30 ETH, 4 TC",'fontsize',14)
+saveas(1,"cpamm-price-curve-e.svg")
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',30,4,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: high ETH, low TC",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(24.5,7.5,"Initial DEX state",'fontsize',14)
+text(24.5,6,"30 ETH, 4 TC",'fontsize',14)
+# for the annotations,
+# y=12 is at 0.435
+# y=6  is at 0.273
+# x=10 is at 0.388
+# x=20 is at 0.647
+a = annotation ("arrow", [.855 .615],[.213 .213], "linewidth", 1)
+text(21,3,"ETH decrease by 10",'fontsize',14)
+saveas(1,"cpamm-price-curve-f.svg")
+delete(a)
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',20,6,'r*',30,4,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: high ETH, low TC",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(24.5,7.5,"Initial DEX state",'fontsize',14)
+text(24.5,6,"30 ETH, 4 TC",'fontsize',14)
+# for the annotations,
+# y=12 is at 0.435
+# y=6  is at 0.273
+# x=10 is at 0.388
+# x=20 is at 0.647
+a = annotation ("arrow", [.855 .615],[.213 .213], "linewidth", 1)
+b = annotation ("arrow", [.615 .615],[.213 .26], "linewidth", 1)
+text(21,3,"ETH decrease by 10",'fontsize',14)
+text(18,5.75,"TC",'fontsize',14)
+text(18,4.25,"inc.",'fontsize',14)
+text(18,2.75,"by 2",'fontsize',14)
+saveas(1,"cpamm-price-curve-g.svg")
+delete(a)
+delete(b)
+
+# 3 graphs showing exchanging 10 ETH for lotsa TC
+
+# cpamm graph
+delete(findall(gcf,'type','annotation'))
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',12,10,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: low ETH, high TC",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(12.25,12,"Initial DEX state",'fontsize',14)
+text(12.25,10.5,"12 ETH, 10 TC",'fontsize',14)
+saveas(1,"cpamm-price-curve-h.svg")
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',12,10,'r*')
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: low ETH, high TC",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(12.25,12,"Initial DEX state",'fontsize',14)
+text(12.25,10.5,"12 ETH, 10 TC",'fontsize',14)
+# for the annotations,
+# y=12 is at 0.435
+# y=6  is at 0.273
+# x=10 is at 0.388
+# x=20 is at 0.647
+a = annotation ("arrow", [.42 .18],[.365 .365], "linewidth", 1)
+text(3,9,"ETH decrease by 10",'fontsize',14)
+saveas(1,"cpamm-price-curve-i.svg")
+delete(a)
+
+# cpamm graph
+x=0:0.1:32
+k=120
+y=k./x
+plot(x,y,'-','color','r',12,10,'r*') # no third point, as it's off the top of the graph
+xlim([0,32])
+ylim([0,32])
+grid minor
+text(12,28,"DEX balance: low ETH, high TC",'fontsize',18)
+title("CPAMM price curve with k=120",'fontsize',18)
+xlabel("Ether (ETH) liquidity",'fontsize',20)
+ylabel("TokenCoin (TC) liquidity",'fontsize',18)
+text(12.25,12,"Initial DEX state",'fontsize',14)
+text(12.25,10.5,"12 ETH, 10 TC",'fontsize',14)
+# for the annotations,
+# y=12 is at 0.435
+# y=6  is at 0.273
+# x=10 is at 0.388
+# x=20 is at 0.647
+a = annotation ("arrow", [.42 .18],[.365 .365], "linewidth", 1)
+b = annotation ("arrow", [.18 .18],[.365 .97], "linewidth", 1)
+text(3,9,"ETH decrease by 10",'fontsize',14)
+text(3,15.75,"TC",'fontsize',14)
+text(3,14.25,"inc.",'fontsize',14)
+text(3,12.75,"by 50",'fontsize',14)
+saveas(1,"cpamm-price-curve-j.svg")
+delete(a)
+delete(b)
+
