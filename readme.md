@@ -12,6 +12,7 @@ The parts of this repository are:
 - [Lecture slides](slides/index.html) ([md](slides/index.md)), which use [reveal.js](https://github.com/hakimel/reveal.js/), an HTML presentation framework
 - [Assignments](hws/index.html) ([md](hws/index.md)), both larger programming assignments and shorter tutorials or readings
 - [Exams](exams/index.html) ([md](exams/index.md)) which contains the past exams given in this course
+- [Documents](docs/index.html) ([md](docs/index.md)) holds various documents and references
 - [UVA section](uva/index.html) ([md](uva/index.md)), which contains the materials that are specific to the current iteration of the course being taught at UVA
 
 
