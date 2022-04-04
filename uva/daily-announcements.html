@@ -98,6 +98,47 @@ Template for first line:
 
 
 
+## geth usage++
+Save this to `preload.js`:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>function mineOneBlock() {
+    var start = eth.blockNumber;
+    miner.start();
+    while ( start == eth.blockNumber );
+    miner.stop();
+    return eth.blockNumber;
+}
+
+function checkAllBalances() { 
+    // this function from https://stackoverflow.com/questions/32312884/
+    //               how-do-i-get-the-balance-of-an-account-in-ethereum
+    var i = 0;
+    var total = 0;
+    for ( var i = 0; i < eth.accounts.length; i++ ) {
+        var e = eth.accounts[i];
+        console.log("  eth.accounts["+i+"]: " +  e + " \tbalance: " + 
+                    web3.fromWei(eth.getBalance(e), "ether") + " ether");
+        total += parseFloat(web3.fromWei(eth.getBalance(e), "ether"));
+    }
+    console.log("Total: " + total + " ETH");
+}
+</code></pre>
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## geth usage++
+Then run geth as:
+
+```
+geth --preload preload.js attach /path/to/geth.ipc
+```
+
+In geth, you can run `mineOneBlock()` and `checkAllBalances()`
+
+
+
 <!-- .slide: class="normal-slide-size" -->
 ## News and Recap
 - Last time we continued talking about [Consensus](../slides/consensus.html#/)
