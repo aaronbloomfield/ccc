@@ -53,7 +53,7 @@ interface AuctionManager is IERC165, IERC721Receiver {
     // getter method from a public variable.
     function num_auctions() external view returns (uint);
 
-    // How much fees, in wei, have been collected so far -- the auction
+    // How much fees, in gwei, have been collected so far -- the auction
     // collects 1% fees of *successful* auctions
     function fees() external view returns (uint);
 

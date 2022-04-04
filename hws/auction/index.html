@@ -259,17 +259,18 @@ interface IERC721Receiver {
 token is transferred to the smart contract. This was done in the <a
 href="../tokens/ERC721.sol.html">ERC721.sol</a> (<a
 href="../tokens/ERC721.sol">src</a>) code that your NFTmanager.sol file
-extended. The <code>operator</code> parameter is the NFT manager smart
-contract, the <code>from</code> is who actually owns the NFT (meaning
-the entity starting the auction), the <code>tokenId</code> is the token
-number in that NFT manager, and you can ignore the <code>data</code>
-parameter (it’s to send extra data if desired). It is by the call to
-this function that your Auctioneer knows an NFT has been transferred to
-it, and can start an auction. If the owner of the NFT is unknown –
-meaning that address has not called <code>createAuction()</code> – then
-a reversion will cancel the entire NFT transfer. This function needs to
-return a confirmation that it acknowledges the receipt of the NFT – to
-do this, have the last line of your function return the <a
+extended. The <code>operator</code> parameter is the address which
+called the <code>safeTrasnferFrom()</code> function, and this can be
+ignored for this assignment; the <code>from</code> is the address which
+previously owned the token, the <code>tokenId</code> is the token number
+in that NFT manager, and you can ignore the <code>data</code> parameter
+(it’s to send extra data if desired). It is by the call to this function
+that your Auctioneer knows an NFT has been transferred to it, and can
+start an auction. If the owner of the NFT is unknown – meaning that
+address has not called <code>createAuction()</code> – then a reversion
+will cancel the entire NFT transfer. This function needs to return a
+confirmation that it acknowledges the receipt of the NFT – to do this,
+have the last line of your function return the <a
 href="../../slides/tokens.html#/funcsel">function selector</a> for that
 function – the line for that is: <code>return
 bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));</code>.</p>
