@@ -26,8 +26,8 @@ import "./IERC721Receiver.sol";
 // - There are four possible states for (endTime,active): 
 //   - (0,false) is when the auction has ended
 //   - (0,true) should never occur
-//   - (> 0, false) is when endTime is the duration, and it's waiting the NFT
-//     receipt
+//   - (> 0, false) is when endTime is the duration, and it's waiting for the
+//     NFT receipt
 //   - (> 0, true) is when the auction is active
 
 
@@ -79,7 +79,9 @@ interface AuctionManager is IERC165, IERC721Receiver {
 
     // This cancels an auction, the id of which is passed in as a parameter,
     // that has been created but that the NFT has not yet be transferred over
-    // for.  Only the creator of an auction can cancel that auction.
+    // for.  Only the creator of an auction can cancel that auction.  Once an
+    // auction has started (via transfering the NFT over), it can no longer
+    // be canceled.
     function cancelAuction(uint id) external;
 
     // This closes out the auction, the ID of which is passed in as a

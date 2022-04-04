@@ -91,7 +91,8 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 16. Mon, Mar 21: [Tokens](../slides/tokens.html#/) to 5.3
 17. Wed, Mar 23: [Tokens](../slides/tokens.html#/) to 6.7
 18. Mon, Mar 28: finished [Tokens](../slides/tokens.html#/); [Consensus](../slides/consensus.html#/) to 6.19
-19. Mon, Mar 30: [Consensus](../slides/consensus.html#/) to 8.14
+19. Wed, Mar 30: [Consensus](../slides/consensus.html#/) to 8.14
+20. Mon, Apr 4: [finished Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/) to slide 3.28
 
 
 ## Legal Issues
