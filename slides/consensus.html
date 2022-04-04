@@ -913,7 +913,7 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 
 ## Practical Byzantine Fault Tolerance (PBFT)
 - A [1999 paper](https://www.scs.stanford.edu/nyu/03sp/sched/bfs.pdf) by Miguel Castro and Barbara Liskov
-- Goal: to provide an efficient means to be Byzantine Fault Tolerant
+- Goal: to provide an *efficient* means to be Byzantine Fault Tolerant
   - And work in an asynchronous environment like the Internet
   - And include many optimizations
 - One network service (NFS), when implemented with PBFT, was only 3% slower than without
@@ -962,10 +962,10 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 
 
 ## Byzantine Fault Tolerance
-- Solve the Byzantine Generals Problem!
+- Solves the Byzantine Generals Problem
   - Assuming strictly less than 1/3 of the nodes are malicious (or flaky)
 - Miners lose coins if they are malicious
-  - So there is no incentive to be a traitor general
+  - So there is no incentive to be a traitor
 - It uses an algorithm from the paper [Consensus in the Presence of Partial Synchrony](https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf)
   - Partial synchrony: the clocks of the nodes in sync within some finite delta value
   - For our purposes, it will use the $SM(m)$ algorithm for communication, and adapted as described in this section
@@ -1012,7 +1012,7 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 - Each validator makes a decision about that proposed block
   - And sends a *prevote* for or against
   - Null prevote if the validator never received a proposed block
-- Prevotes are spread throughout the network via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+- Prevotes are spread via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
 - Vote (& prevote) structure:
 
 <img src="images/consensus/tendermint/tendermint-2.png" style="width:40%">
@@ -1021,7 +1021,7 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 
 ## Precommit
 - If a validator received more than 2/3 prevotes for a block, then it signs and sends a *precommit* for that block
-  - Precommits are spread throughout the network via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+  - Precommits are spread via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
   - If it has not received greater than 2/3 prevotes for a block, it takes no action
 - Once it has $>$2/3 prevotes, it *locks* onto that block, and releases any prior lock
   - Can only lock onto one node at a time

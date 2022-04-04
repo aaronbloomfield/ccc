@@ -116,6 +116,7 @@ line-height:120%;
   - One earns fees on your contribution; more later
 - But how to determine the price?
   - Most pools use the Constant Product Automated Market Maker method
+  - We'll see the ~~Constant Product~~ Automated Market Maker method first
 
 
 
@@ -123,7 +124,7 @@ line-height:120%;
 - Basic idea: as you buy more of token A, by selling token B...
   - The price of token A goes up (since there is less in the pool, it must be more in demand)
   - The price of token B goes down (since there is more in the pool, it must be less in demand)
-- To keep the 50:50 ratio constant...
+- To keep the 50:50 price ratio constant...
   - It has to raise the price of one and lower the price of the other
 
 
@@ -221,7 +222,7 @@ line-height:120%;
   - Perhaps it was created with 20 fETH and 6 TC
   - Or 6 fETH and 20 TC
 - This is too low a liqudity to be viable
-  - But it makes the graphs easy to interpret
+  - But it makes the graphs easy to understand
 - These examples are all the person *buying* 10 fETH for some amount of TC
   - The DEX's ETH balance decreases by 10
   - The DEX's TC balance increases by different amounts
@@ -300,7 +301,7 @@ line-height:120%;
 
 
 ## Liquidity Provider
-- Some entity that puts money into a liquidity pool
+- A *Liquidity Provider* is some entity that puts money into a liquidity pool
 - The fees generated go to the liquidity providers
   - Your percentage of the fees depends on the percentage of your liquidity in the pool
 - Some pools are offering APR of 500%
@@ -368,6 +369,10 @@ line-height:120%;
 - Basic idea: consider how much you would have made if you did not invest in a liquidity pool
 - If that amount is less than the liquidity pool, then the difference is your *impermanent loss*
   - Impermanent because it is not permanent until you sell
+
+
+
+## Impermanent loss
 - This happens when one of the commodities changes price differently than the other
   - Reason: arbitrage traders take *value* out of a liquidity pool when equalizing exchange rates
   - Or the prices *diverge* -- this is also called *divergence loss*
@@ -394,7 +399,7 @@ line-height:120%;
 - An arbitrage trader buys 2 ETH for `$`800 each from Coinbase
 - And exchanges it with our DEX for USDT
   - As per AMM, they get 1,667 (rounded) USDT
-    - They paid `$`800 for those 2 ETH, so they made `$`67
+    - They paid `$`1,600 for those 2 ETH, so they made `$`67
   - Our DEX now has 12 ETH and 8,333 USDT, so $k$ is the same
 
 
@@ -462,34 +467,13 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
 
 
-## Sources
-- Much of the DEX slides were generated after learning about it from [Whiteboard crypto videos](https://www.youtube.com/c/WhiteboardCrypto/videos)
-  - [DEX intro](https://www.youtube.com/watch?v=2tTVJL4bpTU)
-  - [Liquidity pools](https://www.youtube.com/watch?v=dVJzcFDo498)
-  - [Automated Market Makers](https://www.youtube.com/watch?v=1PbZMudPP5E)
-  - [impermanent loss](https://www.youtube.com/watch?v=_m6Mowq3Ptk)
-  - Not yet watched:
-  - [Rug pulls](https://www.youtube.com/watch?v=YFaqng3YESE)
-  - blockchain bridges
-  - sushiswap
-  - how to reduce risk as a liquidity provider
-
-
-
-- A Decentralized Exchange (DEX) is just a smart contract that allows exchanging between two cryptocurrencies
-  - But they must be on the same blockchain!
-  - So between Ethereum and an Ethereum token cryptocurrency, for example
-
-
-
 ## Benefits & Drawbacks
 - Benefits
   - No KYC, since it's decentralized
-  - It's open source, so anybody can check the code; thus, more trust
-  - Much faster than centralized exchanges, and have a much smaller fee
+  - Often open source, so anybody can check the code; thus, more trust
+  - Much faster than centralized exchanges; much smaller fee
 - Drawbacks
-  - No customer support
-    - Maybe community forums
+  - No customer support (*maybe* community forums)
   - Send to the wrong contract address?  Tough luck, your cryptocurrency is lost
   - Have to use a hot storage device -- a wallet connected to the Internet
   - May have low liquidity
@@ -507,6 +491,18 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
   - Has *very* complicated algorithms to manage this
 
 
+
+## Sources
+- Much of the DEX slides were generated after learning about it from [Whiteboard crypto videos](https://www.youtube.com/c/WhiteboardCrypto/videos)
+  - [DEX intro](https://www.youtube.com/watch?v=2tTVJL4bpTU)
+  - [Liquidity pools](https://www.youtube.com/watch?v=dVJzcFDo498)
+  - [Automated Market Makers](https://www.youtube.com/watch?v=1PbZMudPP5E)
+  - [impermanent loss](https://www.youtube.com/watch?v=_m6Mowq3Ptk)
+  - Not yet watched:
+  - [Rug pulls](https://www.youtube.com/watch?v=YFaqng3YESE)
+  - blockchain bridges
+  - sushiswap
+  - how to reduce risk as a liquidity provider
 </textarea></section>
 
   </section>
