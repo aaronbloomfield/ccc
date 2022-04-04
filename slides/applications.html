@@ -147,8 +147,10 @@ line-height:120%;
 ## Value in USD
 - A decentralized exchange only determines the *exchange ratio* between the tokens in its liquidity pool
   - 1 fETH for 10 TC, for example
+- This exchange rate may be quite different than that of other exchanges
+  - We'll address this in a bit
 - The *market value* is how much each is worth in USD
-  - This is determined by external factors
+  - This is determined by external factors, not by the DEX
 - But we can estimate it...
 
 
@@ -164,6 +166,7 @@ line-height:120%;
     - Instead of the initial `$`1 it was worth
   - The 1,250 TC is worth `$`$100/1,250=$ `$`0.08 in USD
     - Instead of the initial `$`0.10 it was worth
+- This only holds if the *exchange rate* doesn't change
 
 
 
@@ -201,7 +204,7 @@ line-height:120%;
 ## Constant Product AMM (CPAMM)
 - Given $x$ of one commodity and $y$ of another commodity
   - Invariant: $x \ast y = k$ for some constant $k$
-- Given the initial pool of $x=100$ fETH and $y=1,000$ TC
+- Initial pool: $x=100$ fETH and $y=1,000$ TC
   - $x \ast y = 100 \ast 1,000 = 100,000$, so $k=100,000$
 - You want to exchange 50 fETH for TC
   - If you put 25 fETH into the pool, $x$ is now 125
@@ -221,6 +224,7 @@ line-height:120%;
   - But it makes the graphs easy to interpret
 - These examples are all the person *buying* 10 fETH for some amount of TC
   - The DEX's ETH balance decreases by 10
+  - The DEX's TC balance increases by different amounts
 </textarea></section>
 
 <section data-markdown data-transition="none" data-transition-speed="fast" data-separator="^\n"><textarea>
