@@ -79,7 +79,7 @@ interface AuctionManager is IERC165, IERC721Receiver {
 
     // This cancels an auction, the id of which is passed in as a parameter,
     // that has been created but that the NFT has not yet be transferred over
-    // for.
+    // for.  Only the creator of an auction can cancel that auction.
     function cancelAuction(uint id) external;
 
     // This closes out the auction, the ID of which is passed in as a

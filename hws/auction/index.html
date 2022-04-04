@@ -149,9 +149,9 @@ with the same NFT later can be created</li>
 <ul>
 <li>Any auction that does not succeed – is canceled, no bids, or does
 not meet the reserve price – does not collect a fee</li>
-<li>The deployer of the auction smart contract, and ONLY that address,
-can view those fees via a call to <code>fees()</code> and collect those
-fees via a call to <code>collectFees()</code></li>
+<li>Anybody can view the fees via the <code>fees()</code> function; the
+deployer of the auction smart contract, and ONLY that address, can and
+collect those fees via a call to <code>collectFees()</code></li>
 </ul></li>
 <li>There are five events that must be emitted at the appropriate times;
 for each, the parameter is the auction ID:

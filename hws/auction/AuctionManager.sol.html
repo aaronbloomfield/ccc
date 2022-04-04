@@ -90,7 +90,7 @@ interface AuctionManager <font color="#008080">is</font> IERC165<font color="#99
 
     <i><font color="#9A1900">// This cancels an auction, the id of which is passed in as a parameter,</font></i>
     <i><font color="#9A1900">// that has been created but that the NFT has not yet be transferred over</font></i>
-    <i><font color="#9A1900">// for.</font></i>
+    <i><font color="#9A1900">// for.  Only the creator of an auction can cancel that auction.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">cancelAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// This closes out the auction, the ID of which is passed in as a</font></i>

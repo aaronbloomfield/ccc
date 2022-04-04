@@ -56,7 +56,7 @@ The contract you will be creating will allow for a decentralized auction for NFT
     - Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created
 - The auction contract will keep a fee of 1% of the value of a *winning* bid
     - Any auction that does not succeed -- is canceled, no bids, or does not meet the reserve price -- does not collect a fee
-    - The deployer of the auction smart contract, and ONLY that address, can view those fees via a call to `fees()` and collect those fees via a call to `collectFees()`
+    - Anybody can view the fees via the `fees()` function; the deployer of the auction smart contract, and ONLY that address, can and collect those fees via a call to `collectFees()`
 - There are five events that must be emitted at the appropriate times; for each, the parameter is the auction ID:
     - `auctionCreateEvent()`: when `createAuction()` is successfully called
     - `auctionStartEvent()`: when the NFT is transferred to the smart contract and the auction starts (*NOT* when `createAuction()` is called)
