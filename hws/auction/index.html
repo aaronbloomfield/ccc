@@ -276,6 +276,11 @@ your function return the <a
 href="../../slides/tokens.html#/funcsel">function selector</a> for that
 function – the line for that is: <code>return
 bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));</code>.</p>
+<p>To transfer ETH to another account, you can use code such as the
+following. Note that the address is in variable <code>a</code>, and the
+value – in wei – is in <code>v</code>:</p>
+<pre><code>(bool success, ) = payable(a).call{value: v}(&quot;&quot;);
+require(success, &quot;Failed to transfer ETH&quot;);</code></pre>
 <p>As you are testing it, you will notice in Remix that the button for
 <code>placeBid()</code> is red – that is because this is a
 <code>payable</code> function. When you call this function, after
