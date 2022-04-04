@@ -138,9 +138,9 @@ initiator</li>
 <li>If the highest bid is less than the reserve price, then that bidder
 is refunded his/her money, and the NFT is transferred back to the
 initiator</li>
-<li>If the highest bid is above the reserve price, then the NFT is
-transferred to the winning bidder, and the ether (minus a percentage
-fee) is transferred to the initiator</li>
+<li>If the highest bid is equal to or greater than the reserve price,
+then the NFT is transferred to the winning bidder, and the ether (minus
+a percentage fee) is transferred to the initiator</li>
 <li>Once closed, an auction cannot be re-opened, although a new auction
 with the same NFT later can be created</li>
 </ul></li>
@@ -264,13 +264,15 @@ called the <code>safeTrasnferFrom()</code> function, and this can be
 ignored for this assignment; the <code>from</code> is the address which
 previously owned the token, the <code>tokenId</code> is the token number
 in that NFT manager, and you can ignore the <code>data</code> parameter
-(it’s to send extra data if desired). It is by the call to this function
-that your Auctioneer knows an NFT has been transferred to it, and can
-start an auction. If the owner of the NFT is unknown – meaning that
-address has not called <code>createAuction()</code> – then a reversion
-will cancel the entire NFT transfer. This function needs to return a
-confirmation that it acknowledges the receipt of the NFT – to do this,
-have the last line of your function return the <a
+(it’s to send extra data if desired). Note that in this function you can
+use <code>msg.sender</code> to get the address of the NFT manager. It is
+by the call to this function that your Auctioneer knows an NFT has been
+transferred to it, and can start an auction. If the owner of the NFT is
+unknown – meaning that address has not called
+<code>createAuction()</code> – then a reversion will cancel the entire
+NFT transfer. This function needs to return a confirmation that it
+acknowledges the receipt of the NFT – to do this, have the last line of
+your function return the <a
 href="../../slides/tokens.html#/funcsel">function selector</a> for that
 function – the line for that is: <code>return
 bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));</code>.</p>

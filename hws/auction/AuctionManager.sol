@@ -15,7 +15,7 @@ import "./IERC721Receiver.sol";
 //   (from IERC721Receiver).
 // - the onERC721Received() should do a whole bunch of checks, most of which
 //   are left for you to decide.  But it shoudl also check that the given URI
-//   is not already in an active (or configured and not yet started) auction.
+//   is not already in an active auction.
 // - The parameters for onERC721Received() are:
 //   - operator: the address which called the `safeTrasnferFrom()` function;
 //     this can be ignored for this assignment
