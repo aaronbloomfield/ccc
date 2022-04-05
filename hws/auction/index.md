@@ -44,7 +44,7 @@ The contract you will be creating will allow for a decentralized auction for NFT
     - The person who started the auction is called the 'initiator'
     - There cannot be two *active* auctions of the same NFT going on at the same time -- the contract should check for this and revert in this case
 - Once ownership of the NFT is transferred to the auction contract, the auction begins -- the length was specified in the previous step.
-    - In the situation where somebody creates a second auction before the first auction has started (meaning calling `createAuction()` twice without transferring the NFT to the auction manager between the two calls), then the second call to `createAuction()` should revert
+    - In the situation where somebody creates a second auction before their first auction has started (meaning calling `createAuction()` twice without transferring the NFT to the auction manager between the two calls), then the second call to `createAuction()` should revert
 - Anybody can bid on the auction -- a bid is placed by transferring ether to the auction contract via a call to `placeBid()`, and specifying which auction it is for via a parameter to that function call
     - If the amount bid is less than the reserve price, then the bid still goes through -- however, this is not a winning bid, as described below
     - If the amount bid is less than or equal to the current maximum bid, then it fails via a `require()` or `revert()`

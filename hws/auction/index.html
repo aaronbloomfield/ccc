@@ -111,11 +111,11 @@ this case</li>
 <li>Once ownership of the NFT is transferred to the auction contract,
 the auction begins – the length was specified in the previous step.
 <ul>
-<li>In the situation where somebody creates a second auction before the
-first auction has started (meaning calling <code>createAuction()</code>
-twice without transferring the NFT to the auction manager between the
-two calls), then the second call to <code>createAuction()</code> should
-revert</li>
+<li>In the situation where somebody creates a second auction before
+their first auction has started (meaning calling
+<code>createAuction()</code> twice without transferring the NFT to the
+auction manager between the two calls), then the second call to
+<code>createAuction()</code> should revert</li>
 </ul></li>
 <li>Anybody can bid on the auction – a bid is placed by transferring
 ether to the auction contract via a call to <code>placeBid()</code>, and
