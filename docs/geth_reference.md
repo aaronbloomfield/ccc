@@ -5,8 +5,8 @@ Geth Command Summary
 
 | Action | Command |
 |----|------------|
-| Run geth | `geth --datadir ./data/ --networkid 67834501 --maxpeers 1` |
-| Run geth with http server flags | `geth --datadir ./data/ --networkid 67834501 --maxpeers 1 --http --http.corsdomain="package://6fd22d6fe5549ad4c4d8fd3ca0b7816b.mod" --http.api web3,eth,debug,personal,net --vmdebug --allow-insecure-unlock` |
+| Run geth | `geth --datadir ./data/ --networkid 12345678 --maxpeers 1` |
+| Run geth with http server flags | `geth --datadir ./data/ --networkid 12345678 --maxpeers 1 --http --http.corsdomain="package://6fd22d6fe5549ad4c4d8fd3ca0b7816b.mod" --http.api web3,eth,debug,personal,net --vmdebug --allow-insecure-unlock` |
 | Attach to node (opens prompt) | `geth attach path/to/geth.ipc` |
 | Attach to node with preload script | `geth --preload preload.js attach path/to/geth.ipc` |
 
