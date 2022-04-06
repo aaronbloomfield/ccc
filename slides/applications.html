@@ -464,6 +464,10 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
 ## Rug Pulls
 - When the DEX owner runs off with your coins
+- Recall `selfdestruct()`
+  - Whomever calls it gets all the coins that the contract controls
+  - We can easily ensure only the deployer can call it
+- In 2021, an estimated 7.7 billion was stolen in rug pulls ([source](https://www.bitchecker.com/en-US/articles/67))
 
 
 
@@ -482,13 +486,26 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
 
 ## Examples
-- Uniswap: exchange between Ethereum and an Ethereum token cryptocurrency
-- Bancor: ...
+- Uniswap: smart contract exchange between Ethereum and various Ethereum token cryptocurrencies
+- Bancor: an entire protocol that competes with Uniswap
 - SushiSwap: operates on many blockchains
   - But cannot swap between different blockchains
 - Three blank lines separate one slide from another
 - Balancer: allows up to 8 assets in a liquidity pool
   - Has *very* complicated algorithms to manage this
+- See a list of various DEXs [here](https://defillama.com/)
+  - And detailed [directions how to use Uniswap](https://beincrypto.com/learn/how-to-use-uniswap/)
+
+
+
+## [Uniswap](https://uniswap.org/)
+- Version 1 in 2018; v2 in 2020, and v3 in 2021
+- V2 had `$`135 *billion* in value
+- Info [here](https://uniswap.org/blog/uniswap-v3)
+- Features:
+  - Slippage prevention
+  - Different risk tiers with different fee rewards
+- You can see the swap web interface [here](https://app.uniswap.org/#/swap?chain=mainnet)
 
 
 
@@ -516,7 +533,145 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
+## DAOs
+- DAO = Decentralized Autonomous Organization
+- An organization whose membership and rules are governed by a smart contract 
+- Membership often managed by an ERC-721 (or ERC-1155) NFT
+  - They can instead issue ERC-20 (or ERC-1155) tokens if some members have "more" voting rights than others
+- They are still in their nascent stage
 
+
+
+## DAO generic examples
+- An organization that allows for voting by its members
+  - The smart contract hosts the polls and only members can vote
+- A charity distribution organization
+  - Members donate to the contract, and the funds are disseminated to the charities that the members vote upon
+- Anything where there is management needed of funds and/or votes
+
+
+
+## DAO Specific Examples
+- [DASH](https://www.kraken.com/learn/what-is-dash), a cryptocurrency managed by its members
+- [MakerDAO](https://www.kraken.com/learn/what-is-maker-mkr), a software that manages a stablecoin
+- [Augur](https://www.kraken.com/learn/what-is-augur-rep), a prediction market platform
+- [MolochDAO](https://molochdao.com/), which focuses on funding Ethereum projects
+
+See [here](https://deepdao.io/organizations) for a list of some well-known DAOs
+
+
+
+## The DAO (styled &ETH;)
+- A venture capital investment DAO launched in April 2016; now defunct
+  - Code is open-source (GPL): [DAO.sol](https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol)
+  - Raised `$`150 million from over 11,000 investors in a month
+    - That was 15% of the ether at that point
+- A hack in June 2016 drained all the ether from the DAO
+  - Because of how much ETH was in The DAO, it had a serious effect on the entire Ethereum system
+
+
+
+## Background: Receiving ether
+- For a smart contract to receive Ether, it has to have a function enabling it to do so
+  - This is for generic receipt of ether, which is separate from a `payable` function
+- In earlier versions of Solidity:
+```
+function () { ... }
+```
+- In current versions of Solidity (0.8.x):
+```
+fallback() external payable { }
+receive() external payable { }
+```
+- The functions don't have to *do* anything, but they do need to exist
+  - Otherwise a transfer of ether to the contract will revert
+
+
+
+## Background: Recursive Send
+- Consider some payout code in a smart contract:
+```
+function withdraw() {
+    msg.sender.call{value:balance[msg.sender]}("");
+    balance[msg.sender] = 0;
+}
+```
+- Let's have our payout recipient be a smart contract
+- It defines `receive()` (or `fallback()`?) as follows:
+```
+uint times; // we'll assume set to 2
+receive() external payable {
+    address v = 0xSmartContractAddress;
+    if ( times-- > 0 )
+      v.withdraw();
+}
+```
+- This has now withdrawn three times the amount!
+
+
+
+## Recursive send: how to fix
+- Lots of ways to fix this:
+  - Zero the balance *before* the transfer, and save into a separate local variable
+  - Check the return value of the transfer (not guaranteed to fix it, though)
+  - Verify that the ether balance after is what was expected
+  - And so on...
+- This was specifically addressed in the Ethereum programming guidelines
+  - But was ignored by many programmers
+
+
+
+## Background: The DAO splits
+- The DAO allowed "splits" to create "child" DAOs
+  - Presumably to focus on some specific aspect of venture capital investments
+  - Or to manage one specific investment
+- Funds would be transferred to the child DAO
+  - That transfer was susceptible to a recursive send attack
+
+
+
+## Mitigation
+- As this attack was happening, The DAO members tried to split The DAO to prevent this
+  - But were unable to get the votes in time
+- This is a known problem with DAOs: people don't always vote in a timely manner
+  - Or don't vote at all, or lose their account, etc.
+
+
+
+## Mitigation
+- Vitalik Buterin (Ethereum's creator) suggested blacklisting the attacker
+  - A so-called "soft fork"
+  - The attacker pointed out (anonymously) that his/her actions did not violate any laws
+- The attacker, on the DAO's Slack channel, then bribed miners with 1 million ETH and 100 BTC to not comply with the mitigation
+- This entire episode (and the bribe) split the community into two about how to respond
+  - And raised lots of philosophical questions
+
+
+
+## Mitigation
+- The final result:
+  - There was a *hard* roll-back (or hard fork) of the blockchain to before this attack
+    - Invalidating all transactions since then
+  - There were a number of bug fixes and mitigation strategies
+  - The DAO got its funds back, and later disbanded
+- But not everybody agreed with this approach!
+
+
+
+## Split
+- This mitigation led to *two* different Ethereums:
+- <img src="images/logos/Ethereum_logo_translucent.svg" class="cclogo"> [ETH](https://coinmarketcap.com/currencies/ethereum/), aka "Ethereum", is the result of the hard fork, with The DAO's money restored <br clear='all'>
+- <img src="images/logos/Ethereum-Classic-Logo.svg" class="cclogo"> [ETC](https://coinmarketcap.com/currencies/ethereum-classic/), aka "Ethereum Classic", is the non-rolled-back version <br clear='all'>
+  - The DAO lost all it's money in ETC, which was worth about $8.5M
+- Presumably the market price of the two after was about equal to the price of ETH before
+
+
+
+## References
+- [ethereum.org page on DAOs](https://ethereum.org/en/dao/)
+- [Some well known examples of DAOs](https://geekflare.com/finance/dao-crypto-projects/)
+- [Vitalik Buterin's blog post about the vulnerability](https://blog.ethereum.org/2016/06/17/critical-update-re-dao-vulnerability/)
+- [Another description of the attack](https://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/)
 </textarea></section>
 
   </section>
