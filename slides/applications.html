@@ -199,9 +199,9 @@ line-height:120%;
   - Our original 100 fETH
   - 990 TC - 4.95 TC $\approx$ 985 TC
 - So clearly this is not viable...
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n" id="cpamm"><textarea>
 ## Constant Product AMM (CPAMM)
 - Given $x$ of one commodity and $y$ of another commodity
   - Invariant: $x \ast y = k$ for some constant $k$
@@ -214,9 +214,9 @@ line-height:120%;
     - $y = 100,000 / 125 = 800$
 - You get $1,000 - 800 = 200$ TC for your 25 ETH
   - As the pool had 1,000 TC to start
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Example
 - Consider an exchange with $k=120$
   - Perhaps it was created with 20 fETH and 6 TC
@@ -306,6 +306,7 @@ line-height:120%;
   - Your percentage of the fees depends on the percentage of your liquidity in the pool
 - Some pools are offering APR of 500%
   - Yes, *five hundred* percent per year
+  - But that seems kinda scammy...
 - As more people join the pool, your cut is less and less
 
 
@@ -358,8 +359,11 @@ line-height:120%;
 
 
 ## Joining a liquidity pool
-- With a 500% APR, why doesn't everybody partake in a liquidity pool?
-- Two reasons:
+- With a high rate of return, why doesn't everybody partake in a liquidity pool?
+- Some typical reasons:
+  - Need a lot of liquidity in multiple currencies
+  - Many people don't know about it
+- Two unique reasons:
   - Impermanent loss (aka Divergence Loss)
   - Rug pulls
 
@@ -377,7 +381,7 @@ line-height:120%;
   - Reason: arbitrage traders take *value* out of a liquidity pool when equalizing exchange rates
   - Or the prices *diverge* -- this is also called *divergence loss*
 - Analogy: "paper loss" when a stock price goes down
-  - But if you wait, you can reverse that loss
+  - But if you wait, you can reverse that loss *if* the price goes up
 
 
 
@@ -398,7 +402,7 @@ line-height:120%;
 - Imagine the price of ETH drops to `$`800
 - An arbitrage trader buys 2 ETH for `$`800 each from Coinbase
 - And exchanges it with our DEX for USDT
-  - As per AMM, they get 1,667 (rounded) USDT
+  - As per CPAMM, they get 1,667 (rounded) USDT
     - They paid `$`1,600 for those 2 ETH, so they made `$`67
   - Our DEX now has 12 ETH and 8,333 USDT, so $k$ is the same
 
@@ -455,6 +459,7 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
 ## Impermanent loss
 - Caused by arbitrage trading
+  - The arbitrage traders are taking *value* out of the DEX
 - Impermanent loss increases when the prices of the commodities diverge
   - With a stablecoin and a volatile coin
 - More pronounced with two volatile coins that move in different directions
@@ -501,11 +506,11 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 ## [Uniswap](https://uniswap.org/)
 - Version 1 in 2018; v2 in 2020, and v3 in 2021
 - V2 had `$`135 *billion* in value
-- Info [here](https://uniswap.org/blog/uniswap-v3)
+- Information about Uniswap is [here](https://uniswap.org/blog/uniswap-v3)
 - Features:
   - Slippage prevention
   - Different risk tiers with different fee rewards
-- You can see the swap web interface [here](https://app.uniswap.org/#/swap?chain=mainnet)
+- You can see the currency swap web interface [here](https://app.uniswap.org/#/swap?chain=mainnet)
 
 
 

@@ -28,7 +28,10 @@ href="../index.md">md</a>)</p>
 Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency
 you created in the <a href="../tokens/index.html">Ethereum Tokens</a>
 (<a href="../tokens/index.md">md</a>) assignment. Once deployed, anybody
-will be able to exchange (fake) ETH for your token cryptocurrency.</p>
+will be able to exchange (fake) ETH for your token cryptocurrency. The
+DEX will use the <a
+href="../../slides/applications.html#/cpamm">Constant Product Automated
+Market Maker (CPAMM)</a> method for determining the exchange rates.</p>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Writing this homework will require completion of the following
 assignments:</p>
@@ -58,9 +61,10 @@ href="../../slides/applications.html">Blockchain Applications</a> slide
 set. The last one is most relevant, as it discusses how DEXes work.</p>
 <h3 id="the-price-of-our-fake-eth">The price of our (fake) ETH</h3>
 <p>To simulate changing market conditions, we have deployed two smart
-contracts to help one determine the price of our (fake) ETH. Both of the
-contracts fulfill the <a href="EtherPricer.sol.html">EtherPricer.sol</a>
-(<a href="EtherPricer.sol">src</a>) interface:</p>
+contracts to help one determine the price of our (fake) ETH. Both of
+these contracts fulfill the <a
+href="EtherPricer.sol.html">EtherPricer.sol</a> (<a
+href="EtherPricer.sol">src</a>) interface:</p>
 <pre><code>interface EtherPricer is IERC165 {
         function getEtherPriceInCents() external view returns (uint);
 }</code></pre>
@@ -70,7 +74,7 @@ from the <a href="IERC165.sol.html">IERC165.sol</a> (<a
 href="IERC165.sol">src</a>) contract. The
 <code>getEtherPriceInCents()</code> will return the current price in
 cents. Thus, if the price is $99.23 per (fake) ETH, it would return
-9923.</p>
+<code>9923</code>.</p>
 <p>As mentioned, there are two deployed, the contract addresses of which
 are on the Collab landing page. The first is a constant implementation,
 which always returns $100.00 (formally: <code>10000</code>) as the
@@ -90,15 +94,16 @@ code. You will need to use the second (variable) one when you make your
 final deployment. The current (variable) price of our (fake) ETH is
 shown on the DEX web page, which is described below.</p>
 <h3 id="details">Details</h3>
-<p>Your DEX must follow the CPAMM (Constant Product Automated Market
-Maker) method as discussed in the lecture slides. Once deployed, there
-will be some liquidity that must be added to the DEX before trading can
-start. Anybody can then exchange some of our (fake) ETH for your token
-cryptocurrency. This, combined with the varying price of our (fake) ETH,
-will cause the price of your token cryptocurrency to fluctuate
-significantly. At the end of the assignment you will register your DEX
-with a course-wide exchange so that the entire class can see all of the
-exchangeable token cryptocurrencies.</p>
+<p>Your DEX must follow the <a
+href="../../slides/applications.html#/cpamm">CPAMM (Constant Product
+Automated Market Maker)</a> method as discussed in the lecture slides.
+Once deployed, there will be some liquidity that must be added to the
+DEX before trading can start. Anybody can then exchange some of our
+(fake) ETH for your token cryptocurrency. This, combined with the
+varying price of our (fake) ETH, will cause the price of your token
+cryptocurrency to fluctuate significantly. At the end of the assignment
+you will register your DEX with a course-wide exchange so that the
+entire class can see all of the exchangeable token cryptocurrencies.</p>
 <p>As far as this assignment is concerned, there will only be
 <em>one</em> DEX for each token cryptocurrency. You may have deployed
 multiple ones to test your code, but for our class trading we will only

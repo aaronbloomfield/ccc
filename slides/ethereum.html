@@ -435,9 +435,9 @@ A *trie* is a $k$-ary prefix tree that holds (usually) strings
 <!-- .slide: class="right-float-img" -->
 ## Tries
 [![](images/ethereum/trees/Trie_example.svg)](https://en.wikipedia.org/wiki/Trie#/media/File:Trie_example.svg)
-- The key is the characters on the transitions to the leaf, as well as the characters in the leaf
-  - The values in the leaves just show the values via the path so far
-- The value is the number by each leaf
+- The key is the characters on the transitions between nodes
+  - The values in the nodes just show the values via the path so far
+- The value is the number by each node
   - Some internal nodes may not have an associated value!
 - Any node has a common prefix -- the path to the root
 - Reference: Wikipedia's article on [Tries](https://en.wikipedia.org/wiki/Trie)
@@ -459,6 +459,7 @@ A space-optimized Trie
   - Left child is a 0 bit, right child is a 1 bit
 - Used to store binary values (hashes, etc.)
   - Not great for dictionaries of ASCII characters
+- We can store hashes of the nodes / children to make it like a Merkle tree
 
 
 
@@ -468,7 +469,7 @@ A space-optimized Trie
 - We store the hex digits 3, 7, e, and f
 - The bit transitions are on the edges
 - In each node:
-  - The path so far is in curly brackets (not actually stored)
+  - The path so far is in curly brackets (not actually stored in the node)
   - `h(L+R)` means hash of left child and right child
     - Or hash of the concatenation if only one child
   - The leaves show the hex values

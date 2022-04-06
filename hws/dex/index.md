@@ -6,7 +6,8 @@ Decentralized Exchange (DEX)
 
 ### Overview
 
-In this assignment you are going to create a Decntralized Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.
+In this assignment you are going to create a Decntralized Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
+[Constant Product Automated Market Maker (CPAMM)](../../slides/applications.html#/cpamm) method for determining the exchange rates.
 
 
 ### Pre-requisites
@@ -24,7 +25,7 @@ You will also need to be familiar with the [Ethereum slide set](../../slides/eth
 
 ### The price of our (fake) ETH
 
-To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH.  Both of the contracts fulfill the [EtherPricer.sol](EtherPricer.sol.html) ([src](EtherPricer.sol)) interface:
+To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH.  Both of these contracts fulfill the [EtherPricer.sol](EtherPricer.sol.html) ([src](EtherPricer.sol)) interface:
 
 ```
 interface EtherPricer is IERC165 {
@@ -32,7 +33,7 @@ interface EtherPricer is IERC165 {
 }
 ```
 
-Thus, it provides only two functions: the `getEtherPriceInCents()` and `supportsInterface()` from the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract.  The `getEtherPriceInCents()` will return the current price in cents.  Thus, if the price is $99.23 per (fake) ETH, it would return 9923.
+Thus, it provides only two functions: the `getEtherPriceInCents()` and `supportsInterface()` from the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract.  The `getEtherPriceInCents()` will return the current price in cents.  Thus, if the price is $99.23 per (fake) ETH, it would return `9923`.
 
 As mentioned, there are two deployed, the contract addresses of which are on the Collab landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)).  This is meant to be used for debugging, as it always returns the same value.
 
@@ -44,7 +45,7 @@ You should use the first (constant) one while you are debugging your code.  You 
 
 ### Details
 
-Your DEX must follow the CPAMM (Constant Product Automated Market Maker) method as discussed in the lecture slides.  Once deployed, there will be some liquidity that must be added to the DEX before trading can start.  Anybody can then exchange some of our (fake) ETH for your token cryptocurrency.  This, combined with the varying price of our (fake) ETH, will cause the price of your token cryptocurrency to fluctuate significantly.  At the end of the assignment you will register your DEX with a course-wide exchange so that the entire class can see all of the exchangeable token cryptocurrencies.
+Your DEX must follow the [CPAMM (Constant Product Automated Market Maker)](../../slides/applications.html#/cpamm) method as discussed in the lecture slides.  Once deployed, there will be some liquidity that must be added to the DEX before trading can start.  Anybody can then exchange some of our (fake) ETH for your token cryptocurrency.  This, combined with the varying price of our (fake) ETH, will cause the price of your token cryptocurrency to fluctuate significantly.  At the end of the assignment you will register your DEX with a course-wide exchange so that the entire class can see all of the exchangeable token cryptocurrencies.
 
 As far as this assignment is concerned, there will only be *one* DEX for each token cryptocurrency.  You may have deployed multiple ones to test your code, but for our class trading we will only be having one DEX that you deploy at the end.  Thus, arbitrage trading is not possible, since that requires trading between two or more exchanges.
 
