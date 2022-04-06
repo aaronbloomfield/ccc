@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>DEX.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./EtherPricer.sol"</font><font color="#990000">;</font>
+
+interface DEX <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Events</font></i>
+
+    <i><font color="#9A1900">// This event must be emitted whenever the amount of liquidity</font></i>
+    <i><font color="#9A1900">// (either ether or token cryptocurrency) changes.  This is from the</font></i>
+    <i><font color="#9A1900">// methods: createPool(), addLiquidity(), removeLiquidity()</font></i>
+    <i><font color="#9A1900">// exchangeEtherForToken(), and exchangeTokenForEther().</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">liquidityChangeEvent</font></b><font color="#990000">();</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Getting the exchange rates and prices</font></i>
+
+    <i><font color="#9A1900">// How many decimals the token is shown to; this is from the ERC-20 token</font></i>
+    <i><font color="#9A1900">// manager itself.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tokenDecimals</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the price of 1 ETH using the EtherPricer contract; return it in</font></i>
+    <i><font color="#9A1900">// cents.  This just gets the price from the EtherPricer contract.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">getEtherPrice</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the price of 1 Token using the EtherPricer contract; return it in</font></i>
+    <i><font color="#9A1900">// cents.  This gets the price of ETH from the EtherPricer contract, and</font></i>
+    <i><font color="#9A1900">// then scales it -- based on the exchange ratio -- to determine the</font></i>
+    <i><font color="#9A1900">// price of the token cryptocurrency.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">getTokenPrice</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Getting the liquidity of the pool or part thereof</font></i>
+
+    <i><font color="#9A1900">// Get the k value.  If 100 ETH were added along with 1,000 of the token</font></i>
+    <i><font color="#9A1900">// cryptocurrency, and the former has 18 decimals and the latter 10</font></i>
+    <i><font color="#9A1900">// decimals, then this will return 10^33.  This can just be a public</font></i>
+    <i><font color="#9A1900">// variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">k</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// How much ether is in the pool; this can just be a public variable. This</font></i>
+    <i><font color="#9A1900">// is with all the decimal places, so 1.5 ETH -- which has 18 decimals --</font></i>
+    <i><font color="#9A1900">// would be 1,500,000,000,000,000,000.  This can just be a public variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">etherLiquidity</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// How many tokens are in the pool; this can just be a public variable. As</font></i>
+    <i><font color="#9A1900">// with the previous, this is returned with all the decimals.  So 15 of</font></i>
+    <i><font color="#9A1900">// the token cryptocurrency coin, which has (say) 10 decimals, this would</font></i>
+    <i><font color="#9A1900">// return 15,000,000,000.  This can just be a public variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tokenLiquidity</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the amount of pool liquidity in USD (actually cents) using the</font></i>
+    <i><font color="#9A1900">// EtherPricer contract.  We assume that the ETH and the token</font></i>
+    <i><font color="#9A1900">// cryptocurrency have the same price, and we know (from the EtherPricer</font></i>
+    <i><font color="#9A1900">// smart contract) how much the ETH is worth.  This can just be a public</font></i>
+    <i><font color="#9A1900">// variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">getPoolLiquidityInUSDCents</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// How much ETH does the address have in the pool.  This is the number in</font></i>
+    <i><font color="#9A1900">// wei.  This can be just be a public mapping variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">etherLiquidityForAddress</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// How much of the token cryptocurrency does the address have in the pool.</font></i>
+    <i><font color="#9A1900">// This is with however many decimals the token cryptocurrency has.  This</font></i>
+    <i><font color="#9A1900">// can be just be a public mapping variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tokenLiquidityForAddress</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Pool creation</font></i>
+
+    <i><font color="#9A1900">// This can be called exactly once, and creates the pool; only the</font></i>
+    <i><font color="#9A1900">// deployer of the contract call this.  Some amount of ETH is passed in</font></i>
+    <i><font color="#9A1900">// along with this call.  For purposes of this assignment, the ratio is</font></i>
+    <i><font color="#9A1900">// then defined based on the amount of ETH paid with this call and the</font></i>
+    <i><font color="#9A1900">// amount of the token cryptocurrency stated in the first parameter.  The</font></i>
+    <i><font color="#9A1900">// first parameter is how many of the token cryptocurrency (with all the</font></i>
+    <i><font color="#9A1900">// decimals) to add to the pool; the ERC-20 contract that manages that</font></i>
+    <i><font color="#9A1900">// token cryptocurrency is the fourth parameter (the caller needs to</font></i>
+    <i><font color="#9A1900">// approve this contract for that much of the token cryptocurrency before</font></i>
+    <i><font color="#9A1900">// the call).  The second and third parameters define the fraction --</font></i>
+    <i><font color="#9A1900">// 0.1% would be 1 and 1000, for example.  The last parameter is the</font></i>
+    <i><font color="#9A1900">// contract address of the EtherPricer contract being used, and can be</font></i>
+    <i><font color="#9A1900">// updated later via the setEtherPricer() function.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">createPool</font></b><font color="#990000">(</font><font color="#008080">uint</font> tokenAmount<font color="#990000">,</font> <font color="#008080">uint</font> feeNumerator<font color="#990000">,</font> <font color="#008080">uint</font> feeDenominator<font color="#990000">,</font> 
+                        <font color="#008080">address</font> erc20token<font color="#990000">,</font> <font color="#008080">address</font> etherpricer<font color="#990000">)</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Fees</font></i>
+
+    <i><font color="#9A1900">// Get the numerator of the fee fraction; this can just be a public</font></i>
+    <i><font color="#9A1900">// variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">feeNumerator</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the denominator of the fee fraction; this can just be a public</font></i>
+    <i><font color="#9A1900">// variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">feeDenominator</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the amount of ether fees accumulated (for all addresses) so far;</font></i>
+    <i><font color="#9A1900">// this can just be a public variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">feesEther</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the amount of token fees accumulated (for all addresses) so far;</font></i>
+    <i><font color="#9A1900">// this can just be a public variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">feesToken</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Managing pool liquidity</font></i>
+
+    <i><font color="#9A1900">// Anybody can add liquidity to the pool.  The amount of ETH is paid along</font></i>
+    <i><font color="#9A1900">// with the function call.  The caller will have to approve the</font></i>
+    <i><font color="#9A1900">// appropriate amount of token cryptocurrency, via the ERC-20 contract,</font></i>
+    <i><font color="#9A1900">// for this call to complete successfully.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">addLiquidity</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// Remove liquidity -- both ether and token -- from the pool.  The ETH is</font></i>
+    <i><font color="#9A1900">// paid to the caller, and the token cryptocurrency is transfered back as</font></i>
+    <i><font color="#9A1900">// well.  If the parameter amount is more than the amount the address has</font></i>
+    <i><font color="#9A1900">// stored in the pool, this should revert.  See the homework description</font></i>
+    <i><font color="#9A1900">// for how fees are managed and paid out.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">removeLiquidity</font></b><font color="#990000">(</font><font color="#008080">uint</font> amountEther<font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Exchanging currencies</font></i>
+
+    <i><font color="#9A1900">// Swaps ether for token.  The amount of ETH is passed in as payment along</font></i>
+    <i><font color="#9A1900">// with this call.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">exchangeEtherForToken</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// Swap token for ether.  The ERC-20 smart contract for the token</font></i>
+    <i><font color="#9A1900">// cryptocurrency must be approved to transfer that much into the DEX,</font></i>
+    <i><font color="#9A1900">// and the appropriate amount of ETH is paid back to the caller.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">exchangeTokenForEther</font></b><font color="#990000">(</font><font color="#008080">uint</font> amountToken<font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Functions for debugging and grading</font></i>
+
+    <i><font color="#9A1900">// This function allows changing of the contract that provides the current</font></i>
+    <i><font color="#9A1900">// ether price.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">setEtherPricer</font></b><font color="#990000">(</font><font color="#008080">address</font> p<font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// This gets the address of the etherPricer being used so that we can</font></i>
+    <i><font color="#9A1900">// verify we are using the correct one; this can just be a public variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">etherPricerAddress</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the address of the ERC-20 token manager being used for the token</font></i>
+    <i><font color="#9A1900">// cryptocurrency; this can just be a public variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">erc20TokenAddress</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Get the abbreviation of the ERC-20 cryptocurrency; this can just call</font></i>
+    <i><font color="#9A1900">// the ERC-20 contract to get that information.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">getTokenCCAbbreviation</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Functions for efficiency</font></i>
+
+    <i><font color="#9A1900">// this function is just to lower the number of calls to the contract from</font></i>
+    <i><font color="#9A1900">// the web page; it just returns the information in many of the above</font></i>
+    <i><font color="#9A1900">// calls as a single call.  The information it returns is a tuple and is,</font></i>
+    <i><font color="#9A1900">// in order:</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// 0: the address of *this* DEX contract</font></i>
+    <i><font color="#9A1900">// 1: token cryptocurrency abbreviation (string memory)</font></i>
+    <i><font color="#9A1900">// 2: token cryptocurrnecy name (string memory)</font></i>
+    <i><font color="#9A1900">// 3: ERC-20 token cryptocurrency address (address)</font></i>
+    <i><font color="#9A1900">// 4: k (uint)</font></i>
+    <i><font color="#9A1900">// 5: ether liquidity (uint)</font></i>
+    <i><font color="#9A1900">// 6: token liquidity (uint)</font></i>
+    <i><font color="#9A1900">// 7: fee numerator (uint)</font></i>
+    <i><font color="#9A1900">// 8: fee denominator (uint)</font></i>
+    <i><font color="#9A1900">// 9: token decimals (uint)</font></i>
+    <i><font color="#9A1900">// 10: fees collected in ether (uint)</font></i>
+    <i><font color="#9A1900">// 11: fees collected in the token CC (uint)</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">getDEXinfo</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> 
+                            address<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Inherited functions</font></i>
+
+    <i><font color="#9A1900">// From IERC165.sol:</font></i>
+    <i><font color="#9A1900">// function supportsInterface(bytes4 interfaceId) external view returns (bool);</font></i>
+
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

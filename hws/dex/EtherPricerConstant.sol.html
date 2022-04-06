@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>EtherPricerConstant.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./EtherPricer.sol"</font><font color="#990000">;</font>
+
+contract EtherPricerConstant <font color="#008080">is</font> EtherPricer <font color="#FF0000">{</font>
+
+    <font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external pure <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b>
+            interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>EtherPricer<font color="#990000">).</font>interfaceId <font color="#990000">||</font>
+            interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC165<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <font color="#008080">function</font> <b><font color="#000000">getEtherPriceInCents</font></b><font color="#990000">()</font> external pure <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">10000</font><font color="#990000">;</font> <i><font color="#9A1900">// $100 in cents</font></i>
+    <font color="#FF0000">}</font>
+
+<font color="#FF0000">}</font></tt></pre>
+</body>
+</html>
