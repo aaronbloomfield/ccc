@@ -6,8 +6,13 @@ Decentralized Exchange (DEX)
 
 ### Overview
 
-In this assignment you are going to create a Decntralized Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
+In this assignment you are going to create a Decntralized Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency (hereafter: TC) you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
 [Constant Product Automated Market Maker (CPAMM)](../../slides/applications.html#/cpamm) method for determining the exchange rates.
+
+
+### Changelog
+
+Any changes to this page will be put here for easy reference.  So far there aren't any.
 
 
 ### Pre-requisites
@@ -35,23 +40,25 @@ interface EtherPricer is IERC165 {
 
 Thus, it provides only two functions: the `getEtherPriceInCents()` and `supportsInterface()` from the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract.  The `getEtherPriceInCents()` will return the current price in cents.  Thus, if the price is $99.23 per (fake) ETH, it would return `9923`.
 
-As mentioned, there are two deployed, the contract addresses of which are on the Collab landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)).  This is meant to be used for debugging, as it always returns the same value.
+As mentioned, there are two deployed contracts that implemented this interface, the contract addresses of which are on the Collab landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)).  You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.
 
 The second one is a variable version, whose price ranges greatly, but generally averages (over time) around $100 in price.  As there is no true randomness on a fully deterministic blockchain, the value is based on the current block number.  So while this will change at each block, it will not change until a new block is mined.  The implementation for the variable version is not being provided, but it follows the interface above.
 
-You should use the first (constant) one while you are debugging your code.  You will need to use the second (variable) one when you make your final deployment.  The current (variable) price of our (fake) ETH is shown on the DEX web page, which is described below.
+You should use the first (constant) one while you are debugging your code.  You will need to use the second (variable) one when you make your final deployment.  The current variable price of our (fake) ETH is shown on the DEX web page, which is described below.
 
 
 
 ### Details
 
-Your DEX must follow the [CPAMM (Constant Product Automated Market Maker)](../../slides/applications.html#/cpamm) method as discussed in the lecture slides.  Once deployed, there will be some liquidity that must be added to the DEX before trading can start.  Anybody can then exchange some of our (fake) ETH for your token cryptocurrency.  This, combined with the varying price of our (fake) ETH, will cause the price of your token cryptocurrency to fluctuate significantly.  At the end of the assignment you will register your DEX with a course-wide exchange so that the entire class can see all of the exchangeable token cryptocurrencies.
+Your DEX must follow the [CPAMM (Constant Product Automated Market Maker](../../slides/applications.html#/cpamm) method as discussed in the lecture slides.  Once deployed, there will be some liquidity that must be added to the DEX before trading can start.  Anybody can then exchange some of our (fake) ETH for your token cryptocurrency.  This, combined with the varying price of our (fake) ETH, will cause the price of your token cryptocurrency to fluctuate significantly.  At the end of the assignment you will register your DEX with the course-wide DEX web page so that the entire class can see all of the exchangeable token cryptocurrencies.
 
-As far as this assignment is concerned, there will only be *one* DEX for each token cryptocurrency.  You may have deployed multiple ones to test your code, but for our class trading we will only be having one DEX that you deploy at the end.  Thus, arbitrage trading is not possible, since that requires trading between two or more exchanges.
+As far as this assignment is concerned, there will only be *one* DEX for each token cryptocurrency.  You may have deployed multiple ones to test your code, but for our class trading we will only be having one DEX that you deploy at the end.  Thus, arbitrage trading is not possible, since that requires trading between two or more exchanges that exchange the same pairs of tokens.  Furthermore, we are not going to be implementing [routing](../../slides/applications.html#/routing).
 
 ### Interface
 
-Formally, you must implement a `TokenDEX` contract that implements the [DEX.sol](DEX.sol.html) ([src](DEX.sol)) interface.  Your contract opening line MUST be: `contract TokenDEX is DEX`.  Note that the `DEX` interface extends the `IERC165` interface, so you will also have to implmenet the `supportsInterface()` function.  The functions in this interface are shown below, and much more detail is provided in the [DEX.sol](DEX.sol.html) ([src](DEX.sol)) file.
+Formally, you must implement a `TokenDEX` contract that implements the [DEX.sol](DEX.sol.html) ([src](DEX.sol)) interface.  Your contract opening line MUST be: `contract TokenDEX is DEX`.  Note that the `DEX` interface extends the `IERC165` interface, so you will have to implement the `supportsInterface()` function as well.  The functions in this interface are shown below, and much more detail is provided in the [DEX.sol](DEX.sol.html) ([src](DEX.sol)) file.
+
+Note that many of these functions are just the getter functions from `public` variables; which ones are described in the full source file.
 
 ```
 // SPDX-License-Identifier: MIT
@@ -149,27 +156,27 @@ interface DEX is IERC165 {
 
 Here are all the files you will need:
 
-- [DEX.sol](DEX.sol.html) ([src](DEX.sol)): the interface, above, that your contract will need to implement
+- [DEX.sol](DEX.sol.html) ([src](DEX.sol)): the interface, above, that your contract will need to implement; that file has many more comments in the file to describe what each function does
 - [EtherPricer.sol](EtherPricer.sol.html) ([src](EtherPricer.sol)): the interface that the two pricing smart contracts implement; the contract addresses for these are on the Collab landing page
 - [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)) is the contract implementation of EtherPricer.sol that always returns 100 in cents (formally: `10000`); note that the source code for the variable version is not being made available
 - [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)): the ERC-165 interface, which the DEX interface extends
 - [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)): the same file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, which your token cryptocurrency implements
 - [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)): The full ERC-20 interface, which the IERC20Metadata contract extends
-
+- [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) is a file to help test the TokenDEX contract, and is explained in detail below
 
 When you want to test your program, this is the expected flow to get it started, whether to the Javascript blockchain in Remix or to our private Ethereum blockchain:
 
-- Deploy your TokenDEX contract and (if necessary) your TokenCC contract
-- Approve your TokenDEX contract for some amount of your TokenCC supply via `approve()` on your TokenCC contract
-- Call `createPool()` on your TokenDEX.  Choose how much TokenCC supply to use (you don't have to use it all!), and put in the appropriate EtherPricer contract address
+- Deploy your TokenDEX contract and (if necessary) your TokenCC contract.
+- Approve your TokenDEX contract for some amount of your TokenCC supply via `approve()` on your TokenCC contract.
+- Call `createPool()` on your TokenDEX.  Choose how much TokenCC supply to use (you don't have to use it all!), and put in the appropriate EtherPricer contract address.  You will have to transfer in some ether with this call.
+
+As far this this assignment is concerned, the exchange rate between our (fake) ETH and your token cryptocurrency is initially set based on the ratio of what you send in via `createPool()`.  The overall value of the DEX is based on the current (fake) ETH price.  So if you have 10 (fake) ETH, and the price of the (fake) ETH is $99.23, then the ETH liquidity is $9,923; the value of the DEX is twice that, or $19,846.
 
 ### Fees
 
-Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out -- it just pays that much less.  Reasonable fees are a fraction of a percent -- perhaps 0.2%, for example.
+Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out -- it just pays that much less.  Reasonable fees are a fraction of a percent -- perhaps 0.2%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEhter` and `feesToken` variables (and getter functions).  These accumulate the *total* amount of fees that the DEX has accumulated over time.  
 
-When fees are withheld, the amount that is withheld is added to the `feesEhter` and `feesToken` variables (and getter functions).  These accumulate the *total* amount of fees that the DEX has accumulated over time.  
-
-Managing fees is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which gets a cut, proportional to their liquidity, of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be added in appropriate proportions.
+Managing fee payout is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which had different times that the DEX held their liquidity, and each of which gets a cut -- proportional to their liquidity -- of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be balanced with the other currency so that they can be added in appropriate proportions.
 
 For this assignment, we are not going to handle distributing fees back to the liquidity providers -- we are just going to accumulate them into the `feesEhter` and `feesToken` variables.  We realize that this inability to retrieve the fees would result in lost ETH or TC.  That's fine for this assignment, even if it would not be fine in a real world situation.
 
@@ -223,6 +230,71 @@ To help you debug your program, here is a worked-out example of how the values i
   	- The exchange rate is 1 ETH for 40 TC (we just divide 240 by 6)
 
 
+### Testing
+
+To help you test your code, below is a method that will test the first case from the example above -- the `createPool()` example.  This is intended to be done on the Javascript development environment in Remix.  This file is saved as [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)).
+
+```
+// SPDX-License-Identifier: GPL-3.0-or-later
+pragma solidity ^0.8.7;
+
+import "./TokenDEX.sol";
+import "./TokenCC.sol";
+import "./EtherPricerConstant.sol";
+
+contract DEXtest {
+
+	function test() public payable {
+ 		require (msg.value > 15 ether, "Must call with more than 15 ether");
+        TokenCC cc = new TokenCC();
+        TokenDEX dex = new TokenDEX();
+        EtherPricerConstant pricer = new EtherPricerConstant();
+        cc.approve(address(dex),cc.totalSupply());
+
+        // initial deposit of 10 ETH and 100 TC
+	    try dex.createPool{value: 10 ether}(100*10**cc.decimals(), 0, 1000, address(cc), address(pricer)) {
+            // do nothing
+        } catch Error(string memory reason) {
+            require (false, string(abi.encodePacked("createPool() call reverted: ",reason)));
+        }
+        require(dex.k() == 1e31, "k value not correct after createPool()");
+        require(dex.etherLiquidity() == 1e19, "x value not correct after createPool()");
+        require(dex.tokenLiquidity() == 10**(cc.decimals()+2), "y value not correct after createPool()");
+
+        // insert code for the example's transaction 1 here
+
+        // insert code for the example's transaction 2 here
+
+        // insert code for the addLiquidity() example here
+
+        // finish up
+        require(false,"end fail"); // huh?
+	}
+
+}
+```
+
+
+To use this file, deploy it and then call `test()` with with 16 ether.  There are a few new concepts here, and various notes as well:
+
+- When compiling it, you may get a message that the size exceeds the maximum limit for the blockchain -- that's because it's compiling a whole bunch of code, including all of the code of the imported files as well as the code in this file.  This large code size is fine, since we are only using it to test on the Javascript environment, which does not have this size limit, despite the warning.  So you can click on 'force send' in the Remix pop-up box.  Or you can enable compiler optimizations to get rid of that warning.
+- You will need to have your `TokenCC.sol` file in the same directory so that it can compile and run
+  - And the amount of your token cryptocurrency that is minted must be greater than 100
+- This code verifies that the first example, above, works correctly (the example that calls `createPool()`)
+	- This also does not enable any fees (the `feeNumerator` parameter is set to 0), just like the example above.
+	- It is left to you to add in additional code to test the other cases above, or when fees are enabled.
+- The `test()` function creates it's own copy of your token cryptocurrency (in the `cc` variable) as well as a copy of your DEX (in the `dex` variable).  Notice the use of the `new` keyword here.  Thus, they are not modifying any ones that you have previously deployed.
+- This code will adapt to however many decimals your token cryptocurrency uses via the various calls to `cc.decimals()`
+- There is a try-catch block here
+  - The syntax is quite different than other programming languages
+  - The "thing" to try is between the `try` keyword and the open curly brace at the end of that line
+  - The code to do if that function call is successful (meaning no errors were thrown) is on the next line -- in this case, it's just `// do nothing`
+  - The `catch` block executes if the function call reverts via `revert()` or `require()`
+  - This particular version of the catch block prints out the error message obtained from the second parameter of `require()` for ease of debugging
+- You will notice the last line of the function is: `require(false,"end fail")`, and this will *always* revert.  If that line were not present, and all the tests pass, then our account will lose the 16 ether we passed in.  While we can reset the account, that requires a Remix restart (or other measures).  What we want is on a means to check that all the tests pass, but get a full refund for all of the payments (including the payment to `createPool()`, in this example).  That's the purpose of this line -- if it reverts on that line, we know all the previous tests passed, but the reversion causes our account to be refunded the (fake) ETH we passed in.
+
+
+
 ### Deployment
 
 This part has three different steps.  This may require a few runs to get it right -- that's fine, just be sure to submit the various values (contract addresses and transaction hashes) from the last deployment.
@@ -234,15 +306,16 @@ Step 2: Deploy your DEX to the private Ethereum blockchain.  So that it will wor
 - It must be initialized with the *variable* EtherPricer contract for the price of our (fake) ether.  While you are welcome to use the constant one for testing, you MUST use the variable one for the final deployment.
 - You need to call `createPool()`
 	- You must fund it with 100 (fake) ether.  *Do not put a different amount in!*
-	    - This implies initializing the TokenCC and allowing the DEX to transfer it
-	- You can put as many or as little of your token in as you like (but no less than 10.0 coins).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in about half of what you own, and you can certainly put in less.
+	    - This implies initializing the TokenCC and allowing the DEX to transfer it via `approve()`
+	- You can put as many or as little of your token in as you like (but no less than 10.0 coins).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in no more than half of what you own, and you can certainly put in less.
+	    - Or you can just mint a million of your TC, and put in 1,000 each time you run another test
 - Do not call either `addLiquidity()` or `removeLiquidity()` yet
 
-Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page.  To register your DEX, fill out the contract address form at the bottom of that page -- all the other information (your userid and token abbreviation) has already been submitted for you.  You will see your DEX values populate one of the table rows -- make sure they are correct.  Note that the current ETH price is listed at the top of the page.
+Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page.  To register your DEX, fill out the contract address form at the bottom of that page.  You will see your DEX values populate one of the table rows -- make sure they are correct.  Note that the current ETH price is listed at the top of the page.
 
 ### Send me some of your token cryptocurrency
 
-I will need some of your token cryptocurrency to test your DEX for grading purposes.  While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract.  Please send me 1.0 coins.  This means that if your TokenCC has 10 decimal places, then the value you need to send me is 10,000,000,000.  The address to send this to is on the Collab landing page.
+I will need some of your token cryptocurrency to test your DEX for grading purposes.  While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract.  Please send me 10.0 coins.  This means that if your TokenCC has 10 decimal places, then the value you need to send me is 100,000,000,000.  The address to send this to is on the Collab landing page.
 
 
 ### Make some exchanges
@@ -251,17 +324,19 @@ Now that your exchange is registered, you can view all the exchanges.  You shoul
 
 You need to make 4 total exchanges with DEXes other than you own.  As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether.  Or you can mine ether and use that to exchange for the others.
 
-Depending on when you submit your assignment, there may not be other DEXes to interact with.  That’s fine – you don’t have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the exchanges. We are going to check whether you exchange for the other token cryptocurrencies by looking if your eth.coinbase account, the address of which you will submit below, initiated exchanges on any one of your classmate’s submitted DEX addresses by a few days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
+Depending on when you submit your assignment, there may not be other DEXes to interact with.  That's fine – you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the exchanges. We are going to check whether you exchange for the other token cryptocurrencies by looking if your eth.coinbase account, the address of which you will submit below, initiated exchanges on any one of your classmate's submitted DEX addresses by a few days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 
 
 ### Submission
 
-There are *four* forms of submission for this assignment; you must do all four.
+There are *five* forms of submission for this assignment; you must do all five.
 
-Submission 1: Submit the TokenDEX.sol file to Gradescope.  Also submit the TokenCC.sol file, from the previous assignment.
-
-Submission 2: Deploy the TokenDEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well, either from the previous assignment or again for this one.  These were likely done in the deployment section, above.
-
-Submission 3: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.
-
-Submission 4: Google form!  The URL is on the Collab landing page.
+1. Submission 1: Submit the TokenDEX.sol file to Gradescope.  Also submit the TokenCC.sol file, from the previous assignment.
+2. Submission 2: Deploy the TokenDEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well, either from the previous assignment or again for this one.  These were likely done in the deployment section, above.
+3. Submission 3: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.
+4. Submission 4: Google form!  The URL is on the Collab landing page.
+5. Submission 5: You have to complete a few of the steps listed in various places above; we just list them here so you don't forget one of them
+	- Ensure you called `createPool()` on your DEX with *exactly* 100 (fake) ETH
+	- Ensure your DEX is initialized with the variable EtherPricer contract
+	- Send me 10.0 coins of your token cryptocurrency
+	- Make 4 exchanges on somebody else's DEX

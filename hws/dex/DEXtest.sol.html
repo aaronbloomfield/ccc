@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>DEXtest.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./TokenDEX.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./EtherPricerConstant.sol"</font><font color="#990000">;</font>
+
+<font color="#008080">contract</font> DEXtest <font color="#FF0000">{</font>
+
+    <font color="#008080">function</font> <b><font color="#000000">test</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#FF0000">{</font>
+        <b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">&gt;</font> <font color="#993399">15</font> ether<font color="#990000">,</font> <font color="#FF0000">"Must call with more than 15 ether"</font><font color="#990000">);</font>
+        <font color="#008080">TokenCC</font> cc <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">TokenCC</font></b><font color="#990000">();</font>
+        <font color="#008080">TokenDEX</font> dex <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">TokenDEX</font></b><font color="#990000">();</font>
+        <font color="#008080">EtherPricerConstant</font> pricer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EtherPricerConstant</font></b><font color="#990000">();</font>
+        cc<font color="#990000">.</font><b><font color="#000000">approve</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font>dex<font color="#990000">),</font>cc<font color="#990000">.</font><b><font color="#000000">totalSupply</font></b><font color="#990000">());</font>
+
+        <i><font color="#9A1900">// initial deposit of 10 ETH and 100 TC</font></i>
+        <b><font color="#0000FF">try</font></b> dex<font color="#990000">.</font>createPool<font color="#FF0000">{</font>value<font color="#990000">:</font> <font color="#993399">10</font> ether<font color="#FF0000">}</font><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font>cc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1000</font><font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>cc<font color="#990000">),</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>pricer<font color="#990000">))</font> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// do nothing</font></i>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">catch</font></b> <b><font color="#000000">Error</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> reason<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#000000">require</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <b><font color="#000000">string</font></b><font color="#990000">(</font>abi<font color="#990000">.</font><b><font color="#000000">encodePacked</font></b><font color="#990000">(</font><font color="#FF0000">"createPool() call reverted: "</font><font color="#990000">,</font>reason<font color="#990000">)));</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">k</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1e31</font><font color="#990000">,</font> <font color="#FF0000">"k value not correct after createPool()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">etherLiquidity</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1e19</font><font color="#990000">,</font> <font color="#FF0000">"x value not correct after createPool()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">tokenLiquidity</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">10</font><font color="#990000">**(</font>cc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">()+</font><font color="#993399">2</font><font color="#990000">),</font> <font color="#FF0000">"y value not correct after createPool()"</font><font color="#990000">);</font>
+
+        <i><font color="#9A1900">// insert code for the example's transaction 1 here</font></i>
+
+        <i><font color="#9A1900">// insert code for the example's transaction 2 here</font></i>
+
+        <i><font color="#9A1900">// insert code for the addLiquidity() example here</font></i>
+
+        <i><font color="#9A1900">// finish up</font></i>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font><font color="#FF0000">"end fail"</font><font color="#990000">);</font> <i><font color="#9A1900">// huh?</font></i>
+    <font color="#FF0000">}</font>
+
+<font color="#FF0000">}</font></tt></pre>
+</body>
+</html>
