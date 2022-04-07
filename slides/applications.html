@@ -424,7 +424,7 @@ line-height:120%;
 - Our pool: 10 ETH and 10,000 USDT; $k=100,000$
 - Imagine the price of ETH rises to `$`1,300
 - An arbitrage trader exchanges USDT for 2 ETH from our DEX
-  - As per AMM, they pay 2,500 USDT
+  - As per CPAMM, they pay 2,500 USDT
   - Our DEX now has 8 ETH and 12,500 USDT, so $k$ is the same
 - And sells the 2 ETH to Coinbase for `$`2,600
   - They made `$`100 profit
@@ -471,7 +471,7 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 - When the DEX owner runs off with your coins
 - Recall `selfdestruct()`
   - Whomever calls it gets all the coins that the contract controls
-  - We can easily ensure only the deployer can call it
+  - We can easily ensure only the deployer can call it, and have it transfer the TC in the process
 - In 2021, an estimated 7.7 billion was stolen in rug pulls ([source](https://www.bitchecker.com/en-US/articles/67))
 
 
@@ -495,7 +495,6 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 - Bancor: an entire protocol that competes with Uniswap
 - SushiSwap: operates on many blockchains
   - But cannot swap between different blockchains
-- Three blank lines separate one slide from another
 - Balancer: allows up to 8 assets in a liquidity pool
   - Has *very* complicated algorithms to manage this
 - See a list of various DEXs [here](https://defillama.com/)
@@ -569,6 +568,7 @@ See [here](https://deepdao.io/organizations) for a list of some well-known DAOs
 ## The DAO (styled &ETH;)
 - A venture capital investment DAO launched in April 2016; now defunct
   - Code is open-source (GPL): [DAO.sol](https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol)
+    - That code contains both an interface and a contract in one file
   - Raised `$`150 million from over 11,000 investors in a month
     - That was 15% of the ether at that point
 - A hack in June 2016 drained all the ether from the DAO
