@@ -17,6 +17,7 @@ These are larger programming homeworks.
 - [P5: dApp Gradebook](gradebook/index.html) ([md](gradebook/index.md))
 - [P6: dApp Tokens](tokens/index.html) ([md](tokens/index.md))
 - [P7: dApp Auction](auction/index.html) ([md](auction/index.md))
+- [P8: DEX](dex/index.html) ([md](dex/index.md))
 
 
 ### Smaller homeworks

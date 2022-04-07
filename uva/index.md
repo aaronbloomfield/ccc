@@ -50,6 +50,7 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Larger Programming Homeworks
 
+- Due Tue, 4/12 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
 - Due Tue, 4/5 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
 - Due Tue, 3/29, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
 - Due Tue, 3/22, by midnight: [HW P5: dApp Gradebook](../hws/gradebook/index.html) ([md](../hws/gradebook/index.md))
