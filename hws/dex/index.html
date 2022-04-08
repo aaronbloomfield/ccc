@@ -37,6 +37,13 @@ Market Maker (CPAMM)</a> method for determining the exchange rates.</p>
 <p>Any changes to this page will be put here for easy reference. Typo
 fixes and minor clarifications are not listed here. So far there aren’t
 any significant changes to report.</p>
+<ul>
+<li>Fri, 4/8: The last two <code>require()</code> statements of <a
+href="DEXtest.sol.html">DEXtest.sol</a> (<a href="DEXtest.sol">src</a>)
+(the two above the ‘end fail’ one) were refactored and better commented
+– the functionality is the exact same as before this edit, but the new
+refactoring should make it easier to understand what is going on</li>
+</ul>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Writing this homework will require completion of the following
 assignments:</p>
@@ -459,8 +466,12 @@ contract DEXtest {
             require (false, string(abi.encodePacked(&quot;createPool() call reverted: &quot;,reason)));
         }
         require(dex.k() == 1e31, &quot;k value not correct after createPool()&quot;);
-        require(dex.etherLiquidity() == 1e19, &quot;x value not correct after createPool()&quot;);
-        require(dex.tokenLiquidity() == 10**(cc.decimals()+2), &quot;y value not correct after createPool()&quot;);
+        // the next line assumes you are sending in 10 ETH; adjust as necessary,
+        // but this amount matches the worked-out example in the homework description
+        require(dex.etherLiquidity() == 10 * 1e18, &quot;x value not correct after createPool()&quot;);
+        // the next line assumes that you are putting in 100 TC; adjust as necessary,
+        // but this amount matches the worked-out example in the homework description
+        require(dex.tokenLiquidity() == 100 * 10**(cc.decimals()), &quot;y value not correct after createPool()&quot;);
 
         // insert code for the example&#39;s transaction 1 here
 

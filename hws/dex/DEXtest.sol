@@ -21,8 +21,12 @@ contract DEXtest {
             require (false, string(abi.encodePacked("createPool() call reverted: ",reason)));
         }
         require(dex.k() == 1e31, "k value not correct after createPool()");
-        require(dex.etherLiquidity() == 1e19, "x value not correct after createPool()");
-        require(dex.tokenLiquidity() == 10**(cc.decimals()+2), "y value not correct after createPool()");
+        // the next line assumes you are sending in 10 ETH; adjust as necessary,
+        // but this amount matches the worked-out example in the homework description
+        require(dex.etherLiquidity() == 10 * 1e18, "x value not correct after createPool()");
+        // the next line assumes that you are putting in 100 TC; adjust as necessary,
+        // but this amount matches the worked-out example in the homework description
+        require(dex.tokenLiquidity() == 100 * 10**(cc.decimals()), "y value not correct after createPool()");
 
         // insert code for the example's transaction 1 here
 

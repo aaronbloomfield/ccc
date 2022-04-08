@@ -14,6 +14,8 @@ In this assignment you are going to create a Decntralized Cryptocurrency Exchang
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Fri, 4/8: The last two `require()` statements of [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) (the two above the 'end fail' one) were refactored and better commented -- the functionality is the exact same as before this edit, but the new refactoring should make it easier to understand what is going on
+
 
 ### Pre-requisites
 
@@ -258,8 +260,12 @@ contract DEXtest {
             require (false, string(abi.encodePacked("createPool() call reverted: ",reason)));
         }
         require(dex.k() == 1e31, "k value not correct after createPool()");
-        require(dex.etherLiquidity() == 1e19, "x value not correct after createPool()");
-        require(dex.tokenLiquidity() == 10**(cc.decimals()+2), "y value not correct after createPool()");
+        // the next line assumes you are sending in 10 ETH; adjust as necessary,
+        // but this amount matches the worked-out example in the homework description
+        require(dex.etherLiquidity() == 10 * 1e18, "x value not correct after createPool()");
+        // the next line assumes that you are putting in 100 TC; adjust as necessary,
+        // but this amount matches the worked-out example in the homework description
+        require(dex.tokenLiquidity() == 100 * 10**(cc.decimals()), "y value not correct after createPool()");
 
         // insert code for the example's transaction 1 here
 
