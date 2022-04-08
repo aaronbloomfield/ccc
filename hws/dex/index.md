@@ -12,7 +12,7 @@ In this assignment you are going to create a Decntralized Cryptocurrency Exchang
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  So far there aren't any.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Pre-requisites
@@ -174,7 +174,7 @@ As far this this assignment is concerned, the exchange rate between our (fake) E
 
 ### Fees
 
-Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out -- it just pays that much less.  Reasonable fees are a fraction of a percent -- perhaps 0.2%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEhter` and `feesToken` variables (and getter functions).  These accumulate the *total* amount of fees that the DEX has accumulated over time.  
+Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEhter` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
 
 Managing fee payout is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which had different times that the DEX held their liquidity, and each of which gets a cut -- proportional to their liquidity -- of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be balanced with the other currency so that they can be added in appropriate proportions.
 
@@ -232,7 +232,7 @@ To help you debug your program, here is a worked-out example of how the values i
 
 ### Testing
 
-To help you test your code, below is a method that will test the first case from the example above -- the `createPool()` example.  This is intended to be done on the Javascript development environment in Remix.  This file is saved as [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)).
+To help you test your code, below is a method that will test the first case from the example above -- the `createPool()` step.  This is intended to be done on the Javascript development environment in Remix.  This file is saved as [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)).
 
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -275,7 +275,7 @@ contract DEXtest {
 ```
 
 
-To use this file, deploy it and then call `test()` with with 16 ether.  There are a few new concepts here, and various notes as well:
+To use this file, deploy it and then call `test()` with with 13 ether.  There are a few new concepts here, and various notes as well:
 
 - When compiling it, you may get a message that the size exceeds the maximum limit for the blockchain -- that's because it's compiling a whole bunch of code, including all of the code of the imported files as well as the code in this file.  This large code size is fine, since we are only using it to test on the Javascript environment, which does not have this size limit, despite the warning.  So you can click on 'force send' in the Remix pop-up box.  Or you can enable compiler optimizations to get rid of that warning.
 - You will need to have your `TokenCC.sol` file in the same directory so that it can compile and run
@@ -292,7 +292,7 @@ To use this file, deploy it and then call `test()` with with 16 ether.  There ar
   - The `catch` block executes if the function call reverts via `revert()` or `require()`
   - This particular version of the catch block prints out the error message obtained from the second parameter of `require()` for ease of debugging
 - You will notice the last line of the function is: `require(false,"end fail")`, and this will *always* revert.  If that line were not present, and all the tests pass, then our account will lose the 16 ether we passed in.  While we can reset the account, that requires a Remix restart (or other measures).  What we want is on a means to check that all the tests pass, but get a full refund for all of the payments (including the payment to `createPool()`, in this example).  That's the purpose of this line -- if it reverts on that line, we know all the previous tests passed, but the reversion causes our account to be refunded the (fake) ETH we passed in.
-
+- We call the function with 13 ether is so that we have enough for the initial `createPool()` call (which uses 10 ether), the successive transaction 1 listed above (which uses 2.5 ether), and a bit extra for gas.
 
 
 ### Deployment

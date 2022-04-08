@@ -34,8 +34,9 @@ DEX will use the <a
 href="../../slides/applications.html#/cpamm">Constant Product Automated
 Market Maker (CPAMM)</a> method for determining the exchange rates.</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. So far
-there aren’t any.</p>
+<p>Any changes to this page will be put here for easy reference. Typo
+fixes and minor clarifications are not listed here. So far there aren’t
+any significant changes to report.</p>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Writing this homework will require completion of the following
 assignments:</p>
@@ -275,14 +276,14 @@ $19,846.</p>
 <h3 id="fees">Fees</h3>
 <p>Each transaction will have fees deducted. Fees are always deducted
 from the amount the DEX pays out – it just pays that much less.
-Reasonable fees are a fraction of a percent – perhaps 0.2%, for example.
-Thus, if you were trading some amount of ETH and getting 100 TC, with
-0.2% fees, you would trade the same amount of (fake) ETH, but receive
-99.8 TC; the other 0.2 TC are the fees. When fees are withheld, the
-amount that is withheld is added to the <code>feesEhter</code> and
-<code>feesToken</code> variables (and getter functions). These
-accumulate the <em>total</em> amount of fees that the DEX has
-accumulated over time.</p>
+Reasonable fees are a fraction of a percent – between 0.2% and 0.5%, for
+example. Thus, if you were trading some amount of ETH and getting 100
+TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but
+receive 99.8 TC; the other 0.2 TC are the fees. When fees are withheld,
+the amount that is withheld is added to the <code>feesEhter</code> and
+<code>feesToken</code> variables. These variables accumulate the
+<em>total</em> amount of fees that the DEX has accumulated over
+time.</p>
 <p>Managing fee payout is quite complicated – one has to take into
 account how much liquidity each provider has in the DEX, and over what
 time frame. There could be thousands of liquidity providers in the pool,
@@ -431,11 +432,10 @@ class="math inline"><em>y</em> = 240 * 10<sup>10</sup> = 2.4 * 1
 </ul>
 <h3 id="testing">Testing</h3>
 <p>To help you test your code, below is a method that will test the
-first case from the example above – the <code>createPool()</code>
-example. This is intended to be done on the Javascript development
-environment in Remix. This file is saved as <a
-href="DEXtest.sol.html">DEXtest.sol</a> (<a
-href="DEXtest.sol">src</a>).</p>
+first case from the example above – the <code>createPool()</code> step.
+This is intended to be done on the Javascript development environment in
+Remix. This file is saved as <a href="DEXtest.sol.html">DEXtest.sol</a>
+(<a href="DEXtest.sol">src</a>).</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.7;
 
@@ -474,7 +474,7 @@ contract DEXtest {
 
 }</code></pre>
 <p>To use this file, deploy it and then call <code>test()</code> with
-with 16 ether. There are a few new concepts here, and various notes as
+with 13 ether. There are a few new concepts here, and various notes as
 well:</p>
 <ul>
 <li>When compiling it, you may get a message that the size exceeds the
@@ -532,6 +532,10 @@ for all of the payments (including the payment to
 line – if it reverts on that line, we know all the previous tests
 passed, but the reversion causes our account to be refunded the (fake)
 ETH we passed in.</li>
+<li>We call the function with 13 ether is so that we have enough for the
+initial <code>createPool()</code> call (which uses 10 ether), the
+successive transaction 1 listed above (which uses 2.5 ether), and a bit
+extra for gas.</li>
 </ul>
 <h3 id="deployment">Deployment</h3>
 <p>This part has three different steps. This may require a few runs to
