@@ -14,6 +14,7 @@ In this assignment you are going to create a Decntralized Cryptocurrency Exchang
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Sun, 4/10: Clarified an ambiguity in the "four or more different DEXs" statement in the "Make some exchanges" section
 - Fri, 4/8: The last two `require()` statements of [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) (the two above the 'end fail' one) were refactored and better commented -- the functionality is the exact same as before this edit, but the new refactoring should make it easier to understand what is going on
 
 
@@ -328,7 +329,7 @@ I will need some of your token cryptocurrency to test your DEX for grading purpo
 
 Now that your exchange is registered, you can view all the exchanges.  You should see your exchange in there, along with your cryptocurrency's logo.  The stats of each exchange are listed in that table.
 
-You need to make 4 total exchanges with DEXes other than you own.  As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether.  Or you can mine ether and use that to exchange for the others.
+You need to make 4 total exchanges with DEXes other than you own (meaning four or more different exchanges, but with four *different* DEXes).  As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether.  Or you can mine ether and use that to exchange for the others.
 
 Depending on when you submit your assignment, there may not be other DEXes to interact with.  That's fine – you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the exchanges. We are going to check whether you exchange for the other token cryptocurrencies by looking if your eth.coinbase account, the address of which you will submit below, initiated exchanges on any one of your classmate's submitted DEX addresses by a few days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 
