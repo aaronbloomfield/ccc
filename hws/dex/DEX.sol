@@ -54,7 +54,7 @@ interface DEX is IERC165 {
 
 	// Get the amount of pool liquidity in USD (actually cents) using the
 	// EtherPricer contract.  We assume that the ETH and the token
-	// cryptocurrency have the same price, and we know (from the EtherPricer
+	// cryptocurrency have the same value, and we know (from the EtherPricer
 	// smart contract) how much the ETH is worth.  This can just be a public
 	// variable.
 	function getPoolLiquidityInUSDCents() external view returns (uint);
@@ -84,8 +84,8 @@ interface DEX is IERC165 {
 	// 0.1% would be 1 and 1000, for example.  The last parameter is the
 	// contract address of the EtherPricer contract being used, and can be
 	// updated later via the setEtherPricer() function.
-	function createPool(uint tokenAmount, uint feeNumerator, uint feeDenominator, 
-						address erc20token, address etherpricer) external payable;
+	function createPool(uint _tokenAmount, uint _feeNumerator, uint _feeDenominator, 
+						address _erc20token, address _etherpricer) external payable;
 
 	//------------------------------------------------------------
 	// Fees
@@ -112,14 +112,16 @@ interface DEX is IERC165 {
 	// Anybody can add liquidity to the pool.  The amount of ETH is paid along
 	// with the function call.  The caller will have to approve the
 	// appropriate amount of token cryptocurrency, via the ERC-20 contract,
-	// for this call to complete successfully.
+	// for this call to complete successfully.  Note that this function does
+	// NOT remove any fees.
 	function addLiquidity() external payable;
 
 	// Remove liquidity -- both ether and token -- from the pool.  The ETH is
 	// paid to the caller, and the token cryptocurrency is transfered back as
 	// well.  If the parameter amount is more than the amount the address has
 	// stored in the pool, this should revert.  See the homework description
-	// for how fees are managed and paid out.
+	// for how fees are managed and paid out, but note that this function
+	// does NOT remove any fees.
 	function removeLiquidity(uint amountEther) external;
 
 	//------------------------------------------------------------

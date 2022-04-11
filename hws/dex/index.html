@@ -24,7 +24,7 @@
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a
 href="../index.md">md</a>)</p>
 <h3 id="overview">Overview</h3>
-<p>In this assignment you are going to create a Decntralized
+<p>In this assignment you are going to create a Decentralized
 Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency
 (hereafter: TC) you created in the <a
 href="../tokens/index.html">Ethereum Tokens</a> (<a
@@ -37,6 +37,12 @@ Market Maker (CPAMM)</a> method for determining the exchange rates.</p>
 <p>Any changes to this page will be put here for easy reference. Typo
 fixes and minor clarifications are not listed here.</p>
 <ul>
+<li>Mon, 4/11: Clarified that the only functions that remove fees are
+<code>exchangeEtherForToken()</code> and
+<code>exchangeTokenForEther()</code>, and they only remove the fee from
+the amount paid out. The other functions (specifically
+<code>addLiquidity()</code> and <code>removeLiquidity()</code>) do not
+deduct fees.</li>
 <li>Mon, 4/11: Put in the blurb about <code>receive()</code> in both
 this description (the last paragraph of the “Testing” section) and the
 <a href="DEXtest.sol.html">DEXtest.sol</a> (<a
@@ -296,6 +302,12 @@ the amount that is withheld is added to the <code>feesEhter</code> and
 <code>feesToken</code> variables. These variables accumulate the
 <em>total</em> amount of fees that the DEX has accumulated over
 time.</p>
+<p><strong><em>NOTE:</em></strong> the ONLY functions that remove fees
+are <code>exchangeEtherForToken()</code> and
+<code>exchangeTokenForEther()</code>, and they only remove the fee from
+the amount paid <em>out</em>. The other functions (specifically
+<code>addLiquidity()</code> and <code>removeLiquidity()</code>) do not
+deduct fees.</p>
 <p>Managing fee payout is quite complicated – one has to take into
 account how much liquidity each provider has in the DEX, and over what
 time frame. There could be thousands of liquidity providers in the pool,

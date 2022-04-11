@@ -6,7 +6,7 @@ Decentralized Exchange (DEX)
 
 ### Overview
 
-In this assignment you are going to create a Decntralized Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency (hereafter: TC) you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
+In this assignment you are going to create a Decentralized Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency (hereafter: TC) you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
 [Constant Product Automated Market Maker (CPAMM)](../../slides/applications.html#/cpamm) method for determining the exchange rates.
 
 
@@ -14,6 +14,7 @@ In this assignment you are going to create a Decntralized Cryptocurrency Exchang
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.
 
+- Mon, 4/11: Clarified that the only functions that remove fees are `exchangeEtherForToken()` and `exchangeTokenForEther()`, and they only remove the fee from the amount paid out.  The other functions (specifically `addLiquidity()` and `removeLiquidity()`) do not deduct fees.
 - Mon, 4/11: Put in the blurb about `receive()` in both this description (the last paragraph of the "Testing" section) and the [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) source code
 - Sun, 4/10: Clarified an ambiguity in the "four or more different DEXs" statement in the "Make some exchanges" section
 - Fri, 4/8: The last two `require()` statements of [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) (the two above the 'end fail' one) were refactored and better commented -- the functionality is the exact same as before this edit, but the new refactoring should make it easier to understand what is going on
@@ -179,6 +180,8 @@ As far this this assignment is concerned, the exchange rate between our (fake) E
 ### Fees
 
 Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEhter` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
+
+***NOTE:*** the ONLY functions that remove fees are `exchangeEtherForToken()` and `exchangeTokenForEther()`, and they only remove the fee from the amount paid *out*.  The other functions (specifically `addLiquidity()` and `removeLiquidity()`) do not deduct fees.
 
 Managing fee payout is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which had different times that the DEX held their liquidity, and each of which gets a cut -- proportional to their liquidity -- of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be balanced with the other currency so that they can be added in appropriate proportions.
 

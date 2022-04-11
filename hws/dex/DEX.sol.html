@@ -65,7 +65,7 @@ interface DEX <font color="#008080">is</font> IERC165 <font color="#FF0000">{</f
 
     <i><font color="#9A1900">// Get the amount of pool liquidity in USD (actually cents) using the</font></i>
     <i><font color="#9A1900">// EtherPricer contract.  We assume that the ETH and the token</font></i>
-    <i><font color="#9A1900">// cryptocurrency have the same price, and we know (from the EtherPricer</font></i>
+    <i><font color="#9A1900">// cryptocurrency have the same value, and we know (from the EtherPricer</font></i>
     <i><font color="#9A1900">// smart contract) how much the ETH is worth.  This can just be a public</font></i>
     <i><font color="#9A1900">// variable.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">getPoolLiquidityInUSDCents</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
@@ -95,8 +95,8 @@ interface DEX <font color="#008080">is</font> IERC165 <font color="#FF0000">{</f
     <i><font color="#9A1900">// 0.1% would be 1 and 1000, for example.  The last parameter is the</font></i>
     <i><font color="#9A1900">// contract address of the EtherPricer contract being used, and can be</font></i>
     <i><font color="#9A1900">// updated later via the setEtherPricer() function.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">createPool</font></b><font color="#990000">(</font><font color="#008080">uint</font> tokenAmount<font color="#990000">,</font> <font color="#008080">uint</font> feeNumerator<font color="#990000">,</font> <font color="#008080">uint</font> feeDenominator<font color="#990000">,</font> 
-                        <font color="#008080">address</font> erc20token<font color="#990000">,</font> <font color="#008080">address</font> etherpricer<font color="#990000">)</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
+    <font color="#008080">function</font> <b><font color="#000000">createPool</font></b><font color="#990000">(</font><font color="#008080">uint</font> _tokenAmount<font color="#990000">,</font> <font color="#008080">uint</font> _feeNumerator<font color="#990000">,</font> <font color="#008080">uint</font> _feeDenominator<font color="#990000">,</font> 
+                        <font color="#008080">address</font> _erc20token<font color="#990000">,</font> <font color="#008080">address</font> _etherpricer<font color="#990000">)</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Fees</font></i>
@@ -123,14 +123,16 @@ interface DEX <font color="#008080">is</font> IERC165 <font color="#FF0000">{</f
     <i><font color="#9A1900">// Anybody can add liquidity to the pool.  The amount of ETH is paid along</font></i>
     <i><font color="#9A1900">// with the function call.  The caller will have to approve the</font></i>
     <i><font color="#9A1900">// appropriate amount of token cryptocurrency, via the ERC-20 contract,</font></i>
-    <i><font color="#9A1900">// for this call to complete successfully.</font></i>
+    <i><font color="#9A1900">// for this call to complete successfully.  Note that this function does</font></i>
+    <i><font color="#9A1900">// NOT remove any fees.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">addLiquidity</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
 
     <i><font color="#9A1900">// Remove liquidity -- both ether and token -- from the pool.  The ETH is</font></i>
     <i><font color="#9A1900">// paid to the caller, and the token cryptocurrency is transfered back as</font></i>
     <i><font color="#9A1900">// well.  If the parameter amount is more than the amount the address has</font></i>
     <i><font color="#9A1900">// stored in the pool, this should revert.  See the homework description</font></i>
-    <i><font color="#9A1900">// for how fees are managed and paid out.</font></i>
+    <i><font color="#9A1900">// for how fees are managed and paid out, but note that this function</font></i>
+    <i><font color="#9A1900">// does NOT remove any fees.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">removeLiquidity</font></b><font color="#990000">(</font><font color="#008080">uint</font> amountEther<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
