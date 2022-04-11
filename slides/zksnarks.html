@@ -131,6 +131,7 @@ line-height:120%;
 - Peggy (the "prover") knows how to open it, and wants to prove it to Victor (the "verifier")
   - But she doesn't want Victor to see how to open it
 - How can she prove this to him?
+  - And not show it to the rest of the world?
 - (Images from [Wikipedia](https://en.wikipedia.org/wiki/Zero-knowledge_proof))
 
 
@@ -166,12 +167,24 @@ line-height:120%;
 - This shows, with 50% probability, that Alice knows a "key"
   - If run twice, then it shows with 75% probability
 - To get a higher confidence level, run it many times
-  - 10?  100?
+  - 10?  100? 1000?
 - This is not a proof!
-  - Since there is a $1-\frac{1}{2^n}$ chance that Peggy was just really lucky
+  - Since there is a $\frac{1}{2^n}$ chance that Peggy was just really lucky
 - We'll call it a *verification*
 - Note that this is an *interactive* verification
-- (Yes, Peggy could have done a loop as well, with Victor outside the cave)
+
+
+
+## But wait...
+- Why doesn't Victor check that the door is locked, and then have Peggy do a loop?
+- Recall that Peggy wants to prove to Victor that she knows the key
+  - But not show it to the rest of the world
+- The current experiment:
+  - Does convince Victor (with probability $1/2^n$ for $n$ tries)
+  - Will look staged to the rest of the world
+- Peggy doing a loop:
+  - Will still convince Victor
+  - Will reveal that Peggy knows the key to the rest of the world
 
 
 
@@ -191,6 +204,8 @@ line-height:120%;
 - This *is* a proof, since I can definitively show where Waldo is
   - There could be *multiple* Waldos, but I have still showed where one is
 - This is still an *interactive* proof
+  - Although I could leave it lying around, and it would be (mostly) non-interactive
+- Note who I verified it to, though...
 
 
 
@@ -267,6 +282,8 @@ line-height:120%;
   - Specifically their [How It Works](https://z.cash/technology/) page
   - And also their "Explaining SNARKs" (parts [1](https://electriccoin.co/blog/snark-explain1/) through [7](https://electriccoin.co/blog/snark-explain7/))
 - <img src="images/logos/zcash.svg" class="cclogo"> [ZEC](https://coinmarketcap.com/currencies/zcash/), aka Zcash, current sells for `$`165 per coin (as of April 10, 2022)<br clear='all'>
+- Another coin that uses zkSNARKs is:
+- <img src="images/logos/Firo-logo.svg" class="cclogo"> [FIRO](https://coinmarketcap.com/currencies/firo/), aka Firo aka Zcoin, current sells for `$`3.86 per coin (as of April 10, 2022)<br clear='all'>
 
 
 
@@ -357,10 +374,15 @@ mod(7^5,11)
 ## Supported operations
 - Our homomorphic hiding operation $E(x)=g^x$ supports addition
   - Meaning we can compute $E(x+y)$ from $E(x)$ and $E(y)$
-  - Specifically because $E(x+y)=E(x)+E(y)$
+  - Specifically because $E(x+y)=E(x) \ast E(y)$
+  - Derivation: $E(x+y)=g^{x+y}=g^x \ast g^y = E(x) \ast E(y)$
+
+
+
+## Supported operations
 - It also supports *linear combinations*
   - Meaning we can compute $E(ax+by)$ from $E(x)$ and $E(y)$
-  - Specifically because:
+  - Derivation:
     - $E(ax+by)=g^{ax+by}=g^{ax} \ast g^{by}=(g^x)^a \ast (g^y)^b$ $=E(x)^a \ast E(y)^b$
   - Note that this is not *polynomial* combinations
 - It does *not* support general multiplication
@@ -374,7 +396,7 @@ mod(7^5,11)
   - $E(ax)=E(x)^a$
 - Specifically:
   - We can perform addition and scalar multiplication with our homomorphic hidings
-  - But not general multiplication!
+  - But not general multiplication, such as of a polynomial by another polynomial
 
 
 
@@ -445,9 +467,9 @@ For some $a_0, \ldots, a_d \in Z_p$
 <!-- from part 3: https://electriccoin.co/blog/snark-explain3/ -->
 ## Forcing Alice to behave
 - Bob needs to force Alice to not make up the results
-- This is done via the KC Test
+- This is done via the Knowledge of Coefficient (KC) Test
 - Overview:
-  - Bob chooses two numbers $(a,b)$ that have a *linear* relationship
+  - Bob chooses two numbers $(a,b)$ that have a *linear* relationship, such as $b=\alpha \cdot a$
   - Alice cannot figure out the relationship because doing so is *hard* (read: computational infeasible)
   - Alice can, however, figure out $E(P(a))$ and $E(P(b))$
     - If Alice computes these faithfully, the relationship will be preserved
@@ -485,7 +507,11 @@ For some $a_0, \ldots, a_d \in Z_p$
 - Bob chooses $a=4$ and $\alpha = 10$, so $b=\alpha \ast a = 10 \ast 4 = 7$ in $Z_{11}$
 - Bob sends the HHs for pair $(4,7)$ to Alice:
   - For $a=4$: $E(1)=7, E(4)=3,E(4^2)=4$
-  - For $b=7$: $E(1\cdot\alpha \text{ \% } 11)=1$, $E(4\cdot\alpha \text{ \% } 11)=6$, and $E(7^2\cdot\alpha \text{ \% } 11)=4$
+  - For $b=7$: $E(1\cdot\alpha \text{ \% } 11)=1$, $E(7\cdot\alpha \text{ \% } 11)=6$, and $E(7^2\cdot\alpha \text{ \% } 11)=4$
+
+
+
+## KC Test Example
 - Alice doesn't know $(a,b)$, but computes & sends back:
   - $a'=E(P(a))=E(P(4))=5$
   - $b'=E(P(b))=E(P(7))=6$
@@ -508,7 +534,7 @@ For some $a_0, \ldots, a_d \in Z_p$
 <!-- from part 4: https://electriccoin.co/blog/snark-explain4/ -->
 ## Where we are
 - Bob sends an $\alpha$-pair $(a,b=\alpha \cdot a)$ to Alice
-  - Formally he sends $(E(a),E(b))$
+  - Formally he sends the HHs for $(E(a),E(b))$
   - Alice does not know $\alpha$
 - Alice responds with $(a',b')$, which also is an $\alpha$-pair
   - Maybe she evaluated her polynomial $P$ by returning $(a',b')=(E(P(a)),E(P(b))$
@@ -521,7 +547,7 @@ For some $a_0, \ldots, a_d \in Z_p$
 ## d-KCA
 - Now let's imagine that Bob sends *two* $\alpha$-pairs: $(a_1,b_1)$ and $(a_2,b_2)$
 - Alice could construct her return $(a',b')$ $\alpha$-pair by picking *two* different values, $\gamma_1$ and $\gamma_2$, to construct a return $\alpha$-pair:
-  - $(a',b')=(\gamma_1 \cdot a_1+\gamma_2 \cdot a_2,\gamma_1 \cdot b_1 + \gamma_2 \cdot b_2)$
+  - $(a',b')=(\gamma_1 a_1+\gamma_2 a_2,\gamma_1 b_1 + \gamma_2 b_2)$
 
 
 
@@ -559,7 +585,7 @@ $$(a',b') = ( \sum_{i=1}^d \gamma_i \cdot a_i, \sum_{i=1}^d \gamma_i \cdot b_i )
 
 
 ## Where we are
-- By passing in the HHs for $x^n$ and $(\alpha x)^n$, Bob can force Alice to compute $a$ polynomial
+- By passing in the HHs for $x^n$ and $(\alpha x)^n$, Bob can force Alice to compute *a* polynomial
   - But not necessarily the $P(x)$ one that we want her to compute
 - Next we have to ensure that she computes the *correct* one
   - Meaning the one showing that she controls her private key
@@ -568,7 +594,7 @@ $$(a',b') = ( \sum_{i=1}^d \gamma_i \cdot a_i, \sum_{i=1}^d \gamma_i \cdot b_i )
 
 ## Protocol formalization
 - The Verifiable Blind Evaluation Protocol:
-  1. Given an agreed-upon $E(x)$ (with a $g$ therein), Bob chooses a random $\alpha,x \in Z_p$, and sends the hidings of $g,x \cdot g,\ldots,x^d \cdot g$ and also $\alpha \cdot g,\alpha x \cdot g,\ldots,\alpha x^d \cdot g$
+  1. Given an agreed-upon $E(x)$, such as $E(x)=g^x$, Bob chooses a random $\alpha,x \in Z_p$, and sends the hidings of $g,x \cdot g,\ldots,x^d \cdot g$ and also $\alpha \cdot g,\alpha x \cdot g,\ldots,\alpha x^d \cdot g$
   2. Alice computes $a=E(P(x))$ and $b=E(\alpha P(x))$ using those values, and sends that to Bob
   3. Bob checks that $b = \alpha \cdot a$, and accepts only if true
 - We still have a few issues to fix
@@ -827,11 +853,10 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 
 
 
+<!--
 ## Forcing Alice to Behave
 - See the "Making sure Alice chooses her polynomials according to an assignment" section from https://electriccoin.co/blog/snark-explain6/
-
-
-
+-->
 ## Ensuring zero-knowledge
 - Alice returns the hidings $E(L(x))$, $E(R(x))$, $E(O(x))$, and $E(H(x))$ as part of the protocol
   - This reveals *some* information
