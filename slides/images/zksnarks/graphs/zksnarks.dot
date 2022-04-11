@@ -1,0 +1,230 @@
+digraph A {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="x",pos="1,2.5!"];
+    g1 [label="x",pos="0.5,1.25!"];
+    g3 [label="+",pos="1.5,1.25!"];
+    c1 [label="c1",shape=plain,pos="0,0!"];
+    c2 [label="c2",shape=plain,pos="1,0!"];
+    c3 [label="c3",shape=plain,pos="2,0!"];
+
+    c1 -> g1;
+    c1 -> g3;
+    c2 -> g1;
+    c3 -> g3;
+    g1 -> g2;
+    g3 -> g2;
+    g2 -> end;
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
+
+digraph B {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="x",xlabel=<g<sub>2</sub>>,pos="1,2.5!"];
+    g1 [label="x",xlabel=<g<sub>1</sub>>,pos="0.5,1.25!"];
+    g3 [label="+",pos="1.5,1.25!"];
+    c1 [label="c1",shape=plain,pos="0,0!",fontcolor=red];
+    c2 [label="c2",shape=plain,pos="1,0!",fontcolor=blue];
+    c3 [label="c3",shape=plain,pos="2,0!",fontcolor=magenta];
+
+    c1 -> g1 [label=<w<sub>1</sub>>,color=red,fontcolor=red];
+    c1 -> g3 [label=<w<sub>1</sub>>,color=red,fontcolor=red];
+    c2 -> g1 [label=<w<sub>2</sub>>,color=blue,fontcolor=blue];
+    c3 -> g3 [label=<w<sub>3</sub>>,color=magenta,fontcolor=magenta];
+    g1 -> g2 [label=<w<sub>4</sub>>,color=sienna4,fontcolor=sienna4];
+    g3 -> g2 [color=purple4];
+    g2 -> end [label=<w<sub>5</sub>>,color=darkgreen,fontcolor=darkgreen];
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
+
+digraph C {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="x",xlabel=<g<sub>2</sub>>,pos="1,2.5!"];
+    g1 [label="x",xlabel=<g<sub>1</sub>>,pos="0.5,1.25!"];
+    g3 [style=invis,shape=point,pos="1.5,1.25!"];
+    c1 [label="c1",shape=plain,pos="0,0!",fontcolor=red];
+    c2 [label="c2",shape=plain,pos="1,0!",fontcolor=blue];
+    c3 [label="c3",shape=plain,pos="2,0!",fontcolor=magenta];
+
+    c1 -> g1 [label=<w<sub>1</sub>>,color=red,fontcolor=red];
+    c1 -> g3 [label=<w<sub>1</sub>>,color=red,fontcolor=red];
+    c2 -> g1 [label=<w<sub>2</sub>>,color=blue,fontcolor=blue];
+    c3 -> g3 [label=<w<sub>3</sub>>,color=magenta,fontcolor=magenta];
+    g1 -> g2 [label=<w<sub>4</sub>>,color=sienna4,fontcolor=sienna4];
+    g3 -> g2 [color=purple4];
+    g2 -> end [label=<w<sub>5</sub>>,color=darkgreen,fontcolor=darkgreen];
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
+
+digraph D {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="",pos="1,2.5!"];
+    g1 [label="",pos="0.5,1.25!"];
+    g3 [style=invis,shape=point,pos="1.5,1.25!"];
+    c1 [label=" ",shape=plain,pos="0,0!"];
+    c2 [label=" ",shape=plain,pos="1,0!"];
+    c3 [label=" ",shape=plain,pos="2,0!"];
+
+    c1 -> g1;
+    c1 -> g3;
+    c2 -> g1;
+    c3 -> g3;
+    g1 -> g2;
+    g3 -> g2;
+    g2 -> end;
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
+
+digraph E {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="x",xlabel=<g<sub>2</sub>>,pos="1,2.5!"];
+    g1 [label="x",xlabel=<g<sub>1</sub>>,pos="0.5,1.25!"];
+    g3 [style=invis,shape=point,pos="1.5,1.25!"];
+    c1 [label="c1",shape=plain,pos="0,0!",fontcolor=red];
+    c2 [label="c2",shape=plain,pos="1,0!",fontcolor=blue];
+    c3 [label="c3",shape=plain,pos="2,0!",fontcolor=magenta];
+
+    c1 -> g1 [label=<w<sub>1</sub>>,color=red,fontcolor=red];
+    c1 -> g3 [label=<w<sub>1</sub>>,color=red,fontcolor=red];
+    c2 -> g1 [label=<w<sub>2</sub>>,color=blue,fontcolor=blue];
+    c3 -> g3 [label=<w<sub>3</sub>>,color=magenta,fontcolor=magenta];
+    g1 -> g2 [label=<c<sub>4</sub>=w<sub>4</sub>>,color=sienna4,fontcolor=sienna4];
+    g3 -> g2 [color=purple4];
+    g2 -> end [label=<c<sub>5</sub>=w<sub>5</sub>>,color=darkgreen,fontcolor=darkgreen];
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
+
+digraph F {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="x",xlabel=<g<sub>2</sub>>,pos="1,2.5!"];
+    g1 [label="x",xlabel=<g<sub>1</sub>>,pos="0.5,1.25!"];
+    g3 [style=invis,shape=point,pos="1.5,1.25!"];
+    c1 [label="c1",shape=plain,pos="0,0!",fontcolor=red];
+    c2 [label="c2",shape=plain,pos="1,0!",fontcolor=blue];
+    c3 [label="c3",shape=plain,pos="2,0!",fontcolor=magenta];
+
+    c1 -> g1 [label=<L<sub>1</sub>>,color=red,fontcolor=red];
+    c1 -> g3 [label=<R<sub>1</sub>>,color=red,fontcolor=red];
+    c2 -> g1 [label=<R<sub>2</sub>>,color=blue,fontcolor=blue];
+    c3 -> g3 [label=<R<sub>3</sub>>,color=magenta,fontcolor=magenta];
+    g1 -> g2 [label=<O<sub>4</sub>,L<sub>4</sub>>,color=sienna4,fontcolor=sienna4];
+    g3 -> g2 [color=purple4];
+    g2 -> end [label=<O<sub>5</sub>>,color=darkgreen,fontcolor=darkgreen];
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
+
+digraph G {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="x",xlabel=<g<sub>2</sub>=2>,pos="1,2.5!"];
+    g1 [label="x",xlabel=<g<sub>1</sub>=1>,pos="0.5,1.25!"];
+    g3 [style=invis,shape=point,pos="1.5,1.25!"];
+    c1 [label="c1",shape=plain,pos="0,0!",fontcolor=red];
+    c2 [label="c2",shape=plain,pos="1,0!",fontcolor=blue];
+    c3 [label="c3",shape=plain,pos="2,0!",fontcolor=magenta];
+
+    c1 -> g1 [label=<L<sub>1</sub>>,color=red,fontcolor=red];
+    c1 -> g3 [label=<R<sub>1</sub>>,color=red,fontcolor=red];
+    c2 -> g1 [label=<R<sub>2</sub>>,color=blue,fontcolor=blue];
+    c3 -> g3 [label=<R<sub>3</sub>>,color=magenta,fontcolor=magenta];
+    g1 -> g2 [label=<O<sub>4</sub>,L<sub>4</sub>>,color=sienna4,fontcolor=sienna4];
+    g3 -> g2 [label=<R<sub>1</sub>+R<sub>3</sub>>,fontcolor=purple4,color=purple4];
+    g2 -> end [label=<O<sub>5</sub>>,color=darkgreen,fontcolor=darkgreen];
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
+
+digraph H {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+
+    rankdir="BT";
+
+    end [style=invis,pos="1,4!"];
+    g2 [label="x",pos="1,2.5!"];
+    g1 [label="x",pos="0.5,1.25!"];
+    g3 [style=invis,shape=point,pos="1.5,1.25!"];
+    c1 [label="c1=4",shape=plain,pos="0,0!",fontcolor=red];
+    c2 [label="c2=2",shape=plain,pos="1,0!",fontcolor=blue];
+    c3 [label="c3=1",shape=plain,pos="2,0!",fontcolor=magenta];
+
+    c1 -> g1 [label=<L<sub>1</sub>=4>,color=red,fontcolor=red];
+    c1 -> g3 [label=<R<sub>1</sub>=4>,color=red,fontcolor=red];
+    c2 -> g1 [label=<R<sub>2</sub>=2>,color=blue,fontcolor=blue];
+    c3 -> g3 [label=<R<sub>3</sub>=1>,color=magenta,fontcolor=magenta];
+    g1 -> g2 [label=<O<sub>4</sub>=8,L<sub>4</sub>=8>,color=sienna4,fontcolor=sienna4];
+    g3 -> g2 [label=<R<sub>1</sub>+R<sub>3</sub>=5>,fontcolor=purple4,color=purple4];
+    g2 -> end [label=<O<sub>5</sub>=40%11=7>,color=darkgreen,fontcolor=darkgreen];
+
+
+    {rank=same g1 g3}
+    {rank=same c1 c2 c3}
+}
