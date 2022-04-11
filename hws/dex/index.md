@@ -14,6 +14,7 @@ In this assignment you are going to create a Decntralized Cryptocurrency Exchang
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Mon, 4/11: Put in the blurb about `receive()` in both this description and the [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) source code
 - Sun, 4/10: Clarified an ambiguity in the "four or more different DEXs" statement in the "Make some exchanges" section
 - Fri, 4/8: The last two `require()` statements of [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) (the two above the 'end fail' one) were refactored and better commented -- the functionality is the exact same as before this edit, but the new refactoring should make it easier to understand what is going on
 
@@ -278,9 +279,10 @@ contract DEXtest {
         require(false,"end fail"); // huh?
 	}
 
+	receive() external payable { } // see note in the HW description
+
 }
 ```
-
 
 To use this file, deploy it and then call `test()` with with 13 ether.  There are a few new concepts here, and various notes as well:
 
@@ -300,6 +302,8 @@ To use this file, deploy it and then call `test()` with with 13 ether.  There ar
   - This particular version of the catch block prints out the error message obtained from the second parameter of `require()` for ease of debugging
 - You will notice the last line of the function is: `require(false,"end fail")`, and this will *always* revert.  If that line were not present, and all the tests pass, then our account will lose the 16 ether we passed in.  While we can reset the account, that requires a Remix restart (or other measures).  What we want is on a means to check that all the tests pass, but get a full refund for all of the payments (including the payment to `createPool()`, in this example).  That's the purpose of this line -- if it reverts on that line, we know all the previous tests passed, but the reversion causes our account to be refunded the (fake) ETH we passed in.
 - We call the function with 13 ether is so that we have enough for the initial `createPool()` call (which uses 10 ether), the successive transaction 1 listed above (which uses 2.5 ether), and a bit extra for gas.
+
+As you work through the other test cases, one of them (transaction 2) will be paying ether *back*.  And, in this case, it is paying it back to the `DEXtest` smart contract.  Smart contracts can receive ether in two ways: as part of a `payable` function, or through a general transfer of ether.  In order to make the second one work for a smart contract, you will have to put, in `DEXtest`, the following function: `receive() external payable { }`.  Note that this function doesn't have to actually *do* anything -- hence the empty curly brackets -- but it must be present.  It is listed in the code above and the [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) file.
 
 
 ### Deployment

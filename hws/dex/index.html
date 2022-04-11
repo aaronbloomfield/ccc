@@ -38,6 +38,9 @@ Market Maker (CPAMM)</a> method for determining the exchange rates.</p>
 fixes and minor clarifications are not listed here. So far there aren’t
 any significant changes to report.</p>
 <ul>
+<li>Mon, 4/11: Put in the blurb about <code>receive()</code> in both
+this description and the <a href="DEXtest.sol.html">DEXtest.sol</a> (<a
+href="DEXtest.sol">src</a>) source code</li>
 <li>Sun, 4/10: Clarified an ambiguity in the “four or more different
 DEXs” statement in the “Make some exchanges” section</li>
 <li>Fri, 4/8: The last two <code>require()</code> statements of <a
@@ -485,6 +488,8 @@ contract DEXtest {
         require(false,&quot;end fail&quot;); // huh?
     }
 
+    receive() external payable { } // see note in the HW description
+
 }</code></pre>
 <p>To use this file, deploy it and then call <code>test()</code> with
 with 13 ether. There are a few new concepts here, and various notes as
@@ -550,6 +555,18 @@ initial <code>createPool()</code> call (which uses 10 ether), the
 successive transaction 1 listed above (which uses 2.5 ether), and a bit
 extra for gas.</li>
 </ul>
+<p>As you work through the other test cases, one of them (transaction 2)
+will be paying ether <em>back</em>. And, in this case, it is paying it
+back to the <code>DEXtest</code> smart contract. Smart contracts can
+receive ether in two ways: as part of a <code>payable</code> function,
+or through a general transfer of ether. In order to make the second one
+work for a smart contract, you will have to put, in
+<code>DEXtest</code>, the following function: <code>receive() external
+payable { }</code>. Note that this function doesn’t have to actually
+<em>do</em> anything – hence the empty curly brackets – but it must be
+present. It is listed in the code above and the <a
+href="DEXtest.sol.html">DEXtest.sol</a> (<a href="DEXtest.sol">src</a>)
+file.</p>
 <h3 id="deployment">Deployment</h3>
 <p>This part has three different steps. This may require a few runs to
 get it right – that’s fine, just be sure to submit the various values

@@ -38,4 +38,6 @@ contract DEXtest {
         require(false,"end fail"); // huh?
 	}
 
+    receive() external payable { } // see note in the HW description
+
 }
