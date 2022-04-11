@@ -95,7 +95,7 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 19. Wed, Mar 30: [Consensus](../slides/consensus.html#/) to 8.14
 20. Mon, Apr 4: finished [Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/) to slide 3.28
 21. Wed, Apr 6: finished [Blockchain applications](../slides/applications.html#/)
-
+22. Mon, Apr 11: [zkSNARKs](../slides/zksnarks.html#/) to slide 5.29
 
 ## Legal Issues
 

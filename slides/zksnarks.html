@@ -403,7 +403,7 @@ mod(7^5,11)
 ## Polynomial Encoding
 - To create a zero-knowledge proof, we want to encode our information in polynomials
   - As verifiers will be able to prove that a polynomial is correct using homomorphic hidings.
-- This is done by evaluating polynomials at certain points and checking if the output is equal to the correct solution
+- This is done by evaluating polynomials at certain values and checking if the output is equal to the correct solution
 - A polynomial or degree $d$ is defined here as:
 
 $$ P(x)=a_0+a_1 \ast x^1 + a2 \ast x^2 + \ldots a_d \ast x^d $$
@@ -414,7 +414,7 @@ For some $a_0, \ldots, a_d \in Z_p$
 
 ## Blind Polynomial Evaluation
 - Alice knows a polynomial $P$ of degree $d$
-- Bob randomly chose a point $x \in Z_p$, and wants to learn $E(P(x))$
+- Bob randomly chose a value $x \in Z_p$, and wants to learn $E(P(x))$
 - Two choices:
   - Alice sends $P$ to Bob, and he computes $E(P(x))$
     - This is not blind evaluation!
@@ -427,7 +427,7 @@ For some $a_0, \ldots, a_d \in Z_p$
 ## Blind Polynomial Evaluation Ex
 - Alice knows $P=x^2+3x+4$
 - We'll keep using $E(x) = 7^x$ in $Z_{11}$
-- Bob chose point $x=4$
+- Bob chose value $x=4$
   - Result: $4^2+3 \ast 4 + 4 = 32$ and $E(32)=5$
 - Bob sends values $E(1)=7, E(4)=3, E(4^2)=4$
 - Alice wants to compute $E(P(x))=E(x^2+3x+4)$
@@ -441,7 +441,7 @@ For some $a_0, \ldots, a_d \in Z_p$
 
 
 ## Wait, what happened?
-- Bob chose a random point $x=4$, and sent homomorphic hidings $E(x^n)$ to Alice (for $n=1 \ldots d$)
+- Bob chose a random value $x=4$, and sent homomorphic hidings $E(x^n)$ to Alice (for $n=1 \ldots d$)
   - Bob did not reveal that $x$ equals 4 to Alice
 - Alice knew a polynomial $P(x)$, and computed the value $E(P(x))$ for $x=4$, and sent the result back to Bob
   - Alice did not reveal the polynomial to Bob
@@ -498,7 +498,7 @@ For some $a_0, \ldots, a_d \in Z_p$
   - As discrete logs are *hard*
 - For simplicity in notation, we will use the center-dot notation: $\cdot$
 - Formally, $x \cdot y \equiv y^x$ (mod $p$)
-- For the explanations that follow, we'll use multiplication, though
+- For some of the explanations that follow, we'll use multiplication
 
 
 
@@ -757,7 +757,7 @@ $$L=\sum^5_{i=1}c_i \cdot L_i,R=\sum^5_{i=1}c_i \cdot R_i,O=\sum^5_{i=1}c_i \cdo
 ![](images/zksnarks/graphs/zksnarks.dot.8.svg)
 - We have $P(x)=12x^2-3x-9$
   - Recall that $L=4x$, $R=3x-1$, $O=-x+9$
-- This polynomial should evaluate to zero at the two points 1 and 2
+- This polynomial should evaluate to zero at the two values 1 and 2
 - Does this hold?
   - $P(1)=L(1) \cdot R(1) - O(1)$
     - $=4 \cdot 2 - 8 = 0$ (mod 11)
@@ -833,7 +833,7 @@ $$L=\sum^5_{i=1}c_i \cdot L_i,R=\sum^5_{i=1}c_i \cdot R_i,O=\sum^5_{i=1}c_i \cdo
 
 ## ZK Verification Protocol
 1. Alice computes $L$, $R$, $O$, and $H$, all of degree $d$, from the circuit from the equation she is trying to satisfy
-2. Bob chooses a random point $x \in Z_p$
+2. Bob chooses a random value $x \in Z_p$
    - He sends the necessary homomorphic hidings to Alice so she can evaluate those four polynomials
    - He also computes $E(T(x))$, but does not send this to Alice
 3. Alice sends Bob the hidings of these polynomials evaluated at $x$
