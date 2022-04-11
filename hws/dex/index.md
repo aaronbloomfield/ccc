@@ -12,9 +12,9 @@ In this assignment you are going to create a Decntralized Cryptocurrency Exchang
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.
 
-- Mon, 4/11: Put in the blurb about `receive()` in both this description and the [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) source code
+- Mon, 4/11: Put in the blurb about `receive()` in both this description (the last paragraph of the "Testing" section) and the [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) source code
 - Sun, 4/10: Clarified an ambiguity in the "four or more different DEXs" statement in the "Make some exchanges" section
 - Fri, 4/8: The last two `require()` statements of [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) (the two above the 'end fail' one) were refactored and better commented -- the functionality is the exact same as before this edit, but the new refactoring should make it easier to understand what is going on
 
