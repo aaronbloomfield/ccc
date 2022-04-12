@@ -198,7 +198,7 @@ To help you debug your program, here is a worked-out example of how the values i
   - For the examples herein, we are ignoring fees -- you can set the `feeNumerator` to 0 to get this when testing your contract
 - `createPool()`: initially, we will deposit 10 (fake) ETH and 100 TC
   - $k$ should be $10 \ast 100 = 1,000$, since we deposited 10 ETH and 100 TC.  But the value reported by the DEX will be with 10 more decimal places for TC and 18 more decimal places for the ETH.  So $k$ will report as $1,000 \ast 10^{10} \ast 10^{18} = 10^{31} = 10,000,000,000,000,000,000,000,000,000,000$
-  - The 10 ETH are worth $100 each (we are assuming the constant EtherPricer for this example), so the ETH is worth $1,000.  Since the TC is assumed to have the same value, the overall DEX liquidity is $2,000.  Each TC is worth $0.10.
+  - The 10 ETH are worth $100 each (we are assuming the constant EtherPricer for this example), so the ETH is worth $1,000.  Since the TC is assumed to have the same value, the overall DEX liquidity is $2,000.  As we put in 100 TC into the pool, then each TC is worth $10.
   - At this point:
   	- $k=10^{31}$
   	- $x$, the amount of ETH, is 10 or $x=10*10^{18}=10^{19}$
