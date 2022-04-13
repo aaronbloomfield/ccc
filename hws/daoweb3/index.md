@@ -3,7 +3,7 @@ DAOs and Web3
 
 ### Overview
 
-In this assignment you are going to create a Decentralized Autonomous Organization (DAO).  The DAO will issue NFT tokens (that you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment) to keep track of who are members, allow members to submit proposals, and allow voting on those proposals.  For the purposes of this assignment, a proposal consists of a reason (which can be any string), an amount to pay, and an address to pay it to.  You will then make a Web3 interface for this DAO that will allow anybody with a standard web browser to see the status of the DAO and the proposals.
+In this assignment you are going to create a Decentralized Autonomous Organization (DAO).  The DAO will issue NFT tokens (that you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment) to keep track of who are members, allow members to submit proposals, and allow voting on those proposals.  For the purposes of this assignment, a proposal consists of a reason (which can be any string), an amount to pay, and an account address to pay it to.  You will then make a Web3 interface for this DAO that will allow anybody with a standard web browser to see the status of the DAO and the proposals.
 
 ### Changelog
 
@@ -13,20 +13,20 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:
 
-- That you completed the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment as we will be using your NFTmanager contract for our ERC-721 tokens
+- That you completed the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment as we will be using your NFTmanager contract for our ERC-721 tokens (if yours is not working, you can use the default ERC721.sol contract provided in that assignment)
 - Familiarity with the [Decentralized Autonomous Organizations (DAO)](../../slides/applications.html#/daos) section of the lecture slides
 - That you have a working account on the CS departmental servers.  If you are unsure, you can view the CS computing page, which has a link to the password reset page (a link to there is on the Collab landing page)
 
 
 ### Part 1: Create the DAO
 
-[Decentralized Autonomous Organizations (DAO)](../../slides/applications.html#/daos) allow members to submit and vote on proposals.  For the purposes of this assignment, these proposals always have some amount of ether associated with them.  One example of what to use a DAO for is a charity organization that focuses on one particular type of area (education, environment, etc.): members vote on what to donate money to (and how much to donate), and a successful proposal means that organization receives some amount of ether.
+A [Decentralized Autonomous Organization (DAO)](../../slides/applications.html#/daos) allows members to submit and vote on proposals.  For the purposes of this assignment, these proposals always have some amount of ether associated with them.  A proposal is whether to pay the amount of ether to that particular account address.  One example of what to use a DAO for is a charity organization that focuses on one particular type of area (education, environment, etc.): members vote on what to donate money to (and how much to donate), and a successful proposal means that organization receives some amount of ether.
 
 As far as this assignment is concerned, we are not concerned as to *what* your DAO is for, only that it works.
 
-Your contract must implement the provided DAO interface.   Your contract opening line must be: `contract DAO is DAOinterface, IERC165 {`.  This interface was adapted from the [open-source code for The &ETH;AO](https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol), but was changed to work with current versions of Solidity, and also modified to fit better with this assignment.  In particular, we removed a number of features, since this assignment is really about Web3: splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc.  In a real DAO, these would need to be implemented as well.
+Your contract must implement the provided DAO interface below.   Your contract opening line must be: `contract DAO is DAOinterface, IERC165 {`.  This interface was adapted from the [open-source code for The &ETH;AO](https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol), but was heavily modified to both work with current versions of Solidity and to fit better with this assignment.  In particular, we removed a number of features, since this assignment is really about Web3: splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc.  In a real DAO, these would need to be implemented as well.
 
-The file is [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)).  That file has many comments to explain how it works.  While there is a lot listed in the interface, there are really only five or so functions that you have to implement; the rest are just `public` variables.
+The file is [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)).  That file has many comments to explain how it works; those comments are not shown below.  While there is a lot listed in the interface, there are really only five or so functions that you have to implement; the rest are just `public` variables.
 
 
 ```
@@ -95,22 +95,22 @@ interface DAOinterface {
 
 The files you will need are:
 
-- [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol))
+- [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)): what you have to implement
 - [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)): this is unchanged from all previous assignments
 - [IERC721full.sol](IERC721full.sol.html) ([src](IERC721full.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 - [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 - [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 
-You will also need your NFTmanager.sol file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, and any other .sol files that are needed to allow that to compile.
+You will also need your NFTmanager.sol file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, and any other .sol files that are needed to allow that to compile (such as ERC721.sol, Strings.sol. Address.sol, etc.).
 
-The requirements on this section are intentionally vague -- the intent is to let you program your DAO any way you want.  The only requirement is that your DAO must fulfill the [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)) interface.  As far as we are concerned, a proposal primarily consists of a single string -- perhaps it's a URL, perhaps a statement, etc.
+The requirements on this section are intentionally vague -- the intent is to let you program your DAO any way you want.  The only requirement is that your DAO must fulfill the spirit of the [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)) interface.  As far as we are concerned, a proposal description primarily consists of a single string -- perhaps it's a URL, perhaps a statement, etc.
 
-Don't overthink this!  The intent is for you to get a working DAO.  It doesn't have to be perfect.  In fact, this is the easier part of this homework, since we've all written a bunch of Solidity programs by now.  The longest methods here are 8 lines.
+Don't overthink this!  The intent is just for you to get a working DAO.  It doesn't have to be perfect.  In fact, this is the easier part of this homework, since we've all written a bunch of Solidity programs by now.  The longest methods here are 8 lines.
 
 ##### Notes
 
 - Your `NFTmanager` contract has `mintWithURI()` that takes in a URL.  But we don't need the URLs for this -- just having the NFT is sufficient to indicate membership; the contract can check that the calling address has the NFT via a call to the `balanceOf()` function.  So what to do with your token URI field?  You can remove it from the contract, if you'd like.  Or you can put in any value that you'd like; I put in `curator` and `member` to indicate when they were given an NFT (in the constructor or `addMember()`, respectively).  I also returned the empty string in the `_baseURI()` function.
-    - Note that the current behavior with that function is to only allow one NFT per unique string, so if you are issuing lots of NFTs with "member" in lieu of the URI, you will have to change that behavior.
+    - Note that the current behavior with that function is to only allow one NFT per unique string, so if you are issuing multiple NFTs with "member" in lieu of the URI, you will have to change that behavior.
 - The `tokens` field is just an `address` of your NFTmanager, and you will have to cast it to call a function: `NFTmanager(tokens).mintWithURL(...);`, for example.
 - For spring 2022, the current blockchain does not support a few operations, such as`address(this).balance` (we have a work-around; see Piazza post 356).  If you get an "invalid opcode" error, that's what the issue is.
 - If you just want to transfer (fake) ether to the contract in Remix without calling a `payable` function, enter the amount in the "Value" box of the deployment pane, choose the right denomination, and click the "Transact" button in the "Low level interactions" box at the bottom of the deployed contract info.  This works in any of the deployment environments.  Note that this will call your `receive()` function (which doesn't have to do anything for this assignment, but it must be there).
@@ -121,7 +121,7 @@ Don't overthink this!  The intent is for you to get a working DAO.  It doesn't h
 A few new Solidity concepts to introduce:
 
 - You can create a `constant` variable if the value is not going to change.  This is done via `uint constant public override minProposalDebatePeriod = 600;`.  This saves gas versus not having it be a constant.
-- Your DAO can deploy an NFT token manager, which saves you the hassle of having to deploy two contracts and link them together.  You will already have to include the line `address public override tokens` variable in your DAO contract.  In your constructor, you can use `tokens = address(new NFTmanager())`.  This will deploy a second contract, which is an `NFTmanager`.  Note that the first contract (the DAO) is the deployer/owner of the NFTmanager, so this may affect how you use it.  You can then get the address of that deployed NFTmanager via a call to the `tokens()` getter function.  In Remix, you can access the NFTmanager directly by (1) deploying your DAO, (2) compiling the NFTmanager contract, and then (3) putting that obtained address from `tokens()` in the "At Address" field of the deployment pane of Remix.
+- Your DAO can deploy an NFT token manager, which saves you the hassle of having to deploy two contracts and link them together.  You will already have to include the line `address public override tokens` variable in your DAO contract.  In your constructor, you can use `tokens = address(new NFTmanager())`.  This will deploy a second contract, which is an `NFTmanager`.  Note that the first contract (the DAO) is the deployer/owner of the NFTmanager, so this may affect how you use it.  You can then get the address of that deployed NFTmanager via a call to the `tokens()` getter function.  In Remix, you can access the NFTmanager directly by (1) deploying your DAO, (2) compiling the NFTmanager contract, and then (3) putting that obtained address from `tokens()` getter function in the "At Address" field of the deployment pane of Remix.
 
 ### Part 2: Web3 Interface
 
@@ -135,7 +135,7 @@ This is not a class on user interfaces, so we are not expecting an amazing looki
 
 - Log into your CS server account.  You can try using ssh from the command line: `ssh mst3k@portal.cs.virginia.edu` (works in Linux, Mac OS X, and Windows Subsystem for Linux).  You can also download [SecureCRT](https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=65a00a3cdb11db404f32fb671d9619bb), which is a GUI ssh client.
     - Don't know your password, or you never received it?  Follow the reset password link on the CS computing page (a link to which  is on the Collab landing page)
-- You will likely want to edit the file on your home computer and copy it over to the CS servers.
+- You will likely want to edit the file on your home computer and copy it over to the CS servers to test it.
     - Create, on your local computer, a file called `dao.html` that just has `hello world` as the contents (we don't need HTML tags for now)
     - There are two ways you can transfer it:
     	- Via `scp` on the command line: `scp dao.html mst3k@portal.cs.virginia.edu:~/public_html/` (works for Linux, Mac OS X, and WSL)
@@ -267,7 +267,7 @@ Below is some sample HTML code to start with:
 A few notes:
 
 - You'll have to fill in the Javascript code, adapted from above, where indicated
-- For the styling -- in the `<style></style>` tags, you can leave it blank or cut-and-paste the style information from any of the above mentioned reference pages (choices.php, debts.php, auctions.php, or dex.php).  We suggest copying from dex.php, if you want to copy some default styling over.
+- For the styling -- in the `<style></style>` tags -- you can leave it blank or cut-and-paste the style information from any of the above mentioned reference pages (choices.php, debts.php, auctions.php, or dex.php) -- they all have the same CSS code.
 - You'll notice that the table has no rows -- the `loadTable()` Javascript function adds them.
 - The 'total proposals' line does not have a value in there.  Once that value is determined (done in a function analogous to the `getNumChoices()` function), you can update that value via the code `document.getElementById('total_proposals').innerHTML = var;`, where `var` is the Javascript variable that holds the number of proposals.  This looks for the element with the id of `total_propsals`, which is the `<span>` element on line 12, and updates the value inside (meaning it replaces "loading...").
 
@@ -293,11 +293,13 @@ subscribeToChoiceEvents();
 
 There are a number of things going on here:
 
-- The `options` variable is just the options that we are specifying -- in this case, we are only specifying the address of the contract.  Again, we can hard-code the contract address, but will have to change it here as well if we re-deploy our smart contract.  You can also use the `contractAddress` variable defined above.
+- The `options` variable is just the options that we are specifying -- in this case, we are only specifying the address of the contract.  Again, we can hard-code the contract address, but will have to change it here as well if we re-deploy our smart contract.  You can also use the `contractAddress` Javascript variable defined above.  If you wanted to listen to multiple contracts, you could put their address in a list (Javascript uses square brackets for lists).
 - The `sub` variable is when we actually subscribe to the events.  We are subscribing to *all* events for this contract (we could have filtered it to only some events).  If there is an error, we print that in `console.log()` -- which is viewable in the browser's developer console. Note that, in Javascript, you can pass a function as a parameter.  And, in this case, you can define that function in the parameter list itself.
-- The two `sub.on` calls specify the particular types of things we are listening for -- data events (normal events emitted from a contract) and errors (we just output that error via `throw`).
+- The two `sub.on` calls specify the particular types of things we are listening for -- data events (normal events emitted from a contract) and errors (we just output that error via `throw`).  These are the only two that we need to listen for in this assignment, but others exist, such as `changed` and `connected`.
 - Note that if *any* event occurs, then it will call `loadTable()`, which we defined above.  This will cause the entire table to regenerate, updating itself in the process.  A more complicated script could only update parts of the table -- you can see this in the dex.php code -- a change to the price of our (fake) ETH will update all the columns that use that value, whereas a change in one of the DEXs will update just that row.
 - We call all this via the `subscribeToChoiceEvents()` call, which is on the last line of the above code block -- this only needs to be called once, and it will execute the code any time an event is emitted by the contract.
+
+There are a number of aspects of events that we are not covering in this assignment -- in particular, one can listen for specific events, or specific events with specific parameters; see the first answer [here](https://ethereum.stackexchange.com/questions/35997/how-to-listen-to-events-using-web3-v1-0) for an example.  One can also listen for the mining of a block -- the dex.php code does this, as that is how it knows to update the (fake) ETH price (to see how, search for "newBlockHeaders" in the source code for dex.php).  The dex.php also updates a single row when a transaction occurs.
 
 #### Your task
 

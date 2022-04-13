@@ -18,6 +18,7 @@ These are larger programming homeworks.
 - [P6: dApp Tokens](tokens/index.html) ([md](tokens/index.md))
 - [P7: dApp Auction](auction/index.html) ([md](auction/index.md))
 - [P8: DEX](dex/index.html) ([md](dex/index.md))
+- [P9: DAO & web3](daoweb3/index.html) ([md](daoweb3/index.md))
 
 
 ### Smaller homeworks

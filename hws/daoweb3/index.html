@@ -28,10 +28,10 @@ the <a href="../tokens/index.html">Ethereum Tokens</a> (<a
 href="../tokens/index.md">md</a>) assignment) to keep track of who are
 members, allow members to submit proposals, and allow voting on those
 proposals. For the purposes of this assignment, a proposal consists of a
-reason (which can be any string), an amount to pay, and an address to
-pay it to. You will then make a Web3 interface for this DAO that will
-allow anybody with a standard web browser to see the status of the DAO
-and the proposals.</p>
+reason (which can be any string), an amount to pay, and an account
+address to pay it to. You will then make a Web3 interface for this DAO
+that will allow anybody with a standard web browser to see the status of
+the DAO and the proposals.</p>
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo
 fixes and minor clarifications are not listed here. So far there aren’t
@@ -42,7 +42,9 @@ at this point it the course), this assignment requires:</p>
 <ul>
 <li>That you completed the <a href="../tokens/index.html">Ethereum
 Tokens</a> (<a href="../tokens/index.md">md</a>) assignment as we will
-be using your NFTmanager contract for our ERC-721 tokens</li>
+be using your NFTmanager contract for our ERC-721 tokens (if yours is
+not working, you can use the default ERC721.sol contract provided in
+that assignment)</li>
 <li>Familiarity with the <a
 href="../../slides/applications.html#/daos">Decentralized Autonomous
 Organizations (DAO)</a> section of the lecture slides</li>
@@ -52,22 +54,23 @@ the password reset page (a link to there is on the Collab landing
 page)</li>
 </ul>
 <h3 id="part-1-create-the-dao">Part 1: Create the DAO</h3>
-<p><a href="../../slides/applications.html#/daos">Decentralized
-Autonomous Organizations (DAO)</a> allow members to submit and vote on
+<p>A <a href="../../slides/applications.html#/daos">Decentralized
+Autonomous Organization (DAO)</a> allows members to submit and vote on
 proposals. For the purposes of this assignment, these proposals always
-have some amount of ether associated with them. One example of what to
-use a DAO for is a charity organization that focuses on one particular
-type of area (education, environment, etc.): members vote on what to
-donate money to (and how much to donate), and a successful proposal
-means that organization receives some amount of ether.</p>
+have some amount of ether associated with them. A proposal is whether to
+pay the amount of ether to that particular account address. One example
+of what to use a DAO for is a charity organization that focuses on one
+particular type of area (education, environment, etc.): members vote on
+what to donate money to (and how much to donate), and a successful
+proposal means that organization receives some amount of ether.</p>
 <p>As far as this assignment is concerned, we are not concerned as to
 <em>what</em> your DAO is for, only that it works.</p>
-<p>Your contract must implement the provided DAO interface. Your
+<p>Your contract must implement the provided DAO interface below. Your
 contract opening line must be: <code>contract DAO is DAOinterface,
 IERC165 {</code>. This interface was adapted from the <a
 href="https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol">open-source
-code for The ÐAO</a>, but was changed to work with current versions of
-Solidity, and also modified to fit better with this assignment. In
+code for The ÐAO</a>, but was heavily modified to both work with current
+versions of Solidity and to fit better with this assignment. In
 particular, we removed a number of features, since this assignment is
 really about Web3: splitting off a sub-DAO, including transaction data
 in the proposal, anything relating to quorum or quorum modifications,
@@ -75,9 +78,10 @@ blocking members, vote freezes, etc. In a real DAO, these would need to
 be implemented as well.</p>
 <p>The file is <a href="DAOinterface.sol.html">DAOinterface.sol</a> (<a
 href="DAOinterface.sol">src</a>). That file has many comments to explain
-how it works. While there is a lot listed in the interface, there are
-really only five or so functions that you have to implement; the rest
-are just <code>public</code> variables.</p>
+how it works; those comments are not shown below. While there is a lot
+listed in the interface, there are really only five or so functions that
+you have to implement; the rest are just <code>public</code>
+variables.</p>
 <pre><code>// SPDX-License-Identifier: GPL
 pragma solidity ^0.8.7;
 
@@ -142,7 +146,7 @@ interface DAOinterface {
 <p>The files you will need are:</p>
 <ul>
 <li><a href="DAOinterface.sol.html">DAOinterface.sol</a> (<a
-href="DAOinterface.sol">src</a>)</li>
+href="DAOinterface.sol">src</a>): what you have to implement</li>
 <li><a href="IERC165.sol.html">IERC165.sol</a> (<a
 href="IERC165.sol">src</a>): this is unchanged from all previous
 assignments</li>
@@ -162,18 +166,19 @@ href="../tokens/index.md">md</a>) assignment</li>
 <p>You will also need your NFTmanager.sol file from the <a
 href="../tokens/index.html">Ethereum Tokens</a> (<a
 href="../tokens/index.md">md</a>) assignment, and any other .sol files
-that are needed to allow that to compile.</p>
+that are needed to allow that to compile (such as ERC721.sol,
+Strings.sol. Address.sol, etc.).</p>
 <p>The requirements on this section are intentionally vague – the intent
 is to let you program your DAO any way you want. The only requirement is
-that your DAO must fulfill the <a
+that your DAO must fulfill the spirit of the <a
 href="DAOinterface.sol.html">DAOinterface.sol</a> (<a
 href="DAOinterface.sol">src</a>) interface. As far as we are concerned,
-a proposal primarily consists of a single string – perhaps it’s a URL,
-perhaps a statement, etc.</p>
-<p>Don’t overthink this! The intent is for you to get a working DAO. It
-doesn’t have to be perfect. In fact, this is the easier part of this
-homework, since we’ve all written a bunch of Solidity programs by now.
-The longest methods here are 8 lines.</p>
+a proposal description primarily consists of a single string – perhaps
+it’s a URL, perhaps a statement, etc.</p>
+<p>Don’t overthink this! The intent is just for you to get a working
+DAO. It doesn’t have to be perfect. In fact, this is the easier part of
+this homework, since we’ve all written a bunch of Solidity programs by
+now. The longest methods here are 8 lines.</p>
 <h5 id="notes">Notes</h5>
 <ul>
 <li>Your <code>NFTmanager</code> contract has <code>mintWithURI()</code>
@@ -188,7 +193,7 @@ constructor or <code>addMember()</code>, respectively). I also returned
 the empty string in the <code>_baseURI()</code> function.
 <ul>
 <li>Note that the current behavior with that function is to only allow
-one NFT per unique string, so if you are issuing lots of NFTs with
+one NFT per unique string, so if you are issuing multiple NFTs with
 “member” in lieu of the URI, you will have to change that behavior.</li>
 </ul></li>
 <li>The <code>tokens</code> field is just an <code>address</code> of
@@ -229,8 +234,8 @@ this may affect how you use it. You can then get the address of that
 deployed NFTmanager via a call to the <code>tokens()</code> getter
 function. In Remix, you can access the NFTmanager directly by (1)
 deploying your DAO, (2) compiling the NFTmanager contract, and then (3)
-putting that obtained address from <code>tokens()</code> in the “At
-Address” field of the deployment pane of Remix.</li>
+putting that obtained address from <code>tokens()</code> getter function
+in the “At Address” field of the deployment pane of Remix.</li>
 </ul>
 <h3 id="part-2-web3-interface">Part 2: Web3 Interface</h3>
 <p>You are going to write a web interface that shows the status of your
@@ -261,7 +266,7 @@ password link on the CS computing page (a link to which is on the Collab
 landing page)</li>
 </ul></li>
 <li>You will likely want to edit the file on your home computer and copy
-it over to the CS servers.
+it over to the CS servers to test it.
 <ul>
 <li>Create, on your local computer, a file called <code>dao.html</code>
 that just has <code>hello world</code> as the contents (we don’t need
@@ -298,16 +303,16 @@ provided so far in class, and to copy/adapt the code therein. The ones
 we have seen are:</p>
 <ul>
 <li>choices.php: for the Choices contract in <a
-href="../dappintro/index.html">dApp Introduction</a> (<a
+href="../dappintro/index.html">dApp Introduction assignment</a> (<a
 href="../dappintro/index.md">md</a>)</li>
 <li>debts.php: for the in-class coding exercise in <a
 href="../../slides/solidity.html#/debtor">the solidity slide
 set</a></li>
 <li>auction.php: for the Auctioneer contract in <a
-href="../auction/index.html">dApp Auction</a> (<a
+href="../auction/index.html">dApp Auction assignment</a> (<a
 href="../auction/index.md">md</a>)</li>
-<li>dex.php: for the DEXes in <a href="../dex/index.html">DEX</a> (<a
-href="../dex/index.md">md</a>)</li>
+<li>dex.php: for the DEXes in <a href="../dex/index.html">DEX
+assignment</a> (<a href="../dex/index.md">md</a>)</li>
 </ul>
 <p>The links to all of these are on the Collab landing page.</p>
 <p>You are welcome to look at the blockchain explorer code as well, but
@@ -482,10 +487,9 @@ search</a>.</p>
 <li>You’ll have to fill in the Javascript code, adapted from above,
 where indicated</li>
 <li>For the styling – in the <code>&lt;style&gt;&lt;/style&gt;</code>
-tags, you can leave it blank or cut-and-paste the style information from
-any of the above mentioned reference pages (choices.php, debts.php,
-auctions.php, or dex.php). We suggest copying from dex.php, if you want
-to copy some default styling over.</li>
+tags – you can leave it blank or cut-and-paste the style information
+from any of the above mentioned reference pages (choices.php, debts.php,
+auctions.php, or dex.php) – they all have the same CSS code.</li>
 <li>You’ll notice that the table has no rows – the
 <code>loadTable()</code> Javascript function adds them.</li>
 <li>The ‘total proposals’ line does not have a value in there. Once that
@@ -520,7 +524,9 @@ subscribeToChoiceEvents();</code></pre>
 specifying – in this case, we are only specifying the address of the
 contract. Again, we can hard-code the contract address, but will have to
 change it here as well if we re-deploy our smart contract. You can also
-use the <code>contractAddress</code> variable defined above.</li>
+use the <code>contractAddress</code> Javascript variable defined above.
+If you wanted to listen to multiple contracts, you could put their
+address in a list (Javascript uses square brackets for lists).</li>
 <li>The <code>sub</code> variable is when we actually subscribe to the
 events. We are subscribing to <em>all</em> events for this contract (we
 could have filtered it to only some events). If there is an error, we
@@ -530,8 +536,10 @@ function as a parameter. And, in this case, you can define that function
 in the parameter list itself.</li>
 <li>The two <code>sub.on</code> calls specify the particular types of
 things we are listening for – data events (normal events emitted from a
-contract) and errors (we just output that error via
-<code>throw</code>).</li>
+contract) and errors (we just output that error via <code>throw</code>).
+These are the only two that we need to listen for in this assignment,
+but others exist, such as <code>changed</code> and
+<code>connected</code>.</li>
 <li>Note that if <em>any</em> event occurs, then it will call
 <code>loadTable()</code>, which we defined above. This will cause the
 entire table to regenerate, updating itself in the process. A more
@@ -544,6 +552,15 @@ call, which is on the last line of the above code block – this only
 needs to be called once, and it will execute the code any time an event
 is emitted by the contract.</li>
 </ul>
+<p>There are a number of aspects of events that we are not covering in
+this assignment – in particular, one can listen for specific events, or
+specific events with specific parameters; see the first answer <a
+href="https://ethereum.stackexchange.com/questions/35997/how-to-listen-to-events-using-web3-v1-0">here</a>
+for an example. One can also listen for the mining of a block – the
+dex.php code does this, as that is how it knows to update the (fake) ETH
+price (to see how, search for “newBlockHeaders” in the source code for
+dex.php). The dex.php also updates a single row when a transaction
+occurs.</p>
 <h4 id="your-task">Your task</h4>
 <p>Your task is for your <code>dao.html</code> page to display all the
 relevant information about the DAO’s proposals and balance. It should
