@@ -1079,36 +1079,6 @@ Any curve of the form $y^2=x^3+ax+b$
 </textarea>
 </section>
 
-<section data-markdown data-transition="none" data-transition-speed="fast">
-<textarea>
-<img src="images/encryption/secp256k1/secp256k1-q-zoomed-out.svg" alt="image secp256k1-q-zoomed-out.svg" class="stretch">
-<aside data-markdown class="notes">
-- just showing it zoomed out
-- the slope approaches infinity, meaning the line approaches vertical
-- note the different scales -- the line is almost vertical at the end
-</aside>
-</textarea>
-</section>
-
-<section data-markdown data-transition="none" data-transition-speed="fast">
-<textarea>
-<img src="images/encryption/secp256k1/secp256k1-r-zoomed-out-with-line.svg" alt="image secp256k1-r-zoomed-out-with-line.svg" class="stretch">
-<aside data-markdown class="notes">
-- just trying to show the curvature of the curve
-</aside>
-</textarea>
-</section>
-
-<section data-markdown data-transition="none" data-transition-speed="fast">
-<textarea>
-<img src="images/encryption/secp256k1/secp256k1-q-point-at-infinity.svg" alt="image secp256k1-q-point-at-infinity.svg" class="stretch">
-<aside data-markdown class="notes">
-- ...
-</aside>
-</textarea>
-</section>
-
-
 <section data-markdown data-separator="^\n\n\n"><textarea>
 ## ECs as Homomorphic Hidings
 - We will use elliptic curves for our (new) homomorphic hiding equation
@@ -1192,15 +1162,114 @@ Any curve of the form $y^2=x^3+ax+b$
   <section id="zcash" class="center"><img src="images/logos/zcash.svg" class="cclogotitle"><h1>Zcash</h1></section>
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
-## Zcash
-- Instead of UTXOs, Zcash uses commitments
-  - Spending a commitment requires a nullifier
-- A commitment is the hash of (recipient address, amount, $\rho$, $r$) where $\rho$ is a random number identifying the commitment and $r$ is a random nonce
-- To nullify a commitment, or spend a transaction, a nullification is made which is the hash of the spending key (private key) and the rho value
-- All verifications of commitments and nullifiers are placed on the blockchain in the form of zk-SNARKs
+<!-- .slide: class="right-float-img" -->
+## Zcash ([ZEC](https://coinmarketcap.com/currencies/zcash/))
+
+<img src="images/logos/zcash.svg" class="cclogotitle">
+
+- Website: https://z.cash; blockchain explorer: https://blockchair.com/zcash/
+- Source code fork of Bitcoin
+  - So it's useful for transactions, not smart contracts
+  - Available online at https://github.com/zcash/zcash
+- Hash function: [Equihash](https://en.wikipedia.org/wiki/Equihash)
+- Development started in 2013
+  - First mined in 2016
+- [Whitepaper](https://zips.z.cash/protocol/protocol.pdf)
 
 
 
+## History
+- [Zerocoin protocol](https://en.wikipedia.org/wiki/Zerocoin_protocol) was developed by [Professor Matthew Green @ JHU](https://isi.jhu.edu/~mgreen/)
+  - An extension to Bitcoin that adds zk-SNARKs
+  - Not compatible with regular Bitcoin, though
+- Zcash was the coin that merged the Zerocoin protocol and Bitcoin
+  - Developed by Green and his graduate students
+- Now managed by the Zcash Foundation and the Electric Coin Company
+
+
+
+## The Ceremony
+- Need to start with a very random seed!
+  - Each successive seed could use the previous block's hash, which is not predictable
+- Two-day process involving multiple people and computers
+  - Each successive person didn't know who was the next in line
+- The computers involved were reportedly destroyed
+- [Radiolab podcast about The Ceremony](https://www.wnycstudios.org/podcasts/radiolab/articles/ceremony)
+
+
+
+## Two Address Types
+- "Regular" addresses
+  - Traceable like Bitcoin is traceable
+  - Called a $t$-address, and starts with a 't'
+- "Shielded" addresses
+  - Shielded by a zk-SNARK
+  - Called a $z$-address, and starts with a 'z'
+  - Can selectively share *some* information for auditing purposes
+
+
+
+## Four Transaction Types
+- Z-to-Z: Private transaction
+  - It's know to have occurred, but all the info is not publickly visible
+- T-to-T: Public transaction
+  - Just like Bitcoin
+- Z-to-T: Deshielding transaction
+  - The recipient (only) is known, and it's know that it came from a $z$-address
+- T-to-Z: Shielding transaction
+  - The sender (only) is known, and it's known that it went to a $z$ address
+
+
+
+## Zcash protocol
+- UTXOs are called *commitments*
+  - To spend a commitment, we reveal a *nullifier*
+  - Both are stored as hashes
+- For each shielded transaction, the sender publishes:
+  - $commitment = \text{hash}(addr,amt,rho)$
+    - $addr$ is the recipient address
+    - $amt$ is the amount to transfer
+    - $rho$ is a unique value for this Tx
+    - (we are ignoring the nonce)
+- To spend a commitment, the spender publishes:
+  - $nullifier = \text{hash}(pkey,rho)$
+    - Where $pkey$, the private key, can be used to derive $addr$, the account address
+
+
+
+## How to verify?
+- $commitment = \text{hash}(addr,amt,rho)$
+- $nullifier = \text{hash}(pkey,rho)$
+- Create an arbitrary computation that shows:
+  - The spender knows $addr$, $amt$, $rho$, and $pkey$
+  - The hash of *commitment* can be computed based on $addr$, $amt$, and $rho$
+  - The hash of *nullifier* can be computed based on $pkey$ and $rho$
+- Then verify this via a zk-SNARK
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Mobile wallet
+
+<img src="https://z.cash/wp-content/uploads/2021/07/featured-wallet-502x1024.png" style="background:transparent">
+
+- Zecwallet Lite
+  - Download from [zecwallet.co](https://www.zecwallet.co/)
+- Supports transactions to and from both shielded and transparent addresses
+- Lite version also available for the desktop
+- Image from [here](https://z.cash/wallets/)
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Desktop wallet
+
+<img src="https://www.zecwallet.co/assets/img/fullnode-cover.png" style="background:transparent">
+
+- Runs a full node in the P2P cryptocurrency network
+  - Just like when we run a geth node
+  - Although, to get *incoming* connections, you have to open a port on your router
+- Image from [here](https://www.zecwallet.co/fullnode.html)
 </textarea></section>
 
 </section>
@@ -1212,8 +1281,55 @@ Any curve of the form $y^2=x^3+ax+b$
   <section id="firo" class="center"><img src="images/logos/Firo-logo.svg" class="cclogotitle"><h1>Firo (aka Zcoin)</h1></section>
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
-## Firo (aka Zcoin)
-- ...
+<!-- .slide: class="right-float-img" -->
+## FIRO ([FIRO](https://coinmarketcap.com/currencies/firo/))
+
+<img src="images/logos/Firo-logo.svg" class="cclogotitle">
+
+- Website: https://firo.org/; blockchain explorer: https://explorer.firo.org/
+- Previously known as Zcoin, name changed to Firo in October 2020
+- Also created at JHU, also based on the Bitcoin source code
+- Also used the Zerocoin protocol
+  - Now uses a different protocol called "Sigma"
+- Hash function: Merkle Tree Proof
+- Development started in 2014
+  - First mined in 2016
+- [Whitepaper](https://lelantus.io/enabling-untraceable-anonymous-payments.pdf)
+
+
+
+## History
+- Started via a Masters paper in 2014; first mined in 2016
+  - By the same research group at JHU
+- September 2018: can use TOR or VPN to hide your origin IP
+- December 2018: mining algorithm changed to Merkle Tree proof
+  - More memory intensive, so less likely to be done via ASICs
+- January 2020: implemented Receiver Address Privacy (RAP)
+  - Single receiving address, but outsiders cannot view transaction history
+- August 2021: the Lelantus Spark protocol adds even more privacy features
+
+
+
+## Notable Incidents
+- A single-character programming error allowed the creation of 370k fake coins in February 2017
+  - Woth `$`440k at the time
+- Flaw in Zerocoin discovered and patched in April 2018 (no known exploits)
+- First large-scale blockchain elections for the Thailand Democratic Party in November 2018
+- Suffered a 51% attack in Jan 2021
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Desktop wallet
+
+<img src="images/zksnarks/firo-wallet-modified.webp" style="background:transparent">
+
+- Similar in look to the Bitcoin core wallet
+- Notice the 'anonymize all' button
+  - Converts "transparent" balances to "private" balances
+  - Similar to Zcash
+- Notice the "anonymous communication with Tor" check box
+- Image adapted from [here](https://en.wikipedia.org/wiki/File:Firo_Core_wallet_GUI_0.14.6.0_on_Windows_10.png)
 
 </textarea></section>
 
