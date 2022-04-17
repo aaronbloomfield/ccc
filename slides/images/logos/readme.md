@@ -9,3 +9,7 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 - Ethereum classic: [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ethereum_Classic_Logo.svg)
 - ZCash: the logo image is [the one they provide](https://cryptologos.cc/zcash) and no license is provided on that page; it is used here under free use guidelines
 - Firo: the logo is from [Wikimedia commons](https://commons.wikimedia.org/wiki/File:Firo-logo.svg)
+- WBTC: logo image from [here](https://cryptologos.cc/wrapped-bitcoin)
+- XLM: logo adapted from the one from [here](https://cryptologos.cc/stellar)
+- MATIC adapted from [here](https://cryptologos.cc/logos/polygon-matic-logo.svg?v=022)
+- DOT adapted from [here](https://cryptologos.cc/polkadot-new)

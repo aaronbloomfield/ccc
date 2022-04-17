@@ -1,0 +1,154 @@
+digraph A {
+graph [fontname = "Helvetica"];
+node [fontname = "Helvetica",shape=point,width=0];
+edge [fontname = "Helvetica"];
+
+// each account timeline header node
+alice_0 [label="Alice",shape=circle,width=0.8,pos="0,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+bob_0 [label="Bob",shape=circle,width=0.8,pos="2,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+
+// timeline end nodes and vertical lines
+alice_end [label="12",pos="0,-4.5!",width=0.2,style=invis];
+alice_0 -> alice_end [arrowhead=none];
+bob_end [label="12",pos="2,-4.5!",width=0.2,style=invis];
+bob_0 -> bob_end [arrowhead=none];
+
+// visible timeline nodes
+alice_1 [label="1",pos="0,-0.5!"];
+alice_2 [label="2",pos="0,-1.0!"];
+alice_3 [label="3",pos="0,-1.5!"];
+alice_4 [label="4",pos="0,-2.0!"];
+alice_5 [label="5",pos="0,-2.5!"];
+alice_6 [label="6",pos="0,-3.0!"];
+alice_7 [label="7",pos="0,-3.5!"];
+alice_8 [label="8",pos="0,-4.0!"];
+
+bob_1 [label="1",pos="2,-0.5!"];
+bob_2 [label="2",pos="2,-1.0!"];
+bob_3 [label="3",pos="2,-1.5!"];
+bob_4 [label="4",pos="2,-2.0!"];
+bob_5 [label="5",pos="2,-2.5!"];
+bob_6 [label="6",pos="2,-3.0!"];
+bob_7 [label="7",pos="2,-3.5!"];
+bob_8 [label="8",pos="2,-4.0!"];
+
+alice_1 -> bob_1 [label="2 BTC"];
+bob_2 -> alice_2 [label="1 BTC"];
+bob_3 -> alice_3 [label="3 BTC"];
+alice_4 -> bob_4 [label="5 BTC"];
+bob_5 -> alice_5 [label="4 BTC"];
+alice_6 -> bob_6 [label="3 BTC"];
+alice_7 -> bob_7 [label="4 BTC"];
+bob_8 -> alice_8 [label="3 BTC"];
+// blue arrow account transfers
+//alice_1 -> a4_5 [color=blue];
+}
+
+digraph B {
+graph [fontname = "Helvetica"];
+node [fontname = "Helvetica",shape=point,width=0];
+edge [fontname = "Helvetica"];
+
+// each account timeline header node
+alice_0 [label="Alice",shape=circle,width=0.8,pos="0,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+bob_0 [label="Bob",shape=circle,width=0.8,pos="2,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+ln_0 [label="LN",shape=circle,width=0.8,pos="4,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+
+// timeline end nodes and vertical lines
+alice_end [label="12",pos="0,-6.5!",width=0.2,style=invis];
+alice_0 -> alice_end [arrowhead=none];
+bob_end [label="12",pos="2,-6.5!",width=0.2,style=invis];
+bob_0 -> bob_end [arrowhead=none];
+ln_end [label="12",pos="4,-6.5!",width=0.2,style=invis];
+ln_0 -> ln_end [arrowhead=none];
+
+// transfer into LN
+alice_a [label="1",pos="0,-0.5!"];
+alice_b [label="2",pos="0,-1.0!"];
+bob_a [label="1",pos="2,-0.5!"];
+bob_b [label="2",pos="2,-1.0!"];
+ln_a [label="1",pos="4,-0.5!"];
+ln_b [label="2",pos="4,-1.0!"];
+alice_a -> ln_a [label="5 BTC"];
+bob_b -> ln_b [label="5 BTC"];
+
+// visible timeline nodes
+alice_1 [label="1",pos="0,-1.5!"];
+alice_2 [label="2",pos="0,-2.0!"];
+alice_3 [label="3",pos="0,-2.5!"];
+alice_4 [label="4",pos="0,-3.0!"];
+alice_5 [label="5",pos="0,-3.5!"];
+alice_6 [label="6",pos="0,-4.0!"];
+alice_7 [label="7",pos="0,-4.5!"];
+alice_8 [label="8",pos="0,-5.0!"];
+
+bob_1 [label="1",pos="2,-1.5!"];
+bob_2 [label="2",pos="2,-2.0!"];
+bob_3 [label="3",pos="2,-2.5!"];
+bob_4 [label="4",pos="2,-3.0!"];
+bob_5 [label="5",pos="2,-3.5!"];
+bob_6 [label="6",pos="2,-4.0!"];
+bob_7 [label="7",pos="2,-4.5!"];
+bob_8 [label="8",pos="2,-5.0!"];
+
+alice_1 -> bob_1 [label="2 BTC",style=dashed];
+bob_2 -> alice_2 [label="1 BTC",style=dashed];
+bob_3 -> alice_3 [label="3 BTC",style=dashed];
+alice_4 -> bob_4 [label="5 BTC",style=dashed];
+bob_5 -> alice_5 [label="4 BTC",style=dashed];
+alice_6 -> bob_6 [label="3 BTC",style=dashed];
+alice_7 -> bob_7 [label="2 BTC",style=dashed];
+bob_8 -> alice_8 [label="3 BTC",style=dashed];
+
+// transfer out of LN
+alice_y [label="1",pos="0,-5.5!"];
+alice_z [label="2",pos="0,-6.0!"];
+bob_y [label="1",pos="2,-5.5!"];
+bob_z [label="2",pos="2,-6.0!"];
+ln_y [label="1",pos="4,-5.5!"];
+ln_z [label="2",pos="4,-6.0!"];
+ln_y -> alice_y [label="6 BTC"];
+ln_z -> bob_z [label="4 BTC"];
+}
+
+graph C {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    A [style=filled,fillcolor=lightgray];
+    B [style=filled,fillcolor=lightgray];
+    G [style=filled,fillcolor=lightgray];
+    J [style=filled,fillcolor=lightgray];
+    N [style=filled,fillcolor=lightgray];
+    P [style=filled,fillcolor=lightgray];
+
+    A -- B [penwidth=4];
+    A -- C;
+    B -- G [penwidth=4];
+    C -- D;
+    C -- F;
+    D -- E;
+    E -- K;
+    E -- Q;
+    F -- K;
+    F -- G;
+    G -- H;
+    G -- J [penwidth=4];
+    H -- I;
+    I -- N;
+    I -- O;
+    J -- K;
+    J -- M;
+    J -- N [penwidth=4];
+    K -- L;
+    L -- M;
+    L -- Q;
+    M -- N;
+    N -- P [penwidth=4];
+    O -- P;
+    P -- Q;
+    B -- R;
+    R -- H;
+
+}

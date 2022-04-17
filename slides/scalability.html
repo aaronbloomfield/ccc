@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Scalability
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Scalability](#/scaling)  
+[On-Chain Scaling](#/onchain)  
+[Sharding](#/sharding)  
+[Off-Chain Scaling](#/offchain)  
+[Bitcoin's Lightning Network](#/btcln)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+<section>
+
+    <section id="scaling" data-markdown class="center"><textarea>
+# Scaling
+    </textarea></section>
+
+<section data-markdown data-separator="^\n\n\n"><textarea>
+## BTC transactions per second
+[![](images/scalability/btc-tps.webp)](https://www.blockchain.com/charts/transactions-per-second)
+
+
+
+## ETH & BTC fees, all time
+[![](images/scalability/btc-eth-fees-alltime.webp)](https://bitinfocharts.com/comparison/transactionfees-btc-eth.html#alltime)
+
+
+
+## ETH & BTC fees, last year
+[![](images/scalability/btc-eth-fees-1year.webp)](https://bitinfocharts.com/comparison/transactionfees-btc-eth.html#1y)
+
+
+
+## Transactions per second (TPS)
+- Bitcoin: about 3-7 TPS
+    - Theoretical maximum of 10-12 TPS
+    - About 350k per day
+- Ethereum: about 10 TPS
+    - About 850k per day
+- VISA: about 6,000 TPS in 2020 ([source](https://www.statista.com/statistics/261327/number-of-per-card-credit-card-transactions-worldwide-by-brand-as-of-2011/))
+    - About 500M per day
+    - Even higher during the holiday shopping season
+
+
+
+## Fundamental problem
+- How do we allow a crytpocurrency system to grow...
+  - As more people use it and more transactions occur
+- While also:
+  - Preserving security
+  - Not having the blockchain size become prohibitively large
+  - Keeping fees to a reasonable level
+  - Keeping transaction times to a reasonable size
+
+
+
+## Blockchain layers
+
+The "parts" of a modern cryptocurrency can be thought of as different "layers", each built upon the one below:
+
+- Layer 0, the "Network" layer: the base system and network (P2P network, Internet, etc.)
+- Layer 1, the "Fundamental" or "Implementation" layer: consensus, cryptography, the computing machine (EVM, e.g.)
+- Layer 2, the "Execution" layer: smart contracts, dApps
+- Layer 3, the "Application" layer: user-facing tools and web interfaces
+
+
+
+## A note on layers
+- Different sources define a different number of layers
+    - From 2 to 6
+- Some separate out the computing aspect of layer 1 into a "Layer 1.5"
+- Optimizations
+    - Not much to do on layer 0 (the network)
+    - Most focus is on layers 1 and 2
+    - Layer 3 is less of a cryptocurrency issue, so we won't focus on that
+
+
+
+## Classic Blockchain Trilemma
+- There are three important aspects to consider:
+  - Scalability
+  - Decentralization
+  - Security
+- Any change to one of them will affect the others
+  - Often negatively
+- So how to improve one without affecting the others?
+  - That's the Blockchain Trilemma
+
+
+
+## Layer 1 Scaling
+- Options include:
+    - Increase block creation speed
+    - Increase block size
+    - Change the consensus protocol
+    - Sharding
+- Called "on-chain" scaling solutions
+  - Require a change to some aspect of the cryptocurrency itself
+
+
+
+## Layer 2 Scaling
+- Options include payment channels, nested channels, and side chains
+- Examples
+    - Lightning Network is (one of?) Bitcoin's layer-2 scaling solution
+        - https://cryptoadventure.com/introduction-to-the-lightning-network-bitcoins-scalability-savior/
+    - Polkadot is a layer-2 scaling solution for Ethereum
+- Called "off-chain" scaling solutions
+    - It does *not* require a change to the cryptocurrency itself
+</textarea></section>
+
+</section>
+
+<!-- ============================================================ -->
+
+<section>
+
+    <section id="onchain" data-markdown class="center"><textarea>
+# On-Chain Scaling (layer 1)
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## On-Chain Scaling (Layer 1)
+- Modifications to the cryptocurrency protocol itself
+- Topics:
+    - Increasing block size, increasing block creation speed, changing the consensus algorithm
+    - Bitcoin's SegWit (segregated witness)
+    - Bitcoin's Lightning Network
+    - Sharding: Splitting a blockchain into multiple, smaller blockchains (shards) to reduce congestion and increase TPS.
+
+
+
+## Increase block size?
+- Doing so will cause increased network delays
+    - The additional TXs have to get around the P2P network
+- Consensus security takes longer with increased block size
+- Current cryptocurrencies strike a balance between these factors
+
+
+
+## Current blockchain stats
+- Bitcoin averages:
+    - $<$10 minute blocks
+    - $\approx$3 Mb block size, 
+    - [1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block)
+    - About 3 transactions per second
+- Ethereum: 
+    - [13 seconds block time](https://etherscan.io/chart/blocktime)
+    - [600 Mb / day](https://messari.io/charts/ethereum/blk-size-byte)
+        - About 90 Kb / block
+    - [1,100,000 TXNs / day](https://etherscan.io/chart/tx/)
+        - About 165 per block
+    - About 12 transactions per second
+
+
+
+## Current blockchain stats
+- [Bitcoin's blockchain size](https://ycharts.com/indicators/bitcoin_blockchain_size) is $\approx$400 GB (as of 4/16/22)
+- Ethereum's full blockchain is about 1.5 Tb
+- This won't be usable with increased adoption
+
+
+
+## Increase block creation speed?
+- That's one of the differences between Ethereum and Bitcoin
+- Too fast a block creation speed adds too many coins to circulation
+    - This will devalue the currency
+- This requires fundamental changes to how the cryptocurrency works
+    - Consensus times, mining algorithms, P2P communication, etc.
+    - This means it likely creates a *new* cryptocurrency
+
+
+
+## Changing the consensus algorithm
+- A necessary step to increase block creation speed or block size
+- But it is not a solution in and of itself
+
+
+
+## Bitcoin's Segregated Witness
+- This puts some data into a separate section, called a *witness*
+    - This is raw stack data
+    - If redeeming multiple UTXOs, then this data can be shared between all the UTXOs
+    - Thus increasing the average TXN size and increasing TXN count per block
+- (It also fixed the issue of the TXN hash changing during mining)
+
+
+
+## Start a new Cryptocurrency
+- You can also start a new, faster, cryptocurrency
+- Consider <img src="images/logos/stellar-xlm-logo.svg" class="cclogo"> Stellar Lumens ([XLM](https://coinmarketcap.com/currencies/stellar/)) <br clear='all'>
+  - We discussed this during [Mining](mining.html#/)
+  - 6 second blocks, no mining, "trusted" nodes
+  - High throughput, fast transactions
+</textarea></section>
+
+</section>
+
+<!-- ============================================================ -->
+    
+<section>
+
+    <section id="sharding" data-markdown class="center"><textarea>
+# Sharding
+### Layer 1: On-channel
+    </textarea></section>
+
+<section data-markdown data-separator="^\n\n\n"><textarea>
+## Sharding
+
+> shard [noun]: a fragment, especially of broken earthenware.
+
+- *Sharding* is splitting a database into pieces, or *shards*
+
+
+
+## Database Sharding
+| ID | Name | DoB | Address | ... |
+|----|--------|----|------------|----|
+| alice | Alice | 1/2/89 | 1234 Any St | ... |
+| bob | Bob | 3/4/98 | 5678 Main St | ... |
+| ... | ... | ... | ... | ... |
+
+- A very large database could keep the *columns* in different databases
+  - And link them by a unique ID
+  - Especially if different operations need mutually exclusive columns
+- This is called *vertical scaling*
+  - As the columns, which are vertical, are split among different databases
+
+
+
+## Database Sharding
+| ID | Name | DoB | Address | ... |
+|----|--------|----|------------|----|
+| alice | Alice | 1/2/89 | 1234 Any St | ... |
+| bob | Bob | 3/4/98 | 5678 Main St | ... |
+| ... | ... | ... | ... | ... |
+
+- A very large database could also keep the *rows* in different databases
+  - Especially if any operation needed mutually exclusive rows
+  - Each row has a "home" database
+- This is called *horizontal scaling* or *sharding*
+  - As the rows, which are horizontal, are split among different databases
+
+
+
+## Cryptocurrency sharding
+- Typically only on a PoS blockchain
+    - PoW blockchains: how to verify TXN on a different shard?
+- Sharding: Splitting a blockchain into multiple, smaller blockchains (shards) to reduce congestion and increase TPS.
+
+
+
+
+
+## Ethereum 2.0 (aka Eth2)
+- The long-awaited switch to PoS from PoW
+- TPS is expected to increase from 15 TPS to "tens of thousands"
+- Idea: split up the workload into many blockchains in parallel (shards)
+    - Have them share a common consensus proof-of-stake blockchain
+    - Changing any one shard would require a modification to the consensus blockchain
+    - And likely a loss of your staked ETH
+
+
+
+## Ethereum 2.0 (aka Eth2)
+Roll-out is in three phases:
+1. "Phase 0" or "Beacon Chain", launched December 1, 2020
+    - Creation of the *Beacon Chain*, the proof-of-stake consensus blockchain of ETH2.0
+2. "Phase 1" or "The Merge", expected in Q3 2022.
+    - This will merge the Beacon Chain with the current Ethereum network, and cause a switch from PoW to PoS
+    - This has been delayed many, many, many times
+3. "Phase 2" or "Shard chains", expected in 2023
+    - State execution will be on the shard chains
+    - The ETH 1.0 chain will become one of the shards
+    - Currently expecting 64 shards
+    </textarea></section>
+
+</section>
+
+<!-- ============================================================ -->
+
+<section>
+
+    <section id="offchain" data-markdown class="center"><textarea>
+# Off-Chain Scaling (layer 2)
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Off-Chain Scaling (Layer 2)
+- Off-chain scaling uses work done outside of the blockchain to improve efficiency of the system
+- This includes grouping transactions together (rollups) and using side channels
+    - Side channels == side chains == parallel chains
+
+
+
+## Rollups
+- General idea:
+    1. Execute a number of transactions off-chain
+    2. Collect the data from those transactions
+    3. Compress that data
+    4. Rolling the data up into the main chain in one batch
+- But how to know if the transactions are valid?
+    - Two possibilities: optimistic rollups and zk-rollups
+
+
+
+## Optimistic Rollups
+- Assumes the data is valid, but checks it
+    - If it is, then no further action needed
+- If not...
+    - Identify the problem transactions and undo them
+        - Perform a fraud proof to do so
+    - Penalize the guilty party
+        - This means a *bond* is provided by those submitting TXNs
+        - Also by those performing the fraud proofs to prevent malicious proofs
+    - Revert those transactions back to before the invalidity
+    - This whole process can take a few weeks!
+
+
+
+## zk-Rollups
+- Transactions provide zero-knowledge proof showing validity
+- These zero knowledge proofs are "bundled" into a single transaction
+  - Anybody can then verify it
+
+
+
+## Rollups
+- Optimistic rollups are relatively easy to implement
+    - But disputes can take weeks to resolve
+- zkRollups are very hard to implement and computationally intensive
+    - But much easier to resolve disputes
+- Both can scale up transactions significantly
+</textarea></section>
+
+</section>
+
+<!-- ============================================================ -->
+
+<section>
+
+    <section id="btcln" data-markdown class="center"><textarea>
+# Bitcoin's Lightning Network
+### Layer 2: off-channel
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Increase number of TXNs
+- What if we increase the number of transactions without an increase in the data?
+    - And without making a fundamental change to the cryptocurrency itself
+- To do so, we would need to keep *some* data off the blockchain, but not *all* of it
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Bitcoin's Lightning Network
+![](images/scalability/graphs/scalability.dot.1.svg)
+<!-- https://www.bitcoin.com/get-started/what-is-lightning-network/ -->
+- Proposed in a [white paper](https://lightning.network/lightning-network-paper.pdf) from 2016
+- Imagine if Alice and Bob were going to make a number of transactions with each other
+- There are 8 TXNs total
+    - Net result: Alice gains 1 BTC
+- This is the motivation for Bitcoin's Lightning Network (LN)
+    - Targeted toward micro-transactions, but works with any size
+- [Main reference](https://www.bitcoin.com/get-started/what-is-lightning-network/)
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Bitcoin's Lightning Network
+![](images/scalability/graphs/scalability.dot.2.svg)
+- If Alice and Bob don't need to spend the money during that time...
+- They can set up a *payment channel*
+    - Money is committed on the Bitcoin blockchain (solid lines)
+    - Intermediate transactions occur *off* the blockchain (dashed lines)
+    - The final settlement occurs on the blockchain (solid lines)
+
+
+
+## Bitcoin's Lightning Network
+- The money is *committed* on the blockchain to open a payment channel
+    - It cannot be spent outside the LN until that channel is closed
+- Any transactions in the channel are much faster
+    - And don't store data on the blockchain
+- The channel can be closed at any time
+    - The final settlement is posted to the blockchain
+
+
+
+## LN Routing
+- Imagine if:
+    - Alice and Bob have a payment channel
+    - Bob and Charlie have a payment channel
+- If Alice wants to pay Charlie...
+    - Then she could *route* it through Bob
+        - Assuming the channel is sufficiently large enough
+    - And still keep it off the chain
+- Bob may collect some (small) fees for this
+
+
+
+<!-- .slide: class="right-float-img" -->
+## LN Routing
+![](images/scalability/graphs/scalability.dot.3.svg)
+- If the LN is large enough, then many transactions can be kept off chain
+- Here, Alice wants to pay Parker
+    - And routes it through four other intermediary nodes
+- (Graph based on the one [here](https://commons.wikimedia.org/wiki/File:17_node_mesh_network.svg))
+
+
+
+## LN Benefits
+- Once off the Bitcoin blockchain, LN is not constrained by those parameters
+    - Can use different consensus, block size, fee structure, etc.
+- Much faster transactions
+    - Don't have to wait to be included in a 10 minute block
+- Lower fees than the Bitcoin blockchain
+    - Ideal for micro-transactions
+- Lowers the data load on the Bitcoin blockchain
+    - Increasing throughput for all
+
+
+
+## LN Drawbacks
+- LN-enabled wallets are not all that friendly
+- You have to encourage people to run LN nodes
+    - Fees paid to those people help
+- Vulnerable to many attacks
+    - See next slide
+- You have to un-lock your funds to spend them elsewhere
+
+
+
+## LN Attacks 1 ([source](https://www.bitcoin.com/get-started/what-is-lightning-network/))
+- Griefing attacks: Funds aren't lost, but it causes the victim's Lightning funds to be frozen so that the payment channel cannot process any transactions
+- Flood and loot: An attacker forces many victims to claim their funds from the blockchain at the same time (flood)
+    - The attacker uses this congestion to steal funds that were unable to be claimed before the deadline (loot)
+
+
+
+## LN Attacks 2 ([source](https://www.bitcoin.com/get-started/what-is-lightning-network/))
+- Time-dilation attacks: An attacker lengthens the time a victim becomes aware of new blocks by delaying block delivery
+- Pinning attacks: An attacker tricks a victim into closing their LN channel improperly and steals individual transactions
+
+
+
+## LN Competitors
+- <img src="images/logos/wrapped-bitcoin-wbtc.svg" class="cclogo" style="border:1px solid white;border-radius:40px"> You can get WBTC: Wrapped Bitcoin <br clear='all'>
+    - A Ethereum smart contract exchanges BTC for WBTC on a 1:1 basis
+    - WBTC is thus an ERC-20 token cryptocurrency
+- Once on Ethereum, transactions are *faster*, if not *cheaper*
+- As of August 2021 ([stats](https://www.bitcoin.com/get-started/what-is-lightning-network/)):
+    - LN had 2,300 BTC locked up
+    - WBTC had 250,000 BTC locked up
+
+
+
+## ETH Simple Payment Channel
+- From [here](https://github.com/eolszewski/simple-payment-channel) and [here](https://github.com/eolszewski/simple-payment-channel/blob/master/contracts/SimplePaymentChannel.sol)
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>pragma solidity ^0.4.24;
+
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
+import "zeppelin-solidity/contracts/ECRecovery.sol";
+
+/**
+ * @title SimplePaymentChannel
+ * @author Eric Olszewski (eolszewski@gmail.com)
+ *
+ * @dev Ethereum payment channels allow for off-chain transactions with an on-chain
+ * settlement. In this implementation, a party (sender) can open a channel with a 
+ * deposit, expiration, and recipient. The sender can then sign transactions off-chain
+ * and send them to the recipient, who can submit one of these signed transactions to 
+ * chain to close and settle the channel.
+ */
+
+contract SimplePaymentChannel {
+    using SafeMath for uint256;
+    using ECRecovery for bytes32;
+
+    event ChannelOpened(address sender, address recipient, uint expiration, uint256 deposit);
+    event ChannelClosed(uint256 senderBalance, uint256 recipientBalance);
+
+    address public sender;
+    address public recipient;
+    uint256 public expiration;
+
+    constructor(address _recipient, uint256 _duration) public payable {
+        require(msg.value > 0);
+        require(msg.sender != _recipient);
+        sender = msg.sender;
+        recipient = _recipient;
+        expiration = now + _duration;
+        emit ChannelOpened(sender, recipient, expiration, msg.value);
+    }
+
+    function closeChannel(uint256 _balance, bytes _signedMessage) public {
+        require(msg.sender == recipient);
+        require(isValidSignature(_balance, _signedMessage));
+        uint256 balance = _balance;
+        uint256 remainder = 0;
+        if (_balance > address(this).balance) {
+            balance = address(this).balance;
+        } else {
+            remainder = address(this).balance.sub(balance);
+        }
+        recipient.transfer(balance);
+        emit ChannelClosed(remainder, balance);
+        selfdestruct(sender);
+    }
+
+    function extendExpiration(uint256 _expiration) public {
+        require(msg.sender == sender);
+        require(_expiration > expiration);
+        expiration = _expiration;
+    }
+
+    function claimTimeout() public {
+        require(now >= expiration);
+        selfdestruct(sender);
+    }
+
+    function isValidSignature(uint256 _balance, bytes _signedMessage) internal view returns (bool) {
+        bytes32 message = prefixed(keccak256(abi.encodePacked(address(this), _balance)));
+        return message.recover(_signedMessage) == sender;
+    }
+
+    function prefixed(bytes32 _hash) internal pure returns (bytes32) {
+        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", _hash));
+    }
+}
+
+</code></pre>
+
+
+
+## Ethereum's State Channels
+- Same idea as Bitcoin's Lightning Network
+- Instead, we use a smart contract to "lock" the funds
+- Transactions happen off-chain
+    - In case of a dispute, arbitration mechanism is to revert back to initial state
+- Example: Matic Network
+
+
+
+## Polygon
+- Re-branded from Matic, it's an expansion of what Matic can do
+- <img src="images/logos/polygon-matic-logo.svg" class="cclogo"> Coin is [MATIC](https://www.coinbase.com/price/polygon) <br clear='all'>
+- It uses existing Ethereum smart contracts to move ETH off-chain to a Polygon "sidechain"
+    - Essentially the smart contract accumulates a balance, and the Polygon chain reads that balance
+- One can create sidechains in Polygon
+    - Existing ones have their own communities that use them, mine them, etc.
+    - They are proof-of-stake
+
+
+
+## Polygon
+- It's not bound to the Ethereum legacy technology from 2015
+- You can create chains for given projects / apps / systems
+  - And pick-and-choose what features you want
+- And yet it's still interoperable with Ethereum
+- This is much more feature-rich and capable than Ethereum!
+
+
+
+## Polkadot
+- Similar to Polygon, it allows scaling and side chains
+- Meant to be able to interact with multiple existing chains, as well chains you create for a given project
+- <img src="images/logos/polkadot-new-dot-logo.svg" class="cclogo"> Governance token and coin is [DOT](https://www.coinbase.com/price/polkadot) <br clear='all'>
+    </textarea></section>
+
+</section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
+
