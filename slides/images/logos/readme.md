@@ -13,3 +13,4 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 - XLM: logo adapted from the one from [here](https://cryptologos.cc/stellar)
 - MATIC adapted from [here](https://cryptologos.cc/logos/polygon-matic-logo.svg?v=022)
 - DOT adapted from [here](https://cryptologos.cc/polkadot-new)
+- SOL adapted from [here](https://cryptologos.cc/solana)

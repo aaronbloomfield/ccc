@@ -63,6 +63,7 @@ line-height:120%;
 [Sharding](#/sharding)  
 [Off-Chain Scaling](#/offchain)  
 [Bitcoin's Lightning Network](#/btcln)  
+[Case Studies](#/casestudies)  
 	</textarea></section>
 
 <!-- ============================================================ -->
@@ -154,17 +155,20 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
     - Sharding
 - Called "on-chain" scaling solutions
   - Require a change to some aspect of the cryptocurrency itself
+- Some solutions create "child" chains
+  - They are still part of the overall blockchain
 
 
 
 ## Layer 2 Scaling
 - Options include payment channels, nested channels, and side chains
 - Examples
-    - Lightning Network is (one of?) Bitcoin's layer-2 scaling solution
-        - https://cryptoadventure.com/introduction-to-the-lightning-network-bitcoins-scalability-savior/
+    - Lightning Network is a Bitcoin's layer-2 scaling solution
     - Polkadot is a layer-2 scaling solution for Ethereum
 - Called "off-chain" scaling solutions
     - It does *not* require a change to the cryptocurrency itself
+- Some solutions create "side chains"
+    - They are on a separate blockchain different from the main cryptocurrency blockchain
 </textarea></section>
 
 </section>
@@ -198,15 +202,16 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 
 ## Current blockchain stats
 - Bitcoin averages:
-    - $<$10 minute blocks
-    - $\approx$3 Mb block size, 
+    - $<$10 minute block time
+    - $\approx$3 Mb block size
     - [1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block)
+    - About 260,000 TXNs per day
     - About 3 transactions per second
 - Ethereum: 
     - [13 seconds block time](https://etherscan.io/chart/blocktime)
-    - [600 Mb / day](https://messari.io/charts/ethereum/blk-size-byte)
-        - About 90 Kb / block
-    - [1,100,000 TXNs / day](https://etherscan.io/chart/tx/)
+    - [600 Mb per day](https://messari.io/charts/ethereum/blk-size-byte)
+        - About 90 Kb block size
+    - [1,100,000 TXNs per day](https://etherscan.io/chart/tx/)
         - About 165 per block
     - About 12 transactions per second
 
@@ -215,12 +220,13 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 ## Current blockchain stats
 - [Bitcoin's blockchain size](https://ycharts.com/indicators/bitcoin_blockchain_size) is $\approx$400 GB (as of 4/16/22)
 - Ethereum's full blockchain is about 1.5 Tb
-- This won't be usable with increased adoption
+    - And increasing at 600 Mb per day!
+- This won't be sustainable with increased adoption
 
 
 
 ## Increase block creation speed?
-- That's one of the differences between Ethereum and Bitcoin
+- A big difference between Ethereum and Bitcoin
 - Too fast a block creation speed adds too many coins to circulation
     - This will devalue the currency
 - This requires fundamental changes to how the cryptocurrency works
@@ -232,6 +238,7 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 ## Changing the consensus algorithm
 - A necessary step to increase block creation speed or block size
 - But it is not a solution in and of itself
+- And requires changing much of how the cryptocurrency is structured
 
 
 
@@ -305,9 +312,7 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 ## Cryptocurrency sharding
 - Typically only on a PoS blockchain
     - PoW blockchains: how to verify TXN on a different shard?
-- Sharding: Splitting a blockchain into multiple, smaller blockchains (shards) to reduce congestion and increase TPS.
-
-
+- Sharding: Splitting a blockchain into multiple, smaller blockchains (shards) to reduce congestion and increase TPS
 
 
 
@@ -356,7 +361,7 @@ Roll-out is in three phases:
 - General idea:
     1. Execute a number of transactions off-chain
     2. Collect the data from those transactions
-    3. Compress that data
+    3. Compress / batch that data
     4. Rolling the data up into the main chain in one batch
 - But how to know if the transactions are valid?
     - Two possibilities: optimistic rollups and zk-rollups
@@ -381,6 +386,17 @@ Roll-out is in three phases:
 - Transactions provide zero-knowledge proof showing validity
 - These zero knowledge proofs are "bundled" into a single transaction
   - Anybody can then verify it
+
+
+
+## Proof types
+- Fraud proofs
+    - Optimistic rollups assume that the transactions are valid
+    - But if challenged, the system runs a *fraud proof* to see if fraud takes place
+- Validity proofs
+    - When the rollup results are supplied to the main chain, a proof of validity is provided as well
+    - Which is then checked
+    - zk-rollups use these, as do other scaling solutions
 
 
 
@@ -504,7 +520,7 @@ Roll-out is in three phases:
 
 
 ## LN Competitors
-- <img src="images/logos/wrapped-bitcoin-wbtc.svg" class="cclogo" style="border:1px solid white;border-radius:40px"> You can get WBTC: Wrapped Bitcoin <br clear='all'>
+- <img src="images/logos/wrapped-bitcoin-wbtc.svg" class="cclogo"> You can get WBTC: Wrapped Bitcoin <br clear='all'>
     - A Ethereum smart contract exchanges BTC for WBTC on a 1:1 basis
     - WBTC is thus an ERC-20 token cryptocurrency
 - Once on Ethereum, transactions are *faster*, if not *cheaper*
@@ -599,7 +615,66 @@ contract SimplePaymentChannel {
 - Instead, we use a smart contract to "lock" the funds
 - Transactions happen off-chain
     - In case of a dispute, arbitration mechanism is to revert back to initial state
-- Example: Matic Network
+- Example: Matic Network was one
+    - It's now Polygon, and is something else we'll cover shortly...
+
+
+
+## Plasma Chains
+- A separate blockchain "anchored" to the Ethereum blockchain
+    - Uses fraud proofs
+    - Sometimes called "child" blockchains
+- There are many implementations:
+    - [OMG network](https://omg.network/)
+    - Polygon, which we'll see shortly
+    - [Gluon](https://gluon.network/)
+    - LeapDAO (now apparently defunct)
+</textarea></section>
+
+</section>
+
+<!-- ============================================================ -->
+
+<section>
+
+    <section id="casestudies" data-markdown class="center"><textarea>
+# Case Studies
+
+<img src="images/logos/stellar-xlm-logo.svg" class="cclogosubtitle">
+<img src="images/logos/polygon-matic-logo.svg" class="cclogosubtitle">
+<img src="images/logos/polkadot-new-dot-logo.svg" class="cclogosubtitle">
+<img src="images/logos/solana-sol-logo.svg" class="cclogosubtitle">
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Stellar Lumens
+- Coin: <img src="images/logos/stellar-xlm-logo.svg" class="cclogo"> Stellar Lumens ([XLM](https://coinmarketcap.com/currencies/stellar/)) <br clear='all'>
+- Design goal was a cryptocurrency that enabled very fast payments
+    - 6 second blocks
+    - Once committed, no possibility of being "undone" via a 51% attack (or similar)
+- While it can handle dApps, it's really used for transactions
+- If you need to move money between accounts, this is one of the fastest ways to do it
+- Currently handling over 80 transactions per second (7 million per day) ([source](https://www.crypto-news-flash.com/report-stellar-tops-cryptotransactions-by-volume/))
+    - Could easily handle 1,000 per second (86 million per day)
+
+
+
+## Stellar Lumens details
+- Consensus via the [Stellar Consensus Protocol](https://www.stellar.org/papers/stellar-consensus-protocol)
+    - Byzantine fault tolerant
+    - A small node subset is selected of "trusted nodes" to be the validator for a block
+- Only 21 "top-tier" validator nodes, run by trusted institutions
+- Mining / validation most similar to proof-of-stake
+
+
+
+## Solana
+- Launched in 2017 via [this whitepaper](https://solana.com/solana-whitepaper.pdf)
+- Programmable (like Ethereum) and meant to be very fast
+    - See the transaction counter [here](https://solana.com/)
+- Uses proof-of-history
+    - Nodes only have to agree on the order of items in the blockchain
+- <img src="images/logos/solana-sol-logo.svg" class="cclogo"> Native token is [SOL](https://www.coinbase.com/price/solana) <br clear='all'>
 
 
 
