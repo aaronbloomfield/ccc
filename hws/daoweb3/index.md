@@ -9,6 +9,11 @@ In this assignment you are going to create a Decentralized Autonomous Organizati
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Mon, 4/18: added the two `chmod` commands that you should run on portal to make sure the permissions are set correctly
+    - `chmod 711 ~ ~/public_html`
+    - `chmod 644 ~/public_html/dao.html ~/public_html/web3*`
+
+
 ### Pre-requisites
 
 Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:
@@ -310,6 +315,12 @@ Your task is for your `dao.html` page to display all the relevant information ab
 Note: ***ALL*** of your HTML, CSS, and Javascript code must in the dao.html file.  The *only* thing that can be separate is the web3.js file, which is included in the HTML template above.
 
 Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due, and one which will stay open for one week after the assignment (just get the right date; we don't care what time on that day).  The third one is up to you.
+
+Note: once the files are on the server, you will need to ensure the permissions are correct.  Run the following two commands exactly as they are listed:
+
+- `chmod 711 ~ ~/public_html`
+- `chmod 644 ~/public_html/dao.html ~/public_html/web3*`
+
 
 ### Submission
 

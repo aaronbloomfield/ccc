@@ -36,6 +36,15 @@ the DAO and the proposals.</p>
 <p>Any changes to this page will be put here for easy reference. Typo
 fixes and minor clarifications are not listed here. So far there aren’t
 any significant changes to report.</p>
+<ul>
+<li>Mon, 4/18: added the two <code>chmod</code> commands that you should
+run on portal to make sure the permissions are set correctly
+<ul>
+<li><code>chmod 711 ~ ~/public_html</code></li>
+<li><code>chmod 644 ~/public_html/dao.html
+~/public_html/web3*</code></li>
+</ul></li>
+</ul>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Beyond general experience with programming Solidity (which you have
 at this point it the course), this assignment requires:</p>
@@ -580,6 +589,14 @@ contain at least three proposals: one of which should have expired by
 the time the assignment is due, and one which will stay open for one
 week after the assignment (just get the right date; we don’t care what
 time on that day). The third one is up to you.</p>
+<p>Note: once the files are on the server, you will need to ensure the
+permissions are correct. Run the following two commands exactly as they
+are listed:</p>
+<ul>
+<li><code>chmod 711 ~ ~/public_html</code></li>
+<li><code>chmod 644 ~/public_html/dao.html
+~/public_html/web3*</code></li>
+</ul>
 <h3 id="submission">Submission</h3>
 <p>There are <em>four</em> forms of submission for this assignment; you
 must do all four.</p>
