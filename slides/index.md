@@ -19,3 +19,4 @@ Slide sets, in the intended order to be presented in lecture, are below (if a li
 - [Consensus](consensus.html#/)
 - [Blockchain Applications](applications.html#/)
 - [zkSNARKs](zksnarks.html#/)
+- [Scalability](scalability.html#/)

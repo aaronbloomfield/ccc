@@ -129,7 +129,7 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
     - From 2 to 6
 - Some separate out the computing aspect of layer 1 into a "Layer 1.5"
 - Optimizations
-    - Not much to do on layer 0 (the network)
+    - Layer 0 optimizations are outside the scope of this course
     - Most focus is on layers 1 and 2
     - Layer 3 is less of a cryptocurrency issue, so we won't focus on that
 
@@ -188,13 +188,16 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
     - Increasing block size, increasing block creation speed, changing the consensus algorithm
     - Bitcoin's SegWit (segregated witness)
     - Bitcoin's Lightning Network
-    - Sharding: Splitting a blockchain into multiple, smaller blockchains (shards) to reduce congestion and increase TPS.
+    - Sharding: splitting a blockchain into multiple, smaller blockchains
 
 
 
 ## Increase block size?
-- Doing so will cause increased network delays
+- Doing so will cause increased delays
     - The additional TXs have to get around the P2P network
+    - Nodes have to spend more time accumulating transactions into the (now larger) blocks
+    - More computational power to compute the hash / nonce for a block
+    - Longer time to verify blocks
 - Consensus security takes longer with increased block size
 - Current cryptocurrencies strike a balance between these factors
 
@@ -203,24 +206,25 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 ## Current blockchain stats
 - Bitcoin averages:
     - $<$10 minute block time
-    - $\approx$3 Mb block size
+    - $\approx$3 Mb block size when busy, but [about 1.5 Mb lately](https://www.blockchain.com/charts/avg-block-size)
     - [1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block)
-    - About 260,000 TXNs per day
-    - About 3 transactions per second
+    - [About 260,000 TXNs per day](https://www.blockchain.com/charts/n-transactions)
+        - Which is about 3 transactions per second
 - Ethereum: 
     - [13 seconds block time](https://etherscan.io/chart/blocktime)
     - [600 Mb per day](https://messari.io/charts/ethereum/blk-size-byte)
         - About 90 Kb block size
     - [1,100,000 TXNs per day](https://etherscan.io/chart/tx/)
-        - About 165 per block
+        - Which is about 165 per block
     - About 12 transactions per second
 
 
 
 ## Current blockchain stats
 - [Bitcoin's blockchain size](https://ycharts.com/indicators/bitcoin_blockchain_size) is $\approx$400 GB (as of 4/16/22)
+    - And increasing at about 150 Mb per day
 - Ethereum's full blockchain is about 1.5 Tb
-    - And increasing at 600 Mb per day!
+    - And increasing at about 600 Mb per day!
 - This won't be sustainable with increased adoption
 
 
@@ -238,6 +242,7 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 ## Changing the consensus algorithm
 - A necessary step to increase block creation speed or block size
 - But it is not a solution in and of itself
+    - Meaning we have to pair it with increased block size or decreased block time
 - And requires changing much of how the cryptocurrency is structured
 
 
@@ -275,7 +280,9 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 
 > shard [noun]: a fragment, especially of broken earthenware.
 
-- *Sharding* is splitting a database into pieces, or *shards*
+&nbsp;  
+
+*Sharding* is splitting a database into pieces, or *shards*
 
 
 
@@ -310,9 +317,13 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 
 
 ## Cryptocurrency sharding
-- Typically only on a PoS blockchain
-    - PoW blockchains: how to verify TXN on a different shard?
-- Sharding: Splitting a blockchain into multiple, smaller blockchains (shards) to reduce congestion and increase TPS
+- Typically only on a proof-of-stake blockchain
+    - Proof-of-work blockchains: how to verify TXN on a different shard?
+- Sharding is splitting a blockchain into multiple, smaller blockchains (shards) to reduce congestion and increase TPS
+    - Often called "child" chains
+- Miners / validators work on one (or more) shards
+    - Transactions on a shard have a root Merkle hash, which appears on the main chain
+    - Some allow child chains to have different consensus algorithms, block details, etc.
 
 
 
@@ -647,13 +658,13 @@ contract SimplePaymentChannel {
     </textarea></section>
     
     <section data-markdown data-separator="^\n\n\n"><textarea>
-## Stellar Lumens
+## [Stellar Lumens](https://www.stellar.org/)
 - Coin: <img src="images/logos/stellar-xlm-logo.svg" class="cclogo"> Stellar Lumens ([XLM](https://coinmarketcap.com/currencies/stellar/)) <br clear='all'>
 - Design goal was a cryptocurrency that enabled very fast payments
-    - 6 second blocks
+    - 3-5 second blocks
     - Once committed, no possibility of being "undone" via a 51% attack (or similar)
 - While it can handle dApps, it's really used for transactions
-- If you need to move money between accounts, this is one of the fastest ways to do it
+    - If you need to move money between accounts, this is one of the fastest ways to do it
 - Currently handling over 80 transactions per second (7 million per day) ([source](https://www.crypto-news-flash.com/report-stellar-tops-cryptotransactions-by-volume/))
     - Could easily handle 1,000 per second (86 million per day)
 
@@ -665,10 +676,11 @@ contract SimplePaymentChannel {
     - A small node subset is selected of "trusted nodes" to be the validator for a block
 - Only 21 "top-tier" validator nodes, run by trusted institutions
 - Mining / validation most similar to proof-of-stake
+- See the current blockchain stats at https://www.stellar.org/
 
 
 
-## Solana
+## [Solana](https://solana.com/)
 - Launched in 2017 via [this whitepaper](https://solana.com/solana-whitepaper.pdf)
 - Programmable (like Ethereum) and meant to be very fast
     - See the transaction counter [here](https://solana.com/)
@@ -678,7 +690,73 @@ contract SimplePaymentChannel {
 
 
 
-## Polygon
+## Solana
+- Mean to be a competitor with Ethereum
+- Can handle 50,000 TPS
+    - In Sept 2021, a surge of transactions (400,000 TPS) brought down the cryptocurrency
+    - IT was restored the next day 
+- Programming languages: C, C++, and Rust
+- Uses the [eBPF (extended Berkeley Packet Filter)](https://en.wikipedia.org/wiki/Berkeley_Packet_Filter) execution environment
+    - A virtual machine that allows for easy analysis of network data
+
+
+
+## Solana C Contract ([ref](https://github.com/solana-labs/example-helloworld))
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>/**
+ * @brief C-based Helloworld BPF program
+ */
+#include &lt;solana_sdk.h&gt;
+
+uint64_t helloworld(SolParameters *params) {
+
+  if (params->ka_num < 1) {
+    sol_log("Greeted account not included in the instruction");
+    return ERROR_NOT_ENOUGH_ACCOUNT_KEYS;
+  }
+
+  // Get the account to say hello to
+  SolAccountInfo *greeted_account = & params->ka[0];
+
+  // The account must be owned by the program in order to modify its data
+  if (!SolPubkey_same(greeted_account->owner, params->program_id)) {
+    sol_log("Greeted account does not have the correct program id");
+    return ERROR_INCORRECT_PROGRAM_ID;
+  }
+
+  // The data must be large enough to hold an uint32_t value
+  if (greeted_account->data_len < sizeof(uint32_t)) {
+    sol_log("Greeted account data length too small to hold uint32_t value");
+    return ERROR_INVALID_ACCOUNT_DATA;
+  }
+
+  // Increment and store the number of times the account has been greeted
+  uint32_t *num_greets = (uint32_t *)greeted_account->data;
+  *num_greets += 1;
+
+  sol_log("Hello!");
+
+  return SUCCESS;
+}
+
+extern uint64_t entrypoint(const uint8_t *input) {
+  sol_log("Helloworld C program entrypoint");
+
+  SolAccountInfo accounts[1];
+  SolParameters params = (SolParameters){.ka = accounts};
+
+  if (!sol_deserialize(input, &params, SOL_ARRAY_SIZE(accounts))) {
+    return ERROR_INVALID_ARGUMENT;
+  }
+
+  return helloworld(&params);
+}
+// </code></pre>
+
+
+
+## [Polygon](https://polygon.technology/)
 - Re-branded from Matic, it's an expansion of what Matic can do
 - <img src="images/logos/polygon-matic-logo.svg" class="cclogo"> Coin is [MATIC](https://www.coinbase.com/price/polygon) <br clear='all'>
 - It uses existing Ethereum smart contracts to move ETH off-chain to a Polygon "sidechain"
@@ -694,15 +772,34 @@ contract SimplePaymentChannel {
 - You can create chains for given projects / apps / systems
   - And pick-and-choose what features you want
 - And yet it's still interoperable with Ethereum
-- This is much more feature-rich and capable than Ethereum!
+- This is much more feature-rich and capable than Ethereum
+- But still largely associated with that model
+- Many of the DEXes [run on Polygon](https://defillama.com/)
 
 
 
-## Polkadot
+## [Polkadot](https://polkadot.network/)
 - Similar to Polygon, it allows scaling and side chains
+- Described in [their whitepaper](https://polkadot.network/PolkaDotPaper.pdf)
 - Meant to be able to interact with multiple existing chains, as well chains you create for a given project
 - <img src="images/logos/polkadot-new-dot-logo.svg" class="cclogo"> Governance token and coin is [DOT](https://www.coinbase.com/price/polkadot) <br clear='all'>
+- Polkadot "interacts" with existing blockchains
+    - Which means you can exchange messages between *different* blockchains through Polkadot
+    - Interaction is through "bridges"
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Polkadot structure
+![](https://wiki.polkadot.network/assets/images/polkadot_relay_chain-c411a282aa36af0f20d04389919a6275.png)
+- Main chain is the "relay chain"
+- One can run one or more parallel chains called "parachains" (shards)
+- Collators: collect parachain TXNs and passes to validator
+    - Think: mining a parachain
+- Validators: a PoS "miner" for the relay chain
+- Fishermen: monitor network for "bad behavior"
     </textarea></section>
+
 
 </section>
 
