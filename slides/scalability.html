@@ -251,7 +251,7 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 - This puts some data into a separate section, called a *witness*
     - This is raw stack data
     - If redeeming multiple UTXOs, then this data can be shared between all the UTXOs
-    - Thus increasing the average TXN size and increasing TXN count per block
+    - Thus decreasing the average TXN size and increasing TXN count per block
 - (It also fixed the issue of the TXN hash changing during mining)
 
 
@@ -694,7 +694,7 @@ contract SimplePaymentChannel {
 - Mean to be a competitor with Ethereum
 - Can handle 50,000 TPS
     - In Sept 2021, a surge of transactions (400,000 TPS) brought down the cryptocurrency
-    - IT was restored the next day 
+    - It was restored the next day 
 - Programming languages: C, C++, and Rust
 - Uses the [eBPF (extended Berkeley Packet Filter)](https://en.wikipedia.org/wiki/Berkeley_Packet_Filter) execution environment
     - A virtual machine that allows for easy analysis of network data

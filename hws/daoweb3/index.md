@@ -9,6 +9,9 @@ In this assignment you are going to create a Decentralized Autonomous Organizati
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Mon, 4/18: updated the `wget` commands:
+    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js`
+    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map`
 - Mon, 4/18: added the two `chmod` commands that you should run on portal to make sure the permissions are set correctly
     - `chmod 711 ~ ~/public_html`
     - `chmod 644 ~/public_html/dao.html ~/public_html/web3*`
@@ -147,8 +150,8 @@ This is not a class on user interfaces, so we are not expecting an amazing looki
     	- Install [SecureFX](https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=d1450ab4db51db404f32fb671d9619c5), which is a GUI scp client
 - View the web page at `https://www.cs.virginia.edu/~mst3k/dao.html`, changing `mst3k` for your userid
 - Copy a few files over: while all of *your* code must be in a single file, you are going to include the `web3.js` library.  To put that into the correct place on portal, execute two commands, both from your `~/public_html/` directory:
-    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map;/bin/rm -f web3.min.js`
-    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map;/bin/rm -f web3.min.js.map`
+    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js`
+    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map`
 
 ##### Background
 
