@@ -13,7 +13,7 @@ Run Python.  You can put these commands into a script file, or type these comman
 
 You will need to install two packages via `pip` or `pip3`: the packages are `web3` and `hexbytes` (note that the former may install the latter on your system).
 
-You should start with the following import lines:
+You should always start with the following import lines:
 
 ```
 from web3 import Web3
@@ -32,7 +32,9 @@ If you are using the geth.ipc file:
 w3 = Web3(Web3.IPCProvider('/path/to/geth.ipc'))
 ```
 
-Note: it is unclear how to do this in Windows...
+This assumes you have started up a node as per the [Private Ethereum Blockchain assignment](../ethprivate/index.html) ([md]((../ethprivate/index.md)).
+
+Note: it is unclear how to do this in Windows, as I do not have a Windows machine that I can test this on.  When/if I find out how, I will update this section.
 
 To connect via the course server:
 
@@ -47,18 +49,18 @@ To see if you are connected, you can try:
 - `w3.isConnected()`, which should return `True`
 - `w3.eth.get_block('latest')`, which should return the latest block
 
-##### Calling a `view` function on a smart contract
+##### Calling a `view` or `pure` function on a smart contract
 
 Calling a `view` or `pure` function is much like with geth -- we define an address and an ABI variable, then create the interface and then the contract.  For this example, we'll call a method on our TokenDEX contract.
 
 You'll need to determine the address of your TokenDEX -- you can use the one you submitted to the dex.php listing.  Define the following variables:
 
 ```
-address='0xa310c68727d01546E138d644263448AcD8865832'
+address='0x0123456789abcdef0123456789abcdef01234567'
 abi='[...]'
 ```
 
-For the `abi` variable, you can copy it from the Collab landing page.  Note that this value is in quotes (ENSURE CORRECT QUOTES), which is different than when we did that in geth.  This ABI also includes the `reset()` function, described in the main HW, which it defines in Solidity as `function reset() public {`.
+For the `abi` variable, you can copy it from the Collab landing page.  Note that this ABI value is in single quotes, which is unlike how we do it via the geth Javascript terminal.
 
 We can then create the contract instance in one command:
 
@@ -72,19 +74,19 @@ From there, we can call a function on it:
 contract.functions.k().call()
 ```
 
-Notice that we have to put parenthesis after both the method name of `k` and after the `call`.  Parameters would go in the parenthesis after the method name, not in the `call()` parenthesis.
+Notice that we have to put parenthesis after both the method name of `k` and after the `call`.  Parameters, if there were any, would go in the parenthesis after the method name, not in the `call()` parentheses.
 
-##### Transacting
+##### Transactions
 
 In geth, we would unlock our account with our password, and then call `sendTransaction()`.  To do this in Python is a bit more complicated.
 
-First, we need the private key in decrypted form.  This was done in the [Private Ethereum Blockchain assignment](ethprivate/index.html) ([md](ethprivate/index.md)) in part 4 -- if you don't have that recorded, then re-do that section.  Your private key will be of the form `b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'`.  Save it via:
+First, we need the private key in decrypted form.  This was done in the [Private Ethereum Blockchain assignment](ethprivate/index.html) ([md](ethprivate/index.md)) in part 4 -- if you don't have that decrypted private key saved, or if you changed accounts, then re-do that section.  Your private key will be of the form `b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'`.  Save it via:
 
 ```
-private_key = b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+private_key = hexbytes.HexBytes('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef')
 ```
 
-NOTE: need the private key *before* calling `binascii.b2a_hex()` or convert it via `from hexbytes import HexBytes`
+You will note that this is a slightly different form than what you got when you decrypted your key -- the hex byte data is the same, it just is in a `hexbytes.HexBytes()` constructor.
 
 We also need to define our account address that we have the private key for:
 
@@ -92,7 +94,7 @@ We also need to define our account address that we have the private key for:
 my_address='0x0123456789abcdef0123456789abcdef01234567';
 ```
 
-This address has to be in correct checksummed form -- you can run it through [ethsum.netlify.app](https://ethsum.netlify.app/) to get the checksummed version.
+This address has to be in correct check-summed form -- you can run it through [ethsum.netlify.app](https://ethsum.netlify.app/) to get the check-summed version.
 
 Once we have the private key, we have to take three steps: create the transaction, sign it, and then transmit it to the blockchain.
 
@@ -108,6 +110,18 @@ transaction = contract.functions.getTokenCCAbbreviation().buildTransaction({
 ```
 
 Other fields could be added as well -- if we wanted to send some wei in with the transaction, such as to a `payable` function, then we would add a `value` key with the (integer) wei amount as the value.
+
+If all we wanted to do was to just pay ETH, and not call a function, we would just create a dict:
+
+```
+transaction = {
+    'nonce': w3.eth.get_transaction_count(my_address),
+    'to': '0x0123456789abcdef0123456789abcdef01234567',
+    'value': w3.toWei(1, 'ether'),
+    'gas': 21000,
+    'gasPrice': web3.toWei('10', 'gwei')
+}
+```
 
 We then sign that transaction:
 
@@ -131,7 +145,7 @@ The return value of `sendRawTransaction()` was saved into the `ret` variable.  W
 w3.eth.wait_for_transaction_receipt(ret)
 ```
 
-This is the transaction *receipt*, which has slightly different information than the transaction itself.  In particular, it will wait (block) until the transaction is mined into a block.  If the `status` field is 0, then the transaction was not successful (likely due to a reversion).
+This is the transaction *receipt*, which has slightly different information than the transaction itself.  In particular, it will wait (block) until the transaction is mined into a block.  If the `status` field is 0, then the transaction was not successful for some reason. Those reasons can include: a reversion (such as a failed `require()`, insufficient funds, insufficient gas, etc.
 
 We can also get the raw transaction information itself:
 
@@ -144,12 +158,12 @@ This is the same information that you can find in the blockchain explorer.
 
 ##### Gas estimation
 
-Web3 can estimate how much gas your transaction will use.  Once you have created your transaction object, you can just call: `gas = w3.eth.estimateGas(transaction)`.  Note that this is an *estimate*, not a fully accurate count.  In particular, if there is an if/else path, then it can't know which one it will take.  Although an estimate, it is sufficient for our purposes.  Lastly, note that this is the amount of gas, and once you supply it with a amount of wei per gas, you can convert that into a actual price in ether.
+Web3 can estimate how much gas your transaction will use.  Once you have created your transaction object, you can just call: `gas = w3.eth.estimateGas(transaction)`.  Note that this is an *estimate*, not a fully accurate count.  In particular, if there is an if/else path, then it can't always know which path it will take.  Although an estimate, it is sufficient for our purposes.  Lastly, note that this is the amount of gas, and once you supply it with a amount of wei per gas, you can convert that into a actual price in ether.
 
 
 ##### Reverts
 
-It turns out it is often (but not always!) possible to get the reason for a reversion.  The code below will do just that (code adapted from [here](https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/)).  We assume the transaction hash is in the `txhash` variable.
+It turns out it is often (but not always!) possible to get the reason for a reversion.  The code below will attempt to do just that (code adapted from [here](https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/)).
 
 
 ```

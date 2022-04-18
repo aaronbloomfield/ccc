@@ -32,7 +32,7 @@ these commands directly into a Python interpreter.</p>
 <code>pip3</code>: the packages are <code>web3</code> and
 <code>hexbytes</code> (note that the former may install the latter on
 your system).</p>
-<p>You should start with the following import lines:</p>
+<p>You should always start with the following import lines:</p>
 <pre><code>from web3 import Web3
 from hexbytes import HexBytes</code></pre>
 <p>All the code below assumes those two import lines are present.</p>
@@ -42,7 +42,12 @@ The difference is if you are going to connect via the geth.ipc file or
 through the course server endpoint.</p>
 <p>If you are using the geth.ipc file:</p>
 <pre><code>w3 = Web3(Web3.IPCProvider(&#39;/path/to/geth.ipc&#39;))</code></pre>
-<p>Note: it is unclear how to do this in Windows…</p>
+<p>This assumes you have started up a node as per the <a
+href="../ethprivate/index.html">Private Ethereum Blockchain
+assignment</a> (<a href="(../ethprivate/index.md)">md</a>.</p>
+<p>Note: it is unclear how to do this in Windows, as I do not have a
+Windows machine that I can test this on. When/if I find out how, I will
+update this section.</p>
 <p>To connect via the course server:</p>
 <pre><code>w3 = Web3(Web3.WebsocketProvider(&#39;wss://&lt;your-provider-url&gt;&#39;))</code></pre>
 <p>The full URL for the course server is on the Collab landing page.</p>
@@ -53,8 +58,8 @@ through the course server endpoint.</p>
 <li><code>w3.eth.get_block('latest')</code>, which should return the
 latest block</li>
 </ul>
-<h5 id="calling-a-view-function-on-a-smart-contract">Calling a
-<code>view</code> function on a smart contract</h5>
+<h5 id="calling-a-view-or-pure-function-on-a-smart-contract">Calling a
+<code>view</code> or <code>pure</code> function on a smart contract</h5>
 <p>Calling a <code>view</code> or <code>pure</code> function is much
 like with geth – we define an address and an ABI variable, then create
 the interface and then the contract. For this example, we’ll call a
@@ -62,42 +67,40 @@ method on our TokenDEX contract.</p>
 <p>You’ll need to determine the address of your TokenDEX – you can use
 the one you submitted to the dex.php listing. Define the following
 variables:</p>
-<pre><code>address=&#39;0xa310c68727d01546E138d644263448AcD8865832&#39;
+<pre><code>address=&#39;0x0123456789abcdef0123456789abcdef01234567&#39;
 abi=&#39;[...]&#39;</code></pre>
 <p>For the <code>abi</code> variable, you can copy it from the Collab
-landing page. Note that this value is in quotes (ENSURE CORRECT QUOTES),
-which is different than when we did that in geth. This ABI also includes
-the <code>reset()</code> function, described in the main HW, which it
-defines in Solidity as <code>function reset() public {</code>.</p>
+landing page. Note that this ABI value is in single quotes, which is
+unlike how we do it via the geth Javascript terminal.</p>
 <p>We can then create the contract instance in one command:</p>
 <pre><code>contract = w3.eth.contract(address=address, abi=abi)</code></pre>
 <p>From there, we can call a function on it:</p>
 <pre><code>contract.functions.k().call()</code></pre>
 <p>Notice that we have to put parenthesis after both the method name of
-<code>k</code> and after the <code>call</code>. Parameters would go in
-the parenthesis after the method name, not in the <code>call()</code>
-parenthesis.</p>
-<h5 id="transacting">Transacting</h5>
+<code>k</code> and after the <code>call</code>. Parameters, if there
+were any, would go in the parenthesis after the method name, not in the
+<code>call()</code> parentheses.</p>
+<h5 id="transactions">Transactions</h5>
 <p>In geth, we would unlock our account with our password, and then call
 <code>sendTransaction()</code>. To do this in Python is a bit more
 complicated.</p>
 <p>First, we need the private key in decrypted form. This was done in
 the <a href="ethprivate/index.html">Private Ethereum Blockchain
 assignment</a> (<a href="ethprivate/index.md">md</a>) in part 4 – if you
-don’t have that recorded, then re-do that section. Your private key will
-be of the form
+don’t have that decrypted private key saved, or if you changed accounts,
+then re-do that section. Your private key will be of the form
 <code>b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'</code>.
 Save it via:</p>
-<pre><code>private_key = b&#39;0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&#39;</code></pre>
-<p>NOTE: need the private key <em>before</em> calling
-<code>binascii.b2a_hex()</code> or convert it via <code>from hexbytes
-import HexBytes</code></p>
+<pre><code>private_key = hexbytes.HexBytes(&#39;0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&#39;)</code></pre>
+<p>You will note that this is a slightly different form than what you
+got when you decrypted your key – the hex byte data is the same, it just
+is in a <code>hexbytes.HexBytes()</code> constructor.</p>
 <p>We also need to define our account address that we have the private
 key for:</p>
 <pre><code>my_address=&#39;0x0123456789abcdef0123456789abcdef01234567&#39;;</code></pre>
-<p>This address has to be in correct checksummed form – you can run it
+<p>This address has to be in correct check-summed form – you can run it
 through <a href="https://ethsum.netlify.app/">ethsum.netlify.app</a> to
-get the checksummed version.</p>
+get the check-summed version.</p>
 <p>Once we have the private key, we have to take three steps: create the
 transaction, sign it, and then transmit it to the blockchain.</p>
 <p>Let’s first create the transaction:</p>
@@ -111,6 +114,15 @@ transaction, sign it, and then transmit it to the blockchain.</p>
 in with the transaction, such as to a <code>payable</code> function,
 then we would add a <code>value</code> key with the (integer) wei amount
 as the value.</p>
+<p>If all we wanted to do was to just pay ETH, and not call a function,
+we would just create a dict:</p>
+<pre><code>transaction = {
+    &#39;nonce&#39;: w3.eth.get_transaction_count(my_address),
+    &#39;to&#39;: &#39;0x0123456789abcdef0123456789abcdef01234567&#39;,
+    &#39;value&#39;: w3.toWei(1, &#39;ether&#39;),
+    &#39;gas&#39;: 21000,
+    &#39;gasPrice&#39;: web3.toWei(&#39;10&#39;, &#39;gwei&#39;)
+}</code></pre>
 <p>We then sign that transaction:</p>
 <pre><code>signed_txn = w3.eth.account.signTransaction(transaction, private_key=private_key)</code></pre>
 <p>Lastly, we send it to the network</p>
@@ -125,7 +137,9 @@ information:</p>
 different information than the transaction itself. In particular, it
 will wait (block) until the transaction is mined into a block. If the
 <code>status</code> field is 0, then the transaction was not successful
-(likely due to a reversion).</p>
+for some reason. Those reasons can include: a reversion (such as a
+failed <code>require()</code>, insufficient funds, insufficient gas,
+etc.</p>
 <p>We can also get the raw transaction information itself:</p>
 <pre><code>w3.eth.get_transaction(ret)</code></pre>
 <p>This is the same information that you can find in the blockchain
@@ -135,16 +149,15 @@ explorer.</p>
 have created your transaction object, you can just call: <code>gas =
 w3.eth.estimateGas(transaction)</code>. Note that this is an
 <em>estimate</em>, not a fully accurate count. In particular, if there
-is an if/else path, then it can’t know which one it will take. Although
-an estimate, it is sufficient for our purposes. Lastly, note that this
-is the amount of gas, and once you supply it with a amount of wei per
-gas, you can convert that into a actual price in ether.</p>
+is an if/else path, then it can’t always know which path it will take.
+Although an estimate, it is sufficient for our purposes. Lastly, note
+that this is the amount of gas, and once you supply it with a amount of
+wei per gas, you can convert that into a actual price in ether.</p>
 <h5 id="reverts">Reverts</h5>
 <p>It turns out it is often (but not always!) possible to get the reason
-for a reversion. The code below will do just that (code adapted from <a
-href="https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/">here</a>).
-We assume the transaction hash is in the <code>txhash</code>
-variable.</p>
+for a reversion. The code below will attempt to do just that (code
+adapted from <a
+href="https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/">here</a>).</p>
 <pre><code>def printRevertReason(w3,txhash):
     # adapted from https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/
     tx = w3.eth.get_transaction(txhash)
