@@ -1,7 +1,7 @@
 Web3.py Introduction
 ====================
 
-[Go up to the main HW page](index.html) ([md](index.md))
+[Go up to the main CCC docs page](index.html) ([md](index.md))
 
 ### Web3.py
 

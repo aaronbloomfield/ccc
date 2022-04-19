@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Solidity Reference</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="../markdown.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="solidity-reference">Solidity Reference</h1>
+<p><a href="index.html">Go up to the main CCC docs page</a> (<a
+href="index.md">md</a>)</p>
+<p>This document is meant to be a series of reminders about Solidity
+programming tasks, all in one place.</p>
+<h3 id="spdx-license-line">SPDX license line</h3>
+<p>The first line of your program, it might look like:</p>
+<pre><code>// SPDX-License-Identifier: Unlicensed</code></pre>
+<p>The fill list can be found <a
+href="https://spdx.org/licenses/">here</a>. For this class, you can use
+any one you want. A few examples:</p>
+<ul>
+<li><code>Unlicensed</code>: there is no attached license. This will
+silence the SPDX missing warning.</li>
+<li><code>GPL</code> or <code>GPL-3.0-only</code> or
+<code>GPL-3.0-or-later</code>: the <a
+href="https://spdx.org/licenses/GPL-3.0-or-later.html">GNU Public
+License</a> which means that anybody who uses that code must release it
+under a similar license (which, in practice, is pretty much always the
+GPL); this generally prevents commercial usage unless they publicly
+release their code</li>
+<li><code>MIT</code>: the <a
+href="https://spdx.org/licenses/MIT.html">MIT license</a> which means
+anybody can use this code, personal or commercial, for any reason, and
+they do not have to release their derived code</li>
+</ul>
+<h3 id="paying-from-a-contract">Paying from a contract</h3>
+<pre><code>(bool success, ) = payable(a).call{value: v}(&quot;&quot;);
+require(success, &quot;Failed to transfer ETH&quot;);</code></pre>
+<h3 id="getting-the-balance-of-a-contract">Getting the balance of a
+contract</h3>
+<p>This only pertains to the spring 2022 semester; outside that
+semester, just call <code>address(this).balance</code>.</p>
+<p>Having a contract get it’s own balance should be easy – just
+<code>address(this).balance</code>. But for the spring 2022 semester,
+that is not working due to a misconfiguration in how the blockchain was
+setup – it complains about <code>SELFBALANCE</code> being an unknown
+opcode. So we need a work-around: a contract has to ask something
+<em>else</em> to get it’s own balance.</p>
+<p>Consider this contract:</p>
+<pre><code>// SPDX-License-Identifier: Unlicensed
+pragma solidity ^0.8.7;
+contract GetBalance {
+    function getBalance(address a) public view returns (uint) {
+        return a.balance;
+    }
+}</code></pre>
+<p>Once deployed, you can call the <code>getBalance()</code> method to
+get one’s own balance. This is deployed at address
+<code>0x1E2c5E21c3b9cFD67bedF28e04fDd295AecbC500</code> <span
+class="copylink"
+onclick="navigator.clipboard.writeText(&#39;0x1E2c5E21c3b9cFD67bedF28e04fDd295AecbC500&#39;)">⎘</span>
+on the course blockchain.</p>
+<p>If you need to be able to switch between this code on the course
+blockchain, and Remix (in which you can just call
+<code>address(this).balance</code>), you can use the following
+method:</p>
+<pre><code>// This is SUCH AND UGLY HACK, but it will work for the spring 2022 semester
+function getSelfBalance() public view returns (uint) {
+    if ( block.number &gt; 70000 )
+        return GetBalance(0x1E2c5E21c3b9cFD67bedF28e04fDd295AecbC500).getBalance(address(this));
+    else
+        return address(this).balance;
+}</code></pre>
+</body>
+</html>

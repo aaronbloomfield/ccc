@@ -98,7 +98,7 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 21. Wed, Apr 6: finished [Blockchain applications](../slides/applications.html#/)
 22. Mon, Apr 11: [zkSNARKs](../slides/zksnarks.html#/) to slide 5.29
 23. Wed, Apr 13: finished [zkSNARKs](../slides/zksnarks.html#/)
-24. Mon, Apr 18: [Scalability](../slides/scalability.html#/) to slide ...
+24. Mon, Apr 18: [Scalability](../slides/scalability.html#/) to slide 6.7
 
 ## Legal Issues
 
