@@ -1,5 +1,5 @@
-Cryptocurrency: Documents
-=========================
+Cryptocurrency Course: Documents
+================================
 
 
 [Go up to the main CCC readme](../readme.html) ([md](../readme.md))

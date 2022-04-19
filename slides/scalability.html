@@ -64,6 +64,7 @@ line-height:120%;
 [Off-Chain Scaling](#/offchain)  
 [Bitcoin's Lightning Network](#/btcln)  
 [Case Studies](#/casestudies)  
+[Concurrency](#/concurrency)  
 	</textarea></section>
 
 <!-- ============================================================ -->
@@ -798,6 +799,184 @@ extern uint64_t entrypoint(const uint8_t *input) {
     - Think: mining a parachain
 - Validators: a PoS "miner" for the relay chain
 - Fishermen: monitor network for "bad behavior"
+</textarea></section>
+
+</section>
+
+<!-- ============================================================ -->
+
+<section>
+
+    <section id="concurrency" data-markdown class="center"><textarea>
+# Concurrency
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
+## TXN order matters
+![](images/scalability/concurrency/concurrency.dot.1.svg)
+- Imagine a contract *A* that only has 10 ETH
+- In the same block, both Alice and Bob try to get their payouts
+- Who gets paid?
+  - In this case, Alice does, and Bob does not
+
+
+
+## TXN order matters
+
+<img src="images/scalability/concurrency/concurrency.dot.1.svg" style="float:right;margin-left:20px !important;max-width:50%;max-height:600px;margin-top:0">
+<img src="images/scalability/concurrency/concurrency.dot.2.svg" style="float:left;margin-right:50px !important;max-width:50%;max-height:600px;margin-top:0">
+
+- What if the transaction order was different?
+- The two shown blocks are *not* the same
+- Who gets paid depends on whose transaction is *earlier* in the block's lists of TXNs
+- Is this a race condition?
+    - Yes, for the miner
+    - No, for the validator
+
+
+
+## Blockchain determinism
+- An axiom of a blockchain:
+
+> The current state of the blockchain must depend solely on the data (including transaction order) in the blockchain itself
+
+- This means:
+    - No random numbers
+    - No difference in opinion about the state by different nodes
+    - No floating point numbers!
+
+
+
+## Evaluating transactions
+
+<img src="images/scalability/concurrency/concurrency.dot.3.svg" style="float:right;margin-left:20px !important;max-width:50%;max-height:600px;margin-top:0">
+<img src="images/scalability/concurrency/concurrency.dot.4.svg" style="float:left;margin-right:50px !important;max-width:50%;max-height:600px;margin-top:0">
+
+- Transactions are evaluated strictly in the order they are found in the blockchain
+    - That's deterministic
+- Miners replay *each* transaction
+  - But they get a (potential) reward for doing so
+- Nodes / validators also have to replay *each* transaction
+  - But they get no reward!
+
+
+
+## Blockchain state
+- The blockchain state is:
+    - All the values of *all* the variables in *all* the contracts
+    - All the balances
+    - The transaction nonces
+    - Etc.
+- This state is maintained by the Ethereum Virtual Machine (EVM)
+    - So is sometimes called the *EVM state*
+- Any one call could depend on any previous call
+- So how to determine current state?
+    - Run everything sequentially!
+        - But that is slooooooow
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Optimizing BC evaluation
+![](https://huonw.github.io/blog/2015/01/crates.io-crate-graph/most-packages-preview.png)
+- Not all TXNs depend on all others
+- Solution: We could build a graph of dependencies
+    - But with the complexity of the EVM state, that would likely take longer than just executing them sequentially
+- Solution: we could add concurrency (threads, locks, etc.)
+    - But then it's not deterministic (when programmed poorly)
+
+
+
+## The problem
+- Sync'ing the full Ethereum blockchain can take *two weeks*
+    - And that's optimized
+- We need to improve upon sequential execution
+    - While staying fully deterministic
+- And we'd like to take advantage of multi-core CPUs
+
+
+
+## Solution: Speculation
+- Solution: execute the transactions in parallel
+    - Detect when there is a conflict and then fix it
+- To make life easier...
+    - ... without much loss in speed...
+    - ... we can parallel execute the transactions in one block at a time
+    - And once that block is all done, move on to the next one
+- *Every* data value on the blockchain will have a *read lock* and also a *write lock*
+- This is all in the Ethereum Virtual Machine (EVM), which is what is replaying all the transactions
+
+
+
+<!-- .slide: class="right-float-img" -->
+## EVM Memory Locks
+![](images/scalability/concurrency/concurrency.dot.5.svg)
+- TXN 1 acquires only a read lock
+- TXN 2 acquires only a write lock
+- TXN 3 acquires both a read lock & a write lock
+- TXN 4 acquires only a read lock
+    - That's allowed!
+- TXN 5 wants a write lock, but that violates TXN 1's read lock
+    - Formally it fails to acquires a write lock on `x[1]`
+- How locks work:
+    - There can be any number of read locks on a value
+    - But a single write lock will conflict with any other locks, either read or write
+
+
+
+<!-- .slide: class="right-float-img" -->
+## EVM Memory Locks
+![](images/scalability/concurrency/concurrency.dot.5.svg)
+- TXNs 1 & 5 violated each other's locks
+- So we cancel those transactions' modifications to the EVM state
+- And schedule them in the order they are in the block
+    - And then re-run them sequentially in that order
+
+
+
+## Evaluating Transactions
+- There are three different entities who evaluate transactions:
+    - Miners as they are mining transactions into blocks
+    - Validators as they are trying to achieve consensus on a just-mined block
+    - Nodes that are playing catch-up of the blockchain
+
+
+
+## Evaluating Transactions
+- Miners now include concurrency information in the blocks
+    - The first $p$ transactions can be run concurrently, the last $n-p$ must be run sequentially
+    - Motivation: if they don't, their block, in the case of a fork, is less attractive to others
+- Validators much check that the TXNs marked as being able to be run concurrently really can be
+    - This is part of the block validation tests
+- Nodes playing catch-up don't have to check it
+
+
+
+## How much speed-up?
+- Saraph & Herlihy (from Brown) studied this in 2019
+    - [An Empirical Study of Speculative Concurrency in Ethereum Smart Contracts](https://drops.dagstuhl.de/opus/volltexte/2020/11968/pdf/OASIcs-Tokenomics-2019-4.pdf)
+    - Their results: 
+        - 8-fold increase in 2016
+        - Declining to a 2-fold increase in late 2017
+- The speed-up decreased as the number of transactions and number of conflicts increased
+    - A "small" number of "popular" contracts were responsible for most of the conflicts
+
+
+
+## Increasing speed-up
+- Saraph & Herlihy had a number of potential ways to allow for further speed-ups:
+    - Split a contract's memory into read memory and write memory
+    - Educate contract programmers how to program to avoid conflicts
+    - Allow the EVM to have atomic data types that avoid all this
+    - Recognize *commutative* operations and allow them to execute in parallel
+        - Example:
+```
+balance['alice'] += 4;
+balance['alice'] += 3;
+balance['alice'] += 7;
+```
+        - The order these are executed does not affect the final result
     </textarea></section>
 
 
