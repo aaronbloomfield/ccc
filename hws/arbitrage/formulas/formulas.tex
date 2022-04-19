@@ -1,0 +1,31 @@
+% this document is just to allow creation of the formula images
+% to do so, run:
+% latext2html formulas.tex
+
+\documentclass{article}
+
+\begin{document}
+
+\begin{enumerate}
+
+\item $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$
+
+\item $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$
+
+\item $h_{after} = \left( q_{e} + f \ast x_{d}-f \ast \frac{k_d}{y_{d}+\delta_{t}} \right) \ast p_{e} + \left( q_{t}-\delta_{t} \right) \ast p_{t} - g \ast p_e$
+
+\item $h_{after} = (q_{t} + f \ast y_{d}-f \ast k_d/(x_{d}+\delta_{e})) \ast p_{t} + (q_{e}-\delta_{e}) \ast p_{e} - g \ast p_e$
+
+\item $h_{after} = \left( q_{t} + f \ast y_{d}-f \ast \frac{k_d}{x_{d}+\delta_{e}} \right) \ast p_{t} + \left( q_{e}-\delta_{e} \right) \ast p_{e} - g \ast p_e$
+
+\item $\delta_{t}=-y_d\pm\sqrt{f \ast k_d \ast p_e/p_t}$
+
+\item $\delta_{t}=-y_d\pm\sqrt{f \ast k_d \ast \frac{p_e}{p_t}}$
+
+\item $\delta_{e}=-x_d\pm\sqrt{f \ast k_d \ast p_t/p_e}$
+
+\item $\delta_{e}=-x_d\pm\sqrt{f \ast k_d \ast \frac{p_t}{p_e}}$
+
+\end{enumerate}
+
+\end{document}

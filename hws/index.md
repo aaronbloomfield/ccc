@@ -19,6 +19,7 @@ These are larger programming homeworks.
 - [P7: dApp Auction](auction/index.html) ([md](auction/index.md))
 - [P8: DEX](dex/index.html) ([md](dex/index.md))
 - [P9: DAO & web3](daoweb3/index.html) ([md](daoweb3/index.md))
+- [P10: Arbitrage trading](arbitrage/index.html) ([md](arbitrage/index.md))
 
 
 ### Smaller homeworks

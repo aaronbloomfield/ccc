@@ -7,6 +7,8 @@ Arbitrage Trading
 
 In this assignment you are going to create a Python program to perform [arbitrage trading](../../slides/applications.html#/arbitrage) on the blockchain.  Your trading will be between a number of different of your TokenDEX instances from the [DEX](../dex/index.html) ([md](../dex/index.md)) assignment.
 
+Regardless of what you named your token cryptocurrency, we are going to refer to it as 'TC' here (for Token Cryptocurrency).
+
 ### Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
@@ -15,7 +17,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:
 
-- That you completed the [DEX](../dex/index.html) ([md](../dex/index.md)) assignment as we will be using that.  If you didn't get yours working, contact us, and we will provide it for you.
+- That you completed the [DEX](../dex/index.html) ([md](../dex/index.md)) assignment as we will be using that.  If you didn't get yours working, contact us, and we will provide a few deployed TokenDEXes for you.
 - That you completed the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment as we will be using your TokenCC contract.
 - Familiarity with the [arbitrage trading](../../slides/applications.html#/arbitrage) section of the lecture slides
 
@@ -63,9 +65,9 @@ function configureDEXes() public payable {
 }
 ```
 
-When supplied with 10 ETH (plus enough for gas fees, so we can just make it 11 ETH), this will make a few exchanges.  We can't put it in the `setup()` function, above, as that would run over the gas limit.
+When supplied with 10 ETH (plus enough for gas fees, so we can just make it 11 ETH), this will make a few exchanges.  We can't put this code in the `setup()` function, above, as that would run over the gas limit.
 
-We provide these functions, and a few others, in an [Arbitrage.sol](Arbitrage.sol.html) ([src](Arbitrage.sol)) file for you to use.  ***NOTE:*** Just using this blindly without understanding what it does will not be successful -- you need to understand the code that is being called.  You will not be submitting this file, so feel free to adapt it as desired.  Note that we create a constant EtherPricer in that code, as we need to pass in an EtherPricer to the `createPool()` function to initialize the TokenDEX.  However, we don't call any functions on the DEX that use the EtherPricer, so using the constant one is fine here.
+We provide these functions, and a few others, in an [Arbitrage.sol](Arbitrage.sol.html) ([src](Arbitrage.sol)) file for you to use.  ***NOTE:*** Just using this blindly without understanding what it does will not be successful -- you need to understand the code that is being called.  You will not be submitting this file, so feel free to adapt it as desired.  Note that we create a constant EtherPricer in that contract, as we need to pass in an EtherPricer to the `createPool()` function to initialize the TokenDEX.  However, we don't call any functions on the DEX that use the EtherPricer, so using the constant one is fine here.
 
 In addition to your TokenCC.sol and TokenDEX.sol files (and any supporting files so they can compile), you will need the
 [EtherPricer.sol](../dex/EtherPricer.sol.html) ([src](../dex/EtherPricer.sol)) and [EtherPricerConstant.sol](../dex/EtherPricerConstant.sol.html) ([src](../dex/EtherPricerConstant.sol)) files.
@@ -73,7 +75,7 @@ In addition to your TokenCC.sol and TokenDEX.sol files (and any supporting files
 
 ### Web3.py
 
-You will need to read the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)).  While you do not need to have all of that memorized, you do need to understand it all!
+You will need to read the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)).  While you do not need to have all of that memorized, you do need to understand it all!  The intent is that you will use that page as a reference while you write this assignment.
 
 
 ### Market Theory
@@ -86,7 +88,7 @@ You will first need to obtain the various information (prices, $x$/$y$/$k$ value
 
 > $ethAmountAfter \ast ethPrice + tcAmountAfter \ast tcPrice > ethAmountBefore \ast ethPrice + tcAmountBefore \ast tcPrice - gasFees$
 
-Note: there are other reasonable ways to determine "profit".  In particular, if one believes that the price of the currency will grow, then the total amount of that currency (not the total USD value) would be another metric.  For our purposes, we will just use the raw USD value of the holdings.
+Note: there are other reasonable ways to determine "profit".  In particular, if one believes that the price of the currency will grow, then the total amount of that currency (not the total USD value) would be another metric.  For our purposes, we will just use the USD value of the holdings.
 
 We are going to call this a *single trade*.  This is when you make one transaction at a single DEX to increase your holdings.
 
@@ -98,12 +100,12 @@ You can assume the number of DEXes involved, $d$, is relatively small, so you ca
 
 -->
 
-For this assignment, you will only need to consider single trades for each run of the program.  This means, for each DEX, and for each of the two directions (ETH -> TC and TC -> ETH), find the (DEX,currency,amount) combination that maximizes your profit.  Consider the most profitable such transaction at all the available DEXes.  If that transaction increases your holdings, then take that action.  It's also possible that a *double trade* would yield a profit, where as a single trade would not (for example, exchanging some ETH for some TC in one DEX, and then trading it back for more ETH at a different DEX).  We are not considering double trades for this assignment.
+For each DEX, and for each of the two directions (ETH -> TC and TC -> ETH), find the (DEX,currency,amount) combination that maximizes your profit.  Consider the most profitable such transaction among all the available DEXes.  If that transaction increases your holdings, then take that action.  It's also possible that a *double trade* would yield a profit, where as a single trade would not (for example, exchanging some ETH for some TC in one DEX, and then trading that TC back for more ETH at a different DEX).  We are not considering double trades for this assignment.
 
 
 ##### How much to buy
 
-We can formulaically determine how much to buy.  The full derivation of the formulas in this section is being omitted here, but you can see that full derivation [here](extra.html) ([md](extra.md)).  For this, we need to define a number of variables:
+We can formulaically determine how much to buy.  The full derivation of the formulas in this section is being omitted here, but you can see that full derivation [here](extra.html) ([md](extra.md)).  First we need to define a number of variables:
 
 - The DEX values are $x_d$, $y_d$, and $k_d$
 - The current prices are $p_e$ and $p_t$, the price of ETH and TC, respectively
@@ -112,25 +114,28 @@ We can formulaically determine how much to buy.  The full derivation of the form
 - The gas fees, computed as per the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)) page, are $g$; this is in units of ETH.  Gas fees are discussed below (in the "Assignment" section)
 - $f$ is the percentage (out of 1.0) obtained after the DEX fees are removed.  So if $f_n$ is the fee numerator (say, 3) and $f_d$ is the fee denominator (say, 1000), then $f=1-f_n/f_d$.  As an example, if $f_n=3$ and $f_d=1000$, then $f=0.997$.  Note that this fee applies to both ETH and TC transactions.
 
-The above values are all fixed when the program runs.  The only values that the program chooses are the amount of ETH that we trade in (we'll call this $\delta_e$) or the amount of TC that we trade in (we'll call this $\delta_t$).  As we are only considering a single trade, only one of them will be non-zero.
+The above values are all fixed when the program runs -- either from the config file (described below) or by querying the DEXes.  Different DEXes will have different values for $x_d$, $y_d$, and $k_d$, of course.  The only values that the program chooses are the amount of ETH that we trade in (we'll call this $\delta_e$) or the amount of TC that we trade in (we'll call this $\delta_t$).  As we are only considering a single trade, only one of them will be non-zero.
 
 The formulas that we need are (derivations [here](extra.html) ([md](extra.md))):
 
-- Our current holdings, in USD, are: $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$
-- If we trade in TC, then our holdings after (in USD) are: $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$
-- If we trade in ETH, then our holdings after (in USD) are: $h_{after} = (q_{t} + f \ast y_{d}-f \ast k_d/(x_{d}+\delta_{e})) \ast p_{t} + (q_{e}-\delta_{e}) \ast p_{e} - g \ast p_e$
+- Our current holdings, in USD, are: <!-- $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$ --> <img src="formulas/formulas/img1.svg" class="formula">
+- If we trade in TC, then our holdings after (in USD) are: <!-- $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$  --> <img src="formulas/formulas/img3.svg" class="formulabig">
+- If we trade in ETH, then our holdings after (in USD) are: <!-- $h_{after} = (q_{t} + f \ast y_{d}-f \ast k_d/(x_{d}+\delta_{e})) \ast p_{t} + (q_{e}-\delta_{e}) \ast p_{e} - g \ast p_e$  --> <img src="formulas/formulas/img5.svg" class="formulabig">
 
 For a single trade, want to find the maximum profit for the two $h_{after}$ formulas.  We take the derivative, then set it equal to zero to find the roots (details [here](extra.html) ([md](extra.md)), if you are interested).  The roots will give us the maximum and/or minimum points.  This gives us:
 
-- If we traded in TC, then the maxima / minima are at: $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$
-- If we traded in ETH, then the maxima / minima are at: $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$
-- Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of
+- If we traded in TC, then the maxima / minima are at: <!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ --> <img src="formulas/formulas/img7.svg" class="formulabig">
+    - Note that $p_e$ is in the numerator in that fraction, which is different than the fraction in the next formula
+- If we traded in ETH, then the maxima / minima are at: <!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ --> <img src="formulas/formulas/img9.svg" class="formulabig">
+    - Note that $p_t$ is in the numerator in that fraction, which is different than the fraction in the previous formula
+<!-- - Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of -->
 
 A few notes on those:
 
+- If you want to cut-and-paste these formulas into your program, the [derivations page](extra.html) ([md](extra.md))) has them in text form
 - Neither of these are guaranteed to make a profit!  But if a profit can be made, then one of those will be the maximum profit.
 - How much profit is determined from the $h_{after}$ formulas, above
-- Because the variables in the parenthetical can never be negative, and because $p_e$ will never be zero, the square root will always return real values
+- Because the variables in the square root can never be negative, and because the fraction denominators can never be zero, the square root will always return real values
 - However, the values to trade (meaning $\delta_e$ or $\delta_t$) may be negative, and you should ignore them in that case
 - The values to trade (meaning $\delta_e$ or $\delta_t$) may be larger than your balance; if so, then you should consider how much profit can be made from trading in all of your balance in that case
 
@@ -174,15 +179,17 @@ The `output()` function, below, will also be in the [config.py](config.py.html) 
 You can assume that the config.py will always be present and properly structured, and that all values will be valid.  The parts of the `config` dict are:
 
 - `account_address`: the address of the Ethereum account that this program is controlling -- it is the balance that this account has, in both ETH and TC, that constitutes the holdings of this account
-- `account_private_key`: the private key for that account, used to initiate transactions; this must be in the exact format shown here
+- `account_private_key`: the (decrypted) private key for that account, used to initiate transactions; this must be in the exact format shown above
     - You will have obtained the decrypted version of your private key in the [Private Ethereum Blockchain](ethprivate/index.html) -- you may have to run through that part again if you lost it or are now using a different key
-    - That key was likely in the form `b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'`.  Just copy the hex code (meaning without the leading `b'` and trailing `'`) into the `HexBytes()` constructor to make it the same format as the code above.
+    - That key was likely in the form `b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'` -- just copy the hex code (meaning without the leading `b'` and trailing `'`) into the `HexBytes()` constructor to make it the same format as the code above.
 - `connection_is_ipc`: whether the connection URI (which is on the next line in this file) is a geth.ipc file or a URL -- this will determine how the web3 provider is created
 - `connection_uri`: how to connect to the blockchain -- this will either be the path to a geth.ipc file or a URL to the course server; see the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)) for details -- you either have to pass it to a `Web3.IPCProvider()` call or a `Web3.WebsocketProvider()` call
 - `price_eth`: the current price of ETH, in USD, as a float -- this is without all the extra decimal places
 - `price_tc`: the current price of TC, in USD, as a float -- this is without all the extra decimal places
 - `tokencc_addr`: the smart address of the TokenCC smart contract
 - `dex_addrs`: the smart contract addresses of the various TokenDEX smart contracts; there will be at least two in this list
+
+You will need to edit all those values in config.py to match the deployed addresses (and other values) for your particular situation.
 
 The `hook()` function should be present, and should do nothing as shown.  This function needs be called at the *start* of each program execution run -- meaning when your program starts (right after the `import` lines) but before any of your other code in the file.  We are going to use that when we grade the assignment.
 
@@ -210,7 +217,7 @@ def output(ethAmt, tcAmt, fees, holdings):
     if ethAmt == 0 and tcAmt == 0:
         print("No profitable arbitrage trades available")
         return
-    assert (ethAmt * tcAmt < 0; "Exactly one of ethAmt and tcAmt should be negative, the other positive")
+    assert ethAmt * tcAmt < 0, "Exactly one of ethAmt and tcAmt should be negative, the other positive"
     if ethAmt < 0:
         print("Exchanged %f ETH for %f TC; fees: %f USD; prices: ETH %.2f USD, TC: %.4f USD; holdings: %.2f USD" %
               str(ethAmt), str(tcAmt), str(fees), config['price_eth'], config['price_tc'], str(holdings))
@@ -219,12 +226,16 @@ def output(ethAmt, tcAmt, fees, holdings):
               str(tcAmt), str(ethAmt), str(fees), config['price_eth'], config['price_tc'], str(holdings))
 ```
 
+***YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER OUTPUT*** other than the result of calling the `output()` function, above.
+
 If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case.  When a transaction is made, then one of `ethAmt` or `tcAmt` should be negative -- that's the one that is being sold.  The other should be positive, and is how much of the other you received for that exchange.  These values should be the amount of coin being bought or sold, and without all the decimals (so 1.5 TC rather than 15000000000 TC).  The prices for ETH and TC are pulled from `config` dict, so they do not have to be passed into this function.  The `fees` and `holdings` parameters should be in USD.
 
 
 ### Testing
 
-When testing your code, don't worry about getting the $x$, $y$, and $k$ values exactly correct for a test.  If you want to test such a situation -- to see if your program makes the right decision, for example -- you can hard-code those values in the arbitrage.py program.  Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values.  Instead, make a few transactions to the various DEXes from *another* account to get the $x$, $y$, and $k$ values to differ between the different DEXes.  The provided [Arbitrage.sol](Arbitrage.sol.html) ([src](Arbitrage.sol)) contract does some trades, but you may need to do that more for your testing.  The `arbitrage.py` program is then called to see if any profitable trades can be made.
+When testing your code, don't worry about getting the $x$, $y$, and $k$ values exactly correct for a test.  If you want to test such a situation -- to see if your program makes the right decision, for example -- you can hard-code those values in the arbitrage.py program and print out the results to see if it computed the correct values to trade.  Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values.  Instead, make a few transactions to the various DEXes from *another* account to get the $x$, $y$, and $k$ values to differ between the different DEXes.  The provided [Arbitrage.sol](Arbitrage.sol.html) ([src](Arbitrage.sol)) contract performs a few initial trades, but you may need to do more for your testing.  The `arbitrage.py` program is then called to see if any profitable trades can be made.
+
+When testing this code, you can open up the appropriate WebSocket port when you run geth -- just add `--ws --ws.origins localhost,127.0.0.1` to the (now long) list of command line parameters when you start your geth node.  Your connection_uri will then be `ws://localhost:8546`.  You are also welcome to connect to the course server (the URI of which is on the Collab landing page) or via your geth.ipc file.
 
 
 ### Real-world profit?
