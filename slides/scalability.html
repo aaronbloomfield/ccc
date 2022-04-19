@@ -328,6 +328,15 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 
 
 
+<!-- .slide: class="right-float-img" -->
+![](images/scalability/shards/shards.dot.2.svg)
+## Cryptocurrency sharding
+- Miners validate blocks on a given shard
+- The hash of a shard's block makes it's way to the main chain
+- The main chain's blocks are just hashes of the blocks on the shards
+
+
+
 ## Ethereum 2.0 (aka Eth2)
 - The long-awaited switch to PoS from PoW
 - TPS is expected to increase from 15 TPS to "tens of thousands"
@@ -969,7 +978,7 @@ extern uint64_t entrypoint(const uint8_t *input) {
     - Split a contract's memory into read memory and write memory
     - Educate contract programmers how to program to avoid conflicts
     - Allow the EVM to have atomic data types that avoid all this
-    - Recognize *commutative* operations and allow them to execute in parallel
+    - Recognize *commutative* operations and allow them to execute in parallel (assuming they are atomic)
         - Example:
 ```
 balance['alice'] += 4;

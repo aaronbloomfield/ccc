@@ -1,0 +1,272 @@
+digraph A {
+    node [shape=plaintext]
+    rankdir=LR;
+    splines=false;
+
+    subgraph clustermain {
+        titlemain [label="Main Chain",shape=plaintext,pos="2,3!"]
+        blockmain1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="hasha1">hash(A1)</td></tr>
+          <tr><td port="hashb1">hash(B1)</td></tr>
+          <tr><td port="hashc1">hash(C1)</td></tr>
+          <tr><td port="hashd1">hash(D1)</td></tr>
+        </table>> pos="2,2!"];
+        blockmain2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="hasha2">hash(A2)</td></tr>
+          <tr><td port="hashb2">hash(B2)</td></tr>
+          <tr><td port="hashc2">hash(C2)</td></tr>
+          <tr><td port="hashd2">hash(D2)</td></tr>
+        </table>> pos="2,0.4!"];
+        blockmain3 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 3</i></td></tr>
+          <tr><td port="hasha3">hash(A3)</td></tr>
+          <tr><td port="hashb3">hash(B3)</td></tr>
+          <tr><td port="hashc3">hash(C3)</td></tr>
+          <tr><td port="hashd3">hash(D3)</td></tr>
+        </table>> pos="2,-1.2!"];
+        blockmain4 [label="...",shape=plaintext,pos="2,-2.2!"]
+        blockmain5 [label=" ",shape=plaintext,pos="2,-2.45!"]
+    }
+
+    subgraph clustera {
+        titlea [label=" Shard A ",shape=plaintext,pos="0,6!"]
+        blocka1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headera1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,5!"];
+        blocka2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headera2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,3.4!"];
+        blocka3 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 3</i></td></tr>
+          <tr><td port="headera3">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,1.8!"];
+        blocka4 [label="...",shape=plaintext,pos="0,0.8!"]
+        blocka5 [label=" ",shape=plaintext,pos="0,0.55!"]
+    }
+
+    subgraph clusterb {
+        titleb [label=" Shard B ",shape=plaintext,pos="0,-0.7!"]
+        blockb1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headerb1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,-1.8!"];
+        blockb2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headerb2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,-3.4!"];
+        blockb3 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 3</i></td></tr>
+          <tr><td port="headerb3">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,-5!"];
+        blockb4 [label="...",shape=plaintext,pos="0,-6!"]
+        blockb5 [label=" ",shape=plaintext,pos="0,-6.25!"]
+    }
+
+    subgraph clusterc {
+        titlec [label=" Shard C ",shape=plaintext,pos="4,6!"]
+        blockc1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headerc1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,5!"];
+        blockc2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headerc2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,3.4!"];
+        blockc3 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 3</i></td></tr>
+          <tr><td port="headerc3">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,1.8!"];
+        blockc4 [label="...",shape=plaintext,pos="4,0.8!"]
+        blockc5 [label=" ",shape=plaintext,pos="4,0.55!"]
+    }
+
+    subgraph clusterd {
+        titled [label=" Shard D ",shape=plaintext,pos="4,-0.7!"]
+        blockd1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headerd1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,-1.8!"];
+        blockd2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headerd2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,-3.4!"];
+        blockd3 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 3</i></td></tr>
+          <tr><td port="headerd3">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,-5!"];
+        blockd4 [label="...",shape=plaintext,pos="4,-6!"]
+        blockd5 [label=" ",shape=plaintext,pos="4,-6.25!"]
+    }
+
+    {
+        blocka1:headera1 -> blockmain1:hasha1;
+        blocka2:headera2 -> blockmain2:hasha2;
+        blocka3:headera3 -> blockmain3:hasha3;
+        blockb1:headerb1 -> blockmain1:hashb1;
+        blockb2:headerb2 -> blockmain2:hashb2;
+        blockb3:headerb3 -> blockmain3:hashb3;
+        blockc1:headerc1 -> blockmain1:hashc1;
+        blockc2:headerc2 -> blockmain2:hashc2;
+        blockc3:headerc3 -> blockmain3:hashc3;
+        blockd1:headerd1 -> blockmain1:hashd1;
+        blockd2:headerd2 -> blockmain2:hashd2;
+        blockd3:headerd3 -> blockmain3:hashd3;
+    }
+}
+
+digraph B {
+    node [shape=plaintext]
+    rankdir=LR;
+    splines=false;
+
+    subgraph clustermain {
+        titlemain [label="Main Chain",shape=plaintext,pos="2,2!"]
+        blockmain1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="hasha1">hash(A1)</td></tr>
+          <tr><td port="hashb1">hash(B1)</td></tr>
+          <tr><td port="hashc1">hash(C1)</td></tr>
+          <tr><td port="hashd1">hash(D1)</td></tr>
+        </table>> pos="2,1!"];
+        blockmain2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="hasha2">hash(A2)</td></tr>
+          <tr><td port="hashb2">hash(B2)</td></tr>
+          <tr><td port="hashc2">hash(C2)</td></tr>
+          <tr><td port="hashd2">hash(D2)</td></tr>
+        </table>> pos="2,-0.6!"];
+        blockmain4 [label="...",shape=plaintext,pos="2,-1.8!"]
+        blockmain5 [label=" ",shape=plaintext,pos="2,-2.05!"]
+    }
+
+    subgraph clustera {
+        titlea [label=" Shard A ",shape=plaintext,pos="0,4.4!"]
+        blocka1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headera1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,3.4!"];
+        blocka2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headera2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,1.8!"];
+        blocka4 [label="...",shape=plaintext,pos="0,0.8!"]
+        blocka5 [label=" ",shape=plaintext,pos="0,0.55!"]
+    }
+
+    subgraph clusterb {
+        titleb [label=" Shard B ",shape=plaintext,pos="0,-0.7!"]
+        blockb1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headerb1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,-1.8!"];
+        blockb2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headerb2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="0,-3.4!"];
+        blockb4 [label="...",shape=plaintext,pos="0,-4.4!"]
+        blockb5 [label=" ",shape=plaintext,pos="0,-4.65!"]
+    }
+
+    subgraph clusterc {
+        titlec [label=" Shard C ",shape=plaintext,pos="4,4.4!"]
+        blockc1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headerc1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,3.4!"];
+        blockc2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headerc2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,1.8!"];
+        blockc4 [label="...",shape=plaintext,pos="4,0.8!"]
+        blockc5 [label=" ",shape=plaintext,pos="4,0.55!"]
+    }
+
+    subgraph clusterd {
+        titled [label=" Shard D ",shape=plaintext,pos="4,-0.7!"]
+        blockd1 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 1</i></td></tr>
+          <tr><td port="headerd1">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,-1.8!"];
+        blockd2 [label=<<table border="0" cellborder="1" cellspacing="0">
+          <tr><td><i>Block 2</i></td></tr>
+          <tr><td port="headerd2">header</td></tr>
+          <tr><td>TXN 1</td></tr>
+          <tr><td>TXN 2</td></tr>
+          <tr><td>TXN 3</td></tr>
+        </table>> pos="4,-3.4!"];
+        blockd4 [label="...",shape=plaintext,pos="4,-4.4!"]
+        blockd5 [label=" ",shape=plaintext,pos="4,-4.65!"]
+    }
+
+    {
+        blocka1:headera1 -> blockmain1:hasha1;
+        blocka2:headera2 -> blockmain2:hasha2;
+        blockb1:headerb1 -> blockmain1:hashb1;
+        blockb2:headerb2 -> blockmain2:hashb2;
+        blockc1:headerc1 -> blockmain1:hashc1;
+        blockc2:headerc2 -> blockmain2:hashc2;
+        blockd1:headerd1 -> blockmain1:hashd1;
+        blockd2:headerd2 -> blockmain2:hashd2;
+    }
+}
