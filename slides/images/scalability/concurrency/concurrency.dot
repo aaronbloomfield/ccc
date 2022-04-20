@@ -23,7 +23,7 @@ graph D {
     rankdir = LR;
     node [shape=plain,fontname="Helvetica"];
     //txn1 [label="Block | TXN 1\nget balance of A | TXN 2\ncontract A spends ETH"]
-    txn1 [label=<<table border="0" cellspacing="0"><tr><td border="1">Block</td></tr><tr><td border="1">TXN 2<br/><font color="blue">get balance of A</font></td></tr><tr><td border="1">TXN 1<br/><font color="forestgreen">contract A spends ETH</font></td></tr></table>>]
+    txn1 [label=<<table border="0" cellspacing="0"><tr><td border="1">Block</td></tr><tr><td border="1">TXN 1<br/><font color="blue">get balance of A</font></td></tr><tr><td border="1">TXN 2<br/><font color="forestgreen">contract A spends ETH</font></td></tr></table>>]
 }
 
 graph E {
