@@ -1,25 +1,29 @@
 graph A {
     rankdir = LR;
-    node [shape=record,fontname="Helvetica"];
-    txn1 [label="Block | TXN 1\ncalls A.foo()\nA has 10 ETH\nA pays Alice 8 ETH | TXN 2\ncalls A.bar()\nA has 2 ETH\nA pays Bob 8 ETH\nREVERTS!"]
+    node [shape=plain,fontname="Helvetica"];
+    //txn1 [label="Block | TXN 1\ncalls A.foo()\nA has 10 ETH\nA pays Alice 8 ETH | TXN 2\ncalls A.bar()\nA has 2 ETH\nA pays Bob 8 ETH\nREVERTS!"]
+    txn1 [label=<<table border="0" cellspacing="0"><tr><td border="1">Block</td></tr><tr><td border="1">TXN 1<br/><font color="blue">calls A.foo()<br/>A has 10 ETH<br/>A pays Alice 8 ETH</font></td></tr><tr><td border="1">TXN 2<br/><font color="forestgreen">calls A.bar()<br/>A has 2 ETH<br/>A pays Bob 8 ETH</font><br/><font color="magenta">REVERTS!</font></td></tr></table>>]
 }
 
 graph B {
     rankdir = LR;
-    node [shape=record,fontname="Helvetica"];
-    txn1 [label="Block | TXN 1\ncalls A.bar()\nA has 10 ETH\nA pays Bob 8 ETH | TXN 2\ncalls A.foo()\nA has 2 ETH\nA pays Alice 8 ETH\nREVERTS!"]
+    node [shape=plain,fontname="Helvetica"];
+    //txn1 [label="Block | TXN 1\ncalls A.bar()\nA has 10 ETH\nA pays Bob 8 ETH | TXN 2\ncalls A.foo()\nA has 2 ETH\nA pays Alice 8 ETH\nREVERTS!"]
+    txn1 [label=<<table border="0" cellspacing="0"><tr><td border="1">Block</td></tr><tr><td border="1">TXN 1<br/><font color="forestgreen">calls A.bar()<br/>A has 2 ETH<br/>A pays Bob 8 ETH</font></td></tr><tr><td border="1">TXN 2<br/><font color="blue">calls A.foo()<br/>A has 10 ETH<br/>A pays Alice 8 ETH</font><br/><font color="magenta">REVERTS!</font></td></tr></table>>]
 }
 
 graph C {
     rankdir = LR;
-    node [shape=record,fontname="Helvetica"];
-    txn1 [label="Block | TXN 1\ncontract A spends ETH | TXN 2\nget balance of A"]
+    node [shape=plain,fontname="Helvetica"];
+    //txn1 [label="Block | TXN 1\ncontract A spends ETH | TXN 2\nget balance of A"]
+    txn1 [label=<<table border="0" cellspacing="0"><tr><td border="1">Block</td></tr><tr><td border="1">TXN 1<br/><font color="forestgreen">contract A spends ETH</font></td></tr><tr><td border="1">TXN 2<br/><font color="blue">get balance of A</font></td></tr></table>>]
 }
 
 graph D {
     rankdir = LR;
-    node [shape=record,fontname="Helvetica"];
-    txn1 [label="Block | TXN 1\nget balance of A | TXN 2\ncontract A spends ETH"]
+    node [shape=plain,fontname="Helvetica"];
+    //txn1 [label="Block | TXN 1\nget balance of A | TXN 2\ncontract A spends ETH"]
+    txn1 [label=<<table border="0" cellspacing="0"><tr><td border="1">Block</td></tr><tr><td border="1">TXN 2<br/><font color="blue">get balance of A</font></td></tr><tr><td border="1">TXN 1<br/><font color="forestgreen">contract A spends ETH</font></td></tr></table>>]
 }
 
 graph E {
@@ -27,4 +31,3 @@ graph E {
     node [shape=record,fontname="Helvetica"];
     txn1 [label="Block | TXN 1\ncontract call:\ny = x[1] | TXN 2\ncontract call:\nx[2] = 10 | TXN 3\ncontract call:\nx[3] += 5 | TXN 4\ncontract call:\nz = x[1] | TXN 5\ncontract call:\nx[1] = 4"]
 }
-

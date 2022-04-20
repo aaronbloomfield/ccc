@@ -643,6 +643,7 @@ contract SimplePaymentChannel {
 
 ## Plasma Chains
 - A separate blockchain "anchored" to the Ethereum blockchain
+    - Technically a "side chain"
     - Uses fraud proofs
     - Sometimes called "child" blockchains
 - There are many implementations:
@@ -756,11 +757,11 @@ extern uint64_t entrypoint(const uint8_t *input) {
   SolAccountInfo accounts[1];
   SolParameters params = (SolParameters){.ka = accounts};
 
-  if (!sol_deserialize(input, &params, SOL_ARRAY_SIZE(accounts))) {
+  if (!sol_deserialize(input, & params, SOL_ARRAY_SIZE(accounts))) {
     return ERROR_INVALID_ARGUMENT;
   }
 
-  return helloworld(&params);
+  return helloworld(& params);
 }
 // </code></pre>
 
