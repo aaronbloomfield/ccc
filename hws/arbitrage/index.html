@@ -36,6 +36,10 @@ to refer to it as ‘TC’ here (for Token Cryptocurrency).</p>
 <p>Any changes to this page will be put here for easy reference. Typo
 fixes and minor clarifications are not listed here. So far there aren’t
 any significant changes to report.</p>
+<ul>
+<li>Fri, 4/21: changed the <code>reset()</code> line in
+<code>Arbitrage::setup()</code> to <code>revert()</code></li>
+</ul>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Beyond general experience with programming Solidity (which you have
 at this point it the course), this assignment requires:</p>
@@ -71,7 +75,7 @@ method:</p>
         if ( dexes[i] == address(0) )
             dexes[i] = address(new TokenDEX());
         else
-            TokenDEX(dexes[i]).reset();
+            revert();
         TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
         TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                  3, 1000, tokencc, etherpricer);

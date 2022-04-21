@@ -13,6 +13,8 @@ Regardless of what you named your token cryptocurrency, we are going to refer to
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Fri, 4/21: changed the `reset()` line in `Arbitrage::setup()` to `revert()`
+
 ### Pre-requisites
 
 Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:
@@ -38,7 +40,7 @@ function setup(uint numdex, uint amt_eth, uint amt_tc) public payable {
         if ( dexes[i] == address(0) )
             dexes[i] = address(new TokenDEX());
         else
-            TokenDEX(dexes[i]).reset();
+            revert();
         TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
         TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                  3, 1000, tokencc, etherpricer);

@@ -29,7 +29,7 @@ contract Arbitrage {
             if ( dexes[i] == address(0) )
                 dexes[i] = address(new TokenDEX());
             else
-                TokenDEX(dexes[i]).reset();
+                revert();
             TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
             TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                      3, 1000, tokencc, etherpricer);
