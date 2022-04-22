@@ -233,6 +233,8 @@ def output(ethAmt, tcAmt, fees, holdings):
 
 If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case.  When a transaction is made, then one of `ethAmt` or `tcAmt` should be negative -- that's the one that is being sold.  The other should be positive, and is how much of the other you received for that exchange.  These values should be the amount of coin being bought or sold, and without all the decimals (so 1.5 TC rather than 15000000000 TC).  The prices for ETH and TC are pulled from `config` dict, so they do not have to be passed into this function.  The `fees` and `holdings` parameters should be in USD.
 
+The 'fees' value that you are reporting is just the USD value of the Ethereum transaction fees.  So you are not considering how much the DEX kept (although that is considered in the formulas).  Once you determine how much gas was actually used, multiply that by the gas price of 10 gwei, then convert that to ether, then multiply that by the price of ether.
+
 
 ### Testing
 

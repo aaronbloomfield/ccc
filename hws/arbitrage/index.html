@@ -438,6 +438,12 @@ the amount of coin being bought or sold, and without all the decimals
 pulled from <code>config</code> dict, so they do not have to be passed
 into this function. The <code>fees</code> and <code>holdings</code>
 parameters should be in USD.</p>
+<p>The ‘fees’ value that you are reporting is just the USD value of the
+Ethereum transaction fees. So you are not considering how much the DEX
+kept (although that is considered in the formulas). Once you determine
+how much gas was actually used, multiply that by the gas price of 10
+gwei, then convert that to ether, then multiply that by the price of
+ether.</p>
 <h3 id="testing">Testing</h3>
 <p>When testing your code, don’t worry about getting the <span
 class="math inline"><em>x</em></span>, <span
