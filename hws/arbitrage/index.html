@@ -37,6 +37,8 @@ to refer to it as ‘TC’ here (for Token Cryptocurrency).</p>
 fixes and minor clarifications are not listed here. So far there aren’t
 any significant changes to report.</p>
 <ul>
+<li>Fri, 4/21: fixed some bugs in the <code>output()</code>
+function</li>
 <li>Fri, 4/21: changed the <code>reset()</code> line in
 <code>Arbitrage::setup()</code> to <code>revert()</code></li>
 </ul>
@@ -401,7 +403,7 @@ and make a change (or not). Your output must be in an exact format. If
 no profitable trades are possible, then you should output <code>No
 profitable arbitrage trades available</code>. If an trade is made, then
 the output should be of the form:</p>
-<pre><code>Exchanged -123 ETH for 2.34 TC; fees: 0.0123 USD; prices: ETH 12.3 USD, TC: 1.23 USD; holdings: 34.3 USD</code></pre>
+<pre><code>Exchanged -123.0000 ETH for 2.3400 TC; fees: 1.23 USD; prices: ETH 12.30 USD, TC: 1.23 USD; holdings: 34.30 USD</code></pre>
 <!--
 
 If two trades are made, then print out two lines of that form.  Keep in mind that each program execution will either make one single trade or one double trade.  
@@ -417,11 +419,11 @@ file.</p>
         return
     assert ethAmt * tcAmt &lt; 0, &quot;Exactly one of ethAmt and tcAmt should be negative, the other positive&quot;
     if ethAmt &lt; 0:
-        print(&quot;Exchanged %f ETH for %f TC; fees: %f USD; prices: ETH %.2f USD, TC: %.4f USD; holdings: %.2f USD&quot; %
-              str(ethAmt), str(tcAmt), str(fees), config[&#39;price_eth&#39;], config[&#39;price_tc&#39;], str(holdings))
+        print(&quot;Exchanged %.4f ETH for %.4f TC; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD&quot; %
+              (ethAmt, tcAmt, fees, config[&#39;price_eth&#39;], config[&#39;price_tc&#39;], holdings))
     else:
-        print(&quot;Exchanged %f TC for %f ETH; fees: %f USD; prices: ETH %.2f USD, TC: %.4f USD; holdings: %.2f USD&quot; %
-              str(tcAmt), str(ethAmt), str(fees), config[&#39;price_eth&#39;], config[&#39;price_tc&#39;], str(holdings))</code></pre>
+        print(&quot;Exchanged %.4f TC for %.4f ETH; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD&quot; %
+              (tcAmt, ethAmt, fees, config[&#39;price_eth&#39;], config[&#39;price_tc&#39;], holdings))</code></pre>
 <p><strong><em>YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER
 OUTPUT</em></strong> other than the result of calling the
 <code>output()</code> function, above.</p>

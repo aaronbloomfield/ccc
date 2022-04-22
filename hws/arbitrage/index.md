@@ -13,6 +13,7 @@ Regardless of what you named your token cryptocurrency, we are going to refer to
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Fri, 4/21: fixed some bugs in the `output()` function
 - Fri, 4/21: changed the `reset()` line in `Arbitrage::setup()` to `revert()`
 
 ### Pre-requisites
@@ -203,7 +204,7 @@ We provide a few other things in config.py: the ABI for the TokenDEX and the Tok
 Your program will analyze the various values at the different DEXes, and make a change (or not).  Your output must be in an exact format.  If no profitable trades are possible, then you should output `No profitable arbitrage trades available`.  If an trade is made, then the output should be of the form:
 
 ```
-Exchanged -123 ETH for 2.34 TC; fees: 0.0123 USD; prices: ETH 12.3 USD, TC: 1.23 USD; holdings: 34.3 USD
+Exchanged -123.0000 ETH for 2.3400 TC; fees: 1.23 USD; prices: ETH 12.30 USD, TC: 1.23 USD; holdings: 34.30 USD
 ```
 
 <!--
@@ -221,11 +222,11 @@ def output(ethAmt, tcAmt, fees, holdings):
         return
     assert ethAmt * tcAmt < 0, "Exactly one of ethAmt and tcAmt should be negative, the other positive"
     if ethAmt < 0:
-        print("Exchanged %f ETH for %f TC; fees: %f USD; prices: ETH %.2f USD, TC: %.4f USD; holdings: %.2f USD" %
-              str(ethAmt), str(tcAmt), str(fees), config['price_eth'], config['price_tc'], str(holdings))
+        print("Exchanged %.4f ETH for %.4f TC; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
+              (ethAmt, tcAmt, fees, config['price_eth'], config['price_tc'], holdings))
     else:
-        print("Exchanged %f TC for %f ETH; fees: %f USD; prices: ETH %.2f USD, TC: %.4f USD; holdings: %.2f USD" %
-              str(tcAmt), str(ethAmt), str(fees), config['price_eth'], config['price_tc'], str(holdings))
+        print("Exchanged %.4f TC for %.4f ETH; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
+              (tcAmt, ethAmt, fees, config['price_eth'], config['price_tc'], holdings))
 ```
 
 ***YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER OUTPUT*** other than the result of calling the `output()` function, above.
