@@ -203,7 +203,7 @@ We provide a few other things in config.py: the ABI for the TokenDEX and the Tok
 Your program will analyze the various values at the different DEXes, and make a change (or not).  Your output must be in an exact format.  If no profitable trades are possible, then you should output `No profitable arbitrage trades available`.  If an trade is made, then the output should be of the form:
 
 ```
-Exchanged 123 ETH for 2.34 TC; fees: 0.0123 USD; prices: ETH 12.3 USD, TC: 1.23 USD; holdings: 34.3 USD
+Exchanged -123 ETH for 2.34 TC; fees: 0.0123 USD; prices: ETH 12.3 USD, TC: 1.23 USD; holdings: 34.3 USD
 ```
 
 <!--
