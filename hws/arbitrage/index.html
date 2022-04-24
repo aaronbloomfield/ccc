@@ -37,9 +37,12 @@ to refer to it as ‘TC’ here (for Token Cryptocurrency).</p>
 fixes and minor clarifications are not listed here. So far there aren’t
 any significant changes to report.</p>
 <ul>
-<li>Fri, 4/21: fixed some bugs in the <code>output()</code>
+<li>Sun, 4/24: updated Arbitrage.sol’s <code>setup()</code> function to
+make it be usable with less gas; the functionality of it is still the
+same</li>
+<li>Fri, 4/22: fixed some bugs in the <code>output()</code>
 function</li>
-<li>Fri, 4/21: changed the <code>reset()</code> line in
+<li>Fri, 4/22: changed the <code>reset()</code> line in
 <code>Arbitrage::setup()</code> to <code>revert()</code></li>
 </ul>
 <h3 id="pre-requisites">Pre-requisites</h3>
@@ -70,18 +73,18 @@ we can automate that via a smart contract. Consider the following
 method:</p>
 <pre><code>function setup(uint numdex, uint amt_eth, uint amt_tc) public payable {
     require (msg.value &gt; numdex * amt_eth * 1 ether, &quot;Must supply enough eth&quot;);
-    tokencc = address(new TokenCC());
-    num_dexes = numdex;
-    etherpricer = address(new EtherPricerConstant());
-    for ( uint i = 0; i &lt; num_dexes; i++ ) {
-        if ( dexes[i] == address(0) )
-            dexes[i] = address(new TokenDEX());
-        else
-            revert();
+    if ( tokencc == address(0) )
+        tokencc = address(new TokenCC());
+    if ( etherpricer == address(0) )
+        etherpricer = address(new EtherPricerConstant());
+    // create and fund the DEXes
+    for ( uint i = num_dexes; i &lt; num_dexes+numdex; i++ ) {
+        dexes[i] = address(new TokenDEX());
         TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
         TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                  3, 1000, tokencc, etherpricer);
     }
+    num_dexes += numdex;
 }</code></pre>
 <p>This handles all the deployment of the DEXes. As the addresses of the
 DEXes and the TokenCC contract are stored in public variables (a

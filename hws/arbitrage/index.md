@@ -13,8 +13,9 @@ Regardless of what you named your token cryptocurrency, we are going to refer to
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-- Fri, 4/21: fixed some bugs in the `output()` function
-- Fri, 4/21: changed the `reset()` line in `Arbitrage::setup()` to `revert()`
+- Sun, 4/24: updated Arbitrage.sol's `setup()` function to make it be usable with less gas; the functionality of it is still the same
+- Fri, 4/22: fixed some bugs in the `output()` function
+- Fri, 4/22: changed the `reset()` line in `Arbitrage::setup()` to `revert()`
 
 ### Pre-requisites
 
@@ -34,18 +35,18 @@ There is a lot to do to get this all set up: you have to deploy a TokenCC contra
 ```
 function setup(uint numdex, uint amt_eth, uint amt_tc) public payable {
     require (msg.value > numdex * amt_eth * 1 ether, "Must supply enough eth");
-    tokencc = address(new TokenCC());
-    num_dexes = numdex;
-    etherpricer = address(new EtherPricerConstant());
-    for ( uint i = 0; i < num_dexes; i++ ) {
-        if ( dexes[i] == address(0) )
-            dexes[i] = address(new TokenDEX());
-        else
-            revert();
+    if ( tokencc == address(0) )
+        tokencc = address(new TokenCC());
+    if ( etherpricer == address(0) )
+        etherpricer = address(new EtherPricerConstant());
+    // create and fund the DEXes
+    for ( uint i = num_dexes; i < num_dexes+numdex; i++ ) {
+        dexes[i] = address(new TokenDEX());
         TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
         TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                  3, 1000, tokencc, etherpricer);
     }
+    num_dexes += numdex;
 }
 ```
 

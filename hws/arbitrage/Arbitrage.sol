@@ -18,26 +18,27 @@ contract Arbitrage {
         deployer = msg.sender;
     }
 
-    // creates the DEXes and the TokenCC, and sends the ETH and TC
+    // creates the DEXes and the TokenCC, and sends the ETH and TC; to avoid
+    // this using too high gas, it can be called multiple times, each time
+    // adding more DEXes
     function setup(uint numdex, uint amt_eth, uint amt_tc) public payable {
         require (msg.value > numdex * amt_eth * 1 ether, "Must supply enough eth");
-        tokencc = address(new TokenCC());
-        num_dexes = numdex;
-        etherpricer = address(new EtherPricerConstant());
+        if ( tokencc == address(0) )
+            tokencc = address(new TokenCC());
+        if ( etherpricer == address(0) )
+            etherpricer = address(new EtherPricerConstant());
         // create and fund the DEXes
-        for ( uint i = 0; i < num_dexes; i++ ) {
-            if ( dexes[i] == address(0) )
-                dexes[i] = address(new TokenDEX());
-            else
-                revert();
+        for ( uint i = num_dexes; i < num_dexes+numdex; i++ ) {
+            dexes[i] = address(new TokenDEX());
             TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
             TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                      3, 1000, tokencc, etherpricer);
         }
+        num_dexes += numdex;
     }
 
     // this performs a few transactions on the DEXes; it's not done as part of
-    // setup() due to gas costs
+    // setup() due to gas costs; must have created 5 DEXes else this will revert
     function configureDEXes() public payable {
         require (msg.value > 10 ether, "Must supply enough eth");
         // excahnge with the DEXes
