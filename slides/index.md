@@ -20,3 +20,5 @@ Slide sets, in the intended order to be presented in lecture, are below (if a li
 - [Blockchain Applications](applications.html#/)
 - [zkSNARKs](zksnarks.html#/)
 - [Scalability](scalability.html#/)
+- [Ethics, Legality, and Policy](ethics-legal-policy.html#/)
+- [The Dark Side of Cryptocurrency](darkside.html#/)

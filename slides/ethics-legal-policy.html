@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Ethics, Legality, and Policy
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Policy](#/policy)  
+[Ethics](#/ethics)  
+[Legality](#/legality)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="policy" data-markdown class="center"><textarea>
+# Policy
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## International legality
+
+[![](https://upload.wikimedia.org/wikipedia/commons/7/7e/Legal_status_of_bitcoin.svg)](https://commons.wikimedia.org/wiki/File:Legal_status_of_bitcoin.svg)
+
+<div style="font-size:small; display:inline-block; line-height:1">
+
+<span class="legend-color" style="background-color:#ff9900; color:black; width:20px; display:inline-block">&nbsp;</span>&nbsp;<b style="font-size:large">Legal tender</b><span style="width:50px;display:inline-block">&nbsp;</span>
+<span class="legend-color" style="background-color:#33cc66; color:black; width:20px; display:inline-block">&nbsp;</span>&nbsp;<b style="font-size:large">Permissive</b> (legal to use bitcoin)<span style="width:50px;display:inline-block">&nbsp;</span>
+<span class="legend-color" style="background-color:#ffff00; color:black; width:20px; display:inline-block">&nbsp;</span>&nbsp;<b style="font-size:large">Contentious</b> (some legal restrictions on usage of bitcoin)
+
+<span class="legend-color" style="background-color:#ec6dd5; color:black; width:20px; display:inline-block">&nbsp;</span>&nbsp;<b style="font-size:large">Contentious</b> (interpretation of old laws, but bitcoin is not prohibited directly)<span style="width:50px;display:inline-block">&nbsp;</span>
+<span class="legend-color" style="background-color:#ff3333; color:black; width:20px; display:inline-block">&nbsp;</span>&nbsp;<b style="font-size:large">Hostile</b> (full or partial prohibition)<span style="width:50px;display:inline-block">&nbsp;</span>
+<span class="legend-color" style="background-color:#b9b9b9; color:black; width:20px; display:inline-block">&nbsp;</span>&nbsp;<b style="font-size:large">No data</b>
+
+</div>
+
+
+
+## Legal Tender Country
+- <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Flag_of_El_Salvador.svg" class="flag"> El Salvador
+  - Their other official currency is the US dollar
+    - No control over monetary policy!
+  - The gov't bought a lot of Bitcoin at it's peak, and has since lost much value
+  - The IMF has urged them to reverse course
+- Malaysia is considering it
+
+
+
+## US Policy
+- 2013: US Treasury classifies Bitcoin as a "virtual currency"
+  - Other cryptocurrencies are classified similarly
+  - This is treated as "property" for tax purposes
+- 2018: cryptocurrency business that a "substantial" amount of business in the US must:
+  - Register with the US Treasury as a money services business
+  - Design and enforce an anti-money laundering program
+  - Keep records on customers ([KYC](applications.html#/kyc)) and report them back
+
+
+
+## Recent US Policy
+- March 9, 2022: [Biden signs order on cryptocurrency as its use explodes](https://abcnews.go.com/Politics/wireStory/biden-signing-order-cryptocurrency-explodes-83336765)
+  - The order "urges the Federal Reserve to explore whether the central bank should jump in and create its own digital currency"
+  - Also urges federal agencies to "study the impact of cryptocurrency on financial stability and national security"
+- Some feel that this is the first step toward the US gov't enacting restrictions on cryptocurrency
+  - Although it would be hard to stop it at this point (but not impossible)
+  - And, in the current polarized political climate, is anything likely to get done on this front?
+
+
+
+## More US Policy
+- In 2021, 17 states passed laws re: cryptocurrency regulation
+- On Feb 17, 2022, the US Justice Department named Eun Young Choi as the first "director of a National Cryptocurrency Enforcement Team to aid in identification of and dealing with misuse of cryptocurrencies and other digital assets"
+
+
+
+## US Tax Status
+- Cryptocurrency is considered property
+  - As per [IRS Notice 2014-21](https://www.irs.gov/irb/2014-16_IRB#NOT-2014-21)
+  - This means it's subject to capital gains tax, like stocks and equities
+- Capital gains primer:
+  - If you own it less than 1 year, you pay your normal tax rate on it
+  - If you own it for more than 1 year, you pay only 10% on it
+  - (I'm not an accountant either, so get another opinion before you try this)
+
+
+
+## Tax implications
+- The IRS will ask this question on the IRS for 1040 ([source](https://stanfieldodell.com/irs-to-update-virtual-currency-question-for-2021/)):
+  - "At any time during 2020, did you receive, sell, send, exchange or otherwise acquire any financial interest in any virtual currency?"
+  - 2021 version: "At any time during 2021, did you receive, sell, exchange or otherwise dispose of any financial interest in virtual currency?"
+- This is why we aren't making you buy any cryptocurrency for this course
+- The "fake" cryptocurrency that you mine and trade in this course does not qualify as a 'yes' for that question...
+  - ... as there is no "financial interest" with it since it has zero market value
+
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="ethics" data-markdown class="center"><textarea>
+# Ethics
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Good uses of Cryptocurrency
+- Allows anybody to move funds; no need for an expensive bank account
+- Avoid the banking monopolies
+- Allows for anonymity online
+- It's such a cool technology!
+
+
+
+## Bad uses of Cryptocurrency
+- It's used for money laundering
+- It's used to avoid paying taxes
+- Putin has used it to avoid sanctions on Russia due to the invasion of Ukraine
+- It's used to enable trading of evil things online
+  - Drugs, weapons, revenge porn, videos of child rape & murder, and worse
+  - (Tor is in a similar category)
+
+
+
+## How to decide if it's ethical to use?
+- There are no clear guidelines for how to balance these things
+- We see four frameworks to help us make these decisions
+  - Virtue Ethics
+  - Consequentialist Ethics
+  - Utilitarian Ethics
+  - Deontological ethics
+
+
+
+## Virtue Ethics
+- Rather than right or wrong...
+  - Or good actions and bad actions...
+- ...this focuses on what a virtuous person would do
+- So what would a 'morally excellent person' do?
+  - Examples: habit of moderation, virtue of prudence, practical wisdom, etc.
+- This is a *thought experiment* to be considered
+
+
+
+## Virtue Ethics
+- How does this help?
+- Three ways:
+  - Help us understand if we have a moral and ethical obligation, and if so, then to who
+  - Help us determine which (moral and ethical) standards to follow
+  - Helps us cultivate practical wisdom and good judgment
+
+
+
+## Virtue Ethics
+- These can be culturally relative
+- Consider a benign example of this cultural relativity:
+  - Aristotle proposed nine important virtues: wisdom, prudence, justice, fortitude, courage, liberality, magnificence, magnanimity, and temperance
+  - A modern ethicist proposed four: ambition/humility, love, courage, and honesty
+
+
+
+## Virtue Ethics
+- These can be culturally relative
+- Consider a non-benign example of this cultural relativity:
+  - Sexism or racism: in the past, this was accepted as an accepted part of society
+    - Think of societies where slavery exists, or women are second-class citizens
+    - They exist today!  They are not all in the past!
+
+
+
+## Consequentialist Ethics
+- Consider what the consequences of our actions will be
+  - Also called [Consequentialism](https://en.wikipedia.org/wiki/Consequentialism)
+- "[A morally right action is one that will produce a good outcome or consequence](https://en.wikipedia.org/wiki/Consequentialism)"
+- Do the ends justify the means?
+  - An extreme interpretation of Consequentialism
+  - Like how terrorism is an extreme interpretation of religion
+
+
+
+## Utilitarian ethics
+- Consider what the 'greatest good' is
+  - Here, 'good' is happiness, pleasure, or absence of pain (emotional, physical, etc.)
+- Many utilitarians believe that a society that maximizes individual rights and justice leads to the greatest common good (in the long run)
+
+
+
+## Utilitarian ethics
+- Gross National Happiness: a real-world application of Utilitarian ethics
+- A philosophy that guides the government of [Bhutan](https://en.wikipedia.org/wiki/Gross_National_Happiness)
+> [Gross National Happiness is] an index which is used to measure the collective happiness and well-being of a population
+
+- [Wikipedia](https://en.wikipedia.org/wiki/Gross_National_Happiness)
+
+
+
+## Utilitarian ethics
+- Would an action that hurt one person but helped society be valid ethically?
+  - Consider eminent domain seizure of property to build a highway
+- What if it were a great injustice to an individual?
+  - All these frameworks can be abused in the extreme
+
+
+
+## Deontological ethics
+- A rule-based or principle-based system
+  - Some set of rules or principles inform us of our moral obligations
+- Examples:
+  - The ten commandments of the Abrahamic religions
+  - A set of (secular) laws in a modern society
+  - The idea of universal human rights
+  - Kant's Categorical imperative
+    - Only act in a way that everybody else should act
+
+
+
+## Deontological ethics
+- But what if the laws are immoral?
+  - Again, consider societies where slavery or sexism exists
+    - Or other forms of discrimination
+
+
+
+## Abuses of ethical frameworks
+- All these frameworks can be abused in the extreme
+  - Virtue ethics: can be culturally relative
+  - Consequentialist ethics: do the ends justify the means?
+  - Utilitarian ethics: sacrifice one individual's rights for the good of the many
+  - Deontological ethics: what if the laws are immoral?
+
+
+
+## How to proceed
+- Consider whether the concept is "ethical" using multiple frameworks
+  - An abuse of one framework is likely not permissible in another framework
+
+
+
+## One commonly held opinion
+- Many consider use of cryptocurrency to be ethical if:
+  - You are not using for "evil" purposes
+  - You are following applicable (and reasonable) laws
+  - You are paying your fair share of taxes on any gains
+
+
+
+## Nebraska lawyer payments
+- Nebraska's state supreme court issued [Ethics Advisory Opinion for Lawyers No. 17-03](https://supremecourt.nebraska.gov/sites/default/files/ethics-opinions/Lawyer/17-03.pdf) which states:
+  - Receiving cryptocurrency for payment is acceptable if:
+    - It's immediately converted to cash (or equivalent)
+      - Prevents volatility from affecting payment amount
+    - Notifying clients of such
+    - The client's account is credited at the time of payment
+
+
+
+## California lawyer payments
+- [That opinion](https://calawyers.org/solo-small-firm/ethics-of-cryptocurrency-new-rules-new-money-new-issues/) is similar to Nebraska's
+- But what if it's as an advance payment
+  - And then it goes up or down in value
+- DIfference in opinion about whether it's "funds" or "property"
+  - The courts have split on this
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="legality" data-markdown class="center"><textarea>
+# Legality
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Virginia and UVA policies
+- We saw this before, in the [legal issues section](../uva/introduction.html#/legal) of the [course introduction slide set](../uva/introduction.html#/)
+- We won't go over it again, but those slides are included here for completeness
+
+
+
+## Disclaimer
+
+I am not a lawyer.  But I have discussed this with UVA's lawyers.  However, they are lawyers for me (as a UVA employee) but not for you (as a UVA student).
+
+
+
+## Mining legality
+- Can you mine cryptocurrency at UVA?
+- Consider Virginia statute [6.2-1901](https://law.lis.virginia.gov/vacode/6.2-1901):
+
+> No person shall engage in the business of selling money orders or engage in the business of money transmission, whether or not the person has a location in the Commonwealth, unless the person obtains from the Commission a license issued pursuant to this chapter.
+
+
+
+## Mining legality
+- Virginia statute [6.2-1901](https://law.lis.virginia.gov/vacode/6.2-1901) requires:
+  - You get a license if you are in the *business* of money transmission
+- Bug if mining is not your business, then you are not directly targetted by that statute
+- Thus, so far, mining is fine in the state of Virginia.  But...
+
+
+
+## UVA's acceptable use
+- UVA has an [acceptable use policy](https://security.virginia.edu/acceptable-use) -- and policy [PRM-011](https://uvapolicy.virginia.edu/policy/PRM-011):
+
+<blockquote style="width:85%">
+<p>Students are allowed reasonable use of University equipment when it is related to scholarship, research, and public service, and/or approved extracurricular activities. Such use requires approval of the appropriate equipment supervisor, provided the University incurs no unreasonable costs for materials, supplies, maintenance, and/or repairs.</p>
+</blockquote>
+
+
+
+## UVA's acceptable use
+- This means you can NOT mine cryptocurrency that:
+  - Uses UVA equipment
+    - Either server-based machines or a loaned notebook
+  - Uses UVA electricity
+    - This means you are not allowed to mine in your dorm room, even on your own machine
+
+
+
+## Legal permission
+- But... how to teach cryptocurrency without mining?
+- This course has received legal permission from UVA's general counsel to mine cryptocurrency, as long as ALL of the following are true:
+  - The mining resource use is "reasonable" and necessary in pursuit of the academic goals of this course
+  - The cryptocurrency mined has zero market value (a "fake" cryptocurrency)
+    - This implies that it cannot be traded for any other "real" cryptocurrency (meaning one with a monetary value)
+
+
+
+## Further permissions
+- ITS and InfoSec have also approved the use of "fake" cryptocurrency in this course, as long as...
+  - Any mining that you do must ONLY use mining software or libraries that I approve
+    - The reason is that there is a LOT of malware distributed through shady mining software
+  - Any software linked to from an assignment for this course, or provided on the VirtualBox image, is thus considered approved for your use
+
+
+
+## Tax implications
+- The IRS will ask this question on the IRS for 1040 ([source](https://stanfieldodell.com/irs-to-update-virtual-currency-question-for-2021/)):
+  - "At any time during 2020, did you receive, sell, send, exchange or otherwise acquire any financial interest in any virtual currency?"
+  - 2021 version: "At any time during 2021, did you receive, sell, exchange or otherwise dispose of any financial interest in virtual currency?"
+- This is why we aren't making you buy any cryptocurrency for this course
+- The "fake" cryptocurrency that you mine and trade in this course does not qualify as a 'yes' for that question...
+  - ... as there is no "financial interest" with it since it has zero market value
+
+
+
+## Can (should?) you mine cryptocurrency on your own?
+- Not on UVA equipment or on grounds!
+  - ITS scans for this, and can revoke your computing access if they catch you
+- If you do it on your own off grounds...
+  - Be sure to understand the tax implications involved
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>

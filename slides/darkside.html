@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## The Dark Side of Cryptocurrency
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Money Laundering](#/laundering)  
+[NFTs](#/nfts)  
+[Lots 'o Cryptocurrencies](#/lotso)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="laundering" data-markdown class="center"><textarea>
+# Money Laundering
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Money Laundering
+
+> The process of moving larges amounts of illegally gained money into "legitimate" sources
+
+It's "cleaning" or "laundering" the money
+
+
+
+## Money Laundering example
+- I buy a house for $500k
+- A "friend" who owes me (illegally gained) money buys it from me for $1 million
+- I have legitimately gained $1 million
+
+
+
+## Money Laundering example
+- I run a mostly-cash business
+  - Casino, bar, restaurant, etc.
+- I also have an illegal side hustle
+  - Drug dealing, extortion, etc.
+- Every day I add some of the illegally gained money to the *till* (proceeds) of the legitimate business
+  - The business acts as a "front" for my side hustle
+- This is the reason that organized crime tends to have cash-only side businesses
+
+
+
+## Money Laundering
+- In 2021, $8.6 billion was laundered via cryptocurrency ([source](https://www.bbc.com/news/technology-60072195))
+- A small group of purpose-built exchanges are used to send and receive such money
+  - This makes them hard to track and investigate
+  - These exchanges moved 47% of this $8.6 billion figure
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Russia and cryptocurrency
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/%D0%91%D0%B0%D1%88%D0%BD%D1%8F_%D1%84%D0%B5%D0%B4%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_2018.jpg/551px-%D0%91%D0%B0%D1%88%D0%BD%D1%8F_%D1%84%D0%B5%D0%B4%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_2018.jpg" style="padding:0">
+
+- [Federation Tower](https://en.wikipedia.org/wiki/Federation_Tower): a two-tower skyscraper in central Moscow
+- Home to many businesses suspected of money laundering cryptocurrency
+  - Or moving funds obtained through scams, darknet markets, and ransomware
+
+
+
+## Russia and cryptocurrency
+- Hydra: a dark-web marketplace that funnels money to Russia
+  - $1 billion in sales in 2020
+- Funds must be exchanged through regional exchanges
+  - Hard for investigators to follow the money!
+- It's been [sanctioned by the US gov't](https://home.treasury.gov/news/press-releases/jy0701)
+
+
+
+## Evading Sanctions
+- In 2018, Russia, Iran, and Venezuela used it to evade sanctions
+  - It allowed them to move money in and out
+- In 2022, Russia is using it to evade more sanctions
+  - After the invasion of Ukraine
+  - And Russia's removal from the SWIFT system
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="nfts" data-markdown class="center"><textarea>
+# NFTs
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## How buy an NFT
+- OpenSea at [opensea.io](https://opensea.io)
+- Let's take a look!
+- We'll be seeing MetaMask later this semester...
+
+
+
+## What does an NFT give you?
+- So unclear
+- Anybody can download the image
+- But you "own" the "thing"
+- There is no legal basis for recognizing "ownership" of a thing based on an NFT
+  - You could take them to court and claim that since you paid for it, you now own it
+  - You'd probably win, after a court battle
+- So what does an NFT give you?
+
+
+
+## Scams
+- Consider DeviantArt user LiamRSharp
+  - He had to shut down [his DeviantArt gallery](https://www.deviantart.com/liamrsharp) because of NFT theft
+  - See [this twitter post](https://twitter.com/liamrsharp/status/1471940531554959360?lang=en) and [this reddit post](https://www.reddit.com/r/KotakuInAction/comments/ritysg/twitter_sadly_im_going_to_have_to_completely_shut/)
+- What prevents somebody from selling an NFT multiple times?
+  - Or making minor modifications and re-selling it?
+  - *Some* auction sites check for this, but not all, and not reliably
+
+
+
+## Sports NFTs: NBA
+- [NBA Top Shot](https://www.coindesk.com/business/2021/12/15/nba-top-shot-maker-dapper-labs-raising-80m-for-startup-acquisitions/): buy NFTs of "moments" (short video clips)
+  - Made $886 million in sales, most in Feb/Mar 2021, but it's popularity has since faded
+    - A Lebron James highlight sold for $200k
+  - Runs on Dapper Labs' Flow
+    - Like Ethereum, but optimized
+  - But the NBA retains ownership of the video clip
+    - You only own the NFT
+  - The license allows: buying / holding / selling in non-commercial settings
+    - So you can't resell it!
+    - Violation could mean confiscation of the NFT
+
+
+
+## Sports NFTs: NFL
+- Also by Dapper Labs, presumably also runs on Flow
+- Purchase NFTs for "moments", like the NBA's version
+- Still in beta?  So unclear
+
+
+
+## Sports NFTs
+- Deloitte predicted that the sports market will generate more than $2 billion in NFT sales in 2022 ([source](https://www.coindesk.com/learn/sports-nfts-how-to-get-in-the-game/))
+- Many other sports are getting in on this
+- And some are doing multiple versions
+  - The NBA has an "athlete" NFT <strike>scam</strike> initiative as well
+
+
+
+## NFTs in Games
+- GPU usage to mine cryptocurrency, in return you get in-game rewards
+- "Shared" inventory between games
+  - Not viable!
+
+
+
+## NFT game shared inventory
+- The idea: an item in game 1 is written as an NFT to a blockchain
+  - Some other character / person obtains that NFT / item in game 2
+- This requires:
+  - That game 1 and game 2 trust each other
+    - Otherwise you could mint lots of things in game 1 and wreck game 2's economy
+    - And games make more money off of in-game purchases
+  - But if the two games trust each other...
+    - Why bother with NFTs and a blockchain?
+    - Just have a regular shared inventory
+- [Visual diagram of the uselessness of this](https://twitter.com/chhopsky/status/1458165632122298369/photo/1)
+</textarea></section>
+
+
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="lotso" data-markdown class="center"><textarea>
+# Lots 'o Cryptocurrencies
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Facebook's Libra
+- https://en.wikipedia.org/wiki/Diem_(digital_currency)
+
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="item2" data-markdown class="center"><textarea>
+# Item 2
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Slide content here
+- bulleted list
+- Three blank lines separate one slide from another
+
+
+
+## And here
+- And here
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="item3" data-markdown class="center"><textarea>
+# Item 3
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Slide content here
+- bulleted list
+- Three blank lines separate one slide from another
+
+
+
+## And here
+- And here
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
