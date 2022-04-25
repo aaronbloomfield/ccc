@@ -11,7 +11,7 @@ Regardless of what you named your token cryptocurrency, we are going to refer to
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
 - Sun, 4/24: updated Arbitrage.sol's `setup()` function to make it be usable with less gas; the functionality of it is still the same
 - Fri, 4/22: fixed some bugs in the `output()` function

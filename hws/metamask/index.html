@@ -260,14 +260,16 @@ correctly without MetaMask.</p>
 <p>The first thing a user has to do is enable the MetaMask extension to
 use the site; this is usually phrased as “connecting to MetaMask”. To do
 this, we add the following code to our HTML file (adapted from <a
-href="https://docs.metamask.io/guide/getting-started.html#connecting-to-metamask">here</a>):</p>
+href="https://docs.metamask.io/guide/getting-started.html#connecting-to-metamask">here</a>).
+You can put this right after the <code>&lt;body&gt;</code> opening
+tag.</p>
 <pre><code>&lt;button class=&quot;enableEthereumButton&quot;&gt;Enable Ethereum&lt;/button&gt;
 &lt;script&gt;
-const ethereumButton = document.querySelector(&#39;.enableEthereumButton&#39;);
-ethereumButton.addEventListener(&#39;click&#39;, () =&gt; {
-  // will start the metamask extension
-  ethereum.request({ method: &#39;eth_requestAccounts&#39; });
-});
+  const ethereumButton = document.querySelector(&#39;.enableEthereumButton&#39;);
+  ethereumButton.addEventListener(&#39;click&#39;, () =&gt; {
+    // will start the metamask extension
+    ethereum.request({ method: &#39;eth_requestAccounts&#39; });
+  });
 &lt;/script&gt;</code></pre>
 <p>This connection will persist through a page reload, and – on some
 operating systems at least – will persist thorough a browser

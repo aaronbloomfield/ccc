@@ -137,16 +137,16 @@ This is useful as it will give a warning to those using other browsers, or those
 
 ##### Connecting to MetaMask
 
-The first thing a user has to do is enable the MetaMask extension to use the site; this is usually phrased as "connecting to MetaMask".  To do this, we add the following code to our HTML file (adapted from [here](https://docs.metamask.io/guide/getting-started.html#connecting-to-metamask)):
+The first thing a user has to do is enable the MetaMask extension to use the site; this is usually phrased as "connecting to MetaMask".  To do this, we add the following code to our HTML file (adapted from [here](https://docs.metamask.io/guide/getting-started.html#connecting-to-metamask)).  You can put this right after the `<body>` opening tag.
 
 ```
 <button class="enableEthereumButton">Enable Ethereum</button>
 <script>
-const ethereumButton = document.querySelector('.enableEthereumButton');
-ethereumButton.addEventListener('click', () => {
-  // will start the metamask extension
-  ethereum.request({ method: 'eth_requestAccounts' });
-});
+  const ethereumButton = document.querySelector('.enableEthereumButton');
+  ethereumButton.addEventListener('click', () => {
+    // will start the metamask extension
+    ethereum.request({ method: 'eth_requestAccounts' });
+  });
 </script>
 ```
 

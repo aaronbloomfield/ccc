@@ -37,10 +37,10 @@ Geth Command Summary
 | Show variable's value | `contract.num_entries.call()` |
 | Get value from mapping | `contract.entries.call(0)` |
 | Get field from struct from mapping | `contract.entries.call(0)[2]` |
-| Call `view` or `pure` method with no parameters | `contract.method.call()` |
-| Call `view` or `pure` method with one parameter | `contract.method.call(2)` |
+| Call `view` or `pure` method with no parameters | `contract.methodName.call()` |
+| Call `view` or `pure` method with one parameter | `contract.methodName.call(2)` |
 | Unlock account | `personal.unlockAccount(eth.coinbase,"password",0)` |
-| Call method via transaction (requires mining) | `contract.method.sendTransaction("param1","param2", {from:eth.coinbase, gas:1000000})` |
+| Call method via transaction (requires mining) | `contract.methodName.sendTransaction("param1","param2", {from:eth.coinbase, gas:1000000})` |
 
 
 ##### Preloading a script

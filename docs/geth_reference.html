@@ -153,12 +153,12 @@ value:web3.toWei(1,"ether"), gas:21000});</code></td>
 <tr class="even">
 <td>Call <code>view</code> or <code>pure</code> method with no
 parameters</td>
-<td><code>contract.method.call()</code></td>
+<td><code>contract.methodName.call()</code></td>
 </tr>
 <tr class="odd">
 <td>Call <code>view</code> or <code>pure</code> method with one
 parameter</td>
-<td><code>contract.method.call(2)</code></td>
+<td><code>contract.methodName.call(2)</code></td>
 </tr>
 <tr class="even">
 <td>Unlock account</td>
@@ -166,7 +166,7 @@ parameter</td>
 </tr>
 <tr class="odd">
 <td>Call method via transaction (requires mining)</td>
-<td><code>contract.method.sendTransaction("param1","param2",
+<td><code>contract.methodName.sendTransaction("param1","param2",
 {from:eth.coinbase, gas:1000000})</code></td>
 </tr>
 </tbody>
