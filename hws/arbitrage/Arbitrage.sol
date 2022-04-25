@@ -8,7 +8,7 @@ import "./EtherPricerConstant.sol";
 
 contract Arbitrage {
 
-    mapping (uint => address) public dexes;
+    mapping (uint => address payable) public dexes;
     uint public num_dexes;
     address public tokencc;
     address deployer;
@@ -29,7 +29,7 @@ contract Arbitrage {
             etherpricer = address(new EtherPricerConstant());
         // create and fund the DEXes
         for ( uint i = num_dexes; i < num_dexes+numdex; i++ ) {
-            dexes[i] = address(new TokenDEX());
+            dexes[i] = payable(address(new TokenDEX()));
             TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
             TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                      3, 1000, tokencc, etherpricer);
