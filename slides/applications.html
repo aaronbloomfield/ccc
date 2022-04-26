@@ -592,10 +592,10 @@ receive() external payable { }
 ```
 - The functions don't have to *do* anything, but they do need to exist
   - Otherwise a transfer of ether to the contract will revert
+    </textarea></section>
 
-
-
-## Background: Recursive Send
+    <section data-markdown data-separator="^\n\n\n" id="daobug"><textarea>
+## Recursive Send
 - Consider some payout code in a smart contract:
 ```
 function withdraw() {
@@ -614,9 +614,9 @@ receive() external payable {
 }
 ```
 - This has now withdrawn three times the amount!
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Recursive send: how to fix
 - Lots of ways to fix this:
   - Zero the balance *before* the transfer, and save into a separate local variable
