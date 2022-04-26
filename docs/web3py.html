@@ -110,6 +110,8 @@ transaction, sign it, and then transmit it to the blockchain.</p>
     &#39;from&#39;: my_address,
     &#39;nonce&#39;: w3.eth.get_transaction_count(my_address)
     })</code></pre>
+<p>Parameters, if there were any, would go in the parenthesis after the
+method name, not in the <code>buildTransaction()</code> parentheses.</p>
 <p>Other fields could be added as well – if we wanted to send some wei
 in with the transaction, such as to a <code>payable</code> function,
 then we would add a <code>value</code> key with the (integer) wei amount

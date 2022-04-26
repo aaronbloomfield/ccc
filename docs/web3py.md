@@ -109,6 +109,8 @@ transaction = contract.functions.getTokenCCAbbreviation().buildTransaction({
     })
 ```
 
+Parameters, if there were any, would go in the parenthesis after the method name, not in the `buildTransaction()` parentheses.
+
 Other fields could be added as well -- if we wanted to send some wei in with the transaction, such as to a `payable` function, then we would add a `value` key with the (integer) wei amount as the value.
 
 If all we wanted to do was to just pay ETH, and not call a function, we would just create a dict:
