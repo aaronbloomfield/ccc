@@ -49,6 +49,7 @@ def printRevertReason(w3,txhash):
         'from': tx['from'],
         'value': tx['value'],
         'data': tx['input'],
+        'gas': tx['gas'],
     }
     # replay the transaction locally:
     try:
