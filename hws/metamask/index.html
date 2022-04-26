@@ -39,7 +39,9 @@ assignments:</p>
 <ul>
 <li><a href="../ethprivate/index.html">Private Ethereum Blockchain</a>
 (<a href="../ethprivate/index">md</a>)</li>
-<li><a href="../tokens/index.html">Ethereum Tokens</a> (<a
+<li><a href="../daoweb3/index.html">DAO &amp; web3</a> (<a
+href="../daoweb3/index.md">md</a>)<a
+href="../tokens/index.html">Ethereum Tokens</a> (<a
 href="../tokens/index.md">md</a>)</li>
 <li><a href="../daoweb3/index.html">DAO &amp; web3</a> (<a
 href="../daoweb3/index.md">md</a>)</li>
@@ -282,18 +284,36 @@ the rest of the page without first connecting via this button.</p>
 are familiar with, is going to make life much easier – it will do all
 the encoding of parameters into calls, etc.</p>
 <p>Previously, we defined the <code>web3</code> variable as such
-(<code>URL</code> was provided separately):</p>
+(<code>URL</code> is on the Collab landing page):</p>
+<pre><code>let web3 = new Web3(&#39;URL&#39;);</code></pre>
+<p>We are now going to <em>add</em> a line:</p>
 <pre><code>let web3 = new Web3(&#39;URL&#39;);
-</code></pre>
-<p>We are now going to change that to:</p>
-<pre><code>let web3 = new Web3(window.ethereum);</code></pre>
-<p>That’s it! We are using the same web3.js library, just using a
-different connection point. MetaMask injects the
-<code>window.ethereum</code> object, and Web3.js can just connect via
-that. All of the previous code from the <a
+let web3mm = new Web3(window.ethereum);</code></pre>
+<p>You will notice that we are creating <em>TWO</em> connections to the
+blockchain. The first connection is through the normal URL as was done
+in the <a href="../daoweb3/index.html">DAO &amp; web3</a> (<a
+href="../daoweb3/index.md">md</a>) assignment and as is done in the
+auctions.php page that you are basing your code off of; that URL is on
+the Collab landing page. The second connection is through MetaMask,
+which injects the <code>window.ethereum</code> object, and Web3.js can
+just connect via that.</p>
+<p>The reason we are doing two connections is because the first one
+supports subscriptions, which is what allows the table to be updated
+upon an event emission – you did that in the <a
 href="../daoweb3/index.html">DAO &amp; web3</a> (<a
-href="../daoweb3/index.md">md</a>) assignment will work the exact same,
-since we are using the same web3.js library.</p>
+href="../daoweb3/index.md">md</a>) assignment, and the auctions.php does
+that as well. However, that first connection does not allow sending
+transactions to the blockchain. The second connection, which is through
+MetaMask, does not support subscriptions (so no automatic updating of
+the tables), but does allow sending transactions to the blockchain.</p>
+<p>As both are wrapped in the Web3 constructor, they operate the same
+way.</p>
+<p>As a general rule, any one Javascript function should use only one of
+those connections. If you are sending transactions to the blockchain,
+you have to use the <code>web3mm</code> one. Otherwise, use the
+<code>web3</code> one. As you will only have four functions that send
+transactions to the blockchain, only those four will use
+<code>web3mm</code>.</p>
 <h5 id="html-and-javascript">HTML and Javascript</h5>
 <p>Below is an example HTML form and associated Javascript function.
 This will call the <code>mintNFT()</code> function on your smart
@@ -301,7 +321,7 @@ contract.</p>
 <pre><code>&lt;script&gt;
   const mintNFT = async() =&gt; {
     try {
-      const eth_coinbase = await web3.eth.getCoinbase();
+      const eth_coinbase = await web3mm.eth.getCoinbase();
       var str = document.getElementById(&#39;nftstring&#39;).value;
       await auctionContract.methods.mintNFT(str).send({from:eth_coinbase, gas:1000000, gasPrice:100000000000});
       const nftid = await auctionContract.methods.lastMintedNFT(eth_coinbase).call();
@@ -322,6 +342,8 @@ contract.</p>
 order to be able to adapt it for the other function calls that you need
 to make.</p>
 <ul>
+<li>Notice that we are using the <code>web3mm</code> connection, since
+we are connecting through MetaMask.</li>
 <li>We define the <code>mintNFT()</code> function which is an
 <code>async</code> function; <code>async</code> functions were described
 in the <a href="../daoweb3/index.html">DAO &amp; web3</a> (<a
@@ -338,8 +360,8 @@ various <code>async</code> calls in that function. Note that
 Javascript restriction. Note that any variable that you
 <code>await</code> for a value for must be a <code>const</code>.</li>
 <li>To get the user’s coinbase account address, we call <code>await
-web3.eth.getCoinbase();</code> – that’s the account they are logged into
-using MetaMask.</li>
+web3mm.eth.getCoinbase();</code> – that’s the account they are logged
+into using MetaMask.</li>
 <li>The <code>auctionContract.methods.mintNFT(str)</code> line is where
 the transaction itself occurs. You will notice that this uses
 <code>send()</code>, not <code>sendTransaction()</code>. So this is

@@ -36,6 +36,8 @@ to refer to it as ‘TC’ here (for Token Cryptocurrency).</p>
 <p>Any changes to this page will be put here for easy reference. Typo
 fixes and minor clarifications are not listed here.</p>
 <ul>
+<li>Sun, 4/24: bug fix to Arbitrage.sol as per <a
+href="https://github.com/aaronbloomfield/ccc/pull/4">PR#4</a></li>
 <li>Sun, 4/24: updated Arbitrage.sol’s <code>setup()</code> function to
 make it be usable with less gas; the functionality of it is still the
 same</li>
@@ -78,7 +80,7 @@ method:</p>
         etherpricer = address(new EtherPricerConstant());
     // create and fund the DEXes
     for ( uint i = num_dexes; i &lt; num_dexes+numdex; i++ ) {
-        dexes[i] = address(new TokenDEX());
+        dexes[i] = payable(address(new TokenDEX()));
         TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
         TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                  3, 1000, tokencc, etherpricer);
