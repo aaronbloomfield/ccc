@@ -338,13 +338,14 @@ function close() public {
 ## King of the Ether Throne (KotET)
 - Smart contract deployed in 2016
   - You can [view it on etherscan.io](https://etherscan.io/address/0x2464d1d97f8d0180cfad67bdb19bc30cca69dda0)
+  - And it's [website](https://www.kingoftheether.com/thrones/kingoftheether/index.html)
 - You pay to "claim the throne"
   - Somebody else will (presumably) pay more to claim the throne (minus a fee)
     - The current king gets that payment
   - Eventually the gas becomes too expensive to continue
   - If 14 days passes with no new king, the game is reset
 - The [source code is available on github](https://github.com/kieranelby/KingOfTheEtherThrone/blob/v1.0/contracts/KingOfTheEtherThrone.sol)
-- This explanation based on the one [here](https://hackernoon.com/smart-contract-attacks-part-2-ponzi-games-gone-wrong-d5a8b1a98dd8)
+- (this explanation based on the one [here](https://hackernoon.com/smart-contract-attacks-part-2-ponzi-games-gone-wrong-d5a8b1a98dd8))
 
 
 
@@ -407,6 +408,8 @@ function withdraw() public {
     //zeroing the balance BEFORE sending creditedFunds
     //to prevent re-entrancy attacks
     pendingWithdrawals[msg.sender] = 0;
+    // we would use a more modern version of 
+    // sending rather than transfer()
     msg.sender.transfer(amount);
 }
 ```
@@ -447,7 +450,7 @@ address[] public credAddr;
 uint[] public credAmt;
 ```
 - Both were to be reset when the game resets
-- It was so popular that these filled up quickly
+- The game was so popular that these arrays filled up quickly
   - The gas needed to clear them was more than the maximum gas allowed at the time (5 million)
 
 
@@ -478,9 +481,9 @@ uint[] public credAmt;
 >contract attackGov { 
   function attackGov (address target, uint count) {
     if ( 0 <= count && count < 1022 )
-        this.attackGov.gas(gasleft() - 2000)(target, count+1);
+      this.attackGov.gas(gasleft() - 2000)(target, count+1);
     else
-       attackGov(target).lendGovernmentMoney;
+      attackGov(target).lendGovernmentMoney();
   }
 }
 </code></pre>
@@ -497,7 +500,8 @@ uint[] public credAmt;
   - That function calls `send()` to send ether, but that fails
     - Because it's call frame 1,024!
   - This would cause a reset of the jackpot / ponzi scheme
-    - But the payout does not check the success of the `send()` call, and it zeros out the jackpot
+    - Because `lendGovernmentMoney()` is poorly written
+      - It does not check the success of the `send()` call, and it zeros out the jackpot
     - But nobody is paid that ether!
 
 
@@ -556,6 +560,23 @@ uint[] public credAmt;
 
 
 
+## TXN fees
+- Imagine any gambling game where there is one winner at a time
+  - Winner per block, per jackpot amount, etc.
+- If only one winner, then whomever has their TXN first in a block will be that winner
+- So to ensure you win...
+  - You pay much higher transaction fees (gasPrice)
+
+
+
+## TXN fee inflation
+- A bunch of accounts paying higher transaction fees will push out other TXNs
+- Not all those fees will make it into the winning block
+  - So successive blocks will have higher transaction fees as well
+  - This raises the overall TXN fee cost
+
+
+
 ## Constructors
 - Before Solidity v0.4.22 they were just a function with the same name as the contract (like in other OO languages)
 - Consider:
@@ -585,16 +606,16 @@ uint[] public credAmt;
 >contract OwnerWallet {
     address public owner;
     
-    function OwnerWallet() public { owner = msg.sender; } // old syntax
+    function ownerWallet() public { owner = msg.sender; } // old syntax
     
     // ...
 }
 </code></pre>
-- But *anybody* can call `OwnerWallet()` and become the owner!
+- But *anybody* can call `ownerWallet()` and become the owner!
+  - Because of the typo, it's not the constructor!
   - And then withdraw all the funds
 - In early versions of Solidity...
   - The constructor was just another function
-  - I'm unclear on if it could be called at any time or only when deployed...
 - Now the `constructor()` syntax is only called when the contract is deployed
 
 
@@ -625,10 +646,92 @@ uint[] public credAmt;
     collectedFees = 0;
   }
 </code></pre>
+- Note the `onlyowner` modifier
 - They forgot to change the name of the constructor!
-- Notice that *anybody* could call `DynamicPyramid()`, become the owner, and then drain the contract of it's balance
+- Notice that *anybody* could call `DynamicPyramid()`, become the owner, and then drain the contract's ether
 
 
+
+## Math precision issues
+```
+function buyTokens() public payable {
+  uint tokens = msg.value / 10**18 * tokensPerEth;
+  balances[msg.sender] += tokens; 
+}
+```
+- Integer division means truncation (floor) of value
+- If the amount is less than 1 ether, then `tokens` will be zero!
+- [Bancor](https://en.wikipedia.org/wiki/Bancor_(cryptocurrency)) tried to do this
+  - Their code was hard to test due to their re-implementation of basic math
+
+
+
+## tx.origin
+- `tx.origin` is like `msg.sender`
+  - But it's the very root of the function call list
+  - Imagine if A calls B, which calls C, which calls D
+  - From D's point of view...
+    - C is the `msg.sender`
+    - A is `tx.origin`
+- Don't use it
+
+
+
+## tx.origin vulnerability
+<pre class="code-wrapper nobottom"><code class="hljs awk small" style="height:auto;width:120%"
+>contract Phishable {
+    address public owner;
+    constructor () {
+        owner = msg.sender; 
+    }
+    receive() external payable {}
+    function withdrawAll(address _recipient) public {
+        require(tx.origin == owner);
+        payable(_recipient).call
+                  {value: address(this).balance}("");
+    }
+}
+</code></pre>
+
+- Note the use of `tx.origin` in `withdrawAll()` for the owner
+  - The payment goes to the origin of the entire call stack, which is not necessarily the person who called the function
+
+
+
+## tx.origin exploit
+<pre class="code-wrapper nobottom"><code class="hljs awk small" style="height:auto;width:120%"
+>contract AttackContract { 
+  Phishable phishableContract; 
+  address attacker;
+  constructor (Phishable _phishableContract, 
+               address _attackerAddress) { 
+    phishableContract = _phishableContract; 
+    attacker = _attackerAddress;
+  }
+  receive() external payable { 
+    phishableContract.withdrawAll(attacker); 
+  }
+}
+</code></pre>
+
+- Use social engineering to get the victim to pay this contract a small fee
+  - That executes `receive()`, which calls `withdrawAll()`
+  - The victim is the `owner` in `withdrawAll()`, so the `require()` succeeds
+  - But the payment goes to the attacker!
+
+
+
+## Use of tx.origin
+```
+function payoff() public {
+  require (msg.sender == tx.origin);
+  // ...
+}
+```
+- Prevents some classes of attacks
+- Smart contract wallets used to use `tx.origin` to authenticate the attacker
+  - Rather than `msg.sender`
+  - No known coins lost, though
 </textarea></section>
 
   </section>
