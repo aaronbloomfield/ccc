@@ -121,7 +121,7 @@ We can formulaically determine how much to buy.  The full derivation of the form
 
 The above values are all fixed when the program runs -- either from the config file (described below) or by querying the DEXes.  Different DEXes will have different values for $x_d$, $y_d$, and $k_d$, of course.  The only values that the program chooses are the amount of ETH that we trade in (we'll call this $\delta_e$) or the amount of TC that we trade in (we'll call this $\delta_t$).  As we are only considering a single trade, only one of them will be non-zero.
 
-The formulas that we need are (derivations [here](extra.html) ([md](extra.md))):
+The formulas that we need are (derivations [here](extra.html) ([md](extra.md)):
 
 - Our current holdings, in USD, are: <!-- $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$ --> <img src="formulas/formulas/img1.svg" class="formula">
 - If we trade in TC, then our holdings after (in USD) are: <!-- $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$  --> <img src="formulas/formulas/img3.svg" class="formulabig">
@@ -129,9 +129,9 @@ The formulas that we need are (derivations [here](extra.html) ([md](extra.md))):
 
 For a single trade, want to find the maximum profit for the two $h_{after}$ formulas.  We take the derivative, then set it equal to zero to find the roots (details [here](extra.html) ([md](extra.md)), if you are interested).  The roots will give us the maximum and/or minimum points.  This gives us:
 
-- If we traded in TC, then the maxima / minima are at: <!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ --> <img src="formulas/formulas/img7.svg" class="formulabig">
+- If we traded in TC, then the maxima or minima is at: <!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ --> <img src="formulas/formulas/img7.svg" class="formulabig">
     - Note that $p_e$ is in the numerator in that fraction, which is different than the fraction in the next formula
-- If we traded in ETH, then the maxima / minima are at: <!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ --> <img src="formulas/formulas/img9.svg" class="formulabig">
+- If we traded in ETH, then the maxima or minima is at: <!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ --> <img src="formulas/formulas/img9.svg" class="formulabig">
     - Note that $p_t$ is in the numerator in that fraction, which is different than the fraction in the previous formula
 <!-- - Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of -->
 
