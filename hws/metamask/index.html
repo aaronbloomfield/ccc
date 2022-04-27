@@ -82,10 +82,13 @@ function.</p>
 Auctioneer contract will deploy it’s <em>own</em> NFTmanager. We saw how
 this was done in the testing section of the <a
 href="../daoweb3/index.html">DAO &amp; web3</a> (<a
-href="../daoweb3/index.md">md</a>) assignment. This way we won’t have to
-pass in the address of the NFT manager every time we want to deal with
-an NFT which will make our lives easier. To make this change, add the
-following as a public variable to your contract:</p>
+href="../daoweb3/index.md">md</a>) assignment and in the <a
+href="../arbitrage/Arbitrage.sol.html">Arbitrage.sol</a> contract in the
+<a href="../arbitrage/index.html">Arbitrage trading</a> (<a
+href="../arbitrage/index.md">md</a>) assignment. This way we won’t have
+to pass in the address of the NFT manager every time we want to deal
+with an NFT which will make our lives easier. To make this change, add
+the following as a public variable to your contract:</p>
 <pre><code>address public override nftmanager;</code></pre>
 <p>This will create an associated getter function as well. This
 <code>override</code> is because it will override the updated
@@ -103,10 +106,9 @@ waste of gas, but it simplifies our modifications for this assignment.
 And gas is free for us in this course.</p>
 <p><strong>Change 3:</strong> We are going to add a method to the
 Auctioneer to mint an NFT, which it does by calling the NFTmanager’s
-<code>mintWithURI()</code> method. Add the following code:</p>
-<pre><code>address public override nftmanager;
-
-mapping (address =&gt; uint) public override lastMintedNFT;
+<code>mintWithURI()</code> method. Copy and paste the following code
+into your Auctioneer_v2 contract:</p>
+<pre><code>mapping (address =&gt; uint) public override lastMintedNFT;
 
 function mintNFT (string memory uri) public override returns (uint) {
     uint ret = NFTmanager(nftmanager).mintWithURI(msg.sender,uri);
@@ -127,12 +129,12 @@ challenging to obtain the return value of a transaction, so we save the
 just minted NFT ID in the <code>lastMintedNFT</code> mapping, which we
 can then read via a regular call. (This means if you mint two NFTs in
 succession, without getting the ID of the first before you mint the
-second, then you won’t know the ID of the first; we are going to
-carefully ignore this case for simplicity). The <code>tokenURI()</code>
-just passes the call to the NFTmanager – having this function here
-allows us to not have to interact with two smart contracts, as the
-Auctioneer will forward that request on for us. This uses up more gas,
-but will make it much simpler for us in this assignment.</p>
+second, then you won’t know the ID of the first; we are going to ignore
+this use case for simplicity). The <code>tokenURI()</code> just passes
+the call to the NFTmanager – having this function here allows us to not
+have to interact with two smart contracts, as the Auctioneer will
+forward that request on for us. This uses up more gas, but will make it
+much simpler for us in this assignment.</p>
 <p><strong>Change 4:</strong> As a result of these changes, your
 Auctioneer_v2.sol contract will now support the updated <a
 href="AuctionManager_v2.sol.html">AuctionManager_v2.sol</a> (<a
@@ -160,6 +162,9 @@ the contract address, as it will be needed below.</p>
 extension to Google Chrome. Unfortunately, it does not run in any other
 browser; meaning you can’t use Firefox, Safari, Edge, or Internet
 Explorer. You have to use Chrome for this assignment.</p>
+<p>Note: at some point below, MetaMask will ask for a password to be set
+– remember that password, as it will be needed every time you restart
+the browser and MetaMask.</p>
 <p>Here are the MetaMask setup steps:</p>
 <ol type="1">
 <li>If you haven’t already, install <a
@@ -213,11 +218,12 @@ pencil/edit icon to the right of the account name.</li>
 </ul></li>
 </ol>
 <p>At this point, the MetaMask extension should be connected to your
-account on the private Ethereum blockchain. Note that if you restart
-Chrome, you may have to enter your password. Also, it will say “Not
-connected” to the left of the account name – that’s fine for now, since
-we have not yet created a web page for it to connect to.
-<br clear="all"></p>
+account on the private Ethereum blockchain – you can tell if this is the
+case because it will report your balance in the MetaMask window. Note
+that if you restart Chrome, you may have to enter your password. Also,
+it will say “Not connected” to the left of the account name – that’s
+fine for now, since we have not yet created a web page for it to connect
+to. <br clear="all"></p>
 <!---
 
 ### Background: Function Call Encoding
@@ -294,9 +300,11 @@ blockchain. The first connection is through the normal URL as was done
 in the <a href="../daoweb3/index.html">DAO &amp; web3</a> (<a
 href="../daoweb3/index.md">md</a>) assignment and as is done in the
 auctions.php page that you are basing your code off of; that URL is on
-the Collab landing page. The second connection is through MetaMask,
-which injects the <code>window.ethereum</code> object, and Web3.js can
-just connect via that.</p>
+the Collab landing page. This first connection is <em>read-only</em>.
+The second connection is through MetaMask, which injects the
+<code>window.ethereum</code> object, and Web3.js can just connect via
+that. We will be able to send transactions through the second
+connection.</p>
 <p>The reason we are doing two connections is because the first one
 supports subscriptions, which is what allows the table to be updated
 upon an event emission – you did that in the <a
@@ -309,11 +317,12 @@ the tables), but does allow sending transactions to the blockchain.</p>
 <p>As both are wrapped in the Web3 constructor, they operate the same
 way.</p>
 <p>As a general rule, any one Javascript function should use only one of
-those connections. If you are sending transactions to the blockchain,
-you have to use the <code>web3mm</code> one. Otherwise, use the
-<code>web3</code> one. As you will only have four functions that send
-transactions to the blockchain, only those four will use
-<code>web3mm</code>.</p>
+those connections, as they may be slightly out of sync with each other
+(the MetaMask one has about a 5 second delay, for example). If you are
+sending transactions to the blockchain, you have to use the
+<code>web3mm</code> one. Otherwise, use the <code>web3</code> one. As
+you will only have four functions that send transactions to the
+blockchain, only those four will use <code>web3mm</code>.</p>
 <h5 id="html-and-javascript">HTML and Javascript</h5>
 <p>Below is an example HTML form and associated Javascript function.
 This will call the <code>mintNFT()</code> function on your smart
@@ -412,25 +421,26 @@ seconds) to realize that the transaction has occurred. So it can easily
 take 10 seconds for the pop-up window to appear. <br clear='all'></p>
 <h3 id="the-task">The Task</h3>
 <p>Finally! We can get to the whole reason for this party.</p>
-<p>Your task is to create a web interface to your <a
-href="../auction/AuctionManager.sol.html">Auctioneer.sol</a> contract.
-MAKE SURE IT’S THE UPDATED VERSION (that you developed above)! That
-updated version was discussed in the “Setup: NFTmanager” section,
-above.</p>
+<p>Your task is to create a web interface to your Auctioneer_v2.sol
+contract, which now fulfills the <a
+href="AuctionManager_v2.sol.html">AuctionManager_v2.sol</a> (<a
+href="AuctionManager_v2.sol">src</a>) interface. MAKE SURE IT’S THE
+UPDATED VERSION (that you developed above)! That updated version was
+discussed in the “Setup: Auctioneer” section, above.</p>
 <p>As you are starting with the web site that was provided to you in the
 <a href="../auction/index.html">dApp Auction</a> (<a
 href="../auction/index.md">md</a>) assignment, the read-only parts of
 this assignment are already done for you. You will have to change the
 contract ID, of course – you should hard-code that into your HTML /
-Javascript code (just replace the one that is there).</p>
+Javascript code (just replace the address that is there).</p>
 <p>For this assignment, you only need to create an interface with four
-of your functions – <code>createAuction()</code>,
+of the functions – <code>createAuction()</code>,
 <code>closeAuction()</code>, <code>placeBid()</code>, and
 <code>mintNFT()</code>. And the interface for <code>mintNFT()</code> was
 provided for you, above. In particular, you do NOT have to create an
 interface for <code>cancelAuction()</code>. We discussed how to create a
 HTML form interface, and the Javascript code to make it work, above.</p>
-<p>The forms for those three functions should be on that same page – in
+<p>The forms for these four functions should be on that same page – in
 particular, you will only be submitting one page, called
 <code>auctions.html</code> (note the plurality of the filename!). You
 can put those forms on the bottom, along with the MetaMask connect
@@ -507,6 +517,11 @@ click on the “localhost:8545” network. Make sure the chain ID is set
 correctly; it’s on the Collab landing page, if you forget what it is. It
 should be set using it’s base-10 value.</li>
 </ul>
+<h3 id="grading">Grading</h3>
+<p>The grades on this are going to be rather binary – if it works, then
+full (or close to full) credit. If it doesn’t work, then very little or
+no credit. In particular, there will be very little partial credit
+awarded on this assignment.</p>
 <h3 id="submission">Submission</h3>
 <p>There are <em>four</em> forms of submission for this assignment; you
 must do all four.</p>
@@ -516,11 +531,14 @@ Solidity code for this assignment. <strong>NOTE:</strong> Gradescope
 cannot fully test this assignment, as it does not have access to the
 private blockchain. So it can only check that the right file has been
 submitted.</p>
-<p>Submission 2: You must deploy your Auctioneer smart contract (and
-likely your NFTmanager smart contract) to our private Ethereum
-blockchain. It’s fine if you deploy it a few times to test it.</p>
+<p>Submission 2: You must have deployed your Auctioneer_v2 smart
+contract to our private Ethereum blockchain. It’s fine if you deploy it
+a few times to test it. Presumably the smart contract address for this
+is in the auctions.html file that you submitted to Gradescope.</p>
 <p>Submission 3: You need to start a few auctions. Mint some NFTs, start
-some auctions.</p>
+some auctions. You should start three auctions using the NFT images that
+you created for the <a href="../auction/index.html">dApp Auction</a> (<a
+href="../auction/index.md">md</a>) assignment.</p>
 <p>Submission 4: You will need to submit your information via a Google
 form, the link to which is on the Collab landing page.</p>
 </body>
