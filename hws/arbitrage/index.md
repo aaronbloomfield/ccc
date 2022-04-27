@@ -121,7 +121,7 @@ We can formulaically determine how much to buy.  The full derivation of the form
 
 The above values are all fixed when the program runs -- either from the config file (described below) or by querying the DEXes.  Different DEXes will have different values for $x_d$, $y_d$, and $k_d$, of course.  The only values that the program chooses are the amount of ETH that we trade in (we'll call this $\delta_e$) or the amount of TC that we trade in (we'll call this $\delta_t$).  As we are only considering a single trade, only one of them will be non-zero.
 
-The formulas that we need are (derivations [here](extra.html) ([md](extra.md)):
+The formulas that we need are (derivations [here](extra.html) ([md](extra.md))):
 
 - Our current holdings, in USD, are: <!-- $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$ --> <img src="formulas/formulas/img1.svg" class="formula">
 - If we trade in TC, then our holdings after (in USD) are: <!-- $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$  --> <img src="formulas/formulas/img3.svg" class="formulabig">
@@ -137,7 +137,7 @@ For a single trade, want to find the maximum profit for the two $h_{after}$ form
 
 A few notes on those:
 
-- If you want to cut-and-paste these formulas into your program, the [derivations page](extra.html) ([md](extra.md))) has them in text form
+- If you want to cut-and-paste these formulas into your program, the [derivations page](extra.html) ([md](extra.md)) has them in text form
 - Neither of these are guaranteed to make a profit!  But if a profit can be made, then one of those will be the maximum profit.
 - How much profit is determined from the $h_{after}$ formulas, above
 - Because the variables in the square root can never be negative, and because the fraction denominators can never be zero, the square root will always return real values

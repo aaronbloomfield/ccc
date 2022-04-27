@@ -32,9 +32,9 @@ If you are using the geth.ipc file:
 w3 = Web3(Web3.IPCProvider('/path/to/geth.ipc'))
 ```
 
-This assumes you have started up a node as per the [Private Ethereum Blockchain assignment](../ethprivate/index.html) ([md]((../ethprivate/index.md)).
+This assumes you have started up a node as per the [Private Ethereum Blockchain assignment](../ethprivate/index.html) ([md]((../ethprivate/index.md))).
 
-Note: it is unclear how to do this in Windows, as I do not have a Windows machine that I can test this on.  When/if I find out how, I will update this section.
+In Windows, according to [this post](https://ethereum.stackexchange.com/questions/76036/how-do-i-connect-geth-to-web3-py-using-ipc-on-windows), you do not pass anything in to the function, as shown here: `w3 = Web3(Web3.IPCProvider()`.
 
 To connect via the course server:
 

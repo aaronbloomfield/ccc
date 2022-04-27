@@ -44,10 +44,11 @@ through the course server endpoint.</p>
 <pre><code>w3 = Web3(Web3.IPCProvider(&#39;/path/to/geth.ipc&#39;))</code></pre>
 <p>This assumes you have started up a node as per the <a
 href="../ethprivate/index.html">Private Ethereum Blockchain
-assignment</a> (<a href="(../ethprivate/index.md)">md</a>.</p>
-<p>Note: it is unclear how to do this in Windows, as I do not have a
-Windows machine that I can test this on. When/if I find out how, I will
-update this section.</p>
+assignment</a> (<a href="(../ethprivate/index.md)">md</a>).</p>
+<p>In Windows, according to <a
+href="https://ethereum.stackexchange.com/questions/76036/how-do-i-connect-geth-to-web3-py-using-ipc-on-windows">this
+post</a>, you do not pass anything in to the function, as shown here:
+<code>w3 = Web3(Web3.IPCProvider()</code>.</p>
 <p>To connect via the course server:</p>
 <pre><code>w3 = Web3(Web3.WebsocketProvider(&#39;wss://&lt;your-provider-url&gt;&#39;))</code></pre>
 <p>The full URL for the course server is on the Collab landing page.</p>

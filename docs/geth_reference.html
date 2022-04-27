@@ -175,15 +175,14 @@ parameter</td>
 <p>Create a preload.js script such as the one below, and then start
 geth’s attach with the <code>--preload preload.js</code> parameter, as
 described above.</p>
-<pre><code>function mineOneBlock() {
-    var start = eth.blockNumber;
-    miner.start();
-    while ( start == eth.blockNumber );
-    miner.stop();
-    return eth.blockNumber;
-}
-
-function checkAllBalances() { 
+<p>What the functions do:</p>
+<ul>
+<li><code>checkAllBalances()</code> will print out all the balances, in
+ETH, for all of the accounts in <code>eth.accounts</code></li>
+<li><code>getRevertReason()</code> will, when passed a transaction hash
+that reverted, attempt to determine why it reverted</li>
+</ul>
+<pre><code>function checkAllBalances() { 
     // this function from https://stackoverflow.com/questions/32312884/how-do-i-get-the-balance-of-an-account-in-ethereum
     var i =0;
     var total = 0;
@@ -193,6 +192,12 @@ function checkAllBalances() {
          total += parseFloat(web3.fromWei(eth.getBalance(e), &quot;ether&quot;));
     }
     console.log(&quot;Total: &quot; + total + &quot; ETH&quot;);
+}
+
+function getRevertReason(txhash) {
+    tx=eth.getTransaction(txhash);
+    tx.data=tx.input;
+    eth.call(tx,tx.blockNumber-1);
 }</code></pre>
 </body>
 </html>

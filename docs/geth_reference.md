@@ -47,15 +47,13 @@ Geth Command Summary
 
 Create a preload.js script such as the one below, and then start geth's attach with the `--preload preload.js` parameter, as described above.
 
-```
-function mineOneBlock() {
-	var start = eth.blockNumber;
-	miner.start();
-	while ( start == eth.blockNumber );
-	miner.stop();
-	return eth.blockNumber;
-}
+What the functions do:
 
+- `checkAllBalances()` will print out all the balances, in ETH, for all of the accounts in `eth.accounts`
+- `getRevertReason()` will, when passed a transaction hash that reverted, attempt to determine why it reverted
+
+
+```
 function checkAllBalances() { 
 	// this function from https://stackoverflow.com/questions/32312884/how-do-i-get-the-balance-of-an-account-in-ethereum
 	var i =0;
@@ -66,5 +64,11 @@ function checkAllBalances() {
 		 total += parseFloat(web3.fromWei(eth.getBalance(e), "ether"));
 	}
 	console.log("Total: " + total + " ETH");
+}
+
+function getRevertReason(txhash) {
+	tx=eth.getTransaction(txhash);
+	tx.data=tx.input;
+	eth.call(tx,tx.blockNumber-1);
 }
 ```
