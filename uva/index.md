@@ -50,6 +50,7 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Larger Programming Homeworks
 
+- Due Tue, 5/3 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
 - Due Tue, 4/26 by midnight: [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
 - Due Tue, 4/19 by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
 - Due Tue, 4/12 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
