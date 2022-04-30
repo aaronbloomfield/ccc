@@ -34,8 +34,12 @@ href="../daoweb3/index.html">DAO &amp; web3</a> (<a
 href="../daoweb3/index.md">md</a>) assignment.</p>
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo
-fixes and minor clarifications are not listed here. So far there aren’t
-any significant changes to report.</p>
+fixes and minor clarifications are not listed here.</p>
+<!-- So far there aren't any significant changes to report. -->
+<ul>
+<li>Fri, 4/29: Clarified that the NFT function to call is
+<code>safeTransferFrom()</code> (not <code>transferFrom()</code>)</li>
+</ul>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Writing this homework will require completion of the following
 assignments:</p>
@@ -488,7 +492,7 @@ discussed how to create a HTML form interface, and the Javascript code
 to make it work, above.</p>
 <p>In addition to those four functions to the Auctioneer_v2, you will
 also need a function that allows the transfer of an NFT over. This is
-the <code>transferFrom()</code> function call in <a
+the <code>safeTransferFrom()</code> function call in <a
 href="../auctions/IERC721.sol.html">IERC721.sol</a> – and recall that
 the NFTmanager inherits from that contract. Thus, you will need to
 create a contract interface to that contract (similar to how
