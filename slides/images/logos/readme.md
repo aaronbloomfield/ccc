@@ -38,5 +38,6 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 - <img src="shib-coin-symbol.svg" class="cclogo"> STORJ adapted from [here](https://cryptologos.cc/shiba-inu) <br clear='all'>
 - <img src="usdc-coin-symbol.svg" class="cclogo"> UDSC (USDC) from [here](https://cryptologos.cc/usd-coin) <br clear='all'>
 - <img src="usdt-coin-symbol.svg" class="cclogo"> Tether (USDT) adapted from [here](https://cryptologos.cc/usd-coin) <br clear='all'>
+- <img src="beam-coin-symbol.svg" class="cclogo"> Beam (BEAM) from [here](https://cryptologos.cc/beam) <br clear='all'>
 
 

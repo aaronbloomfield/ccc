@@ -1,0 +1,93 @@
+digraph A {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [shape=point,style=invis];
+    1000 [label="block 1000",width=0.8];
+    null -> 1000;
+}
+
+digraph B {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [shape=point,style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nw/TX x",width=0.8];
+    null -> 1000;
+    1000 -> 1001;
+}
+
+digraph C {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [shape=point,style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nw/TX x",width=0.8];
+    othera [label="block 1001\nwithout TX x",width=0.8];
+    null -> 1000;
+    1000 -> 1001;
+    1000 -> othera;
+}
+
+digraph D {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [shape=point,style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nw/TX x",width=0.8];
+    1002 [label="block 1002",width=0.8];
+    othera [label="block 1001\nwithout TX x",width=0.8];
+    //otherb [label="different\nblock 1002",width=0.8];
+    null -> 1000;
+    1000 -> 1001;
+    1000 -> othera;
+    othera -> 1002;
+    //othera -> otherb;
+}
+
+digraph E {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [shape=point,style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [label="block 1001\nw/TX x",width=0.8];
+    1002 [label="block 1002",width=0.8];
+    othera [label="block 1001\nwithout TX x",width=0.8];
+    //otherb [label="different\nblock 1002",width=0.8];
+    1003 [label="block 1003",width=0.8];
+    null -> 1000;
+    1000 -> 1001;
+    1000 -> othera;
+    othera -> 1002;
+    //othera -> otherb;
+    1002 -> 1003;
+}
+
+digraph F {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=circle];
+    edge [fontname = "Helvetica"];
+
+    null [shape=point,style=invis];
+    1000 [label="block 1000",width=0.8];
+    1001 [color=red,label="block 1001\nw/TX x",width=0.8];
+    1002 [label="block 1002",width=0.8];
+    othera [label="block 1001\nwithout TX x",width=0.8];
+    //otherb [label="different\nblock 1002",width=0.8];
+    1003 [label="block 1003",width=0.8];
+    null -> 1000;
+    1000 -> 1001;
+    1000 -> othera;
+    othera -> 1002;
+    //othera -> otherb;
+    1002 -> 1003;
+}

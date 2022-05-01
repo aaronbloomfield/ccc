@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Conclusion
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Miscellaneous Topics](#/misc)  
+[Looking Forward](#/forward)  
+[Course Conclusion](#/theend)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="misc" data-markdown class="center"><textarea>
+# Miscellaneous Topics
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Miscellaneous Topics
+- These are a few topics that weren't covered elsewhere, but you should know about
+- They are:
+  - Forks
+  - Oracles
+  - Stablecoins
+
+
+
+## Cryptocurrency "Forks"
+- There are four different meanings of "fork" with regard to cryptocurrencies
+  - Uncle / orphan / ommer nodes
+  - Soft fork 
+  - Hard fork
+  - Source code fork
+    </textarea></section>
+
+
+<section data-markdown data-transition="none" data-transition-speed="fast" data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.1.svg" style="width:100px">
+
+- Given a starting block number (here, 1000)
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.2.svg" style="width:100px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.3.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.4.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.5.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+- And then one more
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.6.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+- And then one more
+- Eventually the block with the TXN is discarded
+  - As it is not part of the longest chain anymore
+    </textarea></section>
+
+
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Uncle / Orphan / Ommer nodes
+- Bitcoin calls these *orphan nodes*
+- Ethereum used to call them *uncle nodes*
+  - But that was gender-specific
+  - Now they are called *ommer nodes*
+    - Ommer is a gender-neutral version of aunt / uncle
+- What happens to that TXN?
+  - Other miners will likely pick it up
+  - Wallet software (or equivalent) will re-send it if it "disappears"
+- This is why we can't all mine the blockchian in this class!
+  - There is no effective way to ensure it is not discarded
+
+
+
+## Soft forks
+- Non-token cryptocurrencies have a group of developers
+  - They will make occasionally changes to the protocol / mining algorithm / etc.
+  - Bitcoin through [BIPs](https://github.com/bitcoin/bips/), Ethereum through [EIPs](https://github.com/ethereum/EIPs/), etc.
+- Sometimes called a *consensus fork*
+- Generally all the uses of the cryptocurrency (eventually) adopt the change
+- These forks are backward-compatible
+  - At least until everybody switches over
+
+
+
+## Soft forks
+- How to get all the miners to adopt it?
+  - Release the updated source code
+  - The agreed-upon change will state that when:
+    - Some number (say, 75%) of the miners have adopted this change
+    - At some date/time
+  - At that point, then all further blocks *must* have that change
+- Example: Bitcoin's [Segregated Witness](bitcoin.html#/segwit) from 2015
+  - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
+
+
+
+## Hard forks
+- A change is proposed that many users do *NOT* want to adopt
+  - Or that is not backwards-compatible
+- Example: Ethereum Classic
+  - Recall that The &ETH;AO had a bug, which endangered the view of the Ethereum as a whole
+  - The fix was to roll back the blockchain to before the hack to fix it
+  - This [split the users](applications.html#/split)
+  - Now Ethereum Classic is the blockchain *without* the fix
+  - Ethereum is the blockchain *with* the fix
+
+
+
+## Source code forks
+- Why make a new cryptocurrency when you can instead:
+  - Take a tested open source code base
+  - Make a the modifications you want
+- <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> The [Ravencoin source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin)
+- Changes:
+  - 1000x as many coins
+  - Native support for assets
+    - Could be NFTs, but can represent any digital or physical item
+  - Different PoW hashes to avoid ASIC monopolization
+
+
+
+## Oracles
+- A smart contract can only use the data on the blockchain
+- Complex situations require more data than that:
+  - Current exchange rates
+  - Random numbers
+  - The ability to interact with other blockchains
+- The solution: Oracles
+
+
+
+## Oracles
+We can create an *oracle*:
+
+```
+contract Oracle {
+    address oracle;
+    uint public price;
+
+    constructor() {
+        oracle = msg.sender;
+    }
+
+    function updatePrice (uint update) external {
+        require (msg.sender == oracle, 
+                 "Only the Oracle can update this");
+        price = update;
+    }
+}
+```
+
+
+
+## Oracle: trusted signer
+![](images/conclusion/oracles/oracles.dot.1.svg)
+- The oracle signer (aka deployer) updates the price, and anybody can read it
+  - This works well when the source is centralized
+  - Such as the oracle on Ethereum that interacts with the Polkadot or Polygon chains
+- But a corrupt signer can maliciously manipulate the price
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Oracle: $m$ of $n$ signers
+![](images/conclusion/oracles/oracles.dot.2.svg)
+- So we have multiple signers
+- We expect some variance in the values
+  - Different exchanges will provide slightly different exchange rates
+- We have to take the *median* value, not the *mean*
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Oracle: $m$ of $n$ signers
+![](images/conclusion/oracles/oracles.dot.3.svg)
+- What if some nodes are corrupted?
+- We have to take the *median* value, not the *mean*
+  - Here the mean is `$`71
+- If more than half are trustworthy, then the oracle will have a correct price
+  - Less than half can be traitors!
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Oracle: Schelling oracles
+![](images/conclusion/oracles/oracles.dot.4.svg)
+- Each signer puts a *stake* in their vote
+- We accept the value that has the most stake
+- Traitors have their stake *slahsed*
+  - Although we allow for some variance in the price
+  - But if we allow for too much variance, a traitor can just give a valid, but low, price
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Schelling oracles & whales
+![](images/conclusion/oracles/oracles.dot.5.svg)
+- A *whale* could put in a huge stake to manipulate the price
+  - Knowing full well s/he will lose their stake
+  - Presumably so s/he can make a (bigger) profit off of the price difference
+
+
+
+## Stablecoins
+- A coin whose value is meant to not be volatile
+- Usually tagged in value to a fiat currency
+
+
+
+<h2><img src="images/logos/usdc-coin-symbol.svg" class="cclogoheader"> USD Coin (USDC) <br clear='all'></h2>
+
+- Managed by a consortium named Centre, which is founded by Coinbase (and others)
+- Backed by actual monetary investments in various accounts
+  - An accounting agency (Grant Thornton) attests monthly to these deposits
+- If you buy one, the money you pay goes into these accounts
+- But how risky are those deposits?
+  - If their value goes down, the number of USDC does not change!
+- Not backed by the US government in any way!
+
+
+
+<h2><img src="images/logos/usdt-coin-symbol.svg" class="cclogoheader"> Tether (USDT) <br clear='all'></h2>
+
+- Similar to USDC in how it works
+- Run by Tether Ltd
+- As per [coinmarketcap.com](https://coinmarketcap.com/), it's has the 3rd largest market capitalization (`$`83 billion as of 5/1/22) 
+  - After Bitcoin (`$`734 billion) and Ethereum (`$`340 billion)
+  - USD Coin is 5th at `$`49 billion
+- Scandal-ridden
+  - 2019: NY AG accuses Tether of hiding a `$`850 million loss
+  - It's really unclear where their reserves are held
+  - Many accusations that their reserves are much less than the 1:1 ratio they claim
+- Not backed by the US government in any way!
+
+
+
+<h2><img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> Dai (DAI) <br clear='all'></h2>
+
+- An ERC-20 token cryptocurrency we've [talked about before](tokens.html#/dai)
+- Run by [MakerDAO](https://cryptonews.com/coins/maker/) via an Ethereum smart contract
+  - [MakerDOA's whitepaper](https://makerdao.com/en/whitepaper/)
+- Uses a series of margin trades and shifts of assets to have its value remain stable despite cryptocurrency volatility
+
+
+
+## Stablecoin categories
+- Fiat-collateralized: rely on a centralized institution with reserves
+  - Examples: Tether, USD Coin, TrueUSD
+- Crypto-collateralized: use cryptocurrency assets as collateral
+  - Examples: Dai (DAI) & Maker (MKR); Havven (HAV) & nUSD, Bitshares (BTS) BitUSD
+- Algorithmic non-collateralized: use software-based economic models to maintain stability
+  - Examples: Basis, Kowala, Carbon, Fragments
+- Hybrid stablecoins: a blend of the above approaches
+  - Examples: Reserve, Saga, Aurora - Boreal
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="forward" data-markdown class="center"><textarea>
+# Looking Forward
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Bitcoin
+- Pros
+  - It started this whole field
+  - It's worth a lot per Bitcoin
+- Cons
+  - You can't do much other than transfer funds
+  - Script language is rather limited
+  - (It's kinda boring once you know about more cryptocurrencies)
+
+
+
+## Ethereum's pros
+- It shows what one can do with a modern cryptocurrency
+- It has a Turing-complete programming language
+- A lot of developer resources
+  - Including things like stack overflow posts for commonly encountered problems
+  - Well developed development environments
+- Widely used, well trusted (relatively speaking)
+
+
+
+
+## Ethereum's cons
+- Expensive to interact with
+- High volatility in the fees
+- Low transaction rate
+- Still PoW
+- Technology is now 7 years old
+
+
+
+## Faster Transactions
+- One's we've seen:
+  - <img src="images/logos/xlm-coin-symbol.svg" class="cclogo"> Stellar Lumens ([XLM](https://coinmarketcap.com/currencies/stellar/)): 1k TPS <br clear='all'>
+  - <img src="images/logos/sol-coin-symbol.svg" class="cclogo"> Solana ([SOL](https://coinmarketcap.com/currencies/solana/)): 50k TPS <br clear='all'>
+- Both are meant to have the same features as Ethereum (smart contracts, etc.)
+
+
+
+## More features
+- One's we've seen:
+  - <img src="images/logos/matic-coin-symbol.svg" class="cclogo"> Polygon ([MATIC](https://coinmarketcap.com/currencies/polygon/)) <br clear='all'>
+  - <img src="images/logos/dot-coin-symbol.svg" class="cclogo"> Polkadot ([DOT](https://coinmarketcap.com/currencies/polkadot-new/)) <br clear='all'>
+- Both have many more features than Ethereum
+  - Creation of additional chains, native interaction with multiple blockchains
+- Plus they are faster as well
+
+
+
+## Better GUIS
+- <img src="images/logos/beam-coin-symbol.svg" class="cclogo"> Beam ([BEAM](https://coinmarketcap.com/currencies/beam/)) GUI:<br clear='all'>
+
+<img src="images/conclusion/beam-desktop.webp" style="padding:0;background:transparent">
+
+Image from [Beam's home page](https://beam.mw/)
+
+
+
+## Different development languages
+- <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum has Solidity, of course (and others) <br clear='all'>
+- <img src="images/logos/dot-coin-symbol.svg" class="cclogo"> Polkadot uses Rust <br clear='all'>
+- <img src="images/logos/sol-coin-symbol.svg" class="cclogo"> Solana uses C, C++, and Rust <br clear='all'>
+- <img src="images/logos/matic-coin-symbol.svg" class="cclogo"> Polygon uses Javascript and Solidity <br clear='all'>
+- <img src="images/logos/atom-coin-symbol.svg" class="cclogo"> Cosmos uses Go <br clear='all'>
+- Many of the newer cryptocurrencies use many less known languages (Erlang, Vue, Michelson, etc.)
+
+
+
+## Is buying a GPU miner worth it?
+- Consider a Nvidia 3090 GPU
+  - Currently selling for `$`1,800 on Amazon
+- It can make [`$`5.27 per day in ETH](https://2cryptocalc.com/gpu/24h/3090/1)
+  - But not for long, because ETH is going to proof-of-stake
+  - It can make about `$`3 per day otherwise
+  - Minus about `$`1 per day in electricity
+  - And you have to buy the machine it connects to
+- `$`2 per day will pay off the miner is 900 days (2.5 years)
+- Unless...
+  - If the overall hash rate goes up, the amount you get per day goes down
+  - Nvidia is coming out with 4090 GPUs in the fall that will have double the speed
+
+
+
+## Is buying a Bitcoin miner worth it?
+- Consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
+- Current profit per day is under `$`3 once electricity is considered
+  - And it's going down as the Bitcoin hashrate goes up
+- That will pay itself off in 1,500 days (4 years!)
+
+
+
+## Where is the field going
+- If we could predict this, we'd all be rich on Bitcoin
+- Vitalik Buterin, the creator of Ethereum, has a [blog](https://vitalik.ca/)
+- [Reddit post: Best crypto life hacks](https://www.reddit.com/r/CryptoCurrency/comments/rtlsoi/best_lifehacks_in_crypto_that_beginners_should/)
+- Reddit post: How I accumulated my wealth by looking at pages 10 and beyond on Coingecko
+  - The [original post](https://www.reddit.com/r/CryptoCurrency/comments/u5je3f/how_i_accumulated_my_wealth_by_looking_at_pages/) was deleted, but is available on [archive.org](https://web.archive.org/web/20220417124008/https://www.reddit.com/r/CryptoCurrency/comments/u5je3f/how_i_accumulated_my_wealth_by_looking_at_pages/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="theend" data-markdown class="center"><textarea>
+# Course Conclusion
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Course Objectives
+- Understand the theoretical aspects of cryptocurrency
+- Understand the basics of blockchain in general, and the details of a selected number of blockchains
+- Understand the uses of cryptocurrency and blockchain beyond that as a form of money
+- Understand the policy, ethical, legal, and tax implications of cryptocurrency
+- Be able to develop programs for a specific Blockchain
+- Implement a fully working modern cryptocurrency
+
+
+
+## Cryptocurrencies we've seen
+- Throughout the semester:
+  - <img src="images/logos/btc-coin-symbol.svg" class="cclogo"> Bitcoin ([BTC](https://coinmarketcap.com/currencies/bitcoin/)) <br clear='all'>
+  - <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> Ravencoin ([RVN](https://coinmarketcap.com/currencies/ravencoin/)) <br clear='all'>
+  - <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum ([ETH](https://coinmarketcap.com/currencies/ethereum/)) <br clear='all'>
+- From [zkSNARKs](zksnarks.html#/):
+  - <img src="images/logos/zec-coin-symbol.svg" class="cclogo"> ZCash ([ZEC](https://coinmarketcap.com/currencies/zcash/)) <br clear='all'>
+  - <img src="images/logos/firo-coin-symbol.svg" class="cclogo"> Firo ([FIRO](https://coinmarketcap.com/currencies/firo/)) <br clear='all'>
+- From [Blockchain Applications](applications.html#/):
+  - <img src="images/logos/etc-coin-symbol.svg" class="cclogo"> Ethereum Classic ([ETC](https://coinmarketcap.com/currencies/ethereum-classic/)) <br clear='all'>
+
+
+
+## Cryptocurrencies we've seen
+
+- From [Mining](mining.html#/):
+  - <img src="images/logos/xpm-coin-symbol.svg" class="cclogo"> Primecoin ([XPM](https://coinmarketcap.com/currencies/primecoin/)) <br clear='all'>
+  - <img src="images/logos/ppc-coin-symbol.svg" class="cclogo"> Peercoin ([PPC](https://coinmarketcap.com/currencies/peercoin/)) <br clear='all'>
+  - <img src="images/logos/fil-coin-symbol.svg" class="cclogo"> Filecoin ([FIL](https://coinmarketcap.com/currencies/filecoin/)) <br clear='all'>
+  - <img src="images/logos/xlm-coin-symbol.svg" class="cclogo"> Stellar Lumens ([XLM](https://coinmarketcap.com/currencies/stellar/)) <br clear='all'>
+  - <img src="images/logos/storj-coin-symbol.svg" class="cclogo"> Storj ([STORJ](https://coinmarketcap.com/currencies/storj/)) <br clear='all'>
+  - <img src="images/logos/gre-coin-symbol.png" class="cclogo"> Greencoin ([GRE](https://coinmarketcap.com/currencies/greencoin/)) <br clear='all'>
+
+
+
+## Cryptocurrencies we've seen
+- From [Tokens](tokens.html#/):
+  - <img src="images/logos/shib-coin-symbol.svg" class="cclogo"> Shib Inu ([SHIB](https://coinmarketcap.com/currencies/shiba-inu/)) <br clear='all'>
+  - <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> DAI ([DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/)) <br clear='all'>
+  - <img src="images/logos/weth-coin-symbol.png" class="cclogo"> Wrapped Ethereum ([WETH](https://coinmarketcap.com/currencies/weth/)) <br clear='all'>
+- From [Consensus](consensus.html#/):
+  - <img src="images/logos/atom-coin-symbol.svg" class="cclogo"> Tendermint / Cosmos ([ATOM](https://coinmarketcap.com/currencies/cosmos/)) <br clear='all'>
+- From this slide set:
+  - <img src="images/logos/beam-coin-symbol.svg" class="cclogo"> Beam ([BEAM](https://coinmarketcap.com/currencies/beam/)) <br clear='all'>
+
+
+
+## Cryptocurrencies we've seen
+
+- From [Scalability](scalability.html#/):
+  - <img src="images/logos/wbtc-coin-symbol.svg" class="cclogo"> Wrapped Bitcoin ([WBTC](https://coinmarketcap.com/currencies/wrapped-bitcoin/)) <br clear='all'>
+  - <img src="images/logos/matic-coin-symbol.svg" class="cclogo"> Polygon ([MATIC](https://www.coinbase.com/price/polygon)) <br clear='all'>
+  - <img src="images/logos/dot-coin-symbol.svg" class="cclogo"> Polkadot ([DOT](https://www.coinbase.com/price/polkadot)) <br clear='all'>
+  - <img src="images/logos/sol-coin-symbol.svg" class="cclogo"> Solana [SOL](https://www.coinbase.com/price/solana) <br clear='all'>
+- Stablecoins:
+  - <img src="images/logos/usdc-coin-symbol.svg" class="cclogo"> USD Coin (USDC) <br clear='all'>
+  - <img src="images/logos/usdt-coin-symbol.svg" class="cclogo"> Tether (USDT) <br clear='all'>
+
+
+
+<h2>HW comments</h2>
+<table class="transparent">
+<tr><td style="width:45%">
+<p>&quot;Short&quot; homeworks</p>
+<ul>
+<li>HW S1: Google form</li>
+<li>HW S2: Bitcoin whitepaper</li>
+<li>HW S3: Ethereum whitepaper</li>
+<li>HW S4: Private Ethereum blockchain</li>
+<li>HW S5: dApp Introduction</li>
+</ul></td><td style="width:10%"></td><td class="top" style="width:45%">
+<p>Programming homeworks</p>
+<ul>
+<li>HW P1: Overview</li>
+<li>HW P2: ECDSA</li>
+<li>HW P3: BTC parser</li>
+<li>HW P4: Bitcoin scripting</li>
+<li>HW P5: dApp Gradebook</li>
+<li>HW P6: dApp Tokens</li>
+<li>HW P7: dApp Auction</li>
+<li>HW P8: DEX</li>
+<li>HW P9: DAO & web3</li>
+<li>HW P10: Arbitrage trading</li>
+<li>HW P11: MetaMask</li>
+</td></tr></table>
+  </section>
+
+
+
+## What we didn't cover
+- Mining algorithms, CUDA (mining on a GPU)
+- P2P networking
+  - That's more in the realm of a Networks class
+- Wallets and how they work
+- Mining pools
+- Maximal extractable value (MEV)
+
+
+
+## What didn't work well
+- Debugging Solidity programs
+- Slowness in grading & regrading
+- Roughness with some of the homeworks
+
+
+
+## What did work well
+- ...
+
+
+
+## Did I push too hard?
+- ...
+
+
+
+## Changes for next semester
+- Restart the blockchain, and with a different chain ID
+
+
+
+
+## Let me know your comments!
+- Please send us your feedback!
+  - Either by e-mail or anonymously or on the course surveys
+- Please fill out the course surveys!
+
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
