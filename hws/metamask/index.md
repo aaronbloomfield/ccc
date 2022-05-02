@@ -22,9 +22,9 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 Writing this homework will require completion of the following assignments:
 
 - [Private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index))
-- [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md))
+- [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) (this is for the experience with web3; the artifacts of that assignment are not needed for the current one)
 - [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md))
-- [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md))
+- [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) (this is for the experience with web3; the artifacts of that assignment are not needed for the current one)
 - [dApp Auction](../auction/index.html) ([md](../auction/index.md))
 
 
