@@ -75,15 +75,19 @@ Template for first line:
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 28: The End
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`38,182; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,795; [ETH gas](https://ethgas.watch/): 92 gwei => `$`5.40
 - Homeworks
   - [HW P11: Metamask](../hws/metamask/index.html) is out, and due tomorrow by midnight
+    - Please make sure your Auctioneer_v2 contract is still deployed!
 - Course & geth updates
   - We have a fix for the Remix IDE white screen!  See the pinned Piazza post
   - Faucet address at /explorer/faucet.php.  Use it responsibly!
 - The final exam will be (mostly) optional -- details next slide
 - Regrade policy: submit a regrade within 1 week of when it's returned
 - I'm so behind in the grading, but working on catching up...
+  - Out being graded: DAO&web3
+  - Still go grade: auction, dex, arbitrage
+  - Soon to grade: metamask
 - About the support requests link on the Collab landing page
 - Office hours
   - Mine: M/W 9-10 & F 1-2 in Rice 402
@@ -115,12 +119,28 @@ Template for first line:
 - Each TXN must have the next highest nonce
 - But if a block holding your transaction is on a shorter chain...
   - Then it's removed, and successive transactions would have a 'gap' in the nonces
-  - This is not allowed
+  - This is so not allowed
 - This will show as queued transactions (via `txpool.queued`)
+  - Until the 'gap' in nonces is resolved
 - To fix:
   - Run a bunch of do-nothing transactions (*not* calls)
   - Example: call `collectFees()` in your Auctioneer a dozen times
 - This should flush the transactions
+  - And moved the queued transactions into pending transactions
+
+
+
+## BTC & ETH prices this semester
+![](prices.svg)
+- These are the prices that I would report each lecture day
+- Gas fee in gwei is missing
+
+
+
+## BTC & ETH prices this semester
+![](prices2.svg)
+- These are the prices that I would report each lecture day
+- Gas fee in gwei now included
 
 
 
@@ -135,6 +155,7 @@ Template for first line:
   - Raised `$`258 million (!)
   - This is selling "Otherside" Metaverse NFTs
 - Back to sanity: today's lecture: [Course Conclusion](../slides/conclusion.html#/)
+  - I have no idea how long this lecture will take...
 </textarea></section>
   </section>
 

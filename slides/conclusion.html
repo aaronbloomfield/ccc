@@ -52,7 +52,7 @@ line-height:120%;
 </p></div>
 <p class='titlep'>&nbsp;</p>
 
-## Conclusion
+## Course Conclusion
 	</textarea></section>
 
 	<section data-markdown><textarea>
@@ -166,22 +166,27 @@ line-height:120%;
 ## Uncle / Orphan / Ommer nodes
 - Bitcoin calls these *orphan nodes*
 - Ethereum used to call them *uncle nodes*
-  - But that was gender-specific
+  - But that is gender-specific
   - Now they are called *ommer nodes*
-    - Ommer is a gender-neutral version of aunt / uncle
+    - Ommer is a gender-neutral version of aunt or uncle
     - Like "sibling" instead of brother or sister
 - What happens to that TXN?
   - Other miners will likely pick it up
   - Wallet software (or equivalent) will re-send it if it "disappears"
+    - Or at least notify you that it was not mined
 - This is why we can't all mine the blockchian in this class!
   - There is no effective way to ensure it is not discarded
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Soft forks
-- Non-token cryptocurrencies have a group of developers
-  - They will make occasionally changes to the protocol / mining algorithm / etc.
-  - Bitcoin through [BIPs](https://github.com/bitcoin/bips/), Ethereum through [EIPs](https://github.com/ethereum/EIPs/), etc.
+
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+
+- Non-token crypto-currencies usually have a group of developers
+  - Occasional changes are made to the protocol / mining algorithm / etc.
+  - Bitcoin via [BIPs](https://github.com/bitcoin/bips/), Ethereum via [EIPs](https://github.com/ethereum/EIPs/), etc.
 - Sometimes called a *consensus fork*
 - Generally all the uses of the cryptocurrency (eventually) adopt the change
 - These forks are backward-compatible
@@ -189,13 +194,17 @@ line-height:120%;
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Soft forks
+
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+
 - How to get all the miners to adopt it?
   - Release the updated source code
   - The agreed-upon change will state that at some point, all further blocks *must* have that change
   - That point could be when:
     - Some number (say, 75%) of the miners have adopted this change
-    - At some date/time
+    - After some date/time
 - Example: Bitcoin's [Segregated Witness](bitcoin.html#/segwit) from 2015
   - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
 
@@ -234,6 +243,8 @@ line-height:120%;
   - The ability to interact with other blockchains
 - The solution: Oracles
 
+> Oracle (n): a person who delivers authoritative, wise, or highly regarded and influential pronouncements
+
 
 
 ## Oracles
@@ -263,7 +274,7 @@ contract Oracle {
 ![](images/conclusion/oracles/oracles.dot.1.svg)
 - The oracle signer (aka deployer) updates the price, and anybody can read it
   - This works well when the source is centralized
-  - Such as the oracle on Ethereum that interacts with the Polkadot or Polygon chains
+  - Such as the oracles on Ethereum that interact with the Polkadot or Polygon chains
 - But a corrupt signer can maliciously manipulate the price
 
 
@@ -314,10 +325,15 @@ contract Oracle {
 ## Stablecoins
 - A coin whose value is meant to not be volatile
 - Usually tagged in value to a fiat currency
+- Examples we'll see here:
+  - <img src="images/logos/usdc-coin-symbol.svg" class="cclogo"> USD Coin ([USDC](https://coinmarketcap.com/currencies/usd-coin/)) <br clear='all'>
+  - <img src="images/logos/usdt-coin-symbol.svg" class="cclogo"> Tether ([USDT](https://coinmarketcap.com/currencies/tether/)) <br clear='all'>
+  - <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> DAI ([DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/)) <br clear='all'>
+    - We've seen DAI before: it's a token cryptocurrency
 
 
 
-<h2><img src="images/logos/usdc-coin-symbol.svg" class="cclogoheader"> USD Coin (USDC) <br clear='all'></h2>
+<h2><img src="images/logos/usdc-coin-symbol.svg" class="cclogoheader"> USD Coin (<a href="https://coinmarketcap.com/currencies/usd-coin/">USDC</a>) <br clear='all'></h2>
 
 - Managed by a consortium named Centre, which is founded by Coinbase (and others)
 - Backed by actual monetary investments in various accounts
@@ -329,7 +345,7 @@ contract Oracle {
 
 
 
-<h2><img src="images/logos/usdt-coin-symbol.svg" class="cclogoheader"> Tether (USDT) <br clear='all'></h2>
+<h2><img src="images/logos/usdt-coin-symbol.svg" class="cclogoheader"> Tether (<a href="https://coinmarketcap.com/currencies/tether/">USDT</a>) <br clear='all'></h2>
 
 - Similar to USDC in how it works
 - Run by Tether Ltd
@@ -344,7 +360,7 @@ contract Oracle {
 
 
 
-<h2><img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> Dai (DAI) <br clear='all'></h2>
+<h2><img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> Dai (<a href="https://coinmarketcap.com/currencies/multi-collateral-dai/">DAI</a>) <br clear='all'></h2>
 
 - An ERC-20 token cryptocurrency we've [talked about before](tokens.html#/dai)
 - Run by [MakerDAO](https://cryptonews.com/coins/maker/) via an Ethereum smart contract
@@ -354,13 +370,17 @@ contract Oracle {
 
 
 ## Stablecoin categories
-- Fiat-collateralized: rely on a centralized institution with reserves
+- Fiat-collateralized
+  - Rely on a centralized institution with reserves
   - Examples: Tether, USD Coin, TrueUSD
-- Crypto-collateralized: use cryptocurrency assets as collateral
+- Crypto-collateralized
+  - Use cryptocurrency assets as collateral
   - Examples: Dai (DAI) & Maker (MKR); Havven (HAV) & nUSD, Bitshares (BTS) BitUSD
-- Algorithmic non-collateralized: use software-based economic models to maintain stability
+- Algorithmic non-collateralized
+  - Use software-based economic models to maintain stability
   - Examples: Basis, Kowala, Carbon, Fragments
-- Hybrid stablecoins: a blend of the above approaches
+- Hybrid stablecoins
+  - A blend of the above approaches
   - Examples: Reserve, Saga, Aurora - Boreal
 
 </textarea></section>
@@ -376,7 +396,8 @@ contract Oracle {
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-## Bitcoin
+<h2><img src="images/logos/btc-coin-symbol.svg" class="cclogoheader"> Bitcoin (<a href="https://coinmarketcap.com/currencies/bitcoin/">BTC</a>) <br clear='all'></h2>
+
 - Pros
   - It started this whole field
   - High exchange rate for one Bitcoin
@@ -387,7 +408,8 @@ contract Oracle {
 
 
 
-## Ethereum's pros
+<h2><img src="images/logos/eth-coin-symbol.svg" class="cclogoheader"> Ethereum (<a href="https://coinmarketcap.com/currencies/ethereum/">ETH</a>) Pros<br clear='all'></h2>
+
 - It shows what one can do with a modern cryptocurrency
 - It has a Turing-complete programming language
 - A lot of developer resources
@@ -398,7 +420,8 @@ contract Oracle {
 
 
 
-## Ethereum's cons
+<h2><img src="images/logos/eth-coin-symbol.svg" class="cclogoheader"> Ethereum (<a href="https://coinmarketcap.com/currencies/ethereum/">ETH</a>) Cons<br clear='all'></h2>
+
 - Expensive to interact with
 - High volatility in the fees
 - Low transaction rate
@@ -482,7 +505,8 @@ Image from [Beam's home page](https://beam.mw/)
 - Getting people to trust it is *hard*
   - There are 100 coins created *each day* -- what will make yours stand out?
 - You need something different that fills a new niche
-- And a *lot* of patience
+  - That probably means a new code base, not an ERC-20 token
+- And a *lot* of patience to get people to adopt it
 - (If you do this, let me know!)
 </textarea></section>
 
@@ -529,6 +553,8 @@ Image from [Beam's home page](https://beam.mw/)
   - <img src="images/logos/xlm-coin-symbol.svg" class="cclogo"> Stellar Lumens ([XLM](https://coinmarketcap.com/currencies/stellar/)) <br clear='all'>
   - <img src="images/logos/storj-coin-symbol.svg" class="cclogo"> Storj ([STORJ](https://coinmarketcap.com/currencies/storj/)) <br clear='all'>
   - <img src="images/logos/gre-coin-symbol.png" class="cclogo"> Greencoin ([GRE](https://coinmarketcap.com/currencies/greencoin/)) <br clear='all'>
+- From the Ethereum whitepaper:
+  - <img src="images/logos/nmc-coin-symbol.svg" class="cclogo"> Namecoin ([NMC](https://coinmarketcap.com/currencies/namecoin/)) <br clear='all'>
 
 
 
@@ -552,15 +578,16 @@ Image from [Beam's home page](https://beam.mw/)
   - <img src="images/logos/dot-coin-symbol.svg" class="cclogo"> Polkadot ([DOT](https://www.coinbase.com/price/polkadot)) <br clear='all'>
   - <img src="images/logos/sol-coin-symbol.svg" class="cclogo"> Solana [SOL](https://www.coinbase.com/price/solana) <br clear='all'>
 - Stablecoins:
-  - <img src="images/logos/usdc-coin-symbol.svg" class="cclogo"> USD Coin (USDC) <br clear='all'>
-  - <img src="images/logos/usdt-coin-symbol.svg" class="cclogo"> Tether (USDT) <br clear='all'>
+  - <img src="images/logos/usdc-coin-symbol.svg" class="cclogo"> USD Coin ([USDC](https://coinmarketcap.com/currencies/usd-coin/)) <br clear='all'>
+  - <img src="images/logos/usdt-coin-symbol.svg" class="cclogo"> Tether ([USDT](https://coinmarketcap.com/currencies/tether/)) <br clear='all'>
+  - (and DAI form a previous slide)
 
 
 
 <h2>HW comments</h2>
 <table class="transparent">
 <tr><td style="width:45%">
-<p>&quot;Short&quot; homeworks</p>
+<p>&quot;Small&quot; homeworks</p>
 <ul>
 <li>HW S1: Google form</li>
 <li>HW S2: Bitcoin whitepaper</li>
@@ -588,11 +615,11 @@ Image from [Beam's home page](https://beam.mw/)
 
 
 
-## What we didn't cover
+## Topics we didn't cover
 - Mining algorithms, CUDA (mining on a GPU)
 - P2P networking
   - That's more in the realm of a Networks class
-- Wallets and how they work
+- Multi-blockchain wallets and how they work
 - Mining pools
 - More modern cryptocurrency systems
   - That would really need a follow-on course
@@ -605,12 +632,16 @@ Image from [Beam's home page](https://beam.mw/)
 - My slowness in grading & regrading
 - Roughness with some of the homeworks
 - The zkSNARKs lectures
+- Blockchain disconnections
 
 
 
 ## What did work well
 - You all did not get a "half course"
-
+- Using our own blockchain for the course
+- The lecture topics
+- The homeworks (mostly)
+- I didn't trip and fall off of the silly stage in the classroom
 
 
 
@@ -619,6 +650,7 @@ Image from [Beam's home page](https://beam.mw/)
   - Problems debugging Solidity
   - Homework specification issues
   - Remix acting up
+- Factoring that out, was it too hard?
 
 
 
@@ -626,8 +658,9 @@ Image from [Beam's home page](https://beam.mw/)
 - Restart the blockchain, and with a different chain ID
 - Same course structure
   - Likely same homeworks, although cleaned up a bit
-- Our two graduate TAs are graduating
-  - Four undergraduate TAs!
+- Four undergraduate TAs!
+  - Our two graduate TAs are graduating
+- Many more diagrams in the lectures
 
 
 
