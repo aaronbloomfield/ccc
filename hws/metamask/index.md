@@ -14,6 +14,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 <!-- So far there aren't any significant changes to report. -->
 
+- Sun, 5/1: Added a few entries to the Troubleshooting section
 - Fri, 4/29: Clarified that the NFT function to call is `safeTransferFrom()` (not `transferFrom()`)
 
 ### Pre-requisites
