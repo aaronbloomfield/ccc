@@ -60,7 +60,7 @@ line-height:120%;
 &nbsp;  
 [Miscellaneous Topics](#/misc)  
 [Looking Forward](#/forward)  
-[Course Conclusion](#/theend)  
+[Course Reflection](#/theend)  
 	</textarea></section>
 
 <!-- ============================================================ -->
@@ -169,6 +169,7 @@ line-height:120%;
   - But that was gender-specific
   - Now they are called *ommer nodes*
     - Ommer is a gender-neutral version of aunt / uncle
+    - Like "sibling" instead of brother or sister
 - What happens to that TXN?
   - Other miners will likely pick it up
   - Wallet software (or equivalent) will re-send it if it "disappears"
@@ -191,29 +192,29 @@ line-height:120%;
 ## Soft forks
 - How to get all the miners to adopt it?
   - Release the updated source code
-  - The agreed-upon change will state that when:
+  - The agreed-upon change will state that at some point, all further blocks *must* have that change
+  - That point could be when:
     - Some number (say, 75%) of the miners have adopted this change
     - At some date/time
-  - At that point, then all further blocks *must* have that change
 - Example: Bitcoin's [Segregated Witness](bitcoin.html#/segwit) from 2015
   - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
 
 
 
 ## Hard forks
-- A change is proposed that many users do *NOT* want to adopt
+- A change is proposed that some users do *NOT* want to adopt
   - Or that is not backwards-compatible
 - Example: Ethereum Classic
-  - Recall that The &ETH;AO had a bug, which endangered the view of the Ethereum as a whole
+  - Recall that The &ETH;AO had a bug, which endangered the perception and trust of the Ethereum as a whole
   - The fix was to roll back the blockchain to before the hack to fix it
-  - This [split the users](applications.html#/split)
-  - Now Ethereum Classic is the blockchain *without* the fix
-  - Ethereum is the blockchain *with* the fix
+  - This [split the users](applications.html#/etcsplit), as some didn't want to make the change
+  - <img src="images/logos/etc-coin-symbol.svg" class="cclogo"> Now Ethereum Classic is the blockchain *without* the fix <br clear='all'>
+  - <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum is the blockchain *with* the fix <br clear='all'>
 
 
 
 ## Source code forks
-- Why make a new cryptocurrency when you can instead:
+- You can make a new cryptocurrency by:
   - Take a tested open source code base
   - Make a the modifications you want
 - <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> The [Ravencoin source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin)
@@ -236,7 +237,7 @@ line-height:120%;
 
 
 ## Oracles
-We can create an *oracle*:
+We can easily create an oracle:
 
 ```
 contract Oracle {
@@ -254,6 +255,7 @@ contract Oracle {
     }
 }
 ```
+- Getting people to trust it is another matter
 
 
 
@@ -273,6 +275,7 @@ contract Oracle {
 - We expect some variance in the values
   - Different exchanges will provide slightly different exchange rates
 - We have to take the *median* value, not the *mean*
+  - We'll see why next
 
 
 
@@ -282,6 +285,7 @@ contract Oracle {
 - What if some nodes are corrupted?
 - We have to take the *median* value, not the *mean*
   - Here the mean is `$`71
+  - The median is `$`101
 - If more than half are trustworthy, then the oracle will have a correct price
   - Less than half can be traitors!
 
@@ -375,7 +379,7 @@ contract Oracle {
 ## Bitcoin
 - Pros
   - It started this whole field
-  - It's worth a lot per Bitcoin
+  - High exchange rate for one Bitcoin
 - Cons
   - You can't do much other than transfer funds
   - Script language is rather limited
@@ -436,7 +440,7 @@ Image from [Beam's home page](https://beam.mw/)
 - <img src="images/logos/sol-coin-symbol.svg" class="cclogo"> Solana uses C, C++, and Rust <br clear='all'>
 - <img src="images/logos/matic-coin-symbol.svg" class="cclogo"> Polygon uses Javascript and Solidity <br clear='all'>
 - <img src="images/logos/atom-coin-symbol.svg" class="cclogo"> Cosmos uses Go <br clear='all'>
-- Many of the newer cryptocurrencies use many less known languages (Erlang, Vue, Michelson, etc.)
+- Many of the newer cryptocurrencies use lesser known languages (Erlang, Vue, Michelson, etc.)
 
 
 
@@ -469,6 +473,17 @@ Image from [Beam's home page](https://beam.mw/)
 - [Reddit post: Best crypto life hacks](https://www.reddit.com/r/CryptoCurrency/comments/rtlsoi/best_lifehacks_in_crypto_that_beginners_should/)
 - Reddit post: How I accumulated my wealth by looking at pages 10 and beyond on Coingecko
   - The [original post](https://www.reddit.com/r/CryptoCurrency/comments/u5je3f/how_i_accumulated_my_wealth_by_looking_at_pages/) was deleted, but is available on [archive.org](https://web.archive.org/web/20220417124008/https://www.reddit.com/r/CryptoCurrency/comments/u5je3f/how_i_accumulated_my_wealth_by_looking_at_pages/)
+
+
+
+## Want to start a cryptocurrency?
+- Starting it is easy
+  - Make a ERC-20 token or fork existing source code
+- Getting people to trust it is *hard*
+  - There are 100 coins created *each day* -- what will make yours stand out?
+- You need something different that fills a new niche
+- And a *lot* of patience
+- (If you do this, let me know!)
 </textarea></section>
 
   </section>
@@ -478,7 +493,7 @@ Image from [Beam's home page](https://beam.mw/)
   <section>
 
     <section id="theend" data-markdown class="center"><textarea>
-# Course Conclusion
+# Course Reflection
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -549,10 +564,11 @@ Image from [Beam's home page](https://beam.mw/)
 <ul>
 <li>HW S1: Google form</li>
 <li>HW S2: Bitcoin whitepaper</li>
-<li>HW S3: Ethereum whitepaper</li>
+<li>HW S3: Ethereum white-paper</li>
 <li>HW S4: Private Ethereum blockchain</li>
 <li>HW S5: dApp Introduction</li>
-</ul></td><td style="width:10%"></td><td class="top" style="width:45%">
+</ul>
+</td><td style="width:10%"></td><td class="top" style="width:45%">
 <p>Programming homeworks</p>
 <ul>
 <li>HW P1: Overview</li>
@@ -566,6 +582,7 @@ Image from [Beam's home page](https://beam.mw/)
 <li>HW P9: DAO & web3</li>
 <li>HW P10: Arbitrage trading</li>
 <li>HW P11: MetaMask</li>
+</ul>
 </td></tr></table>
   </section>
 
@@ -577,30 +594,40 @@ Image from [Beam's home page](https://beam.mw/)
   - That's more in the realm of a Networks class
 - Wallets and how they work
 - Mining pools
-- Maximal extractable value (MEV)
+- More modern cryptocurrency systems
+  - That would really need a follow-on course
 
 
 
 ## What didn't work well
 - Debugging Solidity programs
-- Slowness in grading & regrading
+- Solidity IDE crashing in the middle of the semester
+- My slowness in grading & regrading
 - Roughness with some of the homeworks
+- The zkSNARKs lectures
 
 
 
 ## What did work well
-- ...
+- You all did not get a "half course"
+
 
 
 
 ## Did I push too hard?
-- ...
+- I feel that the frustration was more caused by other issues than the raw work load:
+  - Problems debugging Solidity
+  - Homework specification issues
+  - Remix acting up
 
 
 
 ## Changes for next semester
 - Restart the blockchain, and with a different chain ID
-
+- Same course structure
+  - Likely same homeworks, although cleaned up a bit
+- Our two graduate TAs are graduating
+  - Four undergraduate TAs!
 
 
 
@@ -610,6 +637,9 @@ Image from [Beam's home page](https://beam.mw/)
 - Please fill out the course surveys!
 
 
+
+<h2>Have a great break!</h2>
+<img class="stretch" src="http://www.adamfishercox.com/calvinandhobbes/pageimages/laststrip.png" alt="calvin and hobbes" style="width:100%;background-color:white">
 </textarea></section>
 
   </section>

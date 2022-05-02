@@ -68,6 +68,81 @@ Template for first line:
   <section>
 
     <section class="center">
+<h2 class='xkcd'>Lightsabers</h2>
+<img src="https://imgs.xkcd.com/comics/lightsabers.png" title="A lot of Jedi romances start with this turning into a Lady and the Tramp spaghetti situation." alt="Lightsabers" srcset="https://imgs.xkcd.com/comics/lightsabers_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2612/'>xkcd # 2612</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 28: The End
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
+- Homeworks
+  - [HW P11: Metamask](../hws/metamask/index.html) is out, and due tomorrow by midnight
+- Course & geth updates
+  - We have a fix for the Remix IDE white screen!  See the pinned Piazza post
+  - Faucet address at /explorer/faucet.php.  Use it responsibly!
+- The final exam will be (mostly) optional -- details next slide
+- Regrade policy: submit a regrade within 1 week of when it's returned
+- I'm so behind in the grading, but working on catching up...
+- About the support requests link on the Collab landing page
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today's lecture: [Course Conclusion](../slides/conclusion.html#/)
+
+
+
+## The (mostly) optional final exam
+- The final exam is optional...
+  - Unless you didn't take the midterm, at which point it's required
+- If you do not take the final exam, you agree to these terms:
+- If you don't take it, your grade will be a mix of the homeworks, participation, and the first midterm
+  - The first midterm will have a higher weighting
+  - "P" homeworks will have a higher weighting than "S" homeworks
+  - I do not know the actual weighting, though
+  - And I probably won't know it until after the final exam
+- There will have to be some "scaling" so that it doesn't hurt those who do (or do not) take the final
+  - That, again, I can't know until after the final exam
+  - That scaling may be up or down
+- You will have to trust me to figure these issues out in a fair way *after* the final exam
+  - I'm not trying to give everybody a low grade
+
+
+
+
+## Flushing Ethereum Transactions
+- Each TXN must have the next highest nonce
+- But if a block holding your transaction is on a shorter chain...
+  - Then it's removed, and successive transactions would have a 'gap' in the nonces
+  - This is not allowed
+- This will show as queued transactions (via `txpool.queued`)
+- To fix:
+  - Run a bunch of do-nothing transactions (*not* calls)
+  - Example: call `collectFees()` in your Auctioneer a dozen times
+- This should flush the transactions
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+
+<img src="https://lh3.googleusercontent.com/LyL_OJuBLus_KoGCLDNzQ-TE7TtiKxI80IgQYe0mW8XmgrdzYpztII-i45dya067Wmn42HcTc0GBOyQYMNBgla8aI-E2Q0IjslR3=w600" style="float:right;width: 50%;margin-left: 20px !important;margin-top: 0;padding:0;background:transparent">
+
+- [Our NFT](https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/8337) has not yet sold!
+  - BAYC (Bored Ape Yacht Club) even has a coin: ApeCoin ([APE](https://coinmarketcap.com/currencies/apecoin-ape/))
+- Their [latest NFT auction](https://www.coindesk.com/business/2022/05/01/bayc-team-raises-285m-with-otherside-nfts-clogs-ethereum/)...
+  - Raised `$`258 million (!)
+  - This is selling "Otherside" Metaverse NFTs
+- Back to sanity: today's lecture: [Course Conclusion](../slides/conclusion.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
 <h2 class='xkcd'>Cutest-Sounding Scientific Effects</h2>
 <img src="https://imgs.xkcd.com/comics/cutest_sounding_scientific_effects.png" title="The Stroop-YORP number of a scientific paper is how many of the 16 finalist names (sans &#39;effect&#39;) it manages to casually sneak into the text." alt="Cutest-Sounding Scientific Effects" srcset="https://imgs.xkcd.com/comics/cutest_sounding_scientific_effects_2x.png 2x" style="image-orientation:none" >
 <p class='center'><a href='http://xkcd.com/2611/'>xkcd # 2611</a></p>
