@@ -347,6 +347,9 @@ Once those parameters are set correctly, the last four lines in the above code w
 ### Troubleshooting
 
 - "Invalid sender" error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly.  Click on the MetaMask fox icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the "localhost:8545" network.  Make sure the chain ID is set correctly; it's on the Collab landing page, if you forget what it is.  It should be set using it's base-10 value.
+- MetaMask RPC error / Header not found.  If you get the following error: ` "[ethjs-query] while formatting outputs from RPC '{"value":{"code":-32603,"data":{"code":-32000,"message":"header not found"}}}'"`, try switching your network to Mainnet and then back to localhost:8545, as some have reported that this fixes the issue.
+- If MetaMask suddenly stops appearing to send your transactions, they may have gotten "stuck".  Each successive Ethereum transaction must have the next highest nonce.  If there is a gap, then it will queue the transaction until the gap is resolved.  If a block is removed from the blockchain due to being in a shorter chain, such a gap can appear.  To resolve this, since everything here is free, spam some transactions (not calls) to the blockchain.  Calling `collectFees()` a bunch of times from an Auctioneer contract will do the trick.
+
 
 ### Grading
 
