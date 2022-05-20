@@ -163,7 +163,11 @@ It's "cleaning" or "laundering" the money
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Scams
+
+<img src="https://pbs.twimg.com/media/FG1iEihVIAcrlO8?format=jpg" style="padding:0;max-width:400px">
+
 - Consider DeviantArt user LiamRSharp
   - He had to shut down [his DeviantArt gallery](https://www.deviantart.com/liamrsharp) because of NFT theft
   - See [this twitter post](https://twitter.com/liamrsharp/status/1471940531554959360?lang=en) and [this reddit post](https://www.reddit.com/r/KotakuInAction/comments/ritysg/twitter_sadly_im_going_to_have_to_completely_shut/)
@@ -275,7 +279,7 @@ for ( uint i = _refundProgress; gasUsed < 5000000 && i < _bidIndex; i++ ) {
   - Then it can never proceed to refunding the next bid!
 - Proof of concept exploit [here](https://gist.github.com/except/2ece3e40b72d0bf0cbd1107aa5d06926)
   - Basically a contract that places a bid then has `while(true){}` in the `receive()` function
-- That contract has a [balance of 11,539.5 ether](https://etherscan.io/address/0xF42c318dbfBaab0EEE040279C6a2588Fa01a961d)
+- That contract has a (now locked) [balance of 11,539.5 ether](https://etherscan.io/address/0xF42c318dbfBaab0EEE040279C6a2588Fa01a961d)
   - Worth $34 *million* at the time
 
 

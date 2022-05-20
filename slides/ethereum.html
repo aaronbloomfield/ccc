@@ -71,7 +71,7 @@ line-height:120%;
 	  </textarea></section>
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
-## Bitcoin
+## <img src="images/logos/btc-coin-symbol.svg" class="cclogoheader"> Bitcoin
 - Created in 2009
 - Bitcoin script is not Turing-complete
 - Really only for transactions
@@ -96,7 +96,7 @@ line-height:120%;
 
 ## Definitions
 - *Ethereum* is the system / blockchain / network
-- *Ether* or *Eth* (symbol: ETH) is the currency
+- <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> *Ether* or *Eth* (symbol: ETH) is the currency <br clear='all'>
 - *Smart contract* is a program on the Etherem blockchain
   - Analogous to a Bitcoin script on the blockchain
 - *Solidity* one (of many) programming languages that compiles to Etherem bytecode
@@ -142,6 +142,19 @@ line-height:120%;
 - Blockchains store *all* iterations of a thing (accounts, etc.)
   - Our index only needs to store the most recent version
   - And doesn't need to store spent txn outputs
+
+
+
+## Blockchain data
+- Some items are on the blockchain itself
+  - A smart contract, a TXN for an account, etc.
+- Others can be inferred or computed from the blockchain
+  - How many transactions an account has had
+  - The current balance of an account
+  - These are the current *state*, and not stored directly on the blockchain
+- Yet others can be determined by "rewinding" the blockchain to a previous point in time
+  - How much balance an account had after a given block
+  - The result of a specific function call
 
 
 
@@ -368,12 +381,17 @@ function toChecksumAddress (address) {
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Transaction fields
-- Pretty much all the fields in Bitcoin
-  - Date, block number, from address, to address, amount to transfer
-- Gas limit (aka start gas): the maximum number of computational steps to take
-- Gas price: how much to pay for each computational step taken
-- A much larger "data" field for the compiled contract
+![](images/ethereum/graphs/ethereum.dot.1.svg)
+- Nonce: the overall TXN number for the account
+- gasPrice & gasLimit: how much gas
+- to: the recipient account address
+- value: how much ETH (in wei)
+- v, r, s: ECDSA fields: $(r,s)$ is the signature and $v$ specifies how the point $(r,s)$ is encoded
+- init or data: empty if just ETH xfer
+  - If a smart contract deployment: init is the smart contract hex code
+  - If a smart contract function call: data has the code to make the call
 
 
 

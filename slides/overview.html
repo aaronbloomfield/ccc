@@ -71,7 +71,11 @@
     
 <section data-markdown data-separator="^\n\n\n">
   <textarea data-template>
+<!-- .slide: class="right-float-img" -->
 ## What is money?
+
+<img src="images/tokens/dollar-bill.webp" style="padding:0;border-radius:0">
+
 - Four functions (Jevons, 1875):
   1. medium of exchange
   2. common measure of value (or unit of account)
@@ -130,8 +134,8 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 ## Consider the AaronDollar (TM)
 <!-- .slide: class="no-white-img-background max-image-height-300" -->
 ![AaronDollar (TM)](images/overview/aaron-dollar.png)
-- Would you pay me 1 dollar for it?  What about 10?  100?
-<li class="fragment" data-fragment-index="1">If I told you it would buy you an A+ in this course...<ul><li>Would you pay me 1 dollar for it?  What about 10?  100?</li></ul></li>
+- Would you pay me 1 dollar for it?  What about `$`10?  `$`100?
+<li class="fragment" data-fragment-index="1">If I told you it would buy you an A+ in this course...<ul><li>Would you pay me 1 dollar for it?  What about <code>$</code>10?  <code>$</code>100?</li></ul></li>
 
 
 
@@ -168,7 +172,9 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 
 
 ## Cryptocurrencies
-- There are 10,064 currently, as per [investing.com](https://www.investing.com/crypto/currencies) (as of January 17, 2022)
+- There are 10,064 ones currently (that have value)
+  - As per [investing.com](https://www.investing.com/crypto/currencies) (as of January 17, 2022)
+- One estimate is that 100 new ones are created *each day*
 <!-- change each semester -->
 - Some are [Ponzi schemes](https://en.wikipedia.org/wiki/Ponzi_scheme), some are [pyramid schemes](https://en.wikipedia.org/wiki/Ponzi_scheme), and some are worthwhile
 - Their value comes in if they are widely accepted, and very few are
@@ -262,22 +268,31 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 
 
 
-## The ledger
-- All transactions are stored in a *ledger*, which is public
+## The mempool
+- All transactions not yet on the blockchain are stored in a *memory pool* or *mempool*, which is public
   - Maintained by a network of "equally privileged miners"
 - Every 10 minutes or so, all the transactions are combined into a single *block*
-  - That block eventually becomes part of the *blockchain* (through mining)
-- "Ledger", meaning non-mined transactions, is my term for clarity, and not an official term
+  - That block becomes part of the *blockchain* (through mining)
 
 
 
 ## Blockchain
 - The first block was the "genesis block"
 - Each successive block includes the SHA-256 hash of the previous block
-  - Thus, you can't make a change to a previous block without changing all future blocks
+  - Thus, you can't make a change to a previous block without changing all successive blocks
 - The current blockchain (as of January 17, 2022) is  719,203 blocks (aka 'height'; [source](https://bitinfocharts.com/))
   - About 386 Gb in size ([source](https://www.blockchain.com/charts/blocks-size))
 <!-- change each semester -->
+
+
+
+<!-- .slide: class="right-float-img" -->
+![](images/overview/graphs/overview.dot.1.svg)
+## Simple Blockchain
+- Each block is mined by somebody
+  - That creates currency as a reward
+- A block contains the hash of the previous block
+- A block *may* contain transactions
 </textarea>
 </section>
 

@@ -22,3 +22,4 @@ Slide sets, in the intended order to be presented in lecture, are below (if a li
 - [Scalability](scalability.html#/)
 - [Ethics, Legality, and Policy](ethics-legal-policy.html#/)
 - [The Dark Side of Cryptocurrency](darkside.html#/)
+- [Course Conclusion](conclusion.html)

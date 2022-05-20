@@ -1,0 +1,71 @@
+digraph A {
+graph [fontname = "Helvetica"];
+node [fontname = "Helvetica",shape=point,width=0];
+edge [fontname = "Helvetica"];
+
+forcelabels=true;
+labeljust=l;
+rankdir="TB";
+
+// each account timeline header node
+alice_0 [label="Alice",shape=circle,width=1,pos="0,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+erc20_0 [label="ERC20",shape=circle,width=1,pos="3,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+dex_0 [label="DEX",shape=circle,width=1,pos="6,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+
+// timeline end nodes and vertical lines
+alice_end [label="12",pos="0,-3.5!",width=0.2,style=invis];
+alice_0 -> alice_end [arrowhead=none];
+erc20_end [label="12",pos="3,-3.5!",width=0.2,style=invis];
+erc20_0 -> erc20_end [arrowhead=none];
+dex_end [label="12",pos="6,-3.5!",width=0.2,style=invis];
+dex_0 -> dex_end [arrowhead=none];
+
+// visible timeline nodes
+alice_a [label="1",pos="0,-0.5!"];
+alice_b [label="2",pos="0,-1.0!"];
+alice_c [label="1",pos="0,-1.5!"];
+alice_d [label="2",pos="0,-2.0!"];
+alice_e [label="3",pos="0,-2.5!"];
+alice_f [label="4",pos="0,-3.0!"];
+/*
+alice_g [label="5",pos="0,-3.5!"];
+alice_h [label="6",pos="0,-4.0!"];
+alice_i [label="7",pos="0,-4.5!"];
+alice_j [label="8",pos="0,-5.0!"];
+*/
+
+erc20_a [label="1",pos="3,-0.5!"];
+erc20_b [label="2",pos="3,-1.0!"];
+erc20_c [label="1",pos="3,-1.5!"];
+erc20_d [label="2",pos="3,-2.0!"];
+erc20_e [label="3",pos="3,-2.5!"];
+erc20_f [label="4",pos="3,-3.0!"];
+/*
+erc20_g [label="5",pos="3,-3.5!"];
+erc20_h [label="6",pos="3,-4.0!"];
+erc20_i [label="7",pos="3,-4.5!"];
+erc20_j [label="8",pos="3,-5.0!"];
+*/
+
+dex_a [label="1",pos="6,-0.5!"];
+dex_b [label="2",pos="6,-1.0!"];
+dex_c [label="1",pos="6,-1.5!"];
+dex_d [label="2",pos="6,-2.0!"];
+dex_e [label="3",pos="6,-2.5!"];
+dex_f [label="4",pos="6,-3.0!"];
+/*
+dex_g [label="5",pos="6,-3.5!"];
+dex_h [label="6",pos="6,-4.0!"];
+dex_i [label="7",pos="6,-4.5!"];
+dex_j [label="8",pos="6,-5.0!"];
+*/
+
+// function calls
+alice_a -> erc20_a [label="approve()"];
+erc20_b -> alice_b [label="(confirmation)"];
+alice_c -> dex_c [label="createPool() w/ETH"];
+dex_d -> erc20_d [label="transferFrom()",style=dashed];
+erc20_e -> dex_e [label="(confirmation)",style=dashed];
+dex_f -> alice_f [label="(confirmation)"];
+
+}

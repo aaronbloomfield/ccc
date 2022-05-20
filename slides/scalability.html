@@ -378,7 +378,11 @@ Roll-out is in three phases:
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Rollups
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Betty_Crocker_Fruit_Roll-Ups.jpg/640px-Betty_Crocker_Fruit_Roll-Ups.jpg" style="padding:0">
+
 - General idea:
     1. Execute a number of transactions off-chain
     2. Collect the data from those transactions
@@ -441,10 +445,15 @@ Roll-out is in three phases:
     </textarea></section>
     
     <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
 ## Increase number of TXNs
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Lightning_over_Oradea_Romania_3.jpg/497px-Lightning_over_Oradea_Romania_3.jpg" style="padding:0">
+
 - What if we increase the number of transactions without an increase in the data?
     - And without making a fundamental change to the cryptocurrency itself
 - To do so, we would need to keep *some* data off the blockchain, but not *all* of it
+- This is the idea of Bitcoin's *Lightning Network*
 
 
 
@@ -454,10 +463,10 @@ Roll-out is in three phases:
 <!-- https://www.bitcoin.com/get-started/what-is-lightning-network/ -->
 - Proposed in a [white paper](https://lightning.network/lightning-network-paper.pdf) from 2016
 - Imagine if Alice and Bob were going to make a number of transactions with each other
-- There are 8 TXNs total
+- They make 8 TXNs total
     - Net result: Alice gains 1 BTC
 - This is the motivation for Bitcoin's Lightning Network (LN)
-    - Targeted toward micro-transactions, but works with any size
+    - Targeted toward micro-transactions, but works with transactions of any size
 - [Main reference](https://www.bitcoin.com/get-started/what-is-lightning-network/)
 
 
@@ -468,7 +477,7 @@ Roll-out is in three phases:
 - If Alice and Bob don't need to spend the money during that time...
 - They can set up a *payment channel*
     - Money is committed on the Bitcoin blockchain (solid lines)
-    - Intermediate transactions occur *off* the blockchain (dashed lines)
+    - The eight *intermediate* transactions occur *off* the blockchain (dashed lines)
     - The final settlement occurs on the blockchain (solid lines)
 
 
@@ -544,7 +553,8 @@ Roll-out is in three phases:
 - <img src="images/logos/wbtc-coin-symbol.svg" class="cclogo"> You can get WBTC: Wrapped Bitcoin <br clear='all'>
     - A Ethereum smart contract exchanges BTC for WBTC on a 1:1 basis
     - WBTC is thus an ERC-20 token cryptocurrency
-- Once on Ethereum, transactions are *faster*, if not *cheaper*
+- Once on Ethereum, transactions are *faster*, if not *cheaper* than through Bitcoin
+    - But not as fast as on the Lightning Network
 - As of August 2021 ([stats](https://www.bitcoin.com/get-started/what-is-lightning-network/)):
     - LN had 2,300 BTC locked up
     - WBTC had 250,000 BTC locked up

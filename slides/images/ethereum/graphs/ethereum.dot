@@ -1,0 +1,12 @@
+digraph TXN {
+        rankdir="LR";
+        node [fontname="Helvetica",width=3];
+        init_or_data [shape=Mrecord,label="init or data"]
+        vrs [shape=Mrecord,label="v, r, s"]
+        value [shape=Mrecord,label="value"]
+        to [shape=Mrecord,label="to"]
+        gaslimit [shape=Mrecord,label="gasLimit"]
+        gasprice [shape=Mrecord,label="gasPrice"]
+        nonce [shape=Mrecord,label="nonce"];
+        title [shape=none,label="Ethereum Transaction"];
+}

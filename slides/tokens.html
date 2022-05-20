@@ -379,11 +379,12 @@ contract EZTokens {
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Why `approve()` and `transferFrom()`?
-- Imagine you wanted to transfer both ETH and a token cryptocurrency
-  - This is how you add "liquidity" to a decentralized exchange (DEX)
-- You could do it in two multiple transactions
-- Or you could:
+![](images/tokens/graphs/tokens.dot.1.svg)
+- You only want to make one call to the DEX
+  - The TokenCC needs to know that the DEX can transfer some of your TC
+- Protocol:
   - `approve()` the DEX for a certain amount (say, $x$) of the cryptocurrency
   - Send *one* transaction to the DEX that also contains ETH
     - The parameters in that transaction include the transferred cryptocurrency info
@@ -472,7 +473,7 @@ contract MyToken is ERC20 {
 
 
 
-## Consider [SHIB](https://coinmarketcap.com/currencies/shiba-inu/)
+## <img src="images/logos/shib-coin-symbol.svg" class="cclogoheader"> Consider [SHIB](https://coinmarketcap.com/currencies/shiba-inu/)
 - As of March 20, 2022:
   - SHIB's value is `$`0.00002305 (43,384 per USD)
   - ETH's value is `$`2,851
@@ -484,7 +485,7 @@ contract MyToken is ERC20 {
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id="dai"><textarea>
-## DAI / WETH Example
+## <img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> DAI / <img src="images/logos/weth-coin-symbol.png" class="cclogoheader"> WETH Example
 - The code for this is [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#web3py-example)
   - And reproduced on the next slide
   - Due to a bug in the library, it runs into a parse error

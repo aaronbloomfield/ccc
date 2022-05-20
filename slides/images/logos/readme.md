@@ -40,5 +40,6 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 - <img src="usdc-coin-symbol.svg" class="cclogo"> UDSC (USDC) from [cryptologos.cc](https://cryptologos.cc/usd-coin) <br clear='all'>
 - <img src="usdt-coin-symbol.svg" class="cclogo"> Tether (USDT) adapted from [cryptologos.cc](https://cryptologos.cc/usd-coin) <br clear='all'>
 - <img src="beam-coin-symbol.svg" class="cclogo"> Beam (BEAM) from [cryptologos.cc](https://cryptologos.cc/beam) <br clear='all'>
-
-
+- <img src="luna-coin-symbol.svg" class="cclogo"> Luna (LUNA) from [cryptologos.cc](https://cryptologos.cc/terra-luna) <br clear='all'>
+- <img src="ust-coin-symbol.svg" class="cclogo"> TerraUSD (UST) from [seeklogo](https://seeklogo.com/vector-logo/438118/terrausd-ust) <br clear='all'>
+- <img src="btg-coin-symbol.svg" class="cclogo"> Bitcoin Gold (BTG) from [cryptologos.cc](https://cryptologos.cc/bitcoin-gold) <br clear='all'>

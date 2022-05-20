@@ -84,11 +84,11 @@ line-height:120%;
 ## Coins we'll study
 - <img src="images/logos/btc-coin-symbol.svg" class="cclogo"> Bitcoin: we all know this <br clear='all'>
   - Hash algorithm: double SHA-256<br>&nbsp;
-- <img src="images/logos/rvn-logo.png" class="cclogo"> Ravencoin <br clear='all'>
+- <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> Ravencoin <br clear='all'>
   - A fork of Bitcoin, so works similarily; focuses on tokens
   - Designed to be ASIC resistant
   - Hash algorithm: kawpow (16 different rotating algorithms)<br>&nbsp;
-- <img src="images/logos/eth-logo.svg" class="cclogo"> Ethereum <br clear='all'>
+- <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum <br clear='all'>
   - A generational improvement over Bitcoin
   - Allows for much more complicated programs
   - Hash algorithm: Keccak-256 (aka SHA3)
@@ -374,7 +374,11 @@ line-height:120%;
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Death to the Environment!
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/AlfedPalmersmokestacks.jpg" style="padding:0">
+
 - The lower-bound estimate from the last slide is that BTC mining uses 9.2 GW ($10^{12}$W), or 219 GWh per day, or 80 TWh per year
 - That is more than 171 of the world's 218 countries ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
 - That is the equivalent to 2% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
@@ -450,7 +454,7 @@ line-height:120%;
 
 ## "Useful" Proof-of-Work (PoW)
 - Use computing power for some "good"
-- Example: Primecoin, launched in 2013
+- <img src="images/logos/xpm-coin-symbol.svg" class="cclogo"> Example: Primecoin, launched in 2013 <br clear='all'>
   - Purpose: generate primes for mathematical and scientific study
   - Currently [worth `$`0.047 per share](https://coinmarketcap.com/currencies/primecoin/)
   - [Whitepaper](https://primecoin.io/bin/primecoin-paper.pdf)
@@ -479,7 +483,11 @@ line-height:120%;
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## ASIC mining
+
+<img src="https://canaan.io/wp-content/uploads/2020/08/481e0bea4c81e2d568cf6ae91505937c.png" style="padding-left:0;padding-right:0">
+
 - Some cryptocurrencies use hash algorithms that special-purpose hardware can mine
   - ASIC = application-specific integrated circuit
   - Bitcoin, Ethereum (before the ETH2 upgrade)
@@ -487,7 +495,7 @@ line-height:120%;
 
 
 ## ASIC-resistant mining
-- Consider Ravencoin, which aims for ASIC-resistant mining
+- <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> Consider Ravencoin, which aims for ASIC-resistant mining <br clear='all'>
 - It uses 16 different hash algorithms
   - The last 8 bytes of the previous block's hash determine which 8 algorithms to use
   - That's a *LOT* of hashes, and it is very power-intensive
@@ -513,10 +521,11 @@ line-height:120%;
 ## Lite Hash Rate (LHR)
 - Nvidia accidentally released a driver that disabled this
   - So now everybody knows software (firmware) can get around it
-- Mining programs now *dual-mine*
+- Mining programs figured out how to *dual-mine*
   - It mines Ethash at half GPU usage
   - And another coin for the other half
-- See [this dual-mining page for T-rex](https://github.com/trexminer/T-Rex/wiki/Dual-mining), for example
+  - See [this dual-mining page for T-rex](https://github.com/trexminer/T-Rex/wiki/Dual-mining), for example
+- Nvidia gave up on this in May 2022 and removed LHR in recent drivers
 
 
 
@@ -558,7 +567,7 @@ line-height:120%;
 
 
 
-## Peercoin
+## <img src="images/logos/ppc-coin-symbol.svg" class="cclogoheader"> Peercoin
 - First implementation of PoS, from 2012
   - Currently [worth `$`0.59 per share](https://coinmarketcap.com/currencies/peercoin/)
   - [Whitepaper](https://whitepaper.io/document/139/peercoin-whitepaper), [source code on github](https://github.com/peercoin/peercoin)
@@ -569,7 +578,7 @@ line-height:120%;
 
 
 
-## Peercoin
+## <img src="images/logos/ppc-coin-symbol.svg" class="cclogoheader"> Peercoin
 - Weakness: buy a lot of Peercoin, and wait a long time
   - You can then mine many successive blocks, using a portion of your coin age each time
   - Then execute a [51% attack](bitcoin.html#/attacks)
@@ -635,7 +644,7 @@ line-height:120%;
 - But all parts of the blockchain are on many machines
   - Benefit: in the case of a failure, the "storage" -- in the blockchain -- is replicated
 - You pay to store data in the blockchain
-- Example: Storj ([currently worth `$`0.99 per share](https://coinmarketcap.com/currencies/storj/))
+- <img src="images/logos/storj-coin-symbol.svg" class="cclogo"> Example: Storj ([currently worth `$`0.99 per share](https://coinmarketcap.com/currencies/storj/))
 
 
 
@@ -644,7 +653,7 @@ line-height:120%;
   - And is not related to Einstein's spacetime from relativity
 - Like proof-of-capacity, but...
   - Your reward is based on the amount of space dedicated times the amount of time
-- Example: Filecoin ([currently worth `$`19.93 per share](https://coinmarketcap.com/currencies/filecoin/))
+- <img src="images/logos/fil-coin-symbol.svg" class="cclogo"> Example: Filecoin ([currently worth `$`19.93 per share](https://coinmarketcap.com/currencies/filecoin/)) <br clear='all'>
 
 
 
@@ -654,7 +663,7 @@ line-height:120%;
   - Proof-of-stake, like ETH2 and Peercoin
   - Proof-of-{capacity, replication, spacetime}, like Storj and Filecoin
   - Don't have any proofs, such as Stellar Lumens (XLM) ([currently worth `$`0.20 per share](https://coinmarketcap.com/currencies/stellar/))
-- There is also [Greencoin (GRE) cyrptocurrency](https://coinmarketcap.com/currencies/greencoin/) (worth `$`0.0003 per share)
+- <img src="images/logos/gre-coin-symbol.png" class="cclogo"> There is also [Greencoin (GRE) cyrptocurrency](https://coinmarketcap.com/currencies/greencoin/) (worth `$`0.0003 per share) <br clear='all'>
   - This coin seems to have floundered, and there are other coins with a similar name
   </textarea></section>
 
