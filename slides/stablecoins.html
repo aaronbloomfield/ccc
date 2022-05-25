@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:90%;
+line-height:120%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Stablecoins
+	</textarea></section>
+
+	<section data-markdown><textarea>
+# Contents
+&nbsp;  
+[Introduction](#/intro)  
+[Collateralized centralized](#/collcent)  
+[Uncollateralized centralized](#/uncollcent)  
+[Collateralized algorithmic](#/collalg)  
+[Uncollateralized algorithmic](#/uncollalg)  
+[Case study: LUNA/UST](#/casestudy)  
+	</textarea></section>
+
+<!-- ============================================================ -->
+	
+	<section>
+
+	  <section id="intro" data-markdown class="center"><textarea>
+# Introduction
+	  </textarea></section>
+
+	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Stablecoins
+- A coin whose value is meant to not be volatile
+- Usually tagged in value to a fiat currency
+  - We'll use the US Dollar
+- *Collateralized* stablecoins means that there is some collateral (financial investment) backing up the value of the stablecoin
+
+
+
+## Types
+
+<table>
+<thead>
+<tr>
+<th style="border-bottom:0"></th>
+<th>Centralized</th>
+<th>Decentralized</th>
+</tr>
+</thead>
+<tbody><tr>
+<th style="border-bottom:0;border-right:1px solid">Collateralized</th>
+<td>custodial stablecoins</td>
+<td>Synthetics</td>
+</tr>
+<tr>
+<th style="border-right:1px solid">Un(der)-collateralized</td>
+<td>central bank digital currency</td>
+<td>undercollateralized stablecoins, seigniorage shares</td>
+</tr>
+</tbody>
+</table>
+
+
+- Algorithmic?
+
+
+
+## Examples
+- Examples we'll see here:
+  - <img src="images/logos/usdc-coin-symbol.svg" class="cclogo"> USD Coin ([USDC](https://coinmarketcap.com/currencies/usd-coin/)) <br clear='all'>
+  - <img src="images/logos/usdt-coin-symbol.svg" class="cclogo"> Tether ([USDT](https://coinmarketcap.com/currencies/tether/)) <br clear='all'>
+  - <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> DAI ([DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/)) <br clear='all'>
+    - We've seen DAI before: it's a token cryptocurrency
+
+
+
+## Review: Types of currencies
+- Commodity currency: made from actual valuable commodities, such as gold
+- Representative currency: one that is backed up by a valuable "thing", such as gold
+- Fiat currency: established by the government "by fiat"
+  - What the US dollar is (now)
+- Cryptocurrency (obviously)
+
+
+
+## Stablecoin categories
+- Fiat-collateralized
+  - Rely on a centralized institution with reserves
+  - Examples: Tether, USD Coin, TrueUSD
+- Crypto-collateralized
+  - Use cryptocurrency assets as collateral
+  - Examples: Dai (DAI) & Maker (MKR); Havven (HAV) & nUSD, Bitshares (BTS) BitUSD
+- Algorithmic non-collateralized
+  - Use software-based economic models to maintain stability
+  - Examples: Basis, Kowala, Carbon, Fragments
+- Hybrid stablecoins
+  - A blend of the above approaches
+  - Examples: Reserve, Saga, Aurora - Boreal
+
+</textarea></section>
+
+	</section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="collcent" data-markdown class="center"><textarea>
+# Collateralized centralized
+
+<img src="images/logos/usdc-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/usdt-coin-symbol.svg" class="cclogosubtitle">
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Collateralized centralized
+- Defining characteristics:
+  1. A single entity manages the coin
+     - The entity could be a bank, company, non-profit, consortium, etc.
+  2. When coins are purchased, the fiat money used for the purchase goes somewhere it can be retrieved
+     - Investments, equities, bank account, safe, etc.
+
+
+
+<h2><img src="images/logos/usdc-coin-symbol.svg" class="cclogoheader"> USD Coin (<a href="https://coinmarketcap.com/currencies/usd-coin/">USDC</a>) <br clear='all'></h2>
+
+- Managed by a consortium named Centre, which is founded by Coinbase (and others)
+- Backed by actual monetary investments in various accounts
+  - An accounting agency (Grant Thornton) attests monthly to these deposits
+- If you buy one, the money you pay goes into these accounts
+- But how risky are those deposits?
+  - If their value goes down, the number of USDC does not change!
+- Not backed by the US government in any way!
+
+
+
+<h2><img src="images/logos/usdt-coin-symbol.svg" class="cclogoheader"> Tether (<a href="https://coinmarketcap.com/currencies/tether/">USDT</a>) <br clear='all'></h2>
+
+- Similar to USDC in how it works
+- Run by Tether Ltd
+- As per [coinmarketcap.com](https://coinmarketcap.com/), it's has the 3rd largest market capitalization (`$`83 billion as of 5/1/22) 
+  - After Bitcoin (`$`734 billion) and Ethereum (`$`340 billion)
+  - USD Coin is 5th at `$`49 billion
+- Scandal-ridden
+  - 2019: NY AG accuses Tether of hiding a `$`850 million loss
+  - It's really unclear where their reserves are held
+  - Many accusations that their reserves are much less than the 1:1 ratio they claim
+- Not backed by the US government in any way!
+
+
+
+## Tether Scandals
+
+
+
+## Disadvantages
+- Risky investments
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="uncollcent" data-markdown class="center"><textarea>
+# Uncollateralized centralized
+
+<img src="images/logos/xpd-coin-symbol.webp" class="cclogosubtitle">
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Uncollateralized centralized
+- Because it is *centralized*, it is managed by a single entity
+- Because it is *uncollateralized*, it is basically the cryptocurrency equivalent of a fiat currency
+- Only a government could issue a fiat cryptocurrency and have anybody consider it to have value
+- Thus, these would be a national central bank issued cryptocurrency
+
+
+
+## Examples
+- In the US: none
+- <img src="images/flags/uae.svg" class="flag"> UAE: Dubai issues Emcash (launched in 2017) <br clear='all'>
+- <img src="images/flags/venezuela.svg" class="flag"> Venezuela: Petro (launched in Feb 2018) <br clear='all'>
+  - <img src="images/logos/xpd-coin-symbol.webp" class="cclogo"> Petro (XPD) is the only one here [listed on coinmarketcap.com](https://coinmarketcap.com/currencies/petrodollar/) <br clear='all'>
+- <img src="images/flags/estonia.svg" class="flag"> Estonia: Estcoin (planned in 2018, not launched) <br clear='all'>
+- <img src="images/flags/russia.svg" class="flag"> Russia: Cryptoruble (still in development) <br clear='all'>
+- <img src="images/flags/sweden.svg" class="flag"> Sweden: E-Krona (still in development, launch in 2022?) <br clear='all'>
+- <img src="images/flags/japan.svg" class="flag"> Japan: J-Coin (not actually a cryptocurrency, more like a bank account / credit card combination) <br clear='all'>
+
+
+
+
+## Drawbacks 
+- The government can track this
+- Many people who get into cryptocurrency do not want government centralization
+- It's unclear how this would be better than, say, a credit card or a debit card
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+    <section id="collalg" data-markdown class="center"><textarea>
+# Collateralized Algorithmic
+
+<img src="images/logos/dai-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/mkr-coin-symbol.svg" class="cclogosubtitle">
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Collateralized Debt Position (CDP)
+
+
+
+## Target Rate Feedback Mechanism (TRFM)
+
+
+
+<h2><img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> Dai (<a href="https://coinmarketcap.com/currencies/multi-collateral-dai/">DAI</a>) <br clear='all'></h2>
+
+- An ERC-20 token cryptocurrency we've [talked about before](tokens.html#/dai)
+- Run by [MakerDAO](https://cryptonews.com/coins/maker/) via an Ethereum smart contract
+  - [MakerDOA's whitepaper](https://makerdao.com/en/whitepaper/)
+- Uses a series of margin trades and shifts of assets to have its value remain stable despite cryptocurrency volatility
+- Source code? https://github.com/makerdao/sai
+- [MakerDAO white paper](https://makerdao.com/en/whitepaper/)
+As per https://cs251.stanford.edu/lectures/lecture9.pdf, DAI is undercollateralized, not fully collateralized
+- <img src="../slides/images/logos/mkr-coin-symbol.svg" class="cclogo"> Maker (MKR) is the governance token
+
+
+
+## DAI stability
+- How well did it work?
+  - Coefficient of Variation (CV) is the standard deviation divided by the mean
+    - It describes the variability of a sample relative to the average
+    - Usually expressed as a percentage
+  - CV means relative to the average, how much did it vary?
+  - For DAI, it's 0.95%
+  - For ETH, it's 151.6%
+- We can also see it as a graph...
+
+
+
+<img src="images/stablecoins/graphs/dai-eth.svg" class="stretch">
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="uncollalg" data-markdown class="center"><textarea>
+# Uncollateralized algorithmic
+
+<img src="images/logos/fei-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/tribe-coin-symbol.svg" class="cclogosubtitle">
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Alias
+- As per [Stanford's CS 251 slide set](https://cs251.stanford.edu/lectures/lecture9.pdf), the two categories are:
+  - Undercollateralized stablecoins: FRAX, FEI, IRON, OHM, Gyroscope
+    - backing: diversified portfolio, seigniorage shares as backstop; peg mechanism: redemption; risks: market risks, oracle dependency
+    - <img src="../slides/images/logos/fei-coin-symbol.svg" class="cclogo"> of those, [FEI](https://coinmarketcap.com/currencies/fei-usd/) has the highest market capitalization (#100 as of 5-23-22) <br clear='all'>
+      - <img src="../slides/images/logos/tribe-coin-symbol.svg" class="cclogo"> it's governance token is [TRIBE](https://coinmarketcap.com/currencies/tribe/) <br clear='all'>
+  - Seigniorage shares: Basis, Maker (backstop), Undercollateralized stablecoins (backstop)
+    - backing: confidence; peg mechanism: supply expansion and contraction; risks: death spiral, oracle dependency
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="casestudy" data-markdown class="center"><textarea>
+# Case study: LUNA/UST
+    
+<img src="images/logos/luna-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/ust-coin-symbol.svg" class="cclogosubtitle">
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## LUNA / UST debacle
+
+- [Article on LUNA / UST background](https://www.coindesk.com/learn/what-is-luna-and-ust-a-guide-to-the-terra-ecosystem/)
+- [Overview of the crash](https://www.cnet.com/personal-finance/crypto/terras-luna-crypto-crash-how-ust-broke-and-whats-next/)
+
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>

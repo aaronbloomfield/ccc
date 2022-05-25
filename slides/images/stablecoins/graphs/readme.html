@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>To update this graph:</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="../../../../markdown.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>To update this graph:</p>
+<ul>
+<li>Download the latest data
+<ul>
+<li>DAI prices, in <code>dai-usd-max.csv</code>, from
+https://www.coingecko.com/en/coins/dai/historical_data</li>
+<li>ETH prices, in <code>eth-usd-max.csv</code>, from
+https://www.coingecko.com/en/coins/ethereum/historical_data</li>
+</ul></li>
+<li>In <code>dai-eth.plot</code>, set the end date (the second value in
+the <code>xrange</code> variable) to the latest date in the data
+set</li>
+<li>If necessary, adjust the maximum ETH price (in the
+<code>y2range</code> variable)</li>
+<li>Run <code>make</code></li>
+<li>Update the Coefficient of Variance value in the slides</li>
+</ul>
+</body>
+</html>
