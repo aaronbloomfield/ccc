@@ -6,4 +6,4 @@ Cryptocurrency: Exams
 
 These are the past exams in the course.  I do not have (nor do I make) answer keys.
 
-- Spring 2022: [midterm](exam1-s22.pdf)
+- Spring 2022: [midterm](midterm-s22.pdf), [final](final-s22.pdf)

@@ -103,6 +103,8 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 24. Mon, Apr 18: [Scalability](../slides/scalability.html#/) to slide 6.7
 25. Wed, Apr 20: finished [Scalability](../slides/scalability.html#/)
 26. Mon, Apr 25: started and finished [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/) to slide 4.9
+27. Wed, Apr 27: finished [Ethereum](../slides/ethereum.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/) to slide 5.31
+28. Mon, Apr 30: [Course conclusion](../slides/conclusion.html#/)
 
 
 ## Legal Issues
