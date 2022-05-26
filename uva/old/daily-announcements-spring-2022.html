@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../slides/reveal.js/css/print/pdf.scss' : '../../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:70%;
+line-height:115%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../../slides/images/print-icon.png" style="top:0px;vertical-align:middle" class="nopad"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Daily Announcements
+	</textarea></section>
+
+<!--
+
+Template for first line:
+
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
+
+-->
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Lightsabers</h2>
+<img src="https://imgs.xkcd.com/comics/lightsabers.png" title="A lot of Jedi romances start with this turning into a Lady and the Tramp spaghetti situation." alt="Lightsabers" srcset="https://imgs.xkcd.com/comics/lightsabers_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2612/'>xkcd # 2612</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 28: The End
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`38,182; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,795; [ETH gas](https://ethgas.watch/): 92 gwei => `$`5.40
+- Homeworks
+  - [HW P11: Metamask](../../hws/metamask/index.html) is out, and due tomorrow by midnight
+    - Please make sure your Auctioneer_v2 contract is still deployed!
+- Course & geth updates
+  - We have a fix for the Remix IDE white screen!  See the pinned Piazza post
+  - Faucet address at /explorer/faucet.php.  Use it responsibly!
+- The final exam will be (mostly) optional -- details next slide
+- Regrade policy: submit a regrade within 1 week of when it's returned
+- I'm so behind in the grading, but working on catching up...
+  - Out being graded: DAO&web3
+  - Still go grade: auction, dex, arbitrage
+  - Soon to grade: metamask
+- About the support requests link on the Collab landing page
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today's lecture: [Course Conclusion](../../slides/conclusion.html#/)
+
+
+
+## The (mostly) optional final
+- The final exam is 2pm to 5pm on Tue, May 10th in the lecture classroom
+- The final exam is optional...
+  - Unless you didn't take the midterm, at which point it's required
+- If you do not take the final exam, you agree to these terms:
+- If you don't take it, your grade will be a mix of the homeworks, participation, and the first midterm
+  - The first midterm will have a higher weighting
+  - "P" homeworks will have a higher weighting than "S" homeworks
+  - I do not know the actual weighting, though
+  - And I probably won't know it until after the final exam
+- There will have to be some "scaling" so that it doesn't hurt those who do (or do not) take the final
+  - That, again, I can't know until after the final exam
+  - That scaling may be up or down
+- You will have to trust me to figure these issues out in a fair way *after* the final exam
+  - I'm not trying to give everybody a low grade
+
+
+
+
+## Flushing Ethereum Transactions
+- Each TXN must have the next highest nonce
+- But if a block holding your transaction is on a shorter chain...
+  - Then it's removed, and successive transactions would have a 'gap' in the nonces
+  - This is so not allowed
+- This will show as queued transactions (via `txpool.queued`)
+  - Until the 'gap' in nonces is resolved
+- To fix:
+  - Run a bunch of do-nothing transactions (*not* calls)
+  - Example: call `collectFees()` in your Auctioneer a dozen times
+- This should flush the transactions
+  - And moved the queued transactions into pending transactions
+
+
+
+## BTC & ETH prices this semester
+![](prices-spring-2022.svg)
+- These are the prices that I would report each lecture day
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+
+<img src="https://lh3.googleusercontent.com/LyL_OJuBLus_KoGCLDNzQ-TE7TtiKxI80IgQYe0mW8XmgrdzYpztII-i45dya067Wmn42HcTc0GBOyQYMNBgla8aI-E2Q0IjslR3=w600" style="float:right;width: 50%;margin-left: 20px !important;margin-top: 0;padding:0;background:transparent">
+
+- [Our NFT](https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/8337) has not yet sold!
+  - BAYC (Bored Ape Yacht Club) even has a coin: ApeCoin ([APE](https://coinmarketcap.com/currencies/apecoin-ape/))
+- Their [latest NFT auction](https://www.coindesk.com/business/2022/05/01/bayc-team-raises-285m-with-otherside-nfts-clogs-ethereum/)...
+  - Raised `$`258 million (!)
+  - This is selling "Otherside" Metaverse NFTs
+- Back to sanity: today's lecture: [Course Conclusion](../../slides/conclusion.html#/)
+  - I have no idea how long this lecture will take...
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Cutest-Sounding Scientific Effects</h2>
+<img src="https://imgs.xkcd.com/comics/cutest_sounding_scientific_effects.png" title="The Stroop-YORP number of a scientific paper is how many of the 16 finalist names (sans &#39;effect&#39;) it manages to casually sneak into the text." alt="Cutest-Sounding Scientific Effects" srcset="https://imgs.xkcd.com/comics/cutest_sounding_scientific_effects_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2611/'>xkcd # 2611</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 27: Wed, April 27th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`39,023; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,866; [ETH gas](https://ethgas.watch/): 64 gwei => `$`3.85
+- Homeworks
+  - [HW P10: Aribtrage trading](../../hws/arbitrage/index.html) was due yesterday by midnight
+    - How to specify the geth.ipc in Windows for web3.py?
+    - Thoughts on the assignment?
+  - [HW P11: Metamask](../../hws/metamask/index.html) is *almost* ready, and due next Tuesday by midnight
+    - I want to do a last check, and will post an update on Piazza tonight or tomorrow
+- Course & geth updates
+  - We have a fix for the Remix IDE white screen!  See the pinned Piazza post
+  - Another haiku to the ongoing Remix woes: *...*
+  - Faucet address at /explorer/faucet.php.  Use it responsibly!
+- Regrade policy: submit a regrade within 1 week of when it's returned
+- I'm so behind in the grading, but working on catching up...
+- About the support requests link on the Collab landing page
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today's lecture:
+  - Finishing rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+  - Finishing [The Dark Side of Cryptocurrency](../../slides/darkside.html#/)
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- A [movie on the History of Ethereum](https://bitcoinist.com/the-ethereum-movie-will-be-produced-by-ridley-scott/) is coming to the big screen
+  - It's partially funded by a DAO (the Infinite Machine) that is issuing NFTs to raise funds
+    - (no, I'm not making any of that up)
+  - Planned to start shooting in Q3 2022 with a potential release in 2023
+- We went over [The Dark Side of Cryptocurrency](../../slides/darkside.html#/)
+  - [Money Laudnering](../../slides/darkside.html#/laundering)
+  - [NFTs](../../slides/darkside.html#/nfts)
+- Today:
+  - Finishing rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+  - Finishing [The Dark Side of Cryptocurrency](../../slides/darkside.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Entwives</h2>
+<a href="https:https://www.youtube.com/watch?v=mt2qCjL6-n4"><img src="https://imgs.xkcd.com/comics/entwives.png" title="No, we actually do have a woman who&#39;s basically part of our fellowship. She lives in Rivendell, you wouldn&#39;t know her." alt="Entwives" srcset="https://imgs.xkcd.com/comics/entwives_2x.png 2x" style="image-orientation:none" ></a>
+<p class='center'><a href='http://xkcd.com/2609/'>xkcd # 2609</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 26: Mon, April 25th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`39,475; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,932; [ETH gas](https://ethgas.watch/): 75 gwei => `$`4.62
+- Homeworks
+  - [HW P10: Aribtrage trading](../../hws/arbitrage/index.html) is due tomorrow by midnight
+    - How to specify the geth.ipc in Windows for web3.py?
+    - If you need TokenDEXes deployed, contact me
+  - HW P11: Metamask will be out in a day or two
+- Course & geth updates
+  - Another haiku to the ongoing Remix woes: *you tempted me with glory // but came up short // error: import not found*
+  - About using Truffle & Ganache
+  - Faucet address at /explorer/faucet.php.  Use it responsibly!
+- Regrade policy: submit a regrade within 1 week of when it's returned
+- I'm so behind in the grading, but working on catching up...
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Next few lecture sets:
+  - [Ethics, Legality, and Policy](../../slides/ethics-legal-policy.html#/)
+  - [The Dark Side of Cryptocurrency](../../slides/darkside.html#/)
+  - And then come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- A new NFT auction smart contract has [locked $34 million due to a Solidity bug](https://decrypt.co/98530/aku-ethereum-nft-launch-ends-with-34m-locked-in-flawed-smart-contract)
+  - The problem is [described here](https://twitter.com/staringispolite/status/1517672950291320833)
+  - You can see a [proof of concept exploit](https://gist.github.com/except/2ece3e40b72d0bf0cbd1107aa5d06926) for this
+- [Scalability](../../slides/scalability.html#/)
+  - I rushed through the [last slide of scalability](../../slides/scalability.html#/8/14)
+- Today we'll see:
+  - [Ethics, Legality, and Policy](../../slides/ethics-legal-policy.html#/)
+  - [The Dark Side of Cryptocurrency](../../slides/darkside.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Family Reunion</h2>
+<img src="https://imgs.xkcd.com/comics/family_reunion.png" title="Grandma says that because of differences in primate and feline lifespans, the cat is actually my 17,000,000th cousin 14,000,000 times removed." alt="Family Reunion" srcset="https://imgs.xkcd.com/comics/family_reunion_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2608/'>xkcd # 2608</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 25: Wed, April 20th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`41,062; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,052; [ETH gas](https://ethgas.watch/): 189 gwei => `$`12.11
+- Homeworks
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) was due yesterday by midnight
+  - [HW P10: Aribtrage trading](../../hws/arbitrage/index.html) is out and due next Tuesday by midnight
+  - HW P11: Metamask will be out next week
+- Course & geth updates
+  - A haiku to the ongoing Remix woes: *Remix: you worked well earlier // now you are broken // just like my code*
+  - New faucet address!  at /explorer/faucet.php.  Use it responsibly!
+      - And feel free to donate to it, if you have extra ETH
+- Regrade policy: submit a regrade within 1 week of when it's returned
+- I'm so behind in the grading, but working on catching up...
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will (likely) finish [scalability](../../slides/scalability.html#/)
+  - And then come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- [Scalability](../../slides/scalability.html#/)
+  - We talked about the blockchain layers
+  - Layer 1: on-chain solutions, focusing on sharding
+    - I added a [slide diagramming sharding chains](../../slides/scalability.html#/4/5) to the last lecture
+  - Layer 2: off-chain solutions, including rollups 
+  - We start today on [Bitcoin's lightning network](../../slides/scalability.html#/btcln)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Weird Unicode Math Symbols</h2>
+<img src="https://imgs.xkcd.com/comics/weird_unicode_math_symbols.png" title="U+2A0B ⨋ Mathematicians need to calm down" alt="Weird Unicode Math Symbols" srcset="https://imgs.xkcd.com/comics/weird_unicode_math_symbols_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2606/'>xkcd # 2606</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 24: Mon, April 18th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`40,768; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,014; [ETH gas](https://ethgas.watch/): 56 gwei => `$`3.54
+- Homeworks
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is due tomorrow by midnight
+  - HW P10: Aribtrage trading, will be out this week
+  - HW P11: Metamask, will be out next week
+- Course & geth updates
+  - Problems with Remix: does using [remix.ethereum.org](https://remix.ethereum.org/) site help?
+  - New faucet address!  at /explorer/faucet.php.  Use it responsibly!
+      - And feel free to donate to it, if you have extra ETH
+- Requests for your UVA CS server accounts have been handled
+  - If you didn't receive it via email, try to resetting your password at [www.cs.virginia.edu/computing](https://www.cs.virginia.edu/computing)
+  - Some are reporting that their accounts are not set up properly
+  - CHECK THIS BEFORE TOMORROW NIGHT
+  - You won't get an extension on the HW because you waited until the last day to check it!
+- Regrade policy: submit a regrade within 1 week of when it's returned
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will talk about [scalability](../../slides/scalability.html#/)
+  - And then come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Thoughts about the [zkSNARKs](../../slides/zksnarks.html#/) lecture
+- An article about [buying and then re-selling an NFT of Jack Dorsey's first tweet](https://www.yahoo.com/news/guy-buys-nft-2-9-005000804.html)
+  - Jack Dorsey is the co-founder of Twitter
+- There is some [insider trading going on at Coinbase](https://www.reddit.com/r/CryptoCurrency/comments/u2f90u/there_is_serious_insider_trading_going_on_at/)
+  - Which is not illegal due to a lack of laws or regulatory bodies
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Taylor Series</h2>
+<img src="https://imgs.xkcd.com/comics/taylor_series.png" title="The Taylor series should have been canceled after the first term." alt="Taylor Series" srcset="https://imgs.xkcd.com/comics/taylor_series_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2605/'>xkcd # 2605</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 23: Wed, April 13th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`41,273; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,099; [ETH gas](https://ethgas.watch/): 60 gwei => `$`3.90
+- Homeworks
+  - [HW P8: DEX](../../hws/dex/index.html) was due yesterday by midnight
+  - HW P9: DAO & web3 will be out later today (how much HTML & Javascript knowledge to assume?)
+  - Upcoming: arbitrage trading via web3, then web3 transacting via NFT auctions or DEXs or DAOs
+- Course & geth updates
+  - Change to deployment: no more mining, and it checks every second now
+  - Problems with Remix: does using [remix.ethereum.org](https://remix.ethereum.org/) site help?
+  - Language preference for an upcoming assignment: Python is assumed unless I hear otherwise
+  - Use `--syncmode "full"` when running a geth node (may require re-init)
+  - Course-wide auction issues: apparently I'm not as bad as I think
+  - New faucet address!  at /explorer/faucet.php.  Use it responsibly!
+      - And feel free to donate to it, if you have extra ETH
+- Requests for your UVA CS server accounts have been handled
+  - If you didn't receive it via email, try to resetting your password at [www.cs.virginia.edu/computing](https://www.cs.virginia.edu/computing)
+- Regrade policy: submit a regrade within 1 week of when it's returned
+  - Via support request; exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will continue talking about [zkSNARKs](../../slides/zksnarks.html#/)
+  - And then come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- We started on [zkSNARKs](../../slides/zksnarks.html#/), and ended on [slide 5.29](../../slides/zksnarks.html#/4/28)
+  - We defined a *homomorphic hiding* as $E(x)=g^x$ for some generator $g$ in $Z_p$
+    - But we'll often use multiplication in the examples for clarity
+  - We showed how Bob, who chose a value $x$, can have Alice, who knows polynomial $P$, evaluate $P(x)$ with zero knowledge
+    - But we haven't seen how Bob can verify that Alice really computed $P(x)$ and didn't just make up some value
+  - We saw how Bob can force Alice to compute *a* polynomial, if not necessarily (yet) the *right* polynomial
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Frankenstein Captcha</h2>
+<img src="https://imgs.xkcd.com/comics/frankenstein_captcha.png" title="The distinction between a ship and a boat is a line drawn in water." alt="Frankenstein Captcha" srcset="https://imgs.xkcd.com/comics/frankenstein_captcha_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2604/'>xkcd # 2604</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 22: Mon, April 11th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`40,396; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,017; [ETH gas](https://ethgas.watch/): 79 gwei => `$`5.01
+- Homeworks
+  - [HW P8: DEX](../../hws/dex/index.html) is due tomorrow by midnight
+  - Upcoming: 
+    - Web3 "listening" to a DAO
+    - Arbitrage trading via web3
+    - Web3 transacting via NFT auctions or DEXs or DAOs
+- Course & geth updates
+  - Change to deployment: no more mining by any of you...
+  - Problems with Remix?
+  - Language preference for an upcoming assignment...
+  - use `--syncmode "full"` when running a geth node (may require re-init)
+  - Course-wide auction issues...
+- Requests for your UVA CS server accounts have been handled
+  - If you didn't receive it via email, try to resetting your password at [www.cs.virginia.edu/computing](https://www.cs.virginia.edu/computing)
+- Regrade policy: submit a regrade within 1 week of when it's returned
+  - Via support request; exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will start talking about [zkSNARKs](../../slides/zksnarks.html#/)
+  - And then come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Last time we finished [Blockchain applications](../../slides/applications.html#/)
+  - We talked about Decentralized Exchanges (DEXs), which is the focus of HW P8
+  - We talked about Decentralized Autonomous Organizations (DOAs), which will be the focus of HW P9
+- At some point we still have to come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Linguistics Degree</h2>
+<img src="https://imgs.xkcd.com/comics/linguistics_degree.png" title="You&#39;d think &#39;linguistics&#39; would go to someone important in the field, but it&#39;s actually assigned to a random student in Ohio who barely graduated and then went into automotive marketing." alt="Linguistics Degree" srcset="https://imgs.xkcd.com/comics/linguistics_degree_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2602/'>xkcd # 2602</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 21: Wed, April 6th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`43,500; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,195; [ETH gas](https://ethgas.watch/): 78 gwei => `$`5.23
+- Homeworks
+  - [HW P7: dApp auction](../../hws/auction/index.html) was due yesterday by midnight
+    - We'll talk about that next...
+  - HW P8: DEX will be out tonight
+  - How to work through unit testing?  As part of P8 or a separate HW?
+  - Upcoming: zero-knowledge proofs, then two on Web3
+- I'm told the requests for your UVA CS server accounts have been handled
+  - If you didn't receive it via email, try to resetting your password at [www.cs.virginia.edu/computing](https://www.cs.virginia.edu/computing)
+- Grades: 
+  - HW P6 (Tokens) grades are on Collab's Posted Feedback
+    - Regrades can take TWO forms for this:
+    - A quick fix (NFT ownership issue, unknown NFT token ID, etc.) is just a resubmit with an explanation in the comments box
+    - Otherwise via support request
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request; exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will finish with work through [Blockchain applications](../../slides/applications.html#/)
+  - And then come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+
+
+
+## HW P7: Auctions
+- I realize that assignment was unintentionally much rougher than intended, and I'm sorry about that
+- The problems generally fell into a few categories:
+  1. That homework document clearly needed a few more editing runs
+  2. How to pass in, store, and report money (wei versus gwei)
+  3. The process of calling `createAuction()` then transferring the NFT over
+  4. Difficulty testing and needing to "harden" it against attacks
+  5. Not having gone over some Solidity concepts
+- The Auctioneer is going to be used in a future assignment
+  - For (2), the updated version will have all monetary units in wei
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Last time we finished about [Consensus](../../slides/consensus.html#/)
+- We started on [Blockchain applications](../../slides/applications.html#/)
+  - We discussed the Constant Product Automated Market Maker method for DEXs
+    - Where $x \ast y = k$
+  - We ended on [slide 3.28](../../slides/applications.html#/2/27)
+- At some point we still have to come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Rejected Question Categories</h2>
+<a href="https:https://xkcd.com/what-if-2/"><img src="https://imgs.xkcd.com/comics/rejected_question_categories.png" title="You can click to preorder to get a copy of What If? 2 when it comes out 9/13, assuming we all make it past the spider situation(?) on Tuesday(?)." alt="Rejected Question Categories" srcset="https://imgs.xkcd.com/comics/rejected_question_categories_2x.png 2x" style="image-orientation:none" ></a>
+<p class='center'><a href='http://xkcd.com/2600/'>xkcd # 2600</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 20: Mon, April 4th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`45,323; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,437; [ETH gas](https://ethgas.watch/): 94 gwei => `$`6.78
+- Homeworks
+  - [HW P7: dApp auction](../../hws/auction/index.html) is due tomorrow by midnight
+  - Out soon: HW P8: Decentralized Exchange for your token cryptocurrency
+  - Upcoming: zero-knowledge proofs, then 2 on Web3
+- The requests for your UVA CS server accounts has been sent in
+  - Have you received responses?
+- The blockchain explorer issues are fixed, I think...
+- Grades: 
+  - HW P6 (Tokens) grades are on Collab's Posted Feedback
+    - Regrades can take TWO forms for this:
+    - A quick fix (NFT ownership issue, unknown NFT token ID, etc.) is just a resubmit with an explanation in the comments box
+    - Otherwise via support request
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request; exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will finish with [Consensus](../../slides/consensus.html#/) and start on [Blockchain applications](../../slides/applications.html#/)
+
+
+
+## geth usage++
+Save this to `preload.js`:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>function mineOneBlock() {
+    var start = eth.blockNumber;
+    miner.start();
+    while ( start == eth.blockNumber );
+    miner.stop();
+    return eth.blockNumber;
+}
+
+function checkAllBalances() { 
+    // this function from https://stackoverflow.com/questions/32312884/
+    //               how-do-i-get-the-balance-of-an-account-in-ethereum
+    var i = 0;
+    var total = 0;
+    for ( var i = 0; i < eth.accounts.length; i++ ) {
+        var e = eth.accounts[i];
+        console.log("  eth.accounts["+i+"]: " +  e + " \tbalance: " + 
+                    web3.fromWei(eth.getBalance(e), "ether") + " ether");
+        total += parseFloat(web3.fromWei(eth.getBalance(e), "ether"));
+    }
+    console.log("Total: " + total + " ETH");
+}
+</code></pre>
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## geth usage++
+Then run geth as:
+
+```
+geth --preload preload.js attach /path/to/geth.ipc
+```
+
+In geth, you can run `mineOneBlock()` and `checkAllBalances()`
+
+This is now on the [docs/](../../docs/index.html) page in the repo, specifically the [geth reference](../../docs/geth_reference.html)
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Last time we continued talking about [Consensus](../../slides/consensus.html#/)
+  - We saw two solutions to the Byzantine Generals Problem:
+  - $OM(m)$, the oral messages algorithm, that can tolerate $< 1/3$ traitors
+  - $SM(m)$, the signed messages algorithm, that can support many more traitors
+  - We ended on [slide 8.14](../../slides/consensus.html#/7/13)
+- At some point we still have to come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Spacecraft Debris Odds Ratio</h2>
+<img src="https://imgs.xkcd.com/comics/spacecraft_debris_odds_ratio.png" title="You say this daily walk will reduce my risk of death from cardiovascular disease by 30%, but also increase my risk of death by bear attack by 300%? That&#39;s a 280% increased! I&#39;m not a sucker; I&#39;m staying inside." alt="Spacecraft Debris Odds Ratio" srcset="https://imgs.xkcd.com/comics/spacecraft_debris_odds_ratio_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2599/'>xkcd # 2599</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 19: Wed, March 30th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`47,375; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,411; [ETH gas](https://ethgas.watch/): 112 gwei => `$`8.02
+- The [midterm](../../exams/exam1-s22.pdf)'s grading problem is fixed; regrades are open until Fri
+  - Average was 40.5/60 (67.5%) with a standard deviation of 7.3/60 (12.2%)
+- Homeworks
+  - [HW P6: dApp tokens](../../hws/tokens/index.html) was due yesterday by midnight
+    - Average hours spent: 4.2
+    - We'll take a look at the CC logos and NFTs (I reduced some resolutions)
+  - Out today will HW P7: a smart contract auction for your NFTs
+  - Upcoming: smart contracts on a DEX, 1 on zero-knowledge proofs, then 2 on Web3
+- The requests for your UVA CS server accounts has been sent in
+  - Have you received responses?
+- The blockchain explorer is having issues...
+- Grades: 
+  - HW S6 (dApp gradebook) grades on on Collab's Posted Feedback
+    - If you messed up the hashes, please re-submit the Google form then submit a support request asking for a regrade
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request; exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will continue with [Consensus](../../slides/consensus.html#/)
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Last time we started talking about [Consensus](../../slides/consensus.html#/)
+  - I flubbed the explanation of the [last case of the Three Generals problem](../../slides/consensus.html#/5/12) because I had incorrectly not listed [requirement 3 for such](../../slides/consensus.html#/5/6)
+- We discussed:
+  - The [Two Generals Problem](../../slides/consensus.html#/3/2) (how do they communicate?)
+  - [The Byzantine Generals Problem](../../slides/consensus.html#/4/2) (BGP)
+  - The [Three Generals Problem](../../slides/consensus.html#/5/3)
+    - This is modelling communication in the overall BGP
+    - We showed does not work with 3 generals, 1 of which is a traitor
+    - Nor does it work with 1/3 or more traitors
+  - We ended on [slide 6.19](../../slides/consensus.html#/5/18), and will start today on [slide 7.1](../../slides/consensus.html#/om)
+- At some point we still have to come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Graphic Designers</h2>
+<img src="https://imgs.xkcd.com/comics/graphic_designers.png" title="They might make it past that first line of defense. For the second, you&#39;ll need some picture frames, a level, and a protractor that can do increments of less than a degree." alt="Graphic Designers" srcset="https://imgs.xkcd.com/comics/graphic_designers_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2598/'>xkcd # 2598</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 18: Mon, March 28th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`47,958; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,410; [ETH gas](https://ethgas.watch/): 208 gwei => `$`14.89
+- The [midterm](../../exams/exam1-s22.pdf)'s grading problem is fixed; regrades are open for 1 week
+  - Average was 40.5/60 (67.5%) with a standard deviation of 7.3/60 (12.2%)
+- Homeworks
+  - [HW P6: dApp tokens](../../hws/tokens/index.html) is tomorrow by midnight
+    - I made a change the cryptocurrency image resolution...
+  - Out tomorrow (or Wednesday) will be a smart contract auction for your NFTs
+  - Upcoming: smart contracts on a DEX, 1 on zero-knowledge proofs, then 2 on Web3
+- The requests for your UVA CS server accounts has been sent in
+  - Have you received responses?
+- Grades: 
+  - HW S6 (dApp gradebook) grades on on Collab's Posted Feedback
+    - If you messed up the hashes, please re-submit the Google form then submit a support request asking for a regrade
+  - More on grades on the next page
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request
+    - Exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will finish with [Tokens](../../slides/tokens.html#/) and start on [Consensus](../../slides/consensus.html#/)
+
+
+
+## Grades
+
+| Assignment | Avg | Time (h) |
+|----------|----|----|
+| HW S1 (survey) | 9.65 | |
+| HW S2 (Bitcoin whitepaper) | 7.56 | |
+| HW S3 (Ethereum whitepaper) | 7.28 | |
+| HW S4 (private Ethereum) | 9.59
+| HW P1 (intro) | 8.70 | |
+| HW P2 (ECDSA) | 9.47 | |
+| HW P3 (BTC Parser) | 8.49 | |
+| HW P4 (BTC Scripting) | 9.22 | |
+| HW S5 (dApp intro) | 9.89 | 2.14 h |
+| HW P6 (dApp gradebook) | 8.93 | 3.35 h |
+
+
+
+## Grades
+- These grades are without:
+  - Any regrades counted in
+  - Considering those who got a zero on the assignment
+- Homework average so far is 8.88 (88.78/100)
+- Exam average is 43.0/60 (71.7%)
+  - We'll take this as the overall exam grade
+- Homeworks are weighted at 50% of the grade, exams at 35%
+- The class average is thus: $\frac{88.8 \ast 0.50+71.7 \ast 0.35}{0.85} = 81.8$%
+
+
+
+## How is our NFT doing?
+Let's check in!  The NFT is [here](https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/8337), and shown below:
+
+<img src="https://lh3.googleusercontent.com/LyL_OJuBLus_KoGCLDNzQ-TE7TtiKxI80IgQYe0mW8XmgrdzYpztII-i45dya067Wmn42HcTc0GBOyQYMNBgla8aI-E2Q0IjslR3=w600" style="background:transparent;width:50%">
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Do you want to move to [Satoshi Island](https://cheddar.com/media/satoshi-island-plans-to-become-the-crypto-capital-of-the-world)?
+  - Off of [Vanuatu](https://en.wikipedia.org/wiki/Vanuatu)
+  - See [this reddit post](https://www.reddit.com/r/CryptoCurrency/comments/stwnqs/satoshi_island_plans_to_become_the_crypto_capital/)
+- We worked through [Tokens](../../slides/tokens.html#/) on Monday, ending on [slide 6.8](../../slides/tokens.html#/5/7)
+  - ERC-165 is the `supportsInterface()` function
+  - We talked about both ERC-20 (FT) tokens and ERC-721 (NFT) tokens
+  - I added inheritance diagrams for the lab for both the ERC-20 part ([here](../../slides/tokens.html#/4/15)) and for the ERC-721 part ([here](../../slides/tokens.html#/5/7))
+    - They are in the homework document as well
+- At some point we still have to come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Galaxies</h2>
+<img src="https://imgs.xkcd.com/comics/galaxies.png" title="I know it seems overwhelming, but don&#39;t worry; I&#39;m sure most of them have only a few stars, and probably no planets." alt="Galaxies" srcset="https://imgs.xkcd.com/comics/galaxies_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2596/'>xkcd # 2596</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 17: Wed, March 23rd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`42,101; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,954; [ETH gas](https://ethgas.watch/): 25 gwei => `$`1.55
+- The [midterm](../../exams/exam1-s22.pdf)'s grading problem is fixed; regrades to be open for 1 week
+  - Average was 40.5/60 (67.5%) with a standard deviation of 7.3/60 (12.2%); about the curve...
+- Homeworks
+  - [HW P5: dApp gradebook](../../hws/gradebook/index.html) was due yesterday by midnight; it seemed to go okay
+  - [HW P6: dApp tokens](../../hws/tokens/index.html) is due next Tuesday by midnight
+  - Upcoming: smart contracts on NFT auctions and a DEX, 1 on zero-knowledge proofs, then 2 on Web3
+- You are all about to get UVA CS server accounts
+  - Info will arrive by email; we'll need it for future assignments
+- Grades: 
+  - HW S5 (dApp Introduction) grades on on Collab's Posted Feedback
+    - If you messed up the hashes, please re-submit the Google form then submit a support request asking for a regrade
+  - Wow, I really messed up those homework regrades...
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request
+    - Exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will continue with [Tokens](../../slides/tokens.html#/)
+
+
+
+## How is our NFT doing?
+Let's check in!  The NFT is [here](https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/8337), and shown below:
+
+<img src="https://lh3.googleusercontent.com/LyL_OJuBLus_KoGCLDNzQ-TE7TtiKxI80IgQYe0mW8XmgrdzYpztII-i45dya067Wmn42HcTc0GBOyQYMNBgla8aI-E2Q0IjslR3=w600" style="background:transparent;width:50%">
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- We started [Tokens](../../slides/tokens.html#/) on Monday, ending on [slide 5.3](../../slides/tokens.html#/4/2)
+  - The standards are so the various wallet software have a uniform way to interact with these tokens
+  - ERC-165 is the `supportsInterface()` function
+  - ERC-20 is *fungible* tokens
+- At some point we still have to come back to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Consensus Time</h2>
+<img src="https://imgs.xkcd.com/comics/consensus_time.png" title="Now, you may argue that the varying hour lengths and feedback effects would cause chaos. To which I say, yeah, and I&#39;m also curious to see how the weekday cycle interacts with it! So, you in?" alt="Consensus Time" srcset="https://imgs.xkcd.com/comics/consensus_time_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2594/'>xkcd # 2594</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 16: Mon, March 21st
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`41,047; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,917; [ETH gas](https://ethgas.watch/): 47 gwei => `$`2.88
+- The [midterm](../../exams/exam1-s22.pdf) is all graded; we'll go over it today
+  - Average was 40.5/60 (67.5%) with a standard deviation of 7.3/60 (12.2%)
+  - I have to handle the too long answer issue
+  - Yes, there will be a curve, but I don't know how much yet until I resolve the previous bullet point
+- Upcoming schedule
+  - [HW P5: dApp gradebook](../../hws/gradebook/index.html) is due tomorrow by midnight; the [Gradebook.sol](../../hws/gradebook/Gradebook.sol.html) ([src](../../hws/gradebook/Gradebook.sol)) file has been updated
+  - Due next Tuesday will be a HW on Tokens
+  - Upcoming HWs: smart contracts on NFT auctions and a DEX, one on zero-knowledge proofs, then two on Web3
+- Grades: 
+  - HW S5 (dApp Introduction) grades on on Collab's Posted Feedback
+    - If you messed up the hashes, please re-submit the Google form then submit a support request asking for a regrade
+  - I am working through all the regrades
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request
+    - Exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001
+- Today we will start on [Tokens](../../slides/tokens.html#/)
+
+
+
+## Geth issues
+- Some are having problems with it connecting; try adding `--syncmode "full"` to the flags
+  <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>geth --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 \
+                --syncmode "full"
+</code></pre>
+  - You may have to delete the /path/to/ethprivate/geth directory and restart it
+    - First, copy /path/to/ethprivate/geth/static-nodes.json somewhere
+  - For example:
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>cd /path/to/ethprivate
+cp geth/static-nodes.json .
+/bin/rm -rf ./geth
+geth --identity "mst3k" --datadir ./ init ./genesis.json
+cp static-nodes.json geth/
+geth --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 \
+                --syncmode "full"
+</code></pre>
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## News and Recap
+- Game mining crypto is continuing...
+  - See [Roblox Players Are Mining Crypto Just to Get Robux](https://www.vice.com/en/article/epxkmk/roblox-mine-robux-cryptocurrency)
+- We went through a live coding exercise of Solidity
+- We saw the geth transactions to the Debts smart contract change the web page in real time
+  - But those changes weren't preserved!
+  - Here's why...
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Deviled Eggs</h2>
+<img src="https://imgs.xkcd.com/comics/deviled_eggs.png" title="The foil on the toothpick represents the blue flash." alt="Deviled Eggs" srcset="https://imgs.xkcd.com/comics/deviled_eggs_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2593/'>xkcd # 2593</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 15: Wed, March 16th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`39,866; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,660; [ETH gas](https://ethgas.watch/): 65 gwei => `$`3.63
+- Midterm is all graded
+  - We are going to go over it on Monday
+  - Average was 40.5/60 (67.5%) with a standard deviation of 7.3/60 (12.2%)
+  - Yes, there will be a curve
+  - We were strict on the word limit
+- Upcoming schedule
+  - [HW S5: dApp introduction](../../hws/dappintro/index.html) was due yesterday by midnight
+    - Average time taken was 2.05 hours; we'll see the voting results next
+    - How many people had problems with choices.php?  What web browsers were you using?
+  - [HW P5: dApp gradebook](../../hws/gradebook/index.html) is due next Tuesday by midnight
+  - We are going to have HWs due each Tuesday for the rest of the semester
+    - Smart contracts (gradebook, tokens, auction, DEX), one on zero-knowledge proofs, then two on Web3
+- Grades: everything so far has been graded
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request
+    - Exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will work through an in-class live coding exercise while we work through the [Solidity](../../slides/solidity.html#/) slide set
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## Recap
+- We had a very rapid overview of Solidity
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>For the Sake of Simplicity</h2>
+<img src="https://imgs.xkcd.com/comics/for_the_sake_of_simplicity.png" title="For the sake of simplicity, gardeners are assumed to move through Euclidean space--neglecting the distortion from general relativity--unless they are in the vicinity of a Schwarzschild Orchid." alt="For the Sake of Simplicity" srcset="https://imgs.xkcd.com/comics/for_the_sake_of_simplicity_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2587/'>xkcd # 2587</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 14: Mon, March 14th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`38,594; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,526; [ETH gas](https://ethgas.watch/): 44 gwei => `$`2.59
+- Midterm last Wednesday!  How was it?
+  - We are going to go over it, but not today
+  - It's 96% graded, and will be back before Wednesday's lecture
+- Upcoming schedule
+  - HW [S5: dApp introduction](../../hws/dappintro/index.html) is due tomorrow by midnight
+  - We are going to have HWs due each Tuesday for the rest of the semester
+    - Smart contracts (gradebook, tokens, auction, DEX), one on zero-knowledge proofs, then two on Web3
+- Grades
+  - Everything returned so far, other than the midterm
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request
+    - Exams / quizzes: submit via Gradescope, not a support request
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Please bring your computers on Wednesday
+  - The ones that you have geth installed and configured
+  - We are going to do a live coding exercise
+- Today we will start on [Solidity](../../slides/solidity.html#/)
+  - And come back later to the rest of [Ethereum](../../slides/ethereum.html#/) (we ended on, but did not go over, [slide 3.27](../../slides/ethereum.html#/2/26))
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## Recap
+- Ethereum round-up: we ended on [slide 3.27](../../slides/ethereum.html#/2/26)
+  - Ethereum is the network, ether (or ETH) is the currency
+    - One wei is $10^{-18}$ ETH; one giga-wei (aka gwei) is $10^{-9}$ ETH
+  - Account address is the first 20 bytes of the Keccak-256 hash of the ECDSA key
+  - An Ethereum transaction can hold a program, called a smart contract, which is compiled into bytecode
+    - That program has a *contract address* to find it
+    - Formed by taking the hash of the account address and nonce++
+  - Fees are called *gas*
+    - You specify how much gas you are willing to spend (aka startgas)
+    - And how much you are willing to pay for gas
+    - Different instructions use different amounts of gas
+  - Messages: calling a function (method) on a smart contract
+- Today: programming in [Solidity](../../slides/solidity.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Midterm Today (March 2, 2022)
+
+So no daily announcements
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Greek Letters</h2>
+<img src="https://imgs.xkcd.com/comics/greek_letters.png" title="If you ever see someone using a capital xi in an equation, just observe them quietly to learn as much as you can before they return to their home planet." alt="Greek Letters" srcset="https://imgs.xkcd.com/comics/greek_letters_2x.png 2x" style="image-orientation:none" class="stretch">
+<p class='center'><a href='http://xkcd.com/2586/'>xkcd # 2586</a> (<a href='https://imgs.xkcd.com/comics/greek_letters.png'>img</a>)</p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 12: Mon, Feb 28th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`41,308; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,802; [ETH gas](https://ethgas.watch/): 72 gwei => `$`4.23
+- Midterm on Wednesday!  Similar in format to the [CS 2150 exams](https://uva-cs.github.io/pdr/exams/)
+  - Paper based; closed-book, closed-Internet, closed-neighbor, closed-calculator
+- Upcoming schedule
+  - The next small HW (HW S5: dApp introduction; not yet ready) will be due Tuesday after spring break
+    - Not yet ready!
+  - The next big HW will be due the week after (smart contract programming)
+    - Smart contract HWs will be on: money, auction, cryptocurrency, DEX
+- Grades
+  - HW S1 (Google survey) & HW S4 (private Ethereum) grades, and any attendances, are in Collab's Posted Feedback tool
+  - Grades for HWs [P1](../../hws/intro/index.html), [P2](../../hws/ecdsa/index.html), [P3](../../hws/btcparser/index.html), [P4](../../hws/btcscript/index.html), & S2 (Bitcoin whitepaper quiz) are on gradescope
+    - Grade concerns for an auto-graded assignment? Let's meet within the regrade period to chat in person
+  - Still to grade: HW S3 (Ethereum whitepaper quiz)
+  - Regrade policy: submit a regrade within 1 week of when it's returned
+    - Or speak to me, or submit a support request
+    - I'm going to be handling all pending regrades over spring break
+- Midterm is this Wednesday, Mar 2nd, during lecture
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402; but Friday 2-3 this week
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will start on [Ethereum](../../slides/ethereum.html#/)
+
+
+
+## We need to name our cryptocurrency!
+Current (valid) names are below, from [Piazza @186](https://piazza.com/class/kyiriw2bvorjd?cid=186)
+- Feather (for Fake Ether)
+- CoinCoin
+- HooCoin
+- CavCoin
+- Numis (for Numismatics, the study of (physical) currency)
+- Treather (for Totally Real Ether)
+- ... others?
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## Recap
+- A comment about the importance of [HW S4: Private Ethereum blockchain](../../hws/ethprivate/index.html)
+- Current events
+  - The Ukranian invasion and cryptocurrency
+    - Russia getting around sanctions
+    - Stock market and cryptocurrency dips
+- Last time we finished [Mining](../../slides/mining.html#/)
+  - In particular, the [Proof-of-$X$ section](../../slides/mining.html#/proofofx) and [DAGs](../../slides/mining.html#/dags) sections
+- Today: onto [Ethereum](../../slides/ethereum.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Headline Words</h2>
+<img src="https://imgs.xkcd.com/comics/headline_words.png" title="Roundly-condemned headlinese initiative shuttered indefinitely." alt="Headline Words" srcset="https://imgs.xkcd.com/comics/headline_words_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2584/'>xkcd # 2584</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 11: Wed, Feb 23rd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`37,753; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,646; [ETH gas](https://ethgas.watch/): 78 gwei => `$`4.34
+- Larger programming homeworks
+  - Let's chat about [HW P4: Bitcoin scripting](../../hws/btcscript/index.html)
+  - HWs P5-P8 will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+- Grades
+  - HW S1 (Google survey) grades and any attendance quizzes are in Collab's Posted Feedback tool
+  - Grades for HWs [P1](../../hws/intro/index.html), [P2](../../hws/ecdsa/index.html) & [P3](../../hws/btcparser/index.html) on gradescope
+    - Grade concerns for an auto-graded assignment? Let's meet within the regrade period to chat in person
+  - Grading HW [P4](../../hws/btcscript/index.html) is going to be interesting...
+  - HW S2 (Bitcoin whitepaper quiz) is graded on Gradescope; regrades open until the end of this week
+- Smaller HWs
+  - Due this Friday, Feb 25th will be [HW S4: Private Ethereum blockchain](../../hws/ethprivate/index.html)
+    - A note about the version of the genesis.json file...
+    - Don't actually send 1 ETH to 0xffffffffffffffffffffffffffffffffffffffff
+      - 4 people already have...
+  - Due Tuesday, March 14th (right after spring break): HW S5: dApp introduction
+- Midterm is next Wednesday, Mar 2nd, during lecture
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402; but Friday's time will change to 1-2 starting this week
+    - Note the change in times!
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will continue with [Mining](../../slides/mining.html#/) and start on [Ethereum](../../slides/ethereum.html#/)
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## Recap
+- We started on [Mining](../../slides/mining.html#/)
+  - Got through the [Mining difficulty section](../../slides/mining.html#/difficulty)
+  - Got through the [Environmental issues section](../../slides/mining.html#/environment)
+  - Next up in Mining: [Proof-of-$X$ section](../../slides/mining.html#/proofofx) and then [DAGs](../../slides/mining.html#/dags)
+  - The onto [Ethereum](../../slides/ethereum.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Chorded Keyboard</h2>
+<img src="https://imgs.xkcd.com/comics/chorded_keyboard.png" title="And even though it all went wrong / I&#39;ll stand before the lord of song / with nothing on my tongue but &#39;I don&#39;t understand, I swear I backed up my keyboard config before messing with it&#39;" alt="Chorded Keyboard" srcset="https://imgs.xkcd.com/comics/chorded_keyboard_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2583/'>xkcd # 2583</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 10: Mon, Feb 21st
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`37,915; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,636; [ETH gas](https://ethgas.watch/): 146 gwei => `$`8.09
+- Larger programming homeworks
+  - Due Tuesday, Feb 22nd will be [HW P4: Bitcoin scripting](../../hws/btcscript/index.html)
+  - HWs P5-P8 will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+- Grades
+  - HW S1 (Google survey) grades and any attendance quizzes are in Collab's Posted Feedback tool
+  - Grades for HWs [P1](../../hws/intro/index.html), [P2](../../hws/ecdsa/index.html) & [P3](../../hws/btcparser/index.html) on gradescope
+    - Grade concerns for an auto-graded assignment? Let's meet within the regrade period to chat in person
+  - HW S2 (Bitcoin whitepaper quiz) is graded on Gradescope; regrades open until the end of this week
+- Smaller HWs
+  - Due today by the start of lecture: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
+  - Due this Friday, Feb 25th will be [HW S4: Private Ethereum blockchain](../../hws/ethprivate/index.html)
+  - Due Tuesday, March 14th (right after spring break): HW S5: dApp introduction
+- Midterm is Wednesday, Mar 2nd during lecture
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402; but Friday's time will change to 1-2 starting this week
+    - Note the change in times!
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will start on [Mining](../../slides/mining.html#/)
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## Recap
+- We finished [Bitcoin](../../slides/bitcoin.html#/)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Alice and Bob</h2>
+<img src="https://imgs.xkcd.com/comics/alice_and_bob.png" title="Yet one more reason I&#39;m barred from speaking at crypto conferences." alt="Alice and Bob"  style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/177/'>xkcd # 177</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 9: Wed, Feb 16th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`44,049; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,124; [ETH gas](https://ethgas.watch/): 65 gwei => `$`4.25
+- Larger programming homeworks
+  - How was [HW P3: BTC parser](../../hws/btcparser/index.html)?  Some comments about that...
+  - Due Tuesday, Feb 22nd will be [HW P4: Bitcoin scripting](../../hws/btcscript/index.html)
+    - We saw two parts on Monday (P2PKH & multi-sig), and will see the other two today (puzzle & cross-chain)
+  - HWs P5-P8 will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+- Grades
+  - HW S1 (Google survey) grades and any attendance quizzes are in Collab's Posted Feedback tool
+  - HW [P1](../../hws/intro/index.html) & [P2](../../hws/ecdsa/index.html): grades are on Gradescope; HW P1 test cases in [Piazza post @87](https://piazza.com/class/kyiriw2bvorjd?cid=87)
+  - HW S2 (Bitcoin whitepaper quiz) is graded on Gradescope; regrades open for "one week"
+  - Grade concerns for an auto-graded assignment? Let's meet within the regrade period to chat in person
+- Smaller HWs
+  - Due Monday, Feb 21st by the start of lecture: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
+  - Due Friday, Feb 25th will be [HW S4: Private Ethereum blockchain](../../hws/ethprivate/index.html)
+  - Due Tuesday, March 14th (right after spring break): HW S5: dApp introduction
+- Midterm is Wednesday, Mar 2nd during lecture
+- Office hours
+  - Mine: M/W 9-10 & F 1-2 in Rice 402; but Friday's time will change to 1-2 starting this week
+    - Note the change in times!
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will continue with [Bitcoin](../../slides/bitcoin.html#/); next up: [Mining](../../slides/mining.html#/)
+
+
+
+<!-- .slide: class="normal-slide-size" -->
+## Recap
+- We were chatting about Bitcoin, specifically Bitcoin Script
+  - Went over the P2PKH (pay to public key hash) example in detail
+  - Saw OP_CHECKMULTISIG in detail
+  - We discussed witnesses
+  - We saw the "standard" transactions:
+    - P2PKH (pay to public key hash)
+    - P2PK (pay to public key; obsolete)
+    - P2SH (pay to script hash)
+    - P2WPKH (pay to witness public key hash)
+    - P2WSH (pay to witness script hash)
+- We ended on [Bitcoin slide 7.36](../../slides/bitcoin.html#/6/35)
+  - Although we skipped the slide immediately prior to that one
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Tractor Beam</h2>
+<img src="https://imgs.xkcd.com/comics/tractor_beam.png" title="Did you base the saucer shape on pop culture depictions of aliens, or was that stuff based on your ships? Does the rotational symmetry help with ... hey, where are you going?" alt="Tractor Beam" srcset="https://imgs.xkcd.com/comics/tractor_beam_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2579/'>xkcd # 2579</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 8: Mon, Feb 14th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`42,181; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,883; [ETH gas](https://ethgas.watch/): 81 gwei => `$`4.90
+- Larger programming homeworks
+  - Due tomorrow (Tue, Feb 15th): [HW P3: BTC parser](../../hws/btcparser/index.html)
+  - Due Tuesday, Feb 22nd will be [HW P4: Bitcoin scripting](../../hws/btcscript/index.html) -- ready by midnight tonight
+  - HWs P5-P8 will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+- Grades
+  - HW S1 (Google survey) grades and any attendance quizzes are in Collab's Posted Feedback tool
+  - HW [P1](../../hws/intro/index.html) & [P2](../../hws/ecdsa/index.html): grades are on Gradescope; HW P1 test cases in [Piazza post @87](https://piazza.com/class/kyiriw2bvorjd?cid=87)
+  - HW S2 (Bitcoin whitepaper quiz) is being graded
+  - Grade concerns for an auto-graded assignment? Let's meet within the regrade period to chat in person
+- Smaller HWs
+  - Due Monday, Feb 21st by the start of lecture: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
+  - Due Friday, Feb 25th will be HW S4: connect to the private Ethereum blockchain
+  - Due Tuesday, March 14th (right after spring break): HW S5: dApp introduction
+- Midterm is Wednesday, Mar 2nd during lecture
+- Office hours
+  - Mine: M/W/F from 9am - 10am in Rice 402; but Friday's time will change to 1-2 starting this week
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will continue with [Bitcoin](../../slides/bitcoin.html#/)
+  - Then a slide set on mining (1? lecture), then a slide set on Ethereum/Solidity (3? lectures)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap
+- Bitcoin Whale Watch
+  - Consider [this Bitcoin transaction from Saturday, Feb 12, 2022](https://www.blockchain.com/btc/tx/30c1ed1dd14e2a0efa26f94363ceef55b17fca6b74020ac260901976e580636b)
+  - That was for 30,100 BTC, worth `$`1.3 *billion*
+- Apparently there were a lot of cryptocurrency Super Bowl commercials...
+- We are working through [Bitcoin](../../slides/bitcoin.html#/)
+  - Recall a UTXO: unspent transaction output
+  - Each transaction has one or more inputs and one or more outputs
+  - Each input has a script, called a *sigscript*
+  - Each output also has a script, called a *pubKey script*
+  - We ended on [Bitcoin slide 7.6](../../slides/bitcoin.html#/6/5)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Password Strength</h2>
+<img src="https://imgs.xkcd.com/comics/password_strength.png" title="To anyone who understands information theory and security and is in an infuriating argument with someone who does not (possibly involving mixed case), I sincerely apologize." alt="Password Strength"  style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/936/'>xkcd # 936</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 7: Wed, Feb 9th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`44,535; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,248; [ETH gas](https://ethgas.watch/): 159 gwei => `$`10.88
+- Larger programming homeworks
+  - Due last night: [HW P2: ECDSA](../../hws/ecdsa/index.html)
+  - Due next Tue (Feb 15th): [HW P3: BTC parser](../../hws/btcparser/index.html)
+  - Due Tuesday, Feb 22nd will be HW P4: Bitcoin scripting (not yet ready)
+  - HWs P5-P8 will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+- Grades
+  - HW S1 (Google survey) grades are awaiting the final course enrollment
+  - [HW P1](../../hws/intro/index.html): grades are on Gradescope (test cases released soon; regrades due one week after that)
+- Smaller HWs
+  - Due Monday, Feb 21st by the start of lecture: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
+  - Due Friday, Feb 25th will be HW S4: connect to the private Ethereum blockchain
+  - Due Tuesday, March 14th (right after spring break): HW S5: dApp introduction
+- Midterm is Wednesday, Mar 2nd during lecture
+- Office hours
+  - Mine: M/W/F from 9am - 10am in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will continue with [Bitcoin](../../slides/bitcoin.html#/)
+  - Then a slide set on mining (1? lecture), then a slide set on Ethereum/Solidity (3? lectures)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap
+- Some current events:
+  - Some lawmakers have introduced the [Crypto Tax Fairness Act](https://tittlepress.com/crypto/1522765/)
+    - Encourages using them as a currency; standardizes how gains are taxed
+    - This is different than what was mentioned on Monday
+- We were part way through [Bitcoin](../../slides/bitcoin.html#/)
+  - We discussed Merkle trees
+  - Recall a UTXO: unspent transaction output
+  - Recall a [compactSize unsigned integer](../../slides/bitcoin.html#/3/2): 1-9 bytes
+  - Bitcoin's blockchain only has 5 types:
+    - 4 byte (mostly) unsigned ints
+    - 8 byte unsigned long ints
+    - compactSize unsigned integer
+    - 32 byte hash
+    - Variable-length script
+  - Just about everything in Bitcoin's blockchain is in little-Endian form
+  - We ended on [Bitcoin slide 5.10](../../slides/bitcoin.html#/4/9)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Protocol</h2>
+<img src="https://imgs.xkcd.com/comics/protocol.png" title="Changing the names would be easier, but if you&#39;re not comfortable lying, try only making friends with people named Alice, Bob, Carol, etc." alt="Protocol" srcset="https://imgs.xkcd.com/comics/protocol_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/1323/'>xkcd # 1323</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 6: Mon, Feb 7th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`44,363; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,180; [ETH gas](https://ethgas.watch/): 275 gwei => `$`18.36
+- Larger programming homeworks
+  - Due today: HW S2: read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf))
+  - Due tomorrow (Tue, Feb 8th) by midnight: [HW P2: ECDSA](../../hws/ecdsa/index.html)
+  - Due next Tue (Feb 15th): [HW P3: BTC parser](../../hws/btcparser/index.html); this will be ready by midnight tonight
+- Grades
+  - HW S1 (Google survey) grades are awaiting the final course enrollment
+  - [HW P1](../../hws/intro/index.html): grades are released on Gradescope
+- Upcoming HWs (not yet ready!)
+  - Due Tuesday (Feb 22nd) will be HW P4: Bitcoin scripting
+  - The following week will have the midterm on Wed, Mar 2nd; the following week is spring break
+  - HWs S3 through S5 (before spring break) will be on Ethereum and smart contracts
+  - HWs P5-P8 (after spring break) will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+  - Please don't start a homework until it's released, even if it is in the repo!
+- Office hours
+  - Mine: M/W/F from 9am - 10am in Rice 402
+  - John: Mondays from 11am - 1pm in Olsson 001
+  - Matt: Tu/Th from 2pm - 3pm in Olsson 001 (note the change!)
+- Today we will finish with [encryption](../../slides/encryption.html#/) and start on [Bitcoin](../../slides/bitcoin.html#/)
+  - Then a slide set on mining (1? lecture), then a slide set on Ethereum/Solidity (3? lectures)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap
+- Thoughts on the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf))?
+- Clarification: the hash used in Ethereum is SHA-3 (ake Keccak-256)
+- Some current events:
+  - Forbes is reporting that the [IRS Says It Will Not Tax Unsold, Staked Crypto](https://www.forbes.com/sites/kamranrosen/2022/02/02/in-huge-precedent-irs-says-it-will-not-tax-unsold-staked-crypto/?sh=135dbc5f464c)
+    - We haven't seen staking yet, but think of it like your cryptocurrency gaining "interest"
+  - There is a [Bipartisan Bill to Eliminate Taxes for Small Bitcoin Transactions](https://bitcoinmagazine.com/markets/bipartisan-bill-to-eliminate-taxes-for-small-bitcoin-transactions)
+    - If the capital gains are $200 or less
+    - [Here](https://www.thebharatexpressnews.com/us-lawmakers-reintroduce-bill-to-prevent-irs-from-taxing-crypto-transactions-under-200/) is another article on this
+- We *almost* finished [encryption](../../slides/encryption.html#/)
+  - We saw random number generation and most of hashing
+  - We ended on [encryption slide 9.21](../../slides/encryption.html#/8/20)
+  - I added a [slide on security level](../../slides/encryption.html#/6/25)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>2010 and 2020</h2>
+<img src="https://imgs.xkcd.com/comics/2010_and_2020.png" title="2030: &quot;I just bought a house for one bitcoin. No, it&#39;s the equivalent of a dollar. Houses are often transferred for a nominal fee because the buyer is taking responsibility for containing the holo-banshees in the attic.&quot;" alt="2010 and 2020" srcset="https://imgs.xkcd.com/comics/2010_and_2020_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2280/'>xkcd # 2280</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 5: Wed, Feb 2nd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`37,629; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,712; [ETH gas](https://ethgas.watch/): 278 gwei => `$`15.80
+- Homeworks
+  - Due Tue, Feb 1st (yesterday) by midnight: [HW P1: Introductory HW](../../hws/intro/index.html)
+    - Grades can't be released until the late period ends
+    - Recall the late policy: 25% off per day; can be turned in up until midnight on Friday
+  - Due Mon, Feb 7th (next Monday) by the start of lecture: HW S2: read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf))
+  - Due Tue, Feb 8th (next Tuesday) by midnight: [HW P2: ECDSA](../../hws/ecdsa/index.html)
+- Upcoming HWs (not yet ready!)
+  - HWs P3 will be a Bitcoin blockchain parser, and P4 will be a Bitcoin scripting HW
+  - HWs S3 through S5 will be on Ethereum and smart contracts
+  - HWs P5-P8 will be on Ethereum and smart contracts (currently: money, auction, cryptocurrency, DEX)
+  - Even if a homework is in the repo, please do not start it until I say it's ready, as there are likely to be lots of changes before I release it
+- My office hours are 9am - 10am on M/W/F
+- We have two graduate teaching assistants!!!!
+  - John has office hours Mondays from 11-1
+  - Matt's office hours are changing to Tuesday/Thursday 2-3 (note the change!)
+    - This week his Thursday office are are via Zoom; see Piazza post
+  - Next week all TA office hours are in Olsson 001 (most likely)
+- Today we will continue (and possibly finish) with [encryption](../../slides/encryption.html#/)
+  - Next up: [Bitcoin](../../slides/bitcoin.html#/), which will be most or all of next week (2? lectures)
+  - Then a slide set on mining (1? lecture), then a slide set on Ethereum/Solidity (3? lectures)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Corrections & Clarifications
+- A bunch of typo fixes and bugfixes to the [encryption slide set](../../slides/encryption.html#/) that were encoutered during lecture
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap
+- We nailed ECDSA to the wall
+  - Recall that a 256-bit ECDSA signature is considered about as hard to crack as a 3072-bit RSA signature
+  - We skipped the [how to encode ECDSA points](../../slides/encryption.html#/6/8)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Cryptography</h2>
+<img src="https://imgs.xkcd.com/comics/cryptography.png" title="If you got a big keyspace, let me search it." alt="Cryptography"  style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/153/'>xkcd # 153</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 4: Mon, Jan 31st
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`38,453; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,671; [ETH gas](https://ethgas.watch/): 157 gwei => `$`8.82
+- Homeworks
+  - Due tomorrow (Tue, Feb 1st) by midnight: [HW P1: Introductory HW](../../hws/intro/index.html)
+    - Gradescope submission is ready; note the two output changes made!
+    - Grades can't be released until the late period ends
+    - Recall the late policy: 25% off per day
+  - Due next Tuesday (Feb 8th) by midnight: [HW P2: ECDSA](../../hws/ecdsa/index.html)
+  - HW S2: due next Monday (Feb 7th) by the start of lecture: read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf))
+- Upcoming HWs (not yet ready!)
+  - HWs S3 through S5 will be on Ethereum and smart contracts
+  - HWs P3 and P4 will be a Bitcoin and its blockchain
+  - HWs P5 (and beyond) will be on Ethereum and smart contracts
+  - Even if a homework is in the repo, please do not start it until I say it's ready, as there are likely to be lots of changes before I release it
+- My office hours are 9am - 10am on M/W/F
+- We have two graduate teaching assistants!!!!
+  - John has office hours Mondays from 11-1
+  - Matt has office hours Mondays from 5-6 and Thursdays from 2-3
+    - On Zoom this week; see Piazza post
+  - Next week all TA office hours are in Olsson 001
+- Today we will continue with [encryption](../../slides/encryption.html#/)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Corrections & Clarifications
+- Nothing!  Yee-haw!!!
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap
+- We finished discussing RSA
+- Recall the goals for public-key cryptography
+- And one-time pads from the lecture before that one
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Alternate Currency</h2>
+<img src="https://imgs.xkcd.com/comics/alternate_currency.png" title="For the first time ever, the phrase &#39;I&#39;d like to thank everyone at 4chan for making me successful and happy&#39; is uttered." alt="Alternate Currency"  style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/512/'>xkcd # 512</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 3: Wed, Jan 26th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`37,735; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,588; [ETH gas](https://ethgas.watch/): 261 gwei => `$`14.40
+- HW S1: course introduction Google survey due today by midnight
+  - The link is on the Collab landing page
+- [HW P1: Introductory HW](../../hws/intro/index.html) due next Tuesday (Feb 1st) by midnight
+  - The links are fixed on it now...
+  - Gradescope submission will be ready on Monday
+- HW P2, on encryption, will be out on Monday
+- Upcoming HWs (not yet ready!)
+  - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), due late next week
+  - HWs S3 through S5 will be on Ethereum and smart contracts
+  - HWs P3 and P4 will be a Bitcoin and its blockchain
+  - HWs P5 (and beyond) will be on Ethereum and smart contracts
+- Even if a homework is in the repo, please do not start it until I say it's ready...
+  - ... as there are likely to be lots of changes before I release it
+- My office hours are 9am - 10am on M/W/F
+  - I will hold additional ones, as needed, for given assignments
+- Today we will continue with [encryption](../../slides/encryption.html#/)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Corrections & Clarifications
+- BTC reward includes transaction fees
+  - See the latest block [here](https://www.blockchain.com/explorer)
+- Inflation versus deflation re: BTC growth
+- Mining
+  - The reward address prevents using a mining pool but submitting it yourself
+- "Ledger", meaning non-mined transactions, is my term for clarity, and not an official term
+  - It's actually called 'mempool' -- the pool of transactions still in memory (as opposed to in a block)
+  - You can see it's size [here](https://www.blockchain.com/explorer)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap
+- We finished [cryptocurrency overview](../../slides/overview.html#/)
+- Started on [encryption](../../slides/encryption.html#/)
+  - About one-time pads
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+    <section class="center">
+<h2 class='xkcd'>Blockchain</h2>
+<img src="https://imgs.xkcd.com/comics/blockchain.png" title="Blockchains are like grappling hooks, in that it&#39;s extremely cool when you encounter a problem for which they&#39;re the right solution, but it happens way too rarely in real life." alt="Blockchain" srcset="https://imgs.xkcd.com/comics/blockchain_2x.png 2x" style="image-orientation:none" >
+<p class='center'><a href='http://xkcd.com/2267/'>xkcd # 2267</a></p>
+    </section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 2: Mon, Jan 24th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`35,797; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,351; [ETH gas](https://ethgas.watch/): 143 gwei => `$`7.05
+- About CS 3710: ICS as a pre-req...
+- HW S1: course introduction Google survey due this Wed (Jan 26) by midnight
+  - The link is on the Collab landing page
+- [HW P1: Introductory HW](../../hws/intro/index.html) due by the end of the week
+  - When would you all like homeworks due?
+- Upcoming HWs (not yet ready!)
+  - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), possibly due Wed, Feb 2nd
+  - HWs S3 & S4 (& maybe S5) will be on Ethereum and smart contracts
+  - HW P2 will be on encryption
+  - HWs P3 and P4 will be a Bitcoin and its blockchain
+- My office hours are 9am - 10am on M/W/F
+  - I will hold additional ones, as needed, for given assignments
+- Today's topics:
+  - Likely finish [cryptocurrency overview](../../slides/overview.html#/)
+  - Then start on [encryption](../../slides/encryption.html#/)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Recap: Bitcoin terms
+- Wallet: a set of public/private key pairs
+- Bitcoin address: the public key of one of those key pairs
+- Node: a machine that takes part in the peer-to-peer Bitcoin network
+  - The BTC node software looks like [this](https://upload.wikimedia.org/wikipedia/commons/7/7c/Bitcoin-core-v0.10.0.png)
+- Ledger: the transactions that have just occurred, and have not yet become "official"
+- Block: a list of transactions that have occurred "officially", along with the hash of the previous block
+- Blockchain: all the blocks
+  - BTC is at about 720,000 blocks in the blockchain
+  - Ethereum is at about 1.4 million blocks in the blockchain
+- Miner: we'll get to that, but it's typically NOT a node
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../../slides/reveal.js/dist/reveal.js'></script><script src='../../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../../slides/reveal.js/plugin/notes/notes.js'></script><script src='../../slides/reveal.js/plugin/search/search.js'></script><script src='../../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+
+    
+  </body>
+</html>
