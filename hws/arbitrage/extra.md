@@ -72,7 +72,12 @@ If you are trading $\delta_{t}$ TC to the DEX (note that $\delta_{t}$ must be po
         - $d=-p_t$
     - So we can rewrite that formula as:
         - $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$
+            - That formula does not render well in HTML, but the entire parenthetical is what we are taking the square root of
         - So once we know the DEX values ($x_d$, $y_d, $k_d$, and the fees $f$) and the current prices ($p_e$ and $p_t$), we can compute the points for the maxima and minima
         - Note that these are not guaranteed to make a profit!  But if they do make a profit, one of them will make the *most* and/or *least* profit.
         - If we are trading in ETH, the formula is similar: $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$
         - Because the variables in the parenthetical can never be negative, the square root will always return real values
+    - We can simplify these equations somewhat.  Although there is a &#177; (plus-minus), subtracting that value would make the overall $\delta_t$ or $\delta_e$ value negative, which doesn't make sense in this case -- what we derived is how much we are trading in to the DEX, not how much we are getting out of the DEX.  So we will just replace the &#177; with a regular plus symbol.
+        - If we are trading in TC: $\delta_{t}=-y_d+$ &#8730; $(f \ast k_d \ast p_e/p_t)$
+        - If we are trading in ETH: $\delta_{e}=-x_d+$ &#8730; $(f \ast k_d \ast p_t/p_e)$
+        - As above, those formulas do not render well in HTML, but the entire parenthetical is what we are taking the square root of

@@ -50,6 +50,7 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Larger Programming Homeworks
 
+- Due Tue, 5/3 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
 - Due Tue, 4/26 by midnight: [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
 - Due Tue, 4/19 by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
 - Due Tue, 4/12 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
@@ -100,6 +101,9 @@ The list of lecture topics can be found on the [slides page](../slides/index.htm
 22. Mon, Apr 11: [zkSNARKs](../slides/zksnarks.html#/) to slide 5.29
 23. Wed, Apr 13: finished [zkSNARKs](../slides/zksnarks.html#/)
 24. Mon, Apr 18: [Scalability](../slides/scalability.html#/) to slide 6.7
+25. Wed, Apr 20: finished [Scalability](../slides/scalability.html#/)
+26. Mon, Apr 25: started and finished [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/) to slide 4.9
+
 
 ## Legal Issues
 

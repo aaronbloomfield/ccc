@@ -44,10 +44,11 @@ through the course server endpoint.</p>
 <pre><code>w3 = Web3(Web3.IPCProvider(&#39;/path/to/geth.ipc&#39;))</code></pre>
 <p>This assumes you have started up a node as per the <a
 href="../ethprivate/index.html">Private Ethereum Blockchain
-assignment</a> (<a href="(../ethprivate/index.md)">md</a>.</p>
-<p>Note: it is unclear how to do this in Windows, as I do not have a
-Windows machine that I can test this on. When/if I find out how, I will
-update this section.</p>
+assignment</a> (<a href="(../ethprivate/index.md)">md</a>).</p>
+<p>In Windows, according to <a
+href="https://ethereum.stackexchange.com/questions/76036/how-do-i-connect-geth-to-web3-py-using-ipc-on-windows">this
+post</a>, you do not pass anything in to the function, as shown here:
+<code>w3 = Web3(Web3.IPCProvider()</code>.</p>
 <p>To connect via the course server:</p>
 <pre><code>w3 = Web3(Web3.WebsocketProvider(&#39;wss://&lt;your-provider-url&gt;&#39;))</code></pre>
 <p>The full URL for the course server is on the Collab landing page.</p>
@@ -110,6 +111,8 @@ transaction, sign it, and then transmit it to the blockchain.</p>
     &#39;from&#39;: my_address,
     &#39;nonce&#39;: w3.eth.get_transaction_count(my_address)
     })</code></pre>
+<p>Parameters, if there were any, would go in the parenthesis after the
+method name, not in the <code>buildTransaction()</code> parentheses.</p>
 <p>Other fields could be added as well – if we wanted to send some wei
 in with the transaction, such as to a <code>payable</code> function,
 then we would add a <code>value</code> key with the (integer) wei amount
@@ -166,6 +169,7 @@ href="https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/">here</a>
         &#39;from&#39;: tx[&#39;from&#39;],
         &#39;value&#39;: tx[&#39;value&#39;],
         &#39;data&#39;: tx[&#39;input&#39;],
+        &#39;gas&#39;: tx[&#39;gas&#39;],
     }
     # replay the transaction locally:
     try:

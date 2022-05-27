@@ -306,26 +306,42 @@ table.compact tr td {
   padding: 4px;
 }
 
+/* for when it is going as the start of the <li> bullet point */
 img.cclogo {
   width: 50px;
+  max-height: 50px;
   float: left;
   background-color: transparent !important;
   margin-right: 10px !important;
   margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
+/* on a slide column heading page, it appears above the <h1> title and very large */
 img.cclogotitle {
   width: 200px;
   background-color: transparent !important;
   margin-top: auto;
 }
 
+/* on a slide column heading page, it appears below the <h1> title and small */
 img.cclogosubtitle {
   width: 50px;
   background-color: transparent !important;
   margin-top: auto;
   display: inline !important;
   text-align: center;
+}
+
+/* on a regular slide, it appears at the start of the <h2> slide title */
+img.cclogoheader {
+  max-width: 70px;
+  max-height: 70px;
+  background-color: transparent !important;
+  margin-top: auto;
+  display: inline !important;
+  text-align: center;
+  vertical-align:  middle;
 }
 
 .normal-slide-size li {
@@ -373,4 +389,8 @@ img.flag {
   border: 1px solid white;
   margin: 0;
   margin-right: 10px !important;
+}
+
+pre.nobottom {
+  margin-bottom: -40px;
 }

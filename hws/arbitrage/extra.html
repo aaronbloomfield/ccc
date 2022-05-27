@@ -212,7 +212,11 @@ class="math inline"><em>d</em> =  − <em>p</em><sub><em>t</em></sub></s
 <li><span
 class="math inline"><em>δ</em><sub><em>t</em></sub> =  − <em>y</em><sub><em>d</em></sub>±</span>
 √ <span
-class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span></li>
+class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span>
+<ul>
+<li>That formula does not render well in HTML, but the entire
+parenthetical is what we are taking the square root of</li>
+</ul></li>
 <li>So once we know the DEX values (<span
 class="math inline"><em>x</em><sub><em>d</em></sub></span>, $y_d, <span
 class="math inline"><em>k</em><sub><em>d</em></sub></span>, and the fees
@@ -229,6 +233,25 @@ class="math inline"><em>δ</em><sub><em>e</em></sub> =  − <em>x</em><s
 class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span></li>
 <li>Because the variables in the parenthetical can never be negative,
 the square root will always return real values</li>
+</ul></li>
+<li>We can simplify these equations somewhat. Although there is a ±
+(plus-minus), subtracting that value would make the overall <span
+class="math inline"><em>δ</em><sub><em>t</em></sub></span> or <span
+class="math inline"><em>δ</em><sub><em>e</em></sub></span> value
+negative, which doesn’t make sense in this case – what we derived is how
+much we are trading in to the DEX, not how much we are getting out of
+the DEX. So we will just replace the ± with a regular plus symbol.
+<ul>
+<li>If we are trading in TC: <span
+class="math inline"><em>δ</em><sub><em>t</em></sub> =  − <em>y</em><sub><em>d</em></sub>+</span>
+√ <span
+class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span></li>
+<li>If we are trading in ETH: <span
+class="math inline"><em>δ</em><sub><em>e</em></sub> =  − <em>x</em><sub><em>d</em></sub>+</span>
+√ <span
+class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span></li>
+<li>As above, those formulas do not render well in HTML, but the entire
+parenthetical is what we are taking the square root of</li>
 </ul></li>
 </ul></li>
 </ul>

@@ -1199,11 +1199,11 @@ OP_EQUAL
 - These changeable fields are *malleable*
 - This was used in an [attack in 2015](https://cointelegraph.com/news/the-ongoing-bitcoin-malleability-attack)
   - If you change the malleable data, it creates a different transaction hash, and then that can be resubmitted and (possibly) double-spent
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n" id='segwit'><textarea>
 ## Solution: Witness
-- Defined in [BIP 141](https://en.bitcoin.it/wiki/BIP_0141) from 2015
+- Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki) from 2015
  - A *witness* is a new field in all transactions
 - A normal transaction (P2SH or P2PKH) contains the (hash of the) unlocking signature
   - in the pubKey script
@@ -1211,9 +1211,9 @@ OP_EQUAL
   - Which is called the *witness*
 - This separate section is separate, or segregated, from the rest of the transaction
   - Called the *segregated witness* or *segwit*
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Witness structure
 
 <table class='transparent'>

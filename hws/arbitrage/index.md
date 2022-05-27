@@ -129,15 +129,15 @@ The formulas that we need are (derivations [here](extra.html) ([md](extra.md))):
 
 For a single trade, want to find the maximum profit for the two $h_{after}$ formulas.  We take the derivative, then set it equal to zero to find the roots (details [here](extra.html) ([md](extra.md)), if you are interested).  The roots will give us the maximum and/or minimum points.  This gives us:
 
-- If we traded in TC, then the maxima / minima are at: <!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ --> <img src="formulas/formulas/img7.svg" class="formulabig">
+- If we traded in TC, then the maxima or minima is at: <!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ --> <img src="formulas/formulas/img7.svg" class="formulabig">
     - Note that $p_e$ is in the numerator in that fraction, which is different than the fraction in the next formula
-- If we traded in ETH, then the maxima / minima are at: <!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ --> <img src="formulas/formulas/img9.svg" class="formulabig">
+- If we traded in ETH, then the maxima or minima is at: <!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ --> <img src="formulas/formulas/img9.svg" class="formulabig">
     - Note that $p_t$ is in the numerator in that fraction, which is different than the fraction in the previous formula
 <!-- - Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of -->
 
 A few notes on those:
 
-- If you want to cut-and-paste these formulas into your program, the [derivations page](extra.html) ([md](extra.md))) has them in text form
+- If you want to cut-and-paste these formulas into your program, the [derivations page](extra.html) ([md](extra.md)) has them in text form
 - Neither of these are guaranteed to make a profit!  But if a profit can be made, then one of those will be the maximum profit.
 - How much profit is determined from the $h_{after}$ formulas, above
 - Because the variables in the square root can never be negative, and because the fraction denominators can never be zero, the square root will always return real values
