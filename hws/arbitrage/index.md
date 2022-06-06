@@ -11,12 +11,8 @@ Regardless of what you named your token cryptocurrency, we are going to refer to
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-- Sun, 4/24: bug fix to Arbitrage.sol as per [PR#4](https://github.com/aaronbloomfield/ccc/pull/4)
-- Sun, 4/24: updated Arbitrage.sol's `setup()` function to make it be usable with less gas; the functionality of it is still the same
-- Fri, 4/22: fixed some bugs in the `output()` function
-- Fri, 4/22: changed the `reset()` line in `Arbitrage::setup()` to `revert()`
 
 ### Pre-requisites
 

@@ -10,6 +10,11 @@ In this assignment you will write a smart contract, in Solidity, to handle aucti
 
 Once deployed to our private Ethereum blockchain, anybody should be able to initiate an auction by transferring an NFT to the smart contract.  Anybody could then submit a bid to the auction.  To prevent somebody from placing a bid and then not paying, one has to transfer ETH to the smart contract when a bid is placed -- it is the transfer of this ETH that actually places the bid.  Anybody who is outbid will have their ETH returned, and they can choose (or not) to place a higher bid.  Once the auction is completed, the ETH from the winning bid is transferred to the person who initiated the auction, and the NFT is transferred to the winning bidder.
 
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
 ### Pre-requisites
 
 Writing this homework will require completion of the following assignments:

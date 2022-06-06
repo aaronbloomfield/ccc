@@ -9,6 +9,11 @@ In this assignment you will be writing a series of Bitcoin scripts to enact tran
 
 There are four separate Bitcoin scripts that you will need to write.  You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/).  You will also need to refer to the [Bitcoin Script page](https://en.bitcoin.it/wiki/Script).
 
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
 ### Languages
 
 This assignment uses the [Python bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is NOT installed on the VirtualBox image, so you will have to install it there as well.

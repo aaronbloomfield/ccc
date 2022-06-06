@@ -14,6 +14,11 @@ Your program will provide exactly one line of output to the standard output: eit
 The Bitcoin block format that is being parsed for this assignment is the format of the first many blocks -- specifically before any BIPs were proposed and enacted.  Thus, the blocks will not contain fields such as the height number.  Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).
 
 
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
 ### Languages
 
 In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Four languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.6.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it.

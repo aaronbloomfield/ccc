@@ -9,13 +9,6 @@ In this assignment you are going to create a Decentralized Autonomous Organizati
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-- Mon, 4/18: updated the `wget` commands:
-    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js`
-    - `wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map`
-- Mon, 4/18: added the two `chmod` commands that you should run on portal to make sure the permissions are set correctly
-    - `chmod 711 ~ ~/public_html`
-    - `chmod 644 ~/public_html/dao.html ~/public_html/web3*`
-
 
 ### Pre-requisites
 

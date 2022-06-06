@@ -7,6 +7,11 @@ Connecting to the Private Ethereum Blockchain
 
 We will be developing applications for the Ethereum blockchain.  We won't be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.).  Instead, we are going to use a private Ethereum blockchain -- a test network -- that has been set up for this class.  This assignment is to connect to it, explore it, and perform a few operations.
 
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
 ### Pre-requisites
 
 This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through `pip` (or `pip3`).  This is already taken care of in the VirtualBox image.  Don't worry if you don't know Python -- we give you the exact code to use.

@@ -10,12 +10,8 @@ You are going to create a web interface for the Auctioneer contract you created 
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-<!-- So far there aren't any significant changes to report. -->
-
-- Sun, 5/1: Added a few entries to the Troubleshooting section
-- Fri, 4/29: Clarified that the NFT function to call is `safeTransferFrom()` (not `transferFrom()`)
 
 ### Pre-requisites
 

@@ -15,6 +15,11 @@ We realize that the default random number generators in most (all?) programming 
 
 In this homework, it is critical to carefully test each stage of the assignment.  Each part requires that the previous part works properly -- and, if it does not, then it will be exceedingly difficult to debug your program.  If you get stuck, the best way to figure out where the bug is is to print out the values at each step, and verify them by hand (or via online calculators, linked to below).
 
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
 ### Background
 
 You will need to be familiar with the [Encryption slide set](../../slides/encryption.html#/), specifically the three sections that deal with the content in this assignment: [elliptic curves](../../slides/encryption.html#/elliptic), [finite fields](../../slides/encryption.html#/fields), and [ECDSA](../../slides/encryption.html#/ecdsa).  What this assignment is asking for will make no sense if you are not familiar with that material.

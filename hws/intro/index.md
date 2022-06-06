@@ -30,6 +30,11 @@ described in the [Cryptocurrency overview slide
 set](../../slides/overview.html#/) slide set.
 
 
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
 ## Languages
 
 As mentioned above, you may use any programming language for this, but

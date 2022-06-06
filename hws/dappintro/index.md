@@ -9,6 +9,11 @@ This homework will take you through the process of compiling, deploying, and run
 
 Giving credit where credit is due: The particular smart contract being used here was inspired by the one in [this github repo](https://github.com/dappuniversity/election) by Dapp University (disclaimer: they are not an actual accredited university; but they do have great online tutorials). 
 
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
 ### Pre-requisites
 
 You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You should have a few (fake) ETH.  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You will also need to launch a geth terminal, which is also described in the that assignment.
