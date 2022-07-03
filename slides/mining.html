@@ -62,6 +62,7 @@ line-height:120%;
 [Environmental issues](#/environment)  
 [Proof-of-$X$](#/proofofx)  
 [DAGs](#/dags)  
+[Forks & Orphan Nodes](#/forks)  
 	</textarea></section>
 
 <!-- ============================================================ -->
@@ -801,6 +802,170 @@ Note that UTXOs are not only in the bottom level
 
 </section>
 	
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="forks" data-markdown class="center"><textarea>
+# Forks & Orphan Nodes
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n" data-transition="none" data-transition-speed="fast"><textarea>
+## Cryptocurrency "Forks"
+- There are four different meanings of "fork" with regard to cryptocurrencies
+  - Uncle / orphan / ommer nodes
+  - Soft fork 
+  - Hard fork
+  - Source code fork
+    </textarea></section>
+
+
+<section data-markdown data-transition="none" data-transition-speed="fast" data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.1.svg" style="width:100px;padding-left:86px;padding-right:86px">
+
+- Given a starting block number (here, 1000)
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.2.svg" style="width:120px;padding-left:76px;padding-right:76px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.3.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.4.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.5.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+- And then one more
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer nodes
+
+<img src="images/mining/orphan/orphan.dot.6.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+- And then one more
+- Eventually the block with the TXN is discarded
+  - As it is not part of the longest chain anymore
+    </textarea></section>
+
+
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Uncle / Orphan / Ommer nodes
+- Bitcoin calls these *orphan nodes*
+- Ethereum used to call them *uncle nodes*
+  - But that is gender-specific
+  - Now they are called *ommer nodes*
+    - Ommer is a gender-neutral version of aunt or uncle
+    - Like "sibling" instead of brother or sister
+- What happens to that TXN?
+  - Other miners will likely pick it up
+  - Wallet software (or equivalent) will re-send it if it "disappears"
+    - Or at least notify you that it was not mined
+- This is why we can't all mine the blockchian in this class!
+  - There is no effective way to ensure it is not discarded
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Soft forks
+
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+
+- Non-token crypto-currencies usually have a group of developers
+  - Occasional changes are made to the protocol / mining algorithm / etc.
+  - Bitcoin via [BIPs](https://github.com/bitcoin/bips/), Ethereum via [EIPs](https://github.com/ethereum/EIPs/), etc.
+- Sometimes called a *consensus fork*
+- Generally all the uses of the cryptocurrency (eventually) adopt the change
+- These forks are backward-compatible
+  - At least until everybody switches over
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Soft forks
+
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+
+- How to get all the miners to adopt it?
+  - Release the updated source code
+  - The agreed-upon change will state that at some point, all further blocks *must* have that change
+  - That point could be when:
+    - Some number (say, 75%) of the miners have adopted this change
+    - After some date/time
+- Example: Bitcoin's [Segregated Witness](bitcoin.html#/segwit) from 2015
+  - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
+
+
+
+## Hard forks
+- A change is proposed that some users do *NOT* want to adopt
+  - Or that is not backwards-compatible
+- Example: Ethereum Classic
+  - Recall that The &ETH;AO had a bug, which endangered the perception and trust of the Ethereum as a whole
+  - The fix was to roll back the blockchain to before the hack to fix it
+  - This [split the users](applications.html#/etcsplit), as some didn't want to make the change
+  - <img src="images/logos/etc-coin-symbol.svg" class="cclogo"> Now Ethereum Classic is the blockchain *without* the fix <br clear='all'>
+  - <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum is the blockchain *with* the fix <br clear='all'>
+
+
+
+## Source code forks
+- You can make a new cryptocurrency by:
+  - Take a tested open source code base
+  - Make a the modifications you want
+- <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> The [Ravencoin source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin)
+- Changes:
+  - 1000x as many coins
+  - Native support for assets
+    - Could be NFTs, but can represent any digital or physical item
+  - Different PoW hashes to avoid ASIC monopolization
+  </textarea></section>
+
+</section>
+  
 <!-- ============================================================ -->
 	
       </div>

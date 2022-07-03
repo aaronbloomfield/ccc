@@ -52,7 +52,7 @@ line-height:120%;
 </p></div>
 <p class='titlep'>&nbsp;</p>
 
-## Stablecoins
+## Stablecoins & Oracles
 	</textarea></section>
 
 	<section data-markdown><textarea>
@@ -63,6 +63,7 @@ line-height:120%;
 [Uncollateralized centralized](#/uncollcent)  
 [Collateralized algorithmic](#/collalg)  
 [Uncollateralized algorithmic](#/uncollalg)  
+[Oracles](#/oracles)  
 [Case study: LUNA/UST](#/casestudy)  
 	</textarea></section>
 
@@ -316,6 +317,103 @@ As per https://cs251.stanford.edu/lectures/lecture9.pdf, DAI is undercollaterali
       - <img src="../slides/images/logos/tribe-coin-symbol.svg" class="cclogo"> it's governance token is [TRIBE](https://coinmarketcap.com/currencies/tribe/) <br clear='all'>
   - Seigniorage shares: Basis, Maker (backstop), Undercollateralized stablecoins (backstop)
     - backing: confidence; peg mechanism: supply expansion and contraction; risks: death spiral, oracle dependency
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="oracles" data-markdown class="center"><textarea>
+# Oracles
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Oracles
+- A smart contract can only use the data on the blockchain
+- Complex situations require more data than that:
+  - Current exchange rates
+  - Random numbers
+  - The ability to interact with other blockchains
+- The solution: Oracles
+
+> Oracle (n): a person who delivers authoritative, wise, or highly regarded and influential pronouncements
+
+
+
+## Oracles
+We can easily create an oracle:
+
+```
+contract Oracle {
+    address oracle;
+    uint public price;
+
+    constructor() {
+        oracle = msg.sender;
+    }
+
+    function updatePrice (uint update) external {
+        require (msg.sender == oracle, 
+                 "Only the Oracle can update this");
+        price = update;
+    }
+}
+```
+- Getting people to trust it is another matter
+
+
+
+## Oracle: trusted signer
+![](images/stablecoins/oracles/oracles.dot.1.svg)
+- The oracle signer (aka deployer) updates the price, and anybody can read it
+  - This works well when the source is centralized
+  - Such as the oracles on Ethereum that interact with the Polkadot or Polygon chains
+- But a corrupt signer can maliciously manipulate the price
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Oracle: $m$ of $n$ signers
+![](images/stablecoins/oracles/oracles.dot.2.svg)
+- So we have multiple signers
+- We expect some variance in the values
+  - Different exchanges will provide slightly different exchange rates
+- We have to take the *median* value, not the *mean*
+  - We'll see why next
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Oracle: $m$ of $n$ signers
+![](images/stablecoins/oracles/oracles.dot.3.svg)
+- What if some nodes are corrupted?
+- We have to take the *median* value, not the *mean*
+  - Here the mean is `$`71
+  - The median is `$`101
+- If more than half are trustworthy, then the oracle will have a correct price
+  - Less than half can be traitors!
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Oracle: Schelling oracles
+![](images/stablecoins/oracles/oracles.dot.4.svg)
+- Each signer puts a *stake* in their vote
+- We accept the value that has the most stake
+- Traitors have their stake *slahsed*
+  - Although we allow for some variance in the price
+  - But if we allow for too much variance, a traitor can just give a valid, but low, price
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Schelling oracles & whales
+![](images/stablecoins/oracles/oracles.dot.5.svg)
+- A *whale* could put in a huge stake to manipulate the price
+  - Knowing full well s/he will lose their stake
+  - Presumably so s/he can make a (bigger) profit off of the price difference
 </textarea></section>
 
   </section>
