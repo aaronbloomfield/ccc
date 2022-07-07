@@ -42,6 +42,8 @@ Step 2: In that data directory, copy the [genesis.json](genesis.json) file in th
                 "homesteadBlock": 0,
                 "byzantiumBlock": 0,
                 "constantinopleBlock": 0,
+                "petersburgBlock": 0,
+                "istanbulBlock": 0,
                 "eip150Block": 0,
                 "eip155Block": 0,
                 "eip158Block": 0
@@ -58,7 +60,7 @@ Step 3: You have to change the `chainId` value on that line.  The value we are u
 Step 4: Initialize geth with the following command (you have to change three things before you run it):
 
 ```
-geth --identity "mst3k" --datadir /path/to/ethprivate/ init /path/to/ethprivate/genesis.json
+geth --datadir /path/to/ethprivate/ init /path/to/ethprivate/genesis.json
 ```
 What you have to change in that command:
 
@@ -72,7 +74,7 @@ Step 5: Create a `geth/static-nodes.json` file in your data directory.  The `get
 Step 6: Start geth.  Run the following command, changing the data directory to your own, and changing the networkid value to the `chainId` value that you set in the genesis.json file, above.
 
 ```
-geth --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1
+geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1
 ```
 
 Once running, it should list a peer count (on the right) of at least 1.  It will take a minute or so for that to happen.  Assuming it does, you are now connected our private Ethereum blockchain!

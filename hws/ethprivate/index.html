@@ -72,6 +72,8 @@ directory. This file lists the parameters for our private blockchain
                 &quot;homesteadBlock&quot;: 0,
                 &quot;byzantiumBlock&quot;: 0,
                 &quot;constantinopleBlock&quot;: 0,
+                &quot;petersburgBlock&quot;: 0,
+                &quot;istanbulBlock&quot;: 0,
                 &quot;eip150Block&quot;: 0,
                 &quot;eip155Block&quot;: 0,
                 &quot;eip158Block&quot;: 0
@@ -87,7 +89,7 @@ workspace’s landing page. Nothing herein will work properly if you don’t
 change that value!</p>
 <p>Step 4: Initialize geth with the following command (you have to
 change three things before you run it):</p>
-<pre><code>geth --identity &quot;mst3k&quot; --datadir /path/to/ethprivate/ init /path/to/ethprivate/genesis.json</code></pre>
+<pre><code>geth --datadir /path/to/ethprivate/ init /path/to/ethprivate/genesis.json</code></pre>
 <p>What you have to change in that command:</p>
 <ul>
 <li>For the identity, replace mst3k with your userid. That’s the node
@@ -110,7 +112,7 @@ the <code>geth/</code> sub-directory!</p>
 directory to your own, and changing the networkid value to the
 <code>chainId</code> value that you set in the genesis.json file,
 above.</p>
-<pre><code>geth --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1</code></pre>
+<pre><code>geth --identity &quot;mst3k&quot; --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1</code></pre>
 <p>Once running, it should list a peer count (on the right) of at least
 1. It will take a minute or so for that to happen. Assuming it does, you
 are now connected our private Ethereum blockchain!</p>

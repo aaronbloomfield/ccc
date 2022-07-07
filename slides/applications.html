@@ -469,6 +469,16 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
 
 
+<!-- .slide: class="right-float-img" -->
+## Impermanent Loss Insurance
+![](images/applications/bancor-insurance.webp)
+- [Bancor](https://home.bancor.network/) offers insurance against impermanent loss
+- ... unless they might lose money, then [they will pause it](https://web3isgoinggreat.com/?id=defi-insurer-bancor-pauses-their-impermanent-loss-protection-due-to-hostile-market-conditions)
+  - Posting on the right from [Web3 is going just great](https://web3isgoinggreat.com/?id=defi-insurer-bancor-pauses-their-impermanent-loss-protection-due-to-hostile-market-conditions)
+  - Bancor's [June 19, 2022 update about this](https://blog.bancor.network/market-conditions-update-june-19-2022-e5b857b39336)
+
+
+
 ## Rug Pulls
 - When the DEX owner runs off with your coins
 - Recall `selfdestruct()`
@@ -536,6 +546,11 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
     <section id="daos" data-markdown class="center"><textarea>
 # Decentralized Autonomous Organizations (DAOs)
+
+<img src="images/logos/dai-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/etc-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/mkr-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -674,10 +689,57 @@ receive() external payable {
     </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
+## DAO as currency governance
+- Create a currency or blockchain
+  - And a separate DAO to manage it
+    - Issue token(s) (either ERC-20 or ERC-721) to allow people to vote
+- Example from [Stablecoins](stablecoins.html#/collalg):
+  - <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> Dai ([DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/)) is the stablecoin <br clear='all'>
+  - <img src="images/logos/mkr-coin-symbol.svg" class="cclogo"> Maker ([MKR](https://coinmarketcap.com/currencies/maker/)) is the governance token <br clear='all'>
+
+
+
+## DAO Governance Attack
+- Buy enough of a governance token for a DAO (or other DeFi system)
+  - Especially when it's cheap or when its price has crashed
+  - Then manipulate the associated currency / platform
+- Example: [April 2022 attack against Beanstalk Farms](https://www.theverge.com/2022/4/18/23030754/beanstalk-cryptocurrency-hack-182-million-dao-voting)
+  - Attacker took a `$`1 billion "flash loan" of cryptocurrency
+  - Then bought 67% voting stake
+  - Voted on a change to the system (the DAO allows this)
+  - Transferred assets to his/her own wallet
+  - Net gain: about `$`80 million
+  - Elapsed time of attack: 13 seconds (sic)
+
+
+
+## DAO and governance issues
+- Consider the [JUNO vote from March 2022](https://web3isgoinggreat.com/?id=defi-insurer-bancor-pauses-their-impermanent-loss-protection-due-to-hostile-market-conditions)
+- A whale manipulated an airdrop to gain a huge amount of JUNO tokens
+  - Whale: one who owns a large amount of a given cryptocurrency, and whose actions can significantly affect the price
+  - Airdrop: a free distribution of a small amount of a cryptocurrency to users, usually as a reward to to generate hype
+  - <img src="images/logos/juno-coin-symbol.webp" class="cclogo"> JUNO ([JUNO](https://coinmarketcap.com/currencies/juno/)) is the currency
+
+
+
+## DAO and governance issues
+- Consider the [JUNO vote from March 2022](https://web3isgoinggreat.com/?id=defi-insurer-bancor-pauses-their-impermanent-loss-protection-due-to-hostile-market-conditions)
+- A whale manipulated an airdrop to gain a huge amount of <img src="images/logos/juno-coin-symbol.webp" class="cclogo"> JUNO ([JUNO](https://coinmarketcap.com/currencies/juno/)) tokens <br clear='all'>
+  - Over 3 million tokens, worth `$`117 million at the time
+  - This many tokens could be used to manipulate the price by, say, wiping out the liquidity of the DEX
+    - Or to bribe validators (miners)
+  - It was creating fear in the community, and destabilizing LUNA
+- No simple simple answer, but the vote (barely) succeeded
+  - Many commented that it [set a dangerous precedent](https://twitter.com/ertemann/status/1502255256536821761?s=20&t=sJPPz4-cppsWjjdD1fnwhA)
+- A DAO can remove your cryptocurrency holdings!
+  - Whether they were gained legitimately or through a attack
+
+
+
 ## References
 - [ethereum.org page on DAOs](https://ethereum.org/en/dao/)
 - [Some well known examples of DAOs](https://geekflare.com/finance/dao-crypto-projects/)
-- [Vitalik Buterin's blog post about the vulnerability](https://blog.ethereum.org/2016/06/17/critical-update-re-dao-vulnerability/)
+- [Vitalik Buterin's blog post about the DAO vulnerability](https://blog.ethereum.org/2016/06/17/critical-update-re-dao-vulnerability/)
 - [Another description of the attack](https://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/)
 </textarea></section>
 

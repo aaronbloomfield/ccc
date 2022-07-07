@@ -271,6 +271,10 @@ twodmap[3]["foo"]
 - In every mapping, *all* $2^{256}$ keys exist
   - Anything not explicitly set returns 0 / false / all zero's
   - So no point in getting a mapping's size!
+- You can delete an element from a mapping:
+  - `delete map[1];`
+  - This really just sets the value to 0
+  - And it *restores* gas (since it's shrinking the EVM state)
 
 
 
@@ -638,6 +642,7 @@ interface Foo is Bar {
 - `override`: when a sub-class is replacing an inherited function
   - If the function is multiply inherited, you have to specify which (or all) that it overrides:
     - `function foo() public override(ERC721, IERC165) {`
+    - This will be needed in the Tokens assignment
 
 
 
@@ -872,6 +877,25 @@ emit votedEvent(_id);
 ```
 - Events can be "watched" for (or "subscribed to")
   - We'll see this later this semester
+
+
+
+## Try-catch
+- Try-catch:
+
+```
+try something {
+  // what to do if it succeeds
+} catch {
+  // what to do if it fails
+}
+
+```
+- The "something" can be:
+  - Calling a function
+  - Creating a new contract
+  - Or anything else
+- If the something reverts, the catch clause is executed
 
 
 

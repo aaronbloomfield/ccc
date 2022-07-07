@@ -50,3 +50,4 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. <img src="xpd-coin-symbol.svg" class="cclogo"> Petro (XPD) [here](https://coinranking.com/coin/TCwbmhubavmsh+petro-ptr), and is included under free use guidelines (the old webp one is from [wikipedia](https://en.wikipedia.org/wiki/Petro_(cryptocurrency))<br clear='all'>
 1. <img src="xpm-coin-symbol.svg" class="cclogo"> Primecoin (XPM) from [cryptologos.cc](https://cryptologos.cc/primecoin) <br clear='all'>
 1. <img src="zec-coin-symbol.svg" class="cclogo"> ZCash (ZEC): from [cryptologos.cc](https://cryptologos.cc/zcash) <br clear='all'>
+1.  <img src="juno-coin-symbol.webp" class="cclogo"> JUNO (JUNO) from [here](https://www.finder.com/juno), and assumed valid under free use guidelines

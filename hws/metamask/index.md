@@ -97,6 +97,7 @@ Here are the MetaMask setup steps:
       - That will bring you to the spot in the settings where you have to flip a toggle to "show test networks"
     - In settings, click on Networks in the left-hand pane, then click on the "localhost:8545" network
       - Change the chain ID to the (base-10) value for our blockchain; that value can be found on the Collab landing page
+      - Change the explorer URL to the URL of the course explorer (on the Collab landing page)
       - Then click save
     - Back in the network selection box, you should now be able to select "localhost:8545" as your network -- this is going to connect to the get node that we will be starting in a moment
 3. Obtain your decrypted private key for the account that you want to use.  This was done in Part 4 of the [Private Ethereum Blockchain](../ethprivate/index.html#part-4-extract-private-key) ([md](../ethprivate/index)) assignment, and you also used that in the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) assignment.  It will be a hex value of the form `0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef`
