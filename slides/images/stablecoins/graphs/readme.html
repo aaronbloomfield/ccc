@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>To update this graph:</title>
+  <title>To update the "SAI/DAI price versus ETH price" graph:</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -20,14 +20,15 @@
   <![endif]-->
 </head>
 <body>
-<p>To update this graph:</p>
+<p>To update the “SAI/DAI price versus ETH price” graph:</p>
 <ul>
 <li>Download the latest data
 <ul>
-<li>DAI prices, in <code>dai-usd-max.csv</code>, from
-https://www.coingecko.com/en/coins/dai/historical_data</li>
-<li>ETH prices, in <code>eth-usd-max.csv</code>, from
-https://www.coingecko.com/en/coins/ethereum/historical_data</li>
+<li>DAI prices, in <code>dai-usd-max.csv</code>, from <a
+href="https://www.coingecko.com/en/coins/dai/historical_data">https://www.coingecko.com/en/coins/dai/historical_data</a></li>
+<li>ETH prices, in <code>eth-usd-max.csv</code>, from <a
+href="https://www.coingecko.com/en/coins/ethereum/historical_data">https://www.coingecko.com/en/coins/ethereum/historical_data</a></li>
+<li>As SAI is no longer used, that CSV does not have to be updated</li>
 </ul></li>
 <li>In <code>dai-eth.plot</code>, set the end date (the second value in
 the <code>xrange</code> variable) to the latest date in the data
@@ -35,7 +36,8 @@ set</li>
 <li>If necessary, adjust the maximum ETH price (in the
 <code>y2range</code> variable)</li>
 <li>Run <code>make</code></li>
-<li>Update the Coefficient of Variance value in the slides</li>
+<li>Recompute and update the Coefficient of Variance value in the
+slides: <code>stdev()/average()</code></li>
 </ul>
 </body>
 </html>

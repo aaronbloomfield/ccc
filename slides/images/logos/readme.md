@@ -51,3 +51,4 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. <img src="xpm-coin-symbol.svg" class="cclogo"> Primecoin (XPM) from [cryptologos.cc](https://cryptologos.cc/primecoin) <br clear='all'>
 1. <img src="zec-coin-symbol.svg" class="cclogo"> ZCash (ZEC): from [cryptologos.cc](https://cryptologos.cc/zcash) <br clear='all'>
 1.  <img src="juno-coin-symbol.webp" class="cclogo"> JUNO (JUNO) from [here](https://www.finder.com/juno), and assumed valid under free use guidelines
+1. <img src="sai-coin-symbol.svg" class="cclogo"> Sai (SAI) is from [here](https://saistats.com/) and is used under  under free use guidelines <br clear='all'>

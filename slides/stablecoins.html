@@ -84,6 +84,14 @@ line-height:120%;
 
 
 
+## Definitions
+
+> Peg: to have the price of one asset (say, a cryptocurrency) exactly match the price of another asset (say, USD)
+
+> Depeg: when the asset (say, a cryptocurrency) looses its pegged price against the other asset (say, USD)
+
+
+
 ## Types
 
 <table>
@@ -229,7 +237,7 @@ line-height:120%;
 - In the US: none
 - <img src="images/flags/uae.svg" class="flag"> UAE: Dubai issues Emcash (launched in 2017) <br clear='all'>
 - <img src="images/flags/venezuela.svg" class="flag"> Venezuela: Petro (launched in Feb 2018) <br clear='all'>
-  - <img src="images/logos/xpd-coin-symbol.svg" class="cclogo"> Petro (XPD) is the only one here [listed on coinmarketcap.com](https://coinmarketcap.com/currencies/petrodollar/) <br clear='all'>
+  - <img src="images/logos/xpd-coin-symbol.svg" class="cclogo"> Petro ([XPD](https://coinmarketcap.com/currencies/petrodollar/)) is the only one here [listed on coinmarketcap.com](https://coinmarketcap.com/currencies/petrodollar/) <br clear='all'>
 - <img src="images/flags/estonia.svg" class="flag"> Estonia: Estcoin (planned in 2018, not launched) <br clear='all'>
 - <img src="images/flags/russia.svg" class="flag"> Russia: Cryptoruble (still in development) <br clear='all'>
 - <img src="images/flags/sweden.svg" class="flag"> Sweden: E-Krona (still in development, launch in 2022?) <br clear='all'>
@@ -254,40 +262,98 @@ line-height:120%;
 # Collateralized Algorithmic
 
 <img src="images/logos/dai-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/sai-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/mkr-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-## Collateralized Debt Position (CDP)
+<h2><img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> Dai (<a href="https://coinmarketcap.com/currencies/multi-collateral-dai/">DAI</a>) <br clear='all'></h2>
+
+- Originally only backed by ETH, created in 2017
+  - An Ethereum smart contract
+  - This coin was <img src="../slides/images/logos/sai-coin-symbol.svg" class="cclogo"> SAI (or Single-Collateral DAI)
+- In 2019, <img src="../slides/images/logos/dai-coin-symbol.svg" class="cclogo"> DAI was created, and is pegged at `$`1 USD
+  - An ERC-20 token cryptocurrency we've [talked about before](tokens.html#/dai)
+  - All SAI was upgraded to DAI; SAI no longer exists
+  - DAI is backed by multiple types of collateral
+- <img src="../slides/images/logos/mkr-coin-symbol.svg" class="cclogo"> Maker ([MKR](https://coinmarketcap.com/currencies/maker/)) is the governance token
+  - [MakerDAO white paper](https://makerdao.com/en/whitepaper/)
+  - The MakerDAO votes to allow additional types of ERC-20 collateral (and their risk factor)
+- Source code for [SAI](https://github.com/makerdao/sai) and [DAI](https://github.com/makerdao/dss)
+
+
+
+## How to buy DAI
+- Create a 'vault' in a smart contract that contains the asset you want to convert to DAI
+  - This vault is the collateral; one asset per vault
+- Via the MakerDAO contract, one 'locks' the vault and receives DAI in return
+  - Anybody with a vault can do this; you don't need MKR
+  - Only the MakerDAO can lock and unlock the vault
+  - This DAI is the 'debt' -- hence *Collateralized Debt Position (CDP)*
+- To redeem (some or all of) the original assets:
+  - Pay back the DAI generated above
+  - Pay a 'stability fee' (aka interest) on the DAI generated
+  - Withdraw the asset(s) from the vault
+
+
+
+## Current DAI stats
+- See them at https://daistats.com/
+  - On the 'Collateral' tab the stability fees are listed
+    - It varies by asset, typically 2%-6%, but can be higher or lower
+  - ETH-? provides different levels of risk and reward; see [here](https://forum.defisaver.com/t/converting-between-eth-a-eth-b-and-eth-c-maker-vault-types-using-the-loan-shifter/39) for details
+  - The "Collat. Ratio" is how much DAI has been minted versus the collateral
+    - Above 100% means more collateral is locked than DAI is issued
 
 
 
 ## Target Rate Feedback Mechanism (TRFM)
+- The target price (aka peg) for DAI is `$`1 USD
+- If DAI's price falls below the peg, then there is too much supply (or too little demand)
+  - Stabilization goal: reduce supply and increase demand
+  - The smart contract automatically increases the target rate(s)
+  - DAI is now more expensive to mint
+    - This decreases supply (fewer DAI for the same collateral)
+    - This increases price (DAI are worth more collateral)
+- If DAI's price rises above the peg, then there is too little supply (too much demand)
+  - The smart contract decreases the target rate(s)
+  - The reverse of the above happens
 
 
 
-<h2><img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> Dai (<a href="https://coinmarketcap.com/currencies/multi-collateral-dai/">DAI</a>) <br clear='all'></h2>
+## DAI Liquidation
+- [Liquidation](https://makerdao.com/en/whitepaper/#liquidation-of-risky-maker-vaults) is discussed in the [DAI whitepaper](https://makerdao.com/en/whitepaper)
+  - Each asset type has a liquidation ratio
+    - Determined and adjusted by MakerDAO votes)
+  - If the collateral-to-debt ratio 
+- [Here](https://itovault.com/how-dai-liquidation-work-makerdaos-mcd-system/) is how it works ([direct image link](https://itovault.com/wp-content/uploads/2020/12/MakerDAO-Liquidation-1024x916.png))
+- See recently [liquidated assets](https://makerburn.com/#/liquidations)
+- MKR is minted to make up the shortfall
+  - This dilutes the MKR price
+  - But since it's worth so much, there is typically no shortfall
+  - And it' doesn't happen often
+- Read more about liquidations [here](https://itovault.com/how-dai-liquidation-work-makerdaos-mcd-system/)
 
-- An ERC-20 token cryptocurrency we've [talked about before](tokens.html#/dai)
-- Run by [MakerDAO](https://cryptonews.com/coins/maker/) via an Ethereum smart contract
-  - [MakerDOA's whitepaper](https://makerdao.com/en/whitepaper/)
-- Uses a series of margin trades and shifts of assets to have its value remain stable despite cryptocurrency volatility
-- Source code? https://github.com/makerdao/sai
-- [MakerDAO white paper](https://makerdao.com/en/whitepaper/)
-As per https://cs251.stanford.edu/lectures/lecture9.pdf, DAI is undercollateralized, not fully collateralized
-- <img src="../slides/images/logos/mkr-coin-symbol.svg" class="cclogo"> Maker (MKR) is the governance token
+
+
+## What keeps DAI's peg stable?
+- Stability fees: these fees build additional collateral in the smart contract
+- Liquidation if a vault's assets are too low
+  - And minting MKR to make up for any difference in bankrupt vaults
+- Target Rate Feedback Mechanism
 
 
 
-## DAI stability
-- How well did it work?
+## SAI / DAI stability
+- How well does it work?
   - Coefficient of Variation (CV) is the standard deviation divided by the mean
     - It describes the variability of a sample relative to the average
     - Usually expressed as a percentage
-  - CV means relative to the average, how much did it vary?
-  - For DAI, it's 0.95%
-  - For ETH, it's 151.6%
+  - For <img src="images/logos/sai-coin-symbol.svg" class="cclogo"> SAI, it's 1.33% <br clear='all'>
+  - For <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> DAI, it's 0.92% <br clear='all'>
+  - For <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> ETH, it's 147.9% <br clear='all'>
 - We can also see it as a graph...
+  - I included SAI data until the end of 2019; DAI was introduced Nov 19, 2019; it's price has fluctuated quite a lot since then
 
 
 
@@ -423,18 +489,62 @@ contract Oracle {
   <section>
 
     <section id="casestudy" data-markdown class="center"><textarea>
-# Case study: LUNA/UST
+# Case study: LUNAC/USTC
     
 <img src="images/logos/luna-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/ust-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
+## Terra, LUNAC, and USTC
+- Terra is the ecosystem, built upon the Cosmos SDK
+  - Company is called Terraform Labs
+  - Allows developers to build custom blockchains for decentralized apps
+- <img src="images/logos/luna-coin-symbol.svg" class="cclogo"> LUNA Classic ([LUNAC](https://coinmarketcap.com/currencies/terra-luna/)) is the (volatile) cryptocurrency <br clear='all'>
+  - Previously just LUNA; had a high of `$`118.74 on April 5, 2022
+  - Terra versus LUNAC is like the difference between Ethereum and ETH
+- <img src="images/logos/ust-coin-symbol.svg" class="cclogo"> USD Terra Classic ([USTC](https://coinmarketcap.com/currencies/terrausd/)) (previously just UST) was the stablecoin pegged at `$`1 USD <br clear='all'>
+  - The LUNAC cryptocurrency was used to keep the USTC stablecoin on its peg
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Do Kwon
+
+<img src='https://miro.medium.com/max/3150/2*OV9xggK69sh-NyLubhRc1Q.jpeg'>
+
+- Kwon Do-hyung, known as Do Kwon, is the founder of Terraform Labs (along with Daniel Shin)
+- Stanford graduate, Korean national
+- Founded Terraform Labs in Singapore
+- Was on CoinDesk's [2021 Most Influential list](https://www.coindesk.com/policy/2021/12/10/most-influential-2021-do-kwon/)
+- Now widely reviled, and various legal actions are pending against him
+
+
+
 ## LUNA / UST debacle
 
 - [Article on LUNA / UST background](https://www.coindesk.com/learn/what-is-luna-and-ust-a-guide-to-the-terra-ecosystem/)
 - [Overview of the crash](https://www.cnet.com/personal-finance/crypto/terras-luna-crypto-crash-how-ust-broke-and-whats-next/)
 - [Do Kwon reportedly cashed out $2.7 billion in the span of a few months prior to the LUNA/UST collapse](https://watcher.guru/news/how-do-kwon-allegedly-cashed-out-2-7b-from-terra-network?c=70) (and [twitter announcement](https://twitter.com/watcherguru/status/1535707516784476163?s=21&t=cZ9G69kuatTgBDdnliEieQ)); [this reddit thread](https://www.reddit.com/r/CryptoCurrency/comments/v9ypa6/heres_how_do_kwon_cashed_out_27_billion_using/) describes the article also
+
+
+
+
+## Background
+- Anchor: https://theanchor.io/
+- Degenbox by [Abracadabra](https://abracadabra.money/): ...
+- Abracadabra, MIM, and SPELL
+  - [MIM](https://coinmarketcap.com/currencies/magic-internet-money/)
+  - [this article](https://blocmates.com/blogmates/a-complete-guide-to-abracadabra-money-spell-mim-and-sspell/)
+
+
+
+## So what happened?
+
+- See [FatMatTerra's twitter thread](https://twitter.com/FatManTerra/status/1535623662153437185)
+  - And a [watcher.guru article](https://watcher.guru/news/how-do-kwon-allegedly-cashed-out-2-7b-from-terra-network) that helps explain it (but not all that well)
+
+
 </textarea></section>
 
   </section>
