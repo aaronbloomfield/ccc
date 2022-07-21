@@ -39,5 +39,30 @@ set</li>
 <li>Recompute and update the Coefficient of Variance value in the
 slides: <code>stdev()/average()</code></li>
 </ul>
+<p>To update the CV values:</p>
+<ul>
+<li>Ensure the data for the two cryptocurrencies listed above (DAI and
+ETH) are downloaded</li>
+<li>Download the data for five additional cryptocurrencies:
+<ul>
+<li>USDC prices, in <code>usdc-usd-max.csv</code>, from <a
+href="https://www.coingecko.com/en/coins/usd-coin/historical_data">https://www.coingecko.com/en/coins/usd-coin/historical_data</a></li>
+<li>USDT prices, in <code>usdt-usd-max.csv</code>, from <a
+href="https://www.coingecko.com/en/coins/tether/historical_data">https://www.coingecko.com/en/coins/tether/historical_data</a></li>
+<li>XPD prices, in <code>xpd-usd-max.csv</code>, from <a
+href="https://www.coingecko.com/en/coins/petrodollar/historical_data">https://www.coingecko.com/en/coins/petrodollar/historical_data</a></li>
+<li>FEI prices, in <code>fei-usd-max.csv</code>, from <a
+href="https://www.coingecko.com/en/coins/fei-usd/historical_data">https://www.coingecko.com/en/coins/fei-usd/historical_data</a></li>
+<li>LUNC / LUNAC prices, in <code>fei-usd-max.csv</code>, from <a
+href="https://www.coingecko.com/en/coins/terra-luna-classic/historical_data">https://www.coingecko.com/en/coins/terra-luna-classic/historical_data</a></li>
+</ul></li>
+<li>Note that those last 5 are in the .gitignore so as not to increase
+the repo size significantly</li>
+<li>Run <code>./get-cv.py</code></li>
+<li>Copy and paste the Markdown list output into the Conclusions section
+of stablecoins.html</li>
+<li>Manually enter the data for the first three (SAI, DAI, and ETH) to
+the appropriate slide</li>
+</ul>
 </body>
 </html>

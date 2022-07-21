@@ -17,8 +17,8 @@ Slide sets, in the intended order to be presented in lecture, are below (if a li
 - [Solidity](solidity.html#/)
 - [Tokens](tokens.html#/)
 - [Consensus](consensus.html#/)
-- [Stablecoins](stablecoins.html#/)
-- [Blockchain Applications](applications.html#/) (should be after stablecoins)
+- [Blockchain Applications](applications.html#/)
+- [Stablecoins](stablecoins.html#/) <!-- present after applications, as it refers to DEXes and DAOs -->
 - [zkSNARKs](zksnarks.html#/)
 - [Scalability](scalability.html#/)
 - [Ethics, Legality, and Policy](ethics-legal-policy.html#/)

@@ -84,6 +84,7 @@ line-height:120%;
 - Then give your money to the centralized exchange
 - The exchange tries to pair up your order to buy with somebody who is selling and willing to accept those prices/amounts
   - Really both are just exchanging commodities
+- This occurs on a *Centralized Exchange* (CEX)
 
 
 
@@ -568,6 +569,8 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
   - The smart contract hosts the polls and only members can vote
 - A charity distribution organization
   - Members donate to the contract, and the funds are disseminated to the charities that the members vote upon
+- Governance of another cryptocurrency
+  - Often used for stablecoins, which we'll see later
 - Anything where there is management needed of funds and/or votes
 
 
@@ -693,7 +696,7 @@ receive() external payable {
 - Create a currency or blockchain
   - And a separate DAO to manage it
     - Issue token(s) (either ERC-20 or ERC-721) to allow people to vote
-- Example from [Stablecoins](stablecoins.html#/collalg):
+- Example we'll see in [Stablecoins](stablecoins.html#/colldecen):
   - <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> Dai ([DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/)) is the stablecoin <br clear='all'>
   - <img src="images/logos/mkr-coin-symbol.svg" class="cclogo"> Maker ([MKR](https://coinmarketcap.com/currencies/maker/)) is the governance token <br clear='all'>
 
@@ -713,24 +716,24 @@ receive() external payable {
 
 
 
-## DAO and governance issues
-- Consider the [JUNO vote from March 2022](https://web3isgoinggreat.com/?id=defi-insurer-bancor-pauses-their-impermanent-loss-protection-due-to-hostile-market-conditions)
-- A whale manipulated an airdrop to gain a huge amount of JUNO tokens
-  - Whale: one who owns a large amount of a given cryptocurrency, and whose actions can significantly affect the price
-  - Airdrop: a free distribution of a small amount of a cryptocurrency to users, usually as a reward to to generate hype
-  - <img src="images/logos/juno-coin-symbol.webp" class="cclogo"> JUNO ([JUNO](https://coinmarketcap.com/currencies/juno/)) is the currency
+## Definitions
+
+> Whale: one who owns a large amount of a given cryptocurrency, and whose trades can significantly affect the price
+
+> Airdrop: a free distribution of a small amount of a cryptocurrency to (usually many) users, meant as a reward or to generate hype
 
 
 
 ## DAO and governance issues
-- Consider the [JUNO vote from March 2022](https://web3isgoinggreat.com/?id=defi-insurer-bancor-pauses-their-impermanent-loss-protection-due-to-hostile-market-conditions)
+- Consider the [JUNO vote from March 2022](https://web3isgoinggreat.com/?id=juno-community-votes-to-take-community-members-tokens)
 - A whale manipulated an airdrop to gain a huge amount of <img src="images/logos/juno-coin-symbol.webp" class="cclogo"> JUNO ([JUNO](https://coinmarketcap.com/currencies/juno/)) tokens <br clear='all'>
   - Over 3 million tokens, worth `$`117 million at the time
   - This many tokens could be used to manipulate the price by, say, wiping out the liquidity of the DEX
     - Or to bribe validators (miners)
-  - It was creating fear in the community, and destabilizing LUNA
+  - It was creating fear in the community, and destabilizing JUNO
+- Proposal: to take away the whale's `$`123 million in JUNO
 - No simple simple answer, but the vote (barely) succeeded
-  - Many commented that it [set a dangerous precedent](https://twitter.com/ertemann/status/1502255256536821761?s=20&t=sJPPz4-cppsWjjdD1fnwhA)
+  - Many felt that it [set a dangerous precedent](https://twitter.com/ertemann/status/1502255256536821761?s=20&t=sJPPz4-cppsWjjdD1fnwhA)
 - A DAO can remove your cryptocurrency holdings!
   - Whether they were gained legitimately or through a attack
 

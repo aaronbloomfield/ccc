@@ -307,10 +307,14 @@ table.compact tr td {
 }
 
 /* for when it is going as the start of the <li> bullet point */
-img.cclogo {
+img.cclogo,  img[src$='#cclogo'] {
   width: 50px;
   max-height: 50px;
-  float: left;
+  /* float: left; */
+  vertical-align:  middle;
+  display: inline !important;
+  float: none;
+  padding-right: 0;
   background-color: transparent !important;
   margin-right: 10px !important;
   margin-top: 0 !important;
@@ -321,6 +325,17 @@ img.cclogo {
 img.cclogolarge {
   width: 100px;
   max-height: 100px;
+  float: left;
+  background-color: transparent !important;
+  margin-right: 10px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* In a slide, but smaller than the previous one */
+img.cclogomed, div.cclogomed img, img[src$='#cclogomed'] {
+  width: 90px;
+  max-height: 90px;
   float: left;
   background-color: transparent !important;
   margin-right: 10px !important;

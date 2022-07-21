@@ -61,10 +61,11 @@ line-height:120%;
 [Introduction](#/intro)  
 [Collateralized centralized](#/collcent)  
 [Uncollateralized centralized](#/uncollcent)  
-[Collateralized algorithmic](#/collalg)  
-[Uncollateralized algorithmic](#/uncollalg)  
+[Collateralized decentralized](#/colldecen)  
+[Uncollateralized decentralized](#/uncolldecen)  
 [Oracles](#/oracles)  
 [Case study: LUNA/UST](#/casestudy)  
+[Conclusions](#/coinclusion)  
 	</textarea></section>
 
 <!-- ============================================================ -->
@@ -77,18 +78,28 @@ line-height:120%;
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Stablecoins
-- A coin whose value is meant to not be volatile
+- A coin whose value is meant to not be *non-*volatile
 - Usually tagged in value to a fiat currency
   - We'll use the US Dollar
+
+
+
+## Stablecoin categories
 - *Collateralized* stablecoins means that there is some collateral (financial investment) backing up the value of the stablecoin
+  - Ideally as much collateral as the value of the minted stablecoin
+  - If less, then it's *undercollateralized*
+- *Uncollateralized* means there is no collateral backing up the value of the stablecoin
+  - Fiat currencies are uncollateralized
 
 
 
-## Definitions
-
-> Peg: to have the price of one asset (say, a cryptocurrency) exactly match the price of another asset (say, USD)
-
-> Depeg: when the asset (say, a cryptocurrency) looses its pegged price against the other asset (say, USD)
+## Stablecoin categories
+- The obvious definitions...
+  - *Centralized* means it is run by a single company or entity
+    - Government, corporation, individual, etc.
+  - *Decentralized* means it's not run by a single company or entity
+    - Instead by a group, DAO, or algorithm
+    - These are often called *algorithmic*
 
 
 
@@ -104,28 +115,19 @@ line-height:120%;
 </thead>
 <tbody><tr>
 <th style="border-bottom:0;border-right:1px solid">Collateralized</th>
-<td>custodial stablecoins</td>
-<td>Synthetics</td>
+<td>custodial<br>stablecoins<br>(USDC, USDT)</td>
+<td>Algorithmic<br>&nbsp;<br>(SAI, DAI)</td>
 </tr>
 <tr>
 <th style="border-right:1px solid">Un(der)-collateralized</td>
-<td>central bank digital currency</td>
+<td>central bank digital currency<br>(XPD)</td>
 <td>undercollateralized stablecoins, seigniorage shares</td>
 </tr>
 </tbody>
 </table>
 
 
-- Algorithmic?
-
-
-
-## Examples
-- Examples we'll see here:
-  - <img src="images/logos/usdc-coin-symbol.svg" class="cclogo"> USD Coin ([USDC](https://coinmarketcap.com/currencies/usd-coin/)) <br clear='all'>
-  - <img src="images/logos/usdt-coin-symbol.svg" class="cclogo"> Tether ([USDT](https://coinmarketcap.com/currencies/tether/)) <br clear='all'>
-  - <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> DAI ([DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/)) <br clear='all'>
-    - We've seen DAI before: it's a token cryptocurrency
+- Synthetics ?
 
 
 
@@ -151,6 +153,39 @@ line-height:120%;
 - Hybrid stablecoins
   - A blend of the above approaches
   - Examples: Reserve, Saga, Aurora - Boreal
+
+
+
+## Definitions
+
+> Peg: to have the price of one asset (say, a cryptocurrency) exactly match the price of another asset (say, USD)
+
+> Depeg: when the asset (say, a cryptocurrency) looses its pegged price against the other asset (say, USD)
+
+
+
+## Coins Studied
+- We are going to see a *lot* of coins in this slide set:
+- A total of 15: 
+<img src="images/logos/aust-coin-symbol.svg" class="cclogo">
+<img src="images/logos/dai-coin-symbol.svg" class="cclogo">
+<img src="images/logos/fei-coin-symbol.svg" class="cclogo">
+<img src="images/logos/frax-coin-symbol.svg" class="cclogo">
+<img src="images/logos/lunac-coin-symbol.svg" class="cclogo">
+<img src="images/logos/mim-coin-symbol.svg" class="cclogo">
+<img src="images/logos/mkr-coin-symbol.svg" class="cclogo">
+<img src="images/logos/sai-coin-symbol.svg" class="cclogo">
+<img src="images/logos/spell-coin-symbol.webp" class="cclogo">
+<img src="images/logos/tomb-coin-symbol.webp" class="cclogo">
+<img src="images/logos/tribe-coin-symbol.svg" class="cclogo">
+<img src="images/logos/usdc-coin-symbol.svg" class="cclogo">
+<img src="images/logos/usdt-coin-symbol.svg" class="cclogo">
+<img src="images/logos/ustc-coin-symbol.svg" class="cclogo">
+<img src="images/logos/xpd-coin-symbol.svg" class="cclogo">
+<br clear='all'>
+- They are meant as examples of the concepts taught
+- You don't have to memorize them all!
+
 
 </textarea></section>
 
@@ -193,7 +228,7 @@ line-height:120%;
 
 - Similar to USDC in how it works
 - Run by Tether Ltd
-- As per [coinmarketcap.com](https://coinmarketcap.com/), it's has the 3rd largest market capitalization (`$`83 billion as of 5/1/22) 
+- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 3rd largest market capitalization (`$`83 billion as of 5/1/22) 
   - After Bitcoin (`$`734 billion) and Ethereum (`$`340 billion)
   - USD Coin is 5th at `$`49 billion
 - Scandal-ridden
@@ -258,8 +293,8 @@ line-height:120%;
 
   <section>
 
-    <section id="collalg" data-markdown class="center"><textarea>
-# Collateralized Algorithmic
+    <section id="colldecen" data-markdown class="center"><textarea>
+# Collateralized Decentralized
 
 <img src="images/logos/dai-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/sai-coin-symbol.svg" class="cclogosubtitle">
@@ -269,26 +304,26 @@ line-height:120%;
     <section data-markdown data-separator="^\n\n\n"><textarea>
 <h2><img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> Dai (<a href="https://coinmarketcap.com/currencies/multi-collateral-dai/">DAI</a>) <br clear='all'></h2>
 
-- Originally only backed by ETH, created in 2017
-  - An Ethereum smart contract
-  - This coin was <img src="../slides/images/logos/sai-coin-symbol.svg" class="cclogo"> SAI (or Single-Collateral DAI)
+- Originally only backed by (only) ETH, created in 2017
+  - An ERC-20 token via a smart contract
+  - This coin is <img src="../slides/images/logos/sai-coin-symbol.svg" class="cclogo"> Sai ([SAI](https://coinmarketcap.com/currencies/single-collateral-dai/)) for Single-Collateral DAI
 - In 2019, <img src="../slides/images/logos/dai-coin-symbol.svg" class="cclogo"> DAI was created, and is pegged at `$`1 USD
   - An ERC-20 token cryptocurrency we've [talked about before](tokens.html#/dai)
-  - All SAI was upgraded to DAI; SAI no longer exists
+  - All SAI was upgraded to DAI; SAI no longer (really) exists
   - DAI is backed by multiple types of collateral
 - <img src="../slides/images/logos/mkr-coin-symbol.svg" class="cclogo"> Maker ([MKR](https://coinmarketcap.com/currencies/maker/)) is the governance token
-  - [MakerDAO white paper](https://makerdao.com/en/whitepaper/)
+  - [MakerDAO white paper on DAI](https://makerdao.com/en/whitepaper/)
   - The MakerDAO votes to allow additional types of ERC-20 collateral (and their risk factor)
 - Source code for [SAI](https://github.com/makerdao/sai) and [DAI](https://github.com/makerdao/dss)
 
 
 
 ## How to buy DAI
-- Create a 'vault' in a smart contract that contains the asset you want to convert to DAI
+- Create a 'vault' via a smart contract that contains the asset you want to convert to DAI
   - This vault is the collateral; one asset per vault
-- Via the MakerDAO contract, one 'locks' the vault and receives DAI in return
+- Via the MakerDAO contract, one 'locks' the vault (transfers it to the contract) and receives DAI in return
   - Anybody with a vault can do this; you don't need MKR
-  - Only the MakerDAO can lock and unlock the vault
+  - Only the MakerDAO contract can lock and unlock the vault
   - This DAI is the 'debt' -- hence *Collateralized Debt Position (CDP)*
 - To redeem (some or all of) the original assets:
   - Pay back the DAI generated above
@@ -327,7 +362,7 @@ line-height:120%;
     - Determined and adjusted by MakerDAO votes)
   - If the collateral-to-debt ratio 
 - [Here](https://itovault.com/how-dai-liquidation-work-makerdaos-mcd-system/) is how it works ([direct image link](https://itovault.com/wp-content/uploads/2020/12/MakerDAO-Liquidation-1024x916.png))
-- See recently [liquidated assets](https://makerburn.com/#/liquidations)
+- You can see the recently [liquidated assets](https://makerburn.com/#/liquidations)
 - MKR is minted to make up the shortfall
   - This dilutes the MKR price
   - But since it's worth so much, there is typically no shortfall
@@ -353,7 +388,7 @@ line-height:120%;
   - For <img src="images/logos/dai-coin-symbol.svg" class="cclogo"> DAI, it's 0.92% <br clear='all'>
   - For <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> ETH, it's 147.9% <br clear='all'>
 - We can also see it as a graph...
-  - I included SAI data until the end of 2019; DAI was introduced Nov 19, 2019; it's price has fluctuated quite a lot since then
+  - I included SAI data until the end of 2019; DAI was introduced Nov 19, 2019; SAI's price has fluctuated quite a lot since then
 
 
 
@@ -367,11 +402,13 @@ line-height:120%;
   
   <section>
 
-    <section id="uncollalg" data-markdown class="center"><textarea>
-# Uncollateralized algorithmic
+    <section id="uncolldecen" data-markdown class="center"><textarea>
+# Uncollateralized Decentralized
 
 <img src="images/logos/fei-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/frax-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/tribe-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/tomb-coin-symbol.webp" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -380,9 +417,55 @@ line-height:120%;
   - Undercollateralized stablecoins: FRAX, FEI, IRON, OHM, Gyroscope
     - backing: diversified portfolio, seigniorage shares as backstop; peg mechanism: redemption; risks: market risks, oracle dependency
     - <img src="../slides/images/logos/fei-coin-symbol.svg" class="cclogo"> of those, [FEI](https://coinmarketcap.com/currencies/fei-usd/) has the highest market capitalization (#100 as of 5-23-22) <br clear='all'>
-      - <img src="../slides/images/logos/tribe-coin-symbol.svg" class="cclogo"> it's governance token is [TRIBE](https://coinmarketcap.com/currencies/tribe/) <br clear='all'>
+  
   - Seigniorage shares: Basis, Maker (backstop), Undercollateralized stablecoins (backstop)
     - backing: confidence; peg mechanism: supply expansion and contraction; risks: death spiral, oracle dependency
+
+
+
+## FEI
+- <img src="../slides/images/logos/fei-coin-symbol.svg" class="cclogo"> Fei [FEI](https://coinmarketcap.com/currencies/fei-usd/) is a stable coin pegged at `$`1 USD <br clear='all'>
+  - Main website is [fei.money](https://fei.money/); [whitepaper](https://fei.money/static/media/whitepaper.7d5e2986.pdf)
+- <img src="../slides/images/logos/tribe-coin-symbol.svg" class="cclogo"> [TRIBE](https://coinmarketcap.com/currencies/tribe/) is its governance (DAO) token <br clear='all'>
+
+
+
+## Seigniorage
+
+> Seigniorage: the cost of a unit of currency minus the cost to create it ([source](https://www.investopedia.com/terms/s/seigniorage.asp))
+
+Examples:
+  - A USD `$`20 bill cost 11.5&cent; to make in 2019
+    - Seigniorage: `$`19.885
+  - A USD `$`100 bill cost 14.2&cent; to make in 2019
+    - Seigniorage: `$`99.858
+  - A USD penny cost 1.5&cent; to make in 2016
+    - Seigniorage: -0.5&cent;
+
+
+
+## Seigniorage Stablecoins
+- An algorithmic (aka decentralized) stablecoin
+- If the value of stablecoin rises above the peg, then more are minted
+  - Usually distributed to existing holders
+- If the value of the stable coin dips below the peg...
+  - A bond is issued: basically an IOU for more of the stablecoin
+  - Those bonds are sold for lower than the peg amount
+  - People buy these bonds, with the intent to redeem them for the stablecoin once the price rises to the peg, this making a profit
+- [Reference](https://dailydefi.org/articles/what-are-seigniorage-stablecoins/)
+
+
+
+## Seigniorage Stablecoins
+- But what if the coin's price never rises back up to the peg?
+  - Perhaps people lose faith, the market tanks, etc.
+- These coins have often had trouble holding their peg
+- Consider the [top seigniorage coins by market cap](https://www.coingecko.com/en/categories/seigniorage) (as of July 2022):
+  - <img src="images/logos/frax-coin-symbol.svg" class="cclogo"> [FRAX](https://coinmarketcap.com/currencies/frax/) (#47 overall, #1 top seigniorage) has been fairly stable <br clear='all'>
+  - Number 2 is TerraClassic, which we discuss elsewhere
+  - Number 3 is a variant of FRAX
+  - <img src="images/logos/tomb-coin-symbol.webp" class="cclogo"> [TOMB](https://coinmarketcap.com/currencies/tomb/) (#792 overall, #4 seigniorage) has not been stable at all
+  - The next highest is #871 overall, so clearly not used much
 </textarea></section>
 
   </section>
@@ -413,15 +496,15 @@ We can easily create an oracle:
 
 ```
 contract Oracle {
-    address oracle;
-    uint public price;
+    address deployer;
+    uint public price; // public, so creates a getter
 
     constructor() {
-        oracle = msg.sender;
+        deployer = msg.sender;
     }
 
     function updatePrice (uint update) external {
-        require (msg.sender == oracle, 
+        require (msg.sender == deployer, 
                  "Only the Oracle can update this");
         price = update;
     }
@@ -435,7 +518,7 @@ contract Oracle {
 ![](images/stablecoins/oracles/oracles.dot.1.svg)
 - The oracle signer (aka deployer) updates the price, and anybody can read it
   - This works well when the source is centralized
-  - Such as the oracles on Ethereum that interact with the Polkadot or Polygon chains
+  - Examples: the oracles on Ethereum that interact with the Polkadot or Polygon chains
 - But a corrupt signer can maliciously manipulate the price
 
 
@@ -491,20 +574,24 @@ contract Oracle {
     <section id="casestudy" data-markdown class="center"><textarea>
 # Case study: LUNAC/USTC
     
-<img src="images/logos/luna-coin-symbol.svg" class="cclogosubtitle">
-<img src="images/logos/ust-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/aust-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/lunac-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/mim-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/spell-coin-symbol.webp" class="cclogosubtitle">
+<img src="images/logos/ustc-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Terra, LUNAC, and USTC
 - Terra is the ecosystem, built upon the Cosmos SDK
   - Company is called Terraform Labs
-  - Allows developers to build custom blockchains for decentralized apps
-- <img src="images/logos/luna-coin-symbol.svg" class="cclogo"> LUNA Classic ([LUNAC](https://coinmarketcap.com/currencies/terra-luna/)) is the (volatile) cryptocurrency <br clear='all'>
+  - Allows devs to build custom blockchains for dApps
+- <img src="images/logos/lunac-coin-symbol.svg" class="cclogo"> LUNA Classic ([LUNAC](https://coinmarketcap.com/currencies/terra-luna/)) is the (volatile) cryptocurrency <br clear='all'>
   - Previously just LUNA; had a high of `$`118.74 on April 5, 2022
-  - Terra versus LUNAC is like the difference between Ethereum and ETH
-- <img src="images/logos/ust-coin-symbol.svg" class="cclogo"> USD Terra Classic ([USTC](https://coinmarketcap.com/currencies/terrausd/)) (previously just UST) was the stablecoin pegged at `$`1 USD <br clear='all'>
+  - Terra vs LUNAC is like the difference between Ethereum & ETH
+- <img src="images/logos/ustc-coin-symbol.svg" class="cclogo"> USD Terra Classic ([USTC](https://coinmarketcap.com/currencies/terrausd/)) (previously just UST) is the stablecoin that was pegged at `$`1 USD <br clear='all'>
   - The LUNAC cryptocurrency was used to keep the USTC stablecoin on its peg
+  - It's an Ethereum ERC-20 token
 
 
 
@@ -521,21 +608,68 @@ contract Oracle {
 
 
 
+## Terra bridges
+- The Terra protocol allows cross-chain transfers
+  - The particular one between Terra and Ethereum is called the Shuttle ([source code](https://github.com/terra-money/shuttle))
+- As far as I can tell:
+  - Both sides have ERC-20 (or equivalent) contracts
+  - And an Oracle for the other blockchain
+  - When you transfer assets into one, the oracle on the other sees that, and gives you assets on the other blockchain
+  - Likely done via the minting and burning of tokens on each side
+
+
+
+## Abracadabra
+- Abracadabra is the protocol at [abracadabra.money](https://abracadabra.money/)
+  - <img src="../slides/images/logos/spell-coin-symbol.webp" class="cclogo"> SPELL ([SPELL](https://coinmarketcap.com/currencies/spell-token/)) is their native token 
+  - <img src="../slides/images/logos/mim-coin-symbol.svg" class="cclogo"> Magic Internet Money ([MIM](https://coinmarketcap.com/currencies/magic-internet-money/)) is the stablecoin
+  - Abracadabra / SPELL / MIM is analogous to Terra / LUNA / USTC
+- Their promise: a non-interest bearing asset (coin or token) can be used to generate interest
+  - Like staking
+- The relevant product is called Degenbox
+  - It "deploys strategies" to generate interest on non-interest bearing coins/tokens
+
+
+
+## Abracadabra's Degenbox
+- On the Ethereum blockchain:
+  - You deposit an asset into a 'cauldron' and MIM is minted
+    - Similar to depositing an asset into a 'vault' for DAI
+    - Only some assets are allowed; we'll only talk about USTC
+  - 15% stays on Ethereum mainnet for withdrawals
+  - 85% of that is bridged back to the Terra blockchain
+- On the Terra blockchain:
+  - The 85% bridged back is deposited into the [Anchor Protocol](https://www.terrablockchain.org/anchor) (also [here](https://theanchor.io/)) to generate aUST
+  - <img src="../slides/images/logos/aust-coin-symbol.svg" class="cclogo"> AnchorUST ([aUST](https://coinmarketcap.com/currencies/anchorust/)) was their stablecoin, and was interest-bearing ([coingecko.com](https://www.coingecko.com/en/coins/anchorust) has a price graph) <br clear='all'>
+  - Those aUST are then bridged back to Degenbox on Ethererum mainnet
+
+
+
+## Degenbox
+- The assets bounce back and forth between the blockchains
+- The users see only this:
+  - On Ethereum, they deposit an asset (coin or ERC-20 token)
+  - They get another ERC-20 asset (aUST) on Ethereum worth the same amount that is generating interest
+  - That ERC-20 asset, aUST, can be used like any other asset
+
+
+
+## Looping Stablecoin buys
+- What if you could use your aUST to borrow more USTC
+  - As aUST is a stablecoin and can be collateral to obtain more USTC
+  - Then you can invest the USTC into more aUST
+  - Then take use that aUST to borrow more USTC
+  - And so on...
+- This is *looping* a stablecoin buy
+  - It artificially increases demand, since more and more USTC is being minted
+
+
+
 ## LUNA / UST debacle
 
 - [Article on LUNA / UST background](https://www.coindesk.com/learn/what-is-luna-and-ust-a-guide-to-the-terra-ecosystem/)
 - [Overview of the crash](https://www.cnet.com/personal-finance/crypto/terras-luna-crypto-crash-how-ust-broke-and-whats-next/)
 - [Do Kwon reportedly cashed out $2.7 billion in the span of a few months prior to the LUNA/UST collapse](https://watcher.guru/news/how-do-kwon-allegedly-cashed-out-2-7b-from-terra-network?c=70) (and [twitter announcement](https://twitter.com/watcherguru/status/1535707516784476163?s=21&t=cZ9G69kuatTgBDdnliEieQ)); [this reddit thread](https://www.reddit.com/r/CryptoCurrency/comments/v9ypa6/heres_how_do_kwon_cashed_out_27_billion_using/) describes the article also
-
-
-
-
-## Background
-- Anchor: https://theanchor.io/
-- Degenbox by [Abracadabra](https://abracadabra.money/): ...
-- Abracadabra, MIM, and SPELL
-  - [MIM](https://coinmarketcap.com/currencies/magic-internet-money/)
-  - [this article](https://blocmates.com/blogmates/a-complete-guide-to-abracadabra-money-spell-mim-and-sspell/)
 
 
 
@@ -545,8 +679,55 @@ contract Oracle {
   - And a [watcher.guru article](https://watcher.guru/news/how-do-kwon-allegedly-cashed-out-2-7b-from-terra-network) that helps explain it (but not all that well)
 
 
+
+## The Big Terra Error
+- The founder of the company had full access to the Bitcoin liquidity
+  - It wasn't, say, locked in a smart contract
+  - Or controlled by a DAO that required many people's votes to liquidate
+- This allowed him to plunder these assets and (eventually) transfer them to himself
+
+
+
+## Takeaways
+- Most people who invested in LUNA didn't know much about what it did
+- The scam to loot LUNA was quite complex
+  - Beyond the knowledge of most (almost all?) LUNA investors
+
+
+
+## References
+- [Medium: Abracadabra Degenbox -- Let’s cast spell on UST](https://everythingblockchain.medium.com/abracadabra-degenbox-lets-cast-spell-on-ust-7d2dd8d6e43c)
+- [How To Use The Terra Bridge](https://www.altcoinbuzz.io/bitcoin-and-crypto-guide/how-to-use-the-terra-bridge/)
+
+Still to read:
+
+- [A Complete Guide to Abracadabra Money – SPELL, MIM and sSPELL](https://blocmates.com/blogmates/a-complete-guide-to-abracadabra-money-spell-mim-and-sspell/)
+
 </textarea></section>
 
+  </section>
+
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="conclusion" data-markdown class="center"><textarea>
+# Conclusions
+    
+    </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Coefficient of Variation Comparison
+
+- ![dai logo](../slides/images/logos/dai-coin-symbol.svg#cclogo) Dai ([DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/)): 0.92% <br clear=all>
+- ![eth logo](../slides/images/logos/eth-coin-symbol.svg#cclogo) Ether ([ETH](https://coinmarketcap.com/currencies/ethereum/)): 147.85% <br clear=all>
+- ![fei logo](../slides/images/logos/fei-coin-symbol.svg#cclogo) Fei USD ([FEI](https://coinmarketcap.com/currencies/fei-usd/)): 4.09% <br clear=all>
+- ![luna logo](../slides/images/logos/lunac-coin-symbol.svg#cclogo) Luna Classic ([LUNAC](https://coinmarketcap.com/currencies/terra-luna/)): 169.13% <br clear=all>
+- ![sai logo](../slides/images/logos/sai-coin-symbol.svg#cclogo) Sai ([SAI](https://coinmarketcap.com/currencies/single-collateral-dai/)): 1.33% <br clear=all>
+- ![usdc logo](../slides/images/logos/usdc-coin-symbol.svg#cclogo) USD Coin ([USDC](https://coinmarketcap.com/currencies/usd-coin/)): 0.50% <br clear=all>
+- ![usdt logo](../slides/images/logos/usdt-coin-symbol.svg#cclogo) Tether ([USDT](https://coinmarketcap.com/currencies/tether/)): 1.66% <br clear=all>
+- ![xpd logo](../slides/images/logos/xpd-coin-symbol.svg#cclogo) PetroDollar ([XPD](https://coinmarketcap.com/currencies/petrodollar/)): 57.84% <br clear=all>
+</textarea></section>
   </section>
 
 <!-- ============================================================ -->
