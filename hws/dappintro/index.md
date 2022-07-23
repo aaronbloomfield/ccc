@@ -173,24 +173,19 @@ Note that Remix may complain that the address is not [checksummed](../../slides/
 
 The assumption is that the account you will vote with is your `eth.coinbase` account.  (It's fine if you want to use a different account, but when you submit your information at the end of this assignment, be sure to submit the account that you used for the deployment and voting.) As your account information will be in the `voters` mapping, we will be able to determine who has voted and who has not.  We won't know who voted for what, though, since that information is not kept by this smart contract.  (Well, mostly.  We could look up who voted for what, since it's on the blockchain, but that's a hassle we aren't going to do that.)  You get credit for this part as along as you vote on my smart contract; it does not matter what you vote for.
 
-
-
 ### Closing down
 
 Please turn off your geth node when you are done with this assignment.  You can always turn it back on again when needed.
 
-### Submission & Grading
+### Submission
 
-To test your program, we will look at your deployed Choices smart contract on our private blockchain.  We will check that you did the various tasks (deployed the contract, modified the options, voted for an option for your own contract,  voted for an option on our contract, etc.).
+You will need to fill in the various values from this assignment into the [dappintro.py](dappintro.py.html) ([src](dappintro.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
-You will need to submit your information via a Google form, the link to which is on the Collab landing page. You will need to submit the following items:
 
-- Your name & UVA userid
-- Your account number from `eth.coinbase`.  The assumption is that you did your tasks from this account (deployed your contract, the votes, etc.); if you did it from a different account, submit that account address.
-- From task 2, you should submit information about the smart contract you deployed.  If you mined it to the blockchain multiple times, that's fine -- pick the most recent one (where you voted), and submit that one.  You should submit:
-    - The transaction hash of the contract transaction 
-    - The contract address for the contract (this can be the checksummed version or all lower-case)
-    - The block number where this transaction was mined
-- Also from task 2, the transaction hash and the block number where you voted on YOUR Choices contract
-- From task 4, the transaction hash and the block number where you voted for MY Choices contract
-- How many hours (as a floating-point number) this assignment took you to complete.  Please be honest here -- I'm using this to judge workload, and this will have no impact on your grade for this assignment.
+There are *three* forms of submission for this assignment; you must do all three.
+
+Submission 1: You must deploy the Choices smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract addresses and transaction hashes of these deployments are in the `dappintro.py` file that you submit.
+
+Submission 2: You must vote on both your Choices contract and the course-wide Choices contract.
+
+Submission 3: You should submit your `Choices.sol` file and your completed `dappintro.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in the first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

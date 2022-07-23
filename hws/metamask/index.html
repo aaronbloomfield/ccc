@@ -644,27 +644,37 @@ full (or close to full) credit. If it doesn’t work, then very little or
 no credit. In particular, there will be very little partial credit
 awarded on this assignment.</p>
 <h3 id="submission">Submission</h3>
-<p>There are <em>five</em> forms of submission for this assignment; you
-must do all five.</p>
-<p>Submission 1: You should submit just your <code>auctions.html</code>
-contract to Gradescope. In particular, you are NOT submitting any
-Solidity code for this assignment. <strong>NOTE:</strong> Gradescope
-cannot fully test this assignment, as it does not have access to the
-private blockchain. So it can only check that the right file has been
+<p>You will need to fill in the various values from this assignment into
+the <a href="metamask.py.html">metamask.py</a> (<a
+href="metamask.py">src</a>) file. That file clearly indicates all the
+values that need to be filled in. That file, along with your Solidity
+source code, are the only files that must be submitted. The
+‘sanity_checks’ dictionary is intended to be a checklist to ensure that
+you perform the various other aspects to ensure this assignment is fully
 submitted.</p>
-<p>Submission 2: You need to have your web page deployed on the
-departmental servers. It should be in your <code>~/public_html</code>
-directory there.</p>
-<p>Submission 3: You must have deployed your Auctioneer_v2 smart
-contract to our private Ethereum blockchain. It’s fine if you deploy it
-a few times to test it. Presumably the smart contract address for this
-is in the auctions.html file that you submitted to Gradescope (and that
-you put on the departmental server).</p>
+<p>There are <em>four</em> forms of submission for this assignment; you
+must do all four.</p>
+<p>Submission 1: You should submit your <code>auctions.html</code> file,
+along with your completed <code>metamask.py</code> file, to Gradescope.
+In particular, you are NOT submitting any Solidity code for this
+assignment. <strong>NOTE:</strong> Gradescope cannot fully test this
+assignment, as it does not have access to the private blockchain. So it
+can only do a few sanity tests (correct files submitted, successful
+compilation, valid values in auction.py, etc.).</p>
+<p>Submission 2: You must deploy your Auctioneer_v2 smart contract to
+our private Ethereum blockchain. It’s fine if you deploy it a few times
+to test it. The smart contract address for this needs to be the same as
+the one in your submitted <code>auctions.html</code> file.</p>
+<p>Submission 3: You need to have your auctions.html properly working at
+https://www.cs.virginia.edu/~mst3k/auctions.html, where
+<code>mst3k</code> is your userid. This means it needs to be in your
+<code>~/public_html</code> directory on the departmental servers. You
+should have web.js (or web3.min.js) in that website directory. Needless
+to say, it should properly connect to your deployed DAO smart
+contract.</p>
 <p>Submission 4: You need to start a few auctions. Mint some NFTs, start
 some auctions. You should start three auctions using the NFT images that
 you created for the <a href="../auction/index.html">dApp Auction</a> (<a
 href="../auction/index.md">md</a>) assignment.</p>
-<p>Submission 5: You will need to submit your information via a Google
-form, the link to which is on the Collab landing page.</p>
 </body>
 </html>

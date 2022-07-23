@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>dex.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900"># Submission information for the Decentralized Exchange (DEX) HW</font></i>
+<i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/dex/</font></i>
+
+<i><font color="#9A1900"># The filename of this file must be 'dex.py', else the submission</font></i>
+<i><font color="#9A1900"># verification routines will not work properly.</font></i>
+
+<i><font color="#9A1900"># You are welcome to have additional variables or fields in this file; you</font></i>
+<i><font color="#9A1900"># just cant remove variables or fields.</font></i>
+
+
+<i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
+userid <font color="#990000">=</font> <font color="#FF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#FF0000">"Jane Doe"</font>
+
+
+<i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
+<i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
+<i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
+eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
+<i><font color="#9A1900"># that need to be deployed for this assignment.  The addresses do not need to</font></i>
+<i><font color="#9A1900"># be in checksummed form.  The contracts do, however, need to be deployed by</font></i>
+<i><font color="#9A1900"># the eth_coinbase address, above.  Be sure to include the leading '0x' in</font></i>
+<i><font color="#9A1900"># the address.</font></i>
+contracts <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># The Token Cryptocurrency contract.  It's fine if this is the same as</font></i>
+	<i><font color="#9A1900"># from the Tokens assignment, or if you re-deployed it for this</font></i>
+	<i><font color="#9A1900"># assignment. All of the other information in this file is assumed to be</font></i>
+	<i><font color="#9A1900"># from this TokenCC contract.  The address does not need to be in</font></i>
+	<i><font color="#9A1900"># checksummed form.  It must have been deployed by the eth_coinbase</font></i>
+	<i><font color="#9A1900"># address, above.</font></i>
+	<font color="#FF0000">'token_cc'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Your TokenDEX contract.  All of the actions in this file are assumed to</font></i>
+	<i><font color="#9A1900"># be from this contract.  The address does not need to be in checksummed</font></i>
+	<i><font color="#9A1900"># form.  It must have been deployed by the eth_coinbase address, above.</font></i>
+	<font color="#FF0000">'token_dex'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># This dictionary contains various information that will vary depending on the</font></i>
+<i><font color="#9A1900"># assignment.</font></i>
+other <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># nothing is required in this diectionary for this assignment</font></i>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># These are various sanity checks, and are meant to help you ensure that you</font></i>
+<i><font color="#9A1900"># submitted everything that you are supposed to submit.  Other than</font></i>
+<i><font color="#9A1900"># submitting the necessary files to Gradescope (which checks for those</font></i>
+<i><font color="#9A1900"># files), all other submission requirements are listed herein.  These values</font></i>
+<i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
+sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># Did you register your DEX with the course dex.php web page? This implies</font></i>
+	<i><font color="#9A1900"># that you deployed both TokenDEX and TokenCC to the private Ethereum</font></i>
+	<i><font color="#9A1900"># blockchain.</font></i>
+	<font color="#FF0000">'registered_dex_with_course_page'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you call createPool() on your DEX with *exactly* 100 (fake) ETH? </font></i>
+	<font color="#FF0000">'called_createpoool_with_100_eth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Is your DEX initialized with the *variable* EtherPricer contract?</font></i>
+	<font color="#FF0000">'initialized_dex_with_variable_etherpricer'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you send me exactly 10.0 of your token cryptocurrencty?  If your</font></i>
+	<i><font color="#9A1900"># token cryptocurrency uses 8 decimals, then that will be 1,000,000,000</font></i>
+	<i><font color="#9A1900"># total units sent.</font></i>
+	<font color="#FF0000">'sent_me_10_of_your_cc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you, or will you, make 4 exchanges on somebody else's DEX?  These</font></i>
+	<i><font color="#9A1900"># bids are due 24 hours after the assignment due date</font></i>
+	<font color="#FF0000">'made_4_exchanges_on_another_dex'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># While some of these are optional, you still have to replace those optional</font></i>
+<i><font color="#9A1900"># ones with the empty string (rather than None).</font></i>
+comments <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
+	<i><font color="#9A1900"># integer or float.</font></i>
+	<font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
+	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
+	<i><font color="#9A1900"># empty string (but not None).</font></i>
+	<font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
+	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
+	<i><font color="#9A1900"># None).</font></i>
+	<font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+<font color="#990000">}</font>
+</tt></pre>
+</body>
+</html>

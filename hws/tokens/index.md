@@ -109,7 +109,7 @@ Save the contract address it was deployed to, as well as the transaction hash fr
 
 #### Part 1, task 6: Send me some money!
 
-You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Collab landing page.  This should be through the `transfer()` function (NOT `approve()`).  It doesn't matter how much you transfer, but at least 1.0 coin(s), and not *all* of your coins.  Save the transaction hash of when you sent me your cryptocurrency, as well as the amount.
+You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Collab landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1000000000 total units.  Save the transaction hash of when you sent me your cryptocurrency, as well as the amount.
 
 
 ----
@@ -120,9 +120,9 @@ In this part, you will create a non-fungible token that follows the [ERC-721 tok
 
 #### Part 2, task 1: NFT image
 
-You will be creating two images for NFTs for this assignment.  The images should be uploaded to the `ipfs/` directory in the Collab workspace in the Resources tool.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Collab, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Collab workspace, only those in the class can view those files -- but that means anybody in the class can view it.
+You will be creating three images for NFTs for this assignment.  (You actually only need two for this assignment, but the third will be needed later on, so we'll create all three now).  The images should be uploaded to the `ipfs/` directory in the Collab workspace in the Resources tool.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Collab, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Collab workspace, only those in the class can view those files -- but that means anybody in the class can view it.
 
-All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You are going to be uploading multiple image files in a future assignment, so please plan your file naming scheme appropriately.  You probably won't need more than three or four such images for the semester, and you are welcome to generate them all now; but you'll just need two different ones for this assignment.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG and PNG images, please.
+All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You are going to be uploading multiple image files in a future assignment, so please plan your file naming scheme appropriately.  You probably won't need more than three or four such images for the semester, and you are welcome to generate them all now; but you'll just need three different ones for this assignment.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG (.jpg), PNG (.png), and WEBP (.webp) images, please.
 
 **NOTE:** The filenames, with the extension, **MUST** be strictly less than 32 characters in length.  This is just for the filename ("mst3k_foo_bar.png"), not the path to that file name.
 
@@ -223,27 +223,15 @@ Some common problems encountered, and their solutions:
 
 ### Submission
 
+You will need to fill in the various values from this assignment into the [tokens.py](tokens.py.html) ([src](tokens.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
+
+
 There are *four* forms of submission for this assignment; you must do all four.
 
-Submission 1: You will need to submit your code to Gradescope; that code is the `TokenCC.sol` and `NFTmanager.sol` files.  Do not submit anything else!  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain.  So it can only do a few sanity tests (correct files submitted, successful compilation, etc.).
+Submission 1: You must deploy those two smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract addresses and transaction hashes of these deployments are in the `tokens.py` file that you submit.
 
-Submission 2: You must deploy those two smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  Save the contract addresses and transaction hashes of these deployments, as you will need them below.
+Submission 2: You should submit your `TokenCC.sol` and `NFTManager.sol` files and your completed `tokens.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
 
-Submission 3: You will need to submit your information via a Google form, the link to which is on the Collab landing page. You will need to submit the following items:
+Submission 3: You will need to upload your cryptocurrency logo (properly named!) to the `cclogos/` directory on Collab, and your three NFT images (also properly named!) to the `ipfs/` directory on Collab.
 
-- Your name & UVA userid
-- Your account number from `eth.coinbase`.  The assumption is that you did your tasks for this assignment from this account; if you did it from a different account, submit that account address instead.
-- For the ERC-20 (fungible token) part:
-  - The contract address and transaction hash of your deployed smart contract
-  - Your cryptocurrency name and abbreviation; the assumption is that you have file named `xyz.png` in the `cclogos/` directory of Collab's Resources tool, where `xyz` is the lower-case version of your abbreviation
-  - The transaction hash where you sent me some cryptocurrency
-- For the ERC-721 (non-fungible token) part:
-  - The contract address and transaction hash of your deployed smart contract
-  - The token IDs for the NFT you kept and the NFT you sent me; the assumption is that those NFT images are in the `ipfs/` directory of Collab's Resources tool
-
-Submission 4: Miscellaneous
-
-- Did you properly upload your cryptocurrency logo to the `cclogos/` directory in Collab's Resources tool?
-- Did you properly upload your NFT images to the `ipfs/` directory in Collab's Resources tool?
-- Did you send me some of your cryptocurrency?  The address to transfer it to in on the Collab landing page.
-- Did you properly send me one of your NFTs?  The address to transfer it to in on the Collab landing page (it's the same address to send me some of your cryptocurrency to).
+Submission 4: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Collab landing page.

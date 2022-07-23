@@ -320,12 +320,17 @@ Note: once the files are on the server, you will need to ensure the permissions 
 
 ### Submission
 
+You will need to fill in the various values from this assignment into the [daoweb3.py](daoweb3.py.html) ([src](daoweb3.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
+
+
 There are *four* forms of submission for this assignment; you must do all four.
 
-Submission 1: You should submit your `DAO.sol` file and your `dao.html` file, and ONLY those files, to Gradescope.  If you need NFTmanager.sol for it to compile, then submit that as well.  All other imported files will be included.  Please make sure the capitalization of the file name is correct!  All your code should be in the HTML file (other than web3.js), and all of your Solidity code should be in `DAO.sol` (you should import all the necessary interfaces).  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, etc.).
+Submission 1: You should submit your `DAO.sol` file and your `dao.html` file, along with your completed `daoweb3.py` file, and ONLY those files, to Gradescope.  If you need NFTmanager.sol for it to compile, then submit that as well.  All other imported files will be included.  Please make sure the capitalization of the file name is correct!  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
 
 Submission 2: You must deploy your DAO smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  
 
-Submission 3: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Collab landing page -- a member of your DAO so that that address can perform tasks on your DAO to grade it.
+Submission 3: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory.  Needless to say, it should properly connect to your deployed DAO smart contract.
 
-Submission 4: You will need to submit your information via a Google form, the link to which is on the Collab landing page.
+Submission 4: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Collab landing page -- a member of your DAO so that that address can perform tasks on your DAO to grade it.
+
+

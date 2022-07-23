@@ -312,7 +312,7 @@ cost (10 gwei) will allow you to compute the cost of gas in ether, which
 is the <span class="math inline"><em>g</em></span> variable in the
 formulas above.</p>
 <p>Your program must be in Python. It must be named
-<code>arbitrage.py</code>.</p>
+<code>arbitrage_trading.py</code>.</p>
 <p>In practice, your program would listen for events from any of the
 DEXes, and any time the exchange rate of any of the DEXes changed, it
 would re-run the analysis. In order to make this assignment gradable, we
@@ -445,11 +445,11 @@ class="math inline"><em>y</em></span>, and <span
 class="math inline"><em>k</em></span> values exactly correct for a test.
 If you want to test such a situation – to see if your program makes the
 right decision, for example – you can hard-code those values in the
-arbitrage.py program and print out the results to see if it computed the
-correct values to trade. Trying to get all the DEXes deployed and
-configured exactly will be very frustrating if you are trying for exact
-values. Instead, make a few transactions to the various DEXes from
-<em>another</em> account to get the <span
+arbitrage_trading.py program and print out the results to see if it
+computed the correct values to trade. Trying to get all the DEXes
+deployed and configured exactly will be very frustrating if you are
+trying for exact values. Instead, make a few transactions to the various
+DEXes from <em>another</em> account to get the <span
 class="math inline"><em>x</em></span>, <span
 class="math inline"><em>y</em></span>, and <span
 class="math inline"><em>k</em></span> values to differ between the
@@ -457,7 +457,7 @@ different DEXes. The provided <a
 href="Arbitrage.sol.html">Arbitrage.sol</a> (<a
 href="Arbitrage.sol">src</a>) contract performs a few initial trades,
 but you may need to do more for your testing. The
-<code>arbitrage.py</code> program is then called to see if any
+<code>arbitrage_trading.py</code> program is then called to see if any
 profitable trades can be made.</p>
 <p>When testing this code, you can open up the appropriate WebSocket
 port when you run geth – just add <code>--ws --ws.origins
@@ -503,23 +503,21 @@ course.</li>
 </ul>
 <p>But the concepts are certainly the same!</p>
 <h3 id="submission">Submission</h3>
-<p>There are <em>two</em> forms of submission for this assignment; you
-must do both of them. Note that there is no required deployment to the
-blockchain for this assignment.</p>
-<p>Submission 1: Submit your arbitrage.py file to Gradescope. You do not
-need to submit the config.py file. Note that gradescope can’t test that
-the program works, since it is not connected to the blockchain.</p>
-<p>Submission 2: Fill out the Google form, whose URL is on the Collab
-landing page.</p>
-<p>We also have a few other things for you to check:</p>
-<ul>
-<li>That you call <code>hook()</code> in your program right after your
-<code>import</code> lines, and before any other code</li>
-<li>Your program should produce NO output other than that provided by
-the <code>output()</code> function</li>
-<li>In your transactions, you should always specify the
-<code>gasPrice</code> value, and it should always be 10 gwei (or
-10,000,000,000 wei)</li>
-</ul>
+<p>You will need to fill in the various values from this assignment into
+the <a href="arbitrage.py.html">arbitrage.py</a> (<a
+href="arbitrage.py">src</a>) file. That file clearly indicates all the
+values that need to be filled in. That file, along with your Python
+source code, are the only files that must be submitted. The
+‘sanity_checks’ dictionary is intended to be a checklist to ensure that
+you perform the various other aspects to ensure this assignment is fully
+submitted.</p>
+<p>There is only one submission for this assignment.</p>
+<p>Submission 1: Submit your <code>arbitrage_trading.py</code> source
+code file, along with your completed <code>arbitrage.py</code> file, to
+Gradescope. You should not submit the config.py file.
+<strong>NOTE:</strong> Gradescope cannot fully test this assignment, as
+it does not have access to the private blockchain. So it can only do a
+few sanity tests (correct files submitted, successful compilation, valid
+values in auction.py, etc.).</p>
 </body>
 </html>

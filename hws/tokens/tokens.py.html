@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>tokens.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900"># Submission information for the Ethereum Tokens HW</font></i>
+<i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/tokens/</font></i>
+
+<i><font color="#9A1900"># The filename of this file must be 'tokens.py', else the submission</font></i>
+<i><font color="#9A1900"># verification routines will not work properly.</font></i>
+
+<i><font color="#9A1900"># You are welcome to have additional variables or fields in this file; you</font></i>
+<i><font color="#9A1900"># just cant remove variables or fields.</font></i>
+
+
+<i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
+userid <font color="#990000">=</font> <font color="#FF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#FF0000">"Jane Doe"</font>
+
+
+<i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
+<i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
+<i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
+eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
+<i><font color="#9A1900"># that need to be deployed for this assignment.  The addresses do not need to</font></i>
+<i><font color="#9A1900"># be in checksummed form.  The contracts do, however, need to be deployed by</font></i>
+<i><font color="#9A1900"># the eth_coinbase address, above.  Be sure to include the leading '0x' in</font></i>
+<i><font color="#9A1900"># the address.</font></i>
+contracts <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># The Token cryptocurrency (aka ERC-20) contract.  All of the token</font></i>
+	<i><font color="#9A1900"># cryptocurrencty transactions below are assumed to come from this</font></i>
+	<i><font color="#9A1900"># contract. The address does not need to be in checksummed form.  It must</font></i>
+	<i><font color="#9A1900"># have been deployed by the eth_coinbase address, above.</font></i>
+	<font color="#FF0000">'token_cc'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The NFT Manager (aka ERC-721) contract.  All of the minted NFTs, below,</font></i>
+	<i><font color="#9A1900"># are assumed to come from this contract.  The address does not need to</font></i>
+	<i><font color="#9A1900"># be in checksummed form.  It must have been deployed by the eth_coinbase</font></i>
+	<i><font color="#9A1900"># address, above.</font></i>
+	<font color="#FF0000">'nft_manager'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># This dictionary contains various information that will vary depending on the</font></i>
+<i><font color="#9A1900"># assignment.</font></i>
+other <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># This is the name of your cryptocurrency.  Be creative!  But don't use</font></i>
+	<i><font color="#9A1900"># something that will get me in trouble.</font></i>
+	<font color="#FF0000">'cryptocurrency_name'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The abbreviation for your cryptocurrency: at most 4 letters.  And be</font></i>
+	<i><font color="#9A1900"># sure it is not already used (see the assignment for how to verify this).</font></i>
+	<font color="#FF0000">'cryptocurrency_abbrev'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The transaction hash where you sent me some of your cryptocurrency.  It</font></i>
+	<i><font color="#9A1900"># must have been done by eth_coinbase, above.</font></i>
+	<font color="#FF0000">'cc_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The NFT ID that you sent me.  This is from the nft_manager contract, above.</font></i>
+	<font color="#FF0000">'nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># These are various sanity checks, and are meant to help you ensure that you</font></i>
+<i><font color="#9A1900"># submitted everything that you are supposed to submit.  Other than</font></i>
+<i><font color="#9A1900"># submitting the necessary files to Gradescope (which checks for those</font></i>
+<i><font color="#9A1900"># files), all other submission requirements are listed herein.  These values</font></i>
+<i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
+sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># Is your cryptocurrency logo image correct?  It should be 512x512, a .png</font></i>
+	<i><font color="#9A1900"># file, generally circular in appearance, and with a transparent</font></i>
+	<i><font color="#9A1900"># background (these requirements match the template that was provided).</font></i>
+	<font color="#FF0000">'cc_logo_image_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Is your cc logo named properly?  It should be 'abcd.png', where 'abcd'</font></i>
+	<i><font color="#9A1900"># is your cryptocurrency abbreviation.  The file name should be all lower</font></i>
+	<i><font color="#9A1900"># case.</font></i>
+	<font color="#FF0000">'cc_logo_name_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you upload your cryptocurrency logo to the 'cclogos/' directory?</font></i>
+	<font color="#FF0000">'uploaded_cc_logo'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you send me exactly 10.0 of your token cryptocurrencty?  If your</font></i>
+	<i><font color="#9A1900"># token cryptocurrency uses 8 decimals, then that will be 1,000,000,000</font></i>
+	<i><font color="#9A1900"># total units sent.</font></i>
+	<font color="#FF0000">'sent_ten_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you upload three NFT images?  They must be either .jpg, .png,</font></i>
+	<i><font color="#9A1900"># or .webp images.</font></i>
+	<font color="#FF0000">'uploaded_three_nft_images'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you name the images correctly?  The names should start with your</font></i>
+	<i><font color="#9A1900"># userid followed by a underscore, and have the appropriate image</font></i>
+	<i><font color="#9A1900"># extension.  All filenames must be strictly less than 32 characters in</font></i>
+	<i><font color="#9A1900"># length. stay open for ONE WEEK after the assignment due date/time?</font></i>
+	<font color="#FF0000">'image_files_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you send me one of your NFTs?  Which one was specified in</font></i>
+	<i><font color="#9A1900"># the 'nft_id_sent' field in the 'other' dictionary, above.</font></i>
+	<font color="#FF0000">'sent_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># While some of these are optional, you still have to replace those optional</font></i>
+<i><font color="#9A1900"># ones with the empty string (rather than None).</font></i>
+comments <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
+	<i><font color="#9A1900"># integer or float.</font></i>
+	<font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
+	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
+	<i><font color="#9A1900"># empty string (but not None).</font></i>
+	<font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
+	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
+	<i><font color="#9A1900"># None).</font></i>
+	<font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+<font color="#990000">}</font>
+</tt></pre>
+</body>
+</html>

@@ -3,6 +3,8 @@ doc:
 	source-highlight -s cpp -d *.sol solution/*.sol
 	dot -Tsvg -O inheritance.dot
 	/bin/mv -f inheritance.dot.svg inheritance.dot.1.svg
+	source-highlight -d tokens.py
+
 
 test:
 	solc ERC20.sol

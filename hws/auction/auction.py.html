@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>auction.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900"># Submission information for the NFT Auction HW</font></i>
+<i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/auction/</font></i>
+
+<i><font color="#9A1900"># The filename of this file must be 'auction.py', else the submission</font></i>
+<i><font color="#9A1900"># verification routines will not work properly.</font></i>
+
+<i><font color="#9A1900"># You are welcome to have additional variables or fields in this file; you</font></i>
+<i><font color="#9A1900"># just cant remove variables or fields.</font></i>
+
+
+<i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
+userid <font color="#990000">=</font> <font color="#FF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#FF0000">"Jane Doe"</font>
+
+
+<i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
+<i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
+<i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
+eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
+<i><font color="#9A1900"># that need to be deployed for this assignment.  The addresses do not need to</font></i>
+<i><font color="#9A1900"># be in checksummed form.  The contracts do, however, need to be deployed by</font></i>
+<i><font color="#9A1900"># the eth_coinbase address, above.  Be sure to include the leading '0x' in</font></i>
+<i><font color="#9A1900"># the address.</font></i>
+contracts <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># The NFT manager contract.  All of the bids below, both for your</font></i>
+	<i><font color="#9A1900"># auctioneer and the class auctioneer, are assumed to be NFTs from this</font></i>
+	<i><font color="#9A1900"># contract.  The address does not need to be in checksummed form.  It</font></i>
+	<i><font color="#9A1900"># must have been deployed by the eth_coinbase address, above.</font></i>
+	<font color="#FF0000">'nft_manager'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Your auctioneer contract.  All of the auction bids that are not on the</font></i>
+	<i><font color="#9A1900"># class-wide auctioneer are assumed to come from this contract.  The</font></i>
+	<i><font color="#9A1900"># address does not need to be in checksummed form.  It must have been</font></i>
+	<i><font color="#9A1900"># deployed by the eth_coinbase address, above.</font></i>
+	<font color="#FF0000">'auctioneer'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># This dictionary contains various information that will vary depending on the</font></i>
+<i><font color="#9A1900"># assignment.</font></i>
+other <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># This is the auction ID for the auction in your auctioneer contract whose</font></i>
+	<i><font color="#9A1900"># time should be expired and should be closed.</font></i>
+	<font color="#FF0000">'your_auction_id_1'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># This is the NFT token ID, in your deployed NFT manager, for the above</font></i>
+	<i><font color="#9A1900"># auction.</font></i>
+	<font color="#FF0000">'your_nft_token_id_1'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># This is the auction ID for the auction in your auctioneer contract that</font></i>
+	<i><font color="#9A1900"># stays open for two weeks after the assignment due date.</font></i>
+	<font color="#FF0000">'your_auction_id_2'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># This is the NFT token ID, in your deployed NFT manager, for the above</font></i>
+	<i><font color="#9A1900"># auction.</font></i>
+	<font color="#FF0000">'your_nft_token_id_2'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># This is the auction ID, in the class-wide auctioneer, that needs to stay</font></i>
+	<i><font color="#9A1900"># open for one week past the assignment due date.</font></i>
+	<font color="#FF0000">'course_auction_id'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># This is the NFT token ID, in your deployed NFT manager, for the above</font></i>
+	<i><font color="#9A1900"># auction.</font></i>
+	<font color="#FF0000">'course_nft_token_id'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># These are various sanity checks, and are meant to help you ensure that you</font></i>
+<i><font color="#9A1900"># submitted everything that you are supposed to submit.  Other than</font></i>
+<i><font color="#9A1900"># submitting the necessary files to Gradescope (which checks for those</font></i>
+<i><font color="#9A1900"># files), all other submission requirements are listed herein.  These values</font></i>
+<i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
+sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># Did you deploy both the Auctioneer and NFT manager contracts to the</font></i>
+	<i><font color="#9A1900"># blockchain?</font></i>
+	<font color="#FF0000">'deployed_both_contracts'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Will your first auction ('your_auction_id_1', above) have expired by the</font></i>
+	<i><font color="#9A1900"># assignment due date/time?</font></i>
+	<font color="#FF0000">'auction_1_expiration'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Will your second auction ('your_auction_id_2', above) stay open for TWO</font></i>
+	<i><font color="#9A1900"># WEEKS after the assignment due date/time?</font></i>
+	<font color="#FF0000">'auction_2_expiration'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Will the course auction that you submitted ('course_auction_id', above)</font></i>
+	<i><font color="#9A1900"># stay open for ONE WEEK after the assignment due date/time?</font></i>
+	<font color="#FF0000">'course_auction_expiration'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you, or will you, bid on three (or more) auctions viewable on the</font></i>
+	<i><font color="#9A1900"># course auction web site?</font></i>
+	<font color="#FF0000">'will_have_bid_on_course_auctions'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># While some of these are optional, you still have to replace those optional</font></i>
+<i><font color="#9A1900"># ones with the empty string (rather than None).</font></i>
+comments <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
+	<i><font color="#9A1900"># integer or float.</font></i>
+	<font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
+	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
+	<i><font color="#9A1900"># empty string (but not None).</font></i>
+	<font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
+	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
+	<i><font color="#9A1900"># None).</font></i>
+	<font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+<font color="#990000">}</font>
+</tt></pre>
+</body>
+</html>

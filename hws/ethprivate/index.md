@@ -263,3 +263,14 @@ You will need to submit your information via a Google form, the link to which is
 - The transaction ID when you sent me the (fake) ETH in part (5)
 - The block number that the mined transaction, from part (5), where you sent me some (fake) ETH
 - The URL to the page that contains the transaction (not the block!) where you sent me 1 (fake) ETH, from part (7)
+
+### Submission
+
+You will need to fill in the various values from this assignment into the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file.  That file clearly indicates all the values that need to be filled in.  That file is the only file that must be submitted for this assignment; future assignments will have additional Solidity source code submitted as well.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
+
+
+There are *two* forms of submission for this assignment; you must do both.
+
+Submission 1: You must send 1 (fake) ETH to the course-wide address indicated on the Collab landing page.
+
+Submission 2: You should submit your completed `ethprivate.py` file, and ONLY that file, to Gradescope.

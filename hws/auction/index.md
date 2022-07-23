@@ -199,20 +199,11 @@ Lastly, bid on at least *three* auctions that are not your own.  Depending on wh
 
 ### Submission
 
-There are *three* forms of submission for this assignment; you must do all three.
+You will need to fill in the various values from this assignment into the [auction.py](auction.py.html) ([src](auction.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
-Submission 1: You should submit your `Auctioneer.sol` file, and ONLY that file, to Gradescope.  All your code should be in that file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, etc.).
 
-Submission 2: You must deploy those two smart contracts (`NFTmanager` and `Auctioneer`) to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  But the final deployment for the `Auctioneer` should only have the data specified in task 3, above.  It's also fine if you use your `NFTmanager` from a previous assignment.  Save the contract addresses and transaction hash of these deployments, as you will need to submit them below.
+There are *two* forms of submission for this assignment; you must do both.
 
-Submission 3: You will need to submit your information via a Google form, the link to which is on the Collab landing page. You will need to submit the following items:
+Submission 1: You must deploy those two smart contracts (`NFTmanager` and `Auctioneer`) to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  But the final deployment for the `Auctioneer` should only have the data specified in task 3, above.  It's also fine if you use your `NFTmanager` from a previous assignment.  Save the contract addresses and transaction hash of these deployments, as you will need to submit them below.
 
-- Your name & UVA userid
-- Your account number from `eth.coinbase`. The assumption is that you did your tasks from this account (deployed your contract, the votes, etc.); if you did it from a different account, submit that account address instead.
-- From task 1 (NFT images):
-  - The contract address and transaction hash of your deployed NFTmanager contract (this may be the same as in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment)
-- From task 2 (Auctioneer): the contract address and transaction hash of your deployed smart contract
-- From task 3 (your auctions): the auction ID for the two auctions (the contract address for the Auctioneer contract is assumed to be the one from task 2)
-- From task 4 (class auctions):
-  - The auction ID of the auction you created
-  - The transaction hash for each of the three transactions where you bid on another auction
+Submission 2: You should submit your `Auctioneer.sol` file and your completed `auction.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

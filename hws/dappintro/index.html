@@ -549,38 +549,32 @@ for.</p>
 <h3 id="closing-down">Closing down</h3>
 <p>Please turn off your geth node when you are done with this
 assignment. You can always turn it back on again when needed.</p>
-<h3 id="submission-grading">Submission &amp; Grading</h3>
-<p>To test your program, we will look at your deployed Choices smart
-contract on our private blockchain. We will check that you did the
-various tasks (deployed the contract, modified the options, voted for an
-option for your own contract, voted for an option on our contract,
-etc.).</p>
-<p>You will need to submit your information via a Google form, the link
-to which is on the Collab landing page. You will need to submit the
-following items:</p>
-<ul>
-<li>Your name &amp; UVA userid</li>
-<li>Your account number from <code>eth.coinbase</code>. The assumption
-is that you did your tasks from this account (deployed your contract,
-the votes, etc.); if you did it from a different account, submit that
-account address.</li>
-<li>From task 2, you should submit information about the smart contract
-you deployed. If you mined it to the blockchain multiple times, that’s
-fine – pick the most recent one (where you voted), and submit that one.
-You should submit:
-<ul>
-<li>The transaction hash of the contract transaction</li>
-<li>The contract address for the contract (this can be the checksummed
-version or all lower-case)</li>
-<li>The block number where this transaction was mined</li>
-</ul></li>
-<li>Also from task 2, the transaction hash and the block number where
-you voted on YOUR Choices contract</li>
-<li>From task 4, the transaction hash and the block number where you
-voted for MY Choices contract</li>
-<li>How many hours (as a floating-point number) this assignment took you
-to complete. Please be honest here – I’m using this to judge workload,
-and this will have no impact on your grade for this assignment.</li>
-</ul>
+<h3 id="submission">Submission</h3>
+<p>You will need to fill in the various values from this assignment into
+the <a href="dappintro.py.html">dappintro.py</a> (<a
+href="dappintro.py">src</a>) file. That file clearly indicates all the
+values that need to be filled in. That file, along with your Solidity
+source code, are the only files that must be submitted. The
+‘sanity_checks’ dictionary is intended to be a checklist to ensure that
+you perform the various other aspects to ensure this assignment is fully
+submitted.</p>
+<p>There are <em>three</em> forms of submission for this assignment; you
+must do all three.</p>
+<p>Submission 1: You must deploy the Choices smart contracts to our
+private Ethereum blockchain. It’s fine if you deploy it a few times to
+test it. The contract addresses and transaction hashes of these
+deployments are in the <code>dappintro.py</code> file that you
+submit.</p>
+<p>Submission 2: You must vote on both your Choices contract and the
+course-wide Choices contract.</p>
+<p>Submission 3: You should submit your <code>Choices.sol</code> file
+and your completed <code>dappintro.py</code> file, and ONLY those two
+files, to Gradescope. All your Solidity code should be in the first
+file, and you should specifically import the various interfaces. Those
+interface files will be placed in the same directory on Gradescope when
+you submit. <strong>NOTE:</strong> Gradescope cannot fully test this
+assignment, as it does not have access to the private blockchain. So it
+can only do a few sanity tests (correct files submitted, successful
+compilation, valid values in auction.py, etc.).</p>
 </body>
 </html>

@@ -133,17 +133,18 @@ I've deployed a gradebook with your (fake) grades.  The address for that smart c
 
 There are two ways you can access the gradebook on the blockchain.  One is through Remix, like was done in the [dApp introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md)) -- you load the Gradebook.sol interface, and then enter the address of the deployed Gradebook contract into the 'At Address' text box in the deployment window.  The other way is through geth, like we did in the [live coding example in class](../../slides/solidity.html#/debtor) -- the geth commands start about 8 slides down in that column.  For this you will also need the ABI.  You can compile the Gradebook.sol interface, and then copy the ABI -- after you compile it, the copy ABI link is at the very bottom of the compilation pane.  Note that you may have to reformat that ABI a bit -- what you copy is on many lines, and you may have to reformat it to one line.
 
+The information you need to obtain is:
+
+- What is your (fake) average?  Recall that it reports an integer that is 100 times your average (so 1234 means your average is 12.34%)
+- What are the maximum number of points on the assignment with index 3?
+- What is YOUR score on the assignment with index 3?
+
 ### Submission
 
-There are *three* forms of submission for this assignment; you must do all three.
+You will need to fill in the various values from this assignment into the [gradebook.py](gradebook.py.html) ([src](gradebook.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
-Submission 1: You should submit your `CourseGradebook.sol` file, and ONLY that file, to Gradescope.  All your code should be in that file, and you should specifically import the `Gradebook` interface.  That interface file will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot test this assignment, as it does not have access to the private blockchain. So it can only check that the right file was submitted and that it compiles.  Thus, you should ignore any score that Gradescope presents, as it is not running any actual tests other than compilation.
+There are *two* forms of submission for this assignment; you must do both.
 
-Submission 2:  You must deploy your smart contract to our private Ethereum blockchain -- this was probably done above.  It's fine if you deploy it a few times because you were testing it, screwed something up, or whatever.  But the final deployment should not have any data other than the one call to `designateTA()`.
+Submission 1:  You must deploy your smart contract to our private Ethereum blockchain -- this was probably done above.  It's fine if you deploy it a few times because you were testing it, screwed something up, or whatever.  But the final deployment should not have any data other than the one call to `designateTA()`.
 
-Submission 3: You will need to submit your information via a Google form, the link to which is on the Collab landing page. You will need to submit the following items:
-
-- Your name & UVA userid
-- Your account number from `eth.coinbase`.  The assumption is that you did your tasks from this account (deployed your contract, the votes, etc.); if you did it from a different account, submit that account address instead.
-- The smart contract address for your deployed CourseGradebook contract
-- A few questions about your average in my gradebook, from part 2
+Submission 2: You should submit your `CourseGradebook.sol` file, as well as your `gradebook.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

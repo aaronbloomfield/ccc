@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>gradebook.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900"># Submission information for the dApp Gradebook HW</font></i>
+<i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/gradebook/</font></i>
+
+<i><font color="#9A1900"># The filename of this file must be 'gradebook.py', else the submission</font></i>
+<i><font color="#9A1900"># verification routines will not work properly.</font></i>
+
+<i><font color="#9A1900"># You are welcome to have additional variables or fields in this file; you</font></i>
+<i><font color="#9A1900"># just cant remove variables or fields.</font></i>
+
+
+<i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
+userid <font color="#990000">=</font> <font color="#FF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#FF0000">"Jane Doe"</font>
+
+
+<i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
+<i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
+<i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
+eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
+<i><font color="#9A1900"># that need to be deployed for this assignment.  The addresses do not need to</font></i>
+<i><font color="#9A1900"># be in checksummed form.  The contracts do, however, need to be deployed by</font></i>
+<i><font color="#9A1900"># the eth_coinbase address, above.  Be sure to include the leading '0x' in</font></i>
+<i><font color="#9A1900"># the address.</font></i>
+contracts <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># The Gradebook contract.  The address does not need to be in checksummed</font></i>
+	<i><font color="#9A1900"># form.  It must have been deployed by the eth_coinbase address, above.</font></i>
+	<font color="#FF0000">'gradebook'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># This dictionary contains various information that will vary depending on the</font></i>
+<i><font color="#9A1900"># assignment.</font></i>
+other <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># What is your (fake) average in the course gradebook?  This should be a</font></i>
+	<i><font color="#9A1900"># number out of 100.</font></i>
+	<font color="#FF0000">'your_fake_avg'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The maximum number of points on the assignment with index 3 in the</font></i>
+	<i><font color="#9A1900"># course-wide gradebook; see the assignment write-up for details.</font></i>
+	<font color="#FF0000">'max_points_on_3'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Your score on the assignment with index 3 in the course-wide gradebook;</font></i>
+	<i><font color="#9A1900"># see the assignment write-up for details.</font></i>
+	<font color="#FF0000">'your_score_on_3'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># These are various sanity checks, and are meant to help you ensure that you</font></i>
+<i><font color="#9A1900"># submitted everything that you are supposed to submit.  Other than</font></i>
+<i><font color="#9A1900"># submitting the necessary files to Gradescope (which checks for those</font></i>
+<i><font color="#9A1900"># files), all other submission requirements are listed herein.  These values</font></i>
+<i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
+sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># Did you properly deploy your gradebook contract to the blockchain?</font></i>
+	<font color="#FF0000">'deployed_gradebook'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you designate the instructor account as a TA for your gradebook?  If</font></i>
+	<i><font color="#9A1900"># not, we will not be able to grade your assignment.</font></i>
+	<font color="#FF0000">'designated_us_as_ta'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># While some of these are optional, you still have to replace those optional</font></i>
+<i><font color="#9A1900"># ones with the empty string (rather than None).</font></i>
+comments <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
+	<i><font color="#9A1900"># integer or float.</font></i>
+	<font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
+	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
+	<i><font color="#9A1900"># empty string (but not None).</font></i>
+	<font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
+	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
+	<i><font color="#9A1900"># None).</font></i>
+	<font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+<font color="#990000">}</font>
+</tt></pre>
+</body>
+</html>

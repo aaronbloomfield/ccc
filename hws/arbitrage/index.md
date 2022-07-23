@@ -149,7 +149,7 @@ You must take gas estimation into account!  Otherwise, if you were only to make 
 
 When providing a transaction, you also have to supply the gasPrice.  **For this assignment, we will select a standard 10 gwei as the gas price.**  The gas estimate (perhaps doubled) times the gas cost (10 gwei) will allow you to compute the cost of gas in ether, which is the $g$ variable in the formulas above.
 
-Your program must be in Python.  It must be named `arbitrage.py`.
+Your program must be in Python.  It must be named `arbitrage_trading.py`.
 
 In practice, your program would listen for events from any of the DEXes, and any time the exchange rate of any of the DEXes changed, it would re-run the analysis.  In order to make this assignment gradable, we are going to ignore events, and specify a different way that this program is to be run.
 
@@ -236,7 +236,7 @@ The 'fees' value that you are reporting is just the USD value of the Ethereum tr
 
 ### Testing
 
-When testing your code, don't worry about getting the $x$, $y$, and $k$ values exactly correct for a test.  If you want to test such a situation -- to see if your program makes the right decision, for example -- you can hard-code those values in the arbitrage.py program and print out the results to see if it computed the correct values to trade.  Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values.  Instead, make a few transactions to the various DEXes from *another* account to get the $x$, $y$, and $k$ values to differ between the different DEXes.  The provided [Arbitrage.sol](Arbitrage.sol.html) ([src](Arbitrage.sol)) contract performs a few initial trades, but you may need to do more for your testing.  The `arbitrage.py` program is then called to see if any profitable trades can be made.
+When testing your code, don't worry about getting the $x$, $y$, and $k$ values exactly correct for a test.  If you want to test such a situation -- to see if your program makes the right decision, for example -- you can hard-code those values in the arbitrage_trading.py program and print out the results to see if it computed the correct values to trade.  Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values.  Instead, make a few transactions to the various DEXes from *another* account to get the $x$, $y$, and $k$ values to differ between the different DEXes.  The provided [Arbitrage.sol](Arbitrage.sol.html) ([src](Arbitrage.sol)) contract performs a few initial trades, but you may need to do more for your testing.  The `arbitrage_trading.py` program is then called to see if any profitable trades can be made.
 
 When testing this code, you can open up the appropriate WebSocket port when you run geth -- just add `--ws --ws.origins localhost,127.0.0.1` to the (now long) list of command line parameters when you start your geth node.  Your connection_uri will then be `ws://localhost:8546`.  You are also welcome to connect to the course server (the URI of which is on the Collab landing page) or via your geth.ipc file.
 
@@ -262,14 +262,9 @@ But the concepts are certainly the same!
 
 ### Submission
 
-There are *two* forms of submission for this assignment; you must do both of them.  Note that there is no required deployment to the blockchain for this assignment.
+You will need to fill in the various values from this assignment into the [arbitrage.py](arbitrage.py.html) ([src](arbitrage.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Python source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
-Submission 1: Submit your arbitrage.py file to Gradescope.  You do not need to submit the config.py file.  Note that gradescope can't test that the program works, since it is not connected to the blockchain.
 
-Submission 2: Fill out the Google form, whose URL is on the Collab landing page.
+There is only one submission for this assignment.
 
-We also have a few other things for you to check:
-
-- That you call `hook()` in your program right after your `import` lines, and before any other code
-- Your program should produce NO output other than that provided by the `output()` function
-- In your transactions, you should always specify the `gasPrice` value, and it should always be 10 gwei (or 10,000,000,000 wei)
+Submission 1: Submit your `arbitrage_trading.py` source code file, along with your completed `arbitrage.py` file, to Gradescope.  You should not submit the config.py file.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

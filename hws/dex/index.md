@@ -338,14 +338,13 @@ Depending on when you submit your assignment, there may not be other DEXes to in
 
 ### Submission
 
-There are *five* forms of submission for this assignment; you must do all five.
+You will need to fill in the various values from this assignment into the [dex.py](dex.py.html) ([src](dex.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
-1. Submission 1: Submit the TokenDEX.sol file to Gradescope.  Also submit the TokenCC.sol file, from the previous assignment.
-2. Submission 2: Deploy the TokenDEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well, either from the previous assignment or again for this one.  These were likely done in the deployment section, above.
-3. Submission 3: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.
-4. Submission 4: Google form!  The URL is on the Collab landing page.
-5. Submission 5: You have to complete a few of the steps listed in various places above; we just list them here so you don't forget one of them
-	- Ensure you called `createPool()` on your DEX with *exactly* 100 (fake) ETH
-	- Ensure your DEX is initialized with the variable EtherPricer contract
-	- Send me 10.0 coins of your token cryptocurrency
-	- Make 4 exchanges on somebody else's DEX
+
+There are *three* forms of submission for this assignment; you must do all three.
+
+Submission 1: Deploy the TokenDEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well, either from the previous assignment or again for this one.  These were likely done in the deployment section, above.
+
+Submission 2: You should submit your `TokenDEX.sol` and `TokenCC.sol` files and your completed `auction.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+
+Submission 3: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.

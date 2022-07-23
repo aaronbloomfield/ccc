@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>dappintro.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900"># Submission information for the dApp Introduction HW</font></i>
+<i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/dappintro/</font></i>
+
+<i><font color="#9A1900"># The filename of this file must be 'dappintro.py', else the submission</font></i>
+<i><font color="#9A1900"># verification routines will not work properly.</font></i>
+
+<i><font color="#9A1900"># You are welcome to have additional variables or fields in this file; you</font></i>
+<i><font color="#9A1900"># just cant remove variables or fields.</font></i>
+
+
+<i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
+userid <font color="#990000">=</font> <font color="#FF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#FF0000">"Jane Doe"</font>
+
+
+<i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
+<i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
+<i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
+eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
+
+
+<i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
+<i><font color="#9A1900"># that need to be deployed for this assignment.  The addresses do not need to</font></i>
+<i><font color="#9A1900"># be in checksummed form.  The contracts do, however, need to be deployed by</font></i>
+<i><font color="#9A1900"># the eth_coinbase address, above.  Be sure to include the leading '0x' in</font></i>
+<i><font color="#9A1900"># the address.</font></i>
+contracts <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># Your deployed Choices contract.  All of the action below on your Choices</font></i>
+	<i><font color="#9A1900"># contract is assumed to be from this one. The address does not need to</font></i>
+	<i><font color="#9A1900"># be in checksummed form.  It must have been deployed by the eth_coinbase</font></i>
+	<i><font color="#9A1900"># address, above.</font></i>
+	<font color="#FF0000">'choices'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># This dictionary contains various information that will vary depending on the</font></i>
+<i><font color="#9A1900"># assignment.</font></i>
+other <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># This is the transaction hash where you voted on your own deployed</font></i>
+	<i><font color="#9A1900"># Choices contract.</font></i>
+	<font color="#FF0000">'txn_hash_vote_yours'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># This is the transaction hash where you voted on the course Choices</font></i>
+	<i><font color="#9A1900"># contract.</font></i>
+	<font color="#FF0000">'txn_hash_vote_course'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># These are various sanity checks, and are meant to help you ensure that you</font></i>
+<i><font color="#9A1900"># submitted everything that you are supposed to submit.  Other than</font></i>
+<i><font color="#9A1900"># submitting the necessary files to Gradescope (which checks for those</font></i>
+<i><font color="#9A1900"># files), all other submission requirements are listed herein.  These values</font></i>
+<i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
+sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
+	
+	<i><font color="#9A1900"># Did you deploy the Choices contract?</font></i>
+	<font color="#FF0000">'deployed_choices_contract'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you make the necessasry changes in your deployed the Choices contract?</font></i>
+	<font color="#FF0000">'make_changes_indeployed_choices_contract'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you vote on your own Choices contract?</font></i>
+	<font color="#FF0000">'voted_on_your_choices'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you vote on the course-wide Choices contract?</font></i>
+	<font color="#FF0000">'voted_on_course_choices'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+<font color="#990000">}</font>
+
+
+<i><font color="#9A1900"># While some of these are optional, you still have to replace those optional</font></i>
+<i><font color="#9A1900"># ones with the empty string (rather than None).</font></i>
+comments <font color="#990000">=</font> <font color="#990000">{</font>
+
+	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
+	<i><font color="#9A1900"># integer or float.</font></i>
+	<font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
+	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
+	<i><font color="#9A1900"># empty string (but not None).</font></i>
+	<font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
+	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
+	<i><font color="#9A1900"># None).</font></i>
+	<font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+<font color="#990000">}</font>
+</tt></pre>
+</body>
+</html>
