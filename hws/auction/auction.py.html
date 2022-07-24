@@ -37,17 +37,15 @@ eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
 <i><font color="#9A1900"># the address.</font></i>
 contracts <font color="#990000">=</font> <font color="#990000">{</font>
 
-	<i><font color="#9A1900"># The NFT manager contract.  All of the bids below, both for your</font></i>
-	<i><font color="#9A1900"># auctioneer and the class auctioneer, are assumed to be NFTs from this</font></i>
-	<i><font color="#9A1900"># contract.  The address does not need to be in checksummed form.  It</font></i>
-	<i><font color="#9A1900"># must have been deployed by the eth_coinbase address, above.</font></i>
-	<font color="#FF0000">'nft_manager'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
-
 	<i><font color="#9A1900"># Your auctioneer contract.  All of the auction bids that are not on the</font></i>
 	<i><font color="#9A1900"># class-wide auctioneer are assumed to come from this contract.  The</font></i>
 	<i><font color="#9A1900"># address does not need to be in checksummed form.  It must have been</font></i>
 	<i><font color="#9A1900"># deployed by the eth_coinbase address, above.</font></i>
 	<font color="#FF0000">'auctioneer'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+
+	<i><font color="#9A1900"># We are not asking for the NFT Manager's contract address, as we can find</font></i>
+	<i><font color="#9A1900"># that out via a call to the nftmanager() function in your Auctioneer</font></i>
+	<i><font color="#9A1900"># contract.</font></i>
 <font color="#990000">}</font>
 
 

@@ -896,6 +896,33 @@ try something {
   - Creating a new contract
   - Or anything else
 - If the something reverts, the catch clause is executed
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n" id='payeth'><textarea>
+## Transferring ether in Solidity
+- To transfer ether from a Solidity contract:
+  ```
+  (bool success, ) = payable(a).call{value: v}("");
+  require(success, "Failed to transfer ETH");
+  ```
+- The amount, in `v`, is in wei
+- The address to pay it to is in `a`
+- This reverts if the contract does not have sufficient balance
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Contracts creating contracts
+- We can have a contract `Foo` deploy another contract `Bar`
+- Given a field in Foo such as either:
+  ```
+  Bar public b;
+  address public b;
+  ```
+- Then we can initialize it via either (respectively):
+  ```
+  b = new Bar();
+  b = address(new Bar());
+  ```
 
 
 

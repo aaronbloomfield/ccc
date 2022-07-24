@@ -26,17 +26,15 @@ eth_coinbase = ""
 # the address.
 contracts = {
 
-	# The NFT manager contract.  All of the bids below, both for your
-	# auctioneer and the class auctioneer, are assumed to be NFTs from this
-	# contract.  The address does not need to be in checksummed form.  It
-	# must have been deployed by the eth_coinbase address, above.
-	'nft_manager': '',
-
 	# Your auctioneer contract.  All of the auction bids that are not on the
 	# class-wide auctioneer are assumed to come from this contract.  The
 	# address does not need to be in checksummed form.  It must have been
 	# deployed by the eth_coinbase address, above.
 	'auctioneer': '',
+
+	# We are not asking for the NFT Manager's contract address, as we can find
+	# that out via a call to the nftmanager() function in your Auctioneer
+	# contract.
 }
 
 

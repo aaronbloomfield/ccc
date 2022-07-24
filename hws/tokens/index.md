@@ -182,7 +182,7 @@ The following are the functional requirements for the development of this contra
 
 - Implementation of the `mintWithURI()` function
 	- Note the second parameter is *just* the filename (`mst3k_foo.jpg`), not the full URI
-  	- It should only allow minting by the deployer of the contract
+  	- It should allow minting by *anybody*
   	- A duplicate URI should cause a reversion
   	- This *returns* the token ID of the newly minted NFT; the function itself determines what that ID is (likely the next integer in sequence)
 - Implementation of the `supportsInterface()` function for *four* interfaces -- the three ERC721 interfaces (`IERC721`, `IERC721Metadata`, and `IERC721full`) and `IERC165` (`Context` has no `external` or `public` members, so it's not needed in this list)

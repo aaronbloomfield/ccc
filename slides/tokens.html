@@ -294,6 +294,21 @@ contract EZTokens {
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
+## Function selectors
+- You can get individual function selectors via either:
+  ```
+  this.funcName.selector
+  myInterface.funcName.selector
+  ```
+  - The first one is only to get a function selector of the current contract
+- An *interface selector* is just the XOR of all the contained function selectors
+- You can get the interface selector via:
+  ```
+  type(myInterface).interfaceId
+  ```
+
+
+
 ## Solidity Type Information
 - Given a type `T`, a contract 'C', or an interface 'I', you can get information about that type:
   - `type(T).min`: the minimum value
@@ -326,6 +341,11 @@ contract EZTokens {
 }
 </code></pre>
 
+
+
+## Known interface selectors
+- Our blockchain explorer contains a list of the known function and interface selectors used in this course
+  - Click on the "View the known ABIs and interface IDs" link at the bottom of the main page
 
 </textarea></section>
 

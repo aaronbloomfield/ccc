@@ -62,109 +62,9 @@ href="../auction/index.md">md</a>) assignment. You will also need your
 NFTmanager contract, from the <a href="../tokens/index.html">Ethereum
 Tokens</a> (<a href="../tokens/index.md">md</a>) assignment, as well. If
 you did not get yours working, then contact the course staff, and we can
-deploy them for you to use.</p>
-<p>Before you deploy yours, however, we need to make a few changes to
-our Auctioneer.sol contract. We recommend saving this updated version in
-a separate file, such as <code>Auctioneer_v2.sol</code>.</p>
-<p><strong>Change 1:</strong> The first change is due to an error in the
-specification in the <a href="../auction/index.html">dApp Auction</a>
-(<a href="../auction/index.md">md</a>) assignment. The change is this:
-<em>all</em> monetary amounts should be in <em>wei</em>. This
-includes:</p>
-<ul>
-<li>The <code>reserve</code> and <code>highestBid</code> fields of the
-<code>Auction</code> struct</li>
-<li>The return value of <code>fees()</code> (which is probably just a
-getter function from a public variable)</li>
-<li>The <code>_reserve</code> parameter to
-<code>createAuction()</code></li>
-</ul>
-<p>To make this change, check for each time you modify those fields of
-the <code>Auction</code> struct, for how you store it in
-<code>fees</code>, and the code in the <code>createAuction()</code>
-function.</p>
-<p><strong>Change 2:</strong> To make everybody’s lives easier, each
-Auctioneer contract will deploy it’s <em>own</em> NFTmanager. We saw how
-this was done in the testing section of the <a
-href="../daoweb3/index.html">DAO &amp; web3</a> (<a
-href="../daoweb3/index.md">md</a>) assignment and in the <a
-href="../arbitrage/Arbitrage.sol.html">Arbitrage.sol</a> contract in the
-<a href="../arbitrage/index.html">Arbitrage trading</a> (<a
-href="../arbitrage/index.md">md</a>) assignment. This way we won’t have
-to pass in the address of the NFT manager every time we want to deal
-with an NFT which will make our lives easier. To make this change, add
-the following as a public variable to your contract:</p>
-<pre><code>address public override nftmanager;</code></pre>
-<p>This will create an associated getter function as well. This
-<code>override</code> is because it will override the updated
-AuctionManager_v2.sol contract, which is provided below.</p>
-<p>Also add the following line in your constructor; if you don’t have a
-constructor, add one with just the following line:</p>
-<pre><code>nftmanager = address(new NFTmanager());</code></pre>
-<p>The rest of your Auctioneer code should be unaffected by this change.
-The only time the NFTmanager address comes up is when it is read in
-during the <code>onERC721Received()</code> function, and when it’s
-stored in the <code>Auction</code> struct. But that code should work
-just fine with this change – we are just going to be saving that same
-NFTmanager in all the <code>Auction</code> structs. This is a bit of a
-waste of gas, but it simplifies our modifications for this assignment.
-And gas is free for us in this course.</p>
-<p><strong>Change 3:</strong> We are going to add a method to the
-Auctioneer to mint an NFT, which it does by calling the NFTmanager’s
-<code>mintWithURI()</code> method. Copy and paste the following code
-into your Auctioneer_v2 contract:</p>
-<pre><code>mapping (address =&gt; uint) public override lastMintedNFT;
-
-function mintNFT (string memory uri) public override returns (uint) {
-    uint ret = NFTmanager(nftmanager).mintWithURI(msg.sender,uri);
-    lastMintedNFT[msg.sender] = ret;
-    return ret;
-}
-
-function tokenURI(uint tokenID) public view override returns (string memory) {
-    return NFTmanager(nftmanager).tokenURI(tokenID);
-}</code></pre>
-<p>The <code>mintNFT()</code> function allows us to create a new NFT
-without having to interact with the NFTmanager contract, which will
-simplify the work we have to do below. This assumes that the NFT is
-being minted for the sender, which is a reasonable assumption in this
-case. As mentioned in the <a href="../arbitrage/index.html">Arbitrage
-trading</a> (<a href="../arbitrage/index.md">md</a>) assignment, it’s
-challenging to obtain the return value of a transaction, so we save the
-just minted NFT ID in the <code>lastMintedNFT</code> mapping, which we
-can then read via a regular call. (This means if you mint two NFTs in
-succession, without getting the ID of the first before you mint the
-second, then you won’t know the ID of the first; we are going to ignore
-this use case for simplicity). The <code>tokenURI()</code> just passes
-the call to the NFTmanager – having this function here allows us to not
-have to interact with two smart contracts, as the Auctioneer will
-forward that request on for us. This uses up more gas, but will make it
-much simpler for us in this assignment.</p>
-<p><strong>Change 4:</strong> Make sure anybody can mint an NFT with
-your NFTmanager. Basically ensure there is no <code>require()</code>
-statement in your NFTmanager’s <code>mintWithURI()</code> function that
-prevents anybody from minting a NFT.</p>
-<p><strong>Change 5:</strong> As a result of these changes, your
-Auctioneer_v2.sol contract will now support the updated <a
-href="AuctionManager_v2.sol.html">AuctionManager_v2.sol</a> (<a
-href="AuctionManager_v2.sol">src</a>) interface. Other than changing a
-few comments (changing all ‘gwei’ instances to ‘wei’), the changes for
-this assignment are the first few lines of the contract. In particular,
-your contract line should be <code>contract Auctioneer_v2 is
-AuctionManager_v2 {</code>. In addition to implementing the above
-functions, this means you have to change your <code>import
-"AuctionManager.sol";</code> line to <code>import
-"AuctionManager_v2.sol";</code>. Your <code>supportsInterface()</code>
-function will have to support the new interface (you don’t have to
-indicate support of the old AuctionManager.sol interface, just the new
-AuctionManager_v2.sol interface). The ABI for that interface can be
-found in the <a href="AuctionManager_v2.abi">AuctionManager_v2.abi</a>
-file. Although you likely won’t need it, you can get the link for the
-NFTmanager ABI as well; it’s actually the ABI for the IERC721full
-interface: <a href="IERC721full.abi">IERC721.abi</a>.</p>
-<p><strong>Finalizing:</strong> Once that modification is done, you
-should deploy your Auctioneer_v2.sol contract to the blockchain. Save
-the contract address, as it will be needed below.</p>
+deploy them for you to use. Otherwise, deploy your Auctioneer contract
+to the blockchain, and save the contract address, as it will be needed
+below.</p>
 <h3 id="setup-metamask">Setup: MetaMask</h3>
 <p><img src="metamask-pop-up.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>This assignment uses the <a href="https://metamask.io/">MetaMask</a>
@@ -464,15 +364,13 @@ take 10 seconds for the pop-up window to appear. <br clear='all'></p>
 <h3 id="the-task">The Task</h3>
 <p><img src="final-web-page.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>Finally! We can get to the whole reason for this party.</p>
-<p>Your task is to create a web interface to your Auctioneer_v2.sol
-contract, which now fulfills the <a
-href="AuctionManager_v2.sol.html">AuctionManager_v2.sol</a> (<a
-href="AuctionManager_v2.sol">src</a>) interface. MAKE SURE IT’S THE
-UPDATED VERSION that you developed above! That updated version was
-discussed in the “Setup: Auctioneer” section, above. Our web page looked
-like the image to the right; this is the bottom of the web page, and the
-auction table itself was above what is shown. Yours need not look
-similar, but it does need to be usable.</p>
+<p>Your task is to create a web interface to your Auctioneer.sol
+contract, which fulfills the <a
+href="../auction/AuctionManager.sol.html">AuctionManager.sol</a> (<a
+href="../auction/AuctionManager.sol">src</a>) interface. Our web page
+looked like the image to the right; this is the bottom of the web page,
+and the auction table itself was above what is shown. Yours need not
+look similar, but it does need to be usable.</p>
 <p>As you are starting with the web site that was provided to you in the
 <a href="../auction/index.html">dApp Auction</a> (<a
 href="../auction/index.md">md</a>) assignment (see below for starting on
@@ -535,7 +433,7 @@ Collab landing page. <br clear='all'></p>
 <h3 id="web-page-start-up">Web page start-up</h3>
 <p>To get the auctions.html web page set up:</p>
 <ul>
-<li>Get the contract address of your deployed Auctioneer_v2.sol
+<li>Get the contract address of your deployed Auctioneer.sol
 contract</li>
 <li>Go to the auctions.php web site (the address is on the Collab
 landing page), and enter that smart contract address to view those
@@ -553,7 +451,7 @@ console in the developer tools)</li>
 <li>View that page – ensure it shows the same result, and also has no
 errors</li>
 <li>Edit that file, and update the ABIs to the new versions: <a
-href="AuctionManager_v2.abi">AuctionManager_v2.abi</a> for
+href="AuctionManager.abi">AuctionManager.abi</a> for
 <code>auctioneerAbi</code> and <a href="IERC721full.abi">IERC721.abi</a>
 for <code>nftManagerAbi</code></li>
 <li>Add the code provided above:

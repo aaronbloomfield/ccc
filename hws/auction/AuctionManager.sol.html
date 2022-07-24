@@ -13,87 +13,88 @@ http://www.gnu.org/software/src-highlite">
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
 
 import <font color="#FF0000">"./IERC721.sol"</font><font color="#990000">;</font>
-import <font color="#FF0000">"./IERC721Receiver.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// Some general notes:</font></i>
 <i><font color="#9A1900">//</font></i>
 <i><font color="#9A1900">// - All monetary values passed in as parameters to the functions below are in</font></i>
-<i><font color="#9A1900">//   gwei; note that msg.value is in wei, so it will have to be divided by</font></i>
-<i><font color="#9A1900">//   10**9 to get the amount in gwei</font></i>
-<i><font color="#9A1900">// - Beyond what is listed below, there are two other methods to implement,</font></i>
+<i><font color="#9A1900">//   wei</font></i>
+<i><font color="#9A1900">// - Beyond what is listed below, there is one other method to implement,</font></i>
 <i><font color="#9A1900">//   based on the interfaces that this interface implements:</font></i>
-<i><font color="#9A1900">//   supportsInterface()(from IERC165) and onERC721Received()</font></i>
-<i><font color="#9A1900">//   (from IERC721Receiver).</font></i>
-<i><font color="#9A1900">// - the onERC721Received() should do a whole bunch of checks, most of which</font></i>
-<i><font color="#9A1900">//   are left for you to decide.  But it shoudl also check that the given URI</font></i>
-<i><font color="#9A1900">//   is not already in an active auction.</font></i>
-<i><font color="#9A1900">// - The parameters for onERC721Received() are:</font></i>
-<i><font color="#9A1900">//   - operator: the address which called the `safeTrasnferFrom()` function;</font></i>
-<i><font color="#9A1900">//     this can be ignored for this assignment</font></i>
-<i><font color="#9A1900">//   - from: the address which previously owned the token</font></i>
-<i><font color="#9A1900">//   - tokenId: the NFT identifier being transfered</font></i>
-<i><font color="#9A1900">//   - data: additional data with no specified format; this can be ignored for</font></i>
-<i><font color="#9A1900">//     this assignment</font></i>
-<i><font color="#9A1900">// - There are four possible states for (endTime,active): </font></i>
-<i><font color="#9A1900">//   - (0,false) is when the auction has ended</font></i>
-<i><font color="#9A1900">//   - (0,true) should never occur</font></i>
-<i><font color="#9A1900">//   - (&gt; 0, false) is when endTime is the duration, and it's waiting for the</font></i>
-<i><font color="#9A1900">//     NFT receipt</font></i>
-<i><font color="#9A1900">//   - (&gt; 0, true) is when the auction is active</font></i>
+<i><font color="#9A1900">//   supportsInterface() (from IERC165)</font></i>
 
 
-interface AuctionManager <font color="#008080">is</font> IERC165<font color="#990000">,</font> IERC721Receiver <font color="#FF0000">{</font>
+interface AuctionManager <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
 
     <i><font color="#9A1900">// Holds the information for each auction</font></i>
     <b><font color="#0000FF">struct</font></b> <font color="#008080">Auction</font> <font color="#FF0000">{</font>
         <font color="#008080">uint</font> id<font color="#990000">;</font>            <i><font color="#9A1900">// the auction id</font></i>
         <font color="#008080">uint</font> num_bids<font color="#990000">;</font>      <i><font color="#9A1900">// how many bids have been placed</font></i>
         <font color="#008080">string</font> data<font color="#990000">;</font>        <i><font color="#9A1900">// a text description of the auction or NFT data</font></i>
-        <font color="#008080">uint</font> highestBid<font color="#990000">;</font>    <i><font color="#9A1900">// the current highest bid</font></i>
-        <font color="#008080">uint</font> reserve<font color="#990000">;</font>       <i><font color="#9A1900">// the minimum bid that can win</font></i>
+        <font color="#008080">uint</font> highestBid<font color="#990000">;</font>    <i><font color="#9A1900">// the current highest bid, in wei</font></i>
+        <font color="#008080">uint</font> reserve<font color="#990000">;</font>       <i><font color="#9A1900">// the minimum bid that can win, in wei</font></i>
         <font color="#008080">address</font> winner<font color="#990000">;</font>     <i><font color="#9A1900">// the current highest bidder</font></i>
         <font color="#008080">address</font> initiator<font color="#990000">;</font>  <i><font color="#9A1900">// who started the auction</font></i>
-        <font color="#008080">address</font> manager<font color="#990000">;</font>    <i><font color="#9A1900">// the ERC721 contract address that holds the NFT</font></i>
-        <font color="#008080">uint</font> tokenId<font color="#990000">;</font>       <i><font color="#9A1900">// the token ID at that ERC721 manager</font></i>
+        <font color="#008080">uint</font> tokenId<font color="#990000">;</font>       <i><font color="#9A1900">// the NFT token ID</font></i>
         <font color="#008080">uint</font> endTime<font color="#990000">;</font>       <i><font color="#9A1900">// when the auction will end</font></i>
         <font color="#009900">bool</font> active<font color="#990000">;</font>        <i><font color="#9A1900">// if the auction is active</font></i>
+        <font color="#009900">bool</font> fixedTime<font color="#990000">;</font>     <i><font color="#9A1900">// if the end time is from the start time or last bid</font></i>
     <font color="#FF0000">}</font>
+
+
+    <i><font color="#9A1900">// Constructor: while constructors are never listed in an interface, your</font></i>
+    <i><font color="#9A1900">// contract should have one.  Among other things, it needs to create and</font></i>
+    <i><font color="#9A1900">// deploy it's own NFT Manager.</font></i>
+
+
+    <i><font color="#9A1900">// The following can just be the automatically created getter functions</font></i>
+    <i><font color="#9A1900">// from public variables</font></i>
+
+    <i><font color="#9A1900">// The address of the NFT Manager for this Auctioneer; it is mean to be</font></i>
+    <i><font color="#9A1900">// created and deployed when the Auctioneer constructor is called.  This</font></i>
+    <i><font color="#9A1900">// can just be via the getter method from a public variable.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">nftmanager</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">// How many auctions have been created; those auction IDs are 1 to n(NOT 0</font></i>
     <i><font color="#9A1900">// to n-1), where n is the value returned; this can just be via the</font></i>
     <i><font color="#9A1900">// getter method from a public variable.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">num_auctions</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// How much fees, in gwei, have been collected so far -- the auction</font></i>
+    <i><font color="#9A1900">// How much fees, in wei, have been collected so far -- the auction</font></i>
     <i><font color="#9A1900">// collects 1% fees of *successful* auctions</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">fees</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">totalFees</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
+    <i><font color="#9A1900">// How much fees, in wei, have been collected so far but not yet paid to</font></i>
+    <i><font color="#9A1900">// the deployer -- the auction collects 1% fees of *successful* auctions</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">unpaidFees</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+
+    <i><font color="#9A1900">// The following are functions you must create</font></i>
+
+    <i><font color="#9A1900">// Gets the auction struct for the passed acution id.  This can not be the</font></i>
+    <i><font color="#9A1900">// getter method of a public variable because the public variable is</font></i>
+    <i><font color="#9A1900">// going to be of type `Auction storage`, whereas the required return</font></i>
+    <i><font color="#9A1900">// type is `Auction memory`, and Solidity can't automatically convert</font></i>
+    <i><font color="#9A1900">// between the two.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">auctions</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Auction</font> memory<font color="#990000">);</font>
+    
     <i><font color="#9A1900">// The deployer of the contract, and ONLY that address, can collect the</font></i>
     <i><font color="#9A1900">// fees that this auction contract has accumulated; a call to this by any</font></i>
     <i><font color="#9A1900">// other address should revert.  This causes the fees to be paid to the</font></i>
     <i><font color="#9A1900">// deployer.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">collectFees</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
 
-    <i><font color="#9A1900">// Gets the auction struct for the passed acution id.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">auctions</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Auction</font> memory<font color="#990000">);</font>
-    
     <i><font color="#9A1900">// This sets the data for the auction, but the auction time doesn't start</font></i>
     <i><font color="#9A1900">// until the ERC-721 contract is trasnferred over.  The first three</font></i>
     <i><font color="#9A1900">// parameters are the number of minutes, hours, and days for the auction</font></i>
     <i><font color="#9A1900">// to last -- they can't all be zero.  The data parameter is a textual</font></i>
     <i><font color="#9A1900">// description of the auction, NOT the file name.  The reserve is the</font></i>
-    <i><font color="#9A1900">// minimum price that will win the auction; this amount is in gwei</font></i>
-    <i><font color="#9A1900">// (which is 10^-9 eth). This returns the auction ID of the newly</font></i>
-    <i><font color="#9A1900">// configured auction.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">createAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> m<font color="#990000">,</font> <font color="#008080">uint</font> h<font color="#990000">,</font> <font color="#008080">uint</font> d<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _data<font color="#990000">,</font> <font color="#008080">uint</font> _reserve<font color="#990000">)</font> 
-                    <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// This cancels an auction, the id of which is passed in as a parameter,</font></i>
-    <i><font color="#9A1900">// that has been created but that the NFT has not yet be transferred over</font></i>
-    <i><font color="#9A1900">// for.  Only the creator of an auction can cancel that auction.  Once an</font></i>
-    <i><font color="#9A1900">// auction has started (via transfering the NFT over), it can no longer</font></i>
-    <i><font color="#9A1900">// be canceled.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">cancelAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> external<font color="#990000">;</font>
+    <i><font color="#9A1900">// minimum price that will win the auction; this amount is in wei</font></i>
+    <i><font color="#9A1900">// (which is 10^-18 eth). The fixedTime parameter is whether the end</font></i>
+    <i><font color="#9A1900">// time (of m,h,d) is from the start time of the auction (if True) or</font></i>
+    <i><font color="#9A1900">// from the last bid (if False).  This returns the auction ID of the</font></i>
+    <i><font color="#9A1900">// newly configured auction.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">startAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> m<font color="#990000">,</font> <font color="#008080">uint</font> h<font color="#990000">,</font> <font color="#008080">uint</font> d<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _data<font color="#990000">,</font> 
+                          <font color="#008080">uint</font> _reserve<font color="#990000">,</font> <font color="#009900">bool</font> _fixedTime<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// This closes out the auction, the ID of which is passed in as a</font></i>
     <i><font color="#9A1900">// parameter, but is only valid after the auction end time.  It will</font></i>
@@ -104,30 +105,25 @@ interface AuctionManager <font color="#008080">is</font> IERC165<font color="#99
 
     <i><font color="#9A1900">// When one wants to submit a bid on a NFT; the ID of the auction is</font></i>
     <i><font color="#9A1900">// passed in as a parameter, and some amount of ETH is transferred with</font></i>
-    <i><font color="#9A1900">// this function call.  If a bid is attempted to be placed on an inactive</font></i>
-    <i><font color="#9A1900">// auction or after the close time, then this function should revert.</font></i>
+    <i><font color="#9A1900">// this function call.  See the homework description for various cases</font></i>
+    <i><font color="#9A1900">// where this function should revert.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">placeBid</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> <font color="#008080">payable</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// The time left (in seconds) for the given auction, the ID of which is</font></i>
     <i><font color="#9A1900">// passed in as a parameter.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">auctionTimeLeft</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// This is emitted when an auction is configured in createAuction(); the</font></i>
+
+    <i><font color="#9A1900">// The following are the events that need to be emitted at the appropriate</font></i>
+    <i><font color="#9A1900">// times, as per the homework description.</font></i>
+
+    <i><font color="#9A1900">// This is emitted when an auction is started in startAuction(); the</font></i>
     <i><font color="#9A1900">// ID is the auction ID.</font></i>
     <font color="#008080">event</font> <b><font color="#000000">auctionCreateEvent</font></b><font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// This is emitted when an auction starts (meaning when the NFT is</font></i>
-    <i><font color="#9A1900">// transfered); the ID is the auction ID.  It's emitted by the</font></i>
-    <i><font color="#9A1900">// onERC721Received() function.</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">auctionStartEvent</font></b><font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
 
     <i><font color="#9A1900">// This is emitted when an auction ends in closeAuction(); the ID is the</font></i>
     <i><font color="#9A1900">// auction ID.</font></i>
     <font color="#008080">event</font> <b><font color="#000000">auctionCloseEvent</font></b><font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// This is emitted when an auction is canceled in cancelAuction(); the ID</font></i>
-    <i><font color="#9A1900">// is the auction ID.</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">auctionCancelEvent</font></b><font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
 
     <i><font color="#9A1900">// This is emitted when a new bid is placed that is higher than the</font></i>
     <i><font color="#9A1900">// existing highest bid; the ID is the auction ID.</font></i>
