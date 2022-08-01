@@ -608,6 +608,7 @@ import {symbol1 as alias, symbol2} from "filename.sol";
 ## High-level "things"
 - `contract`
   - Essentially an OO class
+  - Can also be `abstract`
 - `interface`
   - Just like interfaces in Java, or pure abstract classes in C++
 - `library`
@@ -643,9 +644,25 @@ interface Foo is Bar {
   - If the function is multiply inherited, you have to specify which (or all) that it overrides:
     - `function foo() public override(ERC721, IERC165) {`
     - This will be needed in the Tokens assignment
+    </textarea></section>
 
+    <section data-markdown data-separator="^\n\n\n" id='abscon'><textarea>
+## Abstract Contracts
+- A `contract` must have all the methods implemented
+- An `interface` can have no methods implemented
+- An `abstract contract` can have some methods implemented and some not
+  - Part interface, part contract
+  - Example: if you inherit from an interface, but only implement some of the methods
+  - Example: if you inherit from a contract and a (different) interface
 
+```
+abstract contract Foo {
+  // ...
+}
+```
+    </textarea></section>
 
+    <section data-markdown data-separator="^\n\n\n"><textarea>
 ## What we have so far
 ```
 // SPDX-License-Identifier: MIT

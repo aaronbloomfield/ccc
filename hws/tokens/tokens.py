@@ -82,20 +82,31 @@ sanity_checks = {
 	# Did you upload your cryptocurrency logo to the 'cclogos/' directory?
 	'uploaded_cc_logo': False,
 
+	# Did you mint at least 50 coins of your TokenCC?  Keep in mind that you
+	# have to add a number of decimal places after the number of coins.
+	'minted_at_least_50_coins': False,
+
 	# Did you send me exactly 10.0 of your token cryptocurrencty?  If your
 	# token cryptocurrency uses 8 decimals, then that will be 1,000,000,000
 	# total units sent.
 	'sent_ten_tc': False,
 
+	# Can anybody mint an NFT?  Just make sure you don't require() that the
+	# minter is the deployer, for example.
+	'anybody_can_mint_nft': False,
+
 	# Did you upload three NFT images?  They must be either .jpg, .png,
 	# or .webp images.
 	'uploaded_three_nft_images': False,
+
+	# Are the NFT images no larger than 2000x2000?
+	'nft_image_sizes_correct': False,
 
 	# Did you name the images correctly?  The names should start with your
 	# userid followed by a underscore, and have the appropriate image
 	# extension.  All filenames must be strictly less than 32 characters in
 	# length. stay open for ONE WEEK after the assignment due date/time?
-	'image_files_correct': False,
+	'image_files_named_correctly': False,
 
 	# Did you send me one of your NFTs?  Which one was specified in
 	# the 'nft_id_sent' field in the 'other' dictionary, above.

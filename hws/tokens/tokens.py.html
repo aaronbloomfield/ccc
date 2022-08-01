@@ -93,20 +93,31 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Did you upload your cryptocurrency logo to the 'cclogos/' directory?</font></i>
 	<font color="#FF0000">'uploaded_cc_logo'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Did you mint at least 50 coins of your TokenCC?  Keep in mind that you</font></i>
+	<i><font color="#9A1900"># have to add a number of decimal places after the number of coins.</font></i>
+	<font color="#FF0000">'minted_at_least_50_coins'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you send me exactly 10.0 of your token cryptocurrencty?  If your</font></i>
 	<i><font color="#9A1900"># token cryptocurrency uses 8 decimals, then that will be 1,000,000,000</font></i>
 	<i><font color="#9A1900"># total units sent.</font></i>
 	<font color="#FF0000">'sent_ten_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Can anybody mint an NFT?  Just make sure you don't require() that the</font></i>
+	<i><font color="#9A1900"># minter is the deployer, for example.</font></i>
+	<font color="#FF0000">'anybody_can_mint_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you upload three NFT images?  They must be either .jpg, .png,</font></i>
 	<i><font color="#9A1900"># or .webp images.</font></i>
 	<font color="#FF0000">'uploaded_three_nft_images'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Are the NFT images no larger than 2000x2000?</font></i>
+	<font color="#FF0000">'nft_image_sizes_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you name the images correctly?  The names should start with your</font></i>
 	<i><font color="#9A1900"># userid followed by a underscore, and have the appropriate image</font></i>
 	<i><font color="#9A1900"># extension.  All filenames must be strictly less than 32 characters in</font></i>
 	<i><font color="#9A1900"># length. stay open for ONE WEEK after the assignment due date/time?</font></i>
-	<font color="#FF0000">'image_files_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#FF0000">'image_files_named_correctly'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send me one of your NFTs?  Which one was specified in</font></i>
 	<i><font color="#9A1900"># the 'nft_id_sent' field in the 'other' dictionary, above.</font></i>

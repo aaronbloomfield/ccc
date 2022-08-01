@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>ITokenCC.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: Unlicensed</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./ERC20.sol"</font><font color="#990000">;</font>
+
+abstract contract ITokenCC <font color="#008080">is</font> IERC165<font color="#990000">,</font> ERC20 <font color="#FF0000">{</font>
+
+	<i><font color="#9A1900">// This can just be implemented as a public variable, which will cause</font></i>
+	<i><font color="#9A1900">// Solidity to provide a getter function, and you should also make it</font></i>
+	<i><font color="#9A1900">// constant.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> external <b><font color="#0000FF">virtual</font></b> <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+
+	<i><font color="#9A1900">// This can just be implemented as a public variable, which will cause</font></i>
+	<i><font color="#9A1900">// Solidity to provide a getter function, and you should also make it</font></i>
+	<i><font color="#9A1900">// constant.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> external <b><font color="#0000FF">virtual</font></b> <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+
+	<i><font color="#9A1900">// This can just be implemented as a public variable, which will cause</font></i>
+	<i><font color="#9A1900">// Solidity to provide a getter function, and you should also make it</font></i>
+	<i><font color="#9A1900">// constant.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">decimals</font></b><font color="#990000">()</font> external <b><font color="#0000FF">virtual</font></b> <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// We will need this function in a future assignment (Arbitrage Trading),</font></i>
+    <i><font color="#9A1900">// which is why it is in this interface. For now, it should have a single</font></i>
+    <i><font color="#9A1900">// line: `revert();`.  You can make your implementation `pure` as well</font></i>
+    <i><font color="#9A1900">// (the compiler will warn you about that).</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">requestFunds</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#0000FF">virtual</font></b><font color="#990000">;</font>
+
+    <i><font color="#9A1900">// You also need to implement supportsInterface(), which is required by</font></i>
+    <i><font color="#9A1900">// the IERC165 interface.</font></i>
+
+    <i><font color="#9A1900">// The other methods needed by the IERC20 interface are already</font></i>
+    <i><font color="#9A1900">// implemented for you in the ERC20.sol contract.</font></i>
+
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

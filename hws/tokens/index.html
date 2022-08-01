@@ -62,17 +62,18 @@ you will not be able to complete this assignment.</p>
 (enhanced) <a
 href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/">ERC-20
 token standard</a>. This token will represent a token cryptocurrency.
-You will use this code in a future assignment, where you will then be
-creating a decentralized cryptocurrency exchange for the cryptocurrency
-that you are creating here.</p>
+You will use this code in future assignments, such as where you will
+then be creating a decentralized cryptocurrency exchange for the
+cryptocurrency that you are creating here.</p>
 <h4 id="part-1-task-1-name-your-cryptocurrency">Part 1, task 1: Name
 your cryptocurrency</h4>
-<p>You can pick any name that you want. Keep in mind that it is possible
-for the other students to figure out who deployed what cryptocurrency by
-analyzing the blockchain. You can not use the name of the course
-cryptocurrency or of an <a href="https://coinmarketcap.com/">existing
-cryptocurrency</a>. Feel free to be funny and creative here, but please
-be appropriate in your selection.</p>
+<p>You can pick any name that you want. You can not use the name of the
+course cryptocurrency or of an <a
+href="https://coinmarketcap.com/">existing cryptocurrency</a>. Feel free
+to be funny and creative here, but please be appropriate in your
+selection. Also keep in mind that, in this course, it is possible for
+somebody to figure out who deployed what cryptocurrency by analyzing the
+blockchain.</p>
 <p>You will need to create both a name and an abbreviation. Your name
 and abbreviation cannot already exist. To see if an abbreviation exists,
 see if there is a file with that abbreviation in the
@@ -86,30 +87,33 @@ lower case.</p>
 abbreviations are at most four characters, but typically three, and
 possibly two. You can have letters and numbers, but not symbols; the
 first character of the abbreviation must be a letter. The abbreviation
-when representing the cryptocurrency is always rendered in upper case,
-but the logo file is all lower case with a “.png” extension.</p>
+when representing the cryptocurrency is always rendered in upper case
+(i.e., “BTC”), but the logo file name is all lower case with a “.png”
+extension (i.e., “btc.png”).</p>
 <h4 id="part-1-task-2-create-a-logo">Part 1, task 2: Create a logo</h4>
 <p>You will need to create a logo for your cryptocurrency. The logo that
 you submit should be 512x512 pixels in size. Use a fun color! Create a
 neat logo! But please make sure the logo is appropriate. You can look at
 the types of logos on a site such as <a
-href="https://www.gate.io/en/marketlist?tab=usdt">gate.io</a> for
-ideas.</p>
+href="https://coinmarketcap.com">coinmarketcap.com</a> for ideas.</p>
 <p>The logo itself should be a circular logo with a transparent
-background outside the circle (just like what is on gate.io). Note that
-your logo must be readable if the size were reduced to a 32x32 pixel
-version. The submission must be a .png file, and it will have to be
-named <code>logo.png</code>. You can use a free program such as <a
+background outside the circle (just like what is on coinmarketcap.com).
+Note that your logo must be readable if the size were reduced to a 32x32
+pixel version. The submission must be a .png file, and it will have to
+be named <code>logo.png</code>. You can use a free program such as <a
 href="https://www.gimp.org/">GIMP</a> to edit your program. You can use
 this <a href="logo-template.png">logo-template.png</a> file as a starter
 file – it is the correct size and has a transparent background.</p>
+<p>For some examples, see <a
+href="https://cryptologos.cc/">cryptologos.cc</a> and <a
+href="https://github.com/coinwink/cryptocurrency-logos">this github
+site</a>.</p>
 <h4 id="part-1-task-3-review-the-starter-code">Part 1, task 3: Review
 the starter code</h4>
 <p>The code we are going to start with is the <a
 href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol">OpenZeppelin
 ERC-20 implementation</a>. This code was the same as was discussed in
-class. Other than the <code>import</code> lines, there have been no
-changes to the code in this repo.</p>
+class.</p>
 <p>The included code is:</p>
 <ul>
 <li><a href="Context.sol.html">Context.sol</a> (<a
@@ -117,17 +121,19 @@ href="Context.sol">src</a>) is a better way to get the context rather
 than <code>msg.sender</code> and <code>msg.data</code></li>
 <li><a href="IERC165.sol.html">IERC165.sol</a> (<a
 href="IERC165.sol">src</a>), as <a
-href="../../tokens.html#/erc165">discussed in lecture</a></li>
+href="../../slides/tokens.html#/erc165">discussed in lecture</a></li>
 <li><a href="IERC20.sol.html">IERC20.sol</a> (<a
 href="IERC20.sol">src</a>), as <a
-href="../../tokens.html#/erc20">discussed in lecture</a></li>
-<li><a href="IERC20Metadata.sol.html">IERC20Metadata.sol</a> (<a
-href="IERC20Metadata.sol">src</a>), as <a
-href="../../tokens.html#/erc20">discussed in lecture</a></li>
+href="../../slides/tokens.html#/erc20">discussed in lecture</a></li>
+<li><a href="ITokenCC.sol.html">ITokenCC.sol</a> (<a
+href="ITokenCC.sol">src</a>), as <a
+href="../../slides/tokens.html#/erc20">discussed in lecture</a>; this is
+an <a href="../../slides/solidity.html#/abscon">abstract
+contract</a></li>
 <li><a href="ERC20.sol.html">ERC20.sol</a> (<a
 href="ERC20.sol">src</a>), which is the <a
 href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol">OpenZeppelin
-ERC-20 implementation</a>.</li>
+ERC-20 implementation</a> with the two changes noted below.</li>
 </ul>
 <p>There were a few changes made to the <a
 href="ERC20.sol.html">ERC20.sol</a> (<a href="ERC20.sol">src</a>) file
@@ -136,23 +142,19 @@ href="https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contrac
 implementation</a>:</p>
 <ul>
 <li>The <code>import</code> lines were modified so that they include
-everything from this directory</li>
-<li>The <code>ERC20</code> contract now inherits from
-<code>IERC20Metadata</code> rather than <code>IERC20</code>, as we want
-to ensure it has the <code>name()</code>, <code>symbol()</code>, and
-<code>decimals()</code> methods in the <a
-href="IERC20Metadata.sol.html">IERC20Metadata.sol</a> (<a
-href="IERC20Metadata.sol">src</a>) file</li>
-<li>As those three methods (<code>name()</code>, <code>symbol()</code>,
-and <code>decimals()</code>) are now overriding from the
-<code>IERC20Metadata</code> contract, the <code>override</code>
-qualifier was added</li>
-<li>The <code>decimals()</code> visibility was lowered to
-<code>external</code> to allow us to easily override it</li>
+everything from the current directory</li>
+<li>The <code>name()</code>, <code>symbol()</code>, and
+<code>decimals()</code> methods were renamed, as the intent is that you
+will override them (via public variables) in your TokenCC.sol code.
+These renamings were necessary because those three functions are
+“recommended”, but not in the IERC20 interface.</li>
 </ul>
 <p>You should look over and familiarize yourself with all this code. The
 inheritance hierarchy of this code is shown below.</p>
 <p><img src="inheritance.dot.1.svg" /></p>
+<p>Note that the only new files, beyond the the OpenZeppelin
+implementation, are the two bottom grey nodes. We added was the ITokenCC
+abstract contract, and you have to implement the TokenCC contract.</p>
 <h4 id="part-1-task-4-develop-the-smart-contract">Part 1, task 4:
 Develop the smart contract</h4>
 <p>You will need to develop the smart contract for your cryptocurrency,
@@ -164,26 +166,30 @@ github repo</a>.</p>
 <p>There are some very strict submission requirements for this
 submission so that we can grade it in a sane manner:</p>
 <ol type="1">
-<li>Your contract MUST be in a file called <code>TokenCC.sol</code></li>
+<li>Your contract MUST be in a file called
+<code>TokenCC.sol</code>.</li>
 <li>You must put your name and userid as the second line of the file
-(right after the SPDX line)</li>
-<li>Your contract opening line MUST be: <code>contract TokenCC is ERC20,
-IERC165 {</code>; this will inherit the other contracts (Context, IERC20
-and IERC20Metadata)</li>
-<li>The pragma line should be: <code>pragma solidity ^0.8.7;</code></li>
+(right after the SPDX line).</li>
+<li>Your contract opening line MUST be: <code>contract TokenCC is
+ITokenCC {</code>; this will inherit the other contracts and interfaces
+(Context, IERC20, ERC20, and IERC165).</li>
+<li>The pragma line should be: <code>pragma solidity
+^0.8.7;</code>.</li>
 <li>You are NOT to submit any of the <em>files</em> for the interfaces
-above (Context.sol, IERC20.sol, IERC20Metadata.sol, or IERC165.sol), nor
-the ERC20.sol file. And don’t include the code from those files in your
+above (Context.sol, IERC20.sol, ITokenCC.sol, or IERC165.sol), nor the
+ERC20.sol file. And don’t include the code from those files in your
 TokenCC.sol file. You should <code>import</code> them in
-<code>TokenCC.sol</code> as such: <code>import "./IERC165.sol";</code>
+<code>TokenCC.sol</code> as such: <code>import "./ITokenCC.sol";</code>
 and <code>import "./ERC20.sol";</code> – those two files import all the
-other contracts. The necessary files will be put into the appropriate
-directory on Gradescope when it attempts to compile your program.</li>
-<li>You cannot submit any files other than the <code>TokenCC.sol</code>
-file; all your code must be in that <code>TokenCC.sol</code> file</li>
+other contracts and interfaces. The necessary files will be put into the
+appropriate directory on Gradescope when it attempts to compile your
+program.</li>
+<li>You should not submit any files other than the
+<code>TokenCC.sol</code> file for this part of the assignment; all your
+code must be in that <code>TokenCC.sol</code> file.</li>
 <li>You cannot edit the <a href="ERC20.sol.html">ERC20.sol</a> (<a
 href="ERC20.sol">src</a>) file – any changes have to go into your
-<code>TokenCC.sol</code> file</li>
+<code>TokenCC.sol</code> file.</li>
 </ol>
 <p>Your task is to create a <code>TokenCC.sol</code> file with a
 <code>TokenCC</code> contract. Some notes:</p>
@@ -196,25 +202,30 @@ slide</a> and the <a
 href="https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors">Arguments
 for Base Constructors</a> section of the Solidity language
 reference.</li>
+<li>You also have to define public variables <code>name</code>,
+<code>symbol</code>, and <code>decimals</code>, even though you included
+the first two in the ERC20 constructor call. (Doing it this way avoids
+inheritance issues). These variables should be <code>constant</code>,
+<code>public</code>, and <code>override</code>.</li>
 <li>Keep in mind that, because the <code>_mint()</code> function is
 <code>internal</code>, it can only be called from code you write. So
 your constructor should mint for you a reasonable amount of the
 cryptocurrency.<br />
 </li>
-<li>To override the <code>decimals()</code> function, you can just
-create an appropriate variable. Be sure to make those three fields
-<code>public</code> and <code>override</code>!</li>
 <li>You have to implement the <code>supportsInterface()</code> method to
 fulfill the requirements of the <a
 href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>)
 contract; remember that your code supports <em>three</em> interfaces:
-<code>IERC165</code>, <code>IERC20</code>, and
-<code>IERC20Metadata</code>
+<code>IERC165</code>, <code>IERC20</code>, and <code>ITokenCC</code>
 <ul>
 <li>It also extends <code>Context</code>, but there are no
 <code>external</code> or <code>public</code> methods in
 <code>Context</code>, so there is no interface there to support.</li>
 </ul></li>
+<li>You have to implement a <code>requestFunds()</code> function that
+does nothing other than <code>revert()</code> – we will be using that
+function in a future assignment, which is why it is in this
+interface.</li>
 </ul>
 <p>Minting considerations:</p>
 <ul>
@@ -222,7 +233,8 @@ contract; remember that your code supports <em>three</em> interfaces:
 uses 8. To make this a bit more sane for us to manage, let’s choose a
 number between 8 and 12 (inclusive).</li>
 <li>How many coins you mint is up to you. We would recommend no less
-than 100 coins. On the other end of the spectrum, <a
+than 100 coins, and it <em>must</em> be at least 50 coins. On the other
+end of the spectrum, <a
 href="https://coinmarketcap.com/currencies/shiba-inu/">SHIB</a> – a
 token cryptocurrency on Ethereum – minted 549,063,278,876,302 (yes,
 <span class="math inline">5.5 * 10<sup>14</sup></span>) coins.
@@ -231,7 +243,8 @@ token cryptocurrency on Ethereum – minted 549,063,278,876,302 (yes,
 class="math inline"><em>x</em> * 10<sup><em>d</em></sup></span> where
 <span class="math inline"><em>x</em></span> is how many coins you want
 to mint and <span class="math inline"><em>d</em></span> is the number of
-decimal places.</li>
+decimal places. So if you want to mint 100 coins, and you are using 10
+decimal places, then the amount to mint is 1,000,000,000,000.</li>
 </ul></li>
 </ul>
 <p>Be sure to thoroughly test this in Remix! Remember that you have
@@ -256,8 +269,7 @@ to transfer it to in on the Collab landing page. This should be through
 the <code>transfer()</code> function (NOT <code>approve()</code>). You
 should transfer me exactly 10.0 of your token cryptocurrency. So if you
 have 8 decimals, then you will transfer 1000000000 total units. Save the
-transaction hash of when you sent me your cryptocurrency, as well as the
-amount.</p>
+transaction hash of when you sent me your cryptocurrency.</p>
 <hr />
 <h3 id="part-2-erc-721-non-fungible-token">Part 2: ERC-721 Non-Fungible
 Token</h3>
@@ -267,7 +279,7 @@ href="https://ethereum.org/en/developers/docs/standards/tokens/erc-721/">ERC-721
 token standard</a>. This token can represent anything, but we will have
 it represent some image. You will use this code in a future assignment,
 where you will then be creating a decentralized auction for NFTs.</p>
-<h4 id="part-2-task-1-nft-image">Part 2, task 1: NFT image</h4>
+<h4 id="part-2-task-1-nft-images">Part 2, task 1: NFT images</h4>
 <p>You will be creating three images for NFTs for this assignment. (You
 actually only need two for this assignment, but the third will be needed
 later on, so we’ll create all three now). The images should be uploaded
@@ -292,6 +304,8 @@ please.</p>
 <strong>MUST</strong> be strictly less than 32 characters in length.
 This is just for the filename (“mst3k_foo_bar.png”), not the path to
 that file name.</p>
+<p>The images must be no larger than 2000 pixels in either dimension!
+Which means a 2000x2000 image is the maximum size.</p>
 <p>We don’t really care what images you upload, as long as:</p>
 <ol type="1">
 <li>They are images that are in the public domain, such as from
@@ -309,6 +323,8 @@ introduction</a> (<a href="../dappintro/index.md">md</a>) assignment,
 there are many great ways to express your opinions that others may find
 controversial – but in an image for a NFT on our private Ethereum
 blockchain is not really one of them.</li>
+<li>The image sizes are as specified above (no larger than
+2000x2000).</li>
 </ol>
 <p>Understand this: <strong>IN THIS COURSE, OWNING THE NFT DOES NOT
 IMPLY OWNERSHIP OF THE IMAGE.</strong> The assumption is that you don’t
@@ -335,7 +351,8 @@ some useful functions when dealing with Ethereum addresses</li>
 href="Strings.sol">src</a>): a library (not a contract!) that provides
 some useful String manipulation functions</li>
 <li><a href="Context.sol.html">Context.sol</a> (<a
-href="Context.sol">src</a>): …</li>
+href="Context.sol">src</a>): is a better way to get the context rather
+than <code>msg.sender</code> and <code>msg.data</code></li>
 <li><a href="ERC165.sol.html">ERC165.sol</a> (<a
 href="ERC165.sol">src</a>): a bare-bones implementation of the
 <code>IERC165</code> interface</li>
@@ -353,23 +370,20 @@ href="IERC721Metadata.sol">src</a>): this add three functions on top of
 the ERC-721 standard: <code>name()</code>, <code>symbol()</code>, and
 <code>tokenURI()</code>; the first two are for the NFT manager, the last
 one is the URI (aka URL) of the image that the NFT represents</li>
-<li><a href="IERC721full.sol.html">IERC721full.sol</a> (<a
-href="IERC721full.sol">src</a>): this adds one more function on top of
-the IERC721Metadata interface: <code>mintWithURI()</code>, which allows
-creation of an NFT, and setting it’s image URI (aka URL) in one function
-call. Note that the <code>mintWithURI()</code> function will return a
-token ID, which is just a <code>uint</code> that is used to identify
-(and find) that particular NFT in your token manager.</li>
-<li><a href="IERC721Receiver.sol.html">IERC721Receiver.sol</a> (<a
-href="IERC721Receiver.sol">src</a>): this allows notification that an
-NFT has been transferred; we won’t be using this interface in this
-assignment (although it is necessary for compilation), but we will be
-using it in a future assignment</li>
+<li><a href="INFTmanager.sol.html">INFTmanager.sol</a> (<a
+href="INFTmanager.sol">src</a>): this adds one more function on top of
+the IERC721Metadata interface: two <code>mintWithURI()</code>
+functiions, which allow creation of NFTs, and setting it’s image URI
+(aka URL) in one function call. Note that the <code>mintWithURI()</code>
+function will return a token ID, which is just a <code>uint</code> that
+is used to identify (and find) that particular NFT in your token
+manager. This is an <a
+href="../../slides/solidity.html#/abscon">abstract contract</a>.</li>
 </ul>
 <p>Why so many files? Three of the interfaces (IERC165, IERC721, and
 IERC721Metadata) are Ethereum standards, and the practice is to include
 them as-is without modifications. Three of the files are utilities
-(Address, Context, and Strings). The IERC721full adds one function that
+(Address, Context, and Strings). The INFTmanager adds one function that
 we need, and the ERC721.sol is the implementation itself. We realize
 that’s a lot of files to use, but that’s why there are so many of
 them.</p>
@@ -379,6 +393,10 @@ entries (<code>Address</code> and <code>Strings</code>) are type
 substitutions in <code>ERC721.sol</code>. The last one,
 <code>IERC721Recevier</code> is used as a casting type.</p>
 <p><img src="inheritance.dot.2.svg" /></p>
+<p>Note that the only new files, beyond the the OpenZeppelin
+implementation, are the two bottom grey nodes. We added was the
+INFTmanager abstract contract, and you have to implement the NFTmanager
+contract.</p>
 <h4 id="part-2-task-3-compile-and-test-the-provided-code">Part 2, task
 3: Compile and test the provided code</h4>
 <p>You should compile the <a href="ERC721.sol.html">ERC721.sol</a> (<a
@@ -394,8 +412,8 @@ manager. Most of the code is already done in the <a
 href="ERC721.sol.html">ERC721.sol</a> (<a href="ERC721.sol">src</a>). We
 are going to create a smart contract called <code>NFTmanager</code> that
 will work for image URLs (or any other URL). The updated smart contract
-will implement the <a href="IERC721full.sol.html">IERC721full.sol</a>
-(<a href="IERC721full.sol">src</a>) interface (and, though inheritance,
+will implement the <a href="INFTmanager.sol.html">INFTmanager.sol</a>
+(<a href="INFTmanager.sol">src</a>) interface (and, though inheritance,
 a number of other interfaces).</p>
 <p>There are some very strict submission requirements for this
 submission so that we can grade it in a sane manner:</p>
@@ -404,12 +422,12 @@ submission so that we can grade it in a sane manner:</p>
 (right after the SPDX line)</li>
 <li>Your contract MUST be in a file called <code>NFTmanager.sol</code> –
 note the capitalization!</li>
-<li>Your contract line MUST be: <code>contract NFTmanager is ERC721,
-IERC721full {</code>; recall that the IERC721 interface already inherits
-from the IERC165 interface</li>
+<li>Your contract line MUST be: <code>contract NFTmanager is INFTmanager
+{</code>; this will inherit all the other necessary interfaces and
+contracts.</li>
 <li>The pragma line should be: <code>pragma solidity ^0.8.7;</code></li>
 <li>You are NOT to submit any of the <em>files</em> for the interfaces
-above (ERC721, IERC721, IERC721full, or IERC165.sol), nor copy-and-paste
+above (ERC721, IERC721, INFTmanager, or IERC165.sol), nor copy-and-paste
 that code in your file. You should <code>import</code> them in
 <code>NFTmanager.sol</code>; they will be put into the appropriate
 directory on Gradescope when it attempts to compile your program</li>
@@ -419,9 +437,12 @@ any other code must be in your <code>NFTmanager.sol</code> file</li>
 <p>The following are the functional requirements for the development of
 this contract:</p>
 <ul>
-<li>Implementation of the <code>mintWithURI()</code> function
+<li>Implementation of the two <code>mintWithURI()</code> functions
 <ul>
-<li>Note the second parameter is <em>just</em> the filename
+<li>The one-parameter version assumes that the <code>address _to</code>
+is really <code>msg.sender</code> – just have the one parameter version
+call the two parameter version with <code>msg.sender</code></li>
+<li>Note the string parameter is <em>just</em> the filename
 (<code>mst3k_foo.jpg</code>), not the full URI</li>
 <li>It should allow minting by <em>anybody</em></li>
 <li>A duplicate URI should cause a reversion</li>
@@ -430,15 +451,13 @@ function itself determines what that ID is (likely the next integer in
 sequence)</li>
 </ul></li>
 <li>Implementation of the <code>supportsInterface()</code> function for
-<em>four</em> interfaces – the three ERC721 interfaces
-(<code>IERC721</code>, <code>IERC721Metadata</code>, and
-<code>IERC721full</code>) and <code>IERC165</code> (<code>Context</code>
-has no <code>external</code> or <code>public</code> members, so it’s not
-needed in this list)
+<em>four</em> interfaces – the two ERC721 interfaces
+(<code>IERC721</code>, <code>IERC721Metadata</code>),
+<code>IERC165</code>, and <code>INFTmanager</code>.
 <ul>
-<li>Because of the inheritance tree, you will have to specify that it is
-overriding <em>all</em> of the <code>supportsInterface()</code> methods;
-see the lecture slides for details</li>
+<li>It also extends <code>Context</code>, but there are no
+<code>external</code> or <code>public</code> methods in
+<code>Context</code>, so there is no interface there to support.</li>
 </ul></li>
 <li>Implementation of <code>tokenURI()</code>, which is inherited from
 <code>ERC721</code>

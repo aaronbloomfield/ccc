@@ -13,7 +13,7 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
-import <font color="#FF0000">"./IERC20Metadata.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC20.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
@@ -40,7 +40,7 @@ import <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font
 <i><font color="#9A1900"> * functions have been added to mitigate the well-known issues around setting</font></i>
 <i><font color="#9A1900"> * allowances. See {IERC20-approve}.</font></i>
 <i><font color="#9A1900"> */</font></i>
-contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20Metadata <font color="#FF0000">{</font>
+contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20 <font color="#FF0000">{</font>
     <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint256<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> _balances<font color="#990000">;</font>
 
     <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> uint256<font color="#990000">))</font> <b><font color="#0000FF">private</font></b> _allowances<font color="#990000">;</font>
@@ -67,7 +67,7 @@ contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</f
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the name of the token.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> override view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">__name</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _name<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
@@ -75,7 +75,7 @@ contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</f
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the symbol of the token, usually a shorter version of the</font></i>
 <i><font color="#9A1900">     * name.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> override view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">__symbol</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _symbol<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
@@ -92,7 +92,7 @@ contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</f
 <i><font color="#9A1900">     * no way affects any of the arithmetic of the contract, including</font></i>
 <i><font color="#9A1900">     * {IERC20-balanceOf} and {IERC20-transfer}.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">decimals</font></b><font color="#990000">()</font> external override view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">__decimals</font></b><font color="#990000">()</font> external view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <font color="#993399">18</font><font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
