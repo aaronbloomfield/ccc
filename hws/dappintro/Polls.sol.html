@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Polls.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: CC BY-SA</font></i>
+<i><font color="#9A1900">// This file is part of the https://github.com/aaronbloomfield/ccc repo</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./PollsInterface.sol"</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">// A smart contract to allow voting on something.</font></i>
+contract Polls <font color="#008080">is</font> PollsInterface <font color="#FF0000">{</font>
+
+	<i><font color="#9A1900">// struct Choice is defined in PollsInterface.sol, so we can't re-define</font></i>
+	<i><font color="#9A1900">// it here, and is defined as:</font></i>
+	<i><font color="#9A1900">//</font></i>
+	<i><font color="#9A1900">// struct Choice {</font></i>
+	<i><font color="#9A1900">//   uint id;</font></i>
+	<i><font color="#9A1900">//   string name;</font></i>
+	<i><font color="#9A1900">//   uint votes;</font></i>
+	<i><font color="#9A1900">// }</font></i>
+
+	<i><font color="#9A1900">// The following two events are defined in PollsInterface.sol, so we can't</font></i>
+	<i><font color="#9A1900">// re-define them here.  They are defined as:</font></i>
+	<i><font color="#9A1900">//</font></i>
+	<i><font color="#9A1900">// event votedEvent (uint indexed _id);</font></i>
+	<i><font color="#9A1900">// event choiceAddedEvent (uint indexed _id);</font></i>
+
+	<i><font color="#9A1900">// A mapping to keep track of who has voted; the fact that it is public</font></i>
+	<i><font color="#9A1900">// means that a getter function called voted() will also be defined.  As</font></i>
+	<i><font color="#9A1900">// this voted() function is implementing the one specified in</font></i>
+	<i><font color="#9A1900">// PollsInterface.sol, we have to put the 'override' keyword here.</font></i>
+	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> <font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#008080">override</font> voted<font color="#990000">;</font>
+
+	<i><font color="#9A1900">// A mapping to store the various chioces.  Because the type of this</font></i>
+	<i><font color="#9A1900">// mapping (Chioce storage) is ever so slightly different than what is</font></i>
+	<i><font color="#9A1900">// returned from the choices() function defined in PollsInterface.sol</font></i>
+	<i><font color="#9A1900">// (Choices memory), we can't declare this as public to get an getter</font></i>
+	<i><font color="#9A1900">// function.</font></i>
+	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>uint <font color="#990000">=&gt;</font> Choice<font color="#990000">)</font> <font color="#008080">internal</font> _choices<font color="#990000">;</font>
+
+	<i><font color="#9A1900">// This is the getter function for the above mapping that solves the type</font></i>
+	<i><font color="#9A1900">// difference (i.e., that "Choices storage" != "Choices memory").  As</font></i>
+	<i><font color="#9A1900">// this choices() function is implementing the one specified in</font></i>
+	<i><font color="#9A1900">// PollsInterface.sol, we have to put the 'override' keyword here.</font></i>
+	<font color="#008080">function</font> <b><font color="#000000">choices</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Choice</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">return</font></b> _choices<font color="#990000">[</font>i<font color="#990000">];</font>
+	<font color="#FF0000">}</font>
+
+	<i><font color="#9A1900">// How many choices have been added?  It's public, so we get a free getter</font></i>
+	<i><font color="#9A1900">// function called num_choices().  As this num_choices() function is</font></i>
+	<i><font color="#9A1900">// implementing the one specified in PollsInterface.sol, we have to put</font></i>
+	<i><font color="#9A1900">// the 'override' keyword here.</font></i>
+	uint <b><font color="#0000FF">public</font></b> <font color="#008080">override</font> num_choices<font color="#990000">;</font>
+
+	<i><font color="#9A1900">// The constructor, which runs when it's first deployed to the blockchain;</font></i>
+	<i><font color="#9A1900">// this adds our voting choices.</font></i>
+	<i><font color="#9A1900">// YOU HAVE TO CHANGE THE CODE HEREIN -- make up your own choices</font></i>
+	<b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"red"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"orange"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"yellow"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"green"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"blue"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"purple"</font><font color="#990000">);</font>
+	<font color="#FF0000">}</font>
+
+	<i><font color="#9A1900">// The function that adds a choice to be voted upon.  It implements the</font></i>
+	<i><font color="#9A1900">// function of the same name from PollsInterface.sol, so we put</font></i>
+	<i><font color="#9A1900">// the 'override' keyword here.</font></i>
+	<font color="#008080">function</font> <b><font color="#000000">addChoice</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> override <font color="#FF0000">{</font>
+		_choices<font color="#990000">[</font>num_choices<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Choice</font></b><font color="#990000">(</font>num_choices<font color="#990000">,</font> _name<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+		<font color="#008080">emit</font> <b><font color="#000000">choiceAddedEvent</font></b><font color="#990000">(</font>num_choices<font color="#990000">);</font>
+		num_choices<font color="#990000">++;</font>
+	<font color="#FF0000">}</font>
+
+	<i><font color="#9A1900">// The function that allows one to vote; it checks if that account has</font></i>
+	<i><font color="#9A1900">// already voted, and prevents double voting.  It implements the function</font></i>
+	<i><font color="#9A1900">// of the same name from PollsInterface.sol, so we put the 'override'</font></i>
+	<i><font color="#9A1900">// keyword here.</font></i>
+	<font color="#008080">function</font> <b><font color="#000000">vote</font></b> <font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> override <font color="#FF0000">{</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(!</font>voted<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">],</font> <font color="#FF0000">"sender has already voted"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(</font>_id <font color="#990000">&gt;=</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> _id <font color="#990000">&lt;</font> num_choices<font color="#990000">,</font> <font color="#FF0000">"invalid vote selection"</font><font color="#990000">);</font>
+		voted<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+		_choices<font color="#990000">[</font>_id<font color="#990000">].</font>votes<font color="#990000">++;</font>
+		<font color="#008080">emit</font> <b><font color="#000000">votedEvent</font></b><font color="#990000">(</font>_id<font color="#990000">);</font>
+	<font color="#FF0000">}</font>
+
+	<i><font color="#9A1900">// This function is, as its name implies, unnecessary; it is there to show</font></i>
+	<i><font color="#9A1900">// a read-only function -- meaning one that does not modify the state of</font></i>
+	<i><font color="#9A1900">// the object at all.  As it is not defined in PollsInterface.sol, we do</font></i>
+	<i><font color="#9A1900">// not need the 'override' keyword here.</font></i>
+	<font color="#008080">function</font> <b><font color="#000000">unnecessaryFunction</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">return</font></b> _choices<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>name<font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+	<i><font color="#9A1900">// We'll see the necessity and use of this function later, when we talk</font></i>
+	<i><font color="#9A1900">// about Tokens.  For now, keep this function exactly as-is.  As it is</font></i>
+	<i><font color="#9A1900">// not defined in PollsInterface.sol, we do not need the 'override'</font></i>
+	<i><font color="#9A1900">// keyword here.</font></i>
+	<font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+		<b><font color="#0000FF">return</font></b> interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>PollsInterface<font color="#990000">).</font>interfaceId <font color="#990000">||</font> interfaceId <font color="#990000">==</font> <font color="#993399">0x01ffc9a7</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>
