@@ -12,7 +12,7 @@ import "./IERC721.sol";
 //   supportsInterface() (from IERC165)
 
 
-interface AuctionManager is IERC165 {
+interface IAuctioneer is IERC165 {
 
     // Holds the information for each auction
     struct Auction {

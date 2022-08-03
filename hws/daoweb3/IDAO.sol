@@ -4,7 +4,7 @@ pragma solidity ^0.8.7;
 // This file is heavily adapted from the DAO interface at
 // https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol
 
-interface DAOinterface {
+interface IDAO {
 
     //------------------------------------------------------------
     // These are all just variables; some of which are set in the constructor

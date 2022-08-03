@@ -6,7 +6,7 @@ pragma solidity ^0.8.7;
 import "./PollsInterface.sol";
 
 // A smart contract to allow voting on something.
-contract Polls is PollsInterface {
+contract Polls is IPolls {
 
 	// struct Choice is defined in PollsInterface.sol, so we can't re-define
 	// it here, and is defined as:

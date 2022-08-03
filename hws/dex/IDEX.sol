@@ -4,7 +4,7 @@ pragma solidity ^0.8.7;
 import "./IERC165.sol";
 import "./EtherPricer.sol";
 
-interface DEX is IERC165 {
+interface IDEX is IERC165 {
 
 	//------------------------------------------------------------
 	// Events

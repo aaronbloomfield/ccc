@@ -30,10 +30,10 @@ You will also need to be familiar with the [Ethereum slide set](../../slides/eth
 
 ### The price of our (fake) ETH
 
-To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH.  Both of these contracts fulfill the [EtherPricer.sol](EtherPricer.sol.html) ([src](EtherPricer.sol)) interface:
+To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH.  Both of these contracts fulfill the [IEtherPriceOracle.sol](IEtherPriceOracle.sol.html) ([src](IEtherPriceOracle.sol)) interface:
 
 ```
-interface EtherPricer is IERC165 {
+interface IEtherPriceOracle is IERC165 {
         function getEtherPriceInCents() external view returns (uint);
 }
 ```
@@ -56,7 +56,7 @@ As far as this assignment is concerned, there will only be *one* DEX for each to
 
 ### Interface
 
-Formally, you must implement a `TokenDEX` contract that implements the [DEX.sol](DEX.sol.html) ([src](DEX.sol)) interface.  Your contract opening line MUST be: `contract TokenDEX is DEX`.  Note that the `DEX` interface extends the `IERC165` interface, so you will have to implement the `supportsInterface()` function as well.  The functions in this interface are shown below, and much more detail is provided in the [DEX.sol](DEX.sol.html) ([src](DEX.sol)) file.
+Formally, you must implement a `TokenDEX` contract that implements the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) interface.  Your contract opening line MUST be: `contract TokenDEX is DEX`.  Note that the `DEX` interface extends the `IERC165` interface, so you will have to implement the `supportsInterface()` function as well.  The functions in this interface are shown below, and much more detail is provided in the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) file.
 
 Note that many of these functions are just the getter functions from `public` variables; which ones are described in the full source file.
 
@@ -65,9 +65,9 @@ Note that many of these functions are just the getter functions from `public` va
 pragma solidity ^0.8.7;
 
 import "./IERC165.sol";
-import "./EtherPricer.sol";
+import "./IEtherPriceOracle.sol";
 
-interface DEX is IERC165 {
+interface IDEX is IERC165 {
 
 	//------------------------------------------------------------
 	// Events
@@ -156,9 +156,9 @@ interface DEX is IERC165 {
 
 Here are all the files you will need:
 
-- [DEX.sol](DEX.sol.html) ([src](DEX.sol)): the interface, above, that your contract will need to implement; that file has many more comments in the file to describe what each function does
-- [EtherPricer.sol](EtherPricer.sol.html) ([src](EtherPricer.sol)): the interface that the two pricing smart contracts implement; the contract addresses for these are on the Collab landing page
-- [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)) is the contract implementation of EtherPricer.sol that always returns 100 in cents (formally: `10000`); note that the source code for the variable version is not being made available
+- [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)): the interface, above, that your contract will need to implement; that file has many more comments in the file to describe what each function does
+- [IEtherPriceOracle.sol](IEtherPriceOracle.sol.html) ([src](IEtherPriceOracle.sol)): the interface that the two pricing smart contracts implement; the contract addresses for these are on the Collab landing page
+- [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)) is the contract implementation of IEtherPriceOracle.sol that always returns 100 in cents (formally: `10000`); note that the source code for the variable version is not being made available
 - [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)): the ERC-165 interface, which the DEX interface extends
 - [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)): the same file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, which your token cryptocurrency implements
 - [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)): The full ERC-20 interface, which the IERC20Metadata contract extends

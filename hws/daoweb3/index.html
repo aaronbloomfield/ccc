@@ -66,8 +66,8 @@ proposal means that organization receives some amount of ether.</p>
 <p>As far as this assignment is concerned, we are not concerned as to
 <em>what</em> your DAO is for, only that it works.</p>
 <p>Your contract must implement the provided DAO interface below. Your
-contract opening line must be: <code>contract DAO is DAOinterface,
-IERC165 {</code>. This interface was adapted from the <a
+contract opening line must be: <code>contract DAO is IDAO, IERC165
+{</code>. This interface was adapted from the <a
 href="https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol">open-source
 code for The ÐAO</a>, but was heavily modified to both work with current
 versions of Solidity and to fit better with this assignment. In
@@ -76,16 +76,15 @@ really about Web3: splitting off a sub-DAO, including transaction data
 in the proposal, anything relating to quorum or quorum modifications,
 blocking members, vote freezes, etc. In a real DAO, these would need to
 be implemented as well.</p>
-<p>The file is <a href="DAOinterface.sol.html">DAOinterface.sol</a> (<a
-href="DAOinterface.sol">src</a>). That file has many comments to explain
-how it works; those comments are not shown below. While there is a lot
-listed in the interface, there are really only five or so functions that
-you have to implement; the rest are just <code>public</code>
-variables.</p>
+<p>The file is <a href="IDAO.sol.html">IDAO.sol</a> (<a
+href="IDAO.sol">src</a>). That file has many comments to explain how it
+works; those comments are not shown below. While there is a lot listed
+in the interface, there are really only five or so functions that you
+have to implement; the rest are just <code>public</code> variables.</p>
 <pre><code>// SPDX-License-Identifier: GPL
 pragma solidity ^0.8.7;
 
-interface DAOinterface {
+interface IDAO {
 
     // Public variables
 
@@ -145,8 +144,8 @@ interface DAOinterface {
 }</code></pre>
 <p>The files you will need are:</p>
 <ul>
-<li><a href="DAOinterface.sol.html">DAOinterface.sol</a> (<a
-href="DAOinterface.sol">src</a>): what you have to implement</li>
+<li><a href="IDAO.sol.html">IDAO.sol</a> (<a href="IDAO.sol">src</a>):
+what you have to implement</li>
 <li><a href="IERC165.sol.html">IERC165.sol</a> (<a
 href="IERC165.sol">src</a>): this is unchanged from all previous
 assignments</li>
@@ -171,10 +170,10 @@ Strings.sol. Address.sol, etc.).</p>
 <p>The requirements on this section are intentionally vague – the intent
 is to let you program your DAO any way you want. The only requirement is
 that your DAO must fulfill the spirit of the <a
-href="DAOinterface.sol.html">DAOinterface.sol</a> (<a
-href="DAOinterface.sol">src</a>) interface. As far as we are concerned,
-a proposal description primarily consists of a single string – perhaps
-it’s a URL, perhaps a statement, etc.</p>
+href="IDAO.sol.html">IDAO.sol</a> (<a href="IDAO.sol">src</a>)
+interface. As far as we are concerned, a proposal description primarily
+consists of a single string – perhaps it’s a URL, perhaps a statement,
+etc.</p>
 <p>Don’t overthink this! The intent is just for you to get a working
 DAO. It doesn’t have to be perfect. In fact, this is the easier part of
 this homework, since we’ve all written a bunch of Solidity programs by

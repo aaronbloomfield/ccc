@@ -29,7 +29,7 @@ Writing this homework will require completion of the following assignments:
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), and the [Solidity slide set](../../slides/solidity.html#/).
 
 
-### Part 1: Write the CourseGradebook smart contract
+### Part 1: Write the Gradebook smart contract
 
 #### Overview
 
@@ -44,15 +44,15 @@ The gradebook will need to have the following functionalities:
 
 #### Interface
 
-Formally, your contract will need to be named `CourseGradebook`, and saved in a file named `CourseGradebook.sol`.  It will need to implement the [Gradebook.sol](Gradebook.sol.html) ([src](Gradebook.sol)) interface, which is as follows.  **NOTE:** the interface file itself has many more details in the comments; most of the comments were stripped for what is below.
+Formally, your contract will need to be named `Gradebook`, and saved in a file named `Gradebook.sol`.  It will need to implement the [IGradebook.sol](IGradebook.sol.html) ([src](IGradebook.sol)) interface, which is as follows.  **NOTE:** the interface file itself has many more details in the comments; most of the comments were stripped for what is below.
 
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// See the actual Gradebook.sol file, linked to above, for much more detailed comments
+// See the actual IGradebook.sol file, linked to above, for much more detailed comments
 
-interface Gradebook {
+interface IGradebook {
 
     event assignmentCreationEvent (uint indexed _id);
 
@@ -84,6 +84,10 @@ interface Gradebook {
 
     function getAverage(string memory student) external view returns (uint);
 
+    // The implementation for the following is provided in the HW description
+
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+
 }
 ```
 
@@ -94,12 +98,23 @@ interface Gradebook {
 - One cannot have a grade higher than the max score; this should be checked via a `require()`
 - While averages can be non-integers, we will return the (truncated) integer value that is 100 times the average.  So if somebody's average was 86.265%, the returned average would be 8626.
 - The only task the constructor needs to do is set the `instructor` field to `msg.sender`
-- Your contract opening line MUST be: `contract CourseGradebook is Gradebook {`
-- All of your methods and fields will have to have the `override` qualifier, since they are overriding what is specified in the `Gradebook` interface
+- Your contract opening line MUST be: `contract Gradebook is IGradebook {`
+- All of your methods and fields will have to have the `override` qualifier, since they are overriding what is specified in the `IGradebook` interface
 
 The first six methods (after the two events) are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide details this a bit more.
 
 The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit `assignmentCreationEvent()` event, and the `addGrade()` function should emit the `gradeEntryEvent()` event.  Be sure to emit the events *after* any `require()` calls!
+
+
+#### `supportsInterface()`
+
+We will see the use of `supportsInterface()` in a lecture and a later assignment.  For now, you should use this exact implementation:
+
+```
+function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
+        return interfaceId == type(IGradebook).interfaceId || interfaceId == 0x01ffc9a7;
+}
+```
 
 
 #### Testing
@@ -131,7 +146,7 @@ You need to designate me as a TA for your gradebook.  The address to designate i
 I've deployed a gradebook with your (fake) grades.  The address for that smart contract is on the Collab landing page.  You will need to find out your overall average as well as a few other items of information.  Your scores are kept by your UVA userid.  These scores are fake, and were randomly generated, so don't feel bad if your score(s) are low.
 
 
-There are two ways you can access the gradebook on the blockchain.  One is through Remix, like was done in the [dApp introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md)) -- you load the Gradebook.sol interface, and then enter the address of the deployed Gradebook contract into the 'At Address' text box in the deployment window.  The other way is through geth, like we did in the [live coding example in class](../../slides/solidity.html#/debtor) -- the geth commands start about 8 slides down in that column.  For this you will also need the ABI.  You can compile the Gradebook.sol interface, and then copy the ABI -- after you compile it, the copy ABI link is at the very bottom of the compilation pane.  Note that you may have to reformat that ABI a bit -- what you copy is on many lines, and you may have to reformat it to one line.
+There are two ways you can access the gradebook on the blockchain.  One is through Remix, like was done in the [dApp introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md)) -- you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the 'At Address' text box in the deployment window.  The other way is through geth, like we did in the [live coding example in class](../../slides/solidity.html#/debtor) -- the geth commands start about 8 slides down in that column.  For this you will also need the ABI.  You can compile the IGradebook.sol interface, and then copy the ABI -- after you compile it, the copy ABI link is at the very bottom of the compilation pane.  Note that you may have to reformat that ABI a bit -- what you copy is on many lines, and you may have to reformat it to one line.
 
 The information you need to obtain is:
 
@@ -147,4 +162,4 @@ There are *two* forms of submission for this assignment; you must do both.
 
 Submission 1:  You must deploy your smart contract to our private Ethereum blockchain -- this was probably done above.  It's fine if you deploy it a few times because you were testing it, screwed something up, or whatever.  But the final deployment should not have any data other than the one call to `designateTA()`.
 
-Submission 2: You should submit your `CourseGradebook.sol` file, as well as your `gradebook.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+Submission 2: You should submit your `Gradebook.sol` file, as well as your `gradebook.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

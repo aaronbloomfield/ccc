@@ -25,16 +25,16 @@ A [Decentralized Autonomous Organization (DAO)](../../slides/applications.html#/
 
 As far as this assignment is concerned, we are not concerned as to *what* your DAO is for, only that it works.
 
-Your contract must implement the provided DAO interface below.   Your contract opening line must be: `contract DAO is DAOinterface, IERC165 {`.  This interface was adapted from the [open-source code for The &ETH;AO](https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol), but was heavily modified to both work with current versions of Solidity and to fit better with this assignment.  In particular, we removed a number of features, since this assignment is really about Web3: splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc.  In a real DAO, these would need to be implemented as well.
+Your contract must implement the provided DAO interface below.   Your contract opening line must be: `contract DAO is IDAO, IERC165 {`.  This interface was adapted from the [open-source code for The &ETH;AO](https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol), but was heavily modified to both work with current versions of Solidity and to fit better with this assignment.  In particular, we removed a number of features, since this assignment is really about Web3: splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc.  In a real DAO, these would need to be implemented as well.
 
-The file is [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)).  That file has many comments to explain how it works; those comments are not shown below.  While there is a lot listed in the interface, there are really only five or so functions that you have to implement; the rest are just `public` variables.
+The file is [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)).  That file has many comments to explain how it works; those comments are not shown below.  While there is a lot listed in the interface, there are really only five or so functions that you have to implement; the rest are just `public` variables.
 
 
 ```
 // SPDX-License-Identifier: GPL
 pragma solidity ^0.8.7;
 
-interface DAOinterface {
+interface IDAO {
 
     // Public variables
 
@@ -96,7 +96,7 @@ interface DAOinterface {
 
 The files you will need are:
 
-- [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)): what you have to implement
+- [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)): what you have to implement
 - [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)): this is unchanged from all previous assignments
 - [IERC721full.sol](IERC721full.sol.html) ([src](IERC721full.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 - [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
@@ -104,7 +104,7 @@ The files you will need are:
 
 You will also need your NFTmanager.sol file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, and any other .sol files that are needed to allow that to compile (such as ERC721.sol, Strings.sol. Address.sol, etc.).
 
-The requirements on this section are intentionally vague -- the intent is to let you program your DAO any way you want.  The only requirement is that your DAO must fulfill the spirit of the [DAOinterface.sol](DAOinterface.sol.html) ([src](DAOinterface.sol)) interface.  As far as we are concerned, a proposal description primarily consists of a single string -- perhaps it's a URL, perhaps a statement, etc.
+The requirements on this section are intentionally vague -- the intent is to let you program your DAO any way you want.  The only requirement is that your DAO must fulfill the spirit of the [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)) interface.  As far as we are concerned, a proposal description primarily consists of a single string -- perhaps it's a URL, perhaps a statement, etc.
 
 Don't overthink this!  The intent is just for you to get a working DAO.  It doesn't have to be perfect.  In fact, this is the easier part of this homework, since we've all written a bunch of Solidity programs by now.  The longest methods here are 8 lines.
 

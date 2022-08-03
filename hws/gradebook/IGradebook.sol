@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-interface Gradebook {
+interface IGradebook {
 
     //------------------------------------------------------------
     // Events
@@ -63,5 +63,10 @@ interface Gradebook {
     // the value is truncated, not rounded; so if the average were 16.67%, it
     // would return 1666.
     function getAverage(string memory student) external view returns (uint);
+
+    //------------------------------------------------------------
+    // The implementation for the following is provided in the HW description
+
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }

@@ -70,7 +70,7 @@ The contract you will be creating will allow for a decentralized auction for NFT
     - `auctionCloseEvent()`: when `closeAuction()` is successfully called
     - `higherBidEvent()`: when a new (and higher) bid is placed on an NFT via `placebid()`
 
-Formally the task is to develop an `Auctioneer` contract that implements the following `AuctionManager` interface below.  The provided [AuctionManager.sol](AuctionManager.sol.html) ([src](AuctionManager.sol)) file has more comments for this interface.
+Formally the task is to develop an `Auctioneer` contract that implements the following `IAuctioneer` interface below.  The provided [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) file has more comments for this interface.
 
 
 ```
@@ -79,7 +79,7 @@ pragma solidity ^0.8.7;
 
 import "./IERC721.sol";
 
-interface AuctionManager is IERC165 {
+interface IAuctioneer is IERC165 {
 
     struct Auction {
         uint id;            // the auction id
@@ -135,7 +135,7 @@ interface AuctionManager is IERC165 {
 }
 ```
 
-This interface is provided in the [AuctionManager.sol](AuctionManager.sol.html) ([src](AuctionManager.sol)) file.  This interface extends the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) interface, which requires the implementation of a `supportsInterface()` function -- your Auctioneer class thus supports two interfaces (AuctionManager and IERC165).
+This interface is provided in the [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) file.  This interface extends the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) interface, which requires the implementation of a `supportsInterface()` function -- your Auctioneer class thus supports two interfaces (IAuctioneer and IERC165).
 
 To transfer ETH to another account, you can use code such as the following; this was also [discussed in the Solidity slide set](../../slides/solidity.html#/payeth).  Note that the address is in variable `a`, and the value -- in wei -- is in `v`:
 

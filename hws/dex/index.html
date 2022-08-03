@@ -68,9 +68,9 @@ set. The last one is most relevant, as it discusses how DEXes work.</p>
 <p>To simulate changing market conditions, we have deployed two smart
 contracts to help one determine the price of our (fake) ETH. Both of
 these contracts fulfill the <a
-href="EtherPricer.sol.html">EtherPricer.sol</a> (<a
-href="EtherPricer.sol">src</a>) interface:</p>
-<pre><code>interface EtherPricer is IERC165 {
+href="IEtherPriceOracle.sol.html">IEtherPriceOracle.sol</a> (<a
+href="IEtherPriceOracle.sol">src</a>) interface:</p>
+<pre><code>interface IEtherPriceOracle is IERC165 {
         function getEtherPriceInCents() external view returns (uint);
 }</code></pre>
 <p>Thus, it provides only two functions: the
@@ -121,14 +121,14 @@ be implementing <a
 href="../../slides/applications.html#/routing">routing</a>.</p>
 <h3 id="interface">Interface</h3>
 <p>Formally, you must implement a <code>TokenDEX</code> contract that
-implements the <a href="DEX.sol.html">DEX.sol</a> (<a
-href="DEX.sol">src</a>) interface. Your contract opening line MUST be:
+implements the <a href="IDEX.sol.html">IDEX.sol</a> (<a
+href="IDEX.sol">src</a>) interface. Your contract opening line MUST be:
 <code>contract TokenDEX is DEX</code>. Note that the <code>DEX</code>
 interface extends the <code>IERC165</code> interface, so you will have
 to implement the <code>supportsInterface()</code> function as well. The
 functions in this interface are shown below, and much more detail is
-provided in the <a href="DEX.sol.html">DEX.sol</a> (<a
-href="DEX.sol">src</a>) file.</p>
+provided in the <a href="IDEX.sol.html">IDEX.sol</a> (<a
+href="IDEX.sol">src</a>) file.</p>
 <p>Note that many of these functions are just the getter functions from
 <code>public</code> variables; which ones are described in the full
 source file.</p>
@@ -136,9 +136,9 @@ source file.</p>
 pragma solidity ^0.8.7;
 
 import &quot;./IERC165.sol&quot;;
-import &quot;./EtherPricer.sol&quot;;
+import &quot;./IEtherPriceOracle.sol&quot;;
 
-interface DEX is IERC165 {
+interface IDEX is IERC165 {
 
     //------------------------------------------------------------
     // Events
@@ -225,17 +225,17 @@ interface DEX is IERC165 {
 }</code></pre>
 <p>Here are all the files you will need:</p>
 <ul>
-<li><a href="DEX.sol.html">DEX.sol</a> (<a href="DEX.sol">src</a>): the
-interface, above, that your contract will need to implement; that file
-has many more comments in the file to describe what each function
+<li><a href="IDEX.sol.html">IDEX.sol</a> (<a href="IDEX.sol">src</a>):
+the interface, above, that your contract will need to implement; that
+file has many more comments in the file to describe what each function
 does</li>
-<li><a href="EtherPricer.sol.html">EtherPricer.sol</a> (<a
-href="EtherPricer.sol">src</a>): the interface that the two pricing
-smart contracts implement; the contract addresses for these are on the
-Collab landing page</li>
+<li><a href="IEtherPriceOracle.sol.html">IEtherPriceOracle.sol</a> (<a
+href="IEtherPriceOracle.sol">src</a>): the interface that the two
+pricing smart contracts implement; the contract addresses for these are
+on the Collab landing page</li>
 <li><a href="EtherPricerConstant.sol.html">EtherPricerConstant.sol</a>
 (<a href="EtherPricerConstant.sol">src</a>) is the contract
-implementation of EtherPricer.sol that always returns 100 in cents
+implementation of IEtherPriceOracle.sol that always returns 100 in cents
 (formally: <code>10000</code>); note that the source code for the
 variable version is not being made available</li>
 <li><a href="IERC165.sol.html">IERC165.sol</a> (<a

@@ -17,7 +17,7 @@ http://www.gnu.org/software/src-highlite">
 import <font color="#FF0000">"./PollsInterface.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// A smart contract to allow voting on something.</font></i>
-contract Polls <font color="#008080">is</font> PollsInterface <font color="#FF0000">{</font>
+contract Polls <font color="#008080">is</font> IPolls <font color="#FF0000">{</font>
 
 	<i><font color="#9A1900">// struct Choice is defined in PollsInterface.sol, so we can't re-define</font></i>
 	<i><font color="#9A1900">// it here, and is defined as:</font></i>

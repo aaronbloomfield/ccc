@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "./EtherPricer.sol";
+import "./IEtherPriceOracle.sol";
 
-contract EtherPricerConstant is EtherPricer {
+contract EtherPricerConstant is IEtherPriceOracle {
 
     function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {
         return
-            interfaceId == type(EtherPricer).interfaceId ||
+            interfaceId == type(IEtherPriceOracle).interfaceId ||
             interfaceId == type(IERC165).interfaceId;
     }
 

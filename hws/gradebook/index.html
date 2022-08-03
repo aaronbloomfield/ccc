@@ -56,8 +56,8 @@ href="../dappintro/index.md">md</a>)</li>
 <p>You will also need to be familiar with the <a
 href="../../slides/ethereum.html#/">Ethereum slide set</a>, and the <a
 href="../../slides/solidity.html#/">Solidity slide set</a>.</p>
-<h3 id="part-1-write-the-coursegradebook-smart-contract">Part 1: Write
-the CourseGradebook smart contract</h3>
+<h3 id="part-1-write-the-gradebook-smart-contract">Part 1: Write the
+Gradebook smart contract</h3>
 <h4 id="overview-1">Overview</h4>
 <p>The gradebook will need to have the following functionalities:</p>
 <ul>
@@ -72,20 +72,19 @@ enter/update grades</li>
 <li>Anybody can get a student’s average score</li>
 </ul>
 <h4 id="interface">Interface</h4>
-<p>Formally, your contract will need to be named
-<code>CourseGradebook</code>, and saved in a file named
-<code>CourseGradebook.sol</code>. It will need to implement the <a
-href="Gradebook.sol.html">Gradebook.sol</a> (<a
-href="Gradebook.sol">src</a>) interface, which is as follows.
+<p>Formally, your contract will need to be named <code>Gradebook</code>,
+and saved in a file named <code>Gradebook.sol</code>. It will need to
+implement the <a href="IGradebook.sol.html">IGradebook.sol</a> (<a
+href="IGradebook.sol">src</a>) interface, which is as follows.
 <strong>NOTE:</strong> the interface file itself has many more details
 in the comments; most of the comments were stripped for what is
 below.</p>
 <pre><code>// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-// See the actual Gradebook.sol file, linked to above, for much more detailed comments
+// See the actual IGradebook.sol file, linked to above, for much more detailed comments
 
-interface Gradebook {
+interface IGradebook {
 
     event assignmentCreationEvent (uint indexed _id);
 
@@ -117,6 +116,10 @@ interface Gradebook {
 
     function getAverage(string memory student) external view returns (uint);
 
+    // The implementation for the following is provided in the HW description
+
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+
 }</code></pre>
 <h4 id="implementation-details">Implementation details</h4>
 <ul>
@@ -130,11 +133,11 @@ integer value that is 100 times the average. So if somebody’s average
 was 86.265%, the returned average would be 8626.</li>
 <li>The only task the constructor needs to do is set the
 <code>instructor</code> field to <code>msg.sender</code></li>
-<li>Your contract opening line MUST be: <code>contract CourseGradebook
-is Gradebook {</code></li>
+<li>Your contract opening line MUST be: <code>contract Gradebook is
+IGradebook {</code></li>
 <li>All of your methods and fields will have to have the
 <code>override</code> qualifier, since they are overriding what is
-specified in the <code>Gradebook</code> interface</li>
+specified in the <code>IGradebook</code> interface</li>
 </ul>
 <p>The first six methods (after the two events) are getter functions. As
 long as you set the visibility of the field in the contract as
@@ -150,6 +153,13 @@ should emit <code>assignmentCreationEvent()</code> event, and the
 <code>addGrade()</code> function should emit the
 <code>gradeEntryEvent()</code> event. Be sure to emit the events
 <em>after</em> any <code>require()</code> calls!</p>
+<h4 id="supportsinterface"><code>supportsInterface()</code></h4>
+<p>We will see the use of <code>supportsInterface()</code> in a lecture
+and a later assignment. For now, you should use this exact
+implementation:</p>
+<pre><code>function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
+        return interfaceId == type(IGradebook).interfaceId || interfaceId == 0x01ffc9a7;
+}</code></pre>
 <h4 id="testing">Testing</h4>
 <p>You will invariably run into issues testing and debugging your code.
 We have a few tips and tricks.</p>
@@ -200,13 +210,13 @@ randomly generated, so don’t feel bad if your score(s) are low.</p>
 <p>There are two ways you can access the gradebook on the blockchain.
 One is through Remix, like was done in the <a
 href="../dappintro/index.html">dApp introduction assignment</a> (<a
-href="../dappintro/index.md">md</a>) – you load the Gradebook.sol
+href="../dappintro/index.md">md</a>) – you load the IGradebook.sol
 interface, and then enter the address of the deployed Gradebook contract
 into the ‘At Address’ text box in the deployment window. The other way
 is through geth, like we did in the <a
 href="../../slides/solidity.html#/debtor">live coding example in
 class</a> – the geth commands start about 8 slides down in that column.
-For this you will also need the ABI. You can compile the Gradebook.sol
+For this you will also need the ABI. You can compile the IGradebook.sol
 interface, and then copy the ABI – after you compile it, the copy ABI
 link is at the very bottom of the compilation pane. Note that you may
 have to reformat that ABI a bit – what you copy is on many lines, and
@@ -235,8 +245,8 @@ Ethereum blockchain – this was probably done above. It’s fine if you
 deploy it a few times because you were testing it, screwed something up,
 or whatever. But the final deployment should not have any data other
 than the one call to <code>designateTA()</code>.</p>
-<p>Submission 2: You should submit your <code>CourseGradebook.sol</code>
-file, as well as your <code>gradebook.py</code> file, and ONLY those two
+<p>Submission 2: You should submit your <code>Gradebook.sol</code> file,
+as well as your <code>gradebook.py</code> file, and ONLY those two
 files, to Gradescope. All your Solidity code should be in that first
 file, and you should specifically import the various interfaces. Those
 interface files will be placed in the same directory on Gradescope when
