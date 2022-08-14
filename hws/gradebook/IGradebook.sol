@@ -42,12 +42,16 @@ interface IGradebook {
     //------------------------------------------------------------
     // The following four functions are ones you must implement
 
-    // Designates the passed address as a teaching assistant
+    // Designates the passed address as a teaching assistant; re-designating
+    // an address a TA does not do anything special (no revert).
     function designateTA(address ta) external;
 
     // Adds an assignment of the given name with the given maximum score.  It
     // should revert if called by somebody other than the instructor or an
-    // already designated teaching assistant.  It returns the assignment ID.
+    // already designated teaching assistant.  It does not check if an
+    // assignment with the same name already exists; thus, you can have
+    // multiple assignments with the same name (but different IDs).  It
+    // returns the assignment ID.
     function addAssignment(string memory name, uint max_score) external returns (uint);
 
     // Adds the given grade for the given student and the given assignment.

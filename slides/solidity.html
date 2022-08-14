@@ -634,15 +634,15 @@ interface Foo is Bar {
 }
 ```
 - Any contract that inherits from an interface, but does not implement all the methods, must be declared `abstract`
+    </textarea></section>
 
-
-
+    <section data-markdown data-separator="^\n\n\n" id='multioverride'><textarea>
 ## Inheritance
 - `virtual`: if a *thing* (function, field, etc.) in a contract can be overridden
   - All function prototypes in interfaces are assumed to be `virtual`
 - `override`: when a sub-class is replacing an inherited function
   - If the function is multiply inherited, you have to specify which (or all) that it overrides:
-    - `function foo() public override(ERC721, IERC165) {`
+    - `function foo() public override(IERC165,ERC721) {`
     - This will be needed in the Tokens assignment
     </textarea></section>
 

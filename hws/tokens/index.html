@@ -171,8 +171,8 @@ submission so that we can grade it in a sane manner:</p>
 <li>You must put your name and userid as the second line of the file
 (right after the SPDX line).</li>
 <li>Your contract opening line MUST be: <code>contract TokenCC is
-ITokenCC {</code>; this will inherit the other contracts and interfaces
-(Context, IERC20, ERC20, and IERC165).</li>
+ITokenCC, ERC20 {</code>; this will inherit the other contracts and
+interfaces (Context, IERC20, ERC20, and IERC165).</li>
 <li>The pragma line should be: <code>pragma solidity
 ^0.8.7;</code>.</li>
 <li>You are NOT to submit any of the <em>files</em> for the interfaces
@@ -379,6 +379,10 @@ function will return a token ID, which is just a <code>uint</code> that
 is used to identify (and find) that particular NFT in your token
 manager. This is an <a
 href="../../slides/solidity.html#/abscon">abstract contract</a>.</li>
+<li><a href="IERC721Receiver.sol.html">IERC721Receiver.sol</a> (<a
+href="IERC721Receiver.sol">src</a>): we won’t use the functionality in
+this interface, but it is needed for the ERC721.sol file to
+compile.</li>
 </ul>
 <p>Why so many files? Three of the interfaces (IERC165, IERC721, and
 IERC721Metadata) are Ethereum standards, and the practice is to include
@@ -396,7 +400,8 @@ substitutions in <code>ERC721.sol</code>. The last one,
 <p>Note that the only new files, beyond the the OpenZeppelin
 implementation, are the two bottom grey nodes. We added was the
 INFTmanager abstract contract, and you have to implement the NFTmanager
-contract.</p>
+contract. There are a lot of lines because the IERC721 interface needs
+to be included in many of the files.</p>
 <h4 id="part-2-task-3-compile-and-test-the-provided-code">Part 2, task
 3: Compile and test the provided code</h4>
 <p>You should compile the <a href="ERC721.sol.html">ERC721.sol</a> (<a
@@ -422,9 +427,9 @@ submission so that we can grade it in a sane manner:</p>
 (right after the SPDX line)</li>
 <li>Your contract MUST be in a file called <code>NFTmanager.sol</code> –
 note the capitalization!</li>
-<li>Your contract line MUST be: <code>contract NFTmanager is INFTmanager
-{</code>; this will inherit all the other necessary interfaces and
-contracts.</li>
+<li>Your contract line MUST be: <code>contract NFTmanager is
+INFTmanager, ERC721 {</code>; this will inherit all the other necessary
+interfaces and contracts.</li>
 <li>The pragma line should be: <code>pragma solidity ^0.8.7;</code></li>
 <li>You are NOT to submit any of the <em>files</em> for the interfaces
 above (ERC721, IERC721, INFTmanager, or IERC165.sol), nor copy-and-paste
@@ -434,6 +439,17 @@ directory on Gradescope when it attempts to compile your program</li>
 <li>You cannot submit any files other than the ones in the list above;
 any other code must be in your <code>NFTmanager.sol</code> file</li>
 </ol>
+<p>An implementation notes:</p>
+<ul>
+<li>Your <code>supportsInterface()</code> function supports four
+interfaces (see below), and overrides the
+<code>supportsInterface()</code> function from two different ancestors:
+<code>ERC721</code> and <code>IERC165</code>. You will need to specify,
+via the override keyword, that it does so:
+<code>override(IERC165,ERC721)</code> instead of just
+<code>override</code>. This is discussed in lecture <a
+href="../../slides/solidity.html#/multioverride">here</a>.</li>
+</ul>
 <p>The following are the functional requirements for the development of
 this contract:</p>
 <ul>
