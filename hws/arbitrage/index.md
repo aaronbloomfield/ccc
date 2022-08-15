@@ -155,7 +155,7 @@ In practice, your program would listen for events from any of the DEXes, and any
 
 ##### Input
 
-The program will read in a config.py file to provide all the settings, a sample of which is shown below:
+The program will read in a arbitrage_config.py file to provide all the settings, a sample of which is shown below:
 
 ```
 config = {
@@ -175,9 +175,9 @@ def hook():
     pass
 ```
 
-The `output()` function, below, will also be in the [config.py](config.py.html) ([src](config.py)) file, as well as a few more useful items.
+The `output()` function, below, will also be in the [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) file, as well as a few more useful items.
 
-You can assume that the config.py will always be present and properly structured, and that all values will be valid.  The parts of the `config` dict are:
+You can assume that the arbitrage_config.py will always be present and properly structured, and that all values will be valid.  The parts of the `config` dict are:
 
 - `account_address`: the address of the Ethereum account that this program is controlling -- it is the balance that this account has, in both ETH and TC, that constitutes the holdings of this account
 - `account_private_key`: the (decrypted) private key for that account, used to initiate transactions; this must be in the exact format shown above
@@ -190,11 +190,11 @@ You can assume that the config.py will always be present and properly structured
 - `tokencc_addr`: the smart address of the TokenCC smart contract
 - `dex_addrs`: the smart contract addresses of the various TokenDEX smart contracts; there will be at least two in this list
 
-You will need to edit all those values in config.py to match the deployed addresses (and other values) for your particular situation.
+You will need to edit all those values in arbitrage_config.py to match the deployed addresses (and other values) for your particular situation.
 
 The `hook()` function should be present, and should do nothing as shown.  This function needs be called at the *start* of each program execution run -- meaning when your program starts (right after the `import` lines) but before any of your other code in the file.  We are going to use that when we grade the assignment.
 
-We provide a few other things in config.py: the ABI for the TokenDEX and the TokenCC for you to use.  We also provide a function that will attempt to figure out the reason for a reverting transaction.  You can see these in the [config.py](config.py.html) ([src](config.py)) file.
+We provide a few other things in arbitrage_config.py: the ABI for the TokenDEX and the TokenCC for you to use.  We also provide a function that will attempt to figure out the reason for a reverting transaction.  You can see these in the [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) file.
 
 
 ##### Output
@@ -211,7 +211,7 @@ If two trades are made, then print out two lines of that form.  Keep in mind tha
 
 -->
 
-To ensure you output in the correct format, we provide a function that will print the appropriate lines.  This function is also provided in the [config.py](config.py.html) ([src](config.py)) file.
+To ensure you output in the correct format, we provide a function that will print the appropriate lines.  This function is also provided in the [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) file.
 
 ```
 def output(ethAmt, tcAmt, fees, holdings):
@@ -267,4 +267,4 @@ You will need to fill in the various values from this assignment into the [arbit
 
 There is only one submission for this assignment.
 
-Submission 1: Submit your `arbitrage_trading.py` source code file, along with your completed `arbitrage.py` file, to Gradescope.  You should not submit the config.py file.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+Submission 1: Submit your `arbitrage_trading.py` source code file, along with your completed `arbitrage.py` file, to Gradescope.  You should not submit the arbitrage_config.py file.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

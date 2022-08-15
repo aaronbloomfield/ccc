@@ -1,9 +1,9 @@
-Cryptocurrency: UVa specific material, fall 2022
+Cryptocurrency: UVa specific material, spring 2022
 ==================================================
 
 [Go up to the main CCC readme](../readme.html) ([md](../readme.md))
 
-Much of the rest of this git repo is meant to be generic to anybody who has a class such as this one. But this page contains details specific to the specific version of the course at the University of Virginia.
+Much of the rest of this repository is meant to be generic to anybody who has a class such as this one. This page contains details specific to the specific version of the course at the University of Virginia.
 
 ------------------------------------------------------------
 
@@ -12,11 +12,11 @@ Links
 
 There are a number of links and other parts of this course that are **NOT** included in this repository.  They are:
 
-- Any concerns you have should be handled via a [support request](https://libra.cs.virginia.edu/~pedagogy/) (Netbadge login required)
+- Any concerns you have should be handled via a [support request](...) (Netbadge login required)
 - Assignment submission is through the Gradescope tool in Collab
-- Email list archive, which is a Collab tool ([here](https://collab.its.virginia.edu/portal/directtool/5e445205-bf15-439b-9a1e-5d78bdb43039/) is the direct link; Collab login is required)
-- The Piazza forum for this course; Collab can log you in directly -- the Collab tool link is [here](https://collab.its.virginia.edu/portal/directtool/d0c4ceed-47d2-48cf-ad64-96f89fa86759/) (again, Collab login required)
-- [Anonymous feedback](https://collab.its.virginia.edu/portal/directtool/f05eb14a-f7e4-4c7f-9b36-f4e3290902a3/), which is through Collab
+- Email list archive, which is a Collab tool ([here](...) is the direct link; Collab login is required)
+- The Piazza forum for this course; Collab can log you in directly -- the Collab tool link is [here](...) (again, Collab login required)
+- [Anonymous feedback](...), which is through Collab
 - The link for the VirtualBox image will be available on the Collab landing page.  For how to install it, see  [here](https://uva-cs.github.io/pdr/tutorials/01-intro-unix/virtual-box.html).
 
 The parts of this course that are in this repo are:
@@ -47,21 +47,25 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 
 #### Larger Programming Homeworks
 
+- None yet!  The first one will be due on Tuesday, September 6th, and released a week prior
+
 <!--
-- Due Tue, 5/3 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
-- Due Tue, 4/26 by midnight: [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
-- Due Tue, 4/19 by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
-- Due Tue, 4/12 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
-- Due Tue, 4/5 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
-- Due Tue, 3/29, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
-- Due Tue, 3/22, by midnight: [HW P5: dApp Gradebook](../hws/gradebook/index.html) ([md](../hws/gradebook/index.md))
-- Due Tue, 2/22, by midnight: [HW P4: Bitcoin scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
-- Due Tue, 2/15, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
-- Due Tue, 2/8, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
-- Due Tue, 2/1, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
+- Due Tue, 11/22 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
+- Due Tue, 11/15 by midnight: [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
+- Due Tue, 11/8 by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
+- Due Tue, 11/1 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
+- Due Tue, 10/25 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
+- Due Tue, 10/18, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
+- Due Tue, 10/4?, by midnight: [HW P5: dApp Gradebook](../hws/gradebook/index.html) ([md](../hws/gradebook/index.md))
+- Due Tue, 9/27, by midnight: [HW P4: Bitcoin scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
+- Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
+- Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
+- Due Tue, 9/6, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 -->
 
 #### Smaller Homeworks
+
+- None yet!  The first one will be completing a Google form, which will be due by the end of August
 
 <!--
 - Due Tue, 3/15: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
@@ -75,36 +79,36 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 Lecture progress
 ----------------
 
-The list of lecture topics can be found on the [slides page](../slides/index.html) ([md](../slides/index.md)).  As the future schedule of lectures in the course is not yet known, this only has a listing of the past lectures.  Recordings for the lectures can be found in the Collab lecture capture tool.
+This is just an estimate, and will not always be updated if we veer off track.  The list of lecture topics can be found on the [slides page](../slides/index.html) ([md](../slides/index.md)).  Recordings for the lectures can be found in the Collab lecture capture tool.
 
-1. Wed, Jan 19: [course introduction](introduction.html#/) (completed), [overview](../slides/overview.html#/) (to 4.10)
-2. Mon, Jan 24: finished [overview](../slides/overview.html#/); [encryption](../slides/encryption.html#/) to slide 3.7
-3. Wed, Jan 26: [encryption](../slides/encryption.html#/) to slide 5.3
-4. Mon, Jan 31: [encryption](../slides/encryption.html#/) to slide 7.25
-5. Wed, Feb 2: [encryption](../slides/encryption.html#/) to slide 9.21
-6. Mon, Feb 7: finished [encryption](../slides/encryption.html#/); started on [Bitcoin](../slides/bitcoin.html#/) to slide 5.10
-7. Wed, Feb 9: [Bitcoin](../slides/bitcoin.html#/) to slide 7.6
-8. Mon, Feb 14: [Bitcoin](../slides/bitcoin.html#/) to slide 7.36
-9. Wed, Feb 16: finished [Bitcoin](../slides/bitcoin.html#/)
-10. Mon, Feb 21: [mining](../slides/mining.html#/) to slide 4.6
-11. Wed, Feb 23: finished [mining](../slides/mining.html#/) to slide 4.6
-12. Mon, Feb 28: [Ethereum](../slides/ethereum.html#/) to slide 3.27
-13. Wed, Mar 2: midterm
-14. Mon, Mar 14: [Solidity](../slides/solidity.html#/) to slide 5.3
-15. Wed, Mar 16: finished [Solidity](../slides/solidity.html#/)
-16. Mon, Mar 21: [Tokens](../slides/tokens.html#/) to 5.3
-17. Wed, Mar 23: [Tokens](../slides/tokens.html#/) to 6.7
-18. Mon, Mar 28: finished [Tokens](../slides/tokens.html#/); [Consensus](../slides/consensus.html#/) to 6.19
-19. Wed, Mar 30: [Consensus](../slides/consensus.html#/) to 8.14
-20. Mon, Apr 4: finished [Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/) to slide 3.28
-21. Wed, Apr 6: finished [Blockchain applications](../slides/applications.html#/)
-22. Mon, Apr 11: [zkSNARKs](../slides/zksnarks.html#/) to slide 5.29
-23. Wed, Apr 13: finished [zkSNARKs](../slides/zksnarks.html#/)
-24. Mon, Apr 18: [Scalability](../slides/scalability.html#/) to slide 6.7
-25. Wed, Apr 20: finished [Scalability](../slides/scalability.html#/)
-26. Mon, Apr 25: started and finished [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/) to slide 4.9
-27. Wed, Apr 27: finished [Ethereum](../slides/ethereum.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/) to slide 5.31
-28. Mon, Apr 30: [Course conclusion](../slides/conclusion.html#/)
+1. Wed, Aug 24: [course introduction](introduction.html#/), [overview](../slides/overview.html#/)
+2. Mon, Aug 29: [overview](../slides/overview.html#/), [encryption](../slides/encryption.html#/)
+3. Wed, Aug 31: [encryption](../slides/encryption.html#/)
+4. Mon, Sep 5: [encryption](../slides/encryption.html#/)
+5. Wed, Sep 7: [encryption](../slides/encryption.html#/); [Bitcoin](../slides/bitcoin.html#/)
+6. Mon, Sep 12: [Bitcoin](../slides/bitcoin.html#/)
+7. Wed, Sep 14: [Bitcoin](../slides/bitcoin.html#/)
+8. Mon, Sep 19: [Bitcoin](../slides/bitcoin.html#/)
+9. Wed, Sep 21: [mining](../slides/mining.html#/)
+10. Mon, Sep 26: [mining](../slides/mining.html#/)
+11. Wed, Sep 28: [Ethereum](../slides/ethereum.html#/)
+12. Wed, Oct 5: [Ethereum](../slides/ethereum.html#/); [Solidity](../slides/solidity.html#/)
+13. Mon, Oct 10: [Solidity](../slides/solidity.html#/)
+14. Wed, Oct 12: midterm
+15. Mon, Oct 17: [Tokens](../slides/tokens.html#/)
+16. Wed, Oct 19: [Tokens](../slides/tokens.html#/)
+17. Mon, Oct 24: [Tokens](../slides/tokens.html#/); [Consensus](../slides/consensus.html#/)
+18. Wed, Oct 26: [Consensus](../slides/consensus.html#/)
+19. Mon, Oct 31: [Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/)
+20. Wed, Nov 2: [Blockchain applications](../slides/applications.html#/)
+21. Mon, Nov 7: [Stablecoins](../slides/stablecoins.html#/)
+22. Wed, Nov 9: [zkSNARKs](../slides/zksnarks.html#/)
+23. Mon, Nov 14: [Scalability](../slides/scalability.html#/)
+24. Wed, Nov 16: [Scalability](../slides/scalability.html#/)
+25. Mon, Nov 21: [Algorand](../slides/algorand.html#/)
+26. Mon, Nov 28: [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/)
+27. Wed, Nov 30: [The Dark Side of Cryptocurrency](../slides/darkside.html#/)
+28. Mon, Dec 5: [Course conclusion](../slides/conclusion.html#/)
 
 
 ## Legal Issues

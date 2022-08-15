@@ -21,6 +21,7 @@ Slide sets, in the intended order to be presented in lecture, are below (if a li
 - [Stablecoins](stablecoins.html#/) <!-- present after applications, as it refers to DEXes and DAOs -->
 - [zkSNARKs](zksnarks.html#/)
 - [Scalability](scalability.html#/)
+- [Algorand](algorand.html#/)
 - [Ethics, Legality, and Policy](ethics-legal-policy.html#/)
 - [The Dark Side of Cryptocurrency](darkside.html#/)
 - [Course Conclusion](conclusion.html)
