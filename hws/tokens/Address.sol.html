@@ -10,8 +10,9 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (utils/Address.sol)</font></i>
 
-<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">1</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Collection of functions related to the address type</font></i>
@@ -33,16 +34,22 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *  - an address where a contract will be created</font></i>
 <i><font color="#9A1900">     *  - an address where a contract lived, but was destroyed</font></i>
 <i><font color="#9A1900">     * ====</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * [IMPORTANT]</font></i>
+<i><font color="#9A1900">     * ====</font></i>
+<i><font color="#9A1900">     * You shouldn't rely on `isContract` to protect against flash loan attacks!</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Preventing calls from contracts is highly discouraged. It breaks composability, breaks support for smart wallets</font></i>
+<i><font color="#9A1900">     * like Gnosis Safe, and does not provide security since it can be circumvented by calling from a contract</font></i>
+<i><font color="#9A1900">     * constructor.</font></i>
+<i><font color="#9A1900">     * ====</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">isContract</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-        <i><font color="#9A1900">// This method relies on extcodesize, which returns 0 for contracts in</font></i>
-        <i><font color="#9A1900">// construction, since the code is only stored at the end of the</font></i>
-        <i><font color="#9A1900">// constructor execution.</font></i>
+        <i><font color="#9A1900">// This method relies on extcodesize/address.code.length, which returns 0</font></i>
+        <i><font color="#9A1900">// for contracts in construction, since the code is only stored at the end</font></i>
+        <i><font color="#9A1900">// of the constructor execution.</font></i>
 
-        <font color="#008080">uint256</font> size<font color="#990000">;</font>
-        <i><font color="#9A1900">// solhint-disable-next-line no-inline-assembly</font></i>
-        assembly <font color="#FF0000">{</font> size <font color="#990000">:=</font> <b><font color="#000000">extcodesize</font></b><font color="#990000">(</font>account<font color="#990000">)</font> <font color="#FF0000">}</font>
-        <b><font color="#0000FF">return</font></b> size <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> account<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -64,14 +71,13 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">sendValue</font></b><font color="#990000">(</font>address <font color="#008080">payable</font> recipient<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> internal <font color="#FF0000">{</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&gt;=</font> amount<font color="#990000">,</font> <font color="#FF0000">"Address: insufficient balance"</font><font color="#990000">);</font>
 
-        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls, avoid-call-value</font></i>
-        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#990000">)</font> <font color="#990000">=</font> recipient<font color="#990000">.</font>call<font color="#FF0000">{</font> value<font color="#990000">:</font> amount <font color="#FF0000">}</font><font color="#990000">(</font><font color="#FF0000">""</font><font color="#990000">);</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#990000">)</font> <font color="#990000">=</font> recipient<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> amount<font color="#FF0000">}</font><font color="#990000">(</font><font color="#FF0000">""</font><font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font> <font color="#FF0000">"Address: unable to send value, recipient may have reverted"</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Performs a Solidity function call using a low level `call`. A</font></i>
-<i><font color="#9A1900">     * plain`call` is an unsafe replacement for a function call: use this</font></i>
+<i><font color="#9A1900">     * plain `call` is an unsafe replacement for a function call: use this</font></i>
 <i><font color="#9A1900">     * function instead.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * If `target` reverts with a revert reason, it is bubbled up by this</font></i>
@@ -88,7 +94,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     * _Available since v3.1._</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">functionCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-      <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCall</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> <font color="#FF0000">"Address: low-level call failed"</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"Address: low-level call failed"</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -97,7 +103,11 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * _Available since v3.1._</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">functionCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">functionCall</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> target<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> data<font color="#990000">,</font>
+        string memory errorMessage
+    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> errorMessage<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
@@ -112,7 +122,11 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * _Available since v3.1._</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> target<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> data<font color="#990000">,</font>
+        uint256 value
+    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> value<font color="#990000">,</font> <font color="#FF0000">"Address: low-level call with value failed"</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
@@ -122,13 +136,15 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * _Available since v3.1._</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> target<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> data<font color="#990000">,</font>
+        <font color="#008080">uint256</font> value<font color="#990000">,</font>
+        string memory errorMessage
+    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&gt;=</font> value<font color="#990000">,</font> <font color="#FF0000">"Address: insufficient balance for call"</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">isContract</font></b><font color="#990000">(</font>target<font color="#990000">),</font> <font color="#FF0000">"Address: call to non-contract"</font><font color="#990000">);</font>
-
-        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls</font></i>
-        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font>call<font color="#FF0000">{</font> value<font color="#990000">:</font> value <font color="#FF0000">}</font><font color="#990000">(</font>data<font color="#990000">);</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font>success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> value<font color="#FF0000">}</font><font color="#990000">(</font>data<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>target<font color="#990000">,</font> success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -147,12 +163,13 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * _Available since v3.3._</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">functionStaticCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">isContract</font></b><font color="#990000">(</font>target<font color="#990000">),</font> <font color="#FF0000">"Address: static call to non-contract"</font><font color="#990000">);</font>
-
-        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionStaticCall</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> target<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> data<font color="#990000">,</font>
+        string memory errorMessage
+    <font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font><b><font color="#000000">staticcall</font></b><font color="#990000">(</font>data<font color="#990000">);</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font>success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>target<font color="#990000">,</font> success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -171,30 +188,68 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * _Available since v3.4._</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">functionDelegateCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">isContract</font></b><font color="#990000">(</font>target<font color="#990000">),</font> <font color="#FF0000">"Address: delegate call to non-contract"</font><font color="#990000">);</font>
-
-        <i><font color="#9A1900">// solhint-disable-next-line avoid-low-level-calls</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">functionDelegateCall</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> target<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> data<font color="#990000">,</font>
+        string memory errorMessage
+    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font><b><font color="#000000">delegatecall</font></b><font color="#990000">(</font>data<font color="#990000">);</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font>success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>target<font color="#990000">,</font> success<font color="#990000">,</font> returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
-    <font color="#008080">function</font> <b><font color="#000000">_verifyCallResult</font></b><font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b><font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Tool to verify that a low level call to smart-contract was successful, and revert (either by bubbling</font></i>
+<i><font color="#9A1900">     * the revert reason or using the provided one) in case of unsuccessful call or if target was not a contract.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v4.8._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> target<font color="#990000">,</font>
+        <font color="#009900">bool</font> success<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> returndata<font color="#990000">,</font>
+        string memory errorMessage
+    <font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <i><font color="#9A1900">// only check isContract if the call was successful and the return data is empty</font></i>
+                <i><font color="#9A1900">// otherwise we already know that it was a contract</font></i>
+                <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">isContract</font></b><font color="#990000">(</font>target<font color="#990000">),</font> <font color="#FF0000">"Address: call to non-contract"</font><font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">return</font></b> returndata<font color="#990000">;</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <b><font color="#000000">_revert</font></b><font color="#990000">(</font>returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Tool to verify that a low level call was successful, and revert if it wasn't, either by bubbling the</font></i>
+<i><font color="#9A1900">     * revert reason or using the provided one.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * _Available since v4.3._</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">verifyCallResult</font></b><font color="#990000">(</font>
+        <font color="#009900">bool</font> success<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> returndata<font color="#990000">,</font>
+        string memory errorMessage
+    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
             <b><font color="#0000FF">return</font></b> returndata<font color="#990000">;</font>
         <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
-            <i><font color="#9A1900">// Look for revert reason and bubble it up if present</font></i>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                <i><font color="#9A1900">// The easiest way to bubble the revert reason is using memory via assembly</font></i>
+            <b><font color="#000000">_revert</font></b><font color="#990000">(</font>returndata<font color="#990000">,</font> errorMessage<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
 
-                <i><font color="#9A1900">// solhint-disable-next-line no-inline-assembly</font></i>
-                assembly <font color="#FF0000">{</font>
-                    <font color="#008080">let</font> returndata_size <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>returndata<font color="#990000">)</font>
-                    <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> returndata<font color="#990000">),</font> returndata_size<font color="#990000">)</font>
-                <font color="#FF0000">}</font>
-            <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
-                <b><font color="#000000">revert</font></b><font color="#990000">(</font>errorMessage<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">_revert</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> returndata<font color="#990000">,</font> string <font color="#008080">memory</font> errorMessage<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> pure <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// Look for revert reason and bubble it up if present</font></i>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// The easiest way to bubble the revert reason is using memory via assembly</font></i>
+            <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+            assembly <font color="#FF0000">{</font>
+                <font color="#008080">let</font> returndata_size <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>returndata<font color="#990000">)</font>
+                <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> returndata<font color="#990000">),</font> returndata_size<font color="#990000">)</font>
             <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <b><font color="#000000">revert</font></b><font color="#990000">(</font>errorMessage<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>

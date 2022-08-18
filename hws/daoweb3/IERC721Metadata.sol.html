@@ -9,29 +9,32 @@ http://www.gnu.org/software/src-highlite">
 <title>IERC721Metadata.sol</title>
 </head>
 <body bgcolor="white">
-<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: ...</font></i>
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts v4.4.1 (token/ERC721/extensions/IERC721Metadata.sol)</font></i>
 
-<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
-
-
-<i><font color="#9A1900">/// </font></i><font color="#009900">@title</font><i><font color="#9A1900"> ERC-721 Non-Fungible Token Standard, optional metadata extension</font></i>
-<i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-721</font></u>
-<i><font color="#9A1900">///  Note: the ERC-165 identifier for this interface is 0x5b5e139f.</font></i>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
 import <font color="#FF0000">"./IERC721.sol"</font><font color="#990000">;</font>
 
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@title</font><i><font color="#9A1900"> ERC-721 Non-Fungible Token Standard, optional metadata extension</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-721</font></u>
+<i><font color="#9A1900"> */</font></i>
 interface IERC721Metadata <font color="#008080">is</font> IERC721 <font color="#FF0000">{</font>
-    <i><font color="#9A1900">/// </font></i><font color="#009900">@notice</font><i><font color="#9A1900"> A descriptive name for a collection of NFTs in this contract</font></i>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the token collection name.</font></i>
+<i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
-    <i><font color="#9A1900">/// </font></i><font color="#009900">@notice</font><i><font color="#9A1900"> An abbreviated name for NFTs in this contract</font></i>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the token collection symbol.</font></i>
+<i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
-    <i><font color="#9A1900">/// </font></i><font color="#009900">@notice</font><i><font color="#9A1900"> A distinct Uniform Resource Identifier (URI) for a given asset.</font></i>
-    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Throws if `_tokenId` is not a valid NFT. URIs are defined in RFC</font></i>
-    <i><font color="#9A1900">///  3986. The URI may point to a JSON file that conforms to the "ERC721</font></i>
-    <i><font color="#9A1900">///  Metadata JSON Schema".</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">tokenURI</font></b><font color="#990000">(</font><font color="#008080">uint256</font> _tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the Uniform Resource Identifier (URI) for `tokenId` token.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tokenURI</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>

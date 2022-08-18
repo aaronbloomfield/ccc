@@ -10,6 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (utils/Strings.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
@@ -17,7 +18,8 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> String operations.</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> Strings <font color="#FF0000">{</font>
-    bytes16 <b><font color="#0000FF">private</font></b> <font color="#008080">constant</font> alphabet <font color="#990000">=</font> <font color="#FF0000">"0123456789abcdef"</font><font color="#990000">;</font>
+    bytes16 <font color="#008080">private</font> <font color="#008080">constant</font> _HEX_SYMBOLS <font color="#990000">=</font> <font color="#FF0000">"0123456789abcdef"</font><font color="#990000">;</font>
+    uint8 <font color="#008080">private</font> <font color="#008080">constant</font> _ADDRESS_LENGTH <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts a `uint256` to its ASCII `string` decimal representation.</font></i>
@@ -68,13 +70,19 @@ http://www.gnu.org/software/src-highlite">
         buffer<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"0"</font><font color="#990000">;</font>
         buffer<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"x"</font><font color="#990000">;</font>
         <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> length <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <font color="#990000">--</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
-            buffer<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> alphabet<font color="#990000">[</font>value <font color="#990000">&amp;</font> <font color="#993399">0xf</font><font color="#990000">];</font>
+            buffer<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> _HEX_SYMBOLS<font color="#990000">[</font>value <font color="#990000">&amp;</font> <font color="#993399">0xf</font><font color="#990000">];</font>
             value <font color="#990000">&gt;&gt;=</font> <font color="#993399">4</font><font color="#990000">;</font>
         <font color="#FF0000">}</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>value <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"Strings: hex length insufficient"</font><font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">string</font></b><font color="#990000">(</font>buffer<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal representation.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font><font color="#008080">address</font> addr<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font><b><font color="#000000">uint256</font></b><font color="#990000">(</font><b><font color="#000000">uint160</font></b><font color="#990000">(</font>addr<font color="#990000">)),</font> _ADDRESS_LENGTH<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>

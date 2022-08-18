@@ -10,11 +10,12 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
-<i><font color="#9A1900">/*</font></i>
-<i><font color="#9A1900"> * @dev Provides information about the current execution context, including the</font></i>
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Provides information about the current execution context, including the</font></i>
 <i><font color="#9A1900"> * sender of the transaction and its data. While these are generally available</font></i>
 <i><font color="#9A1900"> * via msg.sender and msg.data, they should not be accessed in such a direct</font></i>
 <i><font color="#9A1900"> * manner, since when dealing with meta-transactions the account sending and</font></i>
@@ -29,7 +30,6 @@ abstract <font color="#008080">contract</font> Context <font color="#FF0000">{</
     <font color="#FF0000">}</font>
 
     <font color="#008080">function</font> <b><font color="#000000">_msgData</font></b><font color="#990000">()</font> internal view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> calldata<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">this</font></b><font color="#990000">;</font> <i><font color="#9A1900">// silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691</font></i>
         <b><font color="#0000FF">return</font></b> msg<font color="#990000">.</font>data<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>

@@ -10,13 +10,29 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">7</font><font color="#990000">;</font>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC721/IERC721Receiver.sol)</font></i>
 
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@title</font><i><font color="#9A1900"> ERC721 token receiver interface</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Interface for any contract that wants to support safeTransfers</font></i>
+<i><font color="#9A1900"> * from ERC721 asset contracts.</font></i>
+<i><font color="#9A1900"> */</font></i>
 <font color="#008080">interface</font> IERC721Receiver <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom}</font></i>
+<i><font color="#9A1900">     * by `operator` from `from`, this function is called.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * It must return its Solidity selector to confirm the token transfer.</font></i>
+<i><font color="#9A1900">     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`.</font></i>
+<i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">onERC721Received</font></b><font color="#990000">(</font>
         <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font>
         <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">uint</font> tokenId<font color="#990000">,</font>
+        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
         bytes calldata data
     <font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>bytes4<font color="#990000">);</font>
 <font color="#FF0000">}</font>
