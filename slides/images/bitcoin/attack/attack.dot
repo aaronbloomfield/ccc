@@ -46,7 +46,7 @@ digraph D {
     1002 [label="block 1002\n(conf 1)",width=0.8];
     1003 [label="block 1003\n(conf 2)",width=0.8];
     1004 [label="block 1004\n(conf 3)",width=0.8];
-    bad [label="block 1001'\nspend UTXO\nelsewhere",width=0.8,color=red];
+    bad [label="block 1001'\nspend UTXO\nelsewhere",width=0.8,color=red,fillcolor=lightgray,style=filled];
     null -> 1000;
     1000 -> 1001;
     1001 -> 1002;
@@ -69,7 +69,7 @@ digraph E {
     a1003 [label="block 1003\nfrom 1001'\n(conf 2)",width=0.8];
     a1004 [label="block 1004\nfrom 1001'\n(conf 3)",width=0.8];
     a1005 [label="block 1005\nfrom 1001'\n(conf 4)",width=0.8];
-    bad [label="block 1001'\nspend UTXO\nelsewhere",width=0.8,color=red];
+    bad [label="block 1001'\nspend UTXO\nelsewhere",width=0.8,color=red,fillcolor=lightgray,style=filled];
     null -> 1000;
     1000 -> 1001;
     1001 -> 1002;

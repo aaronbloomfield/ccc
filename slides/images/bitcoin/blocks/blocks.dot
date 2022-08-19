@@ -56,13 +56,13 @@ graph witness {
 	rankdir="LR";
 	node [fontname="Helvetica",width=3];
 	lock_time [shape=Mrecord,label="lock time: 4 bytes"]
-	witness [shape=Mrecord,color=red,label="witness: variable bytes"]
+	witness [shape=Mrecord,color=red,label="witness: variable bytes",fillcolor=lightgray,style=filled]
 	tx_out [shape=Mrecord,label="1+ transaction outputs"]
 	tx_out_count [shape=Mrecord,label="txn out count: 1-9 bytes"]
 	tx_in [shape=Mrecord,label="1+ transaction inputs"]
 	tx_in_count [shape=Mrecord,label="txn in count: 1-9 bytes"]
-	flag [shape=Mrecord,color=red,label="flag: 1 byte, 0x01"];
-	marker [shape=Mrecord,color=red,label="marker: 1 byte, 0x00"];
+	flag [shape=Mrecord,color=red,label="flag: 1 byte, 0x01",fillcolor=lightgray,style=filled];
+	marker [shape=Mrecord,color=red,label="marker: 1 byte, 0x00",fillcolor=lightgray,style=filled];
 	version [shape=Mrecord,label="version: 4 bytes"];
 	title [shape=none,label="Witness Transaction"];
 }

@@ -92,12 +92,12 @@ digraph B {
 	n1 [label="{1}\nh(L+R)"];
 
 	n00 [label="{00}\nh(L+R)"];
-	n10 [label="{10}\nh(L+R)",color=red];
+	n10 [label="{10}\nh(L+R)",color=red,fillcolor=lightgray,style=filled];
 	n001 [label="{001}\nh(L+R)"];
 	n0011 [label="{0011}\n\"3\"\nh(3)"];
 
-	n101 [label="{101}\nh(L+R)",color=red];
-	n1011 [label="{1011}\n\"b\"\nh(b)",color=red];
+	n101 [label="{101}\nh(L+R)",color=red,fillcolor=lightgray,style=filled];
+	n1011 [label="{1011}\n\"b\"\nh(b)",color=red,fillcolor=lightgray,style=filled];
 
 
 	n01 [label="{01}\nh(L+R)"];
@@ -227,9 +227,9 @@ digraph D {
 
 	n [label="{}\nh(L+R)"];
 	n0 [label="{0}\nh(L+R)"];
-	n1 [label="{1}\nh(L+R)",color=red];
+	n1 [label="{1}\nh(L+R)",color=red,fillcolor=lightgray,style=filled];
 	n0011 [label="{0011}\n\"3\"\nh(3)"];
-	n1011 [label="{1011}\n\"b\"\nh(b)",color=red];
+	n1011 [label="{1011}\n\"b\"\nh(b)",color=red,fillcolor=lightgray,style=filled];
 	n0111 [label="{0111}\n\"7\"\nh(7)"];
 	n111 [label="{111}\nh(L+R)"];
 	n1111 [label="{1111}\n\"f\"\nh(f)"];
