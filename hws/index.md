@@ -27,7 +27,7 @@ These are larger programming homeworks.
 
 These are smaller homeworks that take less time.  They are often readings or self-guided tutorials.
 
-- S1: Google course introductory survey: the link for the survey is on the [Collab landing page](https://collab.its.virginia.edu/portal/directtool/7c8e4ae8-4bb5-4d1f-9fd6-9d9323721551/)
+- S1: Google course introductory survey: the link for the survey is on the Collab landing page
 - S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
 - S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)): you can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
 - [S4: Private Ethereum Blockchain](ethprivate/index.html); the necessary links and other information needed to complete this assignment are on the [Collab landing page](https://collab.its.virginia.edu/portal/directtool/7c8e4ae8-4bb5-4d1f-9fd6-9d9323721551/)

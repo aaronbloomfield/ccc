@@ -1,14 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+<!-- Generator: GNU source-highlight 3.1.8
 by Lorenzo Bettini
 http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite">
-<title>basic-test.sh</title>
-</head>
-<body bgcolor="white">
+http://www.gnu.org/software/src-highlite -->
 <pre><tt><i><font color="#9A1900">#!/bin/bash</font></i>
 
 echo The name of this cryptocurrency is<font color="#990000">:</font>
@@ -27,10 +20,10 @@ echo Creating a wallet <b><font color="#0000FF">for</font></b> bob into alice<fo
 echo bob<font color="#990000">.</font>wallet<font color="#990000">.</font>txt wallet signature<font color="#990000">:</font> <font color="#009900">$bob</font>
 echo funding bob wallet with <font color="#993399">100</font>
 <font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh fund <font color="#009900">$bob</font> <font color="#993399">100</font> <font color="#993399">02</font>-bob-funding<font color="#990000">.</font>txt
-echo transfering <font color="#993399">12.5</font> from alice to bob
-<font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh transfer alice<font color="#990000">.</font>wallet<font color="#990000">.</font>txt <font color="#009900">$bob</font> <font color="#993399">12.5</font> <font color="#993399">03</font>-alice-to-bob<font color="#990000">.</font>txt
-echo transfering <font color="#993399">2.5</font> from bob to alice
-<font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh transfer bob<font color="#990000">.</font>wallet<font color="#990000">.</font>txt <font color="#009900">$alice</font> <font color="#993399">2.5</font> <font color="#993399">04</font>-bob-to-alice<font color="#990000">.</font>txt
+echo transfering <font color="#993399">12</font> from alice to bob
+<font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh transfer alice<font color="#990000">.</font>wallet<font color="#990000">.</font>txt <font color="#009900">$bob</font> <font color="#993399">12</font> <font color="#993399">03</font>-alice-to-bob<font color="#990000">.</font>txt
+echo transfering <font color="#993399">2</font> from bob to alice
+<font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh transfer bob<font color="#990000">.</font>wallet<font color="#990000">.</font>txt <font color="#009900">$alice</font> <font color="#993399">2</font> <font color="#993399">04</font>-bob-to-alice<font color="#990000">.</font>txt
 echo verifying the last four transactions
 <font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh verify alice<font color="#990000">.</font>wallet<font color="#990000">.</font>txt <font color="#993399">01</font>-alice-funding<font color="#990000">.</font>txt
 <font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh verify bob<font color="#990000">.</font>wallet<font color="#990000">.</font>txt <font color="#993399">02</font>-bob-funding<font color="#990000">.</font>txt
@@ -47,5 +40,3 @@ sha256sum block_1<font color="#990000">.</font>txt
 echo validating the cryptocurrency chain
 <font color="#990000">.</font>/cryptomoney<font color="#990000">.</font>sh validate
 </tt></pre>
-</body>
-</html>

@@ -3,42 +3,28 @@ P1: Cryptocurrency Introduction
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
-You must design your own cryptocurrency!  Your implementation must be
-secure enough that you could actually use it.
 
-You may use any programming language for this, but if you want to use
-a language other than Java or Python, please check with us first.
+### Overview
 
-## Overview
+You must design your own cryptocurrency!  Your implementation must be secure enough that you could actually use it.
 
-Your cryptocurrency should have a name -- ideally, think of a neat
-name, but make sure it is 
-[not already taken](https://en.wikipedia.org/wiki/List_of_cryptocurrencies).
-It will have to use public/private key encryption to generate the
-wallets.  You do not have to use symmetric encryption (such as AES) to
-protect the private key in the wallet.  You will need to use a good
-hashing algorithm.  In practice, SHA-256 would be the minimum, but you
-can use a shorter SHA hash for this assignment.
+Your cryptocurrency should have a name -- ideally, think of a neat name, but make sure it is [not already taken](https://coinmarketcap.com/). It will have to use public/private key encryption to generate the wallets.  You do not have to use symmetric encryption (such as AES) to protect the private key in the wallet.  You will need to use a good hashing algorithm.  In practice, SHA-256 would be the minimum, but you can use a shorter SHA hash for this assignment.
 
-The intent is not for you to write the hashing or encryption /
-decryption routines -- use existing libraries for that.  In
-particular, both Java and Python can do that for you.  Be careful
-about requiring an uncommon Python module or Java library, as it still has to run on the submission server. 
-
-One option will be to copy how Bitcoin handles these functions, as
-described in the [Cryptocurrency overview slide
-set](../../slides/overview.html#/) slide set.
+The intent is not for you to write the hashing or encryption / decryption routines -- use existing libraries for that.  In particular, both Java and Python can do that for you.  Be careful about requiring an uncommon Python module or Java library, as it still has to run on the submission server. 
 
 
 ### Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+### Pre-requisties
 
-## Languages
+This homework is based on the material covered in the [Cryptocurrency Overview](../../slides/overview.html#/) slide set.
 
-As mentioned above, you may use any programming language for this, but
-if you want to use a language other than Java or Python, please check with us first.
+
+### Languages
+
+You may use any programming language for this, but if you want to use a language other than Java or Python, please check with us first so that we can enable it on the auto-grader.  (If you are using another language, you have to let us know at least two days before the assignment is due so we have time to configure it)
 
 For Java and Python, we provide you with the code to convert a hex
 string to an array of bytes, to convert an array of bytes to a hex
@@ -77,10 +63,10 @@ on the submission server is OpenJDK 1.11.  We provide some methods in the
 [Sample.java](Sample.java)
 ([html](Sample.java.html)) file for you to use.
 
-**C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.  The compiler is `gcc` or `g++`.
+<!-- **C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.  The compiler is `gcc` or `g++`. -->
 
 
-## File format
+### File format
 
 **Blockchain**
 
@@ -115,8 +101,8 @@ parts -- that's fine if you want to do that as well.
 
 bigfoot transferred 100.0 to a3e47443b0f3bc76 on Tue Apr 02 23:09:13 EDT 2019
 bigfoot transferred 100.0 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
-a3e47443b0f3bc76 transferred 12.5 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
-48adadf4fb921fca transferred 2.5 to a3e47443b0f3bc76 on Tue Apr 02 23:09:15 EDT 2019
+a3e47443b0f3bc76 transferred 12 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
+48adadf4fb921fca transferred 2 to a3e47443b0f3bc76 on Tue Apr 02 23:09:15 EDT 2019
 
 nonce: 120
 ```
@@ -124,27 +110,27 @@ nonce: 120
 The details about each line, as well as the 'bigfoot' concept, are
 explained below.
 
-**Ledger**
+**Mempool**
 
 The blocks described above represent transactions that have been
 completed.  Pending transaction records are to be placed in the
-ledger, which we will appropriately call `ledger.txt`.  One of the
+mempool, which we will appropriately call `mempool.txt`.  One of the
 functionalities that you have to implement is the transfer of the
-transaction records in the ledger into a block in the block chain
+transaction records in the mempool into a block in the block chain
 through mining.
 
-Each line will be of the the same form as the lines in the ledger (`S
+Each line will be of the the same form as the lines in the mempool (`S
 transferred x to D on w`).  You are welcome to use present tense as
 well (transfers instead of transferred).  You can have additional
 information after the required text, but it must all be on the same
-line.  This is important -- each transaction record in the ledger must
+line.  This is important -- each transaction record in the mempool must
 be exactly one line!
 
-Below is an example of a line from the ledger.  This line is a
+Below is an example of a line from the mempool.  This line is a
 *transaction record*, which is described next.
 
 ```
-a3e47443b0f3bc76 transferred 12.5 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
+a3e47443b0f3bc76 transferred 12 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
 ```
 
 Note that this is the second-to-last line in the block shown above.
@@ -156,29 +142,29 @@ A transaction *statement* is a multi-line text file that contains the
 sender, the recipient, the amount, and ends with a digital signature.
 Each transaction statement will be in its own file; one is shown below.
 
-A transaction *record* is a single line in a ledger (and, later, in a
+A transaction *record* is a single line in a mempool (and, later, in a
 block in the blockchain) that contains similar information, but on a
-single line.  The one-line example above, in the ledger section, is a
+single line.  The one-line example above, in the mempool section, is a
 transaction record.
 
 Another of the functionalities that you will have to implement is the
 verification of a transaction statement (checking it's signature and
 that there is enough money), which will then insert a single
-transaction record for that transaction into the ledger.
+transaction record for that transaction into the mempool.
 
 As an example, below is one of the transaction statements that was
 generated from the script provided (specifically the `./cryptomoney.sh
-transfer alice.wallet.txt $bob 12.5 03-alice-to-bob.txt` line).  Note
+transfer alice.wallet.txt $bob 12 03-alice-to-bob.txt` line).  Note
 that you don't have to have the same format!  This is just what we
 used.  However, it must contain the same five pieces of information:
 from, to, amount, date, and the signature.  The one-line entry from
-the ledger, above, is the corresponding transaction record for this
+the mempool, above, is the corresponding transaction record for this
 transaction statement.
 
 ```
 From: a3e47443b0f3bc76
 To: 48adadf4fb921fca
-Amount: 12.5
+Amount: 12
 Date: Tue Apr 02 23:09:13 EDT 2019
 
 5b7e1fcbde4edee8b940d820ea807558fc4b3a94108df254267c578077c03dd5d30ca62550376aabaa24f42a11f667d6b191230a50fd9de08bcd37a75dfcc3774735057d84a6aa8abe297f9ff379a02d1976006584cf4fc34ef53a92f973e58d452d0b2c48342f89ebc7cee668511c696b78c36712d2aed9ef2681977bb5a93c
@@ -204,22 +190,18 @@ that.  However, that's a bit long, so we can use only the first 16
 bytes (characters) of that hash for brevity.
 
 
-## Requirements
+### Requirements
 
 Since this can be done in any programming language, you will have to
 write a shell script (described below) so that we can call your code.
-While the shell script is described below, the particular function to
+While the shell script is described below, the particular function -- called the mode -- to
 be implemented is `shown like this` in the requirements below.  That
 function will be the first command line parameter provided to the
 program, and any additional command line parameters are specified
-below.  For example, to generate a wallet, you would call `java CMoney
-wallet.txt` or `python3 cmoney.py wallet.txt`.  Note that these actual
-calls are in the shell script, described below.
+below.  For example, to generate a wallet, you would call `java CMoney generate wallet.txt` or `python3 cmoney.py generate wallet.txt`.  We are going to be using the same command-line parameters (here, `generate wallet.txt`) to both your source code and the shell script.
 
 **Output:** Each command below should print out EXACTLY ONE LINE to
 standard output indicating the success (or failure) of the command.
-It will make your life much easier if this one line is from the source
-code.
 
 The requirements are:
 
@@ -257,7 +239,7 @@ The requirements are:
    alongside the hash of the public keys as the source of funds.  This
    function will be provided with three additional command line
    parameters: the destination wallet address, the amount to transfer,
-   and the file name to save the transaction statement to.
+   and the file name to save the transaction statement to.  All funded amounts are integers; we are not using floating-point numbers in this assignment at all.
 6. Transfer funds (`transfer`): this is how we pay with our
    cryptocurrency.  It will be provided with four additional command
    line parameters: the source wallet file name (not the address!),
@@ -268,25 +250,24 @@ The requirements are:
    readable by a human.  Recall that it must have five pieces of
    information, described above in the "Transaction statement versus
    transaction record" section.  Note that this command does *NOT* add
-   anything to the ledger.
+   anything to the mempool.  All transferred amounts are integers; we are not using floating-point numbers in this assignment at all.
 7. Check a balance (`balance`): based on the transactions in the block
-   chain AND ALSO in the ledger, compute the balance for the provided
+   chain AND ALSO in the mempool, compute the balance for the provided
    wallet.  This does not look at transaction *statements*, only the
-   transaction *records* in the blocks and the ledger.  The wallet
+   transaction *records* in the blocks and the mempool.  The wallet
    address to compute the balance for is provided as an additional
    command line parameter.
-   - **NOTE:** this should ONLY print the balance as a number, and nothing
-       else!
+   - **NOTE:** this should ONLY print the balance as a number, as an integer, and nothing else!
 8. Verify a transaction (`verify`): verify that a given transaction
    statement is valid, which will require checking the signature
    **and** the availability of funds.  Once verified, it should be
-   added to the ledger as a transaction record.  This is the only way
-   that items are added to the ledger.  The wallet file name
+   added to the mempool as a transaction record.  This is the only way
+   that items are added to the mempool.  The wallet file name
    (whichever wallet created the transaction) and the transaction
    statement being verified are the additional command line
    parameters.
 9. Create, mine, and sign block (`mine`): this will form another block
-   in the blockchain.  The ledger will be emptied of transaction
+   in the blockchain.  The mempool will be emptied of transaction
    records, as they will all go into the current block being computed.
    A nonce will have to be computed to ensure the hash is below a
    given value.  Recall that the first line in any block is the
@@ -307,34 +288,50 @@ The requirements are:
        or not), and nothing else!  Case matters here.
 
 
-## Shell script
+### Shell script and Makefile
 
-Since different programming languages can be used, we are going to
-have you submit a shell script called `cryptomoney.sh` that we will
-use to test your code.  It is basically a big case statement for each
-of the 10 functions listed above.  A sample such shell script is
-available for Java: [cryptomoney.sh](java/cryptomoney.sh)
-([html](java/cryptomoney.sh.html)) and for Python:
-[cryptomoney.sh](python/cryptomoney.sh)
-([html](python/cryptomoney.sh.html)).  Note that you will
-have to edit them for your specific implementation.  Also note that
-you will have to run `chmod 755 cryptomoney.sh` before you can run the
-shell script.  This is set up for Java -- for Python, you would
-replace all occurrences of "java CMoney" with "python3 cmoney.py" (or
-similar).  Also note that the parameters provided to the shell script
-are listed in that shell script.  It is the shell script interface
-that we will be using to test your code.
+#### Shell script
 
-We realize that the bash syntax for case statements is pretty horrid,
-which is why we are providing the sample script.  When calling the
-shell script, the function (genesis, generate, fund, etc.)  will
-always be the first command line parameter (thus in $1).  If any
-additional ones are needed, they will be after that (thus in $2, $3,
-etc.).  We will never provide invalid parameters (either the wrong
-number, or the wrong type) to the shell script.
+Since different programming languages can be used, and you may name your file differently, we are going to have you submit a shell script called `cryptomoney.sh` that we will use to test your code.  All it does is pass the command-line parameters on to your program.  If you are using Python, then your shell script would look like the following:
+
+```
+!#/bin/bash
+python3 cmoney.py $@
+```
+
+If you are using Java, then your shell script would look like the following:
+
+```
+!#/bin/bash
+java CMoney $@
+```
+
+Save the two lines above to a text file called `cryptomoney.sh`; change the name of the file as appropriate to your code.  Then run `chmod 755 cryptomoney.sh`.  You should then be able to run your program through the shell script.
+
+#### Makefile
+
+Separately from the shell script, you will also need a Makefile.  This will allow your program to be compiled prior to execution (if your program needs compilation).  For languages that do not need compilation (such as Python), just put in a single `echo` statement so that `make` still runs properly.
+
+If you are using Python, your Makefile will look like the following:
+
+```
+main:
+     echo hello world
+```
+
+Note that the indentation is a tab, not spaces!  Makefiles are very strict on that.  And change the file name as appropriate for your source code.
+
+If you are using Java, your Makefile will look like the following:
+
+```
+main:
+     javac CMoney.java
+```
+
+Note that the indentation is a tab, not spaces!  Makefiles are very strict on that.  And change the file name as appropriate for your source code.
 
 
-## Sample execution
+### Sample execution
 
 This is just meant to show the syntax -- it is not meant to be a full
 fledged testing suite of your homework.  However, it does call each of
@@ -375,29 +372,29 @@ $ echo bob.wallet.txt wallet signature: $bob
 bob.wallet.txt wallet signature: d96b71971fbeec39
 $ ./cryptomoney.sh fund $bob 100 02-bob-funding.txt
 Funded wallet d96b71971fbeec39 with 100 AaronDollars on Tue Apr 02 23:09:00 EDT 2019
-$ ./cryptomoney.sh transfer alice.wallet.txt $bob 12.5 03-alice-to-bob.txt
-Transferred 12.5 from alice.wallet.txt to d96b71971fbeec39 and the statement to '03-alice-to-bob.txt' on Tue Apr 02 23:09:00 EDT 2019
-$ ./cryptomoney.sh transfer bob.wallet.txt $alice 2.5 04-bob-to-alice.txt
-Transferred 2.5 from bob.wallet.txt to e1f3ec14abcb45da and the statement to '04-bob-to-alice.txt' on Tue Apr 02 23:09:01 EDT 2019
+$ ./cryptomoney.sh transfer alice.wallet.txt $bob 12 03-alice-to-bob.txt
+Transferred 12 from alice.wallet.txt to d96b71971fbeec39 and the statement to '03-alice-to-bob.txt' on Tue Apr 02 23:09:00 EDT 2019
+$ ./cryptomoney.sh transfer bob.wallet.txt $alice 2 04-bob-to-alice.txt
+Transferred 2 from bob.wallet.txt to e1f3ec14abcb45da and the statement to '04-bob-to-alice.txt' on Tue Apr 02 23:09:01 EDT 2019
 $ ./cryptomoney.sh verify alice.wallet.txt 01-alice-funding.txt
-Any funding request (i.e., from bigfoot) is considered valid; written to the ledger
+Any funding request (i.e., from bigfoot) is considered valid; written to the mempool
 $ ./cryptomoney.sh verify bob.wallet.txt 02-bob-funding.txt
-Any funding request (i.e., from bigfoot) is considered valid; written to the ledger
+Any funding request (i.e., from bigfoot) is considered valid; written to the mempool
 $ ./cryptomoney.sh verify alice.wallet.txt 03-alice-to-bob.txt
-The transaction in file '03-alice-to-bob.txt' with wallet 'alice.wallet.txt' is valid, and was written to the ledger
+The transaction in file '03-alice-to-bob.txt' with wallet 'alice.wallet.txt' is valid, and was written to the mempool
 $ ./cryptomoney.sh verify bob.wallet.txt 04-bob-to-alice.txt
-The transaction in file '04-bob-to-alice.txt' with wallet 'bob.wallet.txt' is valid, and was written to the ledger
-$ cat ledger.txt
+The transaction in file '04-bob-to-alice.txt' with wallet 'bob.wallet.txt' is valid, and was written to the mempool
+$ cat mempool.txt
 bigfoot transferred 100.0 to e1f3ec14abcb45da on Tue Apr 02 23:09:01 EDT 2019
 bigfoot transferred 100.0 to d96b71971fbeec39 on Tue Apr 02 23:09:01 EDT 2019
-e1f3ec14abcb45da transferred 12.5 to d96b71971fbeec39 on Tue Apr 02 23:09:02 EDT 2019
-d96b71971fbeec39 transferred 2.5 to e1f3ec14abcb45da on Tue Apr 02 23:09:02 EDT 2019
+e1f3ec14abcb45da transferred 12 to d96b71971fbeec39 on Tue Apr 02 23:09:02 EDT 2019
+d96b71971fbeec39 transferred 2 to e1f3ec14abcb45da on Tue Apr 02 23:09:02 EDT 2019
 $ ./cryptomoney.sh balance $alice
 90.0
 $ ./cryptomoney.sh balance $bob
 110.0
 $ ./cryptomoney.sh mine 2
-Ledger transactions moved to block_1.txt and mined with difficulty 2 and nonce 1029
+Mempool transactions moved to block_1.txt and mined with difficulty 2 and nonce 1029
 $ sha256sum block_1.txt
 00cc159f08e9e833d2cc85e8dce788020603346829e86f623e6f3c7e36e34b6c  block_1.txt
 $ ./cryptomoney.sh validate
@@ -405,7 +402,7 @@ True
 $
 ```
 
-## Miscellaneous Notes
+### Miscellaneous Notes
 
 There are a number of assumptions you can make for your code:
 
@@ -415,12 +412,12 @@ There are a number of assumptions you can make for your code:
 - The block_?.txt files will be consecutive -- so there won't be a
   block_3.txt missing when there is a block_4.txt.
 - The block_0.txt file will exist before any calls to verify,
-  validate, or balance; however, the ledger.txt file may not yet
+  validate, or balance; however, the mempool.txt file may not yet
   exist.
+- All numerical values provided for the cryptocurrency amounts -- this is for the `balance` and `fund` modes -- will only be integers; floating point numbers are not being used in this assignment.
 
 
-
-## Submission requirements
+### Submission requirements
 
 You will submit exactly three files for this assignment:
 
@@ -429,10 +426,5 @@ You will submit exactly three files for this assignment:
   .class files, which is fine.  As mentioned above, if you want to use
   a language other than C, C++, Java, or Python, please check with us
   first.
-- The shell script, which should be called `cryptomoney.sh`.  We are
-  going to call that script to test your entire code, so make sure
-  it's named properly!
-- A Makefile that will compile your code when we call `make`, which
-  will be called on submission.  For languages that do not need
-  compilation (such as Python), just put in a single `echo` statement
-  so that `make` still runs properly.
+- `cryptocurrency.sh`: the shell script, described above.  We are going to call that script to test your entire code, so make sure it's named properly!
+- `Makefile`: as described above
