@@ -25,8 +25,8 @@ Introduction</h1>
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a
 href="../index.md">md</a>)</p>
 <h3 id="overview">Overview</h3>
-<p>You must design your own cryptocurrency! Your implementation must be
-secure enough that you could actually use it.</p>
+<p>You must design and implement your own cryptocurrency! Your
+implementation must be secure enough that you could actually use it.</p>
 <p>Your cryptocurrency should have a name – ideally, think of a neat
 name, but make sure it is <a href="https://coinmarketcap.com/">not
 already taken</a>. It will have to use public/private key encryption to
@@ -50,9 +50,9 @@ set.</p>
 <h3 id="languages">Languages</h3>
 <p>You may use any programming language for this, but if you want to use
 a language other than Java or Python, please check with us first so that
-we can enable it on the auto-grader. (If you are using another language,
-you have to let us know at least two days before the assignment is due
-so we have time to configure it)</p>
+we can enable it on the submission server. (If you are using another
+language, you have to let us know at least two days before the
+assignment is due so we have time to configure it.)</p>
 <p>For Java and Python, we provide you with the code to convert a hex
 string to an array of bytes, to convert an array of bytes to a hex
 string, getting the SHA-256 hash of a file, and to read and write RSA
@@ -74,7 +74,7 @@ is part of the Python installation. To take the SHA-256 hash of a file,
 see <a href="https://stackoverflow.com/a/44873382">this code on stack
 overflow</a>. You can see some example code in the <a
 href="sample.py">sample.py</a> (<a href="sample.py.html">html</a>) file
-for you to use. You can see <a
+we have provided for you to use. You can see <a
 href="https://www.tutorialspoint.com/python/python_command_line_arguments.htm">here</a>
 for how to use command-line arguments.</p>
 <p><strong>Java:</strong> RSA and SHA are already in the standard Java
@@ -89,7 +89,8 @@ href="https://niels.nu/blog/2016/java-rsa.html">here</a>. You may use
 any of the code on those pages for your program. Note that the Java
 version on the submission server is OpenJDK 1.11. We provide some
 methods in the <a href="Sample.java">Sample.java</a> (<a
-href="Sample.java.html">html</a>) file for you to use.</p>
+href="Sample.java.html">html</a>) file we have provided for you to
+use.</p>
 <!-- **C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.  The compiler is `gcc` or `g++`. -->
 <h3 id="file-format">File format</h3>
 <p><strong>Blockchain</strong></p>
@@ -104,11 +105,11 @@ block will be of the following format:</p>
 hold a transaction record (which is <em>not</em> the same as a
 transaction statement), one per line; these will be of the form <code>S
 transferred x to D on w</code>, where S is the source wallet, D is the
-destination wallet, x is the (floating point) amount to transfer, and w
-is the date. The date can be any format you would like, as long as it
-has the date and time (with seconds). In Java, <code>new Date()</code>
-will achieve this; in Python 3, <code>str(datetime.now())</code> will do
-the same.</li>
+destination wallet, x is the integer amount to transfer, and w is the
+date. The date can be any format you would like, as long as it has the
+date and time (with seconds), but it must be human readable (so no unix
+timestamps). In Java, <code>new Date()</code> will achieve this; in
+Python 3, <code>str(datetime.now())</code> will do the same.</li>
 <li>The last line will have the nonce, which is determined when the
 block is mined</li>
 </ul>
@@ -135,12 +136,12 @@ which we will appropriately call <code>mempool.txt</code>. One of the
 functionalities that you have to implement is the transfer of the
 transaction records in the mempool into a block in the block chain
 through mining.</p>
-<p>Each line will be of the the same form as the lines in the mempool
-(<code>S transferred x to D on w</code>). You are welcome to use present
-tense as well (transfers instead of transferred). You can have
-additional information after the required text, but it must all be on
-the same line. This is important – each transaction record in the
-mempool must be exactly one line!</p>
+<p>Each line will have the same one-line format described above (<code>S
+transferred x to D on w</code>). You are welcome to use present tense as
+well (transfers instead of transferred). You can have a reasonable
+amount of additional information after the required text, but it must
+all be on the same line. This is important – each transaction record in
+the mempool must be exactly one line!</p>
 <p>Below is an example of a line from the mempool. This line is a
 <em>transaction record</em>, which is described next.</p>
 <pre><code>a3e47443b0f3bc76 transferred 12 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019</code></pre>
@@ -157,7 +158,7 @@ but on a single line. The one-line example above, in the mempool
 section, is a transaction record.</p>
 <p>Another of the functionalities that you will have to implement is the
 verification of a transaction statement (checking it’s signature and
-that there is enough money), which will then insert a single transaction
+that there is enough funds), which will then insert a single transaction
 record for that transaction into the mempool.</p>
 <p>As an example, below is one of the transaction statements that was
 generated from the script provided (specifically the
@@ -186,8 +187,8 @@ bottom of the transaction record.</p>
 or checking a signature, then the full wallet file will be needed. A
 wallet address is a shortened version of the public key. For our
 purposes, we should take the SHA-256 hash of the public key, and use
-that. However, that’s a bit long, so we can use only the first 16 bytes
-(characters) of that hash for brevity.</p>
+that. However, that’s a bit long, so we can use only the first 16
+characters of that hash for brevity.</p>
 <h3 id="requirements">Requirements</h3>
 <p>Since this can be done in any programming language, you will have to
 write a shell script (described below) so that we can call your code.
@@ -401,8 +402,8 @@ $</code></pre>
 <p>There are a number of assumptions you can make for your code:</p>
 <ul>
 <li>We will always provide the proper parameters to the shell script –
-both the number, order, and validity of the parameters can be
-assumed.</li>
+both the number, order, and validity of the parameters can be assumed to
+be correct.</li>
 <li>The block_?.txt files will be consecutive – so there won’t be a
 block_3.txt missing when there is a block_4.txt.</li>
 <li>The block_0.txt file will exist before any calls to verify,
@@ -415,7 +416,7 @@ assignment.</li>
 </ul>
 <h3 id="submission-requirements">Submission requirements</h3>
 <p>You will submit exactly three files for this assignment:</p>
-<ul>
+<ol type="1">
 <li>Your source code file. All your code must be in a single source code
 file. We realize that a Java file may compile to multiple .class files,
 which is fine. As mentioned above, if you want to use a language other
@@ -424,6 +425,6 @@ than C, C++, Java, or Python, please check with us first.</li>
 We are going to call that script to test your entire code, so make sure
 it’s named properly!</li>
 <li><code>Makefile</code>: as described above</li>
-</ul>
+</ol>
 </body>
 </html>

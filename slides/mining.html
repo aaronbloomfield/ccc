@@ -833,6 +833,11 @@ Note that UTXOs are not only in the bottom level
 
     <section id="forks" data-markdown class="center"><textarea>
 # Forks & Orphan Nodes
+
+<img src="images/logos/btg-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/etc-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n" data-transition="none" data-transition-speed="fast"><textarea>
@@ -965,15 +970,34 @@ Note that UTXOs are not only in the bottom level
 
 
 
+<!-- .slide: class="right-float-img-nb-400" -->
 ## Hard forks
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gabel_--_2021_--_7220.jpg/800px-Gabel_--_2021_--_7220.jpg)
 - A change is proposed that some users do *NOT* want to adopt
-  - Or that is not backwards-compatible
-- Example: Ethereum Classic
-  - Recall that The &ETH;AO had a bug, which endangered the perception and trust of the Ethereum as a whole
-  - The fix was to roll back the blockchain to before the hack to fix it
-  - This [split the users](applications.html#/etcsplit), as some didn't want to make the change
-  - <img src="images/logos/etc-coin-symbol.svg" class="cclogo"> Now Ethereum Classic is the blockchain *without* the fix <br clear='all'>
-  - <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum is the blockchain *with* the fix <br clear='all'>
+  - Or that is not backwards-compatible, so some users choose one way and some the other way
+
+
+
+## <h2><a href='https://coinmarketcap.com/currencies/ethereum/'><img src="images/logos/eth-coin-symbol.svg" class="cclogoheader"></a> Ethereum &<br><a href='https://coinmarketcap.com/currencies/ethereum-classic/'><img src="images/logos/etc-coin-symbol.svg" class="cclogoheader"></a> Ethereum Classic </h2>
+- We'll see this in [Blockchain Applications](applications.html#/), but a well-known Ethereum organization had a programming bug that allowed millions to be drained from the account
+  - This endangered the perception and trust of the Ethereum as a whole
+- The fix: roll back the blockchain to before the hack to fix it
+- This [split the users](applications.html#/etcsplit); some didn't want the fix
+- <a href='https://coinmarketcap.com/currencies/ethereum-classic/'><img src="images/logos/etc-coin-symbol.svg" class="cclogo"></a> Ethereum Classic is the blockchain *without* the fix <br clear='all'>
+- <a href='https://coinmarketcap.com/currencies/ethereum/'><img src="images/logos/eth-coin-symbol.svg" class="cclogo"></a> Ethereum is the blockchain *with* the fix <br clear='all'>
+
+
+
+<h2><a href='https://coinmarketcap.com/currencies/bitcoin-gold/'><img src="images/logos/btg-coin-symbol.svg" class="cclogoheader"></a> Bitcoin Gold</h2>
+
+- Hard fork on October 24, 2017 (block height 491,407)
+- Reasons: change to an ASIC-resistant hash
+- It's had a lot of growing pains:
+  - Was hastily put together
+  - Had a developer pre-mine, which always looks shady
+  - Hit by 51% attack in May 2018; 388k BTG (about $18 million) was stolen; promptly de-listed from Bittrex
+  - Hit by a 51% attack again in January 202
+  - July 2020 a "emergency update" was released to counter yet another attack
 
 
 
@@ -981,7 +1005,7 @@ Note that UTXOs are not only in the bottom level
 - You can make a new cryptocurrency by:
   - Take a tested open source code base
   - Make a the modifications you want
-- <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> The [Ravencoin source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin)
+- <a href='https://coinmarketcap.com/currencies/ravencoin/'><img src="images/logos/rvn-coin-symbol.svg" class="cclogo"></a> The [Ravencoin source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin)
 - Changes:
   - 1000x as many coins
   - Native support for assets

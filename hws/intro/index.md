@@ -6,7 +6,7 @@ P1: Cryptocurrency Introduction
 
 ### Overview
 
-You must design your own cryptocurrency!  Your implementation must be secure enough that you could actually use it.
+You must design and implement your own cryptocurrency!  Your implementation must be secure enough that you could actually use it.
 
 Your cryptocurrency should have a name -- ideally, think of a neat name, but make sure it is [not already taken](https://coinmarketcap.com/). It will have to use public/private key encryption to generate the wallets.  You do not have to use symmetric encryption (such as AES) to protect the private key in the wallet.  You will need to use a good hashing algorithm.  In practice, SHA-256 would be the minimum, but you can use a shorter SHA hash for this assignment.
 
@@ -24,7 +24,7 @@ This homework is based on the material covered in the [Cryptocurrency Overview](
 
 ### Languages
 
-You may use any programming language for this, but if you want to use a language other than Java or Python, please check with us first so that we can enable it on the auto-grader.  (If you are using another language, you have to let us know at least two days before the assignment is due so we have time to configure it)
+You may use any programming language for this, but if you want to use a language other than Java or Python, please check with us first so that we can enable it on the submission server.  (If you are using another language, you have to let us know at least two days before the assignment is due so we have time to configure it.)
 
 For Java and Python, we provide you with the code to convert a hex
 string to an array of bytes, to convert an array of bytes to a hex
@@ -47,7 +47,7 @@ part of the Python installation.  To take the SHA-256 hash of a file,
 see [this code on stack
 overflow](https://stackoverflow.com/a/44873382).  You can see some
 example code in the [sample.py](sample.py)
-([html](sample.py.html)) file for you to use.  You can see [here](https://www.tutorialspoint.com/python/python_command_line_arguments.htm) for how to use command-line arguments.
+([html](sample.py.html)) file we have provided for you to use.  You can see [here](https://www.tutorialspoint.com/python/python_command_line_arguments.htm) for how to use command-line arguments.
 
 
 **Java:** RSA and SHA are already in the standard Java library; you
@@ -61,7 +61,7 @@ about how to sign a message can be found
 the code on those pages for your program.  Note that the Java version
 on the submission server is OpenJDK 1.11.  We provide some methods in the
 [Sample.java](Sample.java)
-([html](Sample.java.html)) file for you to use.
+([html](Sample.java.html)) file we have provided for you to use.
 
 <!-- **C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.  The compiler is `gcc` or `g++`. -->
 
@@ -79,9 +79,9 @@ after the genesis block will be of the following format:
 - Lines 2 to $n$-1 will each hold a transaction record (which is *not*
   the same as a transaction statement), one per line; these will be of
   the form `S transferred x to D on w`, where S is the source wallet,
-  D is the destination wallet, x is the (floating point) amount to
+  D is the destination wallet, x is the integer amount to
   transfer, and w is the date.  The date can be any format you would
-  like, as long as it has the date and time (with seconds).  In Java,
+  like, as long as it has the date and time (with seconds), but it must be human readable (so no unix timestamps).  In Java, 
   `new Date()` will achieve this; in Python 3, `str(datetime.now())`
   will do the same.
 - The last line will have the nonce, which is determined when the
@@ -119,9 +119,9 @@ functionalities that you have to implement is the transfer of the
 transaction records in the mempool into a block in the block chain
 through mining.
 
-Each line will be of the the same form as the lines in the mempool (`S
+Each line will have the same one-line format described above (`S
 transferred x to D on w`).  You are welcome to use present tense as
-well (transfers instead of transferred).  You can have additional
+well (transfers instead of transferred).  You can have a reasonable amount of additional
 information after the required text, but it must all be on the same
 line.  This is important -- each transaction record in the mempool must
 be exactly one line!
@@ -149,7 +149,7 @@ transaction record.
 
 Another of the functionalities that you will have to implement is the
 verification of a transaction statement (checking it's signature and
-that there is enough money), which will then insert a single
+that there is enough funds), which will then insert a single
 transaction record for that transaction into the mempool.
 
 As an example, below is one of the transaction statements that was
@@ -187,7 +187,7 @@ or checking a signature, then the full wallet file will be needed.  A
 wallet address is a shortened version of the public key.  For our
 purposes, we should take the SHA-256 hash of the public key, and use
 that.  However, that's a bit long, so we can use only the first 16
-bytes (characters) of that hash for brevity.
+characters of that hash for brevity.
 
 
 ### Requirements
@@ -408,7 +408,7 @@ There are a number of assumptions you can make for your code:
 
 - We will always provide the proper parameters to the shell script --
   both the number, order, and validity of the parameters can be
-  assumed.
+  assumed to be correct.
 - The block_?.txt files will be consecutive -- so there won't be a
   block_3.txt missing when there is a block_4.txt.
 - The block_0.txt file will exist before any calls to verify,
@@ -421,10 +421,6 @@ There are a number of assumptions you can make for your code:
 
 You will submit exactly three files for this assignment:
 
-- Your source code file.  All your code must be in a single source
-  code file.  We realize that a Java file may compile to multiple
-  .class files, which is fine.  As mentioned above, if you want to use
-  a language other than C, C++, Java, or Python, please check with us
-  first.
-- `cryptocurrency.sh`: the shell script, described above.  We are going to call that script to test your entire code, so make sure it's named properly!
-- `Makefile`: as described above
+1. Your source code file.  All your code must be in a single source code file.  We realize that a Java file may compile to multiple .class files, which is fine.  As mentioned above, if you want to use a language other than C, C++, Java, or Python, please check with us first.
+2. `cryptocurrency.sh`: the shell script, described above.  We are going to call that script to test your entire code, so make sure it's named properly!
+3. `Makefile`: as described above

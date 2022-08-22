@@ -10,12 +10,12 @@ I realize that nobody reads these through.  So the TL;DR version:
 - One midterm, on Wed, Oct 12 during lecture; one final, on Tue, Dec 13 from 2-5
 - Grades are 50% homeworks, 15% midterm, 20% final exam, and 15% participation (quizzes & attendance)
 - Everything is going to be auto-graded, but you can submit multiple times; the grades won't be known until the late due date has passed
-- There may be some rough spots in the course -- please be patient, and provide constructive feedback, and I'll do my best to get it all fixed
+- If you encounter any rough spots in the course -- please be patient, and provide constructive feedback, and I'll do my best to get it all fixed
 - There will be both larger programming homeworks and smaller tutorial-style  homeworks or readings -- often one of each will be assigned at any given time
 - Lecture attendance is required, and occasional attendance quizzes will be taken to ensure that
 - Readings will typically have in-class quizzes when they are due
 - Attendance quizzes and reading quizzes are online, so bring a connected device (phone is fine)
-- Due to the size of the course, please contact me via [support request][1]
+- Due to the size of the course, please contact me via support request; the link is on the Collab landing page
 - Office hours are posted on the Collab landing page
 - I want you to succeed in this course and enjoy it -- if you are having any problems (personal, academic, what-not) that I can help with, please let me know
 
@@ -26,19 +26,19 @@ And now for the really long-winded version...
 
 ### Course Staff ###
 
-- [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) / aaron at virginia dot edu.  Office: Rice Hall, room 402.  Office hours are posted on the Collab landing page
-- Four undergraduate TAs (and possibly a Masters TA); their office hours are also posted on the Collab landing page
+- [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) / aaron at virginia dot edu.  Office: Rice Hall, room 402.  Office hours are posted on the Collab landing page, and will start the second week of the semester
+- Four undergraduate TAs (and possibly a Masters TA); their office hours are also posted on the Collab landing page, and will start the second week of the semester
 
 ### Course Info ###
 
 - Lecture: M/W 2:00-3:15 in Thornton E303
-- Email: none; fill out a [support request][1] instead
+- Email: none; fill out a support request instead; the link is on the Collab landing page
 - Announcements will be done through the [daily announcements slide set](daily-announcements.html#/)
 <!-- - TAs and their office hours will be posted on the Collab course main page; all office hours start the second day of classes -->
 
 
 **Course content:** All the course content is available free online at 
-[http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc), which is from a public github repository: [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).  All the material in that repo is released under a [Creative Commons license](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA).  Note that this license and the public availability does NOT apply to the lecture videos.
+[http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc), which is from a public github repository: [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).  All the source code in that repository is released under a [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and all the non-source code material in that repository is released under a [Creative Commons license](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA).  Note that this license and the public availability does NOT apply to the lecture videos.
 
 **Lectures:** Lecture attendance is required.  There will be occasional attendance quizzes to verify this.  These quizzes will be online, so bring a connected device (phone is fine) to take said quizzes.
 
@@ -100,8 +100,3 @@ Alternatively, there are also other University of Virginia resources available. 
 If you or someone you know is struggling with gender, sexual, or domestic violence, there are many community and University of Virginia resources available. The Office of the Dean of Students, Sexual Assault Resource Agency (SARA), Shelter for Help in Emergency (SHE), and UVA Women's Center are ready and eager to help. Contact the Director of Sexual and Domestic Violence Services at 434-982-2774.
 
 **Legality:** This course has received approval from the necessary parts of UVA: [ITS](https://virginia.service-now.com/its/), [InfoSec](https://security.virginia.edu/), and the [Office of the University Counsel](https://universitycounsel.virginia.edu/).  Specifically, the cryptocurrencies created in this course will be exchangeable with each other, but not with any cryptocurrency outside the course; thus they have no monetary value.  Because they have no monetary value, and because the activities in this course are necessary to achieve the academic goals of the course, these various activities of this course, including mining, have been judged to be legal.
-
-
-
-
-[1]: https://pegasus.cs.virginia.edu/satori/cs3710-su2021/tickets/ (support request link)

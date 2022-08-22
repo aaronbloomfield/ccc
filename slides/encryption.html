@@ -162,6 +162,21 @@
 - Many worry about the security of the standard
   - ... that somebody may figure a way to crack it mathematically, in particular
 - [Reference](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
+
+
+## Public key cryptography
+- Everybody has a key that encrypts and a separate key that decrypts
+ - They are not interchangable!
+- The encryption key is made public
+- The decryption key is kept private
+
+
+## Public key cryptography goals
+- Key generation should be relatively easy
+- Encryption should be easy (polynomial time)
+- Decryption should be easy (polynomial time)
+  - With the right key!
+- Cracking should be very hard (exponential time)
 	</textarea></section>
 
 	</section>
@@ -852,7 +867,7 @@ $
 ## Verifying an ECDSA message
 
 <ul>
-  <li>The last formula from the previous slide:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ <br>Or: $k \otimes G = (s^{-1} \ast h) \otimes G \oplus (s^{-1} \ast r) \otimes Q$ </li>
+  <li>The last formula from the previous slide:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ or:<br>$k \otimes G = (s^{-1} \ast h) \otimes G \oplus (s^{-1} \ast r) \otimes Q$ </li>
 
   <li class="fragment" data-fragment-index="1">Point $R$ was computed as: $R=k \otimes G$:<br> $R = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
   <li class="fragment" data-fragment-index="2">Bob knows:
@@ -937,7 +952,7 @@ $
 ## When RSA is better
 - Longer messages don't have to be broken down into as many parts
 - Much easier to implement
-  - And much easier to implement easily
+  - And much easier to implement quickly
 
 
 ## Security Level
@@ -959,8 +974,10 @@ $
 	  
 	  <section data-markdown data-separator="^\n$"><textarea data-template>
 ## xkcd on randomness
-<img href= "http://imgs.xkcd.com/comics/random_number.png">
-<h4 class="xkcd">Random Number</h4><img class="stretch" src="http://imgs.xkcd.com/comics/random_number.png" title="RFC 1149.5 specifies 4 as the standard IEEE-vetted random number." alt="Random Number"><p class="center"><a href="http://xkcd.com/221/">xkcd # 221</a></p>
+
+<p>&nbsp;</p>
+<img src="https://imgs.xkcd.com/comics/random_number.png" title="RFC 1149.5 specifies 4 as the standard IEEE-vetted random number." alt="Random Number"  style="image-orientation:none;width:800px">
+<p class='center'><a href='http://xkcd.com/221/'>xkcd # 221</a></p>
 
 
 ## Computers and randomness

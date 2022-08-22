@@ -1,5 +1,5 @@
-Cryptocurrency: UVa specific material, spring 2022
-==================================================
+Cryptocurrency: UVa specific material, fall 2022
+================================================
 
 [Go up to the main CCC readme](../readme.html) ([md](../readme.md))
 
@@ -12,12 +12,12 @@ Links
 
 There are a number of links and other parts of this course that are **NOT** included in this repository.  They are:
 
-- Any concerns you have should be handled via a [support request](...) (Netbadge login required)
+- Any concerns you have should be handled via a support request; the link is on the [Collab landing page][1]
 - Assignment submission is through the Gradescope tool in Collab
-- Email list archive, which is a Collab tool ([here](...) is the direct link; Collab login is required)
-- The Piazza forum for this course; Collab can log you in directly -- the Collab tool link is [here](...) (again, Collab login required)
-- [Anonymous feedback](...), which is through Collab
-- The link for the VirtualBox image will be available on the Collab landing page.  For how to install it, see  [here](https://uva-cs.github.io/pdr/tutorials/01-intro-unix/virtual-box.html).
+- [Email list archive](https://collab.its.virginia.edu/portal/directtool/23262987-1288-4c6d-912f-c1b031973f44/), which is a Collab tool
+- The [Piazza forum for this course](https://piazza.com/class/l742ukne1k5po); Collab can log you in directly -- the Collab tool link is [here](https://collab.its.virginia.edu/portal/directtool/0aadf20c-f74e-4a8f-a31b-9c5742ea345e/)
+- [Anonymous feedback](https://collab.its.virginia.edu/portal/directtool/b166e2b1-f967-4df0-8e7e-1b25f58a30e2/), which is a Collab tool
+- The link for the VirtualBox image will be available on the [Collab landing page][1].  For how to install it, see  [here](https://uva-cs.github.io/pdr/tutorials/01-intro-unix/virtual-box.html).
 
 The parts of this course that are in this repo are:
 
@@ -30,7 +30,9 @@ The parts of this course that are in this repo are:
 Readings
 --------
 
-All scholarly articles (such as from the ACM digital library) can be obtained from free from any UVa wireless network.  Some of them you will *NOT* be able to get it for free from your home Internet provider such as Comcast (unless you live in a UVa dorm, of course) without using a UVa VPN.  All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
+<!-- All scholarly articles (such as from the ACM digital library) can be obtained from free from any UVa wireless network.  Some of them you will *NOT* be able to get it for free from your home Internet provider such as Comcast (unless you live in a UVa dorm, of course) without using a UVa VPN.  -->
+
+All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
 <!-- 
 - Due Mon, 2/21: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
@@ -114,3 +116,6 @@ This is just an estimate, and will not always be updated if we veer off track.  
 ## Legal Issues
 
 This course has received approval from the necessary parts of UVA: [ITS](https://virginia.service-now.com/its/), [InfoSec](https://security.virginia.edu/), and the [Office of the University Counsel](https://universitycounsel.virginia.edu/).  Specifically, the cryptocurrencies created in this course will be exchangeable with each other, but not with any cryptocurrency outside the course; thus they have no monetary value.  Because they have no monetary value, and because the activities in this course are necessary to achieve the academic goals of the course, these various activities of this course, including mining, have been judged to be legal.
+
+
+[1]: https://collab.its.virginia.edu/portal/directtool/b277916b-e495-4f63-8b9a-dba756858923/

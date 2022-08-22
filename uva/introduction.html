@@ -46,7 +46,7 @@ line-height:120%;
 
 ### Cryptocurrency
 &nbsp;  
-### Spring 2022
+### Fall 2022
 
 <p class='titlep'>&nbsp;</p>
 <div class="titlesmall"><p>
@@ -76,13 +76,17 @@ line-height:120%;
 	  </textarea></section>
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
 ## If you bought Bitcoin...
+
+<a href='https://commons.wikimedia.org/wiki/File:One_bitcoin_sitting_atop_bundles_of_US_$100_notes.png'><img src="../slides/images/overview/bitcoin-coin.webp" style="padding:0"></a>
+
 - ...in 2010 for $0.25 per BTC
   - Let's say you spent $100
   - You would have owned 400 BTC
-- That would be worth $18 million today!
-  - (assuming a price of $45k per BTC)
-- That is not likely to ever happen again...
+- That would be worth $8 million today!
+  - (assuming a price of $25k per BTC)
+- That amount of growth is not likely to ever happen again...
 
 
 
@@ -100,8 +104,7 @@ line-height:120%;
 - The course will primarily focus on the technical aspects of two coins / networks:
   - <img src="../slides/images/logos/btc-coin-symbol.svg" class="cclogo"> Bitcoin (BTC, &#8383;): the first real viable cryptocurrency and the most valuable; ASIC mineable <br clear='all'>
   - <img src="../slides/images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum (ETH, &Xi;): has significant improvements over Bitcoin with much more functionality; is (but shortly no longer) ASIC mineable
-- We'll also see a bunch more, including many from the top few on [2cryptocalc.com](https://2cryptocalc.com/) and [coinmarketcap.com](https://coinmarketcap.com/)
-- Let me know if there are any others you want me to go over!
+- We'll also see a bunch more, but in lesser detail...
 
 
 <aside data-markdown class='notes'>
@@ -188,10 +191,10 @@ From [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/)
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Instructional Staff
-![Aaron Bloomfield](images/introduction/aaronbloomfield.jpg)
+
+<img src="images/introduction/aaronbloomfield.jpg" style="padding:0;margin:auto">
 <p style='text-align:center'>Aaron Bloomfield</p>
-<p style='text-align:center'>Rice Hall, room 402<br>
-aaron@virginia.edu</p>
+<p style='text-align:center'>Rice Hall, room 402<br>aaron@virginia.edu</p>
 
 
 
@@ -199,7 +202,7 @@ aaron@virginia.edu</p>
 - Collab: landing page, anonymous feedback, site email, etc.
 - External course materials: most of the course materials can be found online at [https://aaronbloomfield.github.io/ccc](https://aaronbloomfield.github.io/ccc)
   - Or via the github repo at [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc)
-- External Collab tools: gradescope, Piazza, support requests, Panopto, etc.
+- External Collab tools: Gradescope, Piazza, support requests, Panopto, etc.
 
 
 
@@ -215,12 +218,13 @@ aaron@virginia.edu</p>
 - The [daily announcements slide set](daily-announcements.html)
   - If you miss lecture, you are responsible for checking it!
 - Anything else that is "urgent" will be posted to Piazza as an instructor note
-- VERY few notifications will be sent out as a course email
+- VERY few notifications (possibly none!) will be sent out as a course email
+- Thus, you have to check *two* places for updates: the [daily announcements slide set](daily-announcements.html) and Piazza
 
 
 
 ## Meetings
-- Lectures: M/W 3:30-4:45 in Thornton E303
+- Lectures: M/W 2:00-3:30 in Thornton E303
 - Lectures are required
   - There will be surprise pop quizzes in lecture
 - If you have to miss a lecture, there will be a Google form for you to fill out
@@ -232,20 +236,14 @@ aaron@virginia.edu</p>
 ## Expectations
 - Prerequisites: CS 2150 (PDR) or CS 3100 (DSA2), with a grade of C- or higher
   - This is a strict pre-req!
-- Ideally you have taken CS 3710, Introduction to Cybersecurity
-  - You are assumed to be familiar with the [encryption & hashing slide set](https://aaronbloomfield.github.io/ics/slides/encryption.html#/)
-    - If not, then please review it, as we are not review it all here
-  - You are assumed to be familiar with the [cryptocurrency slide set](https://aaronbloomfield.github.io/ics/slides/cryptocurrency.html#/)
-    - We will go over that in the next lecture
-    - We realize that you may not have completed the cryptocurrency HW in CS 3710
-  - You are assumed to be familiar with Tor (from the [privacy slide set](https://aaronbloomfield.github.io/ics/slides/anonymity.html#/))
+  - You need three semesters of collegiate-level programming courses
 
 
 
 ## Homeworks
 - There will be a combination of:
-  - Larger programming homeworks
-  - Smaller homeworks (tutorials, readings, etc.)
+  - Larger programming homeworks (about a dozen)
+  - Smaller homeworks, such as tutorials and readings (currently about half a dozen; more may be added)
 - Typically one of each will be assigned at any given time
   - But their due dates will be staggered
 - There will also be random in-class quizzes on the quizzes; if you are absent that day, you get a zero
@@ -253,14 +251,31 @@ aaron@virginia.edu</p>
 
 
 
+## Homeworks
+- You can see them all on the [homeworks page](../hws/index.html)
+- Please don't start them early!
+  - They are all going to have changes made, some fairly significantly
+  - I'll have them ready a week or so before they are due
+  - And I will clearly announce when that happens
+    - Either in the daily announcements or on Piazza
+
+
+
 ## HW submission: Gradescope
 - We will be using [Gradescope](https://gradescope.com)
-- All assignments will be ***autograded***, as I do not have the TA staff to grade it by hand
+- All assignments will be ***autograded***
 - We will release specifications and test cases
   - Gradescope will use the same *type* of tests, but with different data
-- Many assignments will require you to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission
-- You may submit as many times to Gradescope as you want before the deadline passes.
-  - We will have a reasonable limit on the number of Ethereum blockchain deployments
+  - You may submit as many times to Gradescope as you want before the deadline passes
+
+
+
+## HW Submission: smart contracts
+- Starting with homework P5, you will have to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission
+  - You can deploy as many times as you would like
+- There will be a bunch of other oddball submission requirements
+- To ensure you submit everything you should, you will have to submit a Python file
+  - We'll provide the template, such as [this one](../hws/gradebook/gradebook.py.html); you just have to fill in the values
 
 
 
@@ -278,12 +293,12 @@ aaron@virginia.edu</p>
 
 ## Development environment
 - You can use any development environment you want (Windows, Mac, Linux; IDEs are okay also)
-  - You will have to use the [Remix IDE](https://remix.ethereum.org/) at some point
+- You will have to use the [Remix IDE](https://remix.ethereum.org/) at some point
+  - You can use it online or install the desktop version
 - I will release a VirtualBox image that has the software configured
   - This will not work on M1 Macs
 - You are welcome to install the software on your own machine
   - We can point you in the right direction, but we cannot debug this
-- M1 Macs: the installation instructions will be given
 
 
 
@@ -296,7 +311,7 @@ aaron@virginia.edu</p>
 
 ## Course syllabus
 - It is available in the github repo; you can click [here](../uva/syllabus.html) to view it
-- It contains all the information covered so far, plus some more stuff
+- It contains all the information covered so far, plus some more information
 
 
 
@@ -328,66 +343,47 @@ Don't be offended if it takes me a while -- there are 100 students in this cours
 
 
 
-## Topics before spring break
-- Course Introduction (this one)
+## Lecture topics
+You can see the slides on the [lecture slides page](../slides/index.html)
+
+
+<table class="transparent"><tr><td>
+
+- Course Introduction
 - Cryptocurrency overview
 - Encryption
 - Bitcoin
 - Mining
-- Ethereum & Solidity
-
-
-
-## Topics after spring break
-
-The order (and format) are likely to change
-
-<table class="transparent"><tr><td>
-
-- Money, banking, payment systems
-- Wallets, storage, key management
-- Security in cryptocurrencies & blockchain
-- Privacy & anonymity
-- zk-SNARKs
-- Legal, policy, & ethical issues
-- Exchanges & mining pools
-- NTFs, tokens, etc.
+- Ethereum
+- Solidity
+- Tokens
+- Consensus
 
 </td><td>
 
-- Disinformation, malware, attacks, evil-ness
-- Altcoins
-- Blockchain applications
-- Consensus protocols & fault tolerance
-- Cross-chain transactions
-- Proof-of-*X* (work, stake, storage, replication, spacetime, etc.)
-- Forks
-- High-performance blockchains
-- Concurrency in smart contracts
+- Blockchain Applications
+- Stablecoins
+- zkSNARKs
+- Scalability
+- Algorand
+- Ethics, Legality, and Policy
+- The Dark Side of Cryptocurrency
+- Course Conclusion
 
 </td></tr></table>
 
 
 
-## Disclaimers, warnings, etc.
-- Course "roughness"
-- Patience
-- Auto-grading
-- Lack of TA support
-- I know nothing, Jon Snow
-
-
-
 ## Initial assignments
-- You need to fill out the course introduction Google survey
+- HW S1: Introductory Survey is an online Google survey
   - Link on the Collab landing page
-  - Due next week (time/date TBA)
-- Start on [HW P1: Introductory HW](../hws/intro/index.html)
+  - Due next Tuesday (by midnight)
+- Soon (but not yet!): start on [HW P1: Introductory HW](../hws/intro/index.html)
+  - You may want to wait until the [Cryptocurrnecy Overview](../slides/overview.html#/) slide set is discussed first
   - This is (essentially) the same as what was assigned in CS 3710: ICS
     - So you can use your code from that course
-  - The only thing that may change is minor tweaks to the output format
-  - You may want to wait until the [Cryptocurrnecy Overview](../slides/overview.html#/) slide set is discussed first
-  - Due next week (time/date TBA)
+    - The only thing that may change is minor tweaks to the output format
+  - Due the second Tuesday of the semester
 
 	  </textarea></section>
 </section>
@@ -498,8 +494,8 @@ I am not a lawyer.  But I have discussed this with UVA's lawyers.  However, they
 
 ## Tax implications
 - The IRS will ask this question on the IRS for 1040 ([source](https://stanfieldodell.com/irs-to-update-virtual-currency-question-for-2021/)):
-  - "At any time during 2020, did you receive, sell, send, exchange or otherwise acquire any financial interest in any virtual currency?"
   - 2021 version: "At any time during 2021, did you receive, sell, exchange or otherwise dispose of any financial interest in virtual currency?"
+  - The 2022 tax year version is presumably going to be the same (or very similar) wording...
 - This is why we aren't making you buy any cryptocurrency for this course
 - The "fake" cryptocurrency that you mine and trade in this course does not qualify as a 'yes' for that question...
   - ... as there is no "financial interest" with it since it has zero market value

@@ -196,8 +196,9 @@ line-height:120%;
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Byzantine Generals Problem
-- We assume that the network is reliable, and the nodes (generals) themselves can get corrupted
+- We assume that the network is not malicious, and the nodes (generals) themselves can get corrupted
   - Meaning any individual general can be a traitor
+  - Messages may not arrive, but the communication medium is not malicious
 - A group of generals need to decide whether to attack a fortress
 - This problem is The Byzantine General's Problem
   - Based on a [paper of the same name from 1982](https://lamport.azurewebsites.net/pubs/byz.pdf)
@@ -338,13 +339,13 @@ line-height:120%;
   - The "lieutenants" are just the two receiving the message, but could also be generals in the full BGP
 - Lieutenant 1 checks the validity of that message by asking lieutenant 2 what the general said
 - But somebody could be a traitor!
-- There are 8 possibilities: messages a, b, and c can each be one of A (attack) or R (retreat)
+- There are 8 possibilities: messages $a$, $b$, and $c$ can each be one of A (attack) or R (retreat)
 
 
 
 ## Three Generals Problem
 - Assumptions:
-  - Both lieutenants should take the same action, else it's a military disaster (rout)
+  - All *loyal* lieutenants should take the same action, else it's a military disaster (rout)
   - *Loyal* lieutenants always obey the general's order
   - *Traitorous*  lieutenants take the action that will lead to a disaster
   - Messages are "oral" and cannot be verified
@@ -359,6 +360,7 @@ line-height:120%;
 ## Analogies
 - The full Byzantine Generals Problem wants all loyal generals to take the same action
 - The Three Generals problem is only modeling their communication, and only wants the *lieutenants* to take the same action
+  - Although the general, if loyal, needs to take the same action as the (loyal) lieutenants
 
 
 
@@ -429,7 +431,7 @@ line-height:120%;
 
 - The general sent the same message, so must be loyal
 - Lieutenant 2 changed the message, so must be a traitor
-- Lieutenant 1, being loyal, takes the action received from the general
+- Lieutenant 1, having received different messages and being loyal, takes the action received from the general
 - Lieutenant 2, being a traitor, takes the opposite action
 - As they are different actions, it's a disaster
 
@@ -751,7 +753,11 @@ This implies:
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
 ## Problems with $OM(m)$
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Baronnet-signet-ring.JPG/800px-Baronnet-signet-ring.JPG" style="padding:0">
+
 - It's *very* expensive
 - The lieutenants can lie
 - Let's change that:
@@ -888,8 +894,14 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 ## How many traitors?
 - We just saw that the 3 general, 1 traitor version has a solution
 - In fact, $SM(m)$ only needs a minimum of $m+2$ participants
-  - Proof omitted from this slide set
-  - But the [original paper](https://lamport.azurewebsites.net/pubs/byz.pdf) describes it
+  - Proof omitted from this slide set, but briefly:
+    - Case 1:
+      - We have $m$ lieutenant traitors, 1 loyal lieutenant, and the loyal general
+      - The loyal lieutenant receives the loyal general's message
+    - Case 2:
+      - We have $m-1$ lieutenant traitors, 2 loyal lieutenants, and the traitor general
+      - The loyal lieutenant receives the loyal lieutenant's message
+  - Full proof in the [original paper](https://lamport.azurewebsites.net/pubs/byz.pdf)
 
 
 
