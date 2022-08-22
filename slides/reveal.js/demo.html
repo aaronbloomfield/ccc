@@ -52,7 +52,7 @@
 						<p>Slides can be nested inside of each other.</p>
 						<p>Use the <em>Space</em> key to navigate through all slides.</p>
 						<br>
-						<a href="#" class="navigate-down">
+						<a href="#/2/1" class="navigate-down">
 							<img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow">
 						</a>
 					</section>
@@ -273,6 +273,11 @@
 							<img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow">
 						</a>
 					</section>
+					<section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
+						<h2>Gradient Backgrounds</h2>
+						<pre><code class="hljs html wrap">&lt;section data-background-gradient=
+							"linear-gradient(to bottom, #ddd, #191919)"&gt;</code></pre>
+					</section>
 					<section data-background="https://static.slid.es/reveal/image-placeholder.png">
 						<h2>Image Backgrounds</h2>
 						<pre><code class="hljs html">&lt;section data-background="image.png"&gt;</code></pre>
@@ -451,23 +456,25 @@ Reveal.on( 'customevent', function() {
 		</div>
 
 		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-			Reveal.initialize();
 
-			const loadScript = src => {
-				return new Promise((resolve, reject) => {
-						const script = document.createElement('script');
-						script.type = 'text/javascript';
-						script.onload = resolve;
-						script.onerror = reject;
-						script.src = src;
-						document.head.append(script);
-				})
-			}
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
 
-			loadScript( 'plugin/highlight/highlight.js' ).then(() => {
-				Reveal.registerPlugin( RevealHighlight )
-			})
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
 		</script>
 
 	</body>
