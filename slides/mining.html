@@ -71,6 +71,10 @@ line-height:120%;
 
 	  <section id="difficulty" data-markdown class="center"><textarea>
 # Mining difficulty
+
+<img src="../slides/images/logos/btc-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
 	  </textarea></section>
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -82,14 +86,18 @@ line-height:120%;
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## Coins we'll study
-- <img src="images/logos/btc-coin-symbol.svg" class="cclogo"> Bitcoin: we all know this <br clear='all'>
-  - Hash algorithm: double SHA-256<br>&nbsp;
-- <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> Ravencoin <br clear='all'>
+- [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/)
+ Bitcoin: we all know this <br clear='all'>
+  - Hash algorithm: double SHA-256
+- [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/)
+ Ravencoin <br clear='all'>
   - A fork of Bitcoin, so works similarily; focuses on tokens
   - Designed to be ASIC resistant
-  - Hash algorithm: kawpow (16 different rotating algorithms)<br>&nbsp;
-- <img src="images/logos/eth-coin-symbol.svg" class="cclogo"> Ethereum <br clear='all'>
+  - Hash algorithm: kawpow (16 different rotating algorithms)
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/)
+ Ethereum <br clear='all'>
   - A generational improvement over Bitcoin
   - Allows for much more complicated programs
   - Hash algorithm: Keccak-256 (aka SHA3)
@@ -435,6 +443,15 @@ line-height:120%;
 
 	  <section id="proofofx" data-markdown class="center"><textarea>
 # Proof-of-$X$
+
+<img src="../slides/images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/fil-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/gre-coin-symbol.webp" class="cclogosubtitle">
+<img src="../slides/images/logos/ppc-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/storj-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/xlm-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/xpm-coin-symbol.svg" class="cclogosubtitle">
 	  </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -465,11 +482,11 @@ line-height:120%;
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## "Useful" Proof-of-Work (PoW)
 - Use computing power for some "good"
-- <img src="images/logos/xpm-coin-symbol.svg" class="cclogo"> Example: Primecoin, launched in 2013 <br clear='all'>
+- [![xpm logo](../slides/images/logos/xpm-coin-symbol.svg)](https://coinmarketcap.com/currencies/primecoin/) Example: Primecoin, launched in 2013 <br clear='all'>
   - Purpose: generate primes for mathematical and scientific study
-  - Currently [worth `$`0.047 per share](https://coinmarketcap.com/currencies/primecoin/)
   - [Whitepaper](https://primecoin.io/bin/primecoin-paper.pdf)
   - Time between blocks: 1 minute
   - Difficulty change is for each block (not 2 weeks)
@@ -507,8 +524,9 @@ line-height:120%;
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## ASIC-resistant mining
-- <img src="images/logos/rvn-coin-symbol.svg" class="cclogo"> Consider Ravencoin, which aims for ASIC-resistant mining <br clear='all'>
+- [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Consider Ravencoin, which aims for ASIC-resistant mining <br clear='all'>
 - It uses 16 different hash algorithms
   - The last 8 bytes of the previous block's hash determine which 8 algorithms to use
   - That's a *LOT* of hashes, and it is very power-intensive
@@ -593,9 +611,9 @@ line-height:120%;
 
 
 
-## <img src="images/logos/ppc-coin-symbol.svg" class="cclogoheader"> Peercoin
+<!-- .slide: class="cclogo-slide" -->
+## [![ppc logo](../slides/images/logos/ppc-coin-symbol.svg)](https://coinmarketcap.com/currencies/peercoin/) Peercoin
 - First implementation of PoS, from 2012
-  - Currently [worth `$`0.59 per share](https://coinmarketcap.com/currencies/peercoin/)
   - [Whitepaper](https://whitepaper.io/document/139/peercoin-whitepaper), [source code on github](https://github.com/peercoin/peercoin)
 - Consider *coin age*, measured in *coin-days*
   - 90 coins held for 10 days is 900 coin-days
@@ -604,7 +622,8 @@ line-height:120%;
 
 
 
-## <img src="images/logos/ppc-coin-symbol.svg" class="cclogoheader"> Peercoin
+<!-- .slide: class="cclogo-slide" -->
+## [![ppc logo](../slides/images/logos/ppc-coin-symbol.svg)](https://coinmarketcap.com/currencies/peercoin/) Peercoin
 - Weakness: buy a lot of Peercoin, and wait a long time
   - You can then mine many successive blocks, using a portion of your coin age each time
   - Then execute a [51% attack](bitcoin.html#/attacks)
@@ -663,6 +682,7 @@ line-height:120%;
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## Proof-of-Capacity
 - aka Proof-of-replication (PoRep), proof-of-storage, etc.
 - You allocate a certain amount of "capacity" to store the blockchain
@@ -670,26 +690,29 @@ line-height:120%;
 - But all parts of the blockchain are on many machines
   - Benefit: in the case of a failure, the "storage" -- in the blockchain -- is replicated
 - You pay to store data in the blockchain
-- <img src="images/logos/storj-coin-symbol.svg" class="cclogo"> Example: Storj ([currently worth `$`0.99 per share](https://coinmarketcap.com/currencies/storj/))
+- [![storj logo](../slides/images/logos/storj-coin-symbol.svg)](https://coinmarketcap.com/currencies/storj/) Example: Storj
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## Proof-of-spacetime
 - Spacetime means allocating space over a period of time
   - And is not related to Einstein's spacetime from relativity
 - Like proof-of-capacity, but...
   - Your reward is based on the amount of space dedicated times the amount of time
-- <img src="images/logos/fil-coin-symbol.svg" class="cclogo"> Example: Filecoin ([currently worth `$`19.93 per share](https://coinmarketcap.com/currencies/filecoin/)) <br clear='all'>
+- [![fil logo](../slides/images/logos/fil-coin-symbol.svg)](https://coinmarketcap.com/currencies/filecoin/) Example: Filecoin
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## "Green" coins
 - Generally, any coin that is not proof-of-work
 - Possibilities:
   - Proof-of-stake, like ETH2 and Peercoin
   - Proof-of-{capacity, replication, spacetime}, like Storj and Filecoin
-  - Don't have any proofs, such as Stellar Lumens (XLM) ([currently worth `$`0.20 per share](https://coinmarketcap.com/currencies/stellar/))
-- <img src="images/logos/gre-coin-symbol.webp" class="cclogo"> There is also [Greencoin (GRE) cyrptocurrency](https://coinmarketcap.com/currencies/greencoin/) (worth `$`0.0003 per share) <br clear='all'>
+  - Don't have any proofs, such as [![xlm logo](../slides/images/logos/xlm-coin-symbol.svg)](https://coinmarketcap.com/currencies/stellar/)
+ Stellar Lumens (XLM)
+- [![gre logo](../slides/images/logos/gre-coin-symbol.webp)](https://coinmarketcap.com/currencies/greencoin/) There is also Greencoin (GRE)
   - This coin seems to have floundered, and there are other coins with a similar name
   </textarea></section>
 
@@ -978,17 +1001,19 @@ Note that UTXOs are not only in the bottom level
 
 
 
-## <h2><a href='https://coinmarketcap.com/currencies/ethereum/'><img src="images/logos/eth-coin-symbol.svg" class="cclogoheader"></a> Ethereum &<br><a href='https://coinmarketcap.com/currencies/ethereum-classic/'><img src="images/logos/etc-coin-symbol.svg" class="cclogoheader"></a> Ethereum Classic </h2>
+<!-- .slide: class="cclogo-slide" -->
+## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum & <br> [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic
 - We'll see this in [Blockchain Applications](applications.html#/), but a well-known Ethereum organization had a programming bug that allowed millions to be drained from the account
   - This endangered the perception and trust of the Ethereum as a whole
 - The fix: roll back the blockchain to before the hack to fix it
 - This [split the users](applications.html#/etcsplit); some didn't want the fix
-- <a href='https://coinmarketcap.com/currencies/ethereum-classic/'><img src="images/logos/etc-coin-symbol.svg" class="cclogo"></a> Ethereum Classic is the blockchain *without* the fix <br clear='all'>
-- <a href='https://coinmarketcap.com/currencies/ethereum/'><img src="images/logos/eth-coin-symbol.svg" class="cclogo"></a> Ethereum is the blockchain *with* the fix <br clear='all'>
+- [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic is the blockchain *without* the fix
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum is the blockchain *with* the fix
 
 
 
-<h2><a href='https://coinmarketcap.com/currencies/bitcoin-gold/'><img src="images/logos/btg-coin-symbol.svg" class="cclogoheader"></a> Bitcoin Gold</h2>
+<!-- .slide: class="cclogo-slide" -->
+## [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold
 
 - Hard fork on October 24, 2017 (block height 491,407)
 - Reasons: change to an ASIC-resistant hash

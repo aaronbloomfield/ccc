@@ -236,6 +236,8 @@ It's "cleaning" or "laundering" the money
 
     <section id="solidity" data-markdown class="center"><textarea>
 # Solidity Attacks
+
+<img src="../slides/images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -244,8 +246,9 @@ It's "cleaning" or "laundering" the money
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## Recursive Send Attack
-- We saw this with The &ETH;AO
+- We saw this with The &ETH;AO on [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum
   - A [recursive send](applications.html#/daobug): it zero'ed the balance *before* the amount was paid, so having the `receive()` function of a contract call it over and over causes much more ether to be paid out than intended
   - To help prevent against re-entrancy attacks, there is a limited amount of gas allowed for paying a contract or account
     - Say, 2,300 gas

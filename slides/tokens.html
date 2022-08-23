@@ -358,6 +358,10 @@ contract EZTokens {
     <section id="erc20" data-markdown class="center"><textarea>
 # ERC-20 Tokens
 ### Fungible Tokens (FTs)
+    
+<img src="../slides/images/logos/dai-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/shib-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/weth-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -458,7 +462,7 @@ contract EZTokens {
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id="erc20constructor"><textarea>
-### Token Cryptocurrencies
+## Token Cryptocurrencies
 - Easy to create; this is adapted from from [solidity-by-example.com](https://solidity-by-example.org/app/erc20/):
 
 ```
@@ -478,7 +482,7 @@ contract MyToken is ERC20 {
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-### Token Cryptocurrencies
+## Token Cryptocurrencies
 - See a list at https://erc-tokens.com/
 - Consider [Atomic Wallet](https://atomicwallet.io/)
   - A wallet that can store (as of March 2022):
@@ -493,7 +497,8 @@ contract MyToken is ERC20 {
 
 
 
-## <img src="images/logos/shib-coin-symbol.svg" class="cclogoheader"> Consider [SHIB](https://coinmarketcap.com/currencies/shiba-inu/)
+<!-- .slide: class="cclogo-slide" -->
+## [![shib logo](../slides/images/logos/shib-coin-symbol.svg)](https://coinmarketcap.com/currencies/shiba-inu/) Consider SHIB
 - As of March 20, 2022:
   - SHIB's value is `$`0.00002305 (43,384 per USD)
   - ETH's value is `$`2,851
@@ -505,13 +510,14 @@ contract MyToken is ERC20 {
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id="dai"><textarea>
-## <img src="images/logos/dai-coin-symbol.svg" class="cclogoheader"> DAI / <img src="images/logos/weth-coin-symbol.svg" class="cclogoheader"> WETH Example
+<!-- .slide: class="cclogo-slide" -->
+## [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) DAI / [![weth logo](../slides/images/logos/weth-coin-symbol.svg)](https://coinmarketcap.com/currencies/weth/) WETH Example
 - The code for this is [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#web3py-example)
   - And reproduced on the next slide
   - Due to a bug in the library, it runs into a parse error
-- [DAI](https://coinmarketcap.com/currencies/multi-collateral-dai/): An Ethereum token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
+- DAI: An Ethereum token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
   - When new DAI are minted, the cryptocurrencies used to exchange for them are put into 'vaults' to help DAI retain it's value
-- [WETH](https://coinmarketcap.com/currencies/weth/), for "Wrapped ETH", has a 1-to-1 exchange value with regular ETH
+- WETH, for "Wrapped ETH", has a 1-to-1 exchange value with regular ETH
   - But it follows the ERC-20 standard, so can be used in lieu of ETH when an ERC-20 token cryptocurrency is needed
    </textarea></section>
 
