@@ -1577,19 +1577,17 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 
 <!-- .slide: class="right-float-img" -->
-## 51% attack
-
 <img src='images/bitcoin/attack/attack.dot.1.svg' style='width:130px'>
 
+## 51% attack
 - Given the initial state in some block, say 1000
 
 
 
 <!-- .slide: class="right-float-img" -->
-## 51% attack
-
 <img src='images/bitcoin/attack/attack.dot.2.svg' style='width:130px'>
 
+## 51% attack
 - Mallory spends a UTXO
   - On something that has a quick delivery, such as a digital asset
   - Or a in-person transaction where she takes possession of a physical item
@@ -1597,10 +1595,9 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 
 <!-- .slide: class="right-float-img" -->
-## 51% attack
-
 <img src='images/bitcoin/attack/attack.dot.3.svg' style='width:130px'>
 
+## 51% attack
 - Seller waits some number of confirmations...
   - Say, 3 (in reality, more like 100)
 - Then the seller assumes the TXN will not change
@@ -1611,10 +1608,9 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 
 <!-- .slide: class="right-float-img" -->
-## 51% attack
-
 <img src='images/bitcoin/attack/attack.dot.4.svg' style='height:773px'>
 
+## 51% attack
 - The original spender tries to spend the UTXO again
   - Mine it into a block
 - Node adoption policy: longest chain
@@ -1625,16 +1621,14 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 
 <!-- .slide: class="right-float-img" -->
-## 51% attack
-
 <img src='images/bitcoin/attack/attack.dot.5.svg' style='height:773px'>
 
+## 51% attack
 - But how to make the rest of the network accept it?
   - Make that second TXN part of the new longest chain
 - Solution
   - Have to mine more than the rest of the network
-  - Thus, must have 51% (or more) of the network mining capability
-    - Hence the name "51% attack"
+  - Thus, must have 51% (or more) of the network mining capability, hence the name
 - If the attacker...
   - Who has 51% (or more) of the mining power...
 - ... can ever create the longest chain...
@@ -1669,7 +1663,7 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 <!-- .slide: class="right-float-img" -->
 ## Required confirmations
 
-<img src='images/bitcoin/attack/attack.dot.6.svg' style='height:773px'>
+<img src='images/bitcoin/attack/attack.dot.6.svg' style='773px'>
 
 - Envision: we have two longest chains, and miners are split between the two
   - Neither has yet become "longer"

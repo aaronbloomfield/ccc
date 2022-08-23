@@ -3,7 +3,7 @@ digraph A {
     node [fontname = "Helvetica",shape=circle];
     edge [fontname = "Helvetica"];
 
-    null [style=invis];
+    null [shape=point,style=invis];
     1000 [label="block 1000",width=0.8];
     null -> 1000;
 }
@@ -13,7 +13,7 @@ digraph B {
     node [fontname = "Helvetica",shape=circle];
     edge [fontname = "Helvetica"];
 
-    null [style=invis];
+    null [shape=point,style=invis];
     1000 [label="block 1000",width=0.8];
     1001 [label="block 1001\nspend UTXO",width=0.8];
     null -> 1000;
@@ -23,7 +23,7 @@ digraph C {
     graph [fontname = "Helvetica"];
     node [fontname = "Helvetica",shape=circle];
     edge [fontname = "Helvetica"];
-    null [style=invis];
+    null [shape=point,style=invis];
     1000 [label="block 1000",width=0.8];
     1001 [label="block 1001\nspend UTXO",width=0.8];
     1002 [label="block 1002\n(conf 1)",width=0.8];
@@ -40,7 +40,7 @@ digraph D {
     graph [fontname = "Helvetica"];
     node [fontname = "Helvetica",shape=circle];
     edge [fontname = "Helvetica"];
-    null [style=invis];
+    null [shape=point,style=invis];
     1000 [label="block 1000",width=0.8];
     1001 [label="block 1001\nspend UTXO",width=0.8];
     1002 [label="block 1002\n(conf 1)",width=0.8];
@@ -59,7 +59,7 @@ digraph E {
     graph [fontname = "Helvetica"];
     node [fontname = "Helvetica",shape=circle];
     edge [fontname = "Helvetica"];
-    null [style=invis];
+    null [shape=point,style=invis];
     1000 [label="block 1000",width=0.8];
     1001 [label="block 1001\nspend UTXO",width=0.8];
     1002 [label="block 1002\n(conf 1)",width=0.8];
@@ -86,7 +86,7 @@ digraph F {
     graph [fontname = "Helvetica"];
     node [fontname = "Helvetica",shape=circle];
     edge [fontname = "Helvetica"];
-    null [style=invis];
+    null [shape=point,style=invis];
     1000 [label="block 1000",width=0.8];
     a1001 [label="block 1001\nversion 1",width=0.8];
     b1001 [label="block 1001\nversion 2",width=0.8];
