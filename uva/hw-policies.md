@@ -1,7 +1,7 @@
 Cryptocurrency: Homework Submission Policies
 ============================================
 
-[Go up to the CCC UVa page](index.html) ([md](index.md))
+[Go up to the CCC UVA page](index.html) ([md](index.md))
 
 
 ### Honor System
@@ -20,7 +20,7 @@ Submission is through the [online submission system](https://libra.cs.virginia.e
 Unless otherwise specified, it is not allowed.  We encourage you to
 discuss the problems and your *general* approach with other students in
 the class. However, the answers you turn in must be your own original
-work, and you are bound by UVa's honor policy.
+work, and you are bound by UVA's honor policy.
 
 For programming assignments, you may not look at any other student's
 code for ANY reason, period.  Not to debug, not to help, not to learn.

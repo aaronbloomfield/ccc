@@ -26,6 +26,7 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. <img src="btg-coin-symbol.svg" class="cclogo"> Bitcoin Gold (BTG) from [cryptologos.cc](https://cryptologos.cc/bitcoin-gold) <br clear='all'>
 1. <img src="dai-coin-symbol.svg" class="cclogo"> Dai (DAI) from [cryptologos.cc](https://cryptologos.cc/multi-collateral-dai) <br clear='all'>
 1. <img src="dot-coin-symbol.svg" class="cclogo"> DOT adapted from [cryptologos.cc](https://cryptologos.cc/polkadot-new) <br clear='all'>
+1. <img src="erg-coin-symbol.svg" class="cclogo"> ERG adapted from [cryptologos.cc](https://cryptologos.cc/ergo) <br clear='all'>
 1. <img src="etc-coin-symbol.svg" class="cclogo"> Ethereum classic (ETC) adapted from the [logo file](etc-logo.svg), which is from [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ethereum_Classic_Logo.svg); the [old version](etc-coin-symbol-old.svg) was from the same file <br clear='all'>
 1. <img src="eth-coin-symbol.svg" class="cclogo"> Ethereum (ETH) was adapted from [here](https://logowik.com/ethereum-vector-logo-1-7602.html), and the [old version](eth-coin-symbol-old.svg) was adapted from [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ethereum_logo_translucent.svg), which is from the [Ethereum Wikipedia article](https://en.wikipedia.org/wiki/Ethereum) <br clear='all'>
 1. <img src="fei-coin-symbol.svg" class="cclogo"> Fei USD (FEI) from [cryptologos.cc](https://cryptologos.cc/fei-usd) <br clear='all'>

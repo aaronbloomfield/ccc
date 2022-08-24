@@ -1,7 +1,7 @@
 Cryptocurrency: Course grades
 =============================
 
-[Go up to the CCC UVa page](index.html) ([md](index.md))
+[Go up to the CCC UVA page](index.html) ([md](index.md))
 
 As per the [syllabus](syllabus.html) ([md](syllabus.md)), the grades were computed by:
 

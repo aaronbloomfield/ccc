@@ -1,4 +1,4 @@
-Cryptocurrency: UVa specific material, fall 2022
+Cryptocurrency: UVA specific material, fall 2022
 ================================================
 
 [Go up to the main CCC readme](../readme.html) ([md](../readme.md))
@@ -30,7 +30,7 @@ The parts of this course that are in this repo are:
 Readings
 --------
 
-<!-- All scholarly articles (such as from the ACM digital library) can be obtained from free from any UVa wireless network.  Some of them you will *NOT* be able to get it for free from your home Internet provider such as Comcast (unless you live in a UVa dorm, of course) without using a UVa VPN.  -->
+<!-- All scholarly articles (such as from the ACM digital library) can be obtained from free from any UVA wireless network.  Some of them you will *NOT* be able to get it for free from your home Internet provider such as Comcast (unless you live in a UVA dorm, of course) without using a UVA VPN.  -->
 
 All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 

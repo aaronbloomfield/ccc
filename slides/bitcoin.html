@@ -1617,7 +1617,7 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
   - Mine it into a block
 - Node adoption policy: longest chain
   - The longest "chain" of blocks, starting from the genesis block, is the valid chain
-- But how to make the rest of the network accept it?
+- But how to make the rest of the network accept the second spending of the UTXO?
   - Make that second TXN part of the new longest chain
 
 
@@ -1648,17 +1648,19 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## 51% attack
 - But is this viable?
   - As no one person is going to have 51% of the BTC mining / [hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
-- But a mining pool might!
-- Consider the [2miners RVN (Ravencoin) pool](https://2miners.com/rvn-mining-pool)
-  - OnFeb 1st, 2022, their pool had a 1.44 Th/s hash rate
+- But a mining pool might for other cyrptocurrencies
+- Consider the [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Ravencoin [pool from 2miners](https://2miners.com/rvn-mining-pool)
+  - On Feb 1st, 2022, their pool had a 1.44 Th/s hash rate
     - The network hashrate then was 5.13 Th/s
-  - Thus, they have 1.44/5.13 = 28% of the total hash rate
-- On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
-  - Due to a purchase of hashpower from (likely) Nicehash
-- They have no incentive to perform a 51% attack, by the way...
+    - Thus, they had 1.44/5.13 = 28% of the total hash rate
+  - On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
+    - Due to a purchase of hashpower from (likely) Nicehash
+- [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo had one in January 2021
+- [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold had one in May 2018 and also January 2020
 
 
 
@@ -1675,16 +1677,16 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
 
 
+<!-- .slide: class="cclogo-slide" -->
 ## Confirmations
-- Different coins have different confirmations typically required (most from [2miners](https://2miners.com)):
-  - XLM: 0 blocks (5 seconds)
-    - XLM transactions are irreversible, so no confirmations needed
-  - BTC: 6 blocks (about 1 hour) for "standard" transactions
-  - ETH: 120 blocks (about 1 hour)
-  - RVN: 100 blocks (about 2 hours)
-  - FIRO: 100 blocks (about 9 hours)
-  - BTC: 60 blocks (about 10 hours) for "large" transactions
-  - ERG: 720 blocks (about 1 day)
+- Number of confirmations typically required (via [2miners](https://2miners.com)):
+  - [![xlm logo](../slides/images/logos/xlm-coin-symbol.svg)](https://coinmarketcap.com/currencies/stellar/) XLM: 0 blocks (5 seconds) (TXNs are irreversible)
+  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 6 blocks (about 1 hour) for "standard" transactions
+  - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH: 120 blocks (about 1 hour)
+  - [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) RVN: 100 blocks (about 2 hours)
+  - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) FIRO: 100 blocks (about 9 hours)
+  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 60 blocks (about 10 hours) for "large" transactions
+  - [![erg logo](../slides/images/logos/erg-coin-symbol.svg)](https://coinmarketcap.com/currencies/ergo/) ERG: 720 blocks (about 1 day)
 - This is based on many factors: block speed, overall network hash rate, and the value of the coin
     </textarea></section>
 

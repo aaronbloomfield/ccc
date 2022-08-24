@@ -1,7 +1,7 @@
 CS 4501: Cryptocurrency Syllabus
 ================================
 
-[Go up to the CCC UVa page](index.html) ([md](index.md))
+[Go up to the CCC UVA page](index.html) ([md](index.md))
 
 ## Quick version
 
@@ -89,7 +89,7 @@ Under **NO** circumstances will anybody be allowed to take the final exam early.
 
 **Regrades:** You may submit graded homeworks and exams for regrading within one week of when they are returned to you (less time for the final due to the end of the semester).  Regrades are submitted via Gradescope.  As long as people submit responsibly, I will not institute a frivolous regrade policy that existed in some semesters of CS 2150 (if one is instituted, you will be told of this ahead of time).  This time limit will be strictly enforced.
 
-**Honor pledge:** The UVa Honor Code is in effect for this course.  There is one course specific addition: You may not look at any other student's code for ANY reason, period.  Not to debug, not to help, not to learn.  You may not let another student look at *your* code for any reason.  Needless to say, you cannot copy code from online sources unless the assignment specifically allows it (and in those cases, you must cite your source).  The next paragraph describes this more.
+**Honor pledge:** The UVA Honor Code is in effect for this course.  There is one course specific addition: You may not look at any other student's code for ANY reason, period.  Not to debug, not to help, not to learn.  You may not let another student look at *your* code for any reason.  Needless to say, you cannot copy code from online sources unless the assignment specifically allows it (and in those cases, you must cite your source).  The next paragraph describes this more.
 
 Students are encouraged to discuss programs and assignments in general. However, helping others find bugs in existing programs, using another person's code, or writing code for someone else is cheating and a violation of the University's Honor System. Basically, you should not be looking at another person's code for **ANY** reason (obviously you can after BOTH have submitted the assignment, or if there is a group project). This includes consulting programming solutions to assignments from previous years. This also includes looking up solutions online.  Any honor violation or cheating will be referred to the honor committee, and will result in an *immediate failure for the course*, regardless of the outcome of the honor trial or your other grades. No exceptions! I am very strict on this, and one have successfully raised honor charges against students in the past due to violations of this policy - and I've blocked people from graduation because of honor offenses.
 
