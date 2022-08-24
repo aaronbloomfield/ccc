@@ -83,7 +83,7 @@ Lecture progress
 
 This is just an estimate, and will not always be updated if we veer off track.  The list of lecture topics can be found on the [slides page](../slides/index.html) ([md](../slides/index.md)).  Recordings for the lectures can be found in the Collab lecture capture tool.
 
-1. Wed, Aug 24: [course introduction](introduction.html#/), [overview](../slides/overview.html#/)
+1. Wed, Aug 24: [course introduction](introduction.html#/), [overview](../slides/overview.html#/) (actual: finished intro, overview to end of introduction column)
 2. Mon, Aug 29: [overview](../slides/overview.html#/), [encryption](../slides/encryption.html#/)
 3. Wed, Aug 31: [encryption](../slides/encryption.html#/)
 4. Mon, Sep 5: [encryption](../slides/encryption.html#/)
