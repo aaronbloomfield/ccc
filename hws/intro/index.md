@@ -210,7 +210,7 @@ The requirements are:
    line parameters to this function.
 2. Create the genesis block (`genesis`): this is the initial block in
    the block chain, and the block should always be the same.  Come up
-   with a fun quote!  It should be written to a `block_0.txt`
+   with a fun quote!  It should always be written to a `block_0.txt`
    file. There are no additional command line parameters to this
    function.
 3. Generate a wallet (`generate`): this will create RSA public/private
@@ -295,14 +295,14 @@ The requirements are:
 Since different programming languages can be used, and you may name your file differently, we are going to have you submit a shell script called `cryptomoney.sh` that we will use to test your code.  All it does is pass the command-line parameters on to your program.  If you are using Python, then your shell script would look like the following:
 
 ```
-!#/bin/bash
+#!/bin/bash
 python3 cmoney.py $@
 ```
 
 If you are using Java, then your shell script would look like the following:
 
 ```
-!#/bin/bash
+#!/bin/bash
 java CMoney $@
 ```
 

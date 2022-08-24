@@ -211,9 +211,9 @@ the name from the Overview section, above. There are no additional
 command line parameters to this function.</li>
 <li>Create the genesis block (<code>genesis</code>): this is the initial
 block in the block chain, and the block should always be the same. Come
-up with a fun quote! It should be written to a <code>block_0.txt</code>
-file. There are no additional command line parameters to this
-function.</li>
+up with a fun quote! It should always be written to a
+<code>block_0.txt</code> file. There are no additional command line
+parameters to this function.</li>
 <li>Generate a wallet (<code>generate</code>): this will create RSA
 public/private key set (1024 bit keys is appropriate for this
 assignment). The resulting wallet file MUST BE TEXT – you will have to
@@ -303,11 +303,11 @@ called <code>cryptomoney.sh</code> that we will use to test your code.
 All it does is pass the command-line parameters on to your program. If
 you are using Python, then your shell script would look like the
 following:</p>
-<pre><code>!#/bin/bash
+<pre><code>#!/bin/bash
 python3 cmoney.py $@</code></pre>
 <p>If you are using Java, then your shell script would look like the
 following:</p>
-<pre><code>!#/bin/bash
+<pre><code>#!/bin/bash
 java CMoney $@</code></pre>
 <p>Save the two lines above to a text file called
 <code>cryptomoney.sh</code>; change the name of the file as appropriate
