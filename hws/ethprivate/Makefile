@@ -1,3 +1,3 @@
 doc:
-	cd ../..; make
+	cd ../..; make -s
 	source-highlight -d ethprivate.py
