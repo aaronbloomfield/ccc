@@ -72,9 +72,10 @@
 	  </textarea></section>
 	  
 	  <section data-markdown data-separator="^\n$"><textarea data-template>
-## Quick Review
-- Ideally you are familiar with the [encryption slide set](https://aaronbloomfield.github.io/ics/slides/encryption.html#/) from CS 3710: Introduction to Cybersecurity
-- But we realize that may not be the case...
+## Content coverage
+- You may have seen some of this material in the [encryption slide set](https://aaronbloomfield.github.io/ics/slides/encryption.html#/) from CS 3710: Introduction to Cybersecurity
+  - But only this first column of slides is the same (a dozen or so slides)
+- If you didn't, that' fine
 
 
 ## Codes versus Ciphers
@@ -166,9 +167,38 @@
 
 ## Public key cryptography
 - Everybody has a key that encrypts and a separate key that decrypts
- - They are not interchangable!
+  - They are not interchangeable!
+  - If one key encrypts a message, the *only* the other key can decrypt it
 - The encryption key is made public
 - The decryption key is kept private
+
+
+## Public key cryptography
+- Alice (A) wants to send a message to Bob (B)
+  - Alice and Bob already have each other's public keys
+- Alice encrypts message $m_1$ with Bob's public key $B_{pub}$ to create ciphertext $c_1$
+  - She cannot decrypt $c_1$ with $B_{pub}$
+    - Although she likely has a copy of $m_1$
+- Bob decrypts $c_1$ with his private key $B_{pri}$ to get the original $m_1$
+- Bob encrypts response message $m_2$ with Alice's public key $A_{pub}$ to create $c_2$
+- Alice can decrypt $c_2$ with her private key $A_{pri}$ to get the original $m_2$
+
+
+## Public key signatures
+- What if Alice wants to publish a message publicly, and prove that it really came from her?
+- She needs to *digitally sign* the message:
+  - Given message $m$, compute $h = sha256(m)$ using a known hash function such as SHA-256
+  - Encrypt $h$ with her *private* key $A_{pri}$ to get signature $s$
+  - Publicly release both the message $m$ and the signature $s$
+
+
+## Public key signatures
+- Now anybody can verify that it came from her:
+  - Given public message $m$, anybody can take the hash of it: $h' = sha256(m)$
+  - Given the signature $s$, anybody can decrypt it with Alice's *public* key $A_{pub}$ to get the original $h$
+    - Recall that $s$ is the encryption of $h$ using $A_{pri}$
+    - If one key encrypts, then the other can decrypt
+  - If $h == h'$, then the original message was signed by Alice's private key
 
 
 ## Public key cryptography goals
@@ -177,6 +207,13 @@
 - Decryption should be easy (polynomial time)
   - With the right key!
 - Cracking should be very hard (exponential time)
+
+
+## Public key cryptography challenges
+- Ensuring you obtain the correct key (not a malicious fake)
+- Ensuring somebody "in the middle" doesn't modify your communications
+- Speed of encryption
+- Size of the signatures
 	</textarea></section>
 
 	</section>
@@ -202,13 +239,13 @@ Any curve of the form $y^2=x^3+ax+b$
     <section data-markdown><textarea data-template>
 ## Specific Elliptic Curves
 - We are going to study curve [secp256k1](http://www.secg.org/sec2-v2.pdf)
-  - Where $a=0$ and $b=7$, so the curve is of the form $y^2=x^3+7$
+  - Where $a=0$ and $b=7$, so the curve formula is $y^2=x^3+7$
 - Operations:
   - Elliptic curve point "addition": $P = Q \oplus R$
   - Elliptic curve point "multiplication": $Q = k \otimes P = kP$
     - We'll show that $k \otimes P = \sum_{i=1}^{k}P$
-      - That summation is elliptic curve "addition"
-  - Note that numerical values are always lower case variables and points are upper case variables
+      - That summation is repeated elliptic curve "addition"
+  - Note that numerical values are always lower case variables and points are always upper case variables
 <aside data-markdown class="notes">
   notes...
 </aside>
@@ -675,7 +712,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - ECDSA = Elliptic Curve Digital Signature Algorithm
 - This ECDSA algorithm is specifically to encrypt the *signature*
   - Meaning the hash of the message
-  - This algorithm is not really used for general purpose cryptography
+  - This algorithm is not really used for general purpose cryptography, as the keys are not interchangeable
 
 
 ## Elliptical curve cryptography
@@ -692,7 +729,7 @@ Any curve of the form $y^2=x^3+ax+b$
 
 ## secp256k1 curve: modulus
 - secp256k1 curve: $y^2=x^3+7$
-- $p$ is the prime modulus, and is defined as 
+- $p$ is the prime modulus (the size of the field), and is defined as 
   - $p=2^{256}-2^{32}-977$
   - $p$ = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
   - $p$ = 115,792,089,237,316,195,423,570,985,008,687,907,853, 269,984,665,640,564,039,457,584,007,908,834,671,663
@@ -707,7 +744,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - We include the point at infinity in $n$
   - $n$ = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
   - $n$ = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
-  - $n \approx 1.16 \ast 10^{77}$, about the same as $p$
+  - $n \approx 1.16 \ast 10^{77}$, a little less than $p$
 - *SOME* modulo operations in ECDSA are with $n$, not $p$
 - Also must be prime, and $n$ is
 - How to determine the order?
@@ -775,6 +812,9 @@ $
 - Compute point $Q=d \otimes G$
   - Point $Q$ is the public key
   - Note that $d$ is a number, but $Q$ is a point
+- $Q$ is the public key and $d$ is the private key
+  - They are not the same -- $d$ is a scalar and $Q$ is a point
+  - Thus, they are *not* interchangeable
 
 <aside data-markdown class="notes">
 - private keys are often called 'd' because they decrypt
@@ -784,13 +824,14 @@ $
 
 
 ## Signing an ECDSA message
-- Alice knows:
-  - $m$, the message to sign
+- Curve parameters:
   - $p$, the prime modulus
   - $n$, the order of the curve
+  - point $G$, the base point
+- Alice knows:
+  - $m$, the message to sign
   - $d$ (or $d_A$), her private key (secret!)
   - point $Q$, her public key
-  - point $G$, the base point
 - Alice generates:
   - $h$, the hash of the message $m$ being signed
     - Using a $b$-bit hash algorithm
@@ -804,8 +845,9 @@ $
 
 
 ## Signing an ECDSA message
-- Alice knows: $m$, $p$, $n$, $d$, $Q$, and $G$
-- Alice generates: $h$, $k$, $k^{-1}$
+- Curve parameters: $p$, $n$, $G$
+- Alice knows: $m$, $d$, $Q$
+- Alice generated: $h$, $k$, $k^{-1}$
 - Alice computes $R=k \otimes G$
   - Let $r$ be the $x$ component of $R$
 - Alice also computes: $s=k^{-1}(h+r*d) \mod n$
@@ -817,6 +859,16 @@ $
   - $s=k^{-1}(h+r*d) \mod n$
 
 
+## Why those formulas
+- We want to encode the hash in such a way that:
+  - It can NOT be "cracked" in polynomial time
+  - With the public key $Q$, the formulas can be verified in polynomial time
+- We obtain $r$ as the $x$ value of  $R=k \otimes G$
+  - Elliptic multiplication is in polynomial time; the reverse (division) would be in exponential time
+- We obtain $s$ via $s=k^{-1}(h+r*d) \mod n$
+  - This is a discrete log, so "reversing" this is exponential time
+
+
 ## Sanity checks
 - If either $r$ or $s$ are zero, then restart the algorithm
   - Compute a new $k$
@@ -825,18 +877,18 @@ $
 
 
 ## Verifying an ECDSA message
-- Bob has to verify the message; he knows:
-  - $m$, the message whose signature is being checked
+- Curve parameters:
   - $p$, the prime modulus
   - $n$, the order of the curve
-  - $Q$, Alice's public key
   - $G$, the base point
+- Bob has to verify the message; he knows:
+  - $m$, the message whose signature is being checked
+  - $Q$, Alice's public key
   - $r$ and $s$, from the signature
 - Bob does NOT know $d$ (Alice's private key) nor $k$ (the one-time pad used)
 - Bob generates:
   - $h$, the hash of the message $m$
-  - $s^{-1}$, the inverse mod-$n$ of $s$
-    - This is in $Z_n$, not $Z_p$
+  - $s^{-1}$, the inverse mod-$n$ of $s$ (this is in $Z_n$, not $Z_p$)
 
 
 ## Verifying an ECDSA message
@@ -845,7 +897,7 @@ $
   - But he doesn't know $d$ nor $k$
     - But recall that $r$ is computed using $k$
 - Bob knows: $r$, $s$, $G$, and $Q$
-  - Knowing $r$ (the $x$ value) implies knowing $R$ (the point)
+  - Knowing $r$ (the $x$ value of $R$) implies knowing all of $R$ (the point)
 - Bob computed: $h$ and $s^{-1}$
 - All further steps omit the 'mod $n$' part for clarity
     </textarea></section>
@@ -874,7 +926,7 @@ $
 
   - $r$, the $x$ component of $R$, which was part of the signature
   - $s$ (and computed $s^{-1}$) from the signature
-  - $h$, the computed hash of the message $m$
+  - $h$, the hash value he computed from the message $m$
   - $G$, the base point
   - $Q$, Alice's public key
 

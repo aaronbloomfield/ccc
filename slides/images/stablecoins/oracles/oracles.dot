@@ -104,7 +104,8 @@ digraph E {
     signer5 [shape=plaintext,label="signer 5"];
     signer6 [shape=plaintext,label="signer 6"];
     signer7 [shape=plaintext,label="signer 7"];
-    whale [shape=ellipse,style=filled,fillcolor=skyblue,label="Whale"];
+    //whale [shape=ellipse,style=filled,fillcolor=skyblue,label="Whale"];
+    whale [shapefile="bigfish.svg",label=".   Whale\n \n ",fixedsize=true,width=2,height=1,penwidth=0];
     output [shape=plaintext,label="staked\nprice:\n$10,000"];
 
     signer1 -> oracle [label="$101 stake $10"];
@@ -114,6 +115,6 @@ digraph E {
     signer5 -> oracle [label="$99 stake $5"];
     signer6 -> oracle [label="$101 stake $2"];
     signer7 -> oracle [label="$102 stake $15"];
-    whale -> oracle [label="$10,000 stake $999",color=blue,fontcolor=blue];
+    whale -> oracle [label="$10,000\nstake\n$999",color=blue,fontcolor=blue];
     oracle -> output;
 }
