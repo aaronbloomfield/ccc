@@ -19,6 +19,8 @@ contract Arbitrage {
     
     constructor() {
         deployer = msg.sender;
+        tokencc = address(new TokenCC());
+        etherpricer = address(new EtherPricerConstant());
     }
 
     // creates the DEXes and the TokenCC, and sends the ETH and TC; to avoid
@@ -26,10 +28,6 @@ contract Arbitrage {
     // adding more DEXes
     function setup(uint numdex, uint amt_eth, uint amt_tc) public payable {
         require (msg.value > numdex * amt_eth * 1 ether, "Must supply enough eth");
-        if ( tokencc == address(0) )
-            tokencc = address(new TokenCC());
-        if ( etherpricer == address(0) )
-            etherpricer = address(new EtherPricerConstant());
         // create and fund the DEXes
         for ( uint i = num_dexes; i < num_dexes+numdex; i++ ) {
             dexes[i] = payable(address(new TokenDEX()));
