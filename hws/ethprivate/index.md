@@ -77,7 +77,7 @@ There are two things to check to ensure that this worked correctly:
 **Step 5:** Start geth.  Run the following command, changing three things: (1) the userid to your own, (2) the data directory to what you used above, and (3) the networkid value to the `chainId` to the value on the Collab landing page.
 
 ```
-geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncnode full --gcmode "archive"
+geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncmode full --gcmode "archive"
 ```
 
 It's a long command, and we'll be adding flags as the semester continues.  We recommend you put that command into a script or batch file so you don't have to re-type it each time.
