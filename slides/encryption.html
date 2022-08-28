@@ -54,7 +54,7 @@
   <section data-markdown><textarea>
 # Contents
 &nbsp;  
-[Review](#/review)  
+[Overview](#/overview)  
 [Elliptic curves](#/elliptic)  
 [Finite fields](#/fields)  
 [ECDSA](#/ecdsa)  
@@ -67,15 +67,16 @@
 
 	<section>
       
-	  <section data-markdown id="review" class="center"><textarea data-template>
-# Review
+	  <section data-markdown id="overview" class="center"><textarea data-template>
+# Overview
 	  </textarea></section>
 	  
 	  <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Content coverage
 - You may have seen some of this material in the [encryption slide set](https://aaronbloomfield.github.io/ics/slides/encryption.html#/) from CS 3710: Introduction to Cybersecurity
   - But only this first column of slides is the same (a dozen or so slides)
-- If you didn't, that' fine
+- If you didn't see that material, that' fine
+  - We'll go over all of it
 
 
 ## Codes versus Ciphers
@@ -90,9 +91,9 @@
 
 
 ## Block-ciphers vs. stream ciphers
-- Block ciphers require a block of text (perhaps 1 Kb, for example)
+- Block ciphers require a block of text (examples: 256 bits (32 bytes), 1 Kb, etc.)
   - [Reference](http://en.wikipedia.org/wiki/Block_cipher)
-- Stream ciphers encrypt data as it is provided, character-by-character
+- Stream ciphers, a.k.a. character ciphers, encrypt data as it is provided, character-by-character
   - I prefer the name 'character cipher' over 'stream cipher'
   - [Reference](http://en.wikipedia.org/wiki/Stream_cipher)
 
@@ -212,7 +213,8 @@
 ## Public key cryptography challenges
 - Ensuring you obtain the correct key (not a malicious fake)
 - Ensuring somebody "in the middle" doesn't modify your communications
-- Speed of encryption
+- Speed of key generation
+- Speed of encryption / decryption
 - Size of the signatures
 	</textarea></section>
 
@@ -527,7 +529,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - $6\*6 = 36 \mod 17 = 2$
 - Exponentiation: easy -- just exponentiate and mod by $p$
   - $3^3 = 27 \mod 17 = 10$
-  - There are more efficient ways to do this, as seen [previously](#/modpow)
+  - There are more efficient ways to do this, not covered here
 
 
 ## Finite Field Subtraction
@@ -542,7 +544,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - Equivalent: $-x \mod p = p-(x \mod p)$
   - Example: 
     - $-23 \mod 17 = -23+17+17=11$
-    - $17-(23 \mod 17) = 17-6=11$
+    - $17-(23 \mod 17) = 17-11=6$
 
 
 ## Fermat's Little Theorem
@@ -623,36 +625,37 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Discrete Elliptic Curves
-- We can perform the four arithmetic operations on a finite field
+- We can now perform the four arithmetic operations on a finite field
   - They are "easy" (read: polynomial time)
 - The $x$ value is always an integer $0 \le x < p$
-- For the algorithm we will study, $p=2^{256}-2^{32}-977$
-  - (more on this value later)
+  - For the algorithm we will study, $p=2^{256}-2^{32}-977$
+    - (more on this value later)
 - But we can't take the square root to determine $y$ from $y^2=x^3+7$
   - That's "hard" (read: exponential time)
 - It turns out we don't need to...
 
 
 ## Elliptical Point Addition
-
-<ul>
-<li>Adding two (different) points is the same as before:
-
-  - $y=mx+b$ and $m=(y_2-y_1)/(x_2-x_1)$
+- Adding two (different) points is the same as before:
+  - Determine the line equation
+    - $y=mx+b$ and $m=(y_2-y_1)/(x_2-x_1)$
     - All these operations are done *within the field*
   - Plug it into the equation for the curve: $y=x^3+ax+b$
-  - (the $b$ terms on the previous 2 lines are not the same)
-  - $(mx+b)^2 = x^3+ax+b$, then [solve for the three values](https://www.calculatorsoup.com/calculators/algebra/cubicequation.php?) of $x$
+    - (the $b$ terms on the previous 2 lines are not the same)
+  - $(mx+b)^2 = x^3+ax+b$, then [solve for the 3 values](https://www.calculatorsoup.com/calculators/algebra/cubicequation.php?) of $x$
     - We know $x_1$ and $x_2$, so we need $x_3$
   - To determine $y_3$, use the formula for the line: $y_3=m\*x_3+b$
+- Problem
+  - This requires square roots or cube roots
+  - Hard to do in a field!
 
-</li>
-<li>Shortcut: let $m=(y_2-y_1)/(x_2-x_1)$
-<ul>
-<li>$x_3=m^2-x_1-x_2$</li>
-<li>$y_3=m(x_1-x_3)-y_1$</li>
-</ul>
-</li></ul>
+
+## Elliptical Point Addition
+- Given two points on the curve: $(x_1,y_1)$ and $(x_2,y_2)$
+  - Determine the slope: $m=(y_2-y_1)/(x_2-x_1)$
+- A shortcut (not derived here) for secp256k1:
+  - $x_3=m^2-x_1-x_2$
+  - $y_3=m(x_1-x_3)-y_1$
     </textarea></section>
     
     <section data-markdown data-separator="^\n$" id="secp256k1derivative"><textarea data-template>
@@ -686,7 +689,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - Consider secp256k1 with the field $Z_{43}$ (i.e., $p=43$)
 - For $x=2$, there are two $y$ values: 12 and 31
 - $(12,31) \oplus (29,31) = (2,12)$
-  - Really it intersects at $(2,31)$, but reflects to $(2,12)$
+  - It intersects at $(2,31)$, but then reflects to $(2,12)$
   - You can see this [here](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=12&py=31&qx=29&qy=31)
 - The formulas provided herein already handle this reflection
 
@@ -695,6 +698,18 @@ Any curve of the form $y^2=x^3+ax+b$
 - Even in a finite field, we do not need anything more than the basic arithmetic operations (and exponentiation)
   - Nowhere do we require square root, in particular
   - Nor a more general discrete log operation
+
+
+## Relevant formulas
+- Division in a field $Z_p$:
+  - $x/a = x\*a^{-1} = x \ast a^{p-2} \mod p$
+- Elliptic point addition: given points $(x_1,y_1)$ and $(x_2,y_2)$, to find the third point:
+  - Determine the slope: $m=(y_2-y_1)/(x_2-x_1)$
+  - Point #3 is $(x_3,y_3)$ and determined by:
+    - $x_3=m^2-x_1-x_2$
+    - $y_3=m(x_1-x_3)-y_1$
+- Finding the slope at a point on secp256k1:
+  - $m=3x^2/2y$
   </textarea></section>
 
   </section>
@@ -740,16 +755,23 @@ Any curve of the form $y^2=x^3+ax+b$
 
 ## secp256k1 curve: order
 - secp256k1 curve: $y^2=x^3+7$
-- $n$ is the *order*, which is the number of points on the curve
-  - We include the point at infinity in $n$
-  - $n$ = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
-  - $n$ = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
-  - $n \approx 1.16 \ast 10^{77}$, a little less than $p$
-- *SOME* modulo operations in ECDSA are with $n$, not $p$
-- Also must be prime, and $n$ is
+- $o$ is the *order*, which is the number of points on the curve
+  - We include the point at infinity in $o$
+  - $o$ = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0 364141
+  - $o$ = 115,792,089,237,316,195,423,570,985,008,687,907,852, 837,564,279,074,904,382,605,163,141,518,161,494,337
+  - $o \approx 1.16 \ast 10^{77}$, a little less than $p$
+- *SOME* modulo operations in ECDSA are with $o$, not $p$
+- Also must be prime, and $o$ is
 - How to determine the order?
   - Count all the points (*very* slow)
   - [Schoof's algorithm](https://en.wikipedia.org/wiki/Schoof%27s_algorithm), which takes polynomial time
+
+
+## secp256k1 curve: order
+- Notation:
+  - Most references use $n$ to represent the order
+  - We'll use $o$
+  - This will lower confusion with one of the elliptic curve computation websites we'll be using a lot
 
 
 ## secp256k1 curve: base point
@@ -766,7 +788,7 @@ Any curve of the form $y^2=x^3+ax+b$
 
 ## Base Point properties
 - In order for the base point to be able to generate all the points in the range $[0,p-1]$, $G$ needs to lie on the secp256k1 curve
-- We can verify this in Python (here use use $p$, not $n$):
+- We can verify this in Python (here use use $p$, not $o$):
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ python3
 >>> p = 2**256 - 2**32 - 977
@@ -801,13 +823,14 @@ $
   - Curve parameters $a$ and $b$ (secp256k1: $a=0$ and $b=7$)
   - Prime modulus $p$ (secp256k1: $p=2^{256}-2^{32}-977$)
     - Size is $b$ bits, selected to match the hash size (for us, $b=256$)
-  - Curve order $n$ (for secp256k1: $n \approx 1.16 \ast 10^{77}$)
+  - Curve order $o$ (for secp256k1: $o \approx 1.16 \ast 10^{77}$)
   - Base point $G$; for secp256k1, $G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
-  - A $b$-bit hash algorithm that we plan on using (SHA-256, e.g.)
+  - A $b$-bit hash algorithm that we plan on using
+    - It could be any $b$-bit hash algorithm, but we'll assume it's SHA-256 herein
 
 
 ## ECDSA Key Generation
-- Determine a $b$ bit random number $d$ such that $1 \le d \le n-1$
+- Determine a $b$ bit random number $d$ such that $1 \le d \le o-1$
   - This is the private key
 - Compute point $Q=d \otimes G$
   - Point $Q$ is the public key
@@ -826,7 +849,7 @@ $
 ## Signing an ECDSA message
 - Curve parameters:
   - $p$, the prime modulus
-  - $n$, the order of the curve
+  - $o$, the order of the curve
   - point $G$, the base point
 - Alice knows:
   - $m$, the message to sign
@@ -834,39 +857,41 @@ $
   - point $Q$, her public key
 - Alice generates:
   - $h$, the hash of the message $m$ being signed
-    - Using a $b$-bit hash algorithm
-  - $k$, a $b$-bit one time pad (secret!) such that $1 \le k \le n-1$
-  - $k^{-1}$, the inverse mod-$n$ of $k$ (also secret)
-    - This is computed in $Z_n$, not $Z_p$!
+    - Using a $b$-bit hash algorithm such as SHA-256
+  - $k$, a $b$-bit one time pad (secret!) such that $1 \le k \le o-1$
+  - $k^{-1}$, the (secret) inverse mod-$o$ of $k$ (this is in $Z_o$, not $Z_p$)
 
 <aside data-markdown class="notes">
-- because we want to find the multiplicitative inverse of $k$, in order to use Fermat's little theorem, $n$ must be prime
+- because we want to find the multiplicitative inverse of $k$, in order to use Fermat's little theorem, $o$ must be prime
 </aside>
 
 
 ## Signing an ECDSA message
-- Curve parameters: $p$, $n$, $G$
+- Curve parameters: $p$, $o$, $G$ (and $a$ and $b$)
 - Alice knows: $m$, $d$, $Q$
 - Alice generated: $h$, $k$, $k^{-1}$
 - Alice computes $R=k \otimes G$
   - Let $r$ be the $x$ component of $R$
-- Alice also computes: $s=k^{-1}(h+r*d) \mod n$
+- Alice also computes: $s=k^{-1}(h+r*d) \mod o$
   - This computation used the private key ($d$), the hash ($h$), and $r$
     - $r$ needed the the one-time pad $k$ to compute
 - The signature is $(r,s)$
   - Both $r$ and $s$ are $b$ bits in size, so the signature is $2b$ bits
 - To verify, we have to show that formula Alice used holds
-  - $s=k^{-1}(h+r*d) \mod n$
+  - $s=k^{-1}(h+r*d) \mod o$
 
 
-## Why those formulas
+## Why those formulas?
 - We want to encode the hash in such a way that:
-  - It can NOT be "cracked" in polynomial time
-  - With the public key $Q$, the formulas can be verified in polynomial time
-- We obtain $r$ as the $x$ value of  $R=k \otimes G$
-  - Elliptic multiplication is in polynomial time; the reverse (division) would be in exponential time
-- We obtain $s$ via $s=k^{-1}(h+r*d) \mod n$
-  - This is a discrete log, so "reversing" this is exponential time
+  1. It can NOT be "cracked" in polynomial time
+  2. With the public key $Q$, the formulas can be verified in polynomial time
+- Part 1: does it take exponential time?
+  - We obtain $r$ as the $x$ value of  $R=k \otimes G$
+    - Elliptic multiplication is in polynomial time; the reverse (division) would be in exponential time
+  - We obtain $s$ via $s=k^{-1}(h+r*d) \mod o$
+    - This is a discrete log, so "reversing" this is exponential time
+- Part 2: can it be verified without knowing $d$ (private key) or $k$ (secret OTP)
+  - Yes; we'll see this next
 
 
 ## Sanity checks
@@ -877,41 +902,41 @@ $
 
 
 ## Verifying an ECDSA message
-- Curve parameters:
-  - $p$, the prime modulus
-  - $n$, the order of the curve
-  - $G$, the base point
+- Curve parameters: $p$, $o$, $G$ (and $a$ and $b$)
 - Bob has to verify the message; he knows:
   - $m$, the message whose signature is being checked
   - $Q$, Alice's public key
-  - $r$ and $s$, from the signature
-- Bob does NOT know $d$ (Alice's private key) nor $k$ (the one-time pad used)
+  - $(r,s)$, the signature
+- Bob does NOT know:
+  - $d$, Alice's private key
+  - $k$, the one-time pad used
+  - $k^{-1}$, the inverse, mod $o$, of $k$
 - Bob generates:
   - $h$, the hash of the message $m$
-  - $s^{-1}$, the inverse mod-$n$ of $s$ (this is in $Z_n$, not $Z_p$)
+  - $s^{-1}$, the inverse mod-$o$ of $s$ (this is in $Z_o$, not $Z_p$)
 
 
 ## Verifying an ECDSA message
-- Bob has to verify that the following equation holds: $s=k^{-1}(h+r*d) \mod n$
+- Bob has to verify that the following equation holds: $s=k^{-1}(h+r*d) \mod o$
   - Using his computation of the hash $h$
   - But he doesn't know $d$ nor $k$
     - But recall that $r$ is computed using $k$
-- Bob knows: $r$, $s$, $G$, and $Q$
+- Bob knows: $m$, $Q$, $(r,s)$, and the curve parameters
   - Knowing $r$ (the $x$ value of $R$) implies knowing all of $R$ (the point)
 - Bob computed: $h$ and $s^{-1}$
-- All further steps omit the 'mod $n$' part for clarity
+- All further steps omit the 'mod $o$' part for clarity
     </textarea></section>
     
     <section data-markdown data-separator="^\n$" id='ecdsaverify'><textarea data-template>
 ## Verifying an ECDSA message
 
 <ul>
-  <li>The formula Bob has to verify without knowing $d$ or $k$:<br> $s=k^{-1}(h+r \ast d)$ </li>
+  <li>The formula Bob is to verify without knowing $d$, $k$, or $k^{-1}$:<br> $s=k^{-1}(h+r \ast d)$ </li>
   <li class="fragment" data-fragment-index="1">Multiply both sides by $s^{-1}$:<br> $1=s^{-1}k^{-1}(h+r \ast d)$ </li>
   <li class="fragment" data-fragment-index="2">Multiply both sides by $k$:<br> $k=s^{-1}(h+r \ast d)$ </li>
   <li class="fragment" data-fragment-index="3">Multiply both sides by $G$:<br> $k \otimes G=s^{-1}(h+r*d) \otimes G$ </li>
   <li class="fragment" data-fragment-index="4">Distribute the parenthetical:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \ast d \otimes G$ </li>
-  <li class="fragment" data-fragment-index="5">The public key is defined as $Q = d \ast G$:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
+  <li class="fragment" data-fragment-index="5">The public key is defined as $Q = d \otimes G$:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
 </ul>
     </textarea></section>
     
@@ -924,9 +949,9 @@ $
   <li class="fragment" data-fragment-index="1">Point $R$ was computed as: $R=k \otimes G$:<br> $R = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
   <li class="fragment" data-fragment-index="2">Bob knows:
 
-  - $r$, the $x$ component of $R$, which was part of the signature
+  - $r$, the $x$ component of $R$, from the signature
   - $s$ (and computed $s^{-1}$) from the signature
-  - $h$, the hash value he computed from the message $m$
+  - $h$, the hash value computed from the message $m$
   - $G$, the base point
   - $Q$, Alice's public key
 
@@ -945,32 +970,34 @@ $
   - We can state: $x \ast y \ast z \otimes P = x \ast  y \otimes Q$
 
 
-## When to mod by $n$ versus $p$
-- $p$ is the prime modulus, $n$ is the order (# of points)
-- In general, we mod by $p$
-- Exceptions: when counting the *points*, mod by $n$
-  - Let $p=43$ and $n=31$
-  - Consider: $R=50 \otimes G$
-  - Because this is counting the number of *points*, we mod by $n$, not $p$
+## When to mod by $o$ versus $p$
+- $p$ is the prime modulus, $o$ is the order (# of points)
+- If counting *points*, we mod by $o$
+  - In EC multiplication
+- If checking *scalars*, we mod by $p$
+  - Does this point lie on the curve?
+- Example
+  - Let $p=43$ and $o=31$ and consider: $R=50 \otimes G$
+  - As this is counting the number of *points*, we mod by $o$, not $p$
   - So $50 \otimes G = 19 \otimes G$, but $50 \otimes G \ne 7 \otimes G$
   - Verify this [here](https://andrea.corbellini.name/ecc/interactive/modk-mul.html)
     - Set $a=0$, $b=7$, $p=43$, and let $P=(25,25)$
-    - The resultant point is the same for $n=50$ and $n=19$
-    - But not the same for $n=50$ and $n=7$
+    - The resultant point is the same for $o=50$ and $o=19$
+    - But not the same for $o=50$ and $o=7$
 
 
-## When to mod by $n$ versus $p$
-- In the signing algorithm, we mod by $n$ (instead of by $p$):
-  - When computing $s=k^{-1}(h+r*d) \mod n$
+## When to mod by $o$ versus $p$
+- In the signing algorithm, we mod by $o$ (instead of by $p$):
+  - When computing $s=k^{-1}(h+r*d) \mod o$
   - When computing $k^{-1}$
-- In the verification algorithm, we mod by $n$ (instead of by $p$):
+- In the verification algorithm, we mod by $o$ (instead of by $p$):
   - When computing $s^{-1}$
 - In any elliptic curve multiplication:
-  - If computing $R = k \otimes G$, we can mod $k$ by $n$ to get the same result
+  - If computing $R = k \otimes G$, we can mod $k$ by $o$ to get the same result
 
 
 ## Computing $k \otimes G$
-- Let $p=43$, $n=31$, $G=(25,25)$, and $k=21$
+- Let $p=43$, $o=31$, $G=(25,25)$, and $k=21$
 - Compute $21 \otimes G$
   - $21 = 10101_b = 2^4+2^2+2^0 = 16+4+1$
   - $21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$
@@ -992,23 +1019,26 @@ $
   - We are using secp256k1, so set $a=0$ and $b=7$
 
 
-## Why RSA versus ECDSA?
+## Why ECDSA over RSA?
 - ECDSA keys are much quicker to generate
 - ECDSA encryption & decryption is faster
 - Cracking a 256-bit ECDSA signature would take about as long as cracking a 3072-bit RSA signature ([source](https://avinetworks.com/glossary/elliptic-curve-cryptography/))
   - Which means the signed message is *significantly* shorter (256 bits versus 3072 bits for the same level of security)
   - That's 1/12th the size!
-- RSA keys are interchangeable; ECDSA keys are not
+- ECDSA is for digital signatures
 
 
-## When RSA is better
+## Why RSA over ECDSA?
 - Longer messages don't have to be broken down into as many parts
 - Much easier to implement
   - And much easier to implement quickly
+- RSA keys are interchangeable; ECDSA keys are not
+  - Thus, you cannot use ECDSA for sending encrypted messages back and forth
+  - ECDSA is for digital signatures only
 
 
 ## Security Level
-- A security level of $n$ means that it takes $2^n$ operations to "break" it
+- A security level of $o$ means that it takes $2^n$ operations to "break" it
   - A means to compare different algorithms
 - 3072 bit RSA and 256-bit ECDSA have about the same security level ($n=128$)
 - [Reference](https://en.wikipedia.org/wiki/Security_level)

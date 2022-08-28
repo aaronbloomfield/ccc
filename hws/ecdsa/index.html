@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>P2: ECDSA Implementation</title>
+  <title>ECDSA Implementation</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,7 @@
   <![endif]-->
 </head>
 <body>
-<h1 id="p2-ecdsa-implementation">P2: ECDSA Implementation</h1>
+<h1 id="ecdsa-implementation">ECDSA Implementation</h1>
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a
 href="../index.md">md</a>)</p>
 <h3 id="overview">Overview</h3>
@@ -142,7 +142,7 @@ secp256k1, which sets <span class="math inline"><em>a</em> = 0</span>
 and <span class="math inline"><em>b</em> = 7</span>. For testing
 purposes, we recommend setting the prime modules <span
 class="math inline"><em>p</em></span> to 43; this will give an curve
-order (<span class="math inline"><em>n</em></span>) value of 31.</p>
+order (<span class="math inline"><em>o</em></span>) value of 31.</p>
 <h3 id="step-3-signature-creation-and-validation">Step 3: Signature
 creation and validation</h3>
 <p>Lastly, you can proceed to generate the signature and then validate
@@ -162,11 +162,11 @@ class="math inline"><em>Q</em></span>, such that <span
 class="math inline"><em>Q</em> = <em>d</em> ⊗ <em>G</em></span>. The
 values needed for these computations (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, and <span
+class="math inline"><em>o</em></span>, and <span
 class="math inline"><em>G</em></span>) will be provided.</li>
 <li>Signing a message: Given the curve parameters (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, and <span
+class="math inline"><em>o</em></span>, and <span
 class="math inline"><em>G</em></span>), the key pair (<span
 class="math inline"><em>d</em></span> and <span
 class="math inline"><em>Q</em></span>), and the hash (<span
@@ -175,7 +175,7 @@ should generate the <span
 class="math inline">(<em>r</em>,<em>s</em>)</span> ECDSA signature.</li>
 <li>Verifying a message: Given the curve parameters (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, and <span
+class="math inline"><em>o</em></span>, and <span
 class="math inline"><em>G</em></span>), the public key <span
 class="math inline"><em>Q</em></span>, the signature <span
 class="math inline">(<em>r</em>,<em>s</em>)</span>, and the hash <span
@@ -204,7 +204,7 @@ mode will be a series of integer command-line parameters, all of which
 will be integers. In most of the modes, the first four integer
 parameters will be, in this order: the prime modulus <span
 class="math inline"><em>p</em></span>, the curve order <span
-class="math inline"><em>n</em></span>, and the <span
+class="math inline"><em>o</em></span>, and the <span
 class="math inline"><em>x</em></span> and <span
 class="math inline"><em>y</em></span> values for the base point <span
 class="math inline"><em>G</em></span>. All numerical values provided
@@ -227,7 +227,7 @@ to compute the public key, point <span
 class="math inline"><em>Q</em></span>. The numerical command-line
 parameters are just the four described above (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, <span
+class="math inline"><em>o</em></span>, <span
 class="math inline"><em>G</em><sub><em>x</em></sub></span>, and <span
 class="math inline"><em>G</em><sub><em>y</em></sub></span>). The output
 should be three integers, one on each line: <span
@@ -240,7 +240,7 @@ that the values returned are correct (specifically that <span
 class="math inline"><em>Q</em> = <em>d</em> ⊗ <em>G</em></span>). Below
 is a sample execution run, which sets <span
 class="math inline"><em>p</em> = 43</span>, <span
-class="math inline"><em>n</em> = 31</span>, and <span
+class="math inline"><em>o</em> = 31</span>, and <span
 class="math inline"><em>G</em> = (25,25)</span>. Since this output is
 based on a random number that is generated (specifically, <span
 class="math inline"><em>d</em></span>), one would expect that your
@@ -256,31 +256,27 @@ $</code></pre></li>
 <li><p><code>sign</code> will sign a message. In addition to the four
 standard numerical parameters (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, <span
+class="math inline"><em>o</em></span>, <span
 class="math inline"><em>G</em><sub><em>x</em></sub></span>, and <span
 class="math inline"><em>G</em><sub><em>y</em></sub></span>), there will
-be four more provided: <span class="math inline"><em>d</em></span>,
-<span class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
-class="math inline"><em>Q</em><sub><em>y</em></sub></span>, and <span
-class="math inline"><em>h</em></span>. The first three of these (<span
-class="math inline"><em>d</em></span>, <span
-class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
-class="math inline"><em>Q</em><sub><em>y</em></sub></span>) are what was
-output from the <code>genkey</code> mode, above. The last one, <span
-class="math inline"><em>h</em></span>, is meant to represent the hash of
-the message that is being signed – it will be in the range <span
+be two more provided: <span class="math inline"><em>d</em></span> and
+<span class="math inline"><em>h</em></span> (note that <span
+class="math inline"><em>Q</em></span> is not needed for signing). The
+first these, <span class="math inline"><em>d</em></span> is the private
+key, and was part of the output from the <code>genkey</code> mode,
+above. The second one, <span class="math inline"><em>h</em></span>, is
+meant to represent the hash of the message that is being signed – it
+will be an integer in the range <span
 class="math inline">1 ≤ <em>h</em> ≤ <em>n</em> − 1</span>. To simplify
 this assignment, we are not providing the message <span
 class="math inline"><em>m</em></span> that you are to take the hash of –
-we are just providing the hash value itself. To be clear, the eight
+we are just providing the hash value itself. To be clear, the six
 numerical parameters are, in order: (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, <span
+class="math inline"><em>o</em></span>, <span
 class="math inline"><em>G</em><sub><em>x</em></sub></span>, <span
 class="math inline"><em>G</em><sub><em>y</em></sub></span>, <span
-class="math inline"><em>d</em></span>, <span
-class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
-class="math inline"><em>Q</em><sub><em>y</em></sub></span>, and <span
+class="math inline"><em>d</em></span>, and <span
 class="math inline"><em>h</em></span>). The output should be two
 integers, one on each line: the <span
 class="math inline"><em>r</em></span> and <span
@@ -294,24 +290,24 @@ re-generate <span class="math inline"><em>k</em></span> and try again –
 there should be no apparent difference in the output. Below is a sample
 execution run, which sets <span
 class="math inline"><em>p</em> = 43</span>, <span
-class="math inline"><em>n</em> = 31</span>, <span
+class="math inline"><em>o</em> = 31</span>, <span
 class="math inline"><em>G</em> = (25,25)</span>, <span
-class="math inline"><em>d</em> = 16</span>, <span
-class="math inline"><em>Q</em> = (37,36)</span>, and <span
-class="math inline"><em>h</em> = 30</span>. Since this output is based
-on a random number that is generated (specifically, <span
-class="math inline"><em>k</em></span>), one would expect that your
-output would be different on each execution run. The result of this
-execution run is that the signature is <span
+class="math inline"><em>d</em> = 16</span>, and <span
+class="math inline"><em>h</em> = 30</span> (the public key, <span
+class="math inline"><em>Q</em> = (37,36)</span>, is not part of the
+parameter list). Since this output is based on a random number that is
+generated (specifically, <span class="math inline"><em>k</em></span>),
+one would expect that your output would be different on each execution
+run. The result of this execution run is that the signature is <span
 class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>.</p>
-<pre><code>$ ./ecdsa.sh sign 43 31 25 25 16 37 36 30
+<pre><code>$ ./ecdsa.sh sign 43 31 25 25 16 30
 12
 24
 $</code></pre></li>
 <li><p><code>verify</code> will verify a message. In addition to the
 four standard numerical parameters (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, <span
+class="math inline"><em>o</em></span>, <span
 class="math inline"><em>G</em><sub><em>x</em></sub></span>, and <span
 class="math inline"><em>G</em><sub><em>y</em></sub></span>), there will
 be five more parameters provided. The next two are the public key: <span
@@ -323,7 +319,7 @@ class="math inline"><em>s</em></span>. Lastly will be the (computed)
 hash of the message that is being verified. To be clear, the nine
 numerical parameters are, in order: (<span
 class="math inline"><em>p</em></span>, <span
-class="math inline"><em>n</em></span>, <span
+class="math inline"><em>o</em></span>, <span
 class="math inline"><em>G</em><sub><em>x</em></sub></span>, <span
 class="math inline"><em>G</em><sub><em>y</em></sub></span>, <span
 class="math inline"><em>Q</em><sub><em>x</em></sub></span>, <span
@@ -334,7 +330,7 @@ class="math inline"><em>h</em></span>). The output should just be ‘True’
 if the signature matches, and ‘False’ if it does not. Below are two
 sample execution runs, which set <span
 class="math inline"><em>p</em> = 43</span>, <span
-class="math inline"><em>n</em> = 31</span>, <span
+class="math inline"><em>o</em> = 31</span>, <span
 class="math inline"><em>G</em> = (25,25)</span>, <span
 class="math inline"><em>Q</em> = (37,36)</span>, <span
 class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>, and (<span
@@ -356,10 +352,10 @@ perform those functions with verbose output. But the four required modes
 <code>verify</code> – should only produce the output shown above.</p>
 <p>Your code may incorrectly verify a invalid signature! The computation
 of <span class="math inline"><em>s</em></span> is computed mod <span
-class="math inline"><em>n</em></span>, which – in this example – is only
+class="math inline"><em>o</em></span>, which – in this example – is only
 31. This means about 1 in 31 random but invalid signatures would be
 expected to verify as true. (In reality, with secp256k1, <span
-class="math inline"><em>n</em> ≈ 1.16 * 10<sup>77</sup></span>, so the
+class="math inline"><em>o</em> ≈ 1.16 * 10<sup>77</sup></span>, so the
 chance of an invalid signature returning true is one in in that very
 large number). If you do get an invalid signature (or two or three) to
 return true, just try some other values.</p>
@@ -371,7 +367,10 @@ href="https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&amp;b=7&a
 for addition</a> and <a
 href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&amp;p=43">here
 for multiplication</a>; verification links are them are also provided
-below.</p>
+below. Note that some of the values used (specifically <span
+class="math inline"><em>d</em></span> and <span
+class="math inline"><em>k</em></span>) are randomly generated, so we
+would expect them to be different in your execution runs.</p>
 <p>To ensure clarity about the operations, the <span
 class="math inline">+</span> symbol is <em>only</em> used for scalar
 addition (meaning between two numbers) and the <span
@@ -382,7 +381,7 @@ multiplication of an elliptic point by a scalar uses the <span
 class="math inline">⊗</span> symbol.</p>
 <p>We know that the prime modulus <span
 class="math inline"><em>p</em> = 43</span>, the order <span
-class="math inline"><em>n</em> = 31</span>, and the base point <span
+class="math inline"><em>o</em> = 31</span>, and the base point <span
 class="math inline"><em>G</em> = (25,25)</span>, as these were given in
 the first four numeric command-line parameters.</p>
 <p><strong>Key generation:</strong> The random value for the private key
@@ -401,7 +400,10 @@ the first part of the signature, and is referred to as lower-case <span
 class="math inline"><em>r</em></span>. We next have to compute <span
 class="math inline"><em>k</em><sup>−1</sup></span>. Because <span
 class="math inline"><em>k</em></span> is counting the number of points,
-the inverse is computed in Z31, NOT in Z43. Thus, in Z31, <span
+the inverse is computed in <span
+class="math inline"><em>Z</em><sub>31</sub></span>, NOT in <span
+class="math inline"><em>Z</em><sub>43</sub></span>. Thus, in <span
+class="math inline"><em>Z</em><sub>31</sub></span>, <span
 class="math inline">17<sup>−1</sup> = 11</span>; (<a
 href="https://planetcalc.com/3311/?a=17&amp;m=31">verification</a>; also
 that <span class="math inline">11 * 17 mod  31 = 1</span>). We know via
@@ -410,17 +412,22 @@ class="math inline"><em>h</em> = 30</span> and <span
 class="math inline"><em>d</em> = 16</span>, and we have just computed
 <span class="math inline"><em>r</em> = 12</span>. We can then compute
 <span class="math inline"><em>s</em></span>, which also is computed in
-Z31, NOT Z43: <span
-class="math inline"><em>s</em> = <em>k</em><sup>−1</sup>(<em>h</em>+<em>r</em>∗<em>d</em>) mod  <em>n</em> = 11 * (30+12*16) mod  31 = 24</span>.
+<span class="math inline"><em>Z</em><sub>31</sub></span>, NOT <span
+class="math inline"><em>Z</em><sub>43</sub></span>: <span
+class="math inline"><em>s</em> = <em>k</em><sup>−1</sup>(<em>h</em>+<em>r</em>∗<em>d</em>) mod  <em>o</em> = 11 * (30+12*16) mod  31 = 24</span>.
 Thus, the signature is <span
 class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>.</p>
 <p><strong>Verification:</strong> We are given the values for <span
 class="math inline"><em>Q</em> = (37,36)</span> and the signature <span
 class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>, as well as
 the hash <span class="math inline"><em>h</em> = 30</span>. As <span
-class="math inline"><em>s</em></span> was computed in Z31 (NOT Z43), we
-also compute it’s inverse in Z31: <span
-class="math inline">24<sup>−1</sup> = 22</span> in Z31; (<a
+class="math inline"><em>s</em></span> was computed in <span
+class="math inline"><em>Z</em><sub>31</sub></span> (NOT <span
+class="math inline"><em>Z</em><sub>43</sub></span>), we also compute
+it’s inverse in <span
+class="math inline"><em>Z</em><sub>31</sub></span>: <span
+class="math inline">24<sup>−1</sup> = 22</span> in <span
+class="math inline"><em>Z</em><sub>31</sub></span>; (<a
 href="https://planetcalc.com/3311/?a=24&amp;m=31">verification</a>; also
 that <span class="math inline">22 * 24 mod  31 = 1</span>).</p>
 <p>To verify this signature, we need to show that <span
@@ -429,8 +436,8 @@ class="math inline"><em>R</em> = <em>s</em><sup>−1</sup> * <em>h</em>�
 (this is an equivalent form of the formula used to sign the signature,
 as shown in the slides starting <a
 href="../../slides/encryption.html#/ecdsaverify">here</a>). We can mod
-those two scalars (660 and 264), but that mod is also in Z31, and yields
-<span
+those two scalars (660 and 264), but that mod is also in <span
+class="math inline"><em>Z</em><sub>31</sub></span>, and yields <span
 class="math inline"><em>R</em> = 9 ⊗ <em>G</em> ⊕ 16 ⊗ <em>Q</em> = 9 ⊗ (25,25) ⊕ 16 ⊗ (37,36) = (2,31) ⊕ (29,31) = (12,12)</span>;
 (verifications <a
 href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&amp;p=43&amp;n=9&amp;px=25&amp;py=25">1</a>,
@@ -465,19 +472,20 @@ the signature is not valid.</p>
 <p>One type of test that we are going to perform is whether your program
 can verify a signature that your code signs, and whether it can indicate
 as invalid a signature that you did not sign. We will be trying
-different prime field sizes. Here are a few examples you can use.</p>
+different prime field sizes (all of the ones listed below also have a
+prime order size). Here are a few examples you can use.</p>
 <ul>
 <li><span class="math inline"><em>p</em> = 43</span>, <span
-class="math inline"><em>n</em> = 31</span>, <span
+class="math inline"><em>o</em> = 31</span>, <span
 class="math inline"><em>G</em> = (25,25)</span></li>
 <li><span class="math inline"><em>p</em> = 79</span>, <span
-class="math inline"><em>n</em> = 67</span>, <span
+class="math inline"><em>o</em> = 67</span>, <span
 class="math inline"><em>G</em> = (35,8)</span></li>
 <li><span class="math inline"><em>p</em> = 127</span>, <span
-class="math inline"><em>n</em> = 127</span>, <span
+class="math inline"><em>o</em> = 127</span>, <span
 class="math inline"><em>G</em> = (93,33)</span></li>
 <li><span class="math inline"><em>p</em> = 733</span>, <span
-class="math inline"><em>n</em> = 691</span>, <span
+class="math inline"><em>o</em> = 691</span>, <span
 class="math inline"><em>G</em> = (336,170)</span></li>
 </ul>
 <p>Note that if you enter the curve of <span
@@ -487,7 +495,8 @@ href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&a
 site</a>, and enter a different <span
 class="math inline"><em>p</em></span> value, it will tell you the order
 below the boxes (“The curve has … points”). You can pick any valid point
-on that curve as <span class="math inline"><em>G</em></span>.</p>
+on that curve as <span class="math inline"><em>G</em></span>; we just
+arbitrarily picked one for the examples above.</p>
 <h3 id="submission">Submission</h3>
 <p>You have to submit three files:</p>
 <ul>
