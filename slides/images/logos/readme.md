@@ -16,6 +16,9 @@ img.cclogo {
 }
 </style>
 
+[Go up to the slides page](../../index.html) ([md](../../index.md))
+
+
 All the logos herein are from sources whose licenses allow redistribution in this repository, or are included under free use guidelines.
 
 1. <img src="algo-coin-symbol.svg" class="cclogo"> Algorand (ALGO) from [cryptologos.cc](https://cryptologos.cc/algorand) <br clear='all'>
@@ -33,9 +36,9 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. <img src="fil-coin-symbol.svg" class="cclogo"> Filecoin (FIL) from [cryptologos.cc](https://cryptologos.cc/filecoin) <br clear='all'>
 1. <img src="firo-coin-symbol.svg" class="cclogo"> Firo (FIRO) from [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Firo-logo.svg) <br clear='all'>
 1. <img src="frax-coin-symbol.svg" class="cclogo"> Frax (FRAX) from [cryptologos.cc](https://cryptologos.cc/frax) <br clear='all'>
-1. <img src="gre-coin-symbol.png" class="cclogo"> Greencoin (GRE) was from a Pinterest site, but they don't hold the copyright; it's on various other sites, so the assumption is that it's legal to use and include it under free use guidelines <br clear='all'>
+1. <img src="gre-coin-symbol.webp" class="cclogo"> Greencoin (GRE) was from a Pinterest site, but they don't hold the copyright; it's on various other sites, so the assumption is that it's legal to use and include it under free use guidelines <br clear='all'>
 1.  <img src="juno-coin-symbol.webp" class="cclogo"> JUNO (JUNO) from [here](https://www.finder.com/juno), and assumed valid under free use guidelines
-1. <img src="luna-coin-symbol.svg" class="cclogo"> Luna (LUNA) from [cryptologos.cc](https://cryptologos.cc/terra-luna) <br clear='all'>
+1. <img src="lunac-coin-symbol.svg" class="cclogo"> Luna (LUNA) from [cryptologos.cc](https://cryptologos.cc/terra-luna) <br clear='all'>
 1. <img src="matic-coin-symbol.svg" class="cclogo"> Polygon (MATIC) adapted from [cryptologos.cc](https://cryptologos.cc/logos/matic-coin-symbol.svg?v=022) <br clear='all'>
 1. <img src="mim-coin-symbol.svg" class="cclogo"> Maker (MKR) from [abracadabra.money](https://abracadabra.money/) (specifically, [here](https://abracadabra.money/img/PixelMIM.12c48248.svg)), and is used under free use guidelines <br clear='all'>
 1. <img src="mkr-coin-symbol.svg" class="cclogo"> Maker (MKR) from [cryptologos.cc](https://cryptologos.cc/maker) <br clear='all'>
@@ -45,13 +48,13 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. <img src="sai-coin-symbol.svg" class="cclogo"> Sai (SAI) is from [here](https://saistats.com/) and is used under free use guidelines <br clear='all'>
 1. <img src="shib-coin-symbol.svg" class="cclogo"> SHIB adapted from [cryptologos.cc](https://cryptologos.cc/shiba-inu) <br clear='all'>
 1. <img src="sol-coin-symbol.svg" class="cclogo"> SOL adapted from [cryptologos.cc](https://cryptologos.cc/solana) <br clear='all'>
-1. <img src="spell-coin-symbol.webp" class="cclogomed"> SPELL taken from [here](https://thegivingblock.com/resources/cryptocurrency/spell-token/) and is used under free use guidelines <br clear='all'>
+1. <img src="spell-coin-symbol.webp" class="cclogo"> SPELL taken from [here](https://thegivingblock.com/resources/cryptocurrency/spell-token/) and is used under free use guidelines <br clear='all'>
 1. <img src="storj-coin-symbol.svg" class="cclogo"> STORJ adapted from [cryptologos.cc](https://cryptologos.cc/storj) <br clear='all'>
 1. <img src="tomb-coin-symbol.webp" class="cclogo"> Tomb (TOMB) adapted from the logo on various sites such as [this one](https://www.coinlore.com/coin/tomb) and is used under free use guidelines <br clear='all'>
 1. <img src="tribe-coin-symbol.svg" class="cclogo"> Tribe (TRIBE) from [cryptologos.cc](https://cryptologos.cc/tribe) <br clear='all'>
 1. <img src="usdc-coin-symbol.svg" class="cclogo"> UDSC (USDC) from [cryptologos.cc](https://cryptologos.cc/usd-coin) <br clear='all'>
 1. <img src="usdt-coin-symbol.svg" class="cclogo"> Tether (USDT) adapted from [cryptologos.cc](https://cryptologos.cc/usd-coin) <br clear='all'>
-1. <img src="ust-coin-symbol.svg" class="cclogo"> TerraUSD (UST) from [seeklogo](https://seeklogo.com/vector-logo/438118/terrausd-ust) <br clear='all'>
+1. <img src="ustc-coin-symbol.svg" class="cclogo"> TerraUSD (UST) from [seeklogo](https://seeklogo.com/vector-logo/438118/terrausd-ust) <br clear='all'>
 1. <img src="wbtc-coin-symbol.svg" class="cclogo"> Wrapped Bitcoin (WBTC) from [cryptologos.cc](https://cryptologos.cc/wrapped-bitcoin) <br clear='all'>
 1. <img src="weth-coin-symbol.svg" class="cclogo"> WETH created by me from the WBTC logo (shown herein) and the ETH logo (also herein)<br clear='all'>
 1. <img src="xlm-coin-symbol.svg" class="cclogo"> Stellar Lumens (XLM) adapted from [cryptologos.cc](https://cryptologos.cc/stellar) <br clear='all'>
