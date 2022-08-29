@@ -1,5 +1,5 @@
-P1: Cryptocurrency Introduction
-===============================
+Cryptocurrency Introduction
+===========================
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
