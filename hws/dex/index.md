@@ -15,7 +15,7 @@ In this assignment you are going to create a Decentralized Cryptocurrency Exchan
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 Writing this homework will require completion of the following assignments:
 
@@ -28,7 +28,7 @@ Note that this assignment requires that your [Ethereum Tokens](../tokens/index.h
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), the [Tokens slide set](../../slides/tokens.html#/), and the [Blockchain Applications](../../slides/applications.html) slide set.  The last one is most relevant, as it discusses how DEXes work.
 
 
-### The price of our (fake) ETH
+### (fake) ETH price
 
 To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH.  Both of these contracts fulfill the [IEtherPriceOracle.sol](IEtherPriceOracle.sol.html) ([src](IEtherPriceOracle.sol)) interface:
 
@@ -322,12 +322,12 @@ Step 2: Deploy your DEX to the private Ethereum blockchain.  So that it will wor
 
 Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page.  To register your DEX, fill out the contract address form at the bottom of that page.  You will see your DEX values populate one of the table rows -- make sure they are correct.  Note that the current ETH price is listed at the top of the page.
 
-### Send me some of your token cryptocurrency
+### Send me Money
 
 I will need some of your token cryptocurrency to test your DEX for grading purposes.  While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract.  Please send me 10.0 coins.  This means that if your TokenCC has 10 decimal places, then the value you need to send me is 100,000,000,000.  The address to send this to is on the Collab landing page.
 
 
-### Make some exchanges
+### Exchanges
 
 Now that your exchange is registered, you can view all the exchanges.  You should see your exchange in there, along with your cryptocurrency's logo.  The stats of each exchange are listed in that table.
 

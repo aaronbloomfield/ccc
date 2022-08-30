@@ -14,7 +14,7 @@ Giving credit where credit is due: The particular smart contract being used here
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You should have a few (fake) ETH.  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  You will also need to launch a geth terminal, which is also described in the that assignment.
 
@@ -48,7 +48,7 @@ For this assignment we will be providing the Solidity code to use: [Polls.sol](P
 That being said, you will need to make a small modification to the code.  Edit the [Polls.sol](Polls.sol.html) ([src](Polls.sol)) file to add your own choices to your Polls contract.  In particular, you should ONLY change the `addChoices()` calls in the constructor -- you can add more or take some away, as needed.  It is important that you do not change any other code in the contract, else it will not work properly when we are testing and grading it!  Please choose something that is not controversial -- there are many great ways to fight for, and to voice opinions for, things that others may find controversial.  Our private Ethereum blockchain for this course is not one of them.
 
 
-### Task 1: Use Remix
+### Task 1: Remix
 
 Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix provides easy to read compiler error messages and makes it really easy to test your smart contract as you are developing it.  You can either use the online editor at [remix.ethereum.org](http://remix.ethereum.org) or you can install it locally via the [Remix download page](https://github.com/ethereum/remix-desktop/releases).  It is already installed on the VirtualBox image.  The web interface on [remix.ethereum.org](http://remix.ethereum.org) is designed to look just like the IDE, and you are welcome to use either -- the directions herein apply the same to both.  However, if you do use the web interface, make sure you save your text file back to your computer.
 
@@ -78,7 +78,7 @@ Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix pro
 8. Explore Remix on your own.  You are going to be spending a lot of time developing smart contracts in Remix. Spending a bit of time learning how it works, and becoming comfortable with the interface, will save you a lot of time in the future.
 
 
-### Task 2: Deployment from Remix
+### Task 2: Remix Deployment
 
 At this point we can edit, compile, and test our program on Remix.  We have also made changes to the `addChoice()` calls in the Polls.sol constructor.  Now we are going to use Remix to deploy to our private Ethereum blockchain.
 
@@ -158,7 +158,7 @@ Read these instructions through before starting them!
     - You are going to need it open and with the Polls.sol compiled, for task 4, below
 
 
-### Task 3: View a web page
+### Task 3: Web Interface
 
 We wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The Javascript of the web page uses the web3 library, which is what allows you to connect to the blockchain from Javascript.  In our case, we use it to connect to a node running geth.  The URL for this web page is on the Collab landing page -- once there, enter your smart contract's contract address (with the leading `0x`) for your deployed smart contract, and it will display the choices.
 

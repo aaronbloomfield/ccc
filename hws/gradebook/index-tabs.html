@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<html xmlns='http://www.w3.org/1999/xhtml' lang='' xml:lang=''>
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta charset='utf-8'></meta>
+  <meta name='generator' content='pandoc'></meta>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes'></meta>
   <title>Gradebook Smart Contract</title>
   <style>
     code{white-space: pre-wrap;}
@@ -14,7 +14,7 @@
     ul.task-list{list-style: none;}
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="../../markdown.css" />
+  <link rel='stylesheet' href='../../markdown.css'></link>
   <script>
   function openTab(evt, tabName) {
     // Declare all variables
@@ -37,28 +37,34 @@
     evt.currentTarget.className += " active";
   }
   </script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  
 </head>
 <body>
-<h1 id="gradebook-smart-contract">Gradebook Smart Contract</h1>
-<p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>)</p>
-<h3 id="overview">Overview</h3>
+<h1 id='gradebook-smart-contract'>Gradebook Smart Contract</h1>
+<p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>)</p>
+<div class='tab'>
+<button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
+<button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
+<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
+<button class='tablinks' onclick="openTab(event,'tpart-1-gradebook-contract')">Gradebook Contract</button>
+<button class='tablinks' onclick="openTab(event,'tpart-2-your-average')">Your Average</button>
+<button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
+</div>
+<div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
 <p>I need a new gradebook! Because Collab and my favorite spreadsheet programs are just not doing the job anymore. So I’ve decided to keep everybody’s grades in a public blockchain. Your task is to implement this gradebook for me.</p>
-<p>Note: I’m not going to to keep <em>real</em> grades in the gradebook. In addition to the fact that doing so would violate your privacy, it would also be a violation of <a href="https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html">FERPA</a>. So only fake grades will be kept herein.</p>
+<p>Note: I’m not going to to keep <em>real</em> grades in the gradebook. In addition to the fact that doing so would violate your privacy, it would also be a violation of <a href='https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html'>FERPA</a>. So only fake grades will be kept herein.</p>
 <p>Admittedly, a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts. But it will introduce you to the concepts involved in developing smart contracts. And there are many very similar applications that would only require a few tweaks to the gradebook contract. There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.</p>
-<h3 id="changelog">Changelog</h3>
+</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-<h3 id="background">Background</h3>
+</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
 <p>Writing this homework will require completion of the following assignments:</p>
 <ul>
-<li><a href="../ethprivate/index.html">Connecting to the private Ethereum blockchain</a> (<a href="../ethprivate/index.md">md</a>)</li>
-<li><a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>)</li>
+<li><a href='../ethprivate/index.html'>Connecting to the private Ethereum blockchain</a> (<a href='../ethprivate/index.md'>md</a>)</li>
+<li><a href='../dappintro/index.html'>dApp introduction</a> (<a href='../dappintro/index.md'>md</a>)</li>
 </ul>
-<p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a>, and the <a href="../../slides/solidity.html#/">Solidity slide set</a>.</p>
-<h3 id="part-1-gradebook-contract">Part 1: Gradebook contract</h3>
-<h4 id="overview-1">Overview</h4>
+<p>You will also need to be familiar with the <a href='../../slides/ethereum.html#/'>Ethereum slide set</a>, and the <a href='../../slides/solidity.html#/'>Solidity slide set</a>.</p>
+</div><div id='tpart-1-gradebook-contract' class='tabcontent'><h3 id='part-1-gradebook-contract'>Part 1: Gradebook contract</h3>
+<h4 id='overview-1'>Overview</h4>
 <p>The gradebook will need to have the following functionalities:</p>
 <ul>
 <li>Assignments can be created; each assignment has a maximum score</li>
@@ -68,8 +74,8 @@
 <li>Only instructors and teaching assistants can create assignments and enter/update grades</li>
 <li>Anybody can get a student’s average score</li>
 </ul>
-<h4 id="interface">Interface</h4>
-<p>Formally, your contract will need to be named <code>Gradebook</code>, and saved in a file named <code>Gradebook.sol</code>. It will need to implement the <a href="IGradebook.sol.html">IGradebook.sol</a> (<a href="IGradebook.sol">src</a>) interface, which is as follows. <strong>NOTE:</strong> the interface file itself has many more details in the comments; most of the comments were stripped for what is below.</p>
+<h4 id='interface'>Interface</h4>
+<p>Formally, your contract will need to be named <code>Gradebook</code>, and saved in a file named <code>Gradebook.sol</code>. It will need to implement the <a href='IGradebook.sol.html'>IGradebook.sol</a> (<a href='IGradebook.sol'>src</a>) interface, which is as follows. <strong>NOTE:</strong> the interface file itself has many more details in the comments; most of the comments were stripped for what is below.</p>
 <pre><code>// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
@@ -112,7 +118,7 @@ interface IGradebook {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }</code></pre>
-<h4 id="implementation-details">Implementation details</h4>
+<h4 id='implementation-details'>Implementation details</h4>
 <ul>
 <li>Students are all identified by a single string; we’ll use UVA userids</li>
 <li>All entered grades are (unsigned) integers</li>
@@ -122,42 +128,43 @@ interface IGradebook {
 <li>Your contract opening line MUST be: <code>contract Gradebook is IGradebook {</code></li>
 <li>All of your methods and fields will have to have the <code>override</code> qualifier, since they are overriding what is specified in the <code>IGradebook</code> interface</li>
 </ul>
-<p>The first six methods (after the two events) are getter functions. As long as you set the visibility of the field in the contract as <code>public</code>, then the getter method is created for you, as <a href="../../slides/solidity.html#/getters">discussed in the lecture slides</a>. For example, for the getter function <code>function num_assignments() external returns (uint)</code>, the appropriate field declaration would be <code>uint public override num_assignments;</code>. The lecture slide details this a bit more.</p>
+<p>The first six methods (after the two events) are getter functions. As long as you set the visibility of the field in the contract as <code>public</code>, then the getter method is created for you, as <a href='../../slides/solidity.html#/getters'>discussed in the lecture slides</a>. For example, for the getter function <code>function num_assignments() external returns (uint)</code>, the appropriate field declaration would be <code>uint public override num_assignments;</code>. The lecture slide details this a bit more.</p>
 <p>The two events, listed at the top of the interface, should be emitted at the appropriate time. The <code>addAssignment()</code> function should emit <code>assignmentCreationEvent()</code> event, and the <code>addGrade()</code> function should emit the <code>gradeEntryEvent()</code> event. Be sure to emit the events <em>after</em> any <code>require()</code> calls!</p>
-<h4 id="supportsinterface"><code>supportsInterface()</code></h4>
+<h4 id='supportsinterface'><code>supportsInterface()</code></h4>
 <p>We will see the use of <code>supportsInterface()</code> in a lecture and a later assignment. For now, you should use this exact implementation:</p>
 <pre><code>function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return interfaceId == type(IGradebook).interfaceId || interfaceId == 0x01ffc9a7;
 }</code></pre>
-<h4 id="testing">Testing</h4>
+<h4 id='testing'>Testing</h4>
 <p>You will invariably run into issues testing and debugging your code. We have a few tips and tricks.</p>
 <ul>
-<li>Use <code>require()</code>. A lot. And be sure to use the <a href="../../slides/solidity.html#/require">two-parameter version of <code>require()</code></a>.</li>
-<li>Keep in mind the <a href="../../slides/solidity.html#/debugging">Solidity testing &amp; debugging ideas</a> from the lecture slides</li>
-<li>Once you have tested it in the Javascript deployment environment, you will want to interact with our private blockchain, as described in the <a href="../dappintro/index.html">dApp introduction</a> assignment. Remember that, in Remix, when you initiate a transaction (orange button) – rather than a call (blue button) – you will have to mine it into the blockchain. Via a <code>geth attach</code> terminal, run <code>miner.start()</code> and then <code>miner.stop()</code>.</li>
+<li>Use <code>require()</code>. A lot. And be sure to use the <a href='../../slides/solidity.html#/require'>two-parameter version of <code>require()</code></a>.</li>
+<li>Keep in mind the <a href='../../slides/solidity.html#/debugging'>Solidity testing & debugging ideas</a> from the lecture slides</li>
+<li>Once you have tested it in the Javascript deployment environment, you will want to interact with our private blockchain, as described in the <a href='../dappintro/index.html'>dApp introduction</a> assignment. Remember that, in Remix, when you initiate a transaction (orange button) – rather than a call (blue button) – you will have to mine it into the blockchain. Via a <code>geth attach</code> terminal, run <code>miner.start()</code> and then <code>miner.stop()</code>.</li>
 <li>In Remix you are going to end up calling a bunch of functions to initialize your smart contract for testing – for example, to create a few assignments, add some scores, etc. Once you know those functions work properly, you can put them in the constructor, as such. This will save you time, but <strong>BE SURE</strong> to remove those lines once you are finished testing it and prior to submission.</li>
 </ul>
 <pre><code>designateTA(0x0123456789abcdef0123456789abcdef01234567);
-addAssignment(&quot;HW1&quot;,10);
-addAssignment(&quot;HW2&quot;,10);
-addGrade(&quot;mst3k&quot;,0,5);
-addGrade(&quot;mst3k&quot;,1,10);</code></pre>
-<h4 id="deployment">Deployment</h4>
+addAssignment("HW1",10);
+addAssignment("HW2",10);
+addGrade("mst3k",0,5);
+addGrade("mst3k",1,10);</code></pre>
+<h4 id='deployment'>Deployment</h4>
 <p>Once done, you will need to deploy your CoruseGradebook smart contract to our private Ethereum blockchain. Save the contract address, as you will need to submit that, below. It’s okay if you deploy it multiple times (for testing, debugging, errors, etc.). Just submit the address of the last one you deployed.</p>
 <p>You need to designate me as a TA for your gradebook. The address to designate is on the Collab landing page. Other than that one call to <code>designateTA()</code>, you should not make any other calls to the deployed smart contract. If you make other calls, please re-deploy it, re-call <code>designateTA()</code>, and submit that deployed contract address.</p>
-<h3 id="part-2-your-average">Part 2: Your average</h3>
+</div><div id='tpart-2-your-average' class='tabcontent'><h3 id='part-2-your-average'>Part 2: Your average</h3>
 <p>I’ve deployed a gradebook with your (fake) grades. The address for that smart contract is on the Collab landing page. You will need to find out your overall average as well as a few other items of information. Your scores are kept by your UVA userid. These scores are fake, and were randomly generated, so don’t feel bad if your score(s) are low.</p>
-<p>There are two ways you can access the gradebook on the blockchain. One is through Remix, like was done in the <a href="../dappintro/index.html">dApp introduction assignment</a> (<a href="../dappintro/index.md">md</a>) – you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the ‘At Address’ text box in the deployment window. The other way is through geth, like we did in the <a href="../../slides/solidity.html#/debtor">live coding example in class</a> – the geth commands start about 8 slides down in that column. For this you will also need the ABI. You can compile the IGradebook.sol interface, and then copy the ABI – after you compile it, the copy ABI link is at the very bottom of the compilation pane. Note that you may have to reformat that ABI a bit – what you copy is on many lines, and you may have to reformat it to one line.</p>
+<p>There are two ways you can access the gradebook on the blockchain. One is through Remix, like was done in the <a href='../dappintro/index.html'>dApp introduction assignment</a> (<a href='../dappintro/index.md'>md</a>) – you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the ‘At Address’ text box in the deployment window. The other way is through geth, like we did in the <a href='../../slides/solidity.html#/debtor'>live coding example in class</a> – the geth commands start about 8 slides down in that column. For this you will also need the ABI. You can compile the IGradebook.sol interface, and then copy the ABI – after you compile it, the copy ABI link is at the very bottom of the compilation pane. Note that you may have to reformat that ABI a bit – what you copy is on many lines, and you may have to reformat it to one line.</p>
 <p>The information you need to obtain is:</p>
 <ul>
 <li>What is your (fake) average? Recall that it reports an integer that is 100 times your average (so 1234 means your average is 12.34%)</li>
 <li>What are the maximum number of points on the assignment with index 3?</li>
 <li>What is YOUR score on the assignment with index 3?</li>
 </ul>
-<h3 id="submission">Submission</h3>
-<p>You will need to fill in the various values from this assignment into the <a href="gradebook.py.html">gradebook.py</a> (<a href="gradebook.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
+</div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
+<p>You will need to fill in the various values from this assignment into the <a href='gradebook.py.html'>gradebook.py</a> (<a href='gradebook.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>two</em> forms of submission for this assignment; you must do both.</p>
 <p>Submission 1: You must deploy your smart contract to our private Ethereum blockchain – this was probably done above. It’s fine if you deploy it a few times because you were testing it, screwed something up, or whatever. But the final deployment should not have any data other than the one call to <code>designateTA()</code>.</p>
 <p>Submission 2: You should submit your <code>Gradebook.sol</code> file, as well as your <code>gradebook.py</code> file, and ONLY those two files, to Gradescope. All your Solidity code should be in that first file, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).</p>
-</body>
+</div><script>document.getElementById('defaultOpen').click();</script></body>
 </html>
+

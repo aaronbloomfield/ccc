@@ -19,6 +19,11 @@ The Bitcoin block format that is being parsed for this assignment is the format 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
+### Background
+
+You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the discussion about the format for the blockchain.
+
+
 ### Languages
 
 In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Four languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.6.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it.
@@ -41,7 +46,7 @@ We have a number of files of the blockchain itself.  Blockchain block counting i
     - [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) will help you ensure that your JSON output is correct -- see the comments in the file for a description of how to use it
     - [change_byte.py](change_byte.py.html) ([src](change_byte.py)) will help with checking for blockchain errors -- see below for how to use it
 
-### Part 1: Reading in the blockchain
+### Part 1: Parsing
 
 Your program will take in exactly one command-line parameter: the file to read in.  You can assume that there will always be one command line parameter provided, and that that file will exist.  Sample files are provided above -- both large and small.
 
@@ -124,7 +129,7 @@ And for Java:
 java BTCParse $@
 ```
 
-### Part 2: Validating the blockchain
+### Part 2: Validation
 
 Now that you can read in valid blockchain, your program should be extended to check for errors in the blockchain.  Once an error is encountered, the program should output the error number and stop.  The errors below are what should be checked for -- note that these are not all the possible errors, but a selection of errors to check for on this assignment.
 
@@ -312,7 +317,7 @@ And then we can get all fancy and do all that in one line:
 ```
 
 
-### Part 3: Outputting the blockchain
+### Part 3: Output
 
 Lastly, your program must output the blockchain in JSON format.  You can read about [JSON on Wikipedia](https://en.wikipedia.org/wiki/JSON).  The format must be as described below, but your whitespace doesn't matter.  We are going to check it via a JSON parser.  Your output should look like the following:
 
@@ -389,7 +394,7 @@ Make sure you test it with multiple blocks!  However, the online site will proba
 
 You should also use the [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) program to ensure that your JSON is in the right format.  This is intended to ensure that you have the right fields for when we grade the assignment.  It just has a bunch of `assert()` calls to ensure that the format is what is shown above.  Remember that white space doesn't matter, so you are welcome to use any spacing that you want.  This program will also be used as one of the visible submission tests in Gradescope.
 
-### Deliverables
+### Submission
 
 You must submit a minimum of three files; more is fine.
 

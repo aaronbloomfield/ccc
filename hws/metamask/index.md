@@ -13,7 +13,7 @@ You are going to create a web interface for the Auctioneer contract you created 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 Writing this homework will require completion of the following assignments:
 
@@ -24,11 +24,11 @@ Writing this homework will require completion of the following assignments:
 - [dApp Auction](../auction/index.html) ([md](../auction/index.md))
 
 
-### Setup: Auctioneer
+#### Auctioneer
 
 We are going to use your Auctioneer contract, from the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  You will also need your NFTmanager contract, from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, as well.  If you did not get yours working, then contact the course staff, and we can deploy them for you to use.  Otherwise, deploy your Auctioneer contract to the blockchain, and save the contract address, as it will be needed below.
 
-### Setup: MetaMask
+### MetaMask Setup 
 
 <img src="metamask-pop-up.webp" style="float:right;border:1px solid black;margin-left:15px">
 
@@ -77,7 +77,7 @@ The catch: in order to be able to call a smart contract that is a *transaction*,
 
 -->
 
-### Background: HTML forms and Javascript
+### HTML and Javascript
 
 The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is on the Collab landing page -- you can just save that as a new HTML file, which you will want to name `auctions.html`.  Note: you have to view that page with an address else most of the relevant code will not be shown.  The link to that page with an address is also on the Collab landing page.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and paired functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
 
@@ -225,7 +225,7 @@ Any calls to four of these functions (`createAuction()`, `closeAuction()`, `plac
 When this assignment is complete, anybody should be able to create NFTs, initiate auctions, bid on existing auctions, and close auctions when they are done.  As for the NFT images, we will still provide just a file name, and the URL prefix will be the same Collab link as in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment; that prefix is on the Collab landing page.
 <br clear='all'>
 
-### Web page start-up
+### Web page setup
 
 To get the auctions.html web page set up:
 

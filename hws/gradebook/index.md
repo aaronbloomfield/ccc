@@ -19,7 +19,7 @@ Admittedly, a gradebook of private grades being kept on a public blockchain is n
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 Writing this homework will require completion of the following assignments:
 
@@ -29,7 +29,7 @@ Writing this homework will require completion of the following assignments:
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), and the [Solidity slide set](../../slides/solidity.html#/).
 
 
-### Part 1: Write the Gradebook smart contract
+### Part 1: Gradebook contract
 
 #### Overview
 
@@ -141,7 +141,7 @@ Once done, you will need to deploy your CoruseGradebook smart contract to our pr
 You need to designate me as a TA for your gradebook.  The address to designate is on the Collab landing page.  Other than that one call to `designateTA()`, you should not make any other calls to the deployed smart contract.  If you make other calls, please re-deploy it, re-call `designateTA()`, and submit that deployed contract address.
 
 
-### Part 2: What is your average?
+### Part 2: Your average
 
 I've deployed a gradebook with your (fake) grades.  The address for that smart contract is on the Collab landing page.  You will need to find out your overall average as well as a few other items of information.  Your scores are kept by your UVA userid.  These scores are fake, and were randomly generated, so don't feel bad if your score(s) are low.
 

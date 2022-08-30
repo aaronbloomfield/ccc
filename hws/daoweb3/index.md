@@ -10,7 +10,7 @@ In this assignment you are going to create a Decentralized Autonomous Organizati
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:
 

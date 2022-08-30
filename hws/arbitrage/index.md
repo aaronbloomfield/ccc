@@ -14,7 +14,7 @@ Regardless of what you named your token cryptocurrency, we are going to refer to
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:
 
@@ -23,7 +23,7 @@ Beyond general experience with programming Solidity (which you have at this poin
 - Familiarity with the [arbitrage trading](../../slides/applications.html#/arbitrage) section of the lecture slides
 
 
-### TokenDEX deployment
+### TokenDEX
 
 You will need to deploy five (or so) instances of your TokenDEX.  The intent is to have a difference in exchange rates between these, and your program below will take advantage of these differences.  Before you deploy them, however, read this section through.
 

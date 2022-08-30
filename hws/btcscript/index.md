@@ -14,12 +14,16 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
+### Background
+
+You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the discussion about the format for the blockchain.
+
+
 ### Languages
 
 This assignment uses the [Python bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is NOT installed on the VirtualBox image, so you will have to install it there as well.
 
-
-### Provided files
+We provide you with a few files to use:
 
 - [scripts.py](scripts.py.html) ([src](scripts.py)): you will modify this file throughout this assignment.  The progression of items in that file mirrors the progression of the assignment steps in this assignment.  This is the only file that you will submit.  We would expect that you would be able to understand everything this file by the end of the assignment
 - [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)): this is the driver file that will run the various parts of the assignment using the values in the above scripts.py.  You are of course welcome to look at the details, but you are not expected to understand what is in that file.
@@ -37,7 +41,7 @@ There are a few really important things to remember in this assignment.
 7. To save you the tedious task of having to learn the [Python Bitcoin library](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/)) -- which you probably would never use again -- much of the library interaction has been handled for you by the provided code.  But in order for that to work, you have to proceed through this homework in the order written.
 
 
-### Testnet Setup
+### Testnet
 
 As we do not want to have to buy, and possibly lose, real BTC, we are going to use a test network.  Because the coins we are going to be using are not "real" Bitcoins, we will use the abbreviation 'tBTC' instead of 'BTC'.  When using a test network, you get coins for free via a "faucet" -- in the same way that a water faucet provides water once turned on, so does a testnet faucet provide tBTC when requested.  The particular one we are using is [Yet Another Bitcoin Testnet Faucet](https://testnet-faucet.mempool.co/).
 
@@ -61,9 +65,9 @@ As we do not want to have to buy, and possibly lose, real BTC, we are going to u
 
 Be careful not to lose the information (keys and TXIDs) that you recorded above.  To prevent abuse, the faucet only allows one transaction per 12 hours for a given IP address or tBTC address.
 
-### Python Bitcoin library
+### Python library
 
-The Bitcoin library for Python handles much of the heavy lifting -- conversion from one type to another, encryption, signing, verification, etc.  If you were to enter actual keys that have real BTC then you could use this library to make real BTC transactions.
+The `python-bitcoinlib` library for Python handles much of the heavy lifting -- conversion from one type to another, encryption, signing, verification, etc.  If you were to enter actual keys that have real BTC then you could use this library to make real BTC transactions.
 
 While the library can do many things, below is a quick summary of the relevant aspects that you will need to know for this assignment.
 
@@ -89,7 +93,7 @@ address = P2PKHBitcoinAddress.from_pubkey(public_key)
   - We provide a helper function, called `create_CHECKSIG_signature()`, in scripts.py to perform these calls.
 
 
-### Part 1: Standard P2PKH transaction
+### Part 1: P2PKH
 
 The UTXO indices that you created when you split your tBTC are paid to a standard [P2PKH transaction](../../slides/bitcoin.html#/p2pkh).  Your task is to redeem them by writing the appropriate scripts (pubkey and sigscript) to redeem the coins from one of the UTXOs.  It should be paid back to the faucet -- use the `faucet_adress` variable, defined at the top of the `scripts.py` file, as the receiver of this transaction.
 
@@ -126,7 +130,7 @@ You will notice that the amount in each UTXO index from the split transaction is
 
 IMPORTANT NOTE: There is somebody that is redeeming all of our puzzle transactions (part 2a) on the Bitcoin test network -- they are parsing the output script, computing the answers, and redeeming the transaction. Because this script does not have a signature, anybody can redeem it. If you keep getting oddball errors, and you have set your transaction hash and UTXO index correctly, check the transaction page itself to see if it's spent.  For the puzzle transactions, blockcyper.com just says “unknown script type”, and does not indicate if it's spent or not. blockchain.com does show this – search for the transaction hash, and in the outputs section, the Details item (on the right) will indicate if it's spent or not. If it is spent, you can click on the word ‘Spent’ to got the transaction that redeemed it.  When grading it, we will look at (1) if the transaction from part 2a was broadcast, (2) whether it was redeemed (by you or somebody else), and (3) whether the two scripts verify with each other. Thus, it does not have to be your transaction that redeems part 2a in part 2b, but your part 2b does have to verify with your part 2a.
 
-### Part 3: Multi-signature transaction
+### Part 3: Multisig
 
 You are going to create a multi-signature transaction, which must use the [OP_CHECKMULTISIG opcode](../../slides/bitcoin.html#/checkmultisig).
 
@@ -154,7 +158,7 @@ The second step is to create a transaction that will redeem it.  You will have t
 
 IMPORTANT NOTE: For the `OP_CHECKMULTISIG`, it should have ONLY the keys/signatures of Alice, Bob, and Charlie; the bank signature should not be in there. Instead, the bank signature should be separate and verified with an `OP_CHECKSIG`. The reason is that if everything is in the `OP_CHECKMULTISIG`, then an empty set of signatures and keys will verify correctly. This is relevant because there is some user on the Bitcoin test network who is trying to redeem your UTXOs.  In particular, it has been observed when the UTXO was only verified with a single `OP_CHECKMULTISIG`.
 
-### Part 4: Cross-chain transactions
+### Part 4: Cross-chain
 
 In this part you will create the scripts for a [cross-chain transaction](../../slides/bitcoin.html#/xchain).  Typically this would be for two different cryptocurrencies.  However, since we only have learned Bitcoin Script, we will use that for both parts.  There are many cryptocurrencies that are forks of Bitcoin, and thus have the same scripting language, so the same program could work for them.  Or a completely different cryptocurrency, with a different scripting language, would have an analogous script.  However, to test this we will be using two *different* Bitcoin testing blockchains.  
 
@@ -216,7 +220,7 @@ Once you have written the script in the `atomicswap_scriptPubKey()` function, yo
 4. Bob can new redeem TXN 1 on the tBTC network, since he knows the secret which Alice just revealed via her redemption above.  Be sure to set the `utxo_index` variable in scripts.py to a valid index before running this part!  This is run via `./bitcoinctl.py part4d`.  Save the transaction hash into `txid_atomicswap_bob_redeem_tbtc`.
 
 
-### Part 5: Pay back the tBTC faucet address
+### Part 5: Return tBTC
 
 Once you have completed this assignment, you should pay any unspent tBTC UTXOs back to the faucet address.  You can use the script from part 1 for this -- just change the `utxo_index` value and re-run it until all the UTXO indices are spent.  If you have any other inputs -- perhaps you used the faucet multiple times -- just change the `txid_split` variable (and the `utxo_index` and the `send_amount`), and then call `./bitcoinctl.py part1`.  But be sure to change those values back!!!
 

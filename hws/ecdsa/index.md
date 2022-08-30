@@ -12,13 +12,6 @@ The sizes of the numbers we are using will be small -- all 1,000 (base 10) or le
 In this homework, it is critical to carefully test each stage of the assignment.  Each part requires that the previous part works properly -- and, if it does not, then it will be exceedingly difficult to debug your program.  If you get stuck, the best way to figure out where the bug is is to print out the values at each step, and verify them by hand (or via online calculators, linked to below).
 
 
-### Languages
-
-You can write this assignment in Java or Python.  If you want to use a different language, please speak to me first.  The intent is for you to write all this code yourself -- you can NOT use any libraries that do field arithmetic, elliptic curve arithmetic, etc.  This includes any hashing functions (such as hashlib in Python).  We expect you to only need the most common standard libraries as a result.
-
-We realize that the default random number generators in most (all?) programming languages are not cryptographically secure random number generators, but that's fine for this assignment.
-
-
 ### Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
@@ -27,6 +20,14 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 ### Background
 
 You will need to be familiar with the [Encryption slide set](../../slides/encryption.html#/), specifically the three sections that deal with the content in this assignment: [elliptic curves](../../slides/encryption.html#/elliptic), [finite fields](../../slides/encryption.html#/fields), and [ECDSA](../../slides/encryption.html#/ecdsa).  What this assignment is asking for will make no sense if you are not familiar with that material.
+
+
+### Languages
+
+You can write this assignment in Java or Python.  If you want to use a different language, please speak to me first.  The intent is for you to write all this code yourself -- you can NOT use any libraries that do field arithmetic, elliptic curve arithmetic, etc.  This includes any hashing functions (such as hashlib in Python).  We expect you to only need the most common standard libraries as a result.
+
+We realize that the default random number generators in most (all?) programming languages are not cryptographically secure random number generators, but that's fine for this assignment.
+
 
 ### Other files
 
@@ -49,7 +50,7 @@ Of course, you should change the second line to match the file/class names that 
 You will also have to submit a `Makefile` that will be used to compile your program, if needed.  For languages that do not need compilation (such as Python), just put in a single `echo` statement so that `make` still runs properly.  This is the same as in the [last assignment](../intro/index.html) ([md](../intro/index.md)).
 
 
-### Step 1: Finite Field functions
+### Step 1: Finite Fields
 
 The first step is to ensure that you have all the finite field arithmetic functions that are necessary.  Some of these are easy -- addition and multiplication, for example.  Others are a bit more challenging, such as division.  You will likely want to reference the [finite field section of the lecture slides](../../slides/encryption.html#/fields).  In addition to the four standard arithmetic operations, you will likely also need exponentiation, obtaining the additive inverse, and obtaining the multiplicative inverse.  Some functions will likely use others -- division of $a$ by $x$ is just multiplying $a$ by the multiplicative inverse of $x$, for example.
 
@@ -57,7 +58,7 @@ The field size should be a parameter to the functions, or a global variable, as 
 
 Test these well to ensure that they work!  You can test your operations by using the arithmetic identities: if $x$ is the multiplicative inverse of $y$, then $x \ast y == 1$, for example.
 
-### Step 2: Elliptic Curve point operations
+### Step 2: EC operations
 
 There are three elliptic curve point operations that will be needed:
 
@@ -72,7 +73,7 @@ There are three elliptic curve point operations that will be needed:
 
 You can test your functions by using two websites: one that does [elliptic curve addition in a field](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43) and one that does [elliptic curve multiplication in a field](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43).  The curve we are using is secp256k1, which sets $a=0$ and $b=7$.  For testing purposes, we recommend setting the prime modulus $p$ to 43; this will give an curve order ($o$) value of 31.
 
-### Step 3: Signature creation and validation
+### Step 3: Signatures
 
 Lastly, you can proceed to generate the signature and then validate it; this is discussed in the [ECDSA section](../../slides/encryption.html#/ecdsa) of the encryption slide set.
 
@@ -87,7 +88,7 @@ Your program will need to be able to perform three primary functions:
 We will only be using the secp256k1 curve, so you can always assume that $a=0$ and $b=7$.
 
 
-### Step 4: Ensure correct input and output
+### Step 4: Correct I/O
 
 Your program will take in a number of command line parameters.  You can always assume that the number and format of command line parameters will be correct, as specified below -- you do not need to error check the parameters (neither the number nor the format).  You may also assume that any points provided (such as $G$ or $Q$) will always lie on the curve.  Your program will only use the secp256k1 curve for all execution runs, so you can globally set $a=0$ and $b=7$; these values will not be passed to the program.
 

@@ -26,16 +26,16 @@ We will be developing applications for the Ethereum blockchain.  We won't be usi
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through `pip` (or `pip3`).  This is already taken care of in the VirtualBox image.  Don't worry if you don't know Python -- we give you the exact code to use.
 
 This document also assumes you can install packages on your machine (also not needed for the VirtualBox image).
 
 
-### Part 1: Install geth
+### Part 1: Geth
 
-This is already taken care of in the VirtualBox image, and you can skip to step 2 if you are using the VB image.
+Geth is the program we will be using to connect to the blockchain.  It is already taken care of in the VirtualBox image, and you can skip to step 2 if you are using the VB image.
 
 You will need to [install geth](https://geth.ethereum.org/docs/install-and-build/installing-geth).  The instructions differ depending on your OS.
 
@@ -43,7 +43,9 @@ Geth, which stands for Go Ethereum, is a command-line interface to run an Ethere
 
 **WARNING:** DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and over 1 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
 
-### Part 2: Connect to the private blockchain
+### Part 2: Blockchain Connection
+
+Here we will connect to the private blockchain.
 
 **Step 1:** Create a directory to hold the blockchain info -- this can be anywhere you want, but we'll call it `/path/to/ethprivate` herein.
 
@@ -131,7 +133,7 @@ Once it is sync'ed, here are some commands for you to try out:
   - Or try: `eth.getBalance(eth.coinbase)`
 
 
-### Part 4: Get some ether
+### Part 4: Get ether
 
 You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Collab landing page.  Each time you use this faucet you will obtain 10 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need.  But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
 
@@ -141,7 +143,7 @@ You should request funds once or twice.  After you make the requests -- you'll n
 To verify that you did this part, we are going to check that you have a non-zero balance in your eth.coinbase account.
 
 
-### Part 5: Extract private key
+### Part 5: Extract key
 
 We need to get the private key of the account you created, as we will need that for our dApp development in future assignments.  The private key is encrypted in a .json file in the keystore/ sub-directory of your geth data directory.  The file will have a name like: UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567.  Note that the last part of that name ("0123456789abcdef0123456789abcdef01234567") matches the Ethereum address we obtained and that is returned from `eth.coinbase`.
 
@@ -190,7 +192,7 @@ The decoded private key is the hex line at the end -- you should remove the lead
 Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.
 
 
-### Part 6: Send me some money!!!!
+### Part 6: Send me ether
 
 Next you are going to send me some money via the geth command line.  We are done with Python for this assignment, and have to go back to the geth prompt (via `geth attach /path/to/ethprivate/geth.ipc`) for this.
 
@@ -223,7 +225,7 @@ Further steps to do in the geth console:
 We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the intended course account.
 
 
-### Part 7: Explore geth on your own
+### Part 7: Explore geth more
 
 You should explore geth on your own.  When you start geth (via `geth attach geth.ipc`), it lists the modules available:
 

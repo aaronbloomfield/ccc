@@ -15,53 +15,50 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
 <h1 id="arbitrage-trading">Arbitrage Trading</h1>
-<p><a href="../index.html">Go up to the CCC HW page</a> (<a
-href="../index.md">md</a>)</p>
+<p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>)</p>
 <h3 id="overview">Overview</h3>
-<p>In this assignment you are going to create a Python program to
-perform <a href="../../slides/applications.html#/arbitrage">arbitrage
-trading</a> on the blockchain. Your trading will be between a number of
-different of your TokenDEX instances from the <a
-href="../dex/index.html">DEX</a> (<a href="../dex/index.md">md</a>)
-assignment.</p>
-<p>Regardless of what you named your token cryptocurrency, we are going
-to refer to it as ‘TC’ here (for Token Cryptocurrency).</p>
+<p>In this assignment you are going to create a Python program to perform <a href="../../slides/applications.html#/arbitrage">arbitrage trading</a> on the blockchain. Your trading will be between a number of different of your TokenDEX instances from the <a href="../dex/index.html">DEX</a> (<a href="../dex/index.md">md</a>) assignment.</p>
+<p>Regardless of what you named your token cryptocurrency, we are going to refer to it as ‘TC’ here (for Token Cryptocurrency).</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo
-fixes and minor clarifications are not listed here. So far there aren’t
-any significant changes to report.</p>
-<h3 id="pre-requisites">Pre-requisites</h3>
-<p>Beyond general experience with programming Solidity (which you have
-at this point it the course), this assignment requires:</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<h3 id="background">Background</h3>
+<p>Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:</p>
 <ul>
-<li>That you completed the <a href="../dex/index.html">DEX</a> (<a
-href="../dex/index.md">md</a>) assignment as we will be using that. If
-you didn’t get yours working, contact us, and we will provide a few
-deployed TokenDEXes for you.</li>
-<li>That you completed the <a href="../tokens/index.html">Ethereum
-Tokens</a> (<a href="../tokens/index.md">md</a>) assignment as we will
-be using your TokenCC contract.</li>
-<li>Familiarity with the <a
-href="../../slides/applications.html#/arbitrage">arbitrage trading</a>
-section of the lecture slides</li>
+<li>That you completed the <a href="../dex/index.html">DEX</a> (<a href="../dex/index.md">md</a>) assignment as we will be using that. If you didn’t get yours working, contact us, and we will provide a few deployed TokenDEXes for you.</li>
+<li>That you completed the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment as we will be using your TokenCC contract.</li>
+<li>Familiarity with the <a href="../../slides/applications.html#/arbitrage">arbitrage trading</a> section of the lecture slides</li>
 </ul>
-<h3 id="tokendex-deployment">TokenDEX deployment</h3>
-<p>You will need to deploy five (or so) instances of your TokenDEX. The
-intent is to have a difference in exchange rates between these, and your
-program below will take advantage of these differences. Before you
-deploy them, however, read this section through.</p>
-<p>There is a lot to do to get this all set up: you have to deploy a
-TokenCC contract, five (or so) DEXes, initialize all the DEXes via
-<code>createPool()</code>, and then perform some trades to create a
-difference in the exchange rates. While this can all be done manually,
-we can automate that via a smart contract. Consider the following
-method:</p>
+<h3 id="tokendex">TokenDEX</h3>
+<p>You will need to deploy five (or so) instances of your TokenDEX. The intent is to have a difference in exchange rates between these, and your program below will take advantage of these differences. Before you deploy them, however, read this section through.</p>
+<p>There is a lot to do to get this all set up: you have to deploy a TokenCC contract, five (or so) DEXes, initialize all the DEXes via <code>createPool()</code>, and then perform some trades to create a difference in the exchange rates. While this can all be done manually, we can automate that via a smart contract. Consider the following method:</p>
 <pre><code>function setup(uint numdex, uint amt_eth, uint amt_tc) public payable {
     require (msg.value &gt; numdex * amt_eth * 1 ether, &quot;Must supply enough eth&quot;);
     if ( tokencc == address(0) )
@@ -77,16 +74,8 @@ method:</p>
     }
     num_dexes += numdex;
 }</code></pre>
-<p>This handles all the deployment of the DEXes. As the addresses of the
-DEXes and the TokenCC contract are stored in public variables (a
-<code>dexes</code> mapping and a <code>tokencc</code> field,
-respectively), we can get their addresses after this function runs –
-we’ll need those when we write our arbitrage trading program. Note that
-this function requires supplying ETH with the call – if you are creating
-5 DEXes with 10 ETH per DEX, then you have to supply it with 50 ETH plus
-gas fees (or just make it 51 ETH).</p>
-<p>We also want to make a few exchanges on the DEXes to vary the
-exchange rates. Consider:</p>
+<p>This handles all the deployment of the DEXes. As the addresses of the DEXes and the TokenCC contract are stored in public variables (a <code>dexes</code> mapping and a <code>tokencc</code> field, respectively), we can get their addresses after this function runs – we’ll need those when we write our arbitrage trading program. Note that this function requires supplying ETH with the call – if you are creating 5 DEXes with 10 ETH per DEX, then you have to supply it with 50 ETH plus gas fees (or just make it 51 ETH).</p>
+<p>We also want to make a few exchanges on the DEXes to vary the exchange rates. Consider:</p>
 <pre><code>function configureDEXes() public payable {
     require (msg.value &gt; 10 ether, &quot;Must supply enough eth&quot;);
     // excahnge with the DEXes
@@ -99,60 +88,20 @@ exchange rates. Consider:</p>
     uint xferamt = TokenCC(tokencc).balanceOf(address(this)) - balance;
     TokenCC(tokencc).transfer(msg.sender,xferamt);
 }</code></pre>
-<p>When supplied with 10 ETH (plus enough for gas fees, so we can just
-make it 11 ETH), this will make a few exchanges. We can’t put this code
-in the <code>setup()</code> function, above, as that would run over the
-gas limit.</p>
-<p>We provide these functions, and a few others, in an <a
-href="Arbitrage.sol.html">Arbitrage.sol</a> (<a
-href="Arbitrage.sol">src</a>) file for you to use.
-<strong><em>NOTE:</em></strong> Just using this blindly without
-understanding what it does will not be successful – you need to
-understand the code that is being called. You will not be submitting
-this file, so feel free to adapt it as desired. Note that we create a
-constant EtherPricer in that contract, as we need to pass in an
-EtherPricer to the <code>createPool()</code> function to initialize the
-TokenDEX. However, we don’t call any functions on the DEX that use the
-EtherPricer, so using the constant one is fine here.</p>
-<p>In addition to your TokenCC.sol and TokenDEX.sol files (and any
-supporting files so they can compile), you will need the <a
-href="../dex/EtherPricer.sol.html">EtherPricer.sol</a> (<a
-href="../dex/EtherPricer.sol">src</a>) and <a
-href="../dex/EtherPricerConstant.sol.html">EtherPricerConstant.sol</a>
-(<a href="../dex/EtherPricerConstant.sol">src</a>) files.</p>
+<p>When supplied with 10 ETH (plus enough for gas fees, so we can just make it 11 ETH), this will make a few exchanges. We can’t put this code in the <code>setup()</code> function, above, as that would run over the gas limit.</p>
+<p>We provide these functions, and a few others, in an <a href="Arbitrage.sol.html">Arbitrage.sol</a> (<a href="Arbitrage.sol">src</a>) file for you to use. <strong><em>NOTE:</em></strong> Just using this blindly without understanding what it does will not be successful – you need to understand the code that is being called. You will not be submitting this file, so feel free to adapt it as desired. Note that we create a constant EtherPricer in that contract, as we need to pass in an EtherPricer to the <code>createPool()</code> function to initialize the TokenDEX. However, we don’t call any functions on the DEX that use the EtherPricer, so using the constant one is fine here.</p>
+<p>In addition to your TokenCC.sol and TokenDEX.sol files (and any supporting files so they can compile), you will need the <a href="../dex/EtherPricer.sol.html">EtherPricer.sol</a> (<a href="../dex/EtherPricer.sol">src</a>) and <a href="../dex/EtherPricerConstant.sol.html">EtherPricerConstant.sol</a> (<a href="../dex/EtherPricerConstant.sol">src</a>) files.</p>
 <h3 id="web3.py">Web3.py</h3>
-<p>You will need to read the <a
-href="../../docs/web3py.html">introduction to web3.py</a> (<a
-href="../../docs/web3py.md">md</a>). While you do not need to have all
-of that memorized, you do need to understand it all! The intent is that
-you will use that page as a reference while you write this
-assignment.</p>
+<p>You will need to read the <a href="../../docs/web3py.html">introduction to web3.py</a> (<a href="../../docs/web3py.md">md</a>). While you do not need to have all of that memorized, you do need to understand it all! The intent is that you will use that page as a reference while you write this assignment.</p>
 <h3 id="market-theory">Market Theory</h3>
 <h5 id="when-to-make-an-trade">When to make an trade</h5>
-<p>Your program will need to compute it’s <em>holdings</em>, which is
-the dollar amount of all the ETH and TC that it has. You can assume some
-fixed price for ETH (say, $100) and for TC (say, $1) for testing – but
-that means that your DEXes should have about 100 times as much TC as
-ETH.</p>
-<p>You will first need to obtain the various information (prices, <span
-class="math inline"><em>x</em></span>/<span
-class="math inline"><em>y</em></span>/<span
-class="math inline"><em>k</em></span> values at each DEX, etc.). Then
-you will need to make a <em>profitable trade</em>. A profitable trade is
-defined here as a trade where the overall value of <em>holdings</em>, in
-USD, increases. You must account for gas fees when determining this! The
-formula to determine if you will make a profit is whether:</p>
+<p>Your program will need to compute it’s <em>holdings</em>, which is the dollar amount of all the ETH and TC that it has. You can assume some fixed price for ETH (say, $100) and for TC (say, $1) for testing – but that means that your DEXes should have about 100 times as much TC as ETH.</p>
+<p>You will first need to obtain the various information (prices, <span class="math inline"><em>x</em></span>/<span class="math inline"><em>y</em></span>/<span class="math inline"><em>k</em></span> values at each DEX, etc.). Then you will need to make a <em>profitable trade</em>. A profitable trade is defined here as a trade where the overall value of <em>holdings</em>, in USD, increases. You must account for gas fees when determining this! The formula to determine if you will make a profit is whether:</p>
 <blockquote>
-<p><span
-class="math inline"><em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> &gt; <em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> − <em>g</em><em>a</em><em>s</em><em>F</em><em>e</em><em>e</em><em>s</em></span></p>
+<p><span class="math inline"><em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> &gt; <em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> − <em>g</em><em>a</em><em>s</em><em>F</em><em>e</em><em>e</em><em>s</em></span></p>
 </blockquote>
-<p>Note: there are other reasonable ways to determine “profit”. In
-particular, if one believes that the price of the currency will grow,
-then the total amount of that currency (not the total USD value) would
-be another metric. For our purposes, we will just use the USD value of
-the holdings.</p>
-<p>We are going to call this a <em>single trade</em>. This is when you
-make one transaction at a single DEX to increase your holdings.</p>
+<p>Note: there are other reasonable ways to determine “profit”. In particular, if one believes that the price of the currency will grow, then the total amount of that currency (not the total USD value) would be another metric. For our purposes, we will just use the USD value of the holdings.</p>
+<p>We are going to call this a <em>single trade</em>. This is when you make one transaction at a single DEX to increase your holdings.</p>
 <!--
 
 However, it could be that making *two* trades at once is profitable, whereas making one would not -- you must consider this possibility as well.  For example, imagine that ETH is worth $100, TC is worth $1, and you have 10 ETH and no TC, for a holdings of $1000.  We'll assume a constant exchange rate, even though our DEXes use $x \ast y = k$ to compute the exchange rate.  If a DEX 1 has a 1:100 ETH:TC exchange rate, then making that trade would not increase the holdings -- you would get $10 \ast 100 = 1,000$ TC for your 100 ETH, still worth $1000, but but the gas fees would lower that amount slightly, causing a loss of holdings.  However, if another DEX could trade that TC back for *more* ETH -- say it had a 1:50 ETH:TC exchange rate -- then you could trade that 1,000 TC for 20 ETH, making a profit.  Thus, you  must consider making two trades to make a profit as well.  We are going to call this a *double trade*.
@@ -160,167 +109,52 @@ However, it could be that making *two* trades at once is profitable, whereas mak
 You can assume the number of DEXes involved, $d$, is relatively small, so you can compute $d^2$ different combinations.  We will not be testing it with more than, say, half a dozen DEXes.
 
 -->
-<p>For each DEX, and for each of the two directions (ETH -&gt; TC and TC
--&gt; ETH), find the (DEX,currency,amount) combination that maximizes
-your profit. Consider the most profitable such transaction among all the
-available DEXes. If that transaction increases your holdings, then take
-that action. It’s also possible that a <em>double trade</em> would yield
-a profit, where as a single trade would not (for example, exchanging
-some ETH for some TC in one DEX, and then trading that TC back for more
-ETH at a different DEX). We are not considering double trades for this
-assignment.</p>
+<p>For each DEX, and for each of the two directions (ETH -&gt; TC and TC -&gt; ETH), find the (DEX,currency,amount) combination that maximizes your profit. Consider the most profitable such transaction among all the available DEXes. If that transaction increases your holdings, then take that action. It’s also possible that a <em>double trade</em> would yield a profit, where as a single trade would not (for example, exchanging some ETH for some TC in one DEX, and then trading that TC back for more ETH at a different DEX). We are not considering double trades for this assignment.</p>
 <h5 id="how-much-to-buy">How much to buy</h5>
-<p>We can formulaically determine how much to buy. The full derivation
-of the formulas in this section is being omitted here, but you can see
-that full derivation <a href="extra.html">here</a> (<a
-href="extra.md">md</a>). First we need to define a number of
-variables:</p>
+<p>We can formulaically determine how much to buy. The full derivation of the formulas in this section is being omitted here, but you can see that full derivation <a href="extra.html">here</a> (<a href="extra.md">md</a>). First we need to define a number of variables:</p>
 <ul>
-<li>The DEX values are <span
-class="math inline"><em>x</em><sub><em>d</em></sub></span>, <span
-class="math inline"><em>y</em><sub><em>d</em></sub></span>, and <span
-class="math inline"><em>k</em><sub><em>d</em></sub></span></li>
-<li>The current prices are <span
-class="math inline"><em>p</em><sub><em>e</em></sub></span> and <span
-class="math inline"><em>p</em><sub><em>t</em></sub></span>, the price of
-ETH and TC, respectively</li>
-<li>The quantity of each that we currently have is <span
-class="math inline"><em>q</em><sub><em>e</em></sub></span> and <span
-class="math inline"><em>q</em><sub><em>t</em></sub></span>, for the
-quantity of ETH and TC, respectively</li>
-<li>Our holdings are <span
-class="math inline"><em>h</em><sub><em>n</em><em>o</em><em>w</em></sub></span>
-(our current holdings) and <span
-class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span>
-(our holdings after the transaction)</li>
-<li>The gas fees, computed as per the <a
-href="../../docs/web3py.html">introduction to web3.py</a> (<a
-href="../../docs/web3py.md">md</a>) page, are <span
-class="math inline"><em>g</em></span>; this is in units of ETH. Gas fees
-are discussed below (in the “Assignment” section)</li>
-<li><span class="math inline"><em>f</em></span> is the percentage (out
-of 1.0) obtained after the DEX fees are removed. So if <span
-class="math inline"><em>f</em><sub><em>n</em></sub></span> is the fee
-numerator (say, 3) and <span
-class="math inline"><em>f</em><sub><em>d</em></sub></span> is the fee
-denominator (say, 1000), then <span
-class="math inline"><em>f</em> = 1 − <em>f</em><sub><em>n</em></sub>/<em>f</em><sub><em>d</em></sub></span>.
-As an example, if <span
-class="math inline"><em>f</em><sub><em>n</em></sub> = 3</span> and <span
-class="math inline"><em>f</em><sub><em>d</em></sub> = 1000</span>, then
-<span class="math inline"><em>f</em> = 0.997</span>. Note that this fee
-applies to both ETH and TC transactions.</li>
+<li>The DEX values are <span class="math inline"><em>x</em><sub><em>d</em></sub></span>, <span class="math inline"><em>y</em><sub><em>d</em></sub></span>, and <span class="math inline"><em>k</em><sub><em>d</em></sub></span></li>
+<li>The current prices are <span class="math inline"><em>p</em><sub><em>e</em></sub></span> and <span class="math inline"><em>p</em><sub><em>t</em></sub></span>, the price of ETH and TC, respectively</li>
+<li>The quantity of each that we currently have is <span class="math inline"><em>q</em><sub><em>e</em></sub></span> and <span class="math inline"><em>q</em><sub><em>t</em></sub></span>, for the quantity of ETH and TC, respectively</li>
+<li>Our holdings are <span class="math inline"><em>h</em><sub><em>n</em><em>o</em><em>w</em></sub></span> (our current holdings) and <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span> (our holdings after the transaction)</li>
+<li>The gas fees, computed as per the <a href="../../docs/web3py.html">introduction to web3.py</a> (<a href="../../docs/web3py.md">md</a>) page, are <span class="math inline"><em>g</em></span>; this is in units of ETH. Gas fees are discussed below (in the “Assignment” section)</li>
+<li><span class="math inline"><em>f</em></span> is the percentage (out of 1.0) obtained after the DEX fees are removed. So if <span class="math inline"><em>f</em><sub><em>n</em></sub></span> is the fee numerator (say, 3) and <span class="math inline"><em>f</em><sub><em>d</em></sub></span> is the fee denominator (say, 1000), then <span class="math inline"><em>f</em> = 1 − <em>f</em><sub><em>n</em></sub>/<em>f</em><sub><em>d</em></sub></span>. As an example, if <span class="math inline"><em>f</em><sub><em>n</em></sub> = 3</span> and <span class="math inline"><em>f</em><sub><em>d</em></sub> = 1000</span>, then <span class="math inline"><em>f</em> = 0.997</span>. Note that this fee applies to both ETH and TC transactions.</li>
 </ul>
-<p>The above values are all fixed when the program runs – either from
-the config file (described below) or by querying the DEXes. Different
-DEXes will have different values for <span
-class="math inline"><em>x</em><sub><em>d</em></sub></span>, <span
-class="math inline"><em>y</em><sub><em>d</em></sub></span>, and <span
-class="math inline"><em>k</em><sub><em>d</em></sub></span>, of course.
-The only values that the program chooses are the amount of ETH that we
-trade in (we’ll call this <span
-class="math inline"><em>δ</em><sub><em>e</em></sub></span>) or the
-amount of TC that we trade in (we’ll call this <span
-class="math inline"><em>δ</em><sub><em>t</em></sub></span>). As we are
-only considering a single trade, only one of them will be non-zero.</p>
-<p>The formulas that we need are (derivations <a
-href="extra.html">here</a> (<a href="extra.md">md</a>)):</p>
+<p>The above values are all fixed when the program runs – either from the config file (described below) or by querying the DEXes. Different DEXes will have different values for <span class="math inline"><em>x</em><sub><em>d</em></sub></span>, <span class="math inline"><em>y</em><sub><em>d</em></sub></span>, and <span class="math inline"><em>k</em><sub><em>d</em></sub></span>, of course. The only values that the program chooses are the amount of ETH that we trade in (we’ll call this <span class="math inline"><em>δ</em><sub><em>e</em></sub></span>) or the amount of TC that we trade in (we’ll call this <span class="math inline"><em>δ</em><sub><em>t</em></sub></span>). As we are only considering a single trade, only one of them will be non-zero.</p>
+<p>The formulas that we need are (derivations <a href="extra.html">here</a> (<a href="extra.md">md</a>)):</p>
 <ul>
-<li>Our current holdings, in USD, are:
-<!-- $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$ -->
-<img src="formulas/formulas/img1.svg" class="formula"></li>
-<li>If we trade in TC, then our holdings after (in USD) are:
-<!-- $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$  -->
-<img src="formulas/formulas/img3.svg" class="formulabig"></li>
-<li>If we trade in ETH, then our holdings after (in USD) are:
-<!-- $h_{after} = (q_{t} + f \ast y_{d}-f \ast k_d/(x_{d}+\delta_{e})) \ast p_{t} + (q_{e}-\delta_{e}) \ast p_{e} - g \ast p_e$  -->
-<img src="formulas/formulas/img5.svg" class="formulabig"></li>
+<li>Our current holdings, in USD, are: <!-- $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$ --> <img src="formulas/formulas/img1.svg" class="formula"></li>
+<li>If we trade in TC, then our holdings after (in USD) are: <!-- $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$  --> <img src="formulas/formulas/img3.svg" class="formulabig"></li>
+<li>If we trade in ETH, then our holdings after (in USD) are: <!-- $h_{after} = (q_{t} + f \ast y_{d}-f \ast k_d/(x_{d}+\delta_{e})) \ast p_{t} + (q_{e}-\delta_{e}) \ast p_{e} - g \ast p_e$  --> <img src="formulas/formulas/img5.svg" class="formulabig"></li>
 </ul>
-<p>For a single trade, want to find the maximum profit for the two <span
-class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span>
-formulas. We take the derivative, then set it equal to zero to find the
-roots (details <a href="extra.html">here</a> (<a
-href="extra.md">md</a>), if you are interested). The roots will give us
-the maximum and/or minimum points. This gives us:</p>
+<p>For a single trade, want to find the maximum profit for the two <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span> formulas. We take the derivative, then set it equal to zero to find the roots (details <a href="extra.html">here</a> (<a href="extra.md">md</a>), if you are interested). The roots will give us the maximum and/or minimum points. This gives us:</p>
 <ul>
-<li>If we traded in TC, then the maxima or minima is at:
-<!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ -->
-<img src="formulas/formulas/img7.svg" class="formulabig">
+<li>If we traded in TC, then the maxima or minima is at: <!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ --> <img src="formulas/formulas/img7.svg" class="formulabig">
 <ul>
-<li>Note that <span
-class="math inline"><em>p</em><sub><em>e</em></sub></span> is in the
-numerator in that fraction, which is different than the fraction in the
-next formula</li>
+<li>Note that <span class="math inline"><em>p</em><sub><em>e</em></sub></span> is in the numerator in that fraction, which is different than the fraction in the next formula</li>
 </ul></li>
-<li>If we traded in ETH, then the maxima or minima is at:
-<!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ -->
-<img src="formulas/formulas/img9.svg" class="formulabig">
+<li>If we traded in ETH, then the maxima or minima is at: <!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ --> <img src="formulas/formulas/img9.svg" class="formulabig">
 <ul>
-<li>Note that <span
-class="math inline"><em>p</em><sub><em>t</em></sub></span> is in the
-numerator in that fraction, which is different than the fraction in the
-previous formula
-<!-- - Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of --></li>
+<li>Note that <span class="math inline"><em>p</em><sub><em>t</em></sub></span> is in the numerator in that fraction, which is different than the fraction in the previous formula <!-- - Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of --></li>
 </ul></li>
 </ul>
 <p>A few notes on those:</p>
 <ul>
-<li>If you want to cut-and-paste these formulas into your program, the
-<a href="extra.html">derivations page</a> (<a href="extra.md">md</a>)
-has them in text form</li>
-<li>Neither of these are guaranteed to make a profit! But if a profit
-can be made, then one of those will be the maximum profit.</li>
-<li>How much profit is determined from the <span
-class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span>
-formulas, above</li>
-<li>Because the variables in the square root can never be negative, and
-because the fraction denominators can never be zero, the square root
-will always return real values</li>
-<li>However, the values to trade (meaning <span
-class="math inline"><em>δ</em><sub><em>e</em></sub></span> or <span
-class="math inline"><em>δ</em><sub><em>t</em></sub></span>) may be
-negative, and you should ignore them in that case</li>
-<li>The values to trade (meaning <span
-class="math inline"><em>δ</em><sub><em>e</em></sub></span> or <span
-class="math inline"><em>δ</em><sub><em>t</em></sub></span>) may be
-larger than your balance; if so, then you should consider how much
-profit can be made from trading in all of your balance in that case</li>
+<li>If you want to cut-and-paste these formulas into your program, the <a href="extra.html">derivations page</a> (<a href="extra.md">md</a>) has them in text form</li>
+<li>Neither of these are guaranteed to make a profit! But if a profit can be made, then one of those will be the maximum profit.</li>
+<li>How much profit is determined from the <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span> formulas, above</li>
+<li>Because the variables in the square root can never be negative, and because the fraction denominators can never be zero, the square root will always return real values</li>
+<li>However, the values to trade (meaning <span class="math inline"><em>δ</em><sub><em>e</em></sub></span> or <span class="math inline"><em>δ</em><sub><em>t</em></sub></span>) may be negative, and you should ignore them in that case</li>
+<li>The values to trade (meaning <span class="math inline"><em>δ</em><sub><em>e</em></sub></span> or <span class="math inline"><em>δ</em><sub><em>t</em></sub></span>) may be larger than your balance; if so, then you should consider how much profit can be made from trading in all of your balance in that case</li>
 </ul>
 <h3 id="assignment">Assignment</h3>
-<p>Your assignment is to create a program that attempts to make a profit
-by arbitrage trading. For the purposes of this assignment, a
-<em>profit</em> means an increase in the value of your holdings in USD;
-the holdings are computed from the amount of ETH and TC your program
-controls as well as the current price of each.</p>
-<p>You must take gas estimation into account! Otherwise, if you were
-only to make 0.001 ETH, but it costs 0.002 ETH in gas, you are losing
-money. How to estimate gas fees is discussed on the <a
-href="../../docs/web3py.html">introduction to web3.py</a> (<a
-href="../../docs/web3py.md">md</a>) page – once you create a
-transaction, you call <code>eth.estimateGas()</code>. Note that if you
-are exchanging TC for ETH, then your gas fees will be double, as you
-have to call <code>approve()</code> first on the TokenCC contract, and
-then <code>exchangeTokenForEther()</code> on the DEX. In this case, for
-our purposes, you can just estimate the gas for the first transaction
-and just double it. The expected gas values will be in the tens of
-thousands of gas – 36,000 to 65,000 is a reasonable guess, but yours may
-be higher or lower.</p>
-<p>When providing a transaction, you also have to supply the gasPrice.
-<strong>For this assignment, we will select a standard 10 gwei as the
-gas price.</strong> The gas estimate (perhaps doubled) times the gas
-cost (10 gwei) will allow you to compute the cost of gas in ether, which
-is the <span class="math inline"><em>g</em></span> variable in the
-formulas above.</p>
-<p>Your program must be in Python. It must be named
-<code>arbitrage_trading.py</code>.</p>
-<p>In practice, your program would listen for events from any of the
-DEXes, and any time the exchange rate of any of the DEXes changed, it
-would re-run the analysis. In order to make this assignment gradable, we
-are going to ignore events, and specify a different way that this
-program is to be run.</p>
+<p>Your assignment is to create a program that attempts to make a profit by arbitrage trading. For the purposes of this assignment, a <em>profit</em> means an increase in the value of your holdings in USD; the holdings are computed from the amount of ETH and TC your program controls as well as the current price of each.</p>
+<p>You must take gas estimation into account! Otherwise, if you were only to make 0.001 ETH, but it costs 0.002 ETH in gas, you are losing money. How to estimate gas fees is discussed on the <a href="../../docs/web3py.html">introduction to web3.py</a> (<a href="../../docs/web3py.md">md</a>) page – once you create a transaction, you call <code>eth.estimateGas()</code>. Note that if you are exchanging TC for ETH, then your gas fees will be double, as you have to call <code>approve()</code> first on the TokenCC contract, and then <code>exchangeTokenForEther()</code> on the DEX. In this case, for our purposes, you can just estimate the gas for the first transaction and just double it. The expected gas values will be in the tens of thousands of gas – 36,000 to 65,000 is a reasonable guess, but yours may be higher or lower.</p>
+<p>When providing a transaction, you also have to supply the gasPrice. <strong>For this assignment, we will select a standard 10 gwei as the gas price.</strong> The gas estimate (perhaps doubled) times the gas cost (10 gwei) will allow you to compute the cost of gas in ether, which is the <span class="math inline"><em>g</em></span> variable in the formulas above.</p>
+<p>Your program must be in Python. It must be named <code>arbitrage_trading.py</code>.</p>
+<p>In practice, your program would listen for events from any of the DEXes, and any time the exchange rate of any of the DEXes changed, it would re-run the analysis. In order to make this assignment gradable, we are going to ignore events, and specify a different way that this program is to be run.</p>
 <h5 id="input">Input</h5>
-<p>The program will read in a arbitrage_config.py file to provide all
-the settings, a sample of which is shown below:</p>
+<p>The program will read in a arbitrage_config.py file to provide all the settings, a sample of which is shown below:</p>
 <pre><code>config = {
     &#39;account_address&#39;: &#39;0x123456789abcdef0123456789abcdef123456789&#39;,
     &#39;account_private_key&#39;: hexbytes.HexBytes(&#39;0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&#39;),
@@ -336,80 +170,34 @@ the settings, a sample of which is shown below:</p>
 
 def hook():
     pass</code></pre>
-<p>The <code>output()</code> function, below, will also be in the <a
-href="arbitrage_config.py.html">arbitrage_config.py</a> (<a
-href="arbitrage_config.py">src</a>) file, as well as a few more useful
-items.</p>
-<p>You can assume that the arbitrage_config.py will always be present
-and properly structured, and that all values will be valid. The parts of
-the <code>config</code> dict are:</p>
+<p>The <code>output()</code> function, below, will also be in the <a href="arbitrage_config.py.html">arbitrage_config.py</a> (<a href="arbitrage_config.py">src</a>) file, as well as a few more useful items.</p>
+<p>You can assume that the arbitrage_config.py will always be present and properly structured, and that all values will be valid. The parts of the <code>config</code> dict are:</p>
 <ul>
-<li><code>account_address</code>: the address of the Ethereum account
-that this program is controlling – it is the balance that this account
-has, in both ETH and TC, that constitutes the holdings of this
-account</li>
-<li><code>account_private_key</code>: the (decrypted) private key for
-that account, used to initiate transactions; this must be in the exact
-format shown above
+<li><code>account_address</code>: the address of the Ethereum account that this program is controlling – it is the balance that this account has, in both ETH and TC, that constitutes the holdings of this account</li>
+<li><code>account_private_key</code>: the (decrypted) private key for that account, used to initiate transactions; this must be in the exact format shown above
 <ul>
-<li>You will have obtained the decrypted version of your private key in
-the <a href="ethprivate/index.html">Private Ethereum Blockchain</a> –
-you may have to run through that part again if you lost it or are now
-using a different key</li>
-<li>That key was likely in the form
-<code>b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'</code>
-– just copy the hex code (meaning without the leading <code>b'</code>
-and trailing <code>'</code>) into the <code>HexBytes()</code>
-constructor to make it the same format as the code above.</li>
+<li>You will have obtained the decrypted version of your private key in the <a href="ethprivate/index.html">Private Ethereum Blockchain</a> – you may have to run through that part again if you lost it or are now using a different key</li>
+<li>That key was likely in the form <code>b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'</code> – just copy the hex code (meaning without the leading <code>b'</code> and trailing <code>'</code>) into the <code>HexBytes()</code> constructor to make it the same format as the code above.</li>
 </ul></li>
-<li><code>connection_is_ipc</code>: whether the connection URI (which is
-on the next line in this file) is a geth.ipc file or a URL – this will
-determine how the web3 provider is created</li>
-<li><code>connection_uri</code>: how to connect to the blockchain – this
-will either be the path to a geth.ipc file or a URL to the course
-server; see the <a href="../../docs/web3py.html">introduction to
-web3.py</a> (<a href="../../docs/web3py.md">md</a>) for details – you
-either have to pass it to a <code>Web3.IPCProvider()</code> call or a
-<code>Web3.WebsocketProvider()</code> call</li>
-<li><code>price_eth</code>: the current price of ETH, in USD, as a float
-– this is without all the extra decimal places</li>
-<li><code>price_tc</code>: the current price of TC, in USD, as a float –
-this is without all the extra decimal places</li>
-<li><code>tokencc_addr</code>: the smart address of the TokenCC smart
-contract</li>
-<li><code>dex_addrs</code>: the smart contract addresses of the various
-TokenDEX smart contracts; there will be at least two in this list</li>
+<li><code>connection_is_ipc</code>: whether the connection URI (which is on the next line in this file) is a geth.ipc file or a URL – this will determine how the web3 provider is created</li>
+<li><code>connection_uri</code>: how to connect to the blockchain – this will either be the path to a geth.ipc file or a URL to the course server; see the <a href="../../docs/web3py.html">introduction to web3.py</a> (<a href="../../docs/web3py.md">md</a>) for details – you either have to pass it to a <code>Web3.IPCProvider()</code> call or a <code>Web3.WebsocketProvider()</code> call</li>
+<li><code>price_eth</code>: the current price of ETH, in USD, as a float – this is without all the extra decimal places</li>
+<li><code>price_tc</code>: the current price of TC, in USD, as a float – this is without all the extra decimal places</li>
+<li><code>tokencc_addr</code>: the smart address of the TokenCC smart contract</li>
+<li><code>dex_addrs</code>: the smart contract addresses of the various TokenDEX smart contracts; there will be at least two in this list</li>
 </ul>
-<p>You will need to edit all those values in arbitrage_config.py to
-match the deployed addresses (and other values) for your particular
-situation.</p>
-<p>The <code>hook()</code> function should be present, and should do
-nothing as shown. This function needs be called at the <em>start</em> of
-each program execution run – meaning when your program starts (right
-after the <code>import</code> lines) but before any of your other code
-in the file. We are going to use that when we grade the assignment.</p>
-<p>We provide a few other things in arbitrage_config.py: the ABI for the
-TokenDEX and the TokenCC for you to use. We also provide a function that
-will attempt to figure out the reason for a reverting transaction. You
-can see these in the <a
-href="arbitrage_config.py.html">arbitrage_config.py</a> (<a
-href="arbitrage_config.py">src</a>) file.</p>
+<p>You will need to edit all those values in arbitrage_config.py to match the deployed addresses (and other values) for your particular situation.</p>
+<p>The <code>hook()</code> function should be present, and should do nothing as shown. This function needs be called at the <em>start</em> of each program execution run – meaning when your program starts (right after the <code>import</code> lines) but before any of your other code in the file. We are going to use that when we grade the assignment.</p>
+<p>We provide a few other things in arbitrage_config.py: the ABI for the TokenDEX and the TokenCC for you to use. We also provide a function that will attempt to figure out the reason for a reverting transaction. You can see these in the <a href="arbitrage_config.py.html">arbitrage_config.py</a> (<a href="arbitrage_config.py">src</a>) file.</p>
 <h5 id="output">Output</h5>
-<p>Your program will analyze the various values at the different DEXes,
-and make a change (or not). Your output must be in an exact format. If
-no profitable trades are possible, then you should output <code>No
-profitable arbitrage trades available</code>. If an trade is made, then
-the output should be of the form:</p>
+<p>Your program will analyze the various values at the different DEXes, and make a change (or not). Your output must be in an exact format. If no profitable trades are possible, then you should output <code>No profitable arbitrage trades available</code>. If an trade is made, then the output should be of the form:</p>
 <pre><code>Exchanged -123.0000 ETH for 2.3400 TC; fees: 1.23 USD; prices: ETH 12.30 USD, TC: 1.23 USD; holdings: 34.30 USD</code></pre>
 <!--
 
 If two trades are made, then print out two lines of that form.  Keep in mind that each program execution will either make one single trade or one double trade.  
 
 -->
-<p>To ensure you output in the correct format, we provide a function
-that will print the appropriate lines. This function is also provided in
-the <a href="arbitrage_config.py.html">arbitrage_config.py</a> (<a
-href="arbitrage_config.py">src</a>) file.</p>
+<p>To ensure you output in the correct format, we provide a function that will print the appropriate lines. This function is also provided in the <a href="arbitrage_config.py.html">arbitrage_config.py</a> (<a href="arbitrage_config.py">src</a>) file.</p>
 <pre><code>def output(ethAmt, tcAmt, fees, holdings):
     if ethAmt == 0 and tcAmt == 0:
         print(&quot;No profitable arbitrage trades available&quot;)
@@ -421,106 +209,30 @@ href="arbitrage_config.py">src</a>) file.</p>
     else:
         print(&quot;Exchanged %.4f TC for %.4f ETH; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD&quot; %
               (tcAmt, ethAmt, fees, config[&#39;price_eth&#39;], config[&#39;price_tc&#39;], holdings))</code></pre>
-<p><strong><em>YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER
-OUTPUT</em></strong> other than the result of calling the
-<code>output()</code> function, above.</p>
-<p>If there are no profitable transactions available, then pass in 0 for
-the first two parameters; the values of the last two parameters do not
-matter in this case. When a transaction is made, then one of
-<code>ethAmt</code> or <code>tcAmt</code> should be negative – that’s
-the one that is being sold. The other should be positive, and is how
-much of the other you received for that exchange. These values should be
-the amount of coin being bought or sold, and without all the decimals
-(so 1.5 TC rather than 15000000000 TC). The prices for ETH and TC are
-pulled from <code>config</code> dict, so they do not have to be passed
-into this function. The <code>fees</code> and <code>holdings</code>
-parameters should be in USD.</p>
-<p>The ‘fees’ value that you are reporting is just the USD value of the
-Ethereum transaction fees. So you are not considering how much the DEX
-kept (although that is considered in the formulas). Once you determine
-how much gas was actually used, multiply that by the gas price of 10
-gwei, then convert that to ether, then multiply that by the price of
-ether.</p>
+<p><strong><em>YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER OUTPUT</em></strong> other than the result of calling the <code>output()</code> function, above.</p>
+<p>If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case. When a transaction is made, then one of <code>ethAmt</code> or <code>tcAmt</code> should be negative – that’s the one that is being sold. The other should be positive, and is how much of the other you received for that exchange. These values should be the amount of coin being bought or sold, and without all the decimals (so 1.5 TC rather than 15000000000 TC). The prices for ETH and TC are pulled from <code>config</code> dict, so they do not have to be passed into this function. The <code>fees</code> and <code>holdings</code> parameters should be in USD.</p>
+<p>The ‘fees’ value that you are reporting is just the USD value of the Ethereum transaction fees. So you are not considering how much the DEX kept (although that is considered in the formulas). Once you determine how much gas was actually used, multiply that by the gas price of 10 gwei, then convert that to ether, then multiply that by the price of ether.</p>
 <h3 id="testing">Testing</h3>
-<p>When testing your code, don’t worry about getting the <span
-class="math inline"><em>x</em></span>, <span
-class="math inline"><em>y</em></span>, and <span
-class="math inline"><em>k</em></span> values exactly correct for a test.
-If you want to test such a situation – to see if your program makes the
-right decision, for example – you can hard-code those values in the
-arbitrage_trading.py program and print out the results to see if it
-computed the correct values to trade. Trying to get all the DEXes
-deployed and configured exactly will be very frustrating if you are
-trying for exact values. Instead, make a few transactions to the various
-DEXes from <em>another</em> account to get the <span
-class="math inline"><em>x</em></span>, <span
-class="math inline"><em>y</em></span>, and <span
-class="math inline"><em>k</em></span> values to differ between the
-different DEXes. The provided <a
-href="Arbitrage.sol.html">Arbitrage.sol</a> (<a
-href="Arbitrage.sol">src</a>) contract performs a few initial trades,
-but you may need to do more for your testing. The
-<code>arbitrage_trading.py</code> program is then called to see if any
-profitable trades can be made.</p>
-<p>When testing this code, you can open up the appropriate WebSocket
-port when you run geth – just add <code>--ws --ws.origins
-localhost,127.0.0.1</code> to the (now long) list of command line
-parameters when you start your geth node. Your connection_uri will then
-be <code>ws://localhost:8546</code>. You are also welcome to connect to
-the course server (the URI of which is on the Collab landing page) or
-via your geth.ipc file.</p>
+<p>When testing your code, don’t worry about getting the <span class="math inline"><em>x</em></span>, <span class="math inline"><em>y</em></span>, and <span class="math inline"><em>k</em></span> values exactly correct for a test. If you want to test such a situation – to see if your program makes the right decision, for example – you can hard-code those values in the arbitrage_trading.py program and print out the results to see if it computed the correct values to trade. Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values. Instead, make a few transactions to the various DEXes from <em>another</em> account to get the <span class="math inline"><em>x</em></span>, <span class="math inline"><em>y</em></span>, and <span class="math inline"><em>k</em></span> values to differ between the different DEXes. The provided <a href="Arbitrage.sol.html">Arbitrage.sol</a> (<a href="Arbitrage.sol">src</a>) contract performs a few initial trades, but you may need to do more for your testing. The <code>arbitrage_trading.py</code> program is then called to see if any profitable trades can be made.</p>
+<p>When testing this code, you can open up the appropriate WebSocket port when you run geth – just add <code>--ws --ws.origins localhost,127.0.0.1</code> to the (now long) list of command line parameters when you start your geth node. Your connection_uri will then be <code>ws://localhost:8546</code>. You are also welcome to connect to the course server (the URI of which is on the Collab landing page) or via your geth.ipc file.</p>
 <h3 id="real-world-profit">Real-world profit?</h3>
 <p>Could you use this program in the real world with real ETH?</p>
 <p>Well, sorta.</p>
-<p>The concepts are the same. But you would have to make a few
-changes:</p>
+<p>The concepts are the same. But you would have to make a few changes:</p>
 <ul>
-<li>The DEX addresses would be different, of course, since that would be
-on the real Ethereum blockchain.</li>
-<li>You would listen for events from the DEXes to trigger the analysis –
-we know how to do that from the <a href="../daoweb3/index.html">DAO
-&amp; web3 assignment</a> (<a href="../daoweb3/index.md">md</a>) in
-Javascript, and the function calls are similar in web3.py.</li>
-<li>You would need to consider double (or triple) trades, not just
-single trades.</li>
-<li>They are going to use a different set of exchange functions, and
-different DEXes are likely to have different interfaces (and thus
-different ABIs); thus you would need <em>separate</em> code to interact
-with each individual DEX.</li>
-<li>I’m guessing you would want to test your code really, really, really
-well if you were about to put a whole bunch of money into it.</li>
-<li>We assumed a fixed price based on what was in the config file. If
-the USD value of the holdings was your metric, then you would need a
-means to get real-time prices. You could also use a different metric,
-such as how much of each currency you had in your holdings.</li>
-<li>One of the big issues here is speed – if an arbitrage opportunity
-does exist, and your program takes 20 seconds to figure that out, it is
-going to get beat by a program written in a faster language that can do
-it in 10 seconds. The difference between those would mean that the other
-one would get in the block before yours, and make the profit
-instead.</li>
-<li>You would likely be making <em>limit</em> orders instead of
-<em>market</em> orders (meaning you place an upper bound on the exchange
-rate when you place an order) – we have ignored limit orders in this
-course.</li>
+<li>The DEX addresses would be different, of course, since that would be on the real Ethereum blockchain.</li>
+<li>You would listen for events from the DEXes to trigger the analysis – we know how to do that from the <a href="../daoweb3/index.html">DAO &amp; web3 assignment</a> (<a href="../daoweb3/index.md">md</a>) in Javascript, and the function calls are similar in web3.py.</li>
+<li>You would need to consider double (or triple) trades, not just single trades.</li>
+<li>They are going to use a different set of exchange functions, and different DEXes are likely to have different interfaces (and thus different ABIs); thus you would need <em>separate</em> code to interact with each individual DEX.</li>
+<li>I’m guessing you would want to test your code really, really, really well if you were about to put a whole bunch of money into it.</li>
+<li>We assumed a fixed price based on what was in the config file. If the USD value of the holdings was your metric, then you would need a means to get real-time prices. You could also use a different metric, such as how much of each currency you had in your holdings.</li>
+<li>One of the big issues here is speed – if an arbitrage opportunity does exist, and your program takes 20 seconds to figure that out, it is going to get beat by a program written in a faster language that can do it in 10 seconds. The difference between those would mean that the other one would get in the block before yours, and make the profit instead.</li>
+<li>You would likely be making <em>limit</em> orders instead of <em>market</em> orders (meaning you place an upper bound on the exchange rate when you place an order) – we have ignored limit orders in this course.</li>
 </ul>
 <p>But the concepts are certainly the same!</p>
 <h3 id="submission">Submission</h3>
-<p>You will need to fill in the various values from this assignment into
-the <a href="arbitrage.py.html">arbitrage.py</a> (<a
-href="arbitrage.py">src</a>) file. That file clearly indicates all the
-values that need to be filled in. That file, along with your Python
-source code, are the only files that must be submitted. The
-‘sanity_checks’ dictionary is intended to be a checklist to ensure that
-you perform the various other aspects to ensure this assignment is fully
-submitted.</p>
+<p>You will need to fill in the various values from this assignment into the <a href="arbitrage.py.html">arbitrage.py</a> (<a href="arbitrage.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Python source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There is only one submission for this assignment.</p>
-<p>Submission 1: Submit your <code>arbitrage_trading.py</code> source
-code file, along with your completed <code>arbitrage.py</code> file, to
-Gradescope. You should not submit the arbitrage_config.py file.
-<strong>NOTE:</strong> Gradescope cannot fully test this assignment, as
-it does not have access to the private blockchain. So it can only do a
-few sanity tests (correct files submitted, successful compilation, valid
-values in auction.py, etc.).</p>
+<p>Submission 1: Submit your <code>arbitrage_trading.py</code> source code file, along with your completed <code>arbitrage.py</code> file, to Gradescope. You should not submit the arbitrage_config.py file. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).</p>
 </body>
 </html>

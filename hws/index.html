@@ -15,67 +15,59 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../markdown.css" />
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
 <h1 id="cryptocurrency-homeworks">Cryptocurrency: Homeworks</h1>
-<p><a href="../readme.html">Go up to the main CCC readme</a> (<a
-href="../readme.md">md</a>)</p>
-<p>You will be bound by the requirements on the <a
-href="../uva/hw-policies.html">Homeworks policies page</a> (<a
-href="../uva/hw-policies.md">md</a>), so please read that! The due dates
-are all listed on the <a href="../uva/index.html">main UVA page</a> (<a
-href="../uva/index.md">md</a>).</p>
+<p><a href="../readme.html">Go up to the main CCC readme</a> (<a href="../readme.md">md</a>)</p>
+<p>You will be bound by the requirements on the <a href="../uva/hw-policies.html">Homeworks policies page</a> (<a href="../uva/hw-policies.md">md</a>), so please read that! The due dates are all listed on the <a href="../uva/index.html">main UVA page</a> (<a href="../uva/index.md">md</a>).</p>
 <h3 id="programing-homeworks">Programing homeworks</h3>
 <p>These are larger programming homeworks.</p>
 <ul>
-<li><a href="intro/index.html">P1: Introductory homework</a> (<a
-href="intro/index.md">md</a>)</li>
-<li><a href="ecdsa/index.html">P2: ECDSA implementation</a> (<a
-href="ecdsa/index.md">md</a>)</li>
-<li><a href="btcparser/index.html">P3: BTC parser</a> (<a
-href="btcparser/index.md">md</a>)</li>
-<li><a href="btcscript/index.html">P4: Bitcoin scripting</a> (<a
-href="btcscript/index.md">md</a>)</li>
-<li><a href="gradebook/index.html">P5: dApp Gradebook</a> (<a
-href="gradebook/index.md">md</a>)</li>
-<li><a href="tokens/index.html">P6: dApp Tokens</a> (<a
-href="tokens/index.md">md</a>)</li>
-<li><a href="auction/index.html">P7: dApp Auction</a> (<a
-href="auction/index.md">md</a>)</li>
-<li><a href="dex/index.html">P8: DEX</a> (<a
-href="dex/index.md">md</a>)</li>
-<li><a href="daoweb3/index.html">P9: DAO &amp; web3</a> (<a
-href="daoweb3/index.md">md</a>)</li>
-<li><a href="arbitrage/index.html">P10: Arbitrage trading</a> (<a
-href="arbitrage/index.md">md</a>)</li>
-<li><a href="metamask/index.html">P11: MetaMask</a> (<a
-href="metamask/index.md">md</a>)</li>
+<li><a href="intro/index.html">P1: Introductory homework</a> (<a href="intro/index.md">md</a>) (<a href="intro/index-tabs.html">tabbed version</a>)</li>
+<li><a href="ecdsa/index.html">P2: ECDSA implementation</a> (<a href="ecdsa/index.md">md</a>) (<a href="ecdsa/index-tabs.html">tabbed version</a>)</li>
+<li><a href="btcparser/index.html">P3: BTC parser</a> (<a href="btcparser/index.md">md</a>) (<a href="btcparser/index-tabs.html">tabbed version</a>)</li>
+<li><a href="btcscript/index.html">P4: Bitcoin scripting</a> (<a href="btcscript/index.md">md</a>) (<a href="btcscript/index-tabs.html">tabbed version</a>)</li>
+<li><a href="gradebook/index.html">P5: dApp Gradebook</a> (<a href="gradebook/index.md">md</a>) (<a href="gradebook/index-tabs.html">tabbed version</a>)</li>
+<li><a href="tokens/index.html">P6: dApp Tokens</a> (<a href="tokens/index.md">md</a>) (<a href="tokens/index-tabs.html">tabbed version</a>)</li>
+<li><a href="auction/index.html">P7: dApp Auction</a> (<a href="auction/index.md">md</a>) (<a href="auction/index-tabs.html">tabbed version</a>)</li>
+<li><a href="dex/index.html">P8: DEX</a> (<a href="dex/index.md">md</a>) (<a href="dex/index-tabs.html">tabbed version</a>)</li>
+<li><a href="daoweb3/index.html">P9: DAO &amp; web3</a> (<a href="daoweb3/index.md">md</a>) (<a href="daoweb3/index-tabs.html">tabbed version</a>)</li>
+<li><a href="arbitrage/index.html">P10: Arbitrage trading</a> (<a href="arbitrage/index.md">md</a>) (<a href="arbitrage/index-tabs.html">tabbed version</a>)</li>
+<li><a href="metamask/index.html">P11: MetaMask</a> (<a href="metamask/index.md">md</a>) (<a href="metamask/index-tabs.html">tabbed version</a>)</li>
 </ul>
 <h3 id="smaller-homeworks">Smaller homeworks</h3>
-<p>These are smaller homeworks that take less time. They are often
-readings or self-guided tutorials.</p>
+<p>These are smaller homeworks that take less time. They are often readings or self-guided tutorials.</p>
 <ul>
-<li>S1: Google course introductory survey: the link for the survey is on
-the Collab landing page</li>
-<li>S2: Read the <a href="https://bitcoinwhitepaper.co/">Bitcoin
-whitepaper</a></li>
-<li>S3: read (some of) the <a
-href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a
-href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>):
-you can skip (or quickly browse) the first 3 sub-parts of the ‘History’
-section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip the
-‘references and further reading’ section at the end; what’s left is 24
-pages in the PDF to read</li>
-<li><a href="ethprivate/index.html">S4: Private Ethereum Blockchain</a>;
-the necessary links and other information needed to complete this
-assignment are on the <a
-href="https://collab.its.virginia.edu/portal/directtool/7c8e4ae8-4bb5-4d1f-9fd6-9d9323721551/">Collab
-landing page</a></li>
-<li>S5: <a href="dappintro/index.html">dApp Introduction</a> (<a
-href="dappintro/index.md">md</a>)</li>
+<li>S1: Google course introductory survey: the link for the survey is on the Collab landing page</li>
+<li>S2: Read the <a href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
+<li>S3: read (some of) the <a href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>): you can skip (or quickly browse) the first 3 sub-parts of the ‘History’ section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip the ‘references and further reading’ section at the end; what’s left is 24 pages in the PDF to read</li>
+<li><a href="ethprivate/index.html">S4: Private Ethereum Blockchain</a> (<a href="ethprivate/index.md">md</a>) (<a href="ethprivate/index-tabs.html">tabbed version</a>)</li>
+<li><a href="dappintro/index.html">S5: dApp Introduction</a> (<a href="dappintro/index.md">md</a>) (<a href="dappintro/index-tabs.html">tabbed version</a>)</li>
 </ul>
 </body>
 </html>

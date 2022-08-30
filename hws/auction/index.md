@@ -15,7 +15,7 @@ Once deployed to our private Ethereum blockchain, anybody should be able to mint
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Pre-requisites
+### Background
 
 Writing this homework will require completion of the following assignments:
 
@@ -28,7 +28,9 @@ Note that this assignment requires that your [Ethereum Tokens](../tokens/index.h
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), and the [Tokens slide set](../../slides/tokens.html#/)
 
 
-### Task 1: Create some NFT images in your NFTmanager
+### Task 1: Create NFTs
+
+You are going to create some NFT images in your NFTmanager.
 
 You should use your NFT manager that you wrote and deployed in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  If you were unable to get yours working in that assignment, then speak to me, and I will provide an alternative deployed contract for you to use.
 
@@ -37,9 +39,9 @@ You will need to have *three* images for NFTs to be used in this assignment.  Th
 Not surprisingly, you will then need to create NFTs for each of your images in your deployed `NFTmanager` smart contract -- you are welcome to do that later as they are needed.
 
 
-### Task 2: Create and deploy a Decentralized Auction smart contract
+### Task 2: Auction contract
 
-The contract you will be creating will allow for a decentralized auction for NFTs.  The intended flow is as follows:
+You are going to create and deploy a decentralized auction smart contract.  The contract you will be creating will allow for a decentralized auction for NFTs.  The intended flow is as follows:
 
 - Each Auctioneer contract has a single NFT Manager that manages all of its NFTs; that NFT Manager is created in the constructor.  Any user can get the NFT manager via a call to `nftmanager()`.
     - The user has to create the NFT there using the standard methods from the NFTmanager contract that we saw in the Tokens assignment
@@ -155,7 +157,7 @@ Test all this thoroughly in Remix!  You will need to deploy your Auctioneer cont
 One it works, deploy it to our private Ethereum blockchain.  You should test it there as well.  You will need to submit the contract address and transaction hash of the deployed Auctioneer.  If you deploy it multiple times, just submit the most recent contract address.  Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Collab landing page.  This web page will make it far easier to see what is going on with your auctions.
 
 
-### Task 3: Populate a few auctions
+### Task 3: Create auctions
 
 You should create two auctions in your Auctioneer contract (you'll create a third one below as well).  It's fine if you create more (such as from testing) -- we will only look at the two requested here.  These two auctions will use two of your three NFT images.  In particular, if you have one NFT that you like more than the others, or is "better", you will want to save it for the course-wide auction, below.
 
@@ -177,7 +179,9 @@ You *SHOULD* call `closeAuction()` on this auction.
 The second auction should end *two weeks* after the assignment is due.  Just get it on the day two weeks later -- we don't really care about the time, as long as the date is 14 days after the assignment due date.  Basically, we want to see an active auction.  This, also, should have a few bids on it.  This auction use the second of your (three) NFTs.  You will be submitting the auction ID for this auction as well as the NFT token ID.
 
 
-### Task 4: Participate in a class-wide auction manager
+### Task 4: Class Auctions
+
+You are going to participate in a class-wide auction manager.
 
 We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
 

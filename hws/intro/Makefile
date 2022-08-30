@@ -1,6 +1,7 @@
 doc:
 	cd ../..; make
 	source-highlight *.sh *.py *.java
+	../maketabs.py
 
 tabs:
 	@echo '<div class="tab">' > tabs.tmp

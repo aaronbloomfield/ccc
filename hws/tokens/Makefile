@@ -4,6 +4,7 @@ doc:
 	dot -Tsvg -O inheritance.dot
 	/bin/mv -f inheritance.dot.svg inheritance.dot.1.svg
 	source-highlight -d tokens.py
+	../maketabs.py
 
 test:
 	solc ERC20.sol
