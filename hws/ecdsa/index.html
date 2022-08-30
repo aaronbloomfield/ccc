@@ -31,6 +31,13 @@ your program does have to run in a reasonable amount of time (say, a
 second or less). In particular, your elliptic curve multiplication must
 be a logarithmic time algorithm (relative to <span
 class="math inline"><em>k</em></span>), not a linear time algorithm.</p>
+<p>In this homework, it is critical to carefully test each stage of the
+assignment. Each part requires that the previous part works properly –
+and, if it does not, then it will be exceedingly difficult to debug your
+program. If you get stuck, the best way to figure out where the bug is
+is to print out the values at each step, and verify them by hand (or via
+online calculators, linked to below).</p>
+<h3 id="languages">Languages</h3>
 <p>You can write this assignment in Java or Python. If you want to use a
 different language, please speak to me first. The intent is for you to
 write all this code yourself – you can NOT use any libraries that do
@@ -40,12 +47,6 @@ need the most common standard libraries as a result.</p>
 <p>We realize that the default random number generators in most (all?)
 programming languages are not cryptographically secure random number
 generators, but that’s fine for this assignment.</p>
-<p>In this homework, it is critical to carefully test each stage of the
-assignment. Each part requires that the previous part works properly –
-and, if it does not, then it will be exceedingly difficult to debug your
-program. If you get stuck, the best way to figure out where the bug is
-is to print out the values at each step, and verify them by hand (or via
-online calculators, linked to below).</p>
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo
 fixes and minor clarifications are not listed here. So far there aren’t
@@ -59,7 +60,7 @@ curves</a>, <a href="../../slides/encryption.html#/fields">finite
 fields</a>, and <a href="../../slides/encryption.html#/ecdsa">ECDSA</a>.
 What this assignment is asking for will make no sense if you are not
 familiar with that material.</p>
-<h3 id="shell-script-and-makefile">Shell script and Makefile</h3>
+<h3 id="other-files">Other files</h3>
 <p>We are going to call your program by calling an <code>ecdsa.sh</code>
 shell script. Any parameters passed to the shell script will be passed
 as-is to your program. This is what your ecdsa.sh script should look
@@ -74,7 +75,9 @@ names that you choose.</p>
 <p>You will also have to submit a <code>Makefile</code> that will be
 used to compile your program, if needed. For languages that do not need
 compilation (such as Python), just put in a single <code>echo</code>
-statement so that <code>make</code> still runs properly.</p>
+statement so that <code>make</code> still runs properly. This is the
+same as in the <a href="../intro/index.html">last assignment</a> (<a
+href="../intro/index.md">md</a>).</p>
 <h3 id="step-1-finite-field-functions">Step 1: Finite Field
 functions</h3>
 <p>The first step is to ensure that you have all the finite field
@@ -122,7 +125,8 @@ this is performing elliptic curve addition of that point <span
 class="math inline"><em>k</em></span> times, but we can’t do that many
 additions (that’s a linear time operation relative to <span
 class="math inline"><em>k</em></span>) – instead, this needs to be a
-logarithmic operation, as discussed in lecture.</li>
+logarithmic operation, as discussed in lecture (specifically, <a
+href="../../slides/encryption.html#/computingkg">here</a>).</li>
 </ul>
 <p>Some references from the lecture slides:</p>
 <ul>
@@ -140,7 +144,7 @@ href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&a
 curve multiplication in a field</a>. The curve we are using is
 secp256k1, which sets <span class="math inline"><em>a</em> = 0</span>
 and <span class="math inline"><em>b</em> = 7</span>. For testing
-purposes, we recommend setting the prime modules <span
+purposes, we recommend setting the prime modulus <span
 class="math inline"><em>p</em></span> to 43; this will give an curve
 order (<span class="math inline"><em>o</em></span>) value of 31.</p>
 <h3 id="step-3-signature-creation-and-validation">Step 3: Signature
@@ -150,7 +154,7 @@ it; this is discussed in the <a
 href="../../slides/encryption.html#/ecdsa">ECDSA section</a> of the
 encryption slide set.</p>
 <p>We recommend reading through the next section, on input and output,
-before starting the work on this section.</p>
+before starting to work on this section.</p>
 <p>Your program will need to be able to perform three primary
 functions:</p>
 <ul>
@@ -167,9 +171,8 @@ class="math inline"><em>G</em></span>) will be provided.</li>
 <li>Signing a message: Given the curve parameters (<span
 class="math inline"><em>p</em></span>, <span
 class="math inline"><em>o</em></span>, and <span
-class="math inline"><em>G</em></span>), the key pair (<span
-class="math inline"><em>d</em></span> and <span
-class="math inline"><em>Q</em></span>), and the hash (<span
+class="math inline"><em>G</em></span>), the private key (<span
+class="math inline"><em>d</em></span>), and the hash (<span
 class="math inline"><em>h</em></span>) of the message to be signed, you
 should generate the <span
 class="math inline">(<em>r</em>,<em>s</em>)</span> ECDSA signature.</li>
@@ -210,7 +213,9 @@ class="math inline"><em>y</em></span> values for the base point <span
 class="math inline"><em>G</em></span>. All numerical values provided
 will be non-negative integers not greater than 1,000. All numbers
 provided as input parameters, or output by the program, are base-10
-numbers.</p>
+numbers. And both <span class="math inline"><em>p</em></span> and <span
+class="math inline"><em>o</em></span> will be prime numbers when we test
+your code.</p>
 <p>The four required modes of the program are:</p>
 <ul>
 <li><p><code>userid</code> will just print your userid. All lower-case,
@@ -238,14 +243,14 @@ verify <a
 href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&amp;p=43">here</a>
 that the values returned are correct (specifically that <span
 class="math inline"><em>Q</em> = <em>d</em> ⊗ <em>G</em></span>). Below
-is a sample execution run, which sets <span
+is a sample execution run, which uses <span
 class="math inline"><em>p</em> = 43</span>, <span
 class="math inline"><em>o</em> = 31</span>, and <span
 class="math inline"><em>G</em> = (25,25)</span>. Since this output is
 based on a random number that is generated (specifically, <span
 class="math inline"><em>d</em></span>), one would expect that your
-output would be different on each execution run. The result of this
-execution run is that the private key is <span
+output would be different on each execution run. The result of the
+execution run shown is that the private key is <span
 class="math inline"><em>d</em> = 16</span> and the public key is <span
 class="math inline"><em>Q</em> = (37,36)</span>.</p>
 <pre><code>$ ./ecdsa.sh genkey 43 31 25 25
@@ -260,19 +265,18 @@ class="math inline"><em>o</em></span>, <span
 class="math inline"><em>G</em><sub><em>x</em></sub></span>, and <span
 class="math inline"><em>G</em><sub><em>y</em></sub></span>), there will
 be two more provided: <span class="math inline"><em>d</em></span> and
-<span class="math inline"><em>h</em></span> (note that <span
-class="math inline"><em>Q</em></span> is not needed for signing). The
-first these, <span class="math inline"><em>d</em></span> is the private
-key, and was part of the output from the <code>genkey</code> mode,
-above. The second one, <span class="math inline"><em>h</em></span>, is
-meant to represent the hash of the message that is being signed – it
-will be an integer in the range <span
-class="math inline">1 ≤ <em>h</em> ≤ <em>n</em> − 1</span>. To simplify
-this assignment, we are not providing the message <span
+<span class="math inline"><em>h</em></span>. The first these, <span
+class="math inline"><em>d</em></span> is the private key, and was part
+of the output from the <code>genkey</code> mode, above. The second one,
+<span class="math inline"><em>h</em></span>, is meant to represent the
+hash of the message that is being signed – it will be an integer in the
+range <span class="math inline">1 ≤ <em>h</em> ≤ <em>n</em> − 1</span>.
+To simplify this assignment, we are not providing the message <span
 class="math inline"><em>m</em></span> that you are to take the hash of –
-we are just providing the hash value itself. To be clear, the six
-numerical parameters are, in order: (<span
-class="math inline"><em>p</em></span>, <span
+we are just providing the hash value itself. Note that <span
+class="math inline"><em>Q</em></span> is not needed for signing, and is
+thus not provided. To be clear, the six numerical parameters are, in
+order: (<span class="math inline"><em>p</em></span>, <span
 class="math inline"><em>o</em></span>, <span
 class="math inline"><em>G</em><sub><em>x</em></sub></span>, <span
 class="math inline"><em>G</em><sub><em>y</em></sub></span>, <span
@@ -288,7 +292,7 @@ output, as would be expected with a typical ECDSA implementation. And if
 class="math inline"><em>s</em></span> are zero, your program should
 re-generate <span class="math inline"><em>k</em></span> and try again –
 there should be no apparent difference in the output. Below is a sample
-execution run, which sets <span
+execution run, which uses <span
 class="math inline"><em>p</em> = 43</span>, <span
 class="math inline"><em>o</em> = 31</span>, <span
 class="math inline"><em>G</em> = (25,25)</span>, <span
@@ -298,8 +302,8 @@ class="math inline"><em>Q</em> = (37,36)</span>, is not part of the
 parameter list). Since this output is based on a random number that is
 generated (specifically, <span class="math inline"><em>k</em></span>),
 one would expect that your output would be different on each execution
-run. The result of this execution run is that the signature is <span
-class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>.</p>
+run. The result of the execution run below is that the signature is
+<span class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>.</p>
 <pre><code>$ ./ecdsa.sh sign 43 31 25 25 16 30
 12
 24
@@ -327,8 +331,8 @@ class="math inline"><em>Q</em><sub><em>y</em></sub></span>, <span
 class="math inline"><em>r</em></span>, <span
 class="math inline"><em>s</em></span>, and <span
 class="math inline"><em>h</em></span>). The output should just be ‘True’
-if the signature matches, and ‘False’ if it does not. Below are two
-sample execution runs, which set <span
+if the signature matches, and ‘False’ if it does not – case matters
+here! Below are two sample execution runs, which set <span
 class="math inline"><em>p</em> = 43</span>, <span
 class="math inline"><em>o</em> = 31</span>, <span
 class="math inline"><em>G</em> = (25,25)</span>, <span
@@ -350,15 +354,16 @@ welcome to add additional modes that you use for debugging, or that
 perform those functions with verbose output. But the four required modes
 – <code>userid</code>, <code>genkey</code>, <code>sign</code>, and
 <code>verify</code> – should only produce the output shown above.</p>
-<p>Your code may incorrectly verify a invalid signature! The computation
-of <span class="math inline"><em>s</em></span> is computed mod <span
-class="math inline"><em>o</em></span>, which – in this example – is only
-31. This means about 1 in 31 random but invalid signatures would be
-expected to verify as true. (In reality, with secp256k1, <span
-class="math inline"><em>o</em> ≈ 1.16 * 10<sup>77</sup></span>, so the
-chance of an invalid signature returning true is one in in that very
-large number). If you do get an invalid signature (or two or three) to
-return true, just try some other values.</p>
+<p>Your code may occasionally incorrectly verify a invalid signature!
+The computation of <span class="math inline"><em>s</em></span> is
+computed mod <span class="math inline"><em>o</em></span>, which – in
+this example – is only 31. This means about 1 in 31 random but invalid
+signatures would be expected to verify as true. (In reality, with
+secp256k1, <span
+class="math inline"><em>o</em> ≈ 1.16 * 10<sup>77</sup></span>, the
+chance of an invalid signature returning true is quite small). If you do
+get an invalid signature (or two or three) to return true, just try some
+other values.</p>
 <h3 id="example">Example</h3>
 <p>To help you understand the previous example, below is the complete
 formulaic work-up of the values that were computed above in the three
@@ -386,13 +391,13 @@ class="math inline"><em>G</em> = (25,25)</span>, as these were given in
 the first four numeric command-line parameters.</p>
 <p><strong>Key generation:</strong> The random value for the private key
 is <span class="math inline"><em>d</em> = 16</span>. Computing <span
-class="math inline"><em>d</em> ⊗ <em>G</em> = 16 ⊗ (25,25) = (37,36)</span>;
+class="math inline"><em>d</em> ⊗ <em>G</em> = 16 ⊗ (25,25) = (37,36)</span>
 (<a
 href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&amp;p=43&amp;n=16&amp;px=25&amp;py=25">verification</a>).</p>
 <p><strong>Signing:</strong> The secret <span
 class="math inline"><em>k</em></span> value, which was not shown, was
 <span class="math inline"><em>k</em> = 17</span>. We compute <span
-class="math inline"><em>R</em> = <em>k</em> ⊗ <em>G</em> = 17 ⊗ (25,25) = (12,12)</span>;
+class="math inline"><em>R</em> = <em>k</em> ⊗ <em>G</em> = 17 ⊗ (25,25) = (12,12)</span>
 (<a
 href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&amp;p=43&amp;n=17&amp;px=25&amp;py=25">verification</a>).
 The <span class="math inline"><em>x</em></span>-value of this, 12, is
@@ -404,7 +409,7 @@ the inverse is computed in <span
 class="math inline"><em>Z</em><sub>31</sub></span>, NOT in <span
 class="math inline"><em>Z</em><sub>43</sub></span>. Thus, in <span
 class="math inline"><em>Z</em><sub>31</sub></span>, <span
-class="math inline">17<sup>−1</sup> = 11</span>; (<a
+class="math inline">17<sup>−1</sup> = 11</span> (<a
 href="https://planetcalc.com/3311/?a=17&amp;m=31">verification</a>; also
 that <span class="math inline">11 * 17 mod  31 = 1</span>). We know via
 the command-line parameters that <span
@@ -419,8 +424,11 @@ Thus, the signature is <span
 class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>.</p>
 <p><strong>Verification:</strong> We are given the values for <span
 class="math inline"><em>Q</em> = (37,36)</span> and the signature <span
-class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>, as well as
-the hash <span class="math inline"><em>h</em> = 30</span>. As <span
+class="math inline">(<em>r</em>,<em>s</em>) = (12,24)</span>. We are
+given two different hash values, each on its own execution run: the
+correct hash value of <span class="math inline"><em>h</em> = 30</span>
+and an incorrect hash value of <span
+class="math inline"><em>h</em> = 29</span>. As <span
 class="math inline"><em>s</em></span> was computed in <span
 class="math inline"><em>Z</em><sub>31</sub></span> (NOT <span
 class="math inline"><em>Z</em><sub>43</sub></span>), we also compute
@@ -430,7 +438,8 @@ class="math inline">24<sup>−1</sup> = 22</span> in <span
 class="math inline"><em>Z</em><sub>31</sub></span>; (<a
 href="https://planetcalc.com/3311/?a=24&amp;m=31">verification</a>; also
 that <span class="math inline">22 * 24 mod  31 = 1</span>).</p>
-<p>To verify this signature, we need to show that <span
+<p>To verify the correct signature (where $h=30), we need to show that
+<span
 class="math inline"><em>R</em> = <em>s</em><sup>−1</sup> * <em>h</em> ⊗ <em>G</em> ⊕ <em>s</em><sup>−1</sup> * <em>r</em> ⊗ <em>Q</em></span>
 = <span class="math inline">660 ⊗ <em>G</em> ⊕ 264 ⊗ <em>Q</em></span>
 (this is an equivalent form of the formula used to sign the signature,
@@ -446,7 +455,7 @@ href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&a
 and <a
 href="https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&amp;b=7&amp;p=43&amp;px=2&amp;py=31&amp;qx=29&amp;qy=31">3</a>).
 Because the <span class="math inline"><em>x</em></span>-value of this
-computed point equals the provided <span
+computed point (i.e., 12) equals the provided <span
 class="math inline"><em>r</em></span> value in the signature, the
 signature is valid.</p>
 <p>The second execution run had the incorrect hash (<span
