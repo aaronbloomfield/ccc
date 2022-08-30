@@ -630,7 +630,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - The $x$ value is always an integer $0 \le x < p$
   - For the algorithm we will study, $p=2^{256}-2^{32}-977$
     - (more on this value later)
-- But we can't take the square root to determine $y$ from $y^2=x^3+7$
+- But we can't take the square root to determine $y$ from the right side of $y^2=x^3+7$
   - That's "hard" (read: exponential time)
 - It turns out we don't need to...
 
@@ -664,7 +664,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - Curve: $y^2=x^3+7$
   - Curve: $y= \pm \sqrt{x^3+7}$
   - Slope is the derivative: $dy/dx = 3x^2/2y$
-    - ([reference](https://github.com/mulllhausen/visual-secp256k1/blob/master/grunt.py), line 92)
+    - ([reference](https://github.com/mulllhausen/visual-secp256k1/blob/master/grunt.py), line 92) (or your calculus class)
 - Use the math on the previous slide to determine the resultant point
   - The slope just computed is $m$ on the previous slide
     </textarea></section>
@@ -672,7 +672,7 @@ Any curve of the form $y^2=x^3+ax+b$
     <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Elliptical Curve Arithmetic
 - Given a point $P$ on a curve, you can keep ellipticlly adding it to itself to get $R=k \otimes P$
-  - Given $k$ and $P$, it is feasible to determine $R$ -- this is "hard"
+  - Given $k$ and $P$, it is feasible to determine $R$ -- this is "easy"
   - But given $R$ and $P$, it is *NOT* feasible to determine $k$
 - Note we can do elliptic curve exponentiation as well:
   - If $k=2^{10}=1024$, then $R=1024 \otimes P$, then we can compute that in about 10 steps:
@@ -774,6 +774,14 @@ Any curve of the form $y^2=x^3+ax+b$
   - This will lower confusion with one of the elliptic curve computation websites we'll be using a lot
 
 
+## secp256k1 curve: values
+- Why these values?
+  - It's 256 bits (size of a SHA-256 hash)
+  - The modulus, $p$, is prime
+  - The order, $o$, is also prime
+- We could have used any values for $p$ and $o$ that fulfilled these properties
+
+
 ## secp256k1 curve: base point
 - The starting point or "base point" $G$
   - $x$ = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2 DCE28D959F2815B16F81798
@@ -824,7 +832,7 @@ $
   - Prime modulus $p$ (secp256k1: $p=2^{256}-2^{32}-977$)
     - Size is $b$ bits, selected to match the hash size (for us, $b=256$)
   - Curve order $o$ (for secp256k1: $o \approx 1.16 \ast 10^{77}$)
-  - Base point $G$; for secp256k1, $G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
+  - Base point $G$; for secp256k1,<br>$G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
   - A $b$-bit hash algorithm that we plan on using
     - It could be any $b$-bit hash algorithm, but we'll assume it's SHA-256 herein
 
@@ -885,18 +893,18 @@ $
 - We want to encode the hash in such a way that:
   1. It can NOT be "cracked" in polynomial time
   2. With the public key $Q$, the formulas can be verified in polynomial time
-- Part 1: does it take exponential time?
+- Part 1: does "reversing" it take exponential time?
   - We obtain $r$ as the $x$ value of  $R=k \otimes G$
     - Elliptic multiplication is in polynomial time; the reverse (division) would be in exponential time
   - We obtain $s$ via $s=k^{-1}(h+r*d) \mod o$
     - This is a discrete log, so "reversing" this is exponential time
-- Part 2: can it be verified without knowing $d$ (private key) or $k$ (secret OTP)
+- Part 2: can it be verified without knowing $d$ (the private key) or $k$ (the secret OTP)
   - Yes; we'll see this next
 
 
 ## Sanity checks
 - If either $r$ or $s$ are zero, then restart the algorithm
-  - Compute a new $k$
+  - Compute a new $k$, and redo the computations
 - This is highly unlikely (although possible!) to occur with the actual values used with secp256k1
 - But is quite likely to occur with the values we will use in our upcoming homework
 
@@ -918,12 +926,14 @@ $
 
 ## Verifying an ECDSA message
 - Bob has to verify that the following equation holds: $s=k^{-1}(h+r*d) \mod o$
-  - Using his computation of the hash $h$
+  - This was the equation Alice computed to determine $s$
+  - He uses his computation of the hash $h$
   - But he doesn't know $d$ nor $k$
     - But recall that $r$ is computed using $k$
+    - And $Q$ was computed using $d$
 - Bob knows: $m$, $Q$, $(r,s)$, and the curve parameters
   - Knowing $r$ (the $x$ value of $R$) implies knowing all of $R$ (the point)
-- Bob computed: $h$ and $s^{-1}$
+- Bob computes: $h$ and $s^{-1}$
 - All further steps omit the 'mod $o$' part for clarity
     </textarea></section>
     
