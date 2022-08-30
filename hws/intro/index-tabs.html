@@ -44,22 +44,33 @@
 <body>
 <h1 id="cryptocurrency-introduction">Cryptocurrency Introduction</h1>
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>)</p>
-<hr />
-<div id="tOverview" class="tabcontenttmp">
+<div class="tab">
+<button class="tablinks" onclick="openTab(event,'tOverview')" id='defaultOpen'>Overview</button>
+<button class="tablinks" onclick="openTab(event,'tChangelog')">Changelog</button>
+<button class="tablinks" onclick="openTab(event,'tPre-requisties')">Pre-requisties</button>
+<button class="tablinks" onclick="openTab(event,'tLanguages')">Languages</button>
+<button class="tablinks" onclick="openTab(event,'tFile_format')">File format</button>
+<button class="tablinks" onclick="openTab(event,'tRequirements')">Requirements</button>
+<button class="tablinks" onclick="openTab(event,'tOther_files')">Other files</button>
+<button class="tablinks" onclick="openTab(event,'tSample_execution')">Sample execution</button>
+<button class="tablinks" onclick="openTab(event,'tMiscellaneous')">Miscellaneous</button>
+<button class="tablinks" onclick="openTab(event,'tSubmission')">Submission</button>
+</div>
+<div id="tOverview" class="tabcontent">
 <h3 id="overview">Overview</h3>
 <p>You must design and implement your own cryptocurrency! Your implementation must be secure enough that you could actually use it.</p>
 <p>Your cryptocurrency should have a name – ideally, think of a neat name, but make sure it is <a href="https://coinmarketcap.com/">not already taken</a>. It will have to use public/private key encryption to generate the wallets. You do not have to use symmetric encryption (such as AES) to protect the private key in the wallet. You will need to use a good hashing algorithm. In practice, SHA-256 would be the minimum, but you can use a shorter SHA hash for this assignment.</p>
 <p>The intent is not for you to write the hashing or encryption / decryption routines – use existing libraries for that. In particular, both Java and Python can do that for you. Be careful about requiring an uncommon Python module or Java library, as it still has to run on the submission server.</p>
 </div>
-<div id="tChangelog" class="tabcontenttmp">
+<div id="tChangelog" class="tabcontent">
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div>
-<div id="tPre-requisties" class="tabcontenttmp">
+<div id="tPre-requisties" class="tabcontent">
 <h3 id="pre-requisties">Pre-requisties</h3>
 <p>This homework is based on the material covered in the <a href="../../slides/overview.html#/">Cryptocurrency Overview</a> slide set.</p>
 </div>
-<div id="tLanguages" class="tabcontenttmp">
+<div id="tLanguages" class="tabcontent">
 <h3 id="languages">Languages</h3>
 <p>You may use any programming language for this, but if you want to use a language other than Java or Python, please check with us first so that we can enable it on the submission server. (If you are using another language, you have to let us know at least two days before the assignment is due so we have time to configure it.)</p>
 <p>For Java and Python, we provide you with the code to convert a hex string to an array of bytes, to convert an array of bytes to a hex string, getting the SHA-256 hash of a file, and to read and write RSA keys. For Java, that is in the form of methods that you can use. For Python, it is links to the library functions that performs that task.</p>
@@ -67,7 +78,7 @@
 <p><strong>Java:</strong> RSA and SHA are already in the standard Java library; you can look <a href="https://www.devglan.com/java8/rsa-encryption-decryption-java">here</a> for how to handle RSA in Java, and see the <a href="https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html">MessageDigest class</a> for SHA (and the example <a href="https://www.baeldung.com/sha-256-hashing-java">here</a>). An example about how to sign a message can be found <a href="https://niels.nu/blog/2016/java-rsa.html">here</a>. You may use any of the code on those pages for your program. Note that the Java version on the submission server is OpenJDK 1.11. We provide some methods in the <a href="Sample.java">Sample.java</a> (<a href="Sample.java.html">html</a>) file we have provided for you to use.</p>
 <!-- **C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.  The compiler is `gcc` or `g++`. -->
 </div>
-<div id="tFile_format" class="tabcontenttmp">
+<div id="tFile_format" class="tabcontent">
 <h3 id="file-format">File format</h3>
 <p><strong>Blockchain</strong></p>
 <p>The blockchain will be in files named <code>block_0.txt</code>, <code>block_1.txt</code>, etc. The zeroth block (<code>block_0.txt</code>) will be the genesis block, and will not have any actual transactions in it. Each successive block after the genesis block will be of the following format:</p>
@@ -109,7 +120,7 @@ Date: Tue Apr 02 23:09:13 EDT 2019
 <p><strong>Wallet address versus wallet file</strong></p>
 <p>A wallet is a public / private key set. When signing a transaction, or checking a signature, then the full wallet file will be needed. A wallet address is a shortened version of the public key. For our purposes, we should take the SHA-256 hash of the public key, and use that. However, that’s a bit long, so we can use only the first 16 characters of that hash for brevity.</p>
 </div>
-<div id="tRequirements" class="tabcontenttmp">
+<div id="tRequirements" class="tabcontent">
 <h3 id="requirements">Requirements</h3>
 <p>Since this can be done in any programming language, you will have to write a shell script (described below) so that we can call your code. While the shell script is described below, the particular function – called the mode – to be implemented is <code>shown like this</code> in the requirements below. That function will be the first command line parameter provided to the program, and any additional command line parameters are specified below. For example, to generate a wallet, you would call <code>java CMoney generate wallet.txt</code> or <code>python3 cmoney.py generate wallet.txt</code>. We are going to be using the same command-line parameters (here, <code>generate wallet.txt</code>) to both your source code and the shell script.</p>
 <p><strong>Output:</strong> Each command below should print out EXACTLY ONE LINE to standard output indicating the success (or failure) of the command.</p>
@@ -133,7 +144,7 @@ Date: Tue Apr 02 23:09:13 EDT 2019
 </ul></li>
 </ol>
 </div>
-<div id="tOther_files" class="tabcontenttmp">
+<div id="tOther_files" class="tabcontent">
 <h3 id="other-files">Other files</h3>
 <h4 id="shell-script">Shell script</h4>
 <p>Since different programming languages can be used, and you may name your file differently, we are going to have you submit a shell script called <code>cryptomoney.sh</code> that we will use to test your code. All it does is pass the command-line parameters on to your program. If you are using Python, then your shell script would look like the following:</p>
@@ -154,7 +165,7 @@ java CMoney $@</code></pre>
      javac CMoney.java</code></pre>
 <p>Note that the indentation is a tab, not spaces! Makefiles are very strict on that. And change the file name as appropriate for your source code.</p>
 </div>
-<div id="tSample_execution" class="tabcontenttmp">
+<div id="tSample_execution" class="tabcontent">
 <h3 id="sample-execution">Sample execution</h3>
 <p>This is just meant to show the syntax – it is not meant to be a full fledged testing suite of your homework. However, it does call each of the commands listed above. Note that the lines with the equals signs are setting variables to be used later on. The commands used here are in the <a href="basic-test.sh">basic-test.sh</a> (<a href="basic-test.sh.html">html</a>) script. Note that you will have to run <code>chmod 755 basic-test.sh</code> before you can run the shell script. Also note that this shell script takes the SHA-256 sum of one of the block files via the <code>sha256sum</code> command – if you don’t have this command on your computer, you can remove that line.</p>
 <p>In this execution run, when a wallet is generated, a signature of the public key is used to identify the wallet (or perhaps it’s the public key itself – how this is done is up to you). It is this value that is returned by the <code>address</code> call, and is indicated below in the output (<code>New wallet generated in 'alice.wallet.txt' with signature abdfa7a347c40443</code>). You can – and likely should, as this program does – use only the first 16 (or so) digits of that wallet signature rather than the full SHA-256 hash of this signature.</p>
@@ -205,7 +216,7 @@ $ ./cryptomoney.sh validate
 True
 $</code></pre>
 </div>
-<div id="tMiscellaneous" class="tabcontenttmp">
+<div id="tMiscellaneous" class="tabcontent">
 <h3 id="miscellaneous-notes">Miscellaneous Notes</h3>
 <p>There are a number of assumptions you can make for your code:</p>
 <ul>
@@ -215,7 +226,7 @@ $</code></pre>
 <li>All numerical values provided for the cryptocurrency amounts – this is for the <code>balance</code> and <code>fund</code> modes – will only be integers; floating point numbers are not being used in this assignment.</li>
 </ul>
 </div>
-<div id="tSubmission" class="tabcontenttmp">
+<div id="tSubmission" class="tabcontent">
 <h3 id="submission">Submission</h3>
 <p>You will submit exactly three files for this assignment:</p>
 <ol type="1">
@@ -224,5 +235,5 @@ $</code></pre>
 <li><code>Makefile</code>: as described above</li>
 </ol>
 </div>
-</body>
+<script>document.getElementById('defaultOpen').click();</script></body>
 </html>
