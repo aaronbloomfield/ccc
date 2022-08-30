@@ -3,6 +3,9 @@ Cryptocurrency Introduction
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
+----
+
+::: {#tOverview .tabcontenttmp}
 
 ### Overview
 
@@ -12,15 +15,25 @@ Your cryptocurrency should have a name -- ideally, think of a neat name, but mak
 
 The intent is not for you to write the hashing or encryption / decryption routines -- use existing libraries for that.  In particular, both Java and Python can do that for you.  Be careful about requiring an uncommon Python module or Java library, as it still has to run on the submission server. 
 
+:::
+
+::: {#tChangelog .tabcontenttmp}
 
 ### Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+:::
+
+::: {#tPre-requisties .tabcontenttmp}
+
 ### Pre-requisties
 
 This homework is based on the material covered in the [Cryptocurrency Overview](../../slides/overview.html#/) slide set.
 
+:::
+
+::: {#tLanguages .tabcontenttmp}
 
 ### Languages
 
@@ -65,6 +78,9 @@ on the submission server is OpenJDK 1.11.  We provide some methods in the
 
 <!-- **C/C++:** Boost is installed, as well as the openssl library.  There are many great things about C and C++, but be careful if you pursue this langage -- we think this will give you a real headache if you try to implement it in C or C++.  The compiler is `gcc` or `g++`. -->
 
+:::
+
+::: {#tFile_format .tabcontenttmp}
 
 ### File format
 
@@ -189,6 +205,9 @@ purposes, we should take the SHA-256 hash of the public key, and use
 that.  However, that's a bit long, so we can use only the first 16
 characters of that hash for brevity.
 
+:::
+
+::: {#tRequirements .tabcontenttmp}
 
 ### Requirements
 
@@ -287,8 +306,11 @@ The requirements are:
     - **NOTE:** this should ONLY print either 'True' or 'False' (if it's valid
        or not), and nothing else!  Case matters here.
 
+:::
 
-### Shell script and Makefile
+::: {#tOther_files .tabcontenttmp}
+
+### Other files
 
 #### Shell script
 
@@ -330,6 +352,9 @@ main:
 
 Note that the indentation is a tab, not spaces!  Makefiles are very strict on that.  And change the file name as appropriate for your source code.
 
+:::
+
+::: {#tSample_execution .tabcontenttmp}
 
 ### Sample execution
 
@@ -402,6 +427,10 @@ True
 $
 ```
 
+:::
+
+::: {#tMiscellaneous .tabcontenttmp}
+
 ### Miscellaneous Notes
 
 There are a number of assumptions you can make for your code:
@@ -416,11 +445,16 @@ There are a number of assumptions you can make for your code:
   exist.
 - All numerical values provided for the cryptocurrency amounts -- this is for the `balance` and `fund` modes -- will only be integers; floating point numbers are not being used in this assignment.
 
+:::
 
-### Submission requirements
+::: {#tSubmission .tabcontenttmp}
+
+### Submission
 
 You will submit exactly three files for this assignment:
 
 1. Your source code file.  All your code must be in a single source code file.  We realize that a Java file may compile to multiple .class files, which is fine.  As mentioned above, if you want to use a language other than C, C++, Java, or Python, please check with us first.
 2. `cryptocurrency.sh`: the shell script, described above.  We are going to call that script to test your entire code, so make sure it's named properly!
 3. `Makefile`: as described above
+
+:::
