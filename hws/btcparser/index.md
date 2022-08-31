@@ -46,6 +46,40 @@ We have a number of files of the blockchain itself.  Blockchain block counting i
     - [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) will help you ensure that your JSON output is correct -- see the comments in the file for a description of how to use it
     - [change_byte.py](change_byte.py.html) ([src](change_byte.py)) will help with checking for blockchain errors -- see below for how to use it
 
+### Other files
+
+#### Shell script
+
+As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a `parse.sh` shell script for us to call.  Such a file for C or C++ might look like:
+
+```
+#!/bin/bash
+./a.out $@
+```
+
+The first line must be there exactly as shown (pound sign, then exclamation point, then `/bin/bash`).  For the second line, replace `./a.out` with how to run your (compiled) program: `java BTCBlockChain` or `python3 btc-parse.py` (use `python3`, not `python`).  Be sure to put the `$@` on that line as well.
+
+Once created, you will have to ensure it can be executed: `chmod 755 parse.sh`.  You should then be able to run your program via: `./parse.sh blk00000.blk`.
+
+The following might be what it would look like for Python:
+
+```
+#!/bin/bash
+python3 btc-parse.py $@
+```
+
+And for Java:
+
+```
+#!/bin/bash
+java BTCParse $@
+```
+
+#### Makefile
+
+You will also have to submit a `Makefile` that will be used to compile your program, if needed.  For languages that do not need compilation (such as Python), just put in a single `echo` statement so that `make` still runs properly.  This is the same as in the [previous assignments](../intro/index.html) ([md](../intro/index.md)).
+
+
 ### Part 1: Parsing
 
 Your program will take in exactly one command-line parameter: the file to read in.  You can assume that there will always be one command line parameter provided, and that that file will exist.  Sample files are provided above -- both large and small.
@@ -101,33 +135,6 @@ Some useful hints:
 
 If you can read in all of the input files -- especially the large one -- without any errors, then you've successfully completed this part.  Note that you may want to redirect your output to a file, since that's a lot of text to be output to the screen.
 
-
-#### Shell script
-
-As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a `parse.sh` shell script for us to call.  Such a file for C or C++ might look like:
-
-```
-#!/bin/bash
-./a.out $@
-```
-
-The first line must be there exactly as shown (pound sign, then exclamation point, then `/bin/bash`).  For the second line, replace `./a.out` with how to run your (compiled) program: `java BTCBlockChain` or `python3 btc-parse.py` (use `python3`, not `python`).  Be sure to put the `$@` on that line as well.
-
-Once created, you will have to ensure it can be executed: `chmod 755 parse.sh`.  You should then be able to run your program via: `./parse.sh blk00000.blk`.
-
-The following might be what it would look like for Python:
-
-```
-#!/bin/bash
-python3 btc-parse.py $@
-```
-
-And for Java:
-
-```
-#!/bin/bash
-java BTCParse $@
-```
 
 ### Part 2: Validation
 
@@ -400,4 +407,4 @@ You must submit a minimum of three files; more is fine.
 
 - `Makefile`: if your program needs compilation, then running `make` will perform that compilation.  If it does not need compiling, then just have something such as `echo "hello world"` as the action for the default target.
 - `parse.sh`: a bash script that will execute your (compiled) program with any provided command-line options.  An example of these are shown above.
-- Your code files: submit as many as you need to submit -- it's fine if you have things in multiple files
+- The source code itself, likely something like `btcscript.py` or `BTCScript.java`

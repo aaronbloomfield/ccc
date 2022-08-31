@@ -21,11 +21,11 @@ You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.h
 
 ### Languages
 
-This assignment uses the [Python bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is NOT installed on the VirtualBox image, so you will have to install it there as well.
+This assignment uses the [Python bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is installed on the VirtualBox image.
 
 We provide you with a few files to use:
 
-- [scripts.py](scripts.py.html) ([src](scripts.py)): you will modify this file throughout this assignment.  The progression of items in that file mirrors the progression of the assignment steps in this assignment.  This is the only file that you will submit.  We would expect that you would be able to understand everything this file by the end of the assignment
+- [scripts.py](scripts.py.html) ([src](scripts.py)): you will modify this file throughout this assignment.  The progression of items in that file mirrors the progression of the assignment steps herein.  This is the only file that you will submit.  We would expect that you would be able to understand everything in this file by the end of the assignment
 - [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)): this is the driver file that will run the various parts of the assignment using the values in the above scripts.py.  You are of course welcome to look at the details, but you are not expected to understand what is in that file.
 
 ### Hints

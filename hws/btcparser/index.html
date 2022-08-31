@@ -77,6 +77,21 @@
 <li><a href="change_byte.py.html">change_byte.py</a> (<a href="change_byte.py">src</a>) will help with checking for blockchain errors – see below for how to use it</li>
 </ul></li>
 </ul>
+<h3 id="other-files">Other files</h3>
+<h4 id="shell-script">Shell script</h4>
+<p>As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a <code>parse.sh</code> shell script for us to call. Such a file for C or C++ might look like:</p>
+<pre><code>#!/bin/bash
+./a.out $@</code></pre>
+<p>The first line must be there exactly as shown (pound sign, then exclamation point, then <code>/bin/bash</code>). For the second line, replace <code>./a.out</code> with how to run your (compiled) program: <code>java BTCBlockChain</code> or <code>python3 btc-parse.py</code> (use <code>python3</code>, not <code>python</code>). Be sure to put the <code>$@</code> on that line as well.</p>
+<p>Once created, you will have to ensure it can be executed: <code>chmod 755 parse.sh</code>. You should then be able to run your program via: <code>./parse.sh blk00000.blk</code>.</p>
+<p>The following might be what it would look like for Python:</p>
+<pre><code>#!/bin/bash
+python3 btc-parse.py $@</code></pre>
+<p>And for Java:</p>
+<pre><code>#!/bin/bash
+java BTCParse $@</code></pre>
+<h4 id="makefile">Makefile</h4>
+<p>You will also have to submit a <code>Makefile</code> that will be used to compile your program, if needed. For languages that do not need compilation (such as Python), just put in a single <code>echo</code> statement so that <code>make</code> still runs properly. This is the same as in the <a href="../intro/index.html">previous assignments</a> (<a href="../intro/index.md">md</a>).</p>
 <h3 id="part-1-parsing">Part 1: Parsing</h3>
 <p>Your program will take in exactly one command-line parameter: the file to read in. You can assume that there will always be one command line parameter provided, and that that file will exist. Sample files are provided above – both large and small.</p>
 <h4 id="block-group-file-format">Block group file format</h4>
@@ -115,18 +130,6 @@ $</code></pre>
 <li>Make sure you have a method that reads in compactSize unsigned integers properly, as this will cause your program to crash otherwise. In particular, remember that if the variable is more than one byte, then all the bytes <em>other</em> than the first are in little-Endian format. HOWEVER, some routines that read in the values will swap them for you, and some will not. This is explicitly why we provide <a href="blk00000-b29664.blk">block 29,664</a> for you – that is the first block that has such a value that is more than one byte (the txn_in_count for the second transaction is 320); you can see more information about that transaction <a href="https://blockchair.com/bitcoin/block/29664">here</a>.</li>
 </ul>
 <p>If you can read in all of the input files – especially the large one – without any errors, then you’ve successfully completed this part. Note that you may want to redirect your output to a file, since that’s a lot of text to be output to the screen.</p>
-<h4 id="shell-script">Shell script</h4>
-<p>As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a <code>parse.sh</code> shell script for us to call. Such a file for C or C++ might look like:</p>
-<pre><code>#!/bin/bash
-./a.out $@</code></pre>
-<p>The first line must be there exactly as shown (pound sign, then exclamation point, then <code>/bin/bash</code>). For the second line, replace <code>./a.out</code> with how to run your (compiled) program: <code>java BTCBlockChain</code> or <code>python3 btc-parse.py</code> (use <code>python3</code>, not <code>python</code>). Be sure to put the <code>$@</code> on that line as well.</p>
-<p>Once created, you will have to ensure it can be executed: <code>chmod 755 parse.sh</code>. You should then be able to run your program via: <code>./parse.sh blk00000.blk</code>.</p>
-<p>The following might be what it would look like for Python:</p>
-<pre><code>#!/bin/bash
-python3 btc-parse.py $@</code></pre>
-<p>And for Java:</p>
-<pre><code>#!/bin/bash
-java BTCParse $@</code></pre>
 <h3 id="part-2-validation">Part 2: Validation</h3>
 <p>Now that you can read in valid blockchain, your program should be extended to check for errors in the blockchain. Once an error is encountered, the program should output the error number and stop. The errors below are what should be checked for – note that these are not all the possible errors, but a selection of errors to check for on this assignment.</p>
 <ol type="1">
@@ -342,7 +345,7 @@ $</code></pre>
 <ul>
 <li><code>Makefile</code>: if your program needs compilation, then running <code>make</code> will perform that compilation. If it does not need compiling, then just have something such as <code>echo "hello world"</code> as the action for the default target.</li>
 <li><code>parse.sh</code>: a bash script that will execute your (compiled) program with any provided command-line options. An example of these are shown above.</li>
-<li>Your code files: submit as many as you need to submit – it’s fine if you have things in multiple files</li>
+<li>The source code itself, likely something like <code>btcscript.py</code> or <code>BTCScript.java</code></li>
 </ul>
 </body>
 </html>

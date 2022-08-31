@@ -404,7 +404,7 @@ $
 ```
 
 
-### Miscellaneous Notes
+### Notes
 
 There are a number of assumptions you can make for your code:
 
