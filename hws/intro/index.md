@@ -424,5 +424,5 @@ There are a number of assumptions you can make for your code:
 You will submit exactly three files for this assignment:
 
 1. Your source code file.  All your code must be in a single source code file.  We realize that a Java file may compile to multiple .class files, which is fine.  As mentioned above, if you want to use a language other than C, C++, Java, or Python, please check with us first.
-2. `cryptocurrency.sh`: the shell script, described above.  We are going to call that script to test your entire code, so make sure it's named properly!
+2. `cryptomoney.sh`: the shell script, described above.  We are going to call that script to test your entire code, so make sure it's named properly!
 3. `Makefile`: as described above
