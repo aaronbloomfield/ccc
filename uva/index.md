@@ -34,22 +34,24 @@ Readings
 
 All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
+- Due Wed, 9/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin.pdf))
+
+
 <!-- 
 - Due Mon, 2/21: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
     - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
-- Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
 -->
 
 
 Homeworks
 -----------
 
-Unless otherwise noted, all submissions are due by the end of the day of the due date given -- this means by 11:59:59 pm.  The late policies are discussed in the [homework policies page](hw-policies.html) ([md](hw-policies.md)).  Submission is through the Gradescope Collab tool -- all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.
+Reading assignments are due by the start of the lecture that day, and all other homeworks are due by the end of the day of the due date given -- this means by 11:59:59 pm.  The late policies are discussed in the [homework policies page](hw-policies.html) ([md](hw-policies.md)).  Submission is through the Gradescope Collab tool -- all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.
 
 
 #### Larger Programming Homeworks
 
-- None yet!  The first one will be due on Tuesday, September 6th, and released a week prior
+- Due Tue, 9/6, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
 <!--
 - Due Tue, 11/22 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
@@ -62,19 +64,17 @@ Unless otherwise noted, all submissions are due by the end of the day of the due
 - Due Tue, 9/27, by midnight: [HW P4: Bitcoin scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
 - Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
-- Due Tue, 9/6, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 -->
 
 #### Smaller Homeworks
 
-- None yet!  The first one will be completing a Google form, which will be due by the end of August
+- Due Wed, 9/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin.pdf))
+- Due Tue, 8/30: HW S1: complete the course introduction Google survey (link in Collab)
 
 <!--
 - Due Tue, 3/15: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
 - Due Fri, 2/25: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html) ([md](../hws/ethprivate/index.md))
 - Due Mon, 2/21: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)); see above (in the Reading section) for what you can skip
-- Due Mon, 2/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
-- Due Wed, 1/26: HW S1: complete the course introduction Google survey (link in Collab)
 -->
 
 
@@ -84,7 +84,7 @@ Lecture progress
 This is just an estimate, and will not always be updated if we veer off track.  The list of lecture topics can be found on the [slides page](../slides/index.html) ([md](../slides/index.md)).  Recordings for the lectures can be found in the Collab lecture capture tool.
 
 1. Wed, Aug 24: [course introduction](introduction.html#/), [overview](../slides/overview.html#/) (actual: finished intro, overview to end of introduction column)
-2. Mon, Aug 29: [overview](../slides/overview.html#/), [encryption](../slides/encryption.html#/)
+2. Mon, Aug 29: [overview](../slides/overview.html#/), [encryption](../slides/encryption.html#/) (actual: finished overview)
 3. Wed, Aug 31: [encryption](../slides/encryption.html#/)
 4. Mon, Sep 5: [encryption](../slides/encryption.html#/)
 5. Wed, Sep 7: [encryption](../slides/encryption.html#/); [Bitcoin](../slides/bitcoin.html#/)

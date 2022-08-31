@@ -202,12 +202,15 @@
   - If $h == h'$, then the original message was signed by Alice's private key
 
 
-## Public key cryptography goals
-- Key generation should be relatively easy
-- Encryption should be easy (polynomial time)
-- Decryption should be easy (polynomial time)
-  - With the right key!
-- Cracking should be very hard (exponential time)
+## Public key cryptography math
+- Public key cryptography uses some type of mathematical theory...
+  - ... such as prime numbers, elliptic curves, or discrete logs ...
+- Where some things are "easy" (read: polynomial time)
+  - These are the operations used for key generation, encryption, and decryption
+  - Examples: determining if a number is prime, elliptic point multiplication, discrete exponentiation
+- And some things are "hard" (read: exponential time)
+  - These are the operations needed to "crack" the encryption
+  - Examples: factoring a large composite number, elliptic point division, discrete logs
 
 
 ## Public key cryptography challenges
@@ -259,6 +262,35 @@ Any curve of the form $y^2=x^3+ax+b$
 <aside data-markdown class="notes">
 - note the scale differs on each axis
 - it reflects across the horizontal ($x$) axis due to the $y^2$ part
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-q-zoomed-out.svg" alt="image secp256k1-q-zoomed-out.svg" class="stretch">
+<aside data-markdown class="notes">
+- just showing it zoomed out
+- the slope approaches infinity, meaning the line approaches vertical, but not asymptotically
+- note the different scales -- the line is almost vertical at the end
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-r-zoomed-out-with-line.svg" alt="image secp256k1-r-zoomed-out-with-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- just trying to show the curvature of the curve
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-a.svg" alt="image secp256k1-a.svg" class="stretch">
+<aside data-markdown class="notes">
+- back to the zoomed-in version
 </aside>
 </textarea>
 </section>
@@ -419,26 +451,6 @@ Any curve of the form $y^2=x^3+ax+b$
 
 <section data-markdown data-transition="none" data-transition-speed="fast">
 <textarea>
-<img src="images/encryption/secp256k1/secp256k1-q-zoomed-out.svg" alt="image secp256k1-q-zoomed-out.svg" class="stretch">
-<aside data-markdown class="notes">
-- just showing it zoomed out
-- the slope approaches infinity, meaning the line approaches vertical
-- note the different scales -- the line is almost vertical at the end
-</aside>
-</textarea>
-</section>
-
-<section data-markdown data-transition="none" data-transition-speed="fast">
-<textarea>
-<img src="images/encryption/secp256k1/secp256k1-r-zoomed-out-with-line.svg" alt="image secp256k1-r-zoomed-out-with-line.svg" class="stretch">
-<aside data-markdown class="notes">
-- just trying to show the curvature of the curve
-</aside>
-</textarea>
-</section>
-
-<section data-markdown data-transition="none" data-transition-speed="fast">
-<textarea>
 <img src="images/encryption/secp256k1/secp256k1-q-point-at-infinity.svg" alt="image secp256k1-q-point-at-infinity.svg" class="stretch">
 <aside data-markdown class="notes">
 - ...
@@ -448,7 +460,7 @@ Any curve of the form $y^2=x^3+ax+b$
 
     <section data-markdown data-separator="^\n$"><textarea data-template>
 ## The Point at Infinity
-- Represented by the digit 0
+- Represented by the digit 0 or capital O
 - Considered one of the points "on" the curve
 - Considered the identity element: $0 \oplus P = P$
 - And $P \oplus P'=0$
@@ -555,7 +567,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - Rephrased: $a^p \equiv a$ (mod $p$)
 
 </li>
-<li class='fragment'>Example: let $a=2$ and $p=7$
+<li class='fragment'>Example in $Z_{7}$: let $a=2$ and $p=7$
 
   - $a^p-a=a^7-2=128-2=126$
   - $126=7\*18$, so 126 is divisible by 7
@@ -660,7 +672,7 @@ Any curve of the form $y^2=x^3+ax+b$
     
     <section data-markdown data-separator="^\n$" id="secp256k1derivative"><textarea data-template>
 ## Elliptical Point Addition
-- Adding the same point to itself
+- Adding the same point $P$ to itself
   - Curve: $y^2=x^3+7$
   - Curve: $y= \pm \sqrt{x^3+7}$
   - Slope is the derivative: $dy/dx = 3x^2/2y$
@@ -685,12 +697,14 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Reflections in a field
-- A reflection in a field means using the other point for that $x$-value
+- A reflection in a field means using the other $y$ value for that $x$-value
+  - The other $y$ value is just $-y$
 - Consider secp256k1 with the field $Z_{43}$ (i.e., $p=43$)
 - For $x=2$, there are two $y$ values: 12 and 31
-- $(12,31) \oplus (29,31) = (2,12)$
+  - $(12,31) \oplus (29,31) = (2,12)$
   - It intersects at $(2,31)$, but then reflects to $(2,12)$
   - You can see this [here](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=12&py=31&qx=29&qy=31)
+- The two $y$ values (here, 12 and 31) will always add to $p$ (here, 43)
 - The formulas provided herein already handle this reflection
 
 

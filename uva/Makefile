@@ -1,2 +1,2 @@
 main:
-	cd .. && make
+	@cd .. && make -s
