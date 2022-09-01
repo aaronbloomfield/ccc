@@ -4,11 +4,15 @@
 # https://www.w3schools.com/howto/howto_js_tabs.asp
 
 from html.parser import HTMLParser
+import os
+
+# remove a 'tabbed version' link from the source
+os.system("sed -i s_' | <a href=\"index-tabs.html\">view tabbed version</a>'__g index.html")
 
 fin = open("index.html","r")
 data = fin.read()
 
-header = ""
+header = "<!DOCTYPE html>\n"
 body = ""
 tabs = []
 
@@ -24,7 +28,8 @@ class MyHTMLParser(HTMLParser):
 			assert len(attrs[0]) == 2
 			tabs.append(attrs[0][1])
 			if self.firsttime:
-				header = body
+				# back up 4 characters (remove the '</p>'), add a navigation link
+				header += body.strip()[:-4] + " | <a href='index.html'>view standard version</a></p>"
 				body = ""
 			else:
 				body += "</div>"
@@ -62,6 +67,7 @@ replacements = [ ("Ec","EC"),("Io","I/O"),("Tbtc","tBTC"),("P2Pkh","P2PKH"),("To
 
 parser = MyHTMLParser()
 parser.feed(data)
+
 with open("index-tabs.html","w") as fout:
 	print(header,file=fout,end='')
 	print("<div class='tab'>",file=fout)
@@ -81,3 +87,6 @@ with open("index-tabs.html","w") as fout:
 		print("<button class='tablinks' onclick=\"openTab(event,'t" + tab + "')\"" + id + ">" + name + "</button>",file=fout)
 	print("</div>",file=fout)
 	print(body,file=fout)
+
+# add in the 'tabbed version' link back into the source
+os.system("sed -i s_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>)</p>'_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>) | <a href=\"index-tabs.html\">view tabbed version</a></p>'_g index.html")
