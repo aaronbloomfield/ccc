@@ -35,7 +35,7 @@ This list is to cut-and-paste into the slides as needed
 - ![firo logo](../slides/images/logos/firo-coin-symbol.svg#cclogo) Firo ([FIRO](https://coinmarketcap.com/currencies/firo/)) <br clear=all>
 - ![frax logo](../slides/images/logos/frax-coin-symbol.svg#cclogo) Frax ([FRAX](https://coinmarketcap.com/currencies/frax/)) <br clear=all>
 - ![gre logo](../slides/images/logos/gre-coin-symbol.webp#cclogo) Greencoin ([GRE](https://coinmarketcap.com/currencies/greencoin/)) <br clear=all>
-- ![juno logo](../slides/images/logos/juno-coin-symbol.webp#cclogo) Juno ([Juno](https://coinmarketcap.com/currencies/juno/)) <br clear=all>
+- ![juno logo](../slides/images/logos/juno-coin-symbol.svg#cclogo) Juno ([Juno](https://coinmarketcap.com/currencies/juno/)) <br clear=all>
 - ![luna logo](../slides/images/logos/lunac-coin-symbol.svg#cclogo) Luna Classic ([LUNAC](https://coinmarketcap.com/currencies/terra-luna/)) <br clear=all>
 - ![matic logo](../slides/images/logos/matic-coin-symbol.svg#cclogo) Polygon ([MATIC](https://coinmarketcap.com/currencies/polygon/)) <br clear=all>
 - ![mim logo](../slides/images/logos/mim-coin-symbol.svg#cclogo) Magic Internet Money ([MIM](https://coinmarketcap.com/currencies/magic-internet-money/)) <br clear=all>
@@ -46,9 +46,9 @@ This list is to cut-and-paste into the slides as needed
 - ![sai logo](../slides/images/logos/sai-coin-symbol.svg#cclogo) Sai ([SAI](https://coinmarketcap.com/currencies/single-collateral-dai/)) <br clear=all>
 - ![shib logo](../slides/images/logos/shib-coin-symbol.svg#cclogo) Shiba Inu ([SHIB](https://coinmarketcap.com/currencies/shiba-inu/)) <br clear=all>
 - ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo) Solana ([SOL](https://coinmarketcap.com/currencies/solana/)) <br clear=all>
-- ![spell logo](../slides/images/logos/spell-coin-symbol.webp#cclogo) Spell ([SPELL](https://coinmarketcap.com/currencies/spell-token/)) <br clear=all>
+- ![spell logo](../slides/images/logos/spell-coin-symbol.svg#cclogo) Spell ([SPELL](https://coinmarketcap.com/currencies/spell-token/)) <br clear=all>
 - ![storj logo](../slides/images/logos/storj-coin-symbol.svg#cclogo) Storj ([STORJ](https://coinmarketcap.com/currencies/storj/)) <br clear=all>
-- ![tomb logo](../slides/images/logos/tomb-coin-symbol.webp#cclogo) Tomb ([TOMB](https://coinmarketcap.com/currencies/tomb/)) <br clear=all>
+- ![tomb logo](../slides/images/logos/tomb-coin-symbol.svg#cclogo) Tomb ([TOMB](https://coinmarketcap.com/currencies/tomb/)) <br clear=all>
 - ![tribe logo](../slides/images/logos/tribe-coin-symbol.svg#cclogo) Tribe ([TRIBE](https://coinmarketcap.com/currencies/tribe/)) <br clear=all>
 - ![usdc logo](../slides/images/logos/usdc-coin-symbol.svg#cclogo) USD Coin ([USDC](https://coinmarketcap.com/currencies/usd-coin/)) <br clear=all>
 - ![usdt logo](../slides/images/logos/usdt-coin-symbol.svg#cclogo) Tether ([USDT](https://coinmarketcap.com/currencies/tether/)) <br clear=all>

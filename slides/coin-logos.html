@@ -15,36 +15,50 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../markdown.css" />
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
 <h1 id="coin-logos-in-the-slides">Coin Logos in the slides</h1>
-<p><a href="../index.html">Go up to the slides page</a> (<a
-href="../index.md">md</a>)</p>
-<p>This page has the relevant code to include the coin logos in the
-reveal.js slides. It’s really just a reference for those creating the
-slides.</p>
+<p><a href="../index.html">Go up to the slides page</a> (<a href="../index.md">md</a>)</p>
+<p>This page has the relevant code to include the coin logos in the reveal.js slides. It’s really just a reference for those creating the slides.</p>
 <h3 id="subtitles">Subtitles</h3>
-<p>As a subtitle to the slide column header, such as <a
-href="stablecoins.html#/casestudy">here</a>:</p>
+<p>As a subtitle to the slide column header, such as <a href="stablecoins.html#/casestudy">here</a>:</p>
 <pre><code>&lt;img src=&quot;../slides/images/logos/btc-coin-symbol.svg&quot; class=&quot;cclogosubtitle&quot;&gt;
 &lt;img src=&quot;../slides/images/logos/eth-coin-symbol.svg&quot; class=&quot;cclogosubtitle&quot;&gt;</code></pre>
 <h3 id="slide-style">Slide style</h3>
-<p>To include an image on a slide, either as part of the text or as part
-of the h2 header, put the following before the first Markdown line of
-the slide content:</p>
+<p>To include an image on a slide, either as part of the text or as part of the h2 header, put the following before the first Markdown line of the slide content:</p>
 <pre><code>&lt;!-- .slide: class=&quot;cclogo-slide&quot; --&gt;</code></pre>
 <h3 id="coin-logo">Coin logo</h3>
-<p>The text of the coin logo is the same. To put it in a h2 header (be
-sure to include the slide style line, above):</p>
+<p>The text of the coin logo is the same. To put it in a h2 header (be sure to include the slide style line, above):</p>
 <pre><code>## [![ppc logo](../slides/images/logos/ppc-coin-symbol.svg)](https://coinmarketcap.com/currencies/peercoin/) Peercoin</code></pre>
 <p>To put it as part of a list or paragraph:</p>
 <pre><code>## - [![ppc logo](../slides/images/logos/ppc-coin-symbol.svg)](https://coinmarketcap.com/currencies/peercoin/) Peercoin</code></pre>
 <h3 id="viewing-the-coin-logos">Viewing the coin logos</h3>
-<p>See <a href="images/logos/readme.html">here</a> or <a
-href="../uva/introduction.html#/allcoins">here</a>.</p>
+<p>See <a href="images/logos/readme.html">here</a> or <a href="../uva/introduction.html#/allcoins">here</a>.</p>
 <h3 id="all-the-coin-logos">All the coin logos</h3>
 <p>They are sorted alphabetically by the coin abbreviation.</p>
 <pre><code>[![algo logo](../slides/images/logos/algo-coin-symbol.svg)](https://coinmarketcap.com/currencies/algorand/)
@@ -63,7 +77,7 @@ href="../uva/introduction.html#/allcoins">here</a>.</p>
 [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/)
 [![frax logo](../slides/images/logos/frax-coin-symbol.svg)](https://coinmarketcap.com/currencies/frax/)
 [![gre logo](../slides/images/logos/gre-coin-symbol.webp)](https://coinmarketcap.com/currencies/greencoin/)
-[![juno logo](../slides/images/logos/juno-coin-symbol.webp)](https://coinmarketcap.com/currencies/juno/)
+[![juno logo](../slides/images/logos/juno-coin-symbol.svg)](https://coinmarketcap.com/currencies/juno/)
 [![luna logo](../slides/images/logos/lunac-coin-symbol.svg)](https://coinmarketcap.com/currencies/terra-luna/)
 [![matic logo](../slides/images/logos/matic-coin-symbol.svg)](https://coinmarketcap.com/currencies/polygon/)
 [![mim logo](../slides/images/logos/mim-coin-symbol.svg)](https://coinmarketcap.com/currencies/magic-internet-money/)
@@ -74,9 +88,9 @@ href="../uva/introduction.html#/allcoins">here</a>.</p>
 [![sai logo](../slides/images/logos/sai-coin-symbol.svg)](https://coinmarketcap.com/currencies/single-collateral-dai/)
 [![shib logo](../slides/images/logos/shib-coin-symbol.svg)](https://coinmarketcap.com/currencies/shiba-inu/)
 [![sol logo](../slides/images/logos/sol-coin-symbol.svg)](https://coinmarketcap.com/currencies/solana/)
-[![spell logo](../slides/images/logos/spell-coin-symbol.webp)](https://coinmarketcap.com/currencies/spell-token/)
+[![spell logo](../slides/images/logos/spell-coin-symbol.svg)](https://coinmarketcap.com/currencies/spell-token/)
 [![storj logo](../slides/images/logos/storj-coin-symbol.svg)](https://coinmarketcap.com/currencies/storj/)
-[![tomb logo](../slides/images/logos/tomb-coin-symbol.webp)](https://coinmarketcap.com/currencies/tomb/)
+[![tomb logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/tomb/)
 [![tribe logo](../slides/images/logos/tribe-coin-symbol.svg)](https://coinmarketcap.com/currencies/tribe/)
 [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/)
 [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/)

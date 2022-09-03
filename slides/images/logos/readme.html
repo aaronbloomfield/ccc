@@ -15,6 +15,28 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../../markdown.css" />
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -35,156 +57,49 @@ img.cclogo {
   display: inline;
 }
 </style>
-<p><a href="../../index.html">Go up to the slides page</a> (<a
-href="../../index.md">md</a>)</p>
-<p>All the logos herein are from sources whose licenses allow
-redistribution in this repository, or are included under free use
-guidelines.</p>
+<p><a href="../../index.html">Go up to the slides page</a> (<a href="../../index.md">md</a>)</p>
+<p>All the logos herein are from sources whose licenses allow redistribution in this repository, or are included under free use guidelines.</p>
 <ol type="1">
-<li><img src="algo-coin-symbol.svg" class="cclogo"> Algorand (ALGO) from
-<a href="https://cryptologos.cc/algorand">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="atom-coin-symbol.svg" class="cclogo"> Cosmos (ATOM) from
-<a href="https://cryptologos.cc/cosmos">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="aust-coin-symbol.svg" class="cclogo"> Anchor UST (aUST)
-was created by me from the USTC logo, below, from images from <a
-href="https://coinmarketcap.com/currencies/anchorust/">here</a>
-<br clear='all'></li>
-<li><img src="beam-coin-symbol.svg" class="cclogo"> Beam (BEAM) from <a
-href="https://cryptologos.cc/beam">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="btc-coin-symbol.svg" class="cclogo"> Bitcoin (BTC) adapted
-from <a
-href="https://commons.wikimedia.org/wiki/File:Bitcoin_logo.svg">this
-image from Wikimedia Commons</a>, which is from the <a
-href="https://en.wikipedia.org/wiki/Bitcoin">Bitcoin Wikipedia
-article</a> <br clear='all'></li>
-<li><img src="btg-coin-symbol.svg" class="cclogo"> Bitcoin Gold (BTG)
-from <a href="https://cryptologos.cc/bitcoin-gold">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="dai-coin-symbol.svg" class="cclogo"> Dai (DAI) from <a
-href="https://cryptologos.cc/multi-collateral-dai">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="dot-coin-symbol.svg" class="cclogo"> DOT adapted from <a
-href="https://cryptologos.cc/polkadot-new">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="erg-coin-symbol.svg" class="cclogo"> ERG adapted from <a
-href="https://cryptologos.cc/ergo">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="etc-coin-symbol.svg" class="cclogo"> Ethereum classic
-(ETC) adapted from the <a href="etc-logo.svg">logo file</a>, which is
-from <a
-href="https://commons.wikimedia.org/wiki/File:Ethereum_Classic_Logo.svg">this
-image from Wikimedia Commons</a>; the <a
-href="etc-coin-symbol-old.svg">old version</a> was from the same file
-<br clear='all'></li>
-<li><img src="eth-coin-symbol.svg" class="cclogo"> Ethereum (ETH) was
-adapted from <a
-href="https://logowik.com/ethereum-vector-logo-1-7602.html">here</a>,
-and the <a href="eth-coin-symbol-old.svg">old version</a> was adapted
-from <a
-href="https://commons.wikimedia.org/wiki/File:Ethereum_logo_translucent.svg">this
-image from Wikimedia Commons</a>, which is from the <a
-href="https://en.wikipedia.org/wiki/Ethereum">Ethereum Wikipedia
-article</a> <br clear='all'></li>
-<li><img src="fei-coin-symbol.svg" class="cclogo"> Fei USD (FEI) from <a
-href="https://cryptologos.cc/fei-usd">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="fil-coin-symbol.svg" class="cclogo"> Filecoin (FIL) from
-<a href="https://cryptologos.cc/filecoin">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="firo-coin-symbol.svg" class="cclogo"> Firo (FIRO) from <a
-href="https://commons.wikimedia.org/wiki/File:Firo-logo.svg">this image
-from Wikimedia Commons</a> <br clear='all'></li>
-<li><img src="frax-coin-symbol.svg" class="cclogo"> Frax (FRAX) from <a
-href="https://cryptologos.cc/frax">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="gre-coin-symbol.webp" class="cclogo"> Greencoin (GRE) was
-from a Pinterest site, but they don’t hold the copyright; it’s on
-various other sites, so the assumption is that it’s legal to use and
-include it under free use guidelines <br clear='all'></li>
-<li><img src="juno-coin-symbol.webp" class="cclogo"> JUNO (JUNO) from <a
-href="https://www.finder.com/juno">here</a>, and assumed valid under
-free use guidelines</li>
-<li><img src="lunac-coin-symbol.svg" class="cclogo"> Luna (LUNA) from <a
-href="https://cryptologos.cc/terra-luna">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="matic-coin-symbol.svg" class="cclogo"> Polygon (MATIC)
-adapted from <a
-href="https://cryptologos.cc/logos/matic-coin-symbol.svg?v=022">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="mim-coin-symbol.svg" class="cclogo"> Maker (MKR) from <a
-href="https://abracadabra.money/">abracadabra.money</a> (specifically,
-<a href="https://abracadabra.money/img/PixelMIM.12c48248.svg">here</a>),
-and is used under free use guidelines <br clear='all'></li>
-<li><img src="mkr-coin-symbol.svg" class="cclogo"> Maker (MKR) from <a
-href="https://cryptologos.cc/maker">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="nmc-coin-symbol.svg" class="cclogo"> Namecoin (NMC) from
-<a href="https://cryptologos.cc/namecoin">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="ppc-coin-symbol.svg" class="cclogo"> Peercoin (PPC) from
-<a href="https://cryptologos.cc/peercoin">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="rvn-coin-symbol.svg" class="cclogo"> Ravencoin (RVN)
-adapted from <a
-href="https://commons.wikimedia.org/wiki/File:Ravencoin-logo.png">this
-image from Wikimedia Commons</a> <br clear='all'></li>
-<li><img src="sai-coin-symbol.svg" class="cclogo"> Sai (SAI) is from <a
-href="https://saistats.com/">here</a> and is used under free use
-guidelines <br clear='all'></li>
-<li><img src="shib-coin-symbol.svg" class="cclogo"> SHIB adapted from <a
-href="https://cryptologos.cc/shiba-inu">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="sol-coin-symbol.svg" class="cclogo"> SOL adapted from <a
-href="https://cryptologos.cc/solana">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="spell-coin-symbol.webp" class="cclogo"> SPELL taken from
-<a
-href="https://thegivingblock.com/resources/cryptocurrency/spell-token/">here</a>
-and is used under free use guidelines <br clear='all'></li>
-<li><img src="storj-coin-symbol.svg" class="cclogo"> STORJ adapted from
-<a href="https://cryptologos.cc/storj">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="tomb-coin-symbol.webp" class="cclogo"> Tomb (TOMB) adapted
-from the logo on various sites such as <a
-href="https://www.coinlore.com/coin/tomb">this one</a> and is used under
-free use guidelines <br clear='all'></li>
-<li><img src="tribe-coin-symbol.svg" class="cclogo"> Tribe (TRIBE) from
-<a href="https://cryptologos.cc/tribe">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="usdc-coin-symbol.svg" class="cclogo"> UDSC (USDC) from <a
-href="https://cryptologos.cc/usd-coin">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="usdt-coin-symbol.svg" class="cclogo"> Tether (USDT)
-adapted from <a
-href="https://cryptologos.cc/usd-coin">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="ustc-coin-symbol.svg" class="cclogo"> TerraUSD (UST) from
-<a
-href="https://seeklogo.com/vector-logo/438118/terrausd-ust">seeklogo</a>
-<br clear='all'></li>
-<li><img src="wbtc-coin-symbol.svg" class="cclogo"> Wrapped Bitcoin
-(WBTC) from <a
-href="https://cryptologos.cc/wrapped-bitcoin">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="weth-coin-symbol.svg" class="cclogo"> WETH created by me
-from the WBTC logo (shown herein) and the ETH logo (also
-herein)<br clear='all'></li>
-<li><img src="xlm-coin-symbol.svg" class="cclogo"> Stellar Lumens (XLM)
-adapted from <a href="https://cryptologos.cc/stellar">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="xpd-coin-symbol.svg" class="cclogo"> Petro (XPD) <a
-href="https://coinranking.com/coin/TCwbmhubavmsh+petro-ptr">here</a>,
-and is included under free use guidelines (the old webp one is from <a
-href="https://en.wikipedia.org/wiki/Petro_(cryptocurrency)">wikipedia</a><br clear='all'></li>
-<li><img src="xpm-coin-symbol.svg" class="cclogo"> Primecoin (XPM) from
-<a href="https://cryptologos.cc/primecoin">cryptologos.cc</a>
-<br clear='all'></li>
-<li><img src="zec-coin-symbol.svg" class="cclogo"> ZCash (ZEC): from <a
-href="https://cryptologos.cc/zcash">cryptologos.cc</a>
-<br clear='all'></li>
+<li><img src="algo-coin-symbol.svg" class="cclogo"> Algorand (ALGO) from <a href="https://cryptologos.cc/algorand">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="atom-coin-symbol.svg" class="cclogo"> Cosmos (ATOM) from <a href="https://cryptologos.cc/cosmos">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="aust-coin-symbol.svg" class="cclogo"> Anchor UST (aUST) was created by me from the USTC logo, below, from images from <a href="https://coinmarketcap.com/currencies/anchorust/">here</a> <br clear='all'></li>
+<li><img src="beam-coin-symbol.svg" class="cclogo"> Beam (BEAM) from <a href="https://cryptologos.cc/beam">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="btc-coin-symbol.svg" class="cclogo"> Bitcoin (BTC) adapted from <a href="https://commons.wikimedia.org/wiki/File:Bitcoin_logo.svg">this image from Wikimedia Commons</a>, which is from the <a href="https://en.wikipedia.org/wiki/Bitcoin">Bitcoin Wikipedia article</a> <br clear='all'></li>
+<li><img src="btg-coin-symbol.svg" class="cclogo"> Bitcoin Gold (BTG) from <a href="https://cryptologos.cc/bitcoin-gold">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="dai-coin-symbol.svg" class="cclogo"> Dai (DAI) from <a href="https://cryptologos.cc/multi-collateral-dai">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="dot-coin-symbol.svg" class="cclogo"> DOT adapted from <a href="https://cryptologos.cc/polkadot-new">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="erg-coin-symbol.svg" class="cclogo"> ERG adapted from <a href="https://cryptologos.cc/ergo">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="etc-coin-symbol.svg" class="cclogo"> Ethereum classic (ETC) adapted from the <a href="etc-logo.svg">logo file</a>, which is from <a href="https://commons.wikimedia.org/wiki/File:Ethereum_Classic_Logo.svg">this image from Wikimedia Commons</a>; the <a href="etc-coin-symbol-old.svg">old version</a> was from the same file <br clear='all'></li>
+<li><img src="eth-coin-symbol.svg" class="cclogo"> Ethereum (ETH) was adapted from <a href="https://logowik.com/ethereum-vector-logo-1-7602.html">here</a>, and the <a href="eth-coin-symbol-old.svg">old version</a> was adapted from <a href="https://commons.wikimedia.org/wiki/File:Ethereum_logo_translucent.svg">this image from Wikimedia Commons</a>, which is from the <a href="https://en.wikipedia.org/wiki/Ethereum">Ethereum Wikipedia article</a> <br clear='all'></li>
+<li><img src="fei-coin-symbol.svg" class="cclogo"> Fei USD (FEI) from <a href="https://cryptologos.cc/fei-usd">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="fil-coin-symbol.svg" class="cclogo"> Filecoin (FIL) from <a href="https://cryptologos.cc/filecoin">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="firo-coin-symbol.svg" class="cclogo"> Firo (FIRO) from <a href="https://commons.wikimedia.org/wiki/File:Firo-logo.svg">this image from Wikimedia Commons</a> <br clear='all'></li>
+<li><img src="frax-coin-symbol.svg" class="cclogo"> Frax (FRAX) from <a href="https://cryptologos.cc/frax">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="gre-coin-symbol.webp" class="cclogo"> Greencoin (GRE) was from a Pinterest site, but they don’t hold the copyright; it’s on various other sites, so the assumption is that it’s legal to use and include it under free use guidelines <br clear='all'></li>
+<li><img src="juno-coin-symbol.svg" class="cclogo"> JUNO (JUNO) from <a href="https://github.com/CosmosContracts/docs">this repo</a>, specifically <a href="https://github.com/CosmosContracts/docs/blob/master/.gitbook/assets/JUNO%20Logo%20%28Black%29.svg">this file</a>; although no license is listed, it is assumed valid under free use guidelines</li>
+<li><img src="lunac-coin-symbol.svg" class="cclogo"> Luna (LUNA) from <a href="https://cryptologos.cc/terra-luna">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="matic-coin-symbol.svg" class="cclogo"> Polygon (MATIC) adapted from <a href="https://cryptologos.cc/logos/matic-coin-symbol.svg?v=022">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="mim-coin-symbol.svg" class="cclogo"> Maker (MKR) from <a href="https://abracadabra.money/">abracadabra.money</a> (specifically, <a href="https://abracadabra.money/img/PixelMIM.12c48248.svg">here</a>), and is used under free use guidelines <br clear='all'></li>
+<li><img src="mkr-coin-symbol.svg" class="cclogo"> Maker (MKR) from <a href="https://cryptologos.cc/maker">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="nmc-coin-symbol.svg" class="cclogo"> Namecoin (NMC) from <a href="https://cryptologos.cc/namecoin">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="ppc-coin-symbol.svg" class="cclogo"> Peercoin (PPC) from <a href="https://cryptologos.cc/peercoin">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="rvn-coin-symbol.svg" class="cclogo"> Ravencoin (RVN) adapted from <a href="https://commons.wikimedia.org/wiki/File:Ravencoin-logo.png">this image from Wikimedia Commons</a> <br clear='all'></li>
+<li><img src="sai-coin-symbol.svg" class="cclogo"> Sai (SAI) is from <a href="https://saistats.com/">here</a> and is used under free use guidelines <br clear='all'></li>
+<li><img src="shib-coin-symbol.svg" class="cclogo"> SHIB adapted from <a href="https://cryptologos.cc/shiba-inu">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="sol-coin-symbol.svg" class="cclogo"> SOL adapted from <a href="https://cryptologos.cc/solana">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="spell-coin-symbol.svg" class="cclogo"> SPELL adapted from the various .svg coin logo parts from <a href="https://abracadabra.money/">abracadabra.money/</a>, and is used under free use guidelines <br clear='all'></li>
+<li><img src="storj-coin-symbol.svg" class="cclogo"> STORJ adapted from <a href="https://cryptologos.cc/storj">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="tomb-coin-symbol.svg" class="cclogo"> Tomb (TOMB) adapted from the logo at <a href="https://grave.tomb.com/">grave.tomb.com</a>, and is used under free use guidelines <br clear='all'></li>
+<li><img src="tribe-coin-symbol.svg" class="cclogo"> Tribe (TRIBE) from <a href="https://cryptologos.cc/tribe">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="usdc-coin-symbol.svg" class="cclogo"> UDSC (USDC) from <a href="https://cryptologos.cc/usd-coin">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="usdt-coin-symbol.svg" class="cclogo"> Tether (USDT) adapted from <a href="https://cryptologos.cc/usd-coin">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="ustc-coin-symbol.svg" class="cclogo"> TerraUSD (UST) from <a href="https://seeklogo.com/vector-logo/438118/terrausd-ust">seeklogo</a> <br clear='all'></li>
+<li><img src="wbtc-coin-symbol.svg" class="cclogo"> Wrapped Bitcoin (WBTC) from <a href="https://cryptologos.cc/wrapped-bitcoin">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="weth-coin-symbol.svg" class="cclogo"> WETH created by me from the WBTC logo (shown herein) and the ETH logo (also herein)<br clear='all'></li>
+<li><img src="xlm-coin-symbol.svg" class="cclogo"> Stellar Lumens (XLM) adapted from <a href="https://cryptologos.cc/stellar">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="xpd-coin-symbol.svg" class="cclogo"> Petro (XPD) <a href="https://coinranking.com/coin/TCwbmhubavmsh+petro-ptr">here</a>, and is included under free use guidelines<br clear='all'></li>
+<li><img src="xpm-coin-symbol.svg" class="cclogo"> Primecoin (XPM) from <a href="https://cryptologos.cc/primecoin">cryptologos.cc</a> <br clear='all'></li>
+<li><img src="zec-coin-symbol.svg" class="cclogo"> ZCash (ZEC): from <a href="https://cryptologos.cc/zcash">cryptologos.cc</a> <br clear='all'></li>
 </ol>
 </body>
 </html>
