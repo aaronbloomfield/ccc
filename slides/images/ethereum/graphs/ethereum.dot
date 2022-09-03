@@ -1,4 +1,6 @@
 digraph TXN {
+        imagescale=true;
+        scale=0.5;
         rankdir="LR";
         node [fontname="Helvetica",width=3];
         init_or_data [shape=Mrecord,label="init or data"]
@@ -8,5 +10,5 @@ digraph TXN {
         gaslimit [shape=Mrecord,label="gasLimit"]
         gasprice [shape=Mrecord,label="gasPrice"]
         nonce [shape=Mrecord,label="nonce"];
-        title [shape=none,label="Ethereum Transaction"];
+        title [shape=none,label=<<table border='0'><tr><td fixedsize="true" width="50" height="50"><img src="eth-coin-symbol.svg" /></td><td>Ethereum transaction</td></tr></table>>];
 }
