@@ -17,7 +17,7 @@ The intent is not for you to write the hashing or encryption / decryption routin
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
-- Clarified on 9/2: For `validate`: the blockchain is considered valid if only the genesis block exists (no checks are necessary other than presence of the file); we will never call this function if the genesis block has not been created.
+- Clarified on 9/2: For `validate`: the blockchain is considered valid if only the genesis block exists; we will never call this function if the genesis block has not been created.  Because of this, you don't have to actually check if the genesis block exists, as we will never call validate on it if it does not exist.  Likewise, you don't have to do any checks on the genesis block file itself.
 
 
 ### Background
@@ -285,7 +285,7 @@ The requirements are:
     entire block chain, validating each one.  This means that starting
     with block 1 (the block *after* the genesis block), ensure that
     the hash listed in that file, which is the hash for the *previous*
-    block file, is correct.  The blockchain is considered valid if only the genesis block exists (no checks are necessary other than presence of the file); we will never call this function if the genesis block has not been created.  There are no additional command-line
+    block file, is correct.  For `validate`: the blockchain is considered valid if only the genesis block exists; we will never call this function if the genesis block has not been created.  Because of this, you don't have to actually check if the genesis block exists, as we will never call validate on it if it does not exist.  Likewise, you don't have to do any checks on the genesis block file itself.  There are no additional command-line
     parameters for this function.
     - **NOTE:** this should ONLY print either 'True' or 'False' (if it's valid
        or not), and nothing else!  Case matters here.
