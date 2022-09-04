@@ -298,7 +298,7 @@ System.out.println(d);
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## History
-- The first viable cryptocurrency, it was created in 2008 by Satoshi Nakamoto
+- The first viable cryptocurrency, white paper released in 2008 by "Satoshi Nakamoto"
   - That's a pseudonym; nobody knows who the real person (or group) that created it
   - Although the person is [likely British](https://en.wikipedia.org/wiki/Satoshi_Nakamoto#Characteristics_and_identity)
 - It is now fully open source
@@ -307,14 +307,23 @@ System.out.println(d);
 
 
 
+## Genesis block
+- Created on January 3, 2009 ([hi-res version](https://upload.wikimedia.org/wikipedia/commons/2/2e/Bitcoin-Genesis-block.jpg))
+
+<img class='stretch' style="padding:0" src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Bitcoin-Genesis-block.jpg/1024px-Bitcoin-Genesis-block.jpg'>
+
+Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
+
+
+
 ## Symbols and conversions
 - &#8383; is the symbol for BTC
   - Both &#8383; and 'BTC' are used interchangably
 - A *satoshi* is the smallest amount of BTC that can be transacted
   - 1 BTC = $10^8$ sat
-  - No standardized symbol for satoshi
+  - No standardized symbol for satoshi; *"sat"* is often used
 - All BTC transaction amounts are represented as a integer number of satoshis
-  - As an 8-byte little-Endian long int
+  - As an 8-byte unsigned little-Endian (long) int
 
 
 
@@ -405,7 +414,7 @@ System.out.println(d);
   - So images need to be suchly encoded
 - Example: the Bitcoin genesis block has hash 0x000000000019d6689c085ae165831e934ff763ae46a2a6 c172b3f1b60a8ce26f
 - Hex encoding: each byte becomes 2 hex digits
-  - Each text character represents 4 bits: 200% increase in size
+  - Each (8-bit) text character represents 4 bits: 200% increase in size
 
 
 
@@ -448,9 +457,9 @@ $
   - Avoid non-alphanumeric characters, which will cause line-breaks
   - Double-click will select entire string (not the case with + or /)
 - Base 58 digit conversion:
-  - 0 -> 1 ... 8 -> 9 (skips 0 (zero))
-  - 9 -> A ... 32 -> Z (skips I (India) and O (Oscar))
-  - 33 -> a ... 57 -> z (skips l (Lima))
+  - 0 -> 1, ..., 8 -> 9 (skips 0 (zero))
+  - 9 -> A, ..., 32 -> Z (skips I (India) and O (Oscar))
+  - 33 -> a, ..., 57 -> z (skips l (Lima))
 - Each text character represents 5.86 (!) bits: 137% increase in size
 
 
@@ -473,8 +482,7 @@ $
   1. Given an ECDSA public/private key pair...
   2. Perform SHA-256 on the (binary of the) public key
   3. Perform RIPEMD-160 on that (binary) SHA-256 result
-  4. Prefix that with the version number
-     0 0x00 for the main network
+  4. Prefix that with the version number 0 (a single 0x00 byte) for the main network
   5. Generate the checksum: Perform SHA-256 twice on the (binary) RIPEMD-160 result, and take the first 4 bytes
   6. The key is the version (0x00), the RIPEMD-160 result, and the checksum concatenated together
   7. Convert to a byte string using base58 encoding
