@@ -58,7 +58,7 @@
 
 -->
 <h3 id="overview">Overview</h3>
-<p>We will be developing applications for the Ethereum blockchain. We won’t be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.). Instead, we are going to use a private Ethereum blockchain – a test network – that has been set up for this class. This assignment is to connect to it, explore it, and perform a few operations.</p>
+<p>We will shortly be developing applications for the Ethereum blockchain. We won’t be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.). Instead, we are going to use a private Ethereum blockchain – a test network – that has been set up for this class. This assignment is to connect to it, explore it, and perform a few operations.</p>
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 <h3 id="background">Background</h3>
@@ -66,8 +66,7 @@
 <p>This document also assumes you can install packages on your machine (also not needed for the VirtualBox image).</p>
 <h3 id="part-1-geth">Part 1: Geth</h3>
 <p>Geth is the program we will be using to connect to the blockchain. It is already taken care of in the VirtualBox image, and you can skip to step 2 if you are using the VB image.</p>
-<p>You will need to <a href="https://geth.ethereum.org/docs/install-and-build/installing-geth">install geth</a>. The instructions differ depending on your OS.</p>
-<p>Geth, which stands for Go Ethereum, is a command-line interface to run an Ethereum node. This particular implementation is written in the Go programming language.</p>
+<p>Geth, which stands for Go Ethereum, is a command-line interface to run an Ethereum node. This particular implementation is written in the Go programming language. You will need to <a href="https://geth.ethereum.org/docs/install-and-build/installing-geth">install geth</a>. The instructions differ depending on your OS.</p>
 <p><strong>WARNING:</strong> DO NOT JUST RUN <code>geth</code>! Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a “light” node and over 1 Tb for a “full” node. It also takes a full week (at least) to synchronize all that data.</p>
 <h3 id="part-2-blockchain-connection">Part 2: Blockchain Connection</h3>
 <p>Here we will connect to the private blockchain.</p>
@@ -87,10 +86,10 @@
 <p><strong>Step 4:</strong> Create a <code>geth/static-nodes.json</code> file in your data directory. The <code>geth/</code> sub-directory will have been created by the previous step. This file lists a static node so you can connect to our blockchain – one of the departmental servers will be used for this purpose. That file is also on the Collab landing page. Make sure it goes into the <code>geth/</code> sub-directory!</p>
 <p><strong>Step 5:</strong> Start geth. Run the following command, changing three things: (1) the userid to your own, (2) the data directory to what you used above, and (3) the networkid value to the <code>chainId</code> to the value on the Collab landing page.</p>
 <pre><code>geth --identity &quot;mst3k&quot; --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncmode full --gcmode &quot;archive&quot;</code></pre>
-<p>It’s a long command, and we’ll be adding flags as the semester continues. We recommend you put that command into a script or batch file so you don’t have to re-type it each time.</p>
+<p>It’s a long command, and we’ll be adding more command-line flags as the semester continues. We recommend you put that command into a script or batch file so you don’t have to re-type it each time.</p>
 <p>There is minimal output when it is running, and we will verify that it has connected properly in a moment.</p>
-<h3 id="part-3-explore-geth">Part 3: Explore geth</h3>
-<p>What is running from part 2 is the Ethereum node, but that is not interactive. You should leave it running while you perform the next few parts of this assignment.</p>
+<h3 id="part-3-interactive-geth">Part 3: Interactive geth</h3>
+<p>What is running from the previous part is the Ethereum node, but that is not interactive. You should leave it running while you perform the next few parts of this assignment.</p>
 <p>To enter commands via the keyboard, you have to “attach” to the local Ethereum node. You do this by entering the following command:</p>
 <pre><code>geth attach /path/to/ethprivate/geth.ipc</code></pre>
 <p>If you are in the same directory as geth.ipc, you may have to enter <code>./geth.ipc</code> as the file name. Note that this won’t work unless the geth node, from the previous step, is running. You will then get a prompt, which is just a greater-than sign. This is a JavaScript console.</p>
@@ -166,11 +165,11 @@ $</code></pre>
 <p>Next you are going to send me some money via the geth command line. We are done with Python for this assignment, and have to go back to the geth prompt (via <code>geth attach /path/to/ethprivate/geth.ipc</code>) for this.</p>
 <p>To send (fake) ETH, you have to first unlock your account:</p>
 <pre><code>personal.unlockAccount(&quot;0x0123456789abcdef0123456789abcdef01234567&quot;);</code></pre>
-<p>This will prompt you for your password. You have to replace the address shown with your account address (via <code>eth.accounts</code>. You can also use <code>eth.coinbase</code> as the account address, as that should be the same account. By default it unlocks for 5 minutes; you can unlock it until geth exits via: <code>personal.unlockAccount(eth.coinbase, "password", 0)</code> (replacing <code>password</code> with your account’s password).</p>
+<p>This will prompt you for your password. You have to replace the address shown with your account address. You can also use <code>eth.coinbase</code> as the account address, as that should be the same account. By default it unlocks for 5 minutes; you can unlock it until geth exits via: <code>personal.unlockAccount(eth.coinbase, "password", 0)</code> (replacing <code>password</code> with your account’s password).</p>
 <p>You can then send me 1 (fake) ETH:</p>
 <pre><code>eth.sendTransaction({from:eth.coinbase, to:&#39;0xffffffffffffffffffffffffffffffffffffffff&#39;, value:web3.toWei(1,&quot;ether&quot;), gas:21000});</code></pre>
 <p>You have to replace the ‘to’ field with the address found on the Collab landing page. Note that we replaced your account address with <code>eth.coinbase</code>. This will print out a hex string – save it! That’s the hash of the transaction, and we’ll need it shortly. It will be something long like: 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd.</p>
-<p><strong>NOTE:</strong> Be sure you cut-and-paste the course account properly! It’s easy to mis-type the account, and send the ether to the wrong place (where it can never be accessed again).</p>
+<p><strong>NOTE:</strong> Be sure you cut-and-paste the destination account properly! It’s easy to mis-type the account, and send the ether to the wrong place where it can never be accessed again.</p>
 <p>Further steps to do in the geth console:</p>
 <ul>
 <li>Check your balance via <code>eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")</code> – you may notice that the balanace has not changed if you enter that before the transaction was not mined into a block.
@@ -183,8 +182,8 @@ $</code></pre>
 <li>Note the block number, which you will have to submit along with the transaction hash</li>
 </ul></li>
 </ul>
-<p>We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the intended course account.</p>
-<h3 id="part-7-explore-geth-more">Part 7: Explore geth more</h3>
+<p>We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the intended course account. You will need to submit both the transaction hash and the block number from when you sent me 1 ether.</p>
+<h3 id="part-7-explore-geth">Part 7: Explore geth</h3>
 <p>You should explore geth on your own. When you start geth (via <code>geth attach geth.ipc</code>), it lists the modules available:</p>
 <pre><code>Welcome to the Geth JavaScript console!
 
@@ -196,9 +195,9 @@ at block: 52 (Sat Jan 08 2022 21:49:04 GMT-0500 (EST))
 
 To exit, press ctrl-d or type exit
 &gt; </code></pre>
-<p>Your geth version number may be more recent. The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3). In the console, type the start of the module, a period, and hit the Tab key – it will show you all the possible completions. If you type in the name and it’s a function, it will tell you that. And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well. Lastly, it’s a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript. (You won’t need to know much JavaScript for this course).</p>
+<p>Your geth version number may be more recent. The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3). In the console, type the start of the module, a period, and hit the Tab key – it will show you all the possible completions. If you type in the name and it’s a function, it will tell you that. And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well. Lastly, it’s a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript. (You won’t need to know much JavaScript for this course). If you do know Javascript, note that this is a much older version of Javascript, before any of the <code>async</code> functionality was added (if you don’t know Javascript, you can ignore this sentence).</p>
 <h3 id="part-8-blockchain-explorer">Part 8: Blockchain Explorer</h3>
-<p>We have a web-based blockchain explorer for our private Ethereum blockchain. The link to that is on the Collab landing page. Browse that site, and play around with the search functionality. Directions for how to use it are on the main page. Note that the site updates every 5 minutes, so if you make a transaction, it will not be immediately visible there – the time of the last update is listed on the main page (the bottom bullet under ‘Statistics’).</p>
+<p>We have a web-based blockchain explorer for our private Ethereum blockchain. The link to that is on the Collab landing page. Browse that site, and play around with the search functionality. Directions for how to use it are on the main page. Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there – the time of the last update is listed on the main page (the bottom bullet under ‘Statistics’).</p>
 <p>Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL.</p>
 <h3 id="closing-down">Closing down</h3>
 <p>If you are not actively using it, you should shut your geth node down. UVA ITS has given permission to do all this, but they do perform port scans on all machines, so no need to raise their hackles by keeping a geth node up and running when we aren’t using it. You can easily re-launch it when you need it again for a future assignment. Likewise for the console from part (3); if you close down the geth node, the console won’t work.</p>

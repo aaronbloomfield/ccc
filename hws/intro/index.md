@@ -302,6 +302,8 @@ Since different programming languages can be used, and you may name your file di
 python3 cmoney.py $@
 ```
 
+Be sure to call `python3`, not `python` in your shell script!  Otherwise it will not work.
+
 If you are using Java, then your shell script would look like the following:
 
 ```

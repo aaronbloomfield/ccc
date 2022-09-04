@@ -19,7 +19,7 @@ Connecting to the Private Ethereum Blockchain
 
 ### Overview
 
-We will be developing applications for the Ethereum blockchain.  We won't be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.).  Instead, we are going to use a private Ethereum blockchain -- a test network -- that has been set up for this class.  This assignment is to connect to it, explore it, and perform a few operations.
+We will shortly be developing applications for the Ethereum blockchain.  We won't be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.).  Instead, we are going to use a private Ethereum blockchain -- a test network -- that has been set up for this class.  This assignment is to connect to it, explore it, and perform a few operations.
 
 ### Changelog
 
@@ -37,9 +37,7 @@ This document also assumes you can install packages on your machine (also not ne
 
 Geth is the program we will be using to connect to the blockchain.  It is already taken care of in the VirtualBox image, and you can skip to step 2 if you are using the VB image.
 
-You will need to [install geth](https://geth.ethereum.org/docs/install-and-build/installing-geth).  The instructions differ depending on your OS.
-
-Geth, which stands for Go Ethereum, is a command-line interface to run an Ethereum node.  This particular implementation is written in the Go programming language.
+Geth, which stands for Go Ethereum, is a command-line interface to run an Ethereum node.  This particular implementation is written in the Go programming language.  You will need to [install geth](https://geth.ethereum.org/docs/install-and-build/installing-geth).  The instructions differ depending on your OS.
 
 **WARNING:** DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and over 1 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
 
@@ -82,13 +80,13 @@ There are two things to check to ensure that this worked correctly:
 geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncmode full --gcmode "archive"
 ```
 
-It's a long command, and we'll be adding flags as the semester continues.  We recommend you put that command into a script or batch file so you don't have to re-type it each time.
+It's a long command, and we'll be adding more command-line flags as the semester continues.  We recommend you put that command into a script or batch file so you don't have to re-type it each time.
 
 There is minimal output when it is running, and we will verify that it has connected properly in a moment.
 
-### Part 3: Explore geth
+### Part 3: Interactive geth
 
-What is running from part 2 is the Ethereum node, but that is not interactive.  You should leave it running while you perform the next few parts of this assignment.
+What is running from the previous part is the Ethereum node, but that is not interactive.  You should leave it running while you perform the next few parts of this assignment.
 
 To enter commands via the keyboard, you have to "attach" to the local Ethereum node.  You do this by entering the following command:
 
@@ -202,7 +200,7 @@ To send (fake) ETH, you have to first unlock your account:
 personal.unlockAccount("0x0123456789abcdef0123456789abcdef01234567");
 ```
 
-This will prompt you for your password.  You have to replace the address shown with your account address (via `eth.accounts`.  You can also use `eth.coinbase` as the account address, as that should be the same account.  By default it unlocks for 5 minutes; you can unlock it until geth exits via: `personal.unlockAccount(eth.coinbase, "password", 0)` (replacing `password` with your account's password).
+This will prompt you for your password.  You have to replace the address shown with your account address.  You can also use `eth.coinbase` as the account address, as that should be the same account.  By default it unlocks for 5 minutes; you can unlock it until geth exits via: `personal.unlockAccount(eth.coinbase, "password", 0)` (replacing `password` with your account's password).
 
 You can then send me 1 (fake) ETH:
 
@@ -212,7 +210,7 @@ eth.sendTransaction({from:eth.coinbase, to:'0xffffffffffffffffffffffffffffffffff
 
 You have to replace the 'to' field with the address found on the Collab landing page.  Note that we replaced your account address with `eth.coinbase`.  This will print out a hex string -- save it!  That's the hash of the transaction, and we'll need it shortly.  It will be something long like: 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd.
 
-**NOTE:** Be sure you cut-and-paste the course account properly!  It's easy to mis-type the account, and send the ether to the wrong place (where it can never be accessed again).
+**NOTE:** Be sure you cut-and-paste the destination account properly!  It's easy to mis-type the account, and send the ether to the wrong place where it can never be accessed again.
 
 Further steps to do in the geth console:
 
@@ -222,10 +220,10 @@ Further steps to do in the geth console:
 - Get information on the mined transaction: `eth.getTransactionReceipt("0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd")` -- replace the hash there with the transaction hash you recorded, above.
   - Note the block number, which you will have to submit along with the transaction hash
 
-We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the intended course account.
+We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the intended course account.  You will need to submit both the transaction hash and the block number from when you sent me 1 ether.
 
 
-### Part 7: Explore geth more
+### Part 7: Explore geth
 
 You should explore geth on your own.  When you start geth (via `geth attach geth.ipc`), it lists the modules available:
 
@@ -242,11 +240,12 @@ To exit, press ctrl-d or type exit
 > 
 ```
 
-Your geth version number may be more recent.  The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3).  In the console, type the start of the module, a period, and hit the Tab key -- it will show you all the possible completions.  If you type in the name and it's a function, it will tell you that.  And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well.  Lastly, it's a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript.  (You won't need to know much JavaScript for this course).
+Your geth version number may be more recent.  The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3).  In the console, type the start of the module, a period, and hit the Tab key -- it will show you all the possible completions.  If you type in the name and it's a function, it will tell you that.  And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well.  Lastly, it's a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript.  (You won't need to know much JavaScript for this course).  If you do know Javascript, note that this is a much older version of Javascript, before any of the `async` functionality was added (if you don't know Javascript, you can ignore this sentence).
+
 
 ### Part 8: Blockchain Explorer
 
-We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Collab landing page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every 5 minutes, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the bottom bullet under 'Statistics').
+We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Collab landing page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the bottom bullet under 'Statistics').
 
 Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL.
 

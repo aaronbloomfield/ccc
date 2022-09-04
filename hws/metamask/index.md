@@ -208,13 +208,13 @@ Once it is confirmed, it will take a second or so for the transaction to reach t
 
 Finally!  We can get to the whole reason for this party.
 
-Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the [AuctionManager.sol](../auction/AuctionManager.sol.html) ([src](../auction/AuctionManager.sol)) interface.  Our web page looked like the image to the right; this is the bottom of the web page, and the auction table itself was above what is shown.  Yours need not look similar, but it does need to be usable.
+Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the [IAuctioneer.sol](../auction/IAuctioneer.sol.html) ([src](../auction/IAuctioneer.sol)) interface.  Our web page looked like the image to the right; this is the bottom of the web page, and the auction table itself was above what is shown.  Yours need not look similar, but it does need to be usable.
 
 As you are starting with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment (see below for starting on that), the read-only parts of this assignment are already done for you.  You will have to change the contract ID, of course -- you should hard-code that into your HTML / Javascript code (just replace the address that is there -- it may be there multiple times).  Note: you have to view that page with an address else most of the relevant code will not be shown.  The link to that page with an address is on the Collab landing page.
 
 For this assignment, you only need to create an interface with four of the Auctioneer functions -- `createAuction()`, `closeAuction()`, `placeBid()`, and `mintNFT()`.  You will also need to have a means to transfer the NFT over, which is discussed next.  Note that the interface for `mintNFT()` was provided for you, above.  In particular, you do NOT have to create an interface for `cancelAuction()`.  We discussed how to create a HTML form interface, and the Javascript code to make it work, above.
 
-In addition to those four functions to the Auctioneer_v2, you will also need a function that allows the transfer of an NFT over.  This is the `safeTransferFrom()` function call in [IERC721.sol](../auctions/IERC721.sol.html) -- and recall that the NFTmanager inherits from that contract.  Thus, you will need to create a contract interface to that contract (similar to how `auctionContractmm` was created) -- be sure to use `web3mm`!  You can hard-code the address for the NFTmanager, and you can obtain that by calling `nftmanager()` on your Auctioneer_v2 contract.  Note that two of the three parameters are already known -- the `from` (the account that MetaMask uses, which was obtained in the `mintNFT()` function, above) and the `to` (the address of the Auctioneer_v2 contract).  So only the NFT ID is what is needed.
+In addition to those four functions to the Auctioneer, you will also need a function that allows the transfer of an NFT over.  This is the `safeTransferFrom()` function call in [IERC721.sol](../auctions/IERC721.sol.html) -- and recall that the NFTmanager inherits from that contract.  Thus, you will need to create a contract interface to that contract (similar to how `auctionContractmm` was created) -- be sure to use `web3mm`!  You can hard-code the address for the NFTmanager, and you can obtain that by calling `nftmanager()` on your Auctioneer contract.  Note that two of the three parameters are already known -- the `from` (the account that MetaMask uses, which was obtained in the `mintNFT()` function, above) and the `to` (the address of the Auctioneer contract).  So only the NFT ID is what is needed.
 
 For the `placeBid()` function, you will have to take in the amount that they want to bid.  This should be a floating-point value of the ether to place the bid for, and your Javascript will have to convert that to wei.
 
@@ -300,7 +300,7 @@ Once those parameters are set correctly, the last four lines in the above code w
 
 ### Grading
 
-The grades on this are going to be rather binary -- if it works, then full (or close to full) credit.  If it doesn't work, then very little or no credit.  In particular, there will be very little partial credit awarded on this assignment.
+The grades on this are going to be rather binary -- if it works, then full (or close to full) credit.  If it doesn't work, then very little or no credit.  In particular, there will be very little partial credit awarded on this assignment.  This assignment is graded by a human; it cannot be auto-graded.
 
 ### Submission
 
@@ -309,10 +309,10 @@ You will need to fill in the various values from this assignment into the [metam
 
 There are *four* forms of submission for this assignment; you must do all four.
 
-Submission 1: You should submit your `auctions.html` file, along with your completed `metamask.py` file, to Gradescope.  In particular, you are NOT submitting any Solidity code for this assignment.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+Submission 1: You should submit your `auctions.html` file, along with your completed `metamask.py` file, to Gradescope.  In particular, you are NOT submitting any Solidity code for this assignment.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in metamask.py, etc.).
 
-Submission 2: You must deploy your Auctioneer_v2 smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The smart contract address for this needs to be the same as the one in your submitted `auctions.html` file.
+Submission 2: You must deploy your Auctioneer smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The smart contract address for this needs to be the same as the one in your submitted `auctions.html` file.
 
-Submission 3: You need to have your auctions.html properly working at https://www.cs.virginia.edu/~mst3k/auctions.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory.  Needless to say, it should properly connect to your deployed DAO smart contract.
+Submission 3: You need to have your auctions.html properly working at https://www.cs.virginia.edu/~mst3k/auctions.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory.  Needless to say, it should properly connect to your deployed Auctioneer smart contract.
 
-Submission 4: You need to start a few auctions.  Mint some NFTs, start some auctions.  You should start three auctions using the NFT images that you created for the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.
+Submission 4: You need to mint a few NFTs and start a few auctions.  You should start three auctions using the NFT images that you created for the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.
