@@ -102,8 +102,8 @@ parts -- that's fine if you want to do that as well.
 ```
 81d5d3bf8c93ac07d4b4654b9e7f06dee3285444a57de4191650eacf1b105a2e
 
-bigfoot transferred 100.0 to a3e47443b0f3bc76 on Tue Apr 02 23:09:13 EDT 2019
-bigfoot transferred 100.0 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
+bigfoot transferred 100 to a3e47443b0f3bc76 on Tue Apr 02 23:09:13 EDT 2019
+bigfoot transferred 100 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
 a3e47443b0f3bc76 transferred 12 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
 48adadf4fb921fca transferred 2 to a3e47443b0f3bc76 on Tue Apr 02 23:09:15 EDT 2019
 
@@ -388,14 +388,14 @@ The transaction in file '03-alice-to-bob.txt' with wallet 'alice.wallet.txt' is 
 $ ./cryptomoney.sh verify bob.wallet.txt 04-bob-to-alice.txt
 The transaction in file '04-bob-to-alice.txt' with wallet 'bob.wallet.txt' is valid, and was written to the mempool
 $ cat mempool.txt
-bigfoot transferred 100.0 to e1f3ec14abcb45da on Tue Apr 02 23:09:01 EDT 2019
-bigfoot transferred 100.0 to d96b71971fbeec39 on Tue Apr 02 23:09:01 EDT 2019
+bigfoot transferred 100 to e1f3ec14abcb45da on Tue Apr 02 23:09:01 EDT 2019
+bigfoot transferred 100 to d96b71971fbeec39 on Tue Apr 02 23:09:01 EDT 2019
 e1f3ec14abcb45da transferred 12 to d96b71971fbeec39 on Tue Apr 02 23:09:02 EDT 2019
 d96b71971fbeec39 transferred 2 to e1f3ec14abcb45da on Tue Apr 02 23:09:02 EDT 2019
 $ ./cryptomoney.sh balance $alice
-90.0
+90
 $ ./cryptomoney.sh balance $bob
-110.0
+110
 $ ./cryptomoney.sh mine 2
 Mempool transactions moved to block_1.txt and mined with difficulty 2 and nonce 1029
 $ sha256sum block_1.txt
