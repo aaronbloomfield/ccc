@@ -62,6 +62,7 @@ line-height:120%;
 [Zero-Knowledge Proofs](#/zkproofs)  
 [zk-SNARKs Introduction](#/zksnarks)  
 [Arithmetic Circuits](#/circuits)  
+[Elliptic Curves](#/elliptic)  
 [Non-Interactiveness](#/noninteractive)  
 [Zcash](#/zcash)  
 [Firo (aka Zcoin)](#/firo)  
@@ -616,8 +617,8 @@ $$(a',b') = ( \sum_{i=1}^d \gamma_i \cdot a_i, \sum_{i=1}^d \gamma_i \cdot b_i )
   - Although we have not yet seen how to force evaluation of the *correct* polynomial 
 - We need to be able to convert a *computation* into a polynomial
   - Which we can then verify and compute with zero knowledge
-- That computation might be the signing of a message of a hash with a private key
-- We'll use: $(c_1 \cdot c_2) \cdot (c_1 + c_3)=7$
+- This uses a QAP: Quadratic Arithmetic Program
+- QAP step 1 is to convert a computation to an *arithmetic circuit*
 
 
 
@@ -629,14 +630,42 @@ $$(a',b') = ( \sum_{i=1}^d \gamma_i \cdot a_i, \sum_{i=1}^d \gamma_i \cdot b_i )
     - As does $(1,3,5)$, $(3,1,3)$, etc.
   - If $\cdot$ is exponentiation, then $(c_1,c_2,c_3)=(1,3,5)$ works
 - We construct an *arithmetic circuit* as shown
+- Let's put some labels on this graph...
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Arithmetic Circuits
+![](images/zksnarks/graphs/zksnarks.dot.2.svg)
+- Gates are labeled as $g_i$
+  - And have an incoming left and right wires
+- Input "wires" are labeled as $w_i$
+  - Even if it goes into more than one gate, we think of it as one wire
+- We think of $w_1$ and $w_3$ as being right inputs of gate $g_2$
+  - We do this with all addition gates
+- Gates and wires we don't need to refer to individually are not labeled in the diagram
+- It's colored for ease of interpreting
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Arithmetic Circuits
+![](images/zksnarks/graphs/zksnarks.dot.3.svg)
+- We think of $w_1$ and $w_3$ as being right inputs of gate $g_2$
+  - We do this with all addition gates
+- When doing so, we see the new look of the graph
+- The only nodes are the multiplication operations
+  - Addition only combines edges
+- Thus, the *shape* of the graph determines the value it will compute
+- We are going to model it's *shape* using polynomial
+  - Which the overall operation derives from
 
 
 
 <!-- .slide: class="right-float-img" -->
 ## Arithmetic Circuits
 ![](images/zksnarks/graphs/zksnarks.dot.4.svg)
-- Our updated graph 
-  - Multiplication is a node, addition is "joining" of two inputs
+- Our updated graph without any labels
   - Assume $c_1,\ldots,c_n$ flow left-to-right along the bottom
 - We are going to model its *shape* using polynomials
 - Given that:
@@ -649,16 +678,105 @@ $$(a',b') = ( \sum_{i=1}^d \gamma_i \cdot a_i, \sum_{i=1}^d \gamma_i \cdot b_i )
 
 <!-- .slide: class="right-float-img" -->
 ## Arithmetic Circuits
-![](images/zksnarks/graphs/zksnarks.dot.4.svg)
-- We want to represent the *shape* of this graph with a polynomial
-- The details are being skipped here
-  - You can see them [later on]()
-- So, POOF!  Some magic happens, and...
-- The result is:
-  - $P = (4x) \cdot (3x-1) - (-x+9) $ $= 12x^2-3x-9$
-  - Somehow, $P$ represents the shape of this circuit
-  - Although we won't see it here, $P$ is a sum of smaller polynomials $L$, $R$, and $O$
-  - Specifically, $P=L(x) \cdot R(x)−O(x)$
+![](images/zksnarks/graphs/zksnarks.dot.5.svg)
+- A *legal assignment* is an assignment of the form $(c_1,c_2,c_3,c_4,c_5)$ where:
+  - $c_4=c_1 \cdot c_2$: that's wire $w_4$ from gate $g_1$
+  - $c_5=c_4 \cdot (c_1+c_3)$: that's wire $w_5$ from gate $g_2$
+- Alice wants to show Bob that she knows a legal assignment $(c_1,c_2,c_3,c_4,c_5)$ such that $c_5=7$
+- Using inputs of $(4,2,1)$:
+  - $(c_1,c_2,c_3,c_4,c_5)=(4,2,1,8,7)$
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Arithmetic Circuits
+![](images/zksnarks/graphs/zksnarks.dot.6.svg)
+- We are going to create a series of polynomials:
+  - $L_i$ are the *left* inputs for each gate
+  - $R_i$ are the *right* inputs for each gate
+  - $O_i$ are the *outputs* for each gate
+- The $i$ subscript is the wire number it travels along
+- For example:
+  - Gate $g_1$ has inputs $L_1$ and $R_2$ and output $O_4$
+  - Gate $g_2$ has inputs $L_4$, $R_1$, and $R_3$, and output $O_5$
+    - Recall that we consider the two parts of the addition gate to really be inputs to the successive multiplication gate
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Arithmetic Circuits
+![](images/zksnarks/graphs/zksnarks.dot.7.svg)
+- This is labelled with the $L$, $R$, and $O$ polynomials
+- A number of them are not necessary
+  - There is no $R_4$, for example
+- We assign each gate a number, starting with 1
+- There are two relevant gates here:
+  - For gate $g_1$: $L_1$ and $R_2$ combine to form $O_4$
+  - For gate $g_2$: $R_1$, $R_3$, and $L_4$ combine to form $O_5$
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Arithmetic Circuits
+![](images/zksnarks/graphs/zksnarks.dot.7.svg)
+- For gate $g_1$: $L_1$ and $R_2$ combine to form $O_4$
+  - The assigned integer here is 1
+  - We want the non-participating polynomials to evaluate to 0 for this computation
+  - So we set the *others* to $x-1$
+  - Thus, $R_1=R_3=L_4=O_5=x-1$
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Arithmetic Circuits
+![](images/zksnarks/graphs/zksnarks.dot.7.svg)
+- For gate $g_2$: $R_1$, $R_3$, and $L_4$ combine to form $O_5$
+  - The assigned integer here is 2
+  - We want the non-participating polynomials to evaluate to 0 for this computation
+  - So we set the *others* to $2-x$
+  - Thus, $L_1=R_2=O_4=2-x$
+
+
+
+## Combining the Polynomials
+- We combine the polynomials as such:
+
+$$L=\sum^5_{i=1}c_i \cdot L_i,R=\sum^5_{i=1}c_i \cdot R_i,O=\sum^5_{i=1}c_i \cdot O_i$$
+
+- Using $(c_1,c_2,c_3,c_4,c_5)=(4,2,1,8,7)$, we get:
+  - $L(x)=4 \cdot(2-x)+8\cdot(x-1)=4x$
+  - $R(x)=4 \cdot (x-1)+2 \cdot(2-x) + 1 \cdot(x-1)=3x-1$
+  - $O(x)=8 \cdot (2-x) + 7 \cdot(x-1)=-x+9$
+- We define polynomial $P$ as $P=L \cdot R - O$
+  - $P = (4x) \cdot (3x-1) - (-x+9) = 12x^2-3x-9$
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Our Polynomial
+![](images/zksnarks/graphs/zksnarks.dot.8.svg)
+- We have $P(x)=12x^2-3x-9$
+  - Recall that $L=4x$, $R=3x-1$, $O=-x+9$
+- This polynomial should evaluate to zero at the two values 1 and 2
+- Does this hold?
+  - $P(1)=L(1) \cdot R(1) - O(1)$
+    - $=4 \cdot 2 - 8 = 0$ (mod 11)
+  - $P(2)=L(2) \cdot R(2) - O(2)$
+    - $=8 \cdot 5 - 7 = 0$ (mod 11)
+- This means 1 and 2 are *roots* of $P$
+
+
+
+## Polynomial roots
+- We know that 1 and 2 are roots of $P$
+- Which means that $P=12x^2-3x-9$ is *divisible* by $(x-1)$ and $(x-2)$
+  - In $Z_{11}$, that is
+- Here's how:
+  - $(x-1) \cdot (x-2) = x^2-3x+2$
+  - In $Z_{11}$, $1 \equiv 12$ and $2 \equiv -9$
+  - So $x^2-3x+2 = 12x^2-3x-9$
+- This root polynomial is called $T$, the *target polynomial*
+  - In this (simple) example, it happens that $T=P$, but that won't always be the case
 
 
 
@@ -683,35 +801,43 @@ $$(a',b') = ( \sum_{i=1}^d \gamma_i \cdot a_i, \sum_{i=1}^d \gamma_i \cdot b_i )
 
 <!-- from part 6: https://electriccoin.co/blog/snark-explain6/ -->
 ## What we have
-- Alice has polynomial $P$
+- Alice has polynomial $P = L \cdot R - O$
   - $P$ represents an arithmetic circuit that represents an equation that she has a satisfying assignment for
-  - $P$ is a sum of the smaller polynomials $L$, $R$, and $O$
-- We also have a *target polynomial* $T$ which divides $P$
-  - If $T$ divides $P$, then we can state that $P=H \cdot T$ for some $H$
-  - Note that $T$ is know to all parties, as it is part of the agreed-upon algorithm
+  - We have a *target polynomial* $T$ which divides $P$
+    - If $T$ divides $P$, then we can state that $P=H \cdot T$ for some $H$
+- Thus, $P=H \cdot T = L \cdot R - O$
+- Note that $T$ is know to all parties, as it is part of the agreed-upon algorithm
+  - It's the roots starting at 1
 
 
 
 ## If Alice is faking it
-- Suppose that Alice does *not* have a satisfying assignment $(c_1,...,c_m)$, but still tries to construct the circuit and then $P$
+- Suppose that Alice does *not* have a satisfying assignment $(c_1,...,c_m)$, but still tries to construct the circuit and then $L$, $R$, $O$, and $P$
 - Then $T$, which is known to all parties, will not divide $P$
-  - You can't make up a polynomial such that $P=H \cdot T$ without brute forcing it
+  - You can't make up a polynomial such that $P=H \cdot T = L \cdot R - O$ without brute forcing it
 - This means that $H$ (the correct polynomial) and $H'$ (the "faked" polynomial) must be different polynomials
 
 
 
+## [Schwartz-Zippel Lemma](https://en.wikipedia.org/wiki/Schwartz%E2%80%93Zippel_lemma)
+- Let $L$, $R$, and $O$ be degree $\approx d$
+  - Then $P$ is of degree $\approx 2d$
+- The Schwartz-Zippel Lemma states that two polynomials of degree $2d$ cross at, at most, $2d$ points in $Z_p$
+  - If $d$ is a million, billion, or even a trillion
+  - And $p$ is around $2^{256}$
+  - Then the chance of randomly picking a point that is on both polynomials is negligible
+- This is what prevents Alice from faking the polynomial
+  - Her faked polynomial $H'$ is not likely to match on the challenge point
+
+
+
 ## ZK Verification Protocol
-1. Alice computes $P$ (from $L$, $R$, and $O$), and $H$ (from $P=H \cdot T$), from the circuit from the equation she is trying to satisfy
+1. Alice computes $L$, $R$, $O$, and $H$, all of degree $d$, from the circuit from the equation she is trying to satisfy
 2. Bob chooses a random value $x \in Z_p$
    - He sends the necessary homomorphic hidings to Alice so she can evaluate those four polynomials
    - He also computes $E(T(x))$, but does not send this to Alice
-
-
-
-## ZK Verification Protocol
 3. Alice sends Bob the hidings of these polynomials evaluated at $x$
    - Specifically: $E(L(x))$, $E(R(x))$, $E(O(x))$, and $E(H(x))$
-   - Something called a random $T$-shift happens to ensure zero-knowledge
 4. Bob checks if this equation holds at $x$
    - Only he knows $E(T(x))$, and thus he can verify that $E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$
 
@@ -723,11 +849,235 @@ $$(a',b') = ( \sum_{i=1}^d \gamma_i \cdot a_i, \sum_{i=1}^d \gamma_i \cdot b_i )
 $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 
 - But our homomorphic hiding operation $E(x)$ does not support multiplication by a non-scalar
+  - More on this shortly
+
+
+
+<!--
+## Forcing Alice to Behave
+- See the "Making sure Alice chooses her polynomials according to an assignment" section from https://electriccoin.co/blog/snark-explain6/
+-->
+## Ensuring zero-knowledge
+- Alice returns the hidings $E(L(x))$, $E(R(x))$, $E(O(x))$, and $E(H(x))$ as part of the protocol
+  - This reveals *some* information
+  - Given some *other* satisfying assignment $(c'_1,\ldots,c'_n)$, Bob can obtain, from Alice, the hidings $E(L'(x))$, $E(R'(x))$, $E(O'(x))$, and $E(H'(x))$
+  - And then compare them to the originals, and tell that the new ones are not Alice's assignment
+- This is not a *lot* of information, but it is not zero-knowledge, either
+
+
+
+## Ensuring zero-knowledge
+- Alice returns the hidings $E(L(x))$, $E(R(x))$, $E(O(x))$, and $E(H(x))$ as part of the protocol
+- To obfuscate it, she adds a random $T$-shift
+  - Alice chooses random $\delta_1,\delta_2,\delta_3 \in Z_p$
+  - She defines $L$ as: $L'=\delta_1 \cdot T + \sum^5_{i=1}c_i \cdot L_i$
+    - And similarly for $R'$ (using $\delta_2$) and $O'$ (using $\delta_3$)
+  - Recall that $T$ is known to all parties
+- When computing $P'=H \cdot T = L' \cdot R' - O'$
+  - We've added a bunch more $T$'s, but $T$ will still divide $P'$
+
+
+
+## Ensuring zero-knowledge
+- With the random $T$-shift, every one of Alice's results will be different
+  - Even if using the same satisfying assignment, since we'll have a different random $\delta_1,\delta_2,\delta_3 \in Z_p$
+- This, zero knowledge is revealed
+</textarea></section>
+</section>
+
+<!-- ============================================================ -->
+
+<section>
+
+  <section id="elliptic" data-markdown class="center"><textarea>
+# Elliptic Curves
+  </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Where we are
+- Our homomorphic hiding equation of $E(x)=g^x$ does not support non-scalar multiplication
 - If it did, then we could get this whole thing working properly
-- Solution: elliptic curves!
+  - Recall that Bob has to verify that $E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$
+    - That has two non-scalar multiplications therein
+  - Solution: elliptic curves!
 - We also want to make this non-interactive
   - More on that shortly
+
+
+
+<!-- from part 7: https://electriccoin.co/blog/snark-explain7/ -->
+## Review: Elliptic Curves
+Any curve of the form $y^2=x^3+ax+b$
+
+<a href="https://en.wikipedia.org/wiki/Elliptic_curve"><img alt="wikipedia elliptic curve diagram" src="images/encryption/EllipticCurveCatalog.svg" style="background-color:white;padding:10px;border-radius:5px"></a>
+<aside data-markdown class="notes">
+  notes...
+</aside>
     </textarea></section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-a.svg" alt="image secp256k1-a.svg" class="stretch">
+<aside data-markdown class="notes">
+- note the scale differs on each axis
+- it reflects across the horizontal ($x$) axis due to the $y^2$ part
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-b-2points.svg" alt="image secp256k1-b-2points.svg" class="stretch">
+<aside data-markdown class="notes">
+- arbitrarily picked to allow the math to all work out on the area shown by this slide
+  - for each $x$-value there are two possible $y$ values due to the square root
+- in reality, the numbers used are huge: 256 bits
+  - $2^{256} \approx 1.1*10^{77}$
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-c-2points-line.svg" alt="image secp256k1-c-2points-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- given any two points, use basic arithmetic to compute the slope
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-d-3points-line.svg" alt="image secp256k1-d-3points-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- find the third point where this line intersects the curve
+  - in the RARE case it doesn't, pick new points
+  - that chance is infinitesimally small in practice
+- for real numbers, this requires finding a cube root
+  - we will be able to compute this with basic arithmetic...
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-e-4points-line.svg" alt="image secp256k1-e-4points-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- reflect the point just found across the y-axis
+- the reflected point, C', is A+B
+- this is elliptic point "addition"
+  - represented with oplus
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-f-point-p.svg" alt="image secp256k1-f-point-p.svg" class="stretch">
+<aside data-markdown class="notes">
+- we can add a point to itself as well
+- this point P is different than A and B from before
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-g-point-p-tangent.svg" alt="image secp256k1-g-point-p-tangent.svg" class="stretch">
+<aside data-markdown class="notes">
+- to elliptically add a point to itself, find the tangent of the line...
+  - we can do that via the derivative of the curve formula
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-h-points-pq-tangent.svg" alt="image secp256k1-h-points-pq-tangent.svg" class="stretch">
+<aside data-markdown class="notes">
+- find the point, Q, where that tangent intersects the curve...
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-i-points-pq-tangent.svg" alt="image secp256k1-i-points-pq-tangent.svg" class="stretch">
+<aside data-markdown class="notes">
+- then reflect that across the y-axis
+- this is P+P and also 2*P
+- but does adding P to itself, say, 4 times equal 4*P?
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-j-to-find-3p.svg" alt="image secp256k1-j-to-find-3p.svg" class="stretch">
+<aside data-markdown class="notes">
+- here we are adding P to Q
+  - or P to P+P
+  - or P to 2*P
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-k-to-find-3p.svg" alt="image secp256k1-k-to-find-3p.svg" class="stretch">
+<aside data-markdown class="notes">
+- the line intersects the curve at R
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-l-found-3p.svg" alt="image secp256k1-l-found-3p.svg" class="stretch">
+<aside data-markdown class="notes">
+- which we reflect across the y-axis
+- R' is now P+P+P or 3*P
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-m-showing-found-points.svg" alt="image secp256k1-m-showing-found-points.svg" class="stretch">
+<aside data-markdown class="notes">
+- The points from the previous slide without all the text
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-n-associative-1.svg" alt="image secp256k1-n-associative-1.svg" class="stretch">
+<aside data-markdown class="notes">
+- we add P and R' to get S'
+- S' is 4*P or P+P+P+P
+- we can all agree that adding P to itself 4 times yields S'
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-o-associative-2.svg" alt="image secp256k1-o-associative-2.svg" class="stretch">
+<aside data-markdown class="notes">
+- we can also add Q', which is 2*P (or P+P) to itself to yield S'
+</aside>
+</textarea>
+</section>
+
+<section data-markdown data-transition="none" data-transition-speed="fast">
+<textarea>
+<img src="images/encryption/secp256k1/secp256k1-p-associative-3.svg" alt="image secp256k1-p-associative-3.svg" class="stretch">
+<aside data-markdown class="notes">
+- this means that adding P to itself k times yields k*P
+</aside>
+</textarea>
+</section>
 
 <section data-markdown data-separator="^\n\n\n"><textarea>
 ## ECs as Homomorphic Hidings
@@ -740,7 +1090,20 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
   - This uses a *Tate reduced pairing*
   - We are skipping the details here, but you can see [here](https://www.math.auckland.ac.nz/~sgal018/crypto-book/ch26.pdf) for details
   - Zcash uses [Optimal Ate Pairings](https://www.esat.kuleuven.be/cosic/publications/talk-96.pdf)
-- This will allow us to do general multiplication on our homomorphic hidings using elliptical curves
+
+
+
+## Tate reduced pairing
+- Given two generators (elliptic base points) $g_1$ and $g_2$
+  1. $\text{Tate}(g_1,g_2)=g$
+     - This is the *identity*, and defines a new generator $g$
+  2. Given $a,b \in Z_p$, we have $\text{Tate}(a \cdot g_1, b \cdot g_2) = g^{ab}$
+     - This showing that we can perform general multiplication
+
+
+
+## Tate reduced pairing
+> The $\text{Tate()}$ function allows us to do general multiplication on our homomorphic hidings using elliptical curves
 </textarea></section>
 </section>
 

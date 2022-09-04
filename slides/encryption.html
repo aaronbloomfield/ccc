@@ -955,7 +955,7 @@ $
 ## Verifying an ECDSA message
 
 <ul>
-  <li>The formula Bob is to verify without knowing $d$, $k$, or $k^{-1}$:<br> $s=k^{-1}(h+r \ast d)$ </li>
+  <li>The formula Bob is to verify without $d$, $k$, or $k^{-1}$:<br> $s=k^{-1}(h+r \ast d)$ </li>
   <li class="fragment" data-fragment-index="1">Multiply both sides by $s^{-1}$:<br> $1=s^{-1}k^{-1}(h+r \ast d)$ </li>
   <li class="fragment" data-fragment-index="2">Multiply both sides by $k$:<br> $k=s^{-1}(h+r \ast d)$ </li>
   <li class="fragment" data-fragment-index="3">Multiply both sides by $G$:<br> $k \otimes G=s^{-1}(h+r*d) \otimes G$ </li>
@@ -1022,19 +1022,26 @@ $
     
     <section data-markdown data-separator="^\n$" id="computingkg"><textarea data-template>
 ## Computing $k \otimes G$
-- Let $p=43$, $o=31$, $G=(25,25)$, and $k=21$
-- Compute $21 \otimes G$
+
+<ul>
+<li>Let $p=43$, $o=31$, $G=(25,25)$, and $k=21$</li>
+<li class="fragment">Compute $21 \otimes G$ <ul>
+  
   - $21 = 10101_b = 2^4+2^2+2^0 = 16+4+1$
   - $21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$
-- Compute the powers of $G$:
-  - $1 \otimes G = G = (25,25)$
-  - $2 \otimes G = (1 \otimes G) \oplus (1 \otimes G) = (25,25) \oplus (25,25) = (34,3)$
-  - $4 \otimes G = (2 \otimes G) \oplus (2 \otimes G) = (34,3) \oplus (34,3) = (35,21)$
-  - $8 \otimes G = (4 \otimes G) \oplus (4 \otimes G) = (35,21) \oplus (35,21) = (29,31)$
-  - $16 \otimes G = (8 \otimes G) \oplus (8 \otimes G) = (29,31) \oplus (29,31) = (37,36)$
-- $21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$
-  - $21 \otimes G = (37,36) \oplus (35,21) \oplus (25,25)$
-  - $21 \otimes G = (38,21) \oplus (25,25) = (32,40)$
+
+</ul></li>
+<li class="fragment">Compute the powers of $G$: <ul>
+
+  <li class="fragment">$1 \otimes G = G = (25,25)$</li>
+  <li class="fragment">$2 \otimes G = (1 \otimes G) \oplus (1 \otimes G) = (25,25) \oplus (25,25) = (34,3)$</li>
+  <li class="fragment">$4 \otimes G = (2 \otimes G) \oplus (2 \otimes G) = (34,3) \oplus (34,3) = (35,21)$</li>
+  <li class="fragment">$8 \otimes G = (4 \otimes G) \oplus (4 \otimes G) = (35,21) \oplus (35,21) = (29,31)$</li>
+  <li class="fragment">$16 \otimes G = (8 \otimes G) \oplus (8 \otimes G) = (29,31) \oplus (29,31) = (37,36)$</li></ul></li>
+<li class="fragment">$21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$<ul>
+  <li class="fragment">$21 \otimes G = (37,36) \oplus (35,21) \oplus (25,25)$</li>
+  <li class="fragment">$21 \otimes G = (38,21) \oplus (25,25) = (32,40)$</li></ul></li>
+</ul>
     </textarea></section>
     
     <section data-markdown data-separator="^\n$"><textarea data-template>
@@ -1051,7 +1058,7 @@ $
 - Cracking a 256-bit ECDSA signature would take about as long as cracking a 3072-bit RSA signature ([source](https://avinetworks.com/glossary/elliptic-curve-cryptography/))
   - Which means the signed message is *significantly* shorter (256 bits versus 3072 bits for the same level of security)
   - That's 1/12th the size!
-- ECDSA is for digital signatures
+- ECDSA is for digital signatures only
 
 
 ## Why RSA over ECDSA?
@@ -1088,6 +1095,10 @@ $
 <p class='center'><a href='http://xkcd.com/221/'>xkcd # 221</a></p>
 
 
+## Dilbert on randomness
+![dilbert on random numbers](http://assets.amuniversal.com/321a39e06d6401301d80001dd8b71c47)
+
+
 ## Computers and randomness
 - A computer, by definition, produces the same output for the same input
 - So how, then, can it produce truly random numbers?
@@ -1121,7 +1132,7 @@ $
 
 ## Typical method: example
 - Let $m=9$, $a=4$, $c=7$
- - This will cycle through all the values $<m$ before repeating
+ - This will cycle through all the values &lt;$m$ before repeating
    - We know that via magic we won't see here
 - $X_{n+1}=(a*X_n+c) \text{ mod } m$
   - $X_0 = 1$
@@ -1195,7 +1206,7 @@ $
 
 ## Remembering your seed
 - Imagine a list of $2048=2^{11}$ words
-  - Each word provides 11 bits of entropy
+  - Each word thus provides 11 bits of entropy
 - Generate a list of 12 of these words
   - $11 \ast 12=132$; use the last 4 bits as a checksum
 - Or a list of 24 of them (264 bits => 256 bit seed)

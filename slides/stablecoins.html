@@ -176,8 +176,8 @@ line-height:120%;
 [![mim logo](../slides/images/logos/mim-coin-symbol.svg)](https://coinmarketcap.com/currencies/magic-internet-money/)
 [![mkr logo](../slides/images/logos/mkr-coin-symbol.svg)](https://coinmarketcap.com/currencies/maker/)
 [![sai logo](../slides/images/logos/sai-coin-symbol.svg)](https://coinmarketcap.com/currencies/single-collateral-dai/)
-[![spell logo](../slides/images/logos/spell-coin-symbol.webp)](https://coinmarketcap.com/currencies/spell-token/)
-[![tomb logo](../slides/images/logos/tomb-coin-symbol.webp)](https://coinmarketcap.com/currencies/tomb/)
+[![spell logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/spell-token/)
+[![tomb logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/tomb/)
 [![tribe logo](../slides/images/logos/tribe-coin-symbol.svg)](https://coinmarketcap.com/currencies/tribe/)
 [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/)
 [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/)
@@ -413,13 +413,13 @@ line-height:120%;
 <img src="images/logos/fei-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/frax-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/tribe-coin-symbol.svg" class="cclogosubtitle">
-<img src="images/logos/tomb-coin-symbol.webp" class="cclogosubtitle">
+<img src="images/logos/tomb-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="cclogo-slide" -->
-## Alias
-- As per [Stanford's CS 251 slide set](https://cs251.stanford.edu/lectures/lecture9.pdf), the two categories are:
+## Introduction
+- The two categories are:
   - Undercollateralized stablecoins: FRAX, FEI, IRON, OHM, Gyroscope
     - backing: diversified portfolio, seigniorage shares as backstop; peg mechanism: redemption; risks: market risks, oracle dependency
     - [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) of those, [FEI](https://coinmarketcap.com/currencies/fei-usd/) has the highest market capitalization (#100 as of 5-23-22)  
@@ -471,7 +471,7 @@ Examples:
   - [![frax logo](../slides/images/logos/frax-coin-symbol.svg)](https://coinmarketcap.com/currencies/frax/) [FRAX](https://coinmarketcap.com/currencies/frax/) (#47 overall, #1 top seigniorage) has been fairly stable
   - Number 2 is TerraClassic, which we discuss elsewhere
   - Number 3 is a variant of FRAX
-  - [![tomb logo](../slides/images/logos/tomb-coin-symbol.webp)](https://coinmarketcap.com/currencies/tomb/) [TOMB](https://coinmarketcap.com/currencies/tomb/) (#792 overall, #4 seigniorage) has not been stable at all
+  - [![tomb logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/tomb/) [TOMB](https://coinmarketcap.com/currencies/tomb/) (#792 overall, #4 seigniorage) has not been stable at all
   - The next highest is #871 overall, so clearly not used much
 </textarea></section>
 
@@ -523,9 +523,10 @@ contract Oracle {
 
 ## Oracle: trusted signer
 ![](images/stablecoins/oracles/oracles.dot.1.svg)
-- The oracle signer (aka deployer) updates the price, and anybody can read it
+- The oracle signer (often the deployer) updates the price, and anybody can read it
   - This works well when the source is centralized
   - Examples: the oracles on Ethereum that interact with the Polkadot or Polygon chains
+- Can be a set of trusted signers, any one of which can update the oracle
 - But a corrupt signer can maliciously manipulate the price
 
 
@@ -548,7 +549,7 @@ contract Oracle {
 - We have to take the *median* value, not the *mean*
   - Here the mean is `$`71
   - The median is `$`101
-- If more than half are trustworthy, then the oracle will have a correct price
+- If more than half are trustworthy, then the oracle will have a (mostly) correct price
   - Less than half can be traitors!
 
 
@@ -584,7 +585,7 @@ contract Oracle {
 <img src="images/logos/aust-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/lunac-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/mim-coin-symbol.svg" class="cclogosubtitle">
-<img src="images/logos/spell-coin-symbol.webp" class="cclogosubtitle">
+<img src="images/logos/tomb-coin-symbol.svg" class="cclogosubtitle">
 <img src="images/logos/ustc-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
@@ -630,7 +631,7 @@ contract Oracle {
 <!-- .slide: class="cclogo-slide" -->
 ## Abracadabra
 - Abracadabra is the protocol at [abracadabra.money](https://abracadabra.money/)
-  - [![spell logo](../slides/images/logos/spell-coin-symbol.webp)](https://coinmarketcap.com/currencies/spell-token/) Spell ([SPELL](https://coinmarketcap.com/currencies/spell-token/)) is their native token 
+  - [![spell logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/spell-token/) Spell ([SPELL](https://coinmarketcap.com/currencies/spell-token/)) is their native token 
   - [![mim logo](../slides/images/logos/mim-coin-symbol.svg)](https://coinmarketcap.com/currencies/magic-internet-money/) Magic Internet Money ([MIM](https://coinmarketcap.com/currencies/magic-internet-money/)) is the stablecoin
   - Abracadabra / SPELL / MIM is analogous to Terra / LUNA / USTC
 - Their promise: a non-interest bearing asset (coin or token) can be used to generate interest
@@ -675,16 +676,6 @@ contract Oracle {
 
 
 
-## LUNA / UST debacle
-
-- [Article on LUNA / UST background](https://www.coindesk.com/learn/what-is-luna-and-ust-a-guide-to-the-terra-ecosystem/)
-- [Overview of the crash](https://www.cnet.com/personal-finance/crypto/terras-luna-crypto-crash-how-ust-broke-and-whats-next/)
-- [Do Kwon reportedly cashed out $2.7 billion in the span of a few months prior to the LUNA/UST collapse](https://watcher.guru/news/how-do-kwon-allegedly-cashed-out-2-7b-from-terra-network?c=70) (and [twitter announcement](https://twitter.com/watcherguru/status/1535707516784476163?s=21&t=cZ9G69kuatTgBDdnliEieQ)); [this reddit thread](https://www.reddit.com/r/CryptoCurrency/comments/v9ypa6/heres_how_do_kwon_cashed_out_27_billion_using/) describes the article also
-- [Votium](https://votium.app/) and [Votium quick start guide](https://docs.votium.app/explainers/quickstart-guide)
-- [Convex](https://www.convexfinance.com/)
-
-
-
 ## So what happened?
 
 - See [FatMatTerra's twitter thread](https://twitter.com/FatManTerra/status/1535623662153437185)
@@ -710,11 +701,13 @@ contract Oracle {
 ## References
 - [Medium: Abracadabra Degenbox -- Let’s cast spell on UST](https://everythingblockchain.medium.com/abracadabra-degenbox-lets-cast-spell-on-ust-7d2dd8d6e43c)
 - [How To Use The Terra Bridge](https://www.altcoinbuzz.io/bitcoin-and-crypto-guide/how-to-use-the-terra-bridge/)
-
-Still to read:
-
 - [A Complete Guide to Abracadabra Money – SPELL, MIM and sSPELL](https://blocmates.com/blogmates/a-complete-guide-to-abracadabra-money-spell-mim-and-sspell/)
-
+- [Article on LUNA / UST background](https://www.coindesk.com/learn/what-is-luna-and-ust-a-guide-to-the-terra-ecosystem/)
+- [Overview of the crash](https://www.cnet.com/personal-finance/crypto/terras-luna-crypto-crash-how-ust-broke-and-whats-next/)
+- [Do Kwon reportedly cashed out $2.7 billion in the span of a few months prior to the LUNA/UST collapse](https://watcher.guru/news/how-do-kwon-allegedly-cashed-out-2-7b-from-terra-network?c=70) (and [twitter announcement](https://twitter.com/watcherguru/status/1535707516784476163?s=21&t=cZ9G69kuatTgBDdnliEieQ))
+  - [This reddit thread](https://www.reddit.com/r/CryptoCurrency/comments/v9ypa6/heres_how_do_kwon_cashed_out_27_billion_using/) describes the article also
+- [Votium](https://votium.app/) and [Votium quick start guide](https://docs.votium.app/explainers/quickstart-guide)
+- [Convex](https://www.convexfinance.com/)
 </textarea></section>
 
   </section>
