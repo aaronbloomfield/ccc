@@ -149,30 +149,30 @@ line-height:120%;
 
     <section data-markdown data-separator="^\n" data-transition="fade" data-transition-speed="fast"><textarea>
 ## Communication protocol
-![](images/consensus/2gen/2gen-communication-0.svg)
+![](images/consensus/2gen/2gen-comm.dot.1.svg)
 
 ## Communication protocol
-![](images/consensus/2gen/2gen-communication-1.svg)
+![](images/consensus/2gen/2gen-comm.dot.2.svg)
 
 ## Communication protocol
-![](images/consensus/2gen/2gen-communication-2.svg)
+![](images/consensus/2gen/2gen-comm.dot.3.svg)
 
 ## Communication protocol
-![](images/consensus/2gen/2gen-communication-3.svg)
+![](images/consensus/2gen/2gen-comm.dot.4.svg)
 
 ## Communication protocol
-![](images/consensus/2gen/2gen-communication-4.svg)
+![](images/consensus/2gen/2gen-comm.dot.5.svg)
 
 ## Communication protocol
-![](images/consensus/2gen/2gen-communication.svg)
+![](images/consensus/2gen/2gen-comm.dot.6.svg)
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## A better protocol
 - A decides to attack and sends 100 couriers to B to notify this
-  - If only one gets through, then B attacks
+  - If only one gets through, and is thus able to deliver the message, then B attacks
 - This would work well in practice, but is not guaranteed!
-- But what if all 100 are stopped?
+  - What if all 100 are stopped?
 - Ultimately:
 
 > If there is a complete failure in your communication system, then there is no way to achieve a consensus
@@ -240,6 +240,15 @@ line-height:120%;
 
 
 
+## Modelling Traitors
+- We assume that the traitorous generals always take the strategy that is most likely to cause problems
+  - The "worst" strategy
+- If they don't take the worst strategy:
+  - They are not very good traitors!
+  - The problem becomes easier to solve, since some traitor generals are acting like loyal generals
+
+
+
 ## Messages may not arrive
 - Either because of a communication failure or a node maliciously not sending such a message
   - The former can be modeled by the latter
@@ -272,6 +281,7 @@ line-height:120%;
 - The algorithm must be able to withstand some number of traitors
 - How many traitors can exist while allowing correct communication among the loyal nodes?
 - Consider one general communicating his/her intentions to the other generals
+  - We will call the "sending" general here the commander
   - We will call the "receiving" generals here lieutenants
 </textarea></section>
 
@@ -287,7 +297,7 @@ line-height:120%;
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## The Problem
-- There is one general who needs to communicate his/her orders to $n-1$ lieutenants
+- There is one commander who needs to communicate his/her orders to $n-1$ lieutenants
   - We'll focus on $n=3$, hence the name "Three Generals Problem"
   - But $n$ can be any positive integer
 - Some number $m$ of participants are traitors
@@ -297,13 +307,13 @@ line-height:120%;
 
 
 ## Base cases
-- $n=1$: If there is only one Byzantine general, then whatever s/he thinks is the consensus
+- $n=1$: If there is only one participant, then whatever s/he thinks is the consensus
   - Since s/he is the only one voting!
-- $n=2$: If there are two generals:
+- $n=2$: If there are two participants:
   - If both agree, at which point there is consensus
   - Or they disagree, at which point no consensus can be had
-    - They may disagree because one is a traitor or because loyal generals can disagree
-- Thus, we need to consider cases of three or more generals
+    - They may disagree because one is a traitor, or because loyal generals can disagree
+- Thus, we need to consider cases of three or more participants
   - $n \ge 3$
 
 
@@ -312,10 +322,10 @@ line-height:120%;
 ## Communication
 <img src="images/consensus/bgp/2gen.svg" style="width:45%">
 
-- One general needs to communicate his/her opinion to the other generals
+- One general (the commander) needs to communicate his/her opinion to the other generals (here, lieutenants)
   - In the full BGP, all generals have to do this with all the others
-- Here, the receiving generals are called lieutenants for this
-- After hearing an order from the general, each lieutenant will *verify* it with each other lieutenant
+  - Here, the receiving generals are called lieutenants for this
+- After hearing an order from the commander, each lieutenant will *verify* it with each other lieutenant
 
 
 
@@ -325,8 +335,8 @@ line-height:120%;
 > Hypothesis: this communication must have less than 1/3 be traitors
 
 - Rephrased: given $m$ traitors, there must be at least $3m+1$ total participants
-- First, show that 1 traitor out of 3 generals will not succeed
-  - Or, if $m=1$, then $3m$ generals is insufficient, and we need *more* than $3m$ generals
+- First, show that 1 traitor (out of 3) will not succeed
+  - Or, if $m=1$, then $3m$ participants is insufficient, and we need *more* than $3m$ participants
 - It analogizes attacking or retreating to message communication
 
 
@@ -334,9 +344,10 @@ line-height:120%;
 <!-- .slide: class="right-float-img" -->
 ## Three Generals Problem
 ![](images/consensus/3gen/3gen.dot.1.svg)
-- A general sends a message to his two lieutenants:
+- A commander sends a message to his two lieutenants:
   - The message is either "Attack" (A) or "Retreat" (R)
-  - The "lieutenants" are just the two receiving the message, but could also be generals in the full BGP
+  - The lieutenants are just the two receiving the message
+    - But could also be generals in the full BGP
 - Lieutenant 1 checks the validity of that message by asking lieutenant 2 what the general said
 - But somebody could be a traitor!
 - There are 8 possibilities: messages $a$, $b$, and $c$ can each be one of A (attack) or R (retreat)
@@ -345,43 +356,43 @@ line-height:120%;
 
 ## Three Generals Problem
 - Assumptions:
-  - All *loyal* lieutenants should take the same action, else it's a military disaster (rout)
-  - *Loyal* lieutenants always obey the general's order
+  - All *loyal* participants should take the same action, else it's a military disaster (rout)
+  - *Loyal* lieutenants always obey the commander's order
   - *Traitorous*  lieutenants take the action that will lead to a disaster
   - Messages are "oral" and cannot be verified
     - No digital signatures (yet)
 - The requirements for this to succeed are:
-  1. All loyal lieutenants obey the same order
-  2. If the general is loyal, then every loyal lieutenant obeys the same order
-  3. Every loyal lieutenant must agree on what everybody else said
+  1. All loyal *lieutenants* obey the same order
+  2. If the commander is loyal, then every loyal lieutenant obeys the same order
+  3. Every loyal lieutenant must agree on what the other loyal participants said
 
 
 
 ## Analogies
 - The full Byzantine Generals Problem wants all loyal generals to take the same action
-- The Three Generals problem is only modeling their communication, and only wants the *lieutenants* to take the same action
-  - Although the general, if loyal, needs to take the same action as the (loyal) lieutenants
+- The Three Generals problem is modeling their communication, and only wants the participants to take the same action
+  - Although the commander, if loyal, needs to take the same action as the (loyal) lieutenants
 
 
 
 ## Three Generals Problem
 - Question: can this work if there is exactly one traitor?
 ![](images/consensus/3gen/3gen.dot.1.svg)
-- We thus are not considering the scenarios where all are loyal or two (or more) are traitors
+- We thus are not considering the scenarios where all are loyal or two (or three) are traitors
 - This is from the point of lieutenant 1, who is assumed to be loyal
   - Since we are considering the case when there is only one traitor, lieutenants 1 and 2 cannot *both* be traitors; thus assume lieutenant 1 is the loyal one
 
 
 
 ## Three Generals Problem
-- Two of the eight cases are when all messages are communicated properly:
+- Two of the eight cases are when all messages are the same:
 
 <table class="transparent"><tr>
 <td><img src="images/consensus/3gen/3gen.dot.2.svg"></td>
 <td><img src="images/consensus/3gen/3gen.dot.9.svg"></td>
 </tr></table>
 
-- The general sent the same message, so must be loyal
+- The commander sent the same message, so must be loyal
 - Lieutenant 2 sent the received message, so must be loyal
 - This is the everybody-is-loyal case, which we not considering here
   - But everybody takes the same action, so it's a success
@@ -396,28 +407,28 @@ line-height:120%;
 <td><img src="images/consensus/3gen/3gen.dot.7.svg"></td>
 </tr></table>
 
-- The general sent different messages, so must be a traitor
+- The commander sent different messages, so must be a traitor
 - Lieutenant 2 changed the message, so must be a traitor
   - If lieutenant 2 is a traitor and did *not* change the message, it is the same as the two cases on the next slide
 - This is the two traitors case, which we are not considering
-  - But the two lieutenants take different actions, which is a disaster
+  - But the two lieutenants take different actions.  Disaster!
 
 
 
 ## Three Generals Problem
-- Two of the eight cases are where the general is a traitor:
+- Two of the eight cases have the commander as the traitor:
 
 <table class="transparent"><tr>
 <td><img src="images/consensus/3gen/3gen.dot.5.svg"></td>
 <td><img src="images/consensus/3gen/3gen.dot.6.svg"></td>
 </tr></table>
 
-- The general sent different messages, so must be a traitor
+- The commander sent different messages, so must be a traitor
 - Lieutenant 2 sent the received message, so must be loyal
   - Or was a traitor, but still sent the received message
 - Lieutenants 1 and 2 received *different* messages
-  - As they are both loyal, they take the action received from the general
-  - Since they are different actions, it's a disaster
+  - As they are both loyal, they take the received action
+  - But they are different actions.  Disaster!
 
 
 
@@ -429,12 +440,21 @@ line-height:120%;
 <td><img src="images/consensus/3gen/3gen.dot.8.svg"></td>
 </tr></table>
 
-- The general sent the same message, so must be loyal
+- The commander sent the same message, so must be loyal
 - Lieutenant 2 changed the message, so must be a traitor
-- Lieutenant 1, having received different messages and being loyal, takes the action received from the general
-- Lieutenant 2, being a traitor, takes the opposite action
-- As they are different actions, it's a disaster
+- Lieutenant 1, receiving different messages and being loyal, takes the action received from the commander
+- The loyal participants (commander and lieutenant 1) take the same action, so it's a success
 
+
+
+
+## Result
+- At least one of the scenarios with one traitor led to a disaster
+  - If the commander was the traitor
+- Why can't we just ensure that the commander is always loyal?
+  - Alas, if you could ensure the loyalty of any participant...
+  - Recall that the three generals problem is really *each* general (in the full BGP) being the commander to send out his/her opinion
+  - So, at some point, if there is a traitorous general in BGP, s/he will be the commander in 3GP
 
 
 
@@ -450,7 +470,7 @@ This implies:
 
 ## Mapping back to Byzantine Generals
 - Three Generals Problem:
-  - If a lieutenant hears *different* messages from the general and the other lieutenant, then it's a disaster
+  - If the loyal participants take *different* actions, then it's a disaster
 - Byzantine Generals Problem, specifically the communication therein:
   - If there are three generals communicating, and one hears *different* vote results from the other two about a given general's opinion, s/he cannot determine the correct value for that vote
 
@@ -521,22 +541,22 @@ This implies:
 - Referred to as $OM(m)$, this is a solution for the Byzantine Generals Problem
   - $m$ is the maximum number of traitors that can be tolerated
   - Must have strictly less than 1/3 traitors
-    - So $OM(1)$ must have at least 4 generals
-    - $OM(2)$ at least 7 generals
-    - $OM(m)$ must have at least $3m+1$ generals
+    - So $OM(1)$ must have at least 4 participants
+    - $OM(2)$ at least 7 participants
+    - $OM(m)$ must have at least $3m+1$ participants
 
 
 
 ## Oral Messages Algorithm
 - Algorithm:
-  - The general sends messages to each lieutenant
+  - The commander sends messages to each lieutenant
   - Lieutenants:
     - Records order received
-    - Uses $OM(m-1)$ to tell the other lieutenants what the general said
+    - Uses $OM(m-1)$ to tell the other lieutenants what the commander said
     - The lieutenants follow `majority()` order
       - A tie has a pre-determined default action, say, retreat
-- Recall the goal: for the *loyal* generals to all agree on a strategy
-  - This requires that each loyal general agree on what *all* the other generals say
+- Recall the goal: for the *loyal* participants to all agree on a strategy
+  - This requires that each loyal participants agree on what *all* the other participants say
 
 
 
@@ -581,7 +601,7 @@ This implies:
 <img src="images/consensus/bgp/om0.svg" style="width:35%">
 
 - If there were really no traitors, then the lieutenants would not need to communicate with each other
-- The general communicates with his/her $n-1$ lieutenants, so it's $\Theta(n)$
+- The commander communicates with his/her $n-1$ lieutenants, so it's $\Theta(n)$
   - We are assuming a broadcast is $\Theta(n)$, not $\Theta(1)$
 - In practice, this case is treated as $OM(1)$ for communication purposes
 </textarea></section>
@@ -623,16 +643,16 @@ This implies:
 
 ## $OM(1)$
 - Just to repeat: 
-- $OM(1)$ guarantees that, with at least 4 participants and at most one traitor, then all the *loyal* lieutenants will agree a course of action
-  - Even if the general gave conflicting orders
+- $OM(1)$ guarantees that, with at least 4 participants and at most one traitor, then all the *loyal* participants will agree a course of action
+  - Even if the commander gave conflicting orders
 
 
 
 ## What about $OM(2)$?
 - This is the 7 generals, 2 traitors problem
 - Three cases:
-  1. The general and one lieutenant are traitors
-  2. The general is loyal, and two lieutenants are traitors
+  1. The commander and one lieutenant are traitors
+  2. The commander is loyal, and two lieutenants are traitors
   3. Fewer than 2 are traitors
       - But that's really the $OM(1)$ or $OM(0)$ case, so we'll ignore it here
 - This is all from the point of view of a loyal lieutenant
@@ -649,8 +669,8 @@ This implies:
 
 <img src="images/consensus/bgp/om2-a.svg" style="width:30%">
 
-- The general and one lieutenant are traitors
-- The general will give varying orders
+- The commander and one lieutenant are traitors
+- The commander will give varying orders
 - Each lieutenant will perform $OM(1)$ to get their array $v$ of messages
   - There is only one traitor among the lieutenants, so $OM(1)$ will work properly
   - And we know $OM(1)$ works (in $\Theta(n^2)$ time)
@@ -667,7 +687,7 @@ This implies:
 
 
 ## Recall $OM(1)$
-- $OM(1)$ means all *loyal* lieutenants will agree a single course of action based on what the message sender said
+- $OM(1)$ means all *loyal* participants will agree a single course of action based on what the message sender said
   - Whether attack or retreat
 - When the traitor is sending out his/her vote, s/he is using $OM(1)$, so all the loyal lieutenants will agree on a single message of what the traitor said
   - This means that we won't have some loyal lieutenants thinking one thing and others something different for the traitor's message
@@ -693,8 +713,8 @@ This implies:
 
 <img src="images/consensus/bgp/om2-f.svg" style="width:30%">
 
-- The general is loyal and two lieutenants are traitors
-  - The general will the same order to all
+- The commander is loyal and two lieutenants are traitors
+  - The commander will the same order to all
 - Each lieutenant will perform $OM(1)$ to send out their message
   - And we know $OM(1) \in \Theta(n^2)$
 - Even though there are two traitors, the loyal lieutenants all received the same message
@@ -720,7 +740,7 @@ This implies:
 - The messages the loyal lieutenants receive from the traitors may not all be the same!
   - Since $OM(1)$ does not work with 6 generals, 2 traitors
   - These are the blue-circled values
-- But their majority vote will still be attack
+- But majority vote (of the loyal generals) will still be attack
 - So the overall $OM(2)$ algorithm still works in this case
 
 
@@ -779,9 +799,9 @@ This implies:
   3. The absence of a message can be detected
 - We now add an additional assumption:
   4. The signatures, which has 3 parts:
-      - A loyal general's signature cannot be forged
-      - Any alteration of a loyal general's message can be detected
-      - Anybody can verify the authenticity of a general's signature
+      - A loyal participant's signature cannot be forged
+      - Any alteration of a loyal participant's message can be detected
+      - Anybody can verify the authenticity of a participant's signature
 
 
 
@@ -789,18 +809,18 @@ This implies:
 - Each lieutenant will have an array *V* (capital *V*)
 - A message will be lower-case *v*
 - A signed message will list all the signatories:
-  - *v:0* means it was signed by person 0 (the general)
-  - *v:0:1:3* means it was signed by the general and lieutenants 1 and 3
-- Recall the goal: for the *loyal* generals to all agree on a strategy
+  - *v:0* means it was signed by person 0 (the commander)
+  - *v:0:1:3* means it was signed by the commander and lieutenants 1 and 3
+- Recall the goal: for the *loyal* participants to all agree on a strategy
 
 
 
 ## Signed Messages Algorithm
 - Referred to as $SM(m)$, where $m$ is the maximum number of traitors allowed where it will still operate correctly
 - Algorithm:
-  - The general sends *signed* messages to each lieutenant
+  - The commander sends *signed* messages to each lieutenant
   - For each lieutenant *i*:
-    - If the message is *v:0* (meaning from the general), then:
+    - If the message is *v:0* (meaning from the commander), then:
       - Verifies authenticity and records order received in *V[i]=v*
       - Signs that message to create *v:0:i*, and send to every other lieutenant
     - If the message is of the form *v:0:j<sub>1</sub>:j<sub>k</sub>*, then:
@@ -811,18 +831,18 @@ This implies:
 
 
 ## Function `choice()`
-- Recall that lieutenants can no longer forge the general's orders
+- Recall that lieutenants can no longer forge the commander's orders
 - If insufficient messages ($<$*m+1*) are received, take the default action (say, retreat)
-- If the general sent different messages to different lieutenants, then take a default action
+- If the commander sent different messages to different lieutenants, then take a default action
   - Meaning if $|V|>1$
-- Otherwise, follow the general's signed orders
+- Otherwise, follow the commander's signed orders
 
 
 
 ## How many times to resend?
 - $SM(m)$ says resend it if the signature has $<$*m* signatures
 - This means that each lieutenant will receive *m+1* confirmations
-  - The one from the general
+  - The one from the commander
   - And *m* more from lieutenants
 - If there are *m* traitors, then at least one of the *m+1* messages is from a loyal participant
 
@@ -837,7 +857,7 @@ Not much to do if there are no traitors
 ## Showing $SM(1)$, case 1
 <img src="images/consensus/bgp/sm1-b.svg" style="width:45%">
 
-The general is a traitor, and sends out different messages
+The commander is a traitor, and sends out different messages
 
 
 
@@ -845,9 +865,9 @@ The general is a traitor, and sends out different messages
 ## $SM(1)$, case 1
 <img src="images/consensus/bgp/sm1-b.svg" style="width:40%">
 
-- Each lieutenant broadcasts the message the general sent to them
+- Each lieutenant broadcasts the message the commander sent to them
   - As our communication is reliable, each broadcast is received by all the other lieutenants
-- Thus, if the general sends out different messages, everybody will know
+- Thus, if the commander sends out different messages, everybody will know
   - It's a tie, so the loyal lieutenants will take the (same) default action
 
 
@@ -855,7 +875,7 @@ The general is a traitor, and sends out different messages
 ## Showing $SM(1)$, case 2
 <img src="images/consensus/bgp/sm1-c.svg" style="width:45%">
 
-Lieutenant 2 (on the right) is a traitor, but cannot change the general's signed order
+Lieutenant 2 (on the right) is a traitor, but cannot change the commander's signed order
 
 
 
@@ -863,10 +883,10 @@ Lieutenant 2 (on the right) is a traitor, but cannot change the general's signed
 ## $SM(1)$, case 2
 <img src="images/consensus/bgp/sm1-c.svg" style="width:40%">
 
-- Lieutenant 2 (on the right) cannot force the general's signature, so must send the general's original message
-- The message sent along contains the general's original order
+- Lieutenant 2 (on the right) cannot force the commander's signature, so must send the commander's original message
+- The message sent along contains the commander's original order
   - Which matches the one received by lieutenant 1
-- Both the loyal participants (general and lieutenant 1) take the same action
+- Both the loyal participants (commander and lieutenant 1) take the same action
 
 
 
@@ -883,7 +903,7 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 
 - Lieutenant 2 (on the right) opts not to send a message
 - The algorithm requires that *m+1* messages are received
-  - The one from the general
+  - The one from the commander
   - And *m* more from lieutenants
 - Here *m=1*, and since $<$*m+1* messages have been received, the default action is taken
 - In general, if *m* traitors and *m+1* messages, the loyal lieutenant still has received one (valid) message
@@ -896,10 +916,10 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 - In fact, $SM(m)$ only needs a minimum of $m+2$ participants
   - Proof omitted from this slide set, but briefly:
     - Case 1:
-      - We have $m$ lieutenant traitors, 1 loyal lieutenant, and the loyal general
-      - The loyal lieutenant receives the loyal general's message
+      - We have $m$ lieutenant traitors, 1 loyal lieutenant, and the loyal commander
+      - The loyal lieutenant receives the loyal commander's message
     - Case 2:
-      - We have $m-1$ lieutenant traitors, 2 loyal lieutenants, and the traitor general
+      - We have $m-1$ lieutenant traitors, 2 loyal lieutenants, and the traitor commander
       - The loyal lieutenant receives the loyal lieutenant's message
   - Full proof in the [original paper](https://lamport.azurewebsites.net/pubs/byz.pdf)
 

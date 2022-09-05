@@ -1,167 +1,58 @@
 digraph A {
-    Gen -> "Lt 1" [label="msg a"];
-    Gen -> "Lt 2" [label="msg b"];
+    Cmdr -> "Lt 1" [label="msg a"];
+    Cmdr -> "Lt 2" [label="msg b"];
     "Lt 2" -> "Lt 1" [constraint=false;label="msg c"];  
 }
 
 digraph B { // byzantine.dot..svg
-    Gen -> "Lt 1" [label="A"];
-    Gen -> "Lt 2" [label="A"];
+    Cmdr -> "Lt 1" [label="A"];
+    Cmdr -> "Lt 2" [label="A"];
     "Lt 2" -> "Lt 1" [constraint=false;label="A"];
 }
 digraph C { // byzantine.dot.3.svg
     "Lt 1";
     "Lt 2" [fillcolor=red,style=filled];
-    Gen -> "Lt 1" [label="A"];
-    Gen -> "Lt 2" [label="A"];
+    Cmdr -> "Lt 1" [label="A"];
+    Cmdr -> "Lt 2" [label="A"];
     "Lt 2" -> "Lt 1" [constraint=false;label="R"];
 }
 digraph D { // byzantine.dot.4.svg
-    Gen [fillcolor=red,style=filled];
+    Cmdr [fillcolor=red,style=filled];
     "Lt 1";
     "Lt 2" [fillcolor=red,style=filled];
-    Gen -> "Lt 1" [label="A"];
-    Gen -> "Lt 2" [label="R"];
+    Cmdr -> "Lt 1" [label="A"];
+    Cmdr -> "Lt 2" [label="R"];
     "Lt 2" -> "Lt 1" [constraint=false;label="A"];
 }
 digraph E { // byzantine.dot.5.svg
-    Gen [fillcolor=red,style=filled];
-    Gen -> "Lt 1" [label="A"];
-    Gen -> "Lt 2" [label="R"];
+    Cmdr [fillcolor=red,style=filled];
+    Cmdr -> "Lt 1" [label="A"];
+    Cmdr -> "Lt 2" [label="R"];
     "Lt 2" -> "Lt 1" [constraint=false;label="R"];
 }
 digraph F { // byzantine.dot.6.svg
-    Gen [fillcolor=red,style=filled];
-    Gen -> "Lt 1" [label="R"];
-    Gen -> "Lt 2" [label="A"];
+    Cmdr [fillcolor=red,style=filled];
+    Cmdr -> "Lt 1" [label="R"];
+    Cmdr -> "Lt 2" [label="A"];
     "Lt 2" -> "Lt 1" [constraint=false;label="A"];
 }
 digraph G { // byzantine.dot.7.svg
-    Gen [fillcolor=red,style=filled];
+    Cmdr [fillcolor=red,style=filled];
     "Lt 1";
     "Lt 2" [fillcolor=red,style=filled];
-    Gen -> "Lt 1" [label="R"];
-    Gen -> "Lt 2" [label="A"];
+    Cmdr -> "Lt 1" [label="R"];
+    Cmdr -> "Lt 2" [label="A"];
     "Lt 2" -> "Lt 1" [constraint=false;label="R"];
 }
 digraph H { // byzantine.dot.8.svg
     "Lt 1";
     "Lt 2" [fillcolor=red,style=filled];
-    Gen -> "Lt 1" [label="R"];
-    Gen -> "Lt 2" [label="R"];
+    Cmdr -> "Lt 1" [label="R"];
+    Cmdr -> "Lt 2" [label="R"];
     "Lt 2" -> "Lt 1" [constraint=false;label="A"];
 }
 digraph I { // byzantine.dot.9.svg
-    Gen -> "Lt 1" [label="R"];
-    Gen -> "Lt 2" [label="R"];
+    Cmdr -> "Lt 1" [label="R"];
+    Cmdr -> "Lt 2" [label="R"];
     "Lt 2" -> "Lt 1" [constraint=false;label="R"];
 }
-
-
-
-
-/*
-digraph B {
-    graph [fontname = "Helvetica"];
-    node [fontname = "Helvetica",shape=circle];
-    edge [fontname = "Helvetica"];
-
-    null [style=invis];
-    1000 [label="block 1000",width=0.8];
-    1001 [label="block 1001\nw/TX x",width=0.8];
-    null -> 1000;
-    1000 -> 1001;
-}
-
-digraph C {
-    graph [fontname = "Helvetica"];
-    node [fontname = "Helvetica",shape=circle];
-    edge [fontname = "Helvetica"];
-
-    null [style=invis];
-    1000 [label="block 1000",width=0.8];
-    1001 [label="block 1001\nw/TX x",width=0.8];
-    othera [label="block 1001\nalso w/TX x",width=0.8];
-    null -> 1000;
-    1000 -> 1001;
-    1000 -> othera;
-}
-
-digraph D {
-    graph [fontname = "Helvetica"];
-    node [fontname = "Helvetica",shape=circle];
-    edge [fontname = "Helvetica"];
-
-    null [style=invis];
-    1000 [label="block 1000",width=0.8];
-    1001 [label="block 1001\nw/TX x",width=0.8];
-    1002 [label="block 1002",width=0.8];
-    othera [label="block 1001\nalso w/TX x",width=0.8];
-    //otherb [label="different\nblock 1002",width=0.8];
-    null -> 1000;
-    1000 -> 1001;
-    1000 -> othera;
-    othera -> 1002;
-    //othera -> otherb;
-}
-
-digraph E {
-    graph [fontname = "Helvetica"];
-    node [fontname = "Helvetica",shape=circle];
-    edge [fontname = "Helvetica"];
-
-    null [style=invis];
-    1000 [label="block 1000",width=0.8];
-    1001 [label="block 1001\nw/TX x",width=0.8];
-    1002 [label="block 1002",width=0.8];
-    othera [label="block 1001\nalso w/TX x",width=0.8];
-    //otherb [label="different\nblock 1002",width=0.8];
-    1003 [label="block 1003",width=0.8];
-    null -> 1000;
-    1000 -> 1001;
-    1000 -> othera;
-    othera -> 1002;
-    //othera -> otherb;
-    1002 -> 1003;
-}
-
-digraph F {
-    graph [fontname = "Helvetica"];
-    node [fontname = "Helvetica",shape=circle];
-    edge [fontname = "Helvetica"];
-
-    null [style=invis];
-    1000 [label="block 1000",width=0.8];
-    1001 [color=red,label="block 1001\nw/TX x",width=0.8];
-    1002 [label="block 1002",width=0.8];
-    othera [label="block 1001\nalso w/TX x",width=0.8];
-    //otherb [label="different\nblock 1002",width=0.8];
-    1003 [label="block 1003",width=0.8];
-    null -> 1000;
-    1000 -> 1001;
-    1000 -> othera;
-    othera -> 1002;
-    //othera -> otherb;
-    1002 -> 1003;
-}
-
-digraph G {
-    graph [fontname = "Helvetica"];
-    node [fontname = "Helvetica",shape=circle];
-    edge [fontname = "Helvetica"];
-
-    null [style=invis];
-    1000 [label="block 1000",width=0.8];
-    1001 [label="block 1001\nw/TX x",width=0.8];
-    1002 [label="block 1002\nw/TX x",width=0.8];
-    othera [label="block 1001\nbut w/o TX x",width=0.8];
-    //otherb [label="different\nblock 1002",width=0.8];
-    1003 [label="block 1003",width=0.8];
-    null -> 1000;
-    1000 -> 1001;
-    1000 -> othera;
-    othera -> 1002;
-    //othera -> otherb;
-    1002 -> 1003;
-}
-*/

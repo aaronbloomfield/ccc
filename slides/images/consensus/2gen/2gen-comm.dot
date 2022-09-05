@@ -1,0 +1,221 @@
+digraph A {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=point,width=0];
+    edge [fontname = "Helvetica"];
+
+    // each account timeline header node
+    alice_0 [shape=none,label="",pos="-1,0.75!",image="green-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+    bob_0 [shape=none,label="",pos="2,0.75!",image="purple-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+
+    // timeline end nodes and vertical lines
+    alice_end [label="12",pos="-1,-3!",width=0.2,style=invis];
+    alice_0 -> alice_end [arrowhead=none];
+    bob_end [label="12",pos="2,-3!",width=0.2,style=invis];
+    bob_0 -> bob_end [arrowhead=none];
+
+    // visible timeline nodes
+    alice_1 [label="1",pos="-1,-0.5!"];
+    alice_2 [label="2",pos="-1,-1.0!"];
+    alice_3 [label="3",pos="-1,-1.5!"];
+    alice_4 [label="4",pos="-1,-2.0!"];
+    alice_5 [label="5",pos="-1,-2.5!"];
+    alice_6 [label="6",pos="-1,-3.0!"];
+
+    bob_1 [label="1",pos="2,-0.5!"];
+    bob_2 [label="2",pos="2,-1.0!"];
+    bob_3 [label="3",pos="2,-1.5!"];
+    bob_4 [label="4",pos="2,-2.0!"];
+    bob_5 [label="5",pos="2,-2.5!"];
+    bob_6 [label="6",pos="2,-3.0!"];
+
+    //alice_1 -> bob_1 [headlabel="If you respond, I'll attack      "];
+    //bob_2 -> alice_2 [taillabel="If you respond, I'll attack      "];
+    //alice_3 -> bob_3 [headlabel="I'll attack if I know you got this"];
+    //bob_4 -> alice_4 [taillabel="I'll attack if I know you got this"];
+    //alice_5 -> bob_5 [headlabel="(and so on...)                "];
+}
+
+digraph B {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=point,width=0];
+    edge [fontname = "Helvetica"];
+
+    // each account timeline header node
+    alice_0 [shape=none,label="",pos="-1,0.75!",image="green-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+    bob_0 [shape=none,label="",pos="2,0.75!",image="purple-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+
+    // timeline end nodes and vertical lines
+    alice_end [label="12",pos="-1,-3!",width=0.2,style=invis];
+    alice_0 -> alice_end [arrowhead=none];
+    bob_end [label="12",pos="2,-3!",width=0.2,style=invis];
+    bob_0 -> bob_end [arrowhead=none];
+
+    // visible timeline nodes
+    alice_1 [label="1",pos="-1,-0.5!"];
+    alice_2 [label="2",pos="-1,-1.0!"];
+    alice_3 [label="3",pos="-1,-1.5!"];
+    alice_4 [label="4",pos="-1,-2.0!"];
+    alice_5 [label="5",pos="-1,-2.5!"];
+    alice_6 [label="6",pos="-1,-3.0!"];
+
+    bob_1 [label="1",pos="2,-0.5!"];
+    bob_2 [label="2",pos="2,-1.0!"];
+    bob_3 [label="3",pos="2,-1.5!"];
+    bob_4 [label="4",pos="2,-2.0!"];
+    bob_5 [label="5",pos="2,-2.5!"];
+    bob_6 [label="6",pos="2,-3.0!"];
+
+    alice_1 -> bob_1 [headlabel="If you respond, I'll attack      "];
+    //bob_2 -> alice_2 [taillabel="If you respond, I'll attack      "];
+    //alice_3 -> bob_3 [headlabel="I'll attack if I know you got this"];
+    //bob_4 -> alice_4 [taillabel="I'll attack if I know you got this"];
+    //alice_5 -> bob_5 [headlabel="(and so on...)                "];
+}
+
+digraph C {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=point,width=0];
+    edge [fontname = "Helvetica"];
+
+    // each account timeline header node
+    alice_0 [shape=none,label="",pos="-1,0.75!",image="green-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+    bob_0 [shape=none,label="",pos="2,0.75!",image="purple-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+
+    // timeline end nodes and vertical lines
+    alice_end [label="12",pos="-1,-3!",width=0.2,style=invis];
+    alice_0 -> alice_end [arrowhead=none];
+    bob_end [label="12",pos="2,-3!",width=0.2,style=invis];
+    bob_0 -> bob_end [arrowhead=none];
+
+    // visible timeline nodes
+    alice_1 [label="1",pos="-1,-0.5!"];
+    alice_2 [label="2",pos="-1,-1.0!"];
+    alice_3 [label="3",pos="-1,-1.5!"];
+    alice_4 [label="4",pos="-1,-2.0!"];
+    alice_5 [label="5",pos="-1,-2.5!"];
+    alice_6 [label="6",pos="-1,-3.0!"];
+
+    bob_1 [label="1",pos="2,-0.5!"];
+    bob_2 [label="2",pos="2,-1.0!"];
+    bob_3 [label="3",pos="2,-1.5!"];
+    bob_4 [label="4",pos="2,-2.0!"];
+    bob_5 [label="5",pos="2,-2.5!"];
+    bob_6 [label="6",pos="2,-3.0!"];
+
+    alice_1 -> bob_1 [headlabel="If you respond, I'll attack      "];
+    bob_2 -> alice_2 [taillabel="If you respond, I'll attack      "];
+    //alice_3 -> bob_3 [headlabel="I'll attack if I know you got this"];
+    //bob_4 -> alice_4 [taillabel="I'll attack if I know you got this"];
+    //alice_5 -> bob_5 [headlabel="(and so on...)                "];
+}
+
+digraph D {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=point,width=0];
+    edge [fontname = "Helvetica"];
+
+    // each account timeline header node
+    alice_0 [shape=none,label="",pos="-1,0.75!",image="green-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+    bob_0 [shape=none,label="",pos="2,0.75!",image="purple-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+
+    // timeline end nodes and vertical lines
+    alice_end [label="12",pos="-1,-3!",width=0.2,style=invis];
+    alice_0 -> alice_end [arrowhead=none];
+    bob_end [label="12",pos="2,-3!",width=0.2,style=invis];
+    bob_0 -> bob_end [arrowhead=none];
+
+    // visible timeline nodes
+    alice_1 [label="1",pos="-1,-0.5!"];
+    alice_2 [label="2",pos="-1,-1.0!"];
+    alice_3 [label="3",pos="-1,-1.5!"];
+    alice_4 [label="4",pos="-1,-2.0!"];
+    alice_5 [label="5",pos="-1,-2.5!"];
+    alice_6 [label="6",pos="-1,-3.0!"];
+
+    bob_1 [label="1",pos="2,-0.5!"];
+    bob_2 [label="2",pos="2,-1.0!"];
+    bob_3 [label="3",pos="2,-1.5!"];
+    bob_4 [label="4",pos="2,-2.0!"];
+    bob_5 [label="5",pos="2,-2.5!"];
+    bob_6 [label="6",pos="2,-3.0!"];
+
+    alice_1 -> bob_1 [headlabel="If you respond, I'll attack      "];
+    bob_2 -> alice_2 [taillabel="If you respond, I'll attack      "];
+    alice_3 -> bob_3 [headlabel="I'll attack if I know you got this"];
+    //bob_4 -> alice_4 [taillabel="I'll attack if I know you got this"];
+    //alice_5 -> bob_5 [headlabel="(and so on...)                "];
+}
+
+digraph E {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=point,width=0];
+    edge [fontname = "Helvetica"];
+
+    // each account timeline header node
+    alice_0 [shape=none,label="",pos="-1,0.75!",image="green-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+    bob_0 [shape=none,label="",pos="2,0.75!",image="purple-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+
+    // timeline end nodes and vertical lines
+    alice_end [label="12",pos="-1,-3!",width=0.2,style=invis];
+    alice_0 -> alice_end [arrowhead=none];
+    bob_end [label="12",pos="2,-3!",width=0.2,style=invis];
+    bob_0 -> bob_end [arrowhead=none];
+
+    // visible timeline nodes
+    alice_1 [label="1",pos="-1,-0.5!"];
+    alice_2 [label="2",pos="-1,-1.0!"];
+    alice_3 [label="3",pos="-1,-1.5!"];
+    alice_4 [label="4",pos="-1,-2.0!"];
+    alice_5 [label="5",pos="-1,-2.5!"];
+    alice_6 [label="6",pos="-1,-3.0!"];
+
+    bob_1 [label="1",pos="2,-0.5!"];
+    bob_2 [label="2",pos="2,-1.0!"];
+    bob_3 [label="3",pos="2,-1.5!"];
+    bob_4 [label="4",pos="2,-2.0!"];
+    bob_5 [label="5",pos="2,-2.5!"];
+    bob_6 [label="6",pos="2,-3.0!"];
+
+    alice_1 -> bob_1 [headlabel="If you respond, I'll attack      "];
+    bob_2 -> alice_2 [taillabel="If you respond, I'll attack      "];
+    alice_3 -> bob_3 [headlabel="I'll attack if I know you got this"];
+    bob_4 -> alice_4 [taillabel="I'll attack if I know you got this"];
+    //alice_5 -> bob_5 [headlabel="(and so on...)                "];
+}
+
+digraph F {
+    graph [fontname = "Helvetica"];
+    node [fontname = "Helvetica",shape=point,width=0];
+    edge [fontname = "Helvetica"];
+
+    // each account timeline header node
+    alice_0 [shape=none,label="",pos="-1,0.75!",image="green-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+    bob_0 [shape=none,label="",pos="2,0.75!",image="purple-general.svg",width=1,height=1.5,fixedsize=true,penwidth=1,imagescale=true];
+
+    // timeline end nodes and vertical lines
+    alice_end [label="12",pos="-1,-3!",width=0.2,style=invis];
+    alice_0 -> alice_end [arrowhead=none];
+    bob_end [label="12",pos="2,-3!",width=0.2,style=invis];
+    bob_0 -> bob_end [arrowhead=none];
+
+    // visible timeline nodes
+    alice_1 [label="1",pos="-1,-0.5!"];
+    alice_2 [label="2",pos="-1,-1.0!"];
+    alice_3 [label="3",pos="-1,-1.5!"];
+    alice_4 [label="4",pos="-1,-2.0!"];
+    alice_5 [label="5",pos="-1,-2.5!"];
+    alice_6 [label="6",pos="-1,-3.0!"];
+
+    bob_1 [label="1",pos="2,-0.5!"];
+    bob_2 [label="2",pos="2,-1.0!"];
+    bob_3 [label="3",pos="2,-1.5!"];
+    bob_4 [label="4",pos="2,-2.0!"];
+    bob_5 [label="5",pos="2,-2.5!"];
+    bob_6 [label="6",pos="2,-3.0!"];
+
+    alice_1 -> bob_1 [headlabel="If you respond, I'll attack      "];
+    bob_2 -> alice_2 [taillabel="If you respond, I'll attack      "];
+    alice_3 -> bob_3 [headlabel="I'll attack if I know you got this"];
+    bob_4 -> alice_4 [taillabel="I'll attack if I know you got this"];
+    alice_5 -> bob_5 [headlabel="(and so on...)                "];
+}
