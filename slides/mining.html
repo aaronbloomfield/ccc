@@ -449,6 +449,7 @@ line-height:120%;
 <img src="../slides/images/logos/gre-coin-symbol.webp" class="cclogosubtitle">
 <img src="../slides/images/logos/ppc-coin-symbol.svg" class="cclogosubtitle">
 <img src="../slides/images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/sol-coin-symbol.svg" class="cclogosubtitle">
 <img src="../slides/images/logos/storj-coin-symbol.svg" class="cclogosubtitle">
 <img src="../slides/images/logos/xlm-coin-symbol.svg" class="cclogosubtitle">
 <img src="../slides/images/logos/xpm-coin-symbol.svg" class="cclogosubtitle">
@@ -683,6 +684,33 @@ line-height:120%;
 
 
 <!-- .slide: class="cclogo-slide" -->
+## Proof-of-History
+- In ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo) Solana ([SOL](https://coinmarketcap.com/currencies/solana/)) the block verification combines PoS and proof of history ([Solana's whitepaper](https://solana.com/solana-whitepaper.pdf))
+  - Each transaction has a hash of *another* transaction
+    - This proves that the TXN happened after the "other" transaction
+    - This forms a chain (graph, really) of events in time
+    - The blocks (maybe TXNs?) also have an actual timestamp
+- This graph is:
+  - Directed (any TXN points to a previous TXN)
+  - Acyclic (you can't have a loop in time)
+- Thus, the validator can always find the topological sort of a set of TXNs
+  - Which means we can sequence them in the signed block
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## PoH and block verification
+- With ![btc logo](../slides/images/logos/btc-coin-symbol.svg#cclogo) Bitcoin, we have to compute the Merkle tree hash
+  - Given $n$ transactions and an infinite computing power, it takes $\Theta(\log n)$ steps to build the tree
+- In ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo) Solana, each transaction can be verified in parallel
+  - Just check that it goes one link back to another valid TXN
+  - Given $n$ transactions and an infinite computing power, it can be done in $\Theta(1)$ time
+- A GPU can have 4,000 cores, and each can verify one TXN in parallel
+  - Okay, not infinite, but still quite fast
+
+
+
+<!-- .slide: class="cclogo-slide" -->
 ## Proof-of-Capacity
 - aka Proof-of-replication (PoRep), proof-of-storage, etc.
 - You allocate a certain amount of "capacity" to store the blockchain
@@ -712,7 +740,7 @@ line-height:120%;
   - Proof-of-{capacity, replication, spacetime}, like Storj and Filecoin
   - Does not require proofs, such as [![xlm logo](../slides/images/logos/xlm-coin-symbol.svg)](https://coinmarketcap.com/currencies/stellar/)
  Stellar Lumens (XLM)
-- [![gre logo](../slides/images/logos/gre-coin-symbol.webp)](https://coinmarketcap.com/currencies/greencoin/) There is also Greencoin (GRE)
+- [![gre logo](../slides/images/logos/gre-coin-symbol.webp)](https://coinmarketcap.com/currencies/greencoin/) There was Greencoin (GRE)
   - Meant to give rewards to those producing renewable energy
   - This coin seems to have floundered, and there are other coins with a similar name
     - Including greencoin.ai, which focuses on fitness

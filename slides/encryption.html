@@ -790,7 +790,7 @@ Any curve of the form $y^2=x^3+ax+b$
 
 ## secp256k1 curve: values
 - Why these values?
-  - It's 256 bits (size of a SHA-256 hash)
+  - Both $p$ and $o$ are 256 bits (size of a SHA-256 hash)
   - The modulus, $p$, is prime
   - The order, $o$, is also prime
 - We could have used any values for $p$ and $o$ that fulfilled these properties
@@ -809,7 +809,7 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Base Point properties
-- In order for the base point to be able to generate all the points in the range $[0,p-1]$, $G$ needs to lie on the secp256k1 curve
+- In order for the base point to be able to generate all the points in the range $[0,o-1]$, $G$ needs to lie on the secp256k1 curve
 - We can verify this in Python (here use use $p$, not $o$):
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ python3
