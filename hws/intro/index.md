@@ -18,7 +18,7 @@ The intent is not for you to write the hashing or encryption / decryption routin
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
 - Clarified on 9/2: For `validate`: the blockchain is considered valid if only the genesis block exists; we will never call this function if the genesis block has not been created.  Because of this, you don't have to actually check if the genesis block exists, as we will never call validate on it if it does not exist.  Likewise, you don't have to do any checks on the genesis block file itself.
-
+- Clarified on 9/6 the output (at the end of the Requirements section)
 
 ### Background
 
@@ -290,6 +290,13 @@ The requirements are:
     - **NOTE:** this should ONLY print either 'True' or 'False' (if it's valid
        or not), and nothing else!  Case matters here.
 
+In terms of output, there are only three commands where the output is very specific:
+
+- `validate` outputs either `True` or `False`
+- `balance` outputs only a single integer
+- `address` outputs only the hash (or part thereof) of the wallet
+
+All other commands can print any reasonable (one-line) line of output.  Note that this output is in addition to any files created.
 
 ### Other files
 

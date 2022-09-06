@@ -52,6 +52,7 @@
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here.</p>
 <ul>
 <li>Clarified on 9/2: For <code>validate</code>: the blockchain is considered valid if only the genesis block exists; we will never call this function if the genesis block has not been created. Because of this, you don’t have to actually check if the genesis block exists, as we will never call validate on it if it does not exist. Likewise, you don’t have to do any checks on the genesis block file itself.</li>
+<li>Clarified on 9/6 the output (at the end of the Requirements section)</li>
 </ul>
 <h3 id="background">Background</h3>
 <p>This homework is based on the material covered in the <a href="../../slides/overview.html#/">Cryptocurrency Overview</a> slide set.</p>
@@ -123,6 +124,13 @@ Date: Tue Apr 02 23:09:13 EDT 2019
 <li><strong>NOTE:</strong> this should ONLY print either ‘True’ or ‘False’ (if it’s valid or not), and nothing else! Case matters here.</li>
 </ul></li>
 </ol>
+<p>In terms of output, there are only three commands where the output is very specific:</p>
+<ul>
+<li><code>validate</code> outputs either <code>True</code> or <code>False</code></li>
+<li><code>balance</code> outputs only a single integer</li>
+<li><code>address</code> outputs only the hash (or part thereof) of the wallet</li>
+</ul>
+<p>All other commands can print any reasonable (one-line) line of output. Note that this output is in addition to any files created.</p>
 <h3 id="other-files">Other files</h3>
 <h4 id="shell-script">Shell script</h4>
 <p>Since different programming languages can be used, and you may name your file differently, we are going to have you submit a shell script called <code>cryptomoney.sh</code> that we will use to test your code. All it does is pass the command-line parameters on to your program. If you are using Python, then your shell script would look like the following:</p>
