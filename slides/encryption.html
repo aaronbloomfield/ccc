@@ -458,14 +458,15 @@ Any curve of the form $y^2=x^3+ax+b$
 </textarea>
 </section>
 
-    <section data-markdown data-separator="^\n$"><textarea data-template>
+    <section data-markdown data-separator="^\n$" id="pointo"><textarea data-template>
 ## The Point at Infinity
 - Represented by the digit 0 or capital O
 - Considered one of the points "on" the curve
 - Considered the identity element: $0 \oplus P = P$
 - And $P \oplus P'=0$
+</textarea></section>
 
-
+    <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Elliptical Curve notes
 - Most operations were the standard arithmetic operations  on scalars
   - Given the $y=mx+b$ formula and an $x$ value, finding the corresponding $y$ is easy
@@ -849,8 +850,9 @@ $
   - Base point $G$; for secp256k1,<br>$G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
   - A $b$-bit hash algorithm that we plan on using
     - It could be any $b$-bit hash algorithm, but we'll assume it's SHA-256 herein
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$" id="ecdsakeygen"><textarea data-template>
 ## ECDSA Key Generation
 - Determine a $b$ bit random number $d$ such that $1 \le d \le o-1$
   - This is the private key
@@ -866,8 +868,9 @@ $
   - although in ECDSA, there isn't much decryption going on
   - but it's still called that anyway...
 </aside>
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$" id="ecdsasign"><textarea data-template>
 ## Signing an ECDSA message
 - Curve parameters:
   - $p$, the prime modulus
@@ -886,8 +889,9 @@ $
 <aside data-markdown class="notes">
 - because we want to find the multiplicitative inverse of $k$, in order to use Fermat's little theorem, $o$ must be prime
 </aside>
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Signing an ECDSA message
 - Curve parameters: $p$, $o$, $G$ (and $a$ and $b$)
 - Alice knows: $m$, $d$, $Q$
@@ -921,8 +925,9 @@ $
   - Compute a new $k$, and redo the computations
 - This is highly unlikely (although possible!) to occur with the actual values used with secp256k1
 - But is quite likely to occur with the values we will use in our upcoming homework
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$" id="ecdsaverifystart"><textarea data-template>
 ## Verifying an ECDSA message
 - Curve parameters: $p$, $o$, $G$ (and $a$ and $b$)
 - Bob has to verify the message; he knows:
@@ -936,8 +941,9 @@ $
 - Bob generates:
   - $h$, the hash of the message $m$
   - $s^{-1}$, the inverse mod-$o$ of $s$ (this is in $Z_o$, not $Z_p$)
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$"><textarea data-template>
 ## Verifying an ECDSA message
 - Bob has to verify that the following equation holds: $s=k^{-1}(h+r*d) \mod o$
   - This was the equation Alice computed to determine $s$
@@ -1172,13 +1178,13 @@ $
 
 
 ## Why libc is not cryptographically secure
-- The seed can be only one of $2^{32} \approx 4.3$ billion values
-- One can generate all 4.3 billion!  On a modern computer:
+- The seed can be only one of $2^{31} \approx 2.1$ billion values
+- One can generate all 2.1 billion!  On a modern computer:
   - A 2048-bit RSA key takes less than 0.1 seconds to generate
-    - To compute all 4.3 billion: 13 years
+    - To compute all 2.1 billion: 6.5 years
   - A 256-bit ECDSA key takes less than 0.005 seconds to generate
     - 1/20th of the time!
-    - To compute all 4.3 billion: 7 months
+    - To compute all 2.1 billion: 3.5 months
 - Much faster on a parallel computer or a GPU...
 
 
