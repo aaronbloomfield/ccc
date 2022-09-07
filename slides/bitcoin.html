@@ -156,7 +156,7 @@ Given a Merkle tree:
 </td></tr></table>
 <p>Array representation:</p>
 
-<div style="scale:60%">
+<div style="scale:100%">
 <table class="transparent compact" style="border-collapse:collapse"><tr class="bordercfifty" style="border-bottom:medium solid;"><td>&empty;</td><td>h(1&#x2011;8)</td><td>h(1&#x2011;4)</td><td>h(5&#x2011;8)</td><td>h(1&#x2011;2)</td><td>h(3&#x2011;4)</td><td>h(5&#x2011;6)</td><td>h(7&#x2011;8)</td><td>h(1)</td><td>h(2)</td><td>h(3)</td><td>h(4)</td><td>h(5)</td><td>h(6)</td><td>h(7)</td><td>h(8)</td></tr>
 <tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
 </table>
@@ -214,7 +214,7 @@ Given a Merkle tree:
 - The hash for Bitcoin block 0 is:
     - Little-Endian: 0x6fe28c0ab6f1b372c1a6a246ae63f74f931e836 5e15a089c68d6190000000000
 	- Big-Endian:    0x000000000019d6689c085ae165831e934ff763a e46a2a6c172b3f1b60a8ce26f
-- When presenting hashes:
+- When presenting block hashes:
     - Either it won't matter the format, or...
 	- We'll carefully specify, or...
 	- You can tell based on which end all the 0x00 bytes are
@@ -281,8 +281,9 @@ System.out.println(d);
   - 32 byte hashes
   - variable-length strings
 - That's it!
-- Pretty much everything is little-Endian
-  - But many programming language routines will convert the Endian-ness for you
+- The first four of those are in little-Endian
+  - Only the variable-length strings are in big-Endian
+  - Note that many programming language routines will convert the Endian-ness for you
     - Some without tell you, others you have to tell it to do so
   </textarea></section>
 
@@ -301,6 +302,7 @@ System.out.println(d);
 - The first viable cryptocurrency, white paper released in 2008 by "Satoshi Nakamoto"
   - That's a pseudonym; nobody knows who the real person (or group) that created it
   - Although the person is [likely British](https://en.wikipedia.org/wiki/Satoshi_Nakamoto#Characteristics_and_identity)
+- Genesis block created on January 3rd, 2009
 - It is now fully open source
   - https://github.com/bitcoin/bitcoin
 - It was also one of the first digital-only currencies that didn't bankrupt the creator
@@ -388,7 +390,7 @@ Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
 - The nodes vote on whether to accept the block
 - But what if some nodes are untrustworthy?
   - This is the issue of consensus
-  - It's a whole lecture in and of itself
+    - An [entire lecture](consensus.html#/) in and of itself
 
 
 
@@ -449,6 +451,7 @@ $
 </code></pre>
 
 - Note that this particular text did not produce a `+` or `/` in the base 64 encoding
+  - But the [PEM-encoded RSA key from the encryption slide set](encryption.html#/rsapem) did
 
 
 

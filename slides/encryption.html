@@ -1431,7 +1431,7 @@ afe68f753a65f773a591bcf6f9ce3c63  message1.txt
   - Used in Bitcoin
 - [RIPEMD-160](https://en.wikipedia.org/wiki/RIPEMD)
   - 160-bit hash
-  - Also used in Bitcoin
+  - Used in Bitcoin
 - Keccak-256, aka SHA-3
   - Used in Ethereum
 - Falcon-512
@@ -1499,8 +1499,9 @@ $ openssl genpkey -algorithm RSA \
 ....+++++
 $
 ```
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$" id=rsapem><textarea data-template>
 ## PEM key file format
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ cat key.pem
 -----BEGIN PRIVATE KEY-----
@@ -1535,8 +1536,9 @@ $
 
 </code>
 </pre>
-
-
+    </textarea></section>
+    
+    <section data-markdown data-separator="^\n$"><textarea data-template>
 ## OpenSSL to view a RSA Key
 
 <pre class="code-wrapper">
@@ -1676,6 +1678,11 @@ $
 
 
 ## Openssl to view an ECDSA key
+<!--
+d=46645095665948752159725390617705266833925338929901767141886312735501806411571
+qx=100520880278031488762125882754878952466629466830145810675677838350919375585844
+qy=92922191582770924169293325173158913322815666845532262217119080172645576630775
+-->
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ cat ec_key.pem
 read EC key
 Private-Key: (256 bit)
@@ -1692,54 +1699,8 @@ pub:
 ASN1 OID: secp256k1
 $
 </code></pre>
-- Private key (scalar) $d \approx 6.72 \ast 10^{63}$
-- Public key (point) $Q \approx (1.01 \ast 10^{63}, 9.29 \ast 10^{63})$
-
-
-## C code to generate a RSA key
-
-- Header: `#include <openssl/rsa.h>`
-- Compile with `-lcrypto`
-
-<pre class="code-wrapper">
-<code class="hljs awk small" style="height:auto">RSA* generate_key(unsigned int bits) {
-  unsigned long e = RSA_F4;
-  BIGNUM *bne = BN_new();
-  if ( BN_set_word(bne,e) != 1 ) {
-      perror("BN_set_word()");
-      BN_free(bne);
-      return nullptr;
-  }
-  RSA *r = RSA_new();
-  if ( RSA_generate_key_ex(r, bits, bne, NULL) != 1 ) {
-      perror("RSA_generate_key_ex()");
-      BN_free(bne);
-      RSA_free(r);
-      return nullptr;
-  }
-  BN_free(bne);
-  return r;
-}
-</code></pre>
-
-
-## Python code to generate a RSA Key
-From [here](https://pycryptodome.readthedocs.io/en/latest/src/examples.html#generate-an-rsa-key); uses the pycryptodome package:
-```
-from Crypto.PublicKey import RSA
-
-key = RSA.generate(2048)
-private_key = key.export_key()
-file_out = open("private.pem", "wb")
-file_out.write(private_key)
-file_out.close()
-
-public_key = key.publickey().export_key()
-file_out = open("receiver.pem", "wb")
-file_out.write(public_key)
-file_out.close()
-```
-
+- Private key (scalar) $d \approx 4.66 \ast 10^{76}$
+- Public key (point) $Q \approx (1.01 \ast 10^{76}, 9.29 \ast 10^{76})$
 	  </textarea></section>
 
 	</section>

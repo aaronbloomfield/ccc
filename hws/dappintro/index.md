@@ -78,7 +78,7 @@ Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix pro
 8. Explore Remix on your own.  You are going to be spending a lot of time developing smart contracts in Remix. Spending a bit of time learning how it works, and becoming comfortable with the interface, will save you a lot of time in the future.
 
 
-### Task 2: Remix Deployment
+### Task 2: Deployment
 
 At this point we can edit, compile, and test our program on Remix.  We have also made changes to the `addChoice()` calls in the Polls.sol constructor.  Now we are going to use Remix to deploy to our private Ethereum blockchain.
 
