@@ -1,4 +1,4 @@
-Timely graphs
+Timely images
 =============
 
 These are the graphs that have to be changed each time the lecture is presented.  The newest images should not have any date suffix; a date suffix is only added when a newer image is being added.
@@ -15,6 +15,11 @@ From the [overview slide set](../../overview.html#/).  These should be exported 
 - Bitcoin difficulty, all-time / raw values  (`btc-difficulty-all-time.webp`), from [blockchain.com](https://www.blockchain.com/en/charts/difficulty): from [2022-01-17](btc-difficulty-all-time-2022-01-17.png), [2022-08-23](btc-difficulty-all-time.webp)
 - Bitcoin difficulty, last 3 years / raw values (`btc-difficulty-last-3-years.webp`), from [blockchain.com](https://www.blockchain.com/en/charts/difficulty): from [2022-01-17](btc-difficulty-last-3-years-2022-01-17.png), [2022-08-23](btc-difficulty-last-3-years.webp)
 - Bitcoin hashes per second, all-time / 7-day average (`btc-hashes-per-sec.webp`), from [blockchain.com](https://www.blockchain.com/charts/hash-rate): from [2022-01-17](btc-hashes-per-sec-2022-01-17.png), [2022-08-23](btc-hashes-per-sec.webp)
+
+From the [Bitcoin slide set](../../bitcoin.html#/)
+
+- [Bitcoin nodes](https://bitnodes.io/) from [2022-09-06](btc-nodes.webp), [2022-02-06](btc-nodes-2022-02-06.png)
+	- cwebp parameters: `-q 75`
 
 
 From the [Scalability slide set](../../scalability.html#/).

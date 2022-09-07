@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Timely graphs</title>
+  <title>Timely images</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -15,70 +15,60 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../../markdown.css" />
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<h1 id="timely-graphs">Timely graphs</h1>
-<p>These are the graphs that have to be changed each time the lecture is
-presented. The newest images should not have any date suffix; a date
-suffix is only added when a newer image is being added.</p>
-<p>From the <a href="../../../uva/introduction.html#/">course
-introduction slide set</a>:</p>
+<h1 id="timely-images">Timely images</h1>
+<p>These are the graphs that have to be changed each time the lecture is presented. The newest images should not have any date suffix; a date suffix is only added when a newer image is being added.</p>
+<p>From the <a href="../../../uva/introduction.html#/">course introduction slide set</a>:</p>
 <ul>
-<li>Cryptocurrency market capitalization, all-time
-(<code>cc-market-cap.svg</code>), from <a
-href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>:
-from <a href="cc-market-cap-2022-01-18.svg">2022-01-18</a>, <a
-href="cc-market-cap.svg">2022-08-23</a></li>
-<li>Cryptocurrency market capitalization without BTC, all-time
-(<code>cc-market-cap-no-btc.svg</code>), from <a
-href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>:
-from <a href="cc-market-cap-no-btc-2022-01-18.svg">2022-01-18</a>, <a
-href="cc-market-cap-no-btc.svg">2022-08-23</a></li>
-<li>Bitcoin dominance, all-time (<code>btc-dominance.svg</code>), from
-<a
-href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>:
-from <a href="btc-dominance-2022-01-18.svg">2022-01-18</a>, <a
-href="btc-dominance.svg">2022-08-23</a></li>
+<li>Cryptocurrency market capitalization, all-time (<code>cc-market-cap.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="cc-market-cap-2022-01-18.svg">2022-01-18</a>, <a href="cc-market-cap.svg">2022-08-23</a></li>
+<li>Cryptocurrency market capitalization without BTC, all-time (<code>cc-market-cap-no-btc.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="cc-market-cap-no-btc-2022-01-18.svg">2022-01-18</a>, <a href="cc-market-cap-no-btc.svg">2022-08-23</a></li>
+<li>Bitcoin dominance, all-time (<code>btc-dominance.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="btc-dominance-2022-01-18.svg">2022-01-18</a>, <a href="btc-dominance.svg">2022-08-23</a></li>
 </ul>
-<p>From the <a href="../../overview.html#/">overview slide set</a>.
-These should be exported as svg if possible; if not, then 1200x600
-rasterized and converted to webp (running <code>make</code> will covert
-.png files to .webp).</p>
+<p>From the <a href="../../overview.html#/">overview slide set</a>. These should be exported as svg if possible; if not, then 1200x600 rasterized and converted to webp (running <code>make</code> will covert .png files to .webp).</p>
 <ul>
-<li>Bitcoin price, all-time / raw values (<code>btc-price.webp</code>),
-from <a
-href="https://www.blockchain.com/charts/market-price">blockchain.com</a>:
-from <a href="btc-price-2022-01-17.png">2022-01-17</a>, <a
-href="btc-price.webp">2022-08-23</a></li>
-<li>Bitcoin difficulty, all-time / raw values
-(<code>btc-difficulty-all-time.webp</code>), from <a
-href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>:
-from <a href="btc-difficulty-all-time-2022-01-17.png">2022-01-17</a>, <a
-href="btc-difficulty-all-time.webp">2022-08-23</a></li>
-<li>Bitcoin difficulty, last 3 years / raw values
-(<code>btc-difficulty-last-3-years.webp</code>), from <a
-href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>:
-from <a
-href="btc-difficulty-last-3-years-2022-01-17.png">2022-01-17</a>, <a
-href="btc-difficulty-last-3-years.webp">2022-08-23</a></li>
-<li>Bitcoin hashes per second, all-time / 7-day average
-(<code>btc-hashes-per-sec.webp</code>), from <a
-href="https://www.blockchain.com/charts/hash-rate">blockchain.com</a>:
-from <a href="btc-hashes-per-sec-2022-01-17.png">2022-01-17</a>, <a
-href="btc-hashes-per-sec.webp">2022-08-23</a></li>
+<li>Bitcoin price, all-time / raw values (<code>btc-price.webp</code>), from <a href="https://www.blockchain.com/charts/market-price">blockchain.com</a>: from <a href="btc-price-2022-01-17.png">2022-01-17</a>, <a href="btc-price.webp">2022-08-23</a></li>
+<li>Bitcoin difficulty, all-time / raw values (<code>btc-difficulty-all-time.webp</code>), from <a href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>: from <a href="btc-difficulty-all-time-2022-01-17.png">2022-01-17</a>, <a href="btc-difficulty-all-time.webp">2022-08-23</a></li>
+<li>Bitcoin difficulty, last 3 years / raw values (<code>btc-difficulty-last-3-years.webp</code>), from <a href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>: from <a href="btc-difficulty-last-3-years-2022-01-17.png">2022-01-17</a>, <a href="btc-difficulty-last-3-years.webp">2022-08-23</a></li>
+<li>Bitcoin hashes per second, all-time / 7-day average (<code>btc-hashes-per-sec.webp</code>), from <a href="https://www.blockchain.com/charts/hash-rate">blockchain.com</a>: from <a href="btc-hashes-per-sec-2022-01-17.png">2022-01-17</a>, <a href="btc-hashes-per-sec.webp">2022-08-23</a></li>
 </ul>
-<p>From the <a href="../../scalability.html#/">Scalability slide
-set</a>.</p>
+<p>From the <a href="../../bitcoin.html#/">Bitcoin slide set</a></p>
 <ul>
-<li>ETH &amp; BTC fees, last year: from <a
-href="btc-eth-fees-1year.webp">2022-04-17</a></li>
-<li>ETH &amp; BTC fees, all time: from <a
-href="btc-eth-fees-alltime.webp">2022-04-17</a></li>
-<li>BTC transactions per second, all time: from <a
-href="btc-tps.webp">2022-04-17</a></li>
+<li><a href="https://bitnodes.io/">Bitcoin nodes</a> from <a href="btc-nodes.webp">2022-09-06</a>, <a href="btc-nodes-2022-02-06.png">2022-02-06</a>
+<ul>
+<li>cwebp parameters: <code>-q 75</code></li>
+</ul></li>
+</ul>
+<p>From the <a href="../../scalability.html#/">Scalability slide set</a>.</p>
+<ul>
+<li>ETH &amp; BTC fees, last year: from <a href="btc-eth-fees-1year.webp">2022-04-17</a></li>
+<li>ETH &amp; BTC fees, all time: from <a href="btc-eth-fees-alltime.webp">2022-04-17</a></li>
+<li>BTC transactions per second, all time: from <a href="btc-tps.webp">2022-04-17</a></li>
 </ul>
 </body>
 </html>

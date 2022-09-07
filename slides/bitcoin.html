@@ -343,10 +343,11 @@ Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
 - Reward halves every 210,000 blocks mined (about every 4 years)
   - Current reward: 6.25 BTC
   - Current circulation: about 19M BTC (90% of final amount)
-- Next halving is expected on March 16, 2024
-- Last halving is in 2140
+- [Next halving](https://coinmarketcap.com/halving/bitcoin/) is expected in April 2024
+- Last halving is around 2140
   - 32 total halvings by then
-  - Mining reward then will be $\frac{50}{2^{32}}$ = 0.000000011641532 BTC
+  - Mining reward then will be $\frac{50}{2^{32}}$ = 0.00000001 1641532 BTC
+    - Or 1 satoshi
 - Total (and final!) BTC in circulation will be 21M
 
 
@@ -361,7 +362,9 @@ Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
   - TXN fee = sum(inputs) - sum(outputs)
 - Only want to spend some of the input(s)?
   - Send the rest back to yourself as a separate output
-  - This means generate a *new* key pair in your wallet to send the money to
+  - Either:
+    - Send it back to the same key that just spent it (less common)
+    - Generate a *new* key pair in your wallet to send the money to
 
 
 
@@ -401,9 +404,9 @@ Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
 
 
 ## Node stats from [bitnodes.io](https://bitnodes.io/)
-- As of Feb 6, 2022, there are 15,252 nodes in the Bitcoin network (but but only 8,698 were "reachable")
+- As of Sep 6, 2022, there are 13,694 nodes in the Bitcoin network
 
-![](images/bitcoin/btc-nodes-2022-02-06.png)
+![](images/timely/btc-nodes.webp)
 
 
 
@@ -569,25 +572,25 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
   </marker>
 </defs>
 
-<path d="M250,140 L220,370"
+<path d="M80,190 L80,370"
       style="stroke:red; stroke-width: 1.25px; fill: none;
       marker-end: url(#arrow);"
       class='fragment' data-fragment-index='1'
 />
 
-<path d="M250,270 L370,140"
+<path d="M250,300 L370,140"
       style="stroke:red; stroke-width: 1.25px; fill: none;
       marker-end: url(#arrow);"
       class='fragment' data-fragment-index='2'
 />
 
-<path d="M580,320 L700,80"
+<path d="M590,330 L700,80"
       style="stroke:red; stroke-width: 1.25px; fill: none;
       marker-end: url(#arrow);"
       class='fragment' data-fragment-index='3'
 />
     
-<path d="M580,450 L700,450"
+<path d="M590,460 L700,460"
       style="stroke:red; stroke-width: 1.25px; fill: none;
       marker-end: url(#arrow);"
       class='fragment' data-fragment-index='4'
