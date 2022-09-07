@@ -20,7 +20,7 @@ li p { margin:0; }
 [Go up to the slides page](../../index.html) ([md](../../index.md))
 
 
-All the logos herein are from sources whose licenses allow redistribution in this repository, or are included under free use guidelines.
+All the logos herein are from sources whose licenses allow redistribution in this repository, or are included under free use guidelines.  How to use them is shown [here](../../coins.html) ([md](../../coins.md)).
 
 1. [![](algo-coin-symbol.svg){class=cclogo}](algo-coin-symbol.svg) Algorand (ALGO) from [cryptologos.cc](https://cryptologos.cc/algorand) <br clear='all'>
 1. [![](atom-coin-symbol.svg){class=cclogo}](atom-coin-symbol.svg) Cosmos (ATOM) from [cryptologos.cc](https://cryptologos.cc/cosmos) <br clear='all'>
@@ -32,13 +32,11 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. [![](dot-coin-symbol.svg){class=cclogo}](dot-coin-symbol.svg) DOT adapted from [cryptologos.cc](https://cryptologos.cc/polkadot-new) <br clear='all'>
 1. [![](erg-coin-symbol.svg){class=cclogo}](erg-coin-symbol.svg) ERG adapted from [cryptologos.cc](https://cryptologos.cc/ergo) <br clear='all'>
 1. [![](etc-coin-symbol.svg){class=cclogo}](etc-coin-symbol.svg) Ethereum classic (ETC) adapted from the [logo file](etc-logo.svg), which is from [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ethereum_Classic_Logo.svg); the [old version](etc-coin-symbol-old.svg) was from the same file <br clear='all'>
-1. [![](eth-coin-symbol.svg){class=cclogo}](eth-coin-symbol.svg) Ethereum (ETH) was adapted from [here](https://logowik.com/ethereum-vector-logo-1-7602.html), and the [old version](eth-coin-symbol-old.svg) was adapted from [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ethereum_logo_translucent.svg), which is from the [Ethereum Wikipedia article](https://en.wikipedia.org/wiki/Ethereum) <br clear='all'>
+1. [![](eth-coin-symbol.svg){class=cclogo}](eth-coin-symbol.svg) Ethereum (ETH) was adapted from the [usage guidelines](https://cryptologos.cc/brandbooks/ethereum-brand-usage-guidelines.pdf), and used in accordance with them; the [Etherem logo](eth-logo.svg) was from [here](https://cryptologos.cc/ethereum). <br clear='all'>
 1. [![](fei-coin-symbol.svg){class=cclogo}](fei-coin-symbol.svg) Fei USD (FEI) from [cryptologos.cc](https://cryptologos.cc/fei-usd) <br clear='all'>
 1. [![](fil-coin-symbol.svg){class=cclogo}](fil-coin-symbol.svg) Filecoin (FIL) from [cryptologos.cc](https://cryptologos.cc/filecoin) <br clear='all'>
 1. [![](firo-coin-symbol.svg){class=cclogo}](firo-coin-symbol.svg) Firo (FIRO) from [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Firo-logo.svg) <br clear='all'>
 1. [![](frax-coin-symbol.svg){class=cclogo}](frax-coin-symbol.svg) Frax (FRAX) from [cryptologos.cc](https://cryptologos.cc/frax) <br clear='all'>
-
-1. [![](gre-coin-symbol.webp){class=cclogo}](gre-coin-symbol.webp) Greencoin (GRE) was from a Pinterest site, but they don't hold the copyright; it's on various other sites, so the assumption is that it's legal to use and include it under free use guidelines <br clear='all'>
 1. [![](juno-coin-symbol.svg){class=cclogo}](juno-coin-symbol.svg) JUNO (JUNO) from [this repo](https://github.com/CosmosContracts/docs), specifically [this file](https://github.com/CosmosContracts/docs/blob/master/.gitbook/assets/JUNO%20Logo%20%28Black%29.svg); although no license is listed, it is assumed valid under free use guidelines
 1. [![](lunac-coin-symbol.svg){class=cclogo}](lunac-coin-symbol.svg) Luna (LUNA) from [cryptologos.cc](https://cryptologos.cc/terra-luna) <br clear='all'>
 1. [![](matic-coin-symbol.svg){class=cclogo}](matic-coin-symbol.svg) Polygon (MATIC) adapted from [cryptologos.cc](https://cryptologos.cc/logos/matic-coin-symbol.svg?v=022) <br clear='all'>
@@ -58,8 +56,8 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. [![](usdt-coin-symbol.svg){class=cclogo}](usdt-coin-symbol.svg) Tether (USDT) adapted from [cryptologos.cc](https://cryptologos.cc/usd-coin) <br clear='all'>
 1. [![](ustc-coin-symbol.svg){class=cclogo}](ustc-coin-symbol.svg) TerraUSD (UST) from [seeklogo](https://seeklogo.com/vector-logo/438118/terrausd-ust) <br clear='all'>
 1. [![](wbtc-coin-symbol.svg){class=cclogo}](wbtc-coin-symbol.svg) Wrapped Bitcoin (WBTC) from [cryptologos.cc](https://cryptologos.cc/wrapped-bitcoin) <br clear='all'>
-1. [![](weth-coin-symbol.svg){class=cclogo}](weth-coin-symbol.svg) WETH created by me from the WBTC logo (above) and the ETH logo (also herein)<br clear='all'>
-1. [![](xlm-coin-symbol.svg){class=cclogo}](xlm-coin-symbol.svg) Stellar Lumens (XLM) adapted from [cryptologos.cc](https://cryptologos.cc/stellar) <br clear='all'>
+1. [![](weth-coin-symbol.svg){class=cclogo}](weth-coin-symbol.svg) WETH created by me from the WBTC logo (above) and the [ETH logo](eth-logo.svg)<br clear='all'>
+1. [![](xlm-coin-symbol.svg){class=cclogo}](xlm-coin-symbol.svg) Stellar Lumens (XLM) adapted from [cryptologos.cc](https://cryptologos.cc/stellar), and used in accordance with their [brand policy](https://www.stellar.org/brand-policy) <br clear='all'>
 1. [![](xpd-coin-symbol.svg){class=cclogo}](xpd-coin-symbol.svg) Petro (XPD) [here](https://coinranking.com/coin/TCwbmhubavmsh+petro-ptr), and is included under free use guidelines<br clear='all'>
 1. [![](xpm-coin-symbol.svg){class=cclogo}](xpm-coin-symbol.svg) Primecoin (XPM) from [cryptologos.cc](https://cryptologos.cc/primecoin) <br clear='all'>
 1. [![](zec-coin-symbol.svg){class=cclogo}](zec-coin-symbol.svg) ZCash (ZEC): from [cryptologos.cc](https://cryptologos.cc/zcash) <br clear='all'>
