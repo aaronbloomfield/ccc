@@ -86,7 +86,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 1. Wed, Aug 24: [course introduction](introduction.html#/), [overview](../slides/overview.html#/) (actual: finished intro, overview to end of introduction column)
 2. Mon, Aug 29: [overview](../slides/overview.html#/), [encryption](../slides/encryption.html#/) (actual: finished overview)
 3. Wed, Aug 31: [encryption](../slides/encryption.html#/) (actual: to slide 5.8 ("Finite Field Division"))
-4. Mon, Sep 5: [encryption](../slides/encryption.html#/) (actual: encryption to slide 7.6 ("Cloudflare..."))
+4. Mon, Sep 5: [encryption](../slides/encryption.html#/) (actual: encryption to slide 7.16 ("Cloudflare..."))
 5. Wed, Sep 7: [encryption](../slides/encryption.html#/); [Bitcoin](../slides/bitcoin.html#/)
 6. Mon, Sep 12: [Bitcoin](../slides/bitcoin.html#/)
 7. Wed, Sep 14: [Bitcoin](../slides/bitcoin.html#/)
