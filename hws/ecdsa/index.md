@@ -14,7 +14,9 @@ In this homework, it is critical to carefully test each stage of the assignment.
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
+
+- Fri, Sep 9: added the "elliptic point addition" example, from [Piazza post @62](https://piazza.com/class/l742ukne1k5po/post/62), to the "Examples" section.
 
 
 ### Background
@@ -146,6 +148,10 @@ To help you understand the previous example, below is the complete formulaic wor
 To ensure clarity about the operations, the $+$ symbol is only used for scalar addition (meaning between two numbers) and the $\ast$ symbol is only used for scalar multiplication (meaning between two numbers).  Addition of two elliptic points uses the $\oplus$ symbol, and multiplication of an elliptic point by a scalar uses the $\otimes$ symbol.
 
 We know that the prime modulus $p=43$, the order $o=31$, and the base point $G=(25,25)$, as these were given in the first four numeric command-line parameters.  These are consistent for all the execution runs.
+
+**Elliptic point addition:** There are [formulas presented in the slides](../../slides/encryption.html#/secp256k1addition) to add two points, both on secp256k1, within a field.  Given two points $P_1=(x_1,y_1)$ and $P_2=(x_2,y_2)$, the sum of those two points is: $x_3=m^2-x_1-x_2$ and $y_3=m(x_1-x_3)-y_1$.  In $Z_{43}$ we'll pick two arbitrary points to add: $(29,31)$ and $(37,36)$.  Formally, we want to compute $P_3=P_1 \oplus P_2 = (29,31) \oplus (37,36)$.  As we are not counting points on a curve, but instead just using curve formulas, this is all mod'ed by 43 (NOT $o=31$).
+
+First we determine the slope.  The formula is $m=(y_2−y_1)/(x_2−x_1)=(36-31)/(37-29)=5/8$.  The division $5 \div 8$ in $Z_{43}$ is 6 (confirmation: $6*8 \mod 43 = 5$).  Thus, we know the slope: $m=6$.  To determine the points, we use the [formulas presented in the slides](../../slides/encryption.html#/secp256k1addition):  $x_3=m^2-x_1-x_2=6^2-29-37=13$ and $y_3=m(x_1-x_3)-y_1=6*(29-13)-31=22$, both in $Z_{43}$.  (I've removed all the "mod $p$" parts for clarity.)  Thus, $(29,31) \oplus (37,36) = (13,22)$, and this computation can be verified [here](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=29&py=31&qx=37&qy=36).
 
 **Key generation:** The random value for the private key is $d=16$.  Computing $d \otimes G = 16 \otimes (25,25) = (37,36)$ ([verification](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=16&px=25&py=25)).
 
