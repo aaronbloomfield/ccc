@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns='http://www.w3.org/1999/xhtml' lang='' xml:lang=''>
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta charset='utf-8'></meta>
+  <meta name='generator' content='pandoc'></meta>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes'></meta>
   <title>Decentralized NFT Auction</title>
   <style>
     code{white-space: pre-wrap;}
@@ -14,7 +14,7 @@
     ul.task-list{list-style: none;}
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="../../markdown.css" />
+  <link rel='stylesheet' href='../../markdown.css'></link>
   <script>
   function openTab(evt, tabName) {
     // Declare all variables
@@ -37,33 +37,41 @@
     evt.currentTarget.className += " active";
   }
   </script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  
 </head>
 <body>
-<h1 id="decentralized-nft-auction">Decentralized NFT Auction</h1>
-<p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>) | <a href="index-tabs.html">view tabbed version</a></p>
-<h3 id="overview">Overview</h3>
+<h1 id='decentralized-nft-auction'>Decentralized NFT Auction</h1>
+<p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
+<button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
+<button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
+<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
+<button class='tablinks' onclick="openTab(event,'ttask-1-create-nfts')">Create NFTs</button>
+<button class='tablinks' onclick="openTab(event,'ttask-2-auction-contract')">Auction Contract</button>
+<button class='tablinks' onclick="openTab(event,'ttask-3-create-auctions')">Create Auctions</button>
+<button class='tablinks' onclick="openTab(event,'ttask-4-class-auctions')">Class Auctions</button>
+<button class='tablinks' onclick="openTab(event,'tnotes-and-hints')">Notes And Hints</button>
+<button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
+</div>
+<div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
 <p>In this assignment you will write a smart contract, in Solidity, to handle auctions for NFTs. The NFTs will be ERC-721 tokens.</p>
 <p>Once deployed to our private Ethereum blockchain, anybody should be able to mint an NFT and then initiate an auction. Anybody could then submit a bid to the auction. To prevent somebody from placing a bid and then not paying, one has to transfer ETH to the smart contract when a bid is placed – it is the transfer of this ETH that actually places the bid. Anybody who is outbid will have their ETH returned, and they can choose (or not) to place a higher bid. Once the auction is completed, the ETH from the winning bid is transferred to the person who initiated the auction (minus some fees), and the NFT is transferred to the winning bidder.</p>
-<h3 id="changelog">Changelog</h3>
+</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-<h3 id="background">Background</h3>
+</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
 <p>Writing this homework will require completion of the following assignments:</p>
 <ul>
-<li><a href="../ethprivate/index.html">Connecting to the private Ethereum blockchain</a> (<a href="../ethprivate/index.md">md</a>)</li>
-<li><a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>)</li>
-<li><a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>)</li>
+<li><a href='../ethprivate/index.html'>Connecting to the private Ethereum blockchain</a> (<a href='../ethprivate/index.md'>md</a>)</li>
+<li><a href='../dappintro/index.html'>dApp introduction</a> (<a href='../dappintro/index.md'>md</a>)</li>
+<li><a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>)</li>
 </ul>
-<p>Note that this assignment requires that your <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment is working properly. If you did not get it working properly, then see the next section.</p>
-<p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a>, the <a href="../../slides/solidity.html#/">Solidity slide set</a>, and the <a href="../../slides/tokens.html#/">Tokens slide set</a></p>
-<h3 id="task-1-create-nfts">Task 1: Create NFTs</h3>
+<p>Note that this assignment requires that your <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment is working properly. If you did not get it working properly, then see the next section.</p>
+<p>You will also need to be familiar with the <a href='../../slides/ethereum.html#/'>Ethereum slide set</a>, the <a href='../../slides/solidity.html#/'>Solidity slide set</a>, and the <a href='../../slides/tokens.html#/'>Tokens slide set</a></p>
+</div><div id='ttask-1-create-nfts' class='tabcontent'><h3 id='task-1-create-nfts'>Task 1: Create NFTs</h3>
 <p>You are going to create some NFT images in your NFTmanager.</p>
-<p>You should use your NFT manager that you wrote and deployed in the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment. If you were unable to get yours working in that assignment, then speak to me, and I will provide an alternative deployed contract for you to use.</p>
-<p>You will need to have <em>three</em> images for NFTs to be used in this assignment. The intent is that you will reuse the ones you created for the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment. You can also create new images, if you would like, as long as you follow the guidelines in that assignment (public domain, nothing that will get me in trouble, file naming, in the <code>ipfs/</code> directory, etc.). As before, in this course, owning the NFT does NOT imply ownership of the image – the assumption is that you don’t actually own the original image, since it’s in the public domain.</p>
+<p>You should use your NFT manager that you wrote and deployed in the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. If you were unable to get yours working in that assignment, then speak to me, and I will provide an alternative deployed contract for you to use.</p>
+<p>You will need to have <em>three</em> images for NFTs to be used in this assignment. The intent is that you will reuse the ones you created for the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. You can also create new images, if you would like, as long as you follow the guidelines in that assignment (public domain, nothing that will get me in trouble, file naming, in the <code>ipfs/</code> directory, etc.). As before, in this course, owning the NFT does NOT imply ownership of the image – the assumption is that you don’t actually own the original image, since it’s in the public domain.</p>
 <p>Not surprisingly, you will then need to create NFTs for each of your images in your deployed <code>NFTmanager</code> smart contract – you are welcome to do that later as they are needed.</p>
-<h3 id="task-2-auction-contract">Task 2: Auction contract</h3>
+</div><div id='ttask-2-auction-contract' class='tabcontent'><h3 id='task-2-auction-contract'>Task 2: Auction contract</h3>
 <p>You are going to create and deploy a decentralized auction smart contract. The contract you will be creating will allow for a decentralized auction for NFTs. The intended flow is as follows:</p>
 <ul>
 <li>Each Auctioneer contract has a single NFT Manager that manages all of its NFTs; that NFT Manager is created in the constructor. Any user can get the NFT manager via a call to <code>nftmanager()</code>.
@@ -111,11 +119,11 @@
 <li><code>higherBidEvent()</code>: when a new (and higher) bid is placed on an NFT via <code>placebid()</code></li>
 </ul></li>
 </ul>
-<p>Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file has more comments for this interface.</p>
+<p>Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file has more comments for this interface.</p>
 <pre><code>// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import &quot;./IERC721.sol&quot;;
+import "./IERC721.sol";
 
 interface IAuctioneer is IERC165 {
 
@@ -171,45 +179,44 @@ interface IAuctioneer is IERC165 {
 
     event higherBidEvent (uint indexed _id);
 }</code></pre>
-<p>This interface is provided in the <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file. This interface extends the <a href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>) interface, which requires the implementation of a <code>supportsInterface()</code> function – your Auctioneer class thus supports two interfaces (IAuctioneer and IERC165).</p>
-<p>To transfer ETH to another account, you can use code such as the following; this was also <a href="../../slides/solidity.html#/payeth">discussed in the Solidity slide set</a>. Note that the address is in variable <code>a</code>, and the value – in wei – is in <code>v</code>:</p>
-<pre><code>(bool success, ) = payable(a).call{value: v}(&quot;&quot;);
-require(success, &quot;Failed to transfer ETH&quot;);</code></pre>
+<p>This interface is provided in the <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file. This interface extends the <a href='IERC165.sol.html'>IERC165.sol</a> (<a href='IERC165.sol'>src</a>) interface, which requires the implementation of a <code>supportsInterface()</code> function – your Auctioneer class thus supports two interfaces (IAuctioneer and IERC165).</p>
+<p>To transfer ETH to another account, you can use code such as the following; this was also <a href='../../slides/solidity.html#/payeth'>discussed in the Solidity slide set</a>. Note that the address is in variable <code>a</code>, and the value – in wei – is in <code>v</code>:</p>
+<pre><code>(bool success, ) = payable(a).call{value: v}("");
+require(success, "Failed to transfer ETH");</code></pre>
 <p>As you are testing it, you will notice in Remix that the button for <code>placeBid()</code> is red – that is because this is a <code>payable</code> function. When you call this function, after setting the correct auction ID as the parameter, you will need to transfer some ETH along with the call. In the deployment pane in Remix, just enter a numerical value in the ‘Value’ box, and select the right denomination (wei, gwei, ether, etc.). That amount of ETH will be transferred along with the function call. If the call reverts, then you get that money back (minus the fees). If you have a mistake in your function code, you will likely lose that ETH – this is why we are developing this on the Javascript deployment environment in Remix and then on a private blockchain where the ETH has no value.</p>
-<!--
-Some people are having problems in Remix with determining the return value of a transaction -- if this is happening to you, you can create a function such as `getPendingAuctionID()` that, given an address, returns the pending (but not yet started) auction ID for that address.  We will not check for this function.
--->
+
 <p>Test all this thoroughly in Remix! You will need to deploy your Auctioneer contract in Remix’s Javascript environment to test everything working together. Recall that you have to select the right contract to deploy in the “Contract” list, else Remix may not know which one to deploy. Be sure to develop via incremental development, else you will not be able to figure out where your bug is.</p>
 <p>One it works, deploy it to our private Ethereum blockchain. You should test it there as well. You will need to submit the contract address and transaction hash of the deployed Auctioneer. If you deploy it multiple times, just submit the most recent contract address. Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Collab landing page. This web page will make it far easier to see what is going on with your auctions.</p>
-<h3 id="task-3-create-auctions">Task 3: Create auctions</h3>
+</div><div id='ttask-3-create-auctions' class='tabcontent'><h3 id='task-3-create-auctions'>Task 3: Create auctions</h3>
 <p>You should create two auctions in your Auctioneer contract (you’ll create a third one below as well). It’s fine if you create more (such as from testing) – we will only look at the two requested here. These two auctions will use two of your three NFT images. In particular, if you have one NFT that you like more than the others, or is “better”, you will want to save it for the course-wide auction, below.</p>
-<p>Note that you can perform these calls through Remix (via calling an external contract, as described in the <a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>) assignment) or through geth calls (as described in the <a href="../../slides/solidity.html#/debtor">Solidity slide set</a>).</p>
-<h4 id="auction-1">Auction 1</h4>
+<p>Note that you can perform these calls through Remix (via calling an external contract, as described in the <a href='../dappintro/index.html'>dApp introduction</a> (<a href='../dappintro/index.md'>md</a>) assignment) or through geth calls (as described in the <a href='../../slides/solidity.html#/debtor'>Solidity slide set</a>).</p>
+<h4 id='auction-1'>Auction 1</h4>
 <p>The first one should be an auction that has fully ended by due date/time of the assignment. Basically, we want it to be a closed auction. There should be a few bids on this auction. You can create multiple accounts for this – just call <code>personal.newAccount()</code> a few more times – each account is in the <code>eth.accounts</code> list, and you will have to unlock each one with <code>personal.unlockAccount()</code>. To get ether into those other accounts you can:</p>
 <ul>
-<li>Transfer ETH to that account (see the <a href="../ethprivate/index.html">Connecting to the private Ethereum blockchain</a> (<a href="../ethprivate/index.md">md</a>) assignment for how to transfer ETH)</li>
+<li>Transfer ETH to that account (see the <a href='../ethprivate/index.html'>Connecting to the private Ethereum blockchain</a> (<a href='../ethprivate/index.md'>md</a>) assignment for how to transfer ETH)</li>
 <li>Request funds from the Ether faucet into that account</li>
 </ul>
 <p>You can also get classmates to bid on your auction, although that is not required. This auction will use the first of your (three) NFTs. You will be submitting the auction ID for this auction as well as the NFT token ID.</p>
 <p>You <em>SHOULD</em> call <code>closeAuction()</code> on this auction.</p>
-<h4 id="auction-2">Auction 2</h4>
+<h4 id='auction-2'>Auction 2</h4>
 <p>The second auction should end <em>two weeks</em> after the assignment is due. Just get it on the day two weeks later – we don’t really care about the time, as long as the date is 14 days after the assignment due date. Basically, we want to see an active auction. This, also, should have a few bids on it. This auction use the second of your (three) NFTs. You will be submitting the auction ID for this auction as well as the NFT token ID.</p>
-<h3 id="task-4-class-auctions">Task 4: Class Auctions</h3>
+</div><div id='ttask-4-class-auctions' class='tabcontent'><h3 id='task-4-class-auctions'>Task 4: Class Auctions</h3>
 <p>You are going to participate in a class-wide auction manager.</p>
-<p>We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page. As above, you can perform these calls through Remix (via calling an external contract, as described in the <a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>) assignment) or through geth calls (as described in the <a href="../../slides/solidity.html#/">Solidity slide set</a>).</p>
+<p>We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page. As above, you can perform these calls through Remix (via calling an external contract, as described in the <a href='../dappintro/index.html'>dApp introduction</a> (<a href='../dappintro/index.md'>md</a>) assignment) or through geth calls (as described in the <a href='../../slides/solidity.html#/'>Solidity slide set</a>).</p>
 <p>You should use the third of your (three) NFTs. You should create an auction that ends <em>one week</em> after the due date of the assignment (again, we are looking for the day – we don’t care too much about the time of day). You will need to submit the auction ID from the auction you created as well as the NFT token ID. <strong><em>YOUR RESERVE</em></strong> should be no higher than 5 ETH.</p>
 <p>Lastly, bid on at least <em>three</em> auctions that are not your own. Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on. That’s fine – you don’t have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the information you have to submit does not include the transaction hashes of the bids. We are going to check whether you bid on the auctions by looking if your <code>eth.coinbase</code> account, the address of which you will submit below, initiated bids on any one of your classmate’s submitted NFT manager addresses by two days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.</p>
 <p><strong>MAKE YOUR BIDS REASONABLE!!!</strong> If the current highest bid is 0.5 ETH, don’t suddenly bid 5,000 ETH. Doing so is going to require others who need to bid on that NFT to have to obtain a lot more ETH, which will increase the blockchain size and the difficulty, which will make it harder for everybody else in the class. This will make me very cranky. Any successive bid should be no more than about 1 ETH more than the previous bid.</p>
-<h3 id="notes-and-hints">Notes and Hints</h3>
+</div><div id='tnotes-and-hints' class='tabcontent'><h3 id='notes-and-hints'>Notes and Hints</h3>
 <ul>
 <li>We are going to grade this by creating a very short auction – a minute or so. In your <code>startAuction()</code>, only one of them must be non-zero.</li>
-<li>When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use <code>safeTransferFrom()</code> instead of <code>transferFrom()</code> (see <a href="https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i">here</a> for details)</li>
+<li>When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use <code>safeTransferFrom()</code> instead of <code>transferFrom()</code> (see <a href='https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i'>here</a> for details)</li>
 <li>Make sure that <em>anybody</em> can mint an NFT via your NFT Manager</li>
 </ul>
-<h3 id="submission">Submission</h3>
-<p>You will need to fill in the various values from this assignment into the <a href="auction.py.html">auction.py</a> (<a href="auction.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
+</div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
+<p>You will need to fill in the various values from this assignment into the <a href='auction.py.html'>auction.py</a> (<a href='auction.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>two</em> forms of submission for this assignment; you must do both.</p>
 <p>Submission 1: You must deploy those two smart contracts (<code>NFTmanager</code> and <code>Auctioneer</code>) to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it. But the final deployment for the <code>Auctioneer</code> should only have the data specified in task 3, above. It’s also fine if you use your <code>NFTmanager</code> from a previous assignment. Save the contract addresses and transaction hash of these deployments, as you will need to submit them below.</p>
 <p>Submission 2: You should submit your <code>Auctioneer.sol</code> file and your completed <code>auction.py</code> file, and ONLY those two files, to Gradescope. All your Solidity code should be in that first file, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).</p>
-</body>
+</div><script>document.getElementById('defaultOpen').click();</script></body>
 </html>
+

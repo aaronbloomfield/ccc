@@ -6,10 +6,19 @@
 from html.parser import HTMLParser
 import os
 
-# remove a 'tabbed version' link from the source
-os.system("sed -i s_' | <a href=\"index-tabs.html\">view tabbed version</a>'__g index.html")
+#print("index.md:\t",os.path.getctime('index.md'))
+#print("index.html:\t",os.path.getctime('index.html'))
+#print("index-full.html:\t",os.path.getctime('index-full.html'))
+#print(os.path.getctime('index.html') == os.path.getctime('index-full.html'))
 
-fin = open("index.html","r")
+# don't do anything if the file was not just re-generated from the original
+# Markdown source
+if os.path.getctime('index.html') == os.path.getctime('index-full.html'):
+	exit()
+
+os.system("/bin/mv -f index.html index-full.html")
+
+fin = open("index-full.html","r")
 data = fin.read()
 
 header = "<!DOCTYPE html>\n"
@@ -29,7 +38,7 @@ class MyHTMLParser(HTMLParser):
 			tabs.append(attrs[0][1])
 			if self.firsttime:
 				# back up 4 characters (remove the '</p>'), add a navigation link
-				header += body.strip()[:-4] + " | <a href='index.html'>view standard version</a></p>"
+				header += body.strip()[:-4] + " | <a href='index-full.html'>view one-page version</a></p>"
 				body = ""
 			else:
 				body += "</div>"
@@ -68,7 +77,7 @@ replacements = [ ("Ec","EC"),("Io","I/O"),("Tbtc","tBTC"),("P2Pkh","P2PKH"),("To
 parser = MyHTMLParser()
 parser.feed(data)
 
-with open("index-tabs.html","w") as fout:
+with open("index.html","w") as fout:
 	print(header,file=fout,end='')
 	print("<div class='tab'>",file=fout)
 	firsttime = True
@@ -89,4 +98,5 @@ with open("index-tabs.html","w") as fout:
 	print(body,file=fout)
 
 # add in the 'tabbed version' link back into the source
-os.system("sed -i s_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>)</p>'_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>) | <a href=\"index-tabs.html\">view tabbed version</a></p>'_g index.html")
+os.system("sed -i s_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>)</p>'_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>) | <a href=\"index.html\">view tabbed version</a></p>'_g index-full.html")
+os.system("touch index.html index-full.html")
