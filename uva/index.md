@@ -87,7 +87,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 2. Mon, Aug 29: [overview](../slides/overview.html#/), [encryption](../slides/encryption.html#/) (actual: finished overview)
 3. Wed, Aug 31: [encryption](../slides/encryption.html#/) (actual: to slide 5.8 ("Finite Field Division"))
 4. Mon, Sep 5: [encryption](../slides/encryption.html#/) (actual: encryption to slide 7.16 ("Cloudflare..."))
-5. Wed, Sep 7: [encryption](../slides/encryption.html#/); [Bitcoin](../slides/bitcoin.html#/)
+5. Wed, Sep 7: [encryption](../slides/encryption.html#/); [Bitcoin](../slides/bitcoin.html#/) (actual: finished encryption, Bitcoin to the end of the second column ("Blockchain types used", slide 4.6))
 6. Mon, Sep 12: [Bitcoin](../slides/bitcoin.html#/)
 7. Wed, Sep 14: [Bitcoin](../slides/bitcoin.html#/)
 8. Mon, Sep 19: [Bitcoin](../slides/bitcoin.html#/)
