@@ -153,8 +153,8 @@ txid_p2pkh = ""
 # Part 2: puzzle transaction
 
 # These two values are constants that you should choose -- they should be four
-# digits long.  They need to have the same parity -- either both have to be
-# even, or both have to be odd.
+# digits long.  They need to allow for only integer solutions to the linear
+# equations specified in the assignment.
 puzzle_txn_p = 0
 puzzle_txn_q = 0
 
@@ -221,9 +221,9 @@ def multisig_scriptPubKey():
 # This function provides the sigScript (aka input script) that can redeem the
 # above transaction.  The parameters are the same as for P2PKH_scriptSig
 # (), above.  You also will need to use the keys for alice, bob, and charlie,
-# as well as your own key.  The private_key parameter that is passed in is
-# the same as my_private_key.
-def multisig_scriptSig(txin, txout, txin_scriptPubKey, private_key):
+# as well as your own key.  The private key parameter used is the global
+# my_private_key.
+def multisig_scriptSig(txin, txout, txin_scriptPubKey):
     bank_sig = create_CHECKSIG_signature(txin, txout, txin_scriptPubKey, my_private_key)
     alice_sig = create_CHECKSIG_signature(txin, txout, txin_scriptPubKey, alice_private_key)
     bob_sig = create_CHECKSIG_signature(txin, txout, txin_scriptPubKey, bob_private_key)

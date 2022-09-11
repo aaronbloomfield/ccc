@@ -164,8 +164,8 @@ txid_p2pkh <font color="#990000">=</font> <font color="#FF0000">""</font>
 <i><font color="#9A1900"># Part 2: puzzle transaction</font></i>
 
 <i><font color="#9A1900"># These two values are constants that you should choose -- they should be four</font></i>
-<i><font color="#9A1900"># digits long.  They need to have the same parity -- either both have to be</font></i>
-<i><font color="#9A1900"># even, or both have to be odd.</font></i>
+<i><font color="#9A1900"># digits long.  They need to allow for only integer solutions to the linear</font></i>
+<i><font color="#9A1900"># equations specified in the assignment.</font></i>
 puzzle_txn_p <font color="#990000">=</font> <font color="#993399">0</font>
 puzzle_txn_q <font color="#990000">=</font> <font color="#993399">0</font>
 
@@ -232,9 +232,9 @@ charlie_invoice_address_str <font color="#990000">=</font> <font color="#FF0000"
 <i><font color="#9A1900"># This function provides the sigScript (aka input script) that can redeem the</font></i>
 <i><font color="#9A1900"># above transaction.  The parameters are the same as for P2PKH_scriptSig</font></i>
 <i><font color="#9A1900"># (), above.  You also will need to use the keys for alice, bob, and charlie,</font></i>
-<i><font color="#9A1900"># as well as your own key.  The private_key parameter that is passed in is</font></i>
-<i><font color="#9A1900"># the same as my_private_key.</font></i>
-<b><font color="#0000FF">def</font></b> <b><font color="#000000">multisig_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> private_key<font color="#990000">):</font>
+<i><font color="#9A1900"># as well as your own key.  The private key parameter used is the global</font></i>
+<i><font color="#9A1900"># my_private_key.</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">multisig_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">):</font>
     bank_sig <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> my_private_key<font color="#990000">)</font>
     alice_sig <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> alice_private_key<font color="#990000">)</font>
     bob_sig <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> bob_private_key<font color="#990000">)</font>

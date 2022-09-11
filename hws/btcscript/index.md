@@ -7,16 +7,14 @@ Bitcoin Scripting Homework
 
 In this assignment you will be writing a series of Bitcoin scripts to enact transfers.  You will be using a Bitcoin test network to do so.  While regular Bitcoin uses the abbreviation BTC, we will use the abbreviation 'tBTC' for the Bitcoin on our test network.
 
-There are four separate Bitcoin scripts that you will need to write.  You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/).  You will also need to refer to the [Bitcoin Script page](https://en.bitcoin.it/wiki/Script).
+There are four separate Bitcoin scripts that you will need to write.  You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the [Bitcoin Script](../../slides/bitcoin.html#/script) and [Cross-Chain Transactions](../../slides/bitcoin.html#/xchain) sections.  You will also need to refer to the [Bitcoin Script page](https://en.bitcoin.it/wiki/Script).
+
+You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the discussion about the format for the blockchain.
+
 
 ### Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
-
-
-### Background
-
-You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the discussion about the format for the blockchain.
 
 
 ### Languages
@@ -30,7 +28,13 @@ We provide you with a few files to use:
 
 ### Hints
 
-There are a few really important things to remember in this assignment.
+#### Development Tips
+
+- You can, and should, use a site such as [https://siminchen.github.io/bitcoinIDE/build/editor.html](https://siminchen.github.io/bitcoinIDE/build/editor.html) to test your code.  Note that this site is, by necessity, limited in what it can do.  It will try to execute the scripts, but it doesn't always know if there is enough balance, if the corresponding UTXO script matches, etc.  So use that site to get started, but be sure to test your scripts via the means specified in this assignment.
+
+
+
+#### General Hints
 
 1. **UTXO indices:** each transaction has one more more UTXO indices -- each transaction output creates a separate UTXO index.  To find out what UTXO index you need to use, *view the transaction on the blockcypher.com website*.  All UTXO indices start from 0, like arrays.  In particular, for your funding transaction, your UTXO index will probably not be 0.  You need to set the `utxo_index` variable for **EACH** transaction to the right UTXO index.
 2. After each transaction, there is a place to store the transaction hash.  Be diligent about doing this -- it's really easy to lose track of which of a dozen transaction hashes is which.  Keeping them in the stated variables will help with this.
@@ -39,6 +43,26 @@ There are a few really important things to remember in this assignment.
 5. Some errors with Bitcoin scripts can be determined prior to broadcasting it on the Bitcoin test network.  This is done by the `VerifyScript()` method, which the provided code base calls for you before any attempted broadcast transaction.  So if you see an error such as, `verifyerror: "bitcoin.core.scripteval.VerifyOpFailedError: EvalScript: OP_EQUALVERIFY failed`, or similar, it means that the Bitcoin library was able to detect that your script would not work, and did not broadcast the transaction.
 6. We provide you with a `create_CHECKSIG_signature()` function in the scripts.py file -- use it!  See the comments there for details as to how.
 7. To save you the tedious task of having to learn the [Python Bitcoin library](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/)) -- which you probably would never use again -- much of the library interaction has been handled for you by the provided code.  But in order for that to work, you have to proceed through this homework in the order written.
+8. If you want to put the number 2 onto the stack, you can't just use the integer value 2.  Instead, you have to use the `OP_2` opcode.  In fact, `OP_2` happens to have integer value 82, and the integer value 2 has a different meaning.
+
+#### Common Errors
+
+- "Error validating transaction: Transaction ... referenced by input 0 has lesser than 3 outputs" means the UTXO index you provided is too high
+- "Error validating transaction: Error running script for input 0 referencing ... at 0: Script was NOT verified successfully" is when the scripts don't work together
+
+
+
+#### Mac OS X issues
+
+If you have a M1 Mac, there are a few issues you should be aware of.
+
+Installing OpenSSL via homebrew would still lead to errors in past semesters.  These errors report a problem with the "libeay32" library.  Here are some solutions that helped in the past:
+
+- Installing OpenSSL as per [https://www.davidseek.com/ruby-on-m1/](https://www.davidseek.com/ruby-on-m1/)
+- 
+You can replace the OpenSSL library that bitcoinlib calls.  In the bitcoin package, in `/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/bitcoin` (that may differ on your machine), in `core/key.py`, replace `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl')` or `ctypes.util.find_library('libeay32')` with `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl'))`.
+
+We cannot vouch for any of these solutions; we just collected a bunch of Piazza responses from the previous semester.
 
 
 ### Testnet
@@ -63,7 +87,7 @@ As we do not want to have to buy, and possibly lose, real BTC, we are going to u
       - If this works properly, it will present back a Python dictionary that will take up many lines.  If it doesn't work, it will give you an error in just a few lines.
     - Look at the wallet info URL (run `./bitcoinctl.py geturls` to get the URL), and note the transaction hash of the split transaction -- it should be the top transaction listed, and will have 10 different outputs.  The transaction hash itself is also listed in the output from the split transaction -- it's the `hash` field of the dictionary, and is about a half a dozen lines down.  Record that transaction id in scripts.py as `txid_split`
 
-Be careful not to lose the information (keys and TXIDs) that you recorded above.  To prevent abuse, the faucet only allows one transaction per 12 hours for a given IP address or tBTC address.
+Be careful not to lose the information (keys and TXIDs) that you recorded above.  To prevent abuse, the faucet only allows one transaction per 12 hours for a given IP address or tBTC address.  If you need more during that 12 hour window, or you are running into 'exceeded limit' issues, you can try requesting it through your cell phone.  If you put it on cellular (meaning disconnect from UVA's network), it will report a very different IP address to the faucet.
 
 ### Python library
 
@@ -113,14 +137,16 @@ You should notice your wallet balance has decreased.
 
 For this tBTC transaction, you are going to create an algebraic puzzle script -- one that anybody can redeem as long as they complete the numerical puzzle.
 
-You will need to pick two 4-digit base-10 numbers.  You can take your UVA SIS ID and split the digits in half.  You **MUST** make sure that the numbers have the same parity -- both numbers are odd or both numbers are even.  We'll call those numbers $p$ and $q$.  You will need to store those values into `puzzle_txn_p` and `puzzle_txn_q` in scripts.py.
+You will first need to pick two 4-digit base-10 numbers (meaning between 1,000 and 10,000 in value).  You can take your UVA SIS ID and split the digits in half.  These will be the solutions to the linear equations below.  You will likely need to tweak these numbers in a moment.  You will need to store those values into `puzzle_txn_p` and `puzzle_txn_q` in scripts.py.
 
 The puzzle transaction will deal with the solution to the following two linear equations:
 
-$$2x+y=p$$
-$$x+2y=q$$
+$$3x+y=p$$
+$$x+3y=q$$
 
-You can use an online linear question solver, such as [this one](https://onsolver.com/system-equations.php), to find the solution.  And make sure that the solutions are integer values!  Once you know those values, put them into `puzzle_txn_x` and `puzzle_txn_y` in scripts.py
+<!-- spring 2022: 2x+y / x+2y -->
+
+You can use an online linear question solver, such as [this one](https://onsolver.com/system-equations.php), to find the solution.  And ***make sure*** that the solutions are integer values!  If not, then tweak one (or both) of your solutions ($p$ and/or $q$) until you have integer solutions.  Once you know those values, put them into `puzzle_txn_x` and `puzzle_txn_y` in scripts.py
 
 For this part, you will create a transaction to redeem one of the split UTXO indices that were created, above.  The pubKey (output) script of that newly created transaction will be specified in the `puzzle_scriptPubKey()` function in scripts.py.  Note that because this output script does not depend on the receiver's public key, that is not provided as a parameter to the function.  Also note that the `OP_MUL` opcode has been disabled on the Bitcoin networks, so you can't use that.  This pubKey script should verify that the two values specified by the redeemer fulfill those two equations.  Once this is created, run `./bitcoinctl.py part2a` -- remember to choose an unspent UTXO index first via the `utxo_index` variable.  As above, record the transaction hash into the `txid_puzzle_txn1` variable.
 
@@ -128,7 +154,9 @@ You will also need to create the sigScript that redeems this transaction.  This 
 
 You will notice that the amount in each UTXO index from the split transaction is 0.0001 tBTC.  For the first half of this puzzle transaction, the amount transacted is slightly less (90% of that, or 0.00009).  The difference -- 0.00001 tBTC -- is the transaction fee.  Even though this is a test network, and no actual money is involved, your transaction will not be mined into the blockchain unless you have a transaction fee.  For the second half of this, we need to lower the amount even further, so the amount transacted is 90% of 0.00009, or 0.000081; this lowering is done automatically by the code base provided.  The difference here -- 0.000009 tBTC -- is the transaction fee.  While the test network requires there be *some* transaction fees, it doesn't seem to care much about how much those fees are, which is different than with the real BTC network.  This automatic lowering of the transaction amount will recur elsewhere in this assignment.
 
-IMPORTANT NOTE: There is somebody that is redeeming all of our puzzle transactions (part 2a) on the Bitcoin test network -- they are parsing the output script, computing the answers, and redeeming the transaction. Because this script does not have a signature, anybody can redeem it. If you keep getting oddball errors, and you have set your transaction hash and UTXO index correctly, check the transaction page itself to see if it's spent.  For the puzzle transactions, blockcyper.com just says “unknown script type”, and does not indicate if it's spent or not. blockchain.com does show this – search for the transaction hash, and in the outputs section, the Details item (on the right) will indicate if it's spent or not. If it is spent, you can click on the word ‘Spent’ to got the transaction that redeemed it.  When grading it, we will look at (1) if the transaction from part 2a was broadcast, (2) whether it was redeemed (by you or somebody else), and (3) whether the two scripts verify with each other. Thus, it does not have to be your transaction that redeems part 2a in part 2b, but your part 2b does have to verify with your part 2a.
+**NOTE:** The purpose of this part is for your redeeming script to actually check if the values passed in for $x$ and $y$ fulfill the equation.  You need to actually make that computation, not just check for equality for some pre-set values for $x$ and $y$.  This is something we explicitly check for when grading the assignment.
+
+IMPORTANT NOTE: There are occasionally people who redeeming all of our puzzle transactions (part 2a) on the Bitcoin test network -- they are parsing the output script, computing the answers, and redeeming the transaction. Because this script does not have a signature, anybody can redeem it. If you keep getting oddball errors, and you have set your transaction hash and UTXO index correctly, check the transaction page itself to see if it's already spent.  For the puzzle transactions, blockcyper.com just says “unknown script type”, and does not indicate if it's spent or not, but blockchain.com does show this – search for the transaction hash, and in the outputs section, the Details item (on the right) will indicate if it's spent or not. If it is spent, you can click on the word ‘Spent’ to got the transaction that redeemed it.  When grading it, we will look at (1) if the transaction from part 2a was broadcast, (2) whether it was redeemed (by you or somebody else), and (3) whether the two scripts verify with each other. Thus, it does not have to be *your* transaction that redeems part 2a in part 2b, but your part 2b does have to verify with your part 2a.
 
 ### Part 3: Multisig
 
@@ -230,7 +258,7 @@ You do not need to do this for the extra BCY in your account(s).
 
 ### Submission
 
-The only file you need to submit is scripts.py.  There will be a few sanity checks made when you submit it.  Those checks are:
+The only file you need to submit to Gradescope is scripts.py.  There will be a few sanity checks made when you submit it.  Those checks are:
 
 - Ensure that the `userid` returns a non-zero length string
 - Ensure that the three values set during setup (`my_private_key_str`, `my_invoice_address_str`, and `txid_initial`)
@@ -239,3 +267,4 @@ The only file you need to submit is scripts.py.  There will be a few sanity chec
 - Ensure that the four parts verify via `VerifyScript()`.  This does NOT mean they work correctly!  It just means that the `VerifyScript()` function did not detect errors.  For one example, the `VerifyScript()` has no way of knowing the actual signature required on the blockchain.  This is the same function that is run before broadcasting the transactions to the network.  The full grading will check what is on the blockchain itself.
 - Ensure that the final balance of the tBTC wallet (from `my_invoice_address_str`) is zero
 
+**Rate Limiter:** The various aspects of this program are verified by checking via blockcyper.com's API to obtain the wallet, transaction, balance, etc.  As with most websites, there is a rate limiter, and if there are too many requests in too little a time period, then it will block requests to that IP address for some period.  If everybody submits the assignment around the same time, this rate limiter will kick in, and the auto-grader will reports lots of errors.  We will re-run the auto-grader at a later point to ensure that it is evaluated properly, but you will not see useful results when you submit your assignment.  We have set up a proxy to help this issue (it caches previously made requests).  However, if there are still too many requests, it will still run into the rate limiter.  Unfortunately, there is nothing more we can do about this.
