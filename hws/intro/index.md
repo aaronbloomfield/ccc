@@ -12,6 +12,8 @@ Your cryptocurrency should have a name -- ideally, think of a neat name, but mak
 
 The intent is not for you to write the hashing or encryption / decryption routines -- use existing libraries for that.  In particular, both Java and Python can do that for you.  Be careful about requiring an uncommon Python module or Java library, as it still has to run on the submission server. 
 
+This homework is based on the material covered in the [Cryptocurrency Overview](../../slides/overview.html#/) slide set.
+
 
 ### Changelog
 
@@ -19,10 +21,6 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 - Clarified on 9/2: For `validate`: the blockchain is considered valid if only the genesis block exists; we will never call this function if the genesis block has not been created.  Because of this, you don't have to actually check if the genesis block exists, as we will never call validate on it if it does not exist.  Likewise, you don't have to do any checks on the genesis block file itself.
 - Clarified on 9/6 the output (at the end of the Requirements section)
-
-### Background
-
-This homework is based on the material covered in the [Cryptocurrency Overview](../../slides/overview.html#/) slide set.
 
 
 ### Languages

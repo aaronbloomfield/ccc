@@ -44,7 +44,6 @@
 <p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
-<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
 <button class='tablinks' onclick="openTab(event,'tlanguages')">Languages</button>
 <button class='tablinks' onclick="openTab(event,'tfile-format')">File Format</button>
 <button class='tablinks' onclick="openTab(event,'trequirements')">Requirements</button>
@@ -57,14 +56,13 @@
 <p>You must design and implement your own cryptocurrency! Your implementation must be secure enough that you could actually use it.</p>
 <p>Your cryptocurrency should have a name – ideally, think of a neat name, but make sure it is <a href='https://coinmarketcap.com/'>not already taken</a>. It will have to use public/private key encryption to generate the wallets. You do not have to use symmetric encryption (such as AES) to protect the private key in the wallet. You will need to use a good hashing algorithm. In practice, SHA-256 would be the minimum, but you can use a shorter SHA hash for this assignment.</p>
 <p>The intent is not for you to write the hashing or encryption / decryption routines – use existing libraries for that. In particular, both Java and Python can do that for you. Be careful about requiring an uncommon Python module or Java library, as it still has to run on the submission server.</p>
+<p>This homework is based on the material covered in the <a href='../../slides/overview.html#/'>Cryptocurrency Overview</a> slide set.</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here.</p>
 <ul>
 <li>Clarified on 9/2: For <code>validate</code>: the blockchain is considered valid if only the genesis block exists; we will never call this function if the genesis block has not been created. Because of this, you don’t have to actually check if the genesis block exists, as we will never call validate on it if it does not exist. Likewise, you don’t have to do any checks on the genesis block file itself.</li>
 <li>Clarified on 9/6 the output (at the end of the Requirements section)</li>
 </ul>
-</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
-<p>This homework is based on the material covered in the <a href='../../slides/overview.html#/'>Cryptocurrency Overview</a> slide set.</p>
 </div><div id='tlanguages' class='tabcontent'><h3 id='languages'>Languages</h3>
 <p>You may use any programming language for this, but if you want to use a language other than Java or Python, please check with us first so that we can enable it on the submission server. (If you are using another language, you have to let us know at least two days before the assignment is due so we have time to configure it.)</p>
 <p>For Java and Python, we provide you with the code to convert a hex string to an array of bytes, to convert an array of bytes to a hex string, getting the SHA-256 hash of a file, and to read and write RSA keys. For Java, that is in the form of methods that you can use. For Python, it is links to the library functions that performs that task.</p>

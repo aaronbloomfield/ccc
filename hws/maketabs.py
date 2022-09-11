@@ -13,7 +13,8 @@ import os
 
 # don't do anything if the file was not just re-generated from the original
 # Markdown source
-if os.path.getctime('index.html') == os.path.getctime('index-full.html'):
+if os.path.exists("index-full.html") and \
+	os.path.getctime('index.html') == os.path.getctime('index-full.html'):
 	exit()
 
 os.system("/bin/mv -f index.html index-full.html")
