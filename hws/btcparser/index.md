@@ -7,9 +7,9 @@ Bitcoin Blockchain Parser
 
 In this assignment you will read in, validate, and then output the Bitcoin blockchain.
 
-Your program will take in a file that contains one or more blocks from the Bitcoin blockchain; these blocks are in binary format.  Your program must read these blocks in, check the blockchain for errors, and then output the result in JSON format.
+Your program will take in a file that contains one or more blocks from the Bitcoin blockchain; these blocks are in binary format.  Your program must read these blocks in, check the blockchain for a set of possible errors, and then output the result in JSON format.
 
-Your program will provide exactly one line of output to the standard output: either "no errors X blocks" (case sensitive!) or the specific error number ("error 5 block 17") -- we describe the error numbers below.  In the case of multiple errors, your program should terminate on the first discovered error.  In addition, it will create a JSON file if there were no errors -- if the input file name was blk00000.blk, then it will create a JSON file named blk00000.blk.json.  If there are errors, it is fine to create the JSON file or not -- it will not be checked.  The format of this file is described below.
+Your program will provide exactly one line of output to the standard output: either "no errors X blocks" (case sensitive!) or the specific error and block number ("error 5 block 17") -- we describe the error numbers below.  In the case of multiple errors, your program should report then terminate on the first discovered error.  In addition, it will create a JSON file if there were no errors -- if the input file name was blk00000.blk, then it will create a JSON file named blk00000.blk.json.  If there are errors, it is fine to create the JSON file or not -- it will not be checked.  The format of this file is described below.
 
 The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain -- specifically before any BIPs were proposed and enacted.  Thus, the blocks will not contain fields such as the height number.  Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).
 
@@ -32,7 +32,7 @@ This assignment specifically is intended for you to use the default packages tha
 
 ### Provided files
 
-We have a number of files of the blockchain itself.  Blockchain block counting is indexed from 0 (the genesis block), so a file that contains the first 10 blocks will contain blocks 0-9.
+We have a number of files of the blockchain itself.  Blockchain block counting is indexed from 0 (the genesis block), so a file that contains the first 10 blocks will contain blocks 0-9.  Note that not all of the files below contain the genesis block!
 
 - Files with multiple blocks
     - [blk00000-f10.blk](blk00000-f10.blk) (2.3 Kb) contains the first 10 blocks
@@ -89,9 +89,9 @@ Your program will take in exactly one command-line parameter: the file to read i
 
 #### Block group file format
 
-The blocks to be verified are grouped together in a file -- this file is from the Bitcoin system, and if you were to launch a Bitcoin node and have it sync the blockchain, you would have those files on your machine as well.  The largest file provided contains block 0 (the genesis block) through block 119,341.
+The blocks to be verified are grouped together in a file -- this file is from the Bitcoin system, and if you were to launch a Bitcoin node and have it sync the blockchain, you would have those files on your machine as well.  The largest file we provide contains block 0 (the genesis block) through block 119,340.
 
-To see the contents of a binary file, run it through `hexdump -C`.  This will print a LOT of text, so we will pipe it through `head`, as shown below.  Each block is preceded by 8 bytes of data.  The first 4 bytes are the magic number, and the second four bytes are the block size.  Both are in little-Endian format in the file.  The output of the genesis block, when run through `hexdump -C`, are:
+To see the contents of a binary file, run it through `hexdump -C` on a Linux / UNIX system.  Make sure you use the `-C` parameter!  This will print a LOT of text, so we will pipe it through `head`, as shown below.  Each block is preceded by 8 bytes of data.  The first 4 bytes are the magic number, and the second four bytes are the block size.  Both are in little-Endian format in the file.  The output of the genesis block, when run through `hexdump -C`, are:
 
 ```
 $ hexdump -C blk00000-f10.blk | head -13
@@ -111,11 +111,11 @@ $ hexdump -C blk00000-f10.blk | head -13
 $
 ```
 
-The file provided has the first 10 blocks, and would create 145 lines of output; we only want the beginning, so we pipe it through `head -13` to get the first 13 lines of the hexdump output.
+The file specified on the command line in the execution above has the first 10 blocks, and would create 145 lines of output; we only want the beginning, so we pipe it through `head -13` to get the first 13 lines of the hexdump output.
 
-Each line displays 16 bytes from the file.  The columns in hexdump shows the address of the first byte in the row (in hex), the hex values of the 16 bytes, and an ASCII representation of those 16 bytes (if they are printable characters; a period is used if they are not printable characters).  You can see, at the bottom of the hexdump display above, the text included in the genesis block for Bitcoin ("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks").  You may want to save the hexdump output to a file (`hexdump -C blk00000.blk > blk00000.blk.txt`).  If you do this with some of the larger blockchain files, be aware that the hexdump output can be quite large (up to 631 Mb for the largest file we provide in this assignment).
+Each line displays 16 bytes from the file.  The columns in hexdump shows the address of the first byte in the row (in hex), the hex values of the 16 bytes, and an ASCII representation of those 16 bytes (if they are printable characters; a period is used if they are not printable characters).  You can see, at the bottom of the hexdump display above, the text included in the genesis block for Bitcoin ("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks").  You may want to save the hexdump output to a file (`hexdump -C blk00000.blk > blk00000.blk.txt`).  If you do this with some of the larger blockchain files, be aware that the hexdump output can be quite large -- up to 631 Mb for the largest file we provide in this assignment.
 
-The first four bytes (`f9 be b4 d9`) is the so-called "magic number" which identifies the start of a block.  The value is 0xd9b4bef9, or 0xf9beb4d9 in little-Endian.  The next four bytes (1d 01 00 00) are the size.  That's in little-Endian, so converted to big-Endian it's 0x0000011d = 285.  The next 285 bytes are the contents of block 0 (the genesis block).  Block 1 thus starts at byte 285+8=293 (0x125 in hex) in the file.  You can see this later in the hexdump output (not shown above because of the `head -13` pipe):
+The first four bytes (`f9 be b4 d9`) is the so-called "magic number" which identifies the start of a block in a file.  The value is 0xd9b4bef9, or 0xf9beb4d9 in little-Endian.  The next four bytes (`1d 01 00 00`) are the size.  That's in little-Endian, so converted to big-Endian it's 0x0000011d = 285.  The next 285 bytes are the contents of block 0 (the genesis block).  Block 1 thus starts at byte 285+8=293 (0x125 in hex) in the file.  You can see this later in the hexdump output (not shown above because of the `head -13` pipe):
 
 ```
 00000110  5c 38 4d f7 ba 0b 8d 57  8a 4c 70 2b 6b f1 1d 5f  |\8M....W.Lp+k.._|
@@ -123,18 +123,18 @@ The first four bytes (`f9 be b4 d9`) is the so-called "magic number" which ident
 00000130  00 6f e2 8c 0a b6 f1 b3  72 c1 a6 a2 46 ae 63 f7  |.o......r...F.c.|
 ```
 
-On the second line, the magic number of the second block (block index 1) starts on the 6th byte.
+On the second line, the magic number (`f9 be b4 d9`) of the second block (block index 1) starts on the 6th byte.
 
 #### Reading in the blockchain
 
 Your task is to read in the blockchain.  The format for the blockchain can be found in the [Bitcoin lecture slides](../../slides/bitcoin.html#/), specifically starting [here](../../slides/bitcoin.html#/blockchain).  You will need to read in the file in binary format.
 
-You will likely want to print out the data read in (and the associated fields).  This will be changed to a different output format in part 3, below.  As you are printing out the values, you can see what they should be [here](https://www.blockchain.com/btc/block/0) for block 0; the output is also shown below.  That site prints the values in big-Endian, which is how we will be printing them in this assignment. However, we are going to print out the nBits field in hex; that size prints it out in decimal.
+You will likely want to print out the data read in (and the associated fields).  This will be changed to a different output format in part 3, below.  As you are printing out the values, you can see what they should be [here](https://www.blockchain.com/btc/block/0) for block 0; the output is also shown below.  That site prints the values in big-Endian, which is how we will be printing them in this assignment. However, we are going to print out the nBits field in hex; that site prints it out in decimal.
 
 Some useful hints:
 
 - There really are only five different types in the bitcoin blockchain: 4-byte unsigned integers, 8-byte unsigned integers, compactSize unsigned integers, 32-byte hashes, and variable-length scripts.  That's it.  All of the blockchain is one of these five types -- so you can reuse your code from reading in one type to read in another value of that type.
-  - While there are only 5 types, we will be outputting them in different ways -- but each programming language can easily print a number in hex or decimal.
+- While there are only 5 types, we will be outputting them in different ways -- but each programming language can easily print a number in hex or decimal.
 - Make sure you have a method that reads in compactSize unsigned integers properly, as this will cause your program to crash otherwise.  In particular, remember that if the variable is more than one byte, then all the bytes *other* than the first are in little-Endian format.  HOWEVER, some routines that read in the values will swap them for you, and some will not.  This is explicitly why we provide [block 29,664](blk00000-b29664.blk) for you -- that is the first block that has such a compactSize unsigned int value that is more than one byte (the `txn_in_count` for the second transaction is 320); you can see more information about that transaction [here](https://blockchair.com/bitcoin/block/29664).
 
 If you can read in all of the input files -- especially the large one -- without any errors, then you've successfully completed this part.  Note that you may want to redirect your output to a file, since that's a lot of text to be output to the screen.
@@ -142,7 +142,7 @@ If you can read in all of the input files -- especially the large one -- without
 
 ### Part 2a: Validation
 
-Now that you can read in valid blockchain, your program should be extended to check for errors in the blockchain.  Once an error is encountered, the program should output the error number and stop.  The errors below are what should be checked for -- note that these are not all the possible errors, but a selection of errors to check for on this assignment.
+Now that you can read in valid blockchain, your program should be extended to check for errors in the blockchain.  Once an error is encountered, the program should output the error number and exit.  The errors below are what should be checked for -- note that these are not all the possible errors, but a selection of errors to check for in this assignment.
 
 1. Invalid magic number
 2. Invalid header version (we only are allowing version 1 for this assignment)
@@ -155,7 +155,7 @@ If an error is found, the output should only be `error 5 block 17` with the appr
 
 If there are multiple errors, you should report the one found in the earlier block and then exit.  For example, if there is a modification to the Merkle hash in block 10, then both block 10 will have an error (#6 -- bad Merkle hash) as well as block 11 (#3 -- bad previous header hash).  In this case, the error in block 10 should be reported, and the program should then exit.
 
-If there are multiple errors in a single block, you can report any of them.  Because this makes it very difficult to grade, we are going to avoid testing this possibility when grading your assignment.
+If there are multiple errors in a single block, you can report any one of them and then exit.  Because this makes it very difficult to grade, we are going to avoid testing this possibility when grading your assignment.
 
 Test this well!  We are going to provide all sorts of messed-up files to your program as input.  The file provided to your program may not even be a valid blockchain file!  You are guaranteed that the following will be true:
 
@@ -169,7 +169,7 @@ Test this well!  We are going to provide all sorts of messed-up files to your pr
 
 Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the "no errors X blocks" or "error 5 block 17" line -- we'll get rid of the other output in the next section.
 
-#### Testing
+### Testing
 
 To test each error, you should try to change one byte in the file -- specifically, a byte in the particular field you are checking for errors.  For example, if you want to modify the magic number, you would change one of the first 4 bytes; as bytes are indexed from zero, that's bytes 0, 1, 2, or 3. To do that, you can use the following Python program, which you can save as `change_byte.py`:
 
@@ -182,7 +182,7 @@ data[int(sys.argv[1])] = int(sys.argv[2])
 sys.stdout.buffer.write(bytes(data))
 ```
 
-This can also be downloaded via [change_byte.py](change_byte.py.html) ([src](change_byte.py)).  Yes, this program could be compacted more, but then it would be even more unreadable.  This program will read in binary data from standard input, change one byte, and write the resulting data to standard output.  It takes in two command-line parameters: the byte number to change, and the value to change it to; both are decimal numbers.  There is no error checking in this program!  You would use it as such:
+This can also be downloaded via [change_byte.py](change_byte.py.html) ([src](change_byte.py)).  Yes, this program could be compacted more, but then it would be even more unreadable.  This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output.  It takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are decimal numbers.  There is no error checking in this program!  You would use it as such:
 
 ```
 $ cat blk00000-f10.blk | ./change_byte.py 2 0 > test.blk
@@ -226,7 +226,7 @@ error 6 block 0
 $
 ```
 
-These test are by no means comprehensive!  But some of these tests will be used for the visible tests when you submit the file to Gradescope.  The hidden tests, which your grade will be based on similar tests different than the ones shown above.
+These test are by no means comprehensive!  But some of these examples will be used for the visible tests when you submit the file to Gradescope.  The hidden tests, which your grade will be based on similar tests different than the ones shown above.
 
 ### Part 2b: Merkle Trees
 
@@ -283,7 +283,7 @@ $ hexdump -C blk00000-b0.blk
 $
 ```
 
-There is only one transaction in this block.  With a preamble of 8 bytes, a header of 80 bytes, and a transaction count of 1 byte (since it's a compactSize unsigned integer with value of 1), the transaction has to start at byte 89 (0x59).  This is the row with address 0x00000050, and the start of the transaction is the last 7 bytes on that line ("01 00 00 00 01 00 00"), and continues until the end of the block.
+There is only one transaction in this block.  With a preamble of 8 bytes, a header of 80 bytes, and a transaction count of 1 byte (since it's a compactSize unsigned integer with value of 1), the transaction has to start at byte 89 (0x59).  This is the row with address 0x00000050, and the start of the transaction is the last 7 bytes on that line (`01 00 00 00 01 00 00`), and continues until the end of the block.
 
 Putting all those bytes together gives us the (ASCII) hex of the transaction, which is stored in a `txn` variable:
 
@@ -309,7 +309,7 @@ $ python3
 
 In Python, given a hash, the `.digest()` method returns it in binary format, and the `.hexdigest()` method returns it in an ASCII hex representation.
 
-This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block), although our Endian-ness is reversed.  So we can un-reverse (?) it (note that we are recomputing `hash2` with `.digest()`, rather than `.hexdigest()`, to get it's value in binary):
+This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block), displayed in big-Endian format.  Thus, our Endian-ness is reversed.  So we can un-reverse (?) it; note that we are recomputing `hash2` with `.digest()`, rather than `.hexdigest()`, to get it's value in binary:
 
 ```
 >>> hash2 = sha256(hash1).digest() 
@@ -321,7 +321,7 @@ This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/G
 >>>
 ```
 
-Now the hex of the hash exactly matches what is listed in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block).
+Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block).
 
 And then we can get all fancy and do all that in one line:
 
@@ -389,9 +389,9 @@ Your output for the genesis block (file blk00000-b0.blk), which is saved to a fi
 
 A bunch of notes:
 
-- We don't need to list the magic number in the JSON file -- it's always the same, and was verified when the blockchain was read in
+- We don't need to list the magic number in the JSON file -- it's always the same, and was verified when the blockchain was read in (technically it's not part of the block, it's part of the file format)
 - Likewise, we don't need to include the block size, since that's not as important in JSON
-- You can put in additional fields if you would like -- but the fields shown above must be there; in the output above, both 'timestamp_readable' and 'file_position' are NOT required fields
+- You can put in additional fields if you would like -- but the fields shown above must be there; in the output above, both `timestamp_readable` and `file_position` are NOT required fields
 - All hexadecimal values should NOT have a leading '0x'
 - Integer values should not have quotes around them (that's a JSON feature), but all other values should be enclosed in double quotes (not single quotes -- a JSON restriction)
 - If you have a list if items in an array, JSON is not happy with a comma after the last one; you can see this after the 'lock_time' value -- there is no comma after its value 0 (yes, this is stupid, but that's JSON for you)
@@ -403,7 +403,7 @@ A bunch of notes:
 
 In particular, this JSON output need to be written to a file, NOT to standard output.  The file name will just append ".json" to the input file name.  If you are writing this file as you go, and you encounter an error, it's fine if you have a partially written JSON file -- we aren't going to check it if there are errors.
 
-You can verify that it works by running it through JSON's lint: `jsonlint-php blk00000-first10.blk.json`.  This program is installed on the Linux VirtualBox image.  If you not using VirtualBox, you can install it yourself, or use online sites such as [these](https://jsonlint.com/).  You can also use a one-line Python command to test it:
+You can verify that it is valid JSON by running it through JSON's lint: `jsonlint-php blk00000-first10.blk.json`.  This program is installed on the Linux VirtualBox image.  If you not using VirtualBox, you can install it yourself, or use online sites such as [these](https://jsonlint.com/).  You can also use a one-line Python command to test it:
 
 ```
 $ cat blk00000-b0.blk.json | python3 -c "import json,sys; json.load(sys.stdin)"
@@ -414,7 +414,7 @@ If there is no output (specifically, no error output), then it was parsed correc
 
 Make sure you test it with multiple blocks!  However, the online site will probably not like you trying to upload a huge JSON file.
 
-You should also use the [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) program to ensure that your JSON is in the right format.  This is intended to ensure that you have the right fields for when we grade the assignment.  It just has a bunch of `assert()` calls to ensure that the format is what is shown above.  Remember that white space doesn't matter, so you are welcome to use any spacing that you want.  This program will also be used as one of the visible submission tests in Gradescope.
+You should also use the [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) program to ensure that your JSON is in the right format AND ALSO that the values are correct.  This is intended to ensure that you have the right fields for when we grade the assignment.  It just has a bunch of `assert()` calls to ensure that the format is what is shown above.  Remember that white space doesn't matter, so you are welcome to use any spacing that you want.  And you can add fields, if you would like.  This program will also be used as one of the visible submission tests in Gradescope.
 
 ### Submission
 

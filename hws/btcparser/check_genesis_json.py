@@ -2,8 +2,12 @@
 
 import sys, json
 
-# this checks that the JSON produced by a BTC parsing program matches what is
-# expected in this assignment
+# This checks that the JSON produced by a BTC parsing program matches what is
+# expected in this assignment.  After you run your parser on the genesis
+# block file (blk00000-b0.blk), run this program on the output (which should
+# be blk00000-b0.blk.json) on the output.  The one and only command line
+# parameter is the JSON file to read in.  This program will help verify that
+# you are reporting everything properly.
 
 # the required command-line parameter is the file name
 assert(len(sys.argv)==2)

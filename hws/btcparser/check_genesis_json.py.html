@@ -13,8 +13,12 @@ http://www.gnu.org/software/src-highlite">
 
 <b><font color="#000080">import</font></b> sys<font color="#990000">,</font> json
 
-<i><font color="#9A1900"># this checks that the JSON produced by a BTC parsing program matches what is</font></i>
-<i><font color="#9A1900"># expected in this assignment</font></i>
+<i><font color="#9A1900"># This checks that the JSON produced by a BTC parsing program matches what is</font></i>
+<i><font color="#9A1900"># expected in this assignment.  After you run your parser on the genesis</font></i>
+<i><font color="#9A1900"># block file (blk00000-b0.blk), run this program on the output (which should</font></i>
+<i><font color="#9A1900"># be blk00000-b0.blk.json) on the output.  The one and only command line</font></i>
+<i><font color="#9A1900"># parameter is the JSON file to read in.  This program will help verify that</font></i>
+<i><font color="#9A1900"># you are reporting everything properly.</font></i>
 
 <i><font color="#9A1900"># the required command-line parameter is the file name</font></i>
 <b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)==</font><font color="#993399">2</font><font color="#990000">)</font>
