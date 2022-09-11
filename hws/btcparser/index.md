@@ -13,22 +13,25 @@ Your program will provide exactly one line of output to the standard output: eit
 
 The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain -- specifically before any BIPs were proposed and enacted.  Thus, the blocks will not contain fields such as the height number.  Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).
 
+You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the first four sections: on [Merkle trees](../../slides/bitcoin.html#/merkle), [data types used](../../slides/bitcoin.html#/datatypes), [Bitcoin concepts and terminology](../../slides/bitcoin.html#/concepts), and the [blockchain description](../../slides/bitcoin.html#/blockchain).
+
 
 ### Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Background
-
-You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the first four sections: on [Merkle trees](../../slides/bitcoin.html#/merkle), [data types used](../../slides/bitcoin.html#/datatypes), [Bitcoin concepts and terminology](../../slides/bitcoin.html#/concepts), and the [blockchain description](../../slides/bitcoin.html#/blockchain).
-
-
 ### Languages
 
 In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Four languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.10.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it.
 
-This assignment specifically is intended for you to use the default packages that come with the given programming language.  In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries).  However, you are welcome to -- and probably should -- use any JSON libraries.
+This assignment specifically is intended for you to use packages that handle the JSON processing for your programming language.  In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries).  However, you are welcome to -- and probably should -- use any JSON libraries.
+
+**Python:** To output JSON in Python, you create a dictionary (with nested dictionaries and lists, as necessary), and then use the `json` library (included with Python) to output the JSON; see [here](https://www.w3schools.com/python/python_json.asp) for a tutorial.
+
+**Java:** In Java, a number of tutorials ([1](https://www.javatpoint.com/java-json-example), [2](https://www.tutorialspoint.com/json/json_java_example.htm), [3](https://www.geeksforgeeks.org/working-with-json-data-in-java/), etc.) recommend using the [json-simple](https://github.com/fangyidong/json-simple) package from [json.org](https://www.json.org/json-en.html); you can download the .jar file from [here](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-simple/json-simple-1.1.1.jar).  Version 1.1.1 of that file (`json-simple-1.1.1.jar`) will be put into the directory along with your source code; thus, you should NOT include it in the files that you submit.  To use it you will need to update your classpath on both the compilation (`javac -cp json-simple-1.1.1.jar:. BTCParse.java`) and execution (`java -cp json-simple-1.1.1.jar:. BTCParse`); these updates will have to be made to the Makefile and parse.sh files, respectively, that you submit.  The first of those tutorials ([this one](https://www.javatpoint.com/java-json-example)) has example code that outputs in JSON using this library.  Lastly, it's fine if the compilation line complains about a deprecated API, as long as the compilation result is still successful.
+
+**Others:** If there is another language that you want to use, please speak to us, and we will work to get it configured on the submission system.  You will have to let us know at least two days before the submission deadline so that we can configure it in time.
 
 ### Provided files
 
@@ -76,6 +79,14 @@ And for Java:
 #!/bin/bash
 java BTCParse $@
 ```
+
+Note that you may have to add a flag to modify the class path if you are using the suggested JSON library in Java, as described in the Languages section above.  If so, your parse.sh file may look something like this:
+
+```
+#!/bin/bash
+java -cp json-simple-1.1.1.jar:. BTCParse $@
+```
+
 
 #### Makefile
 
@@ -339,7 +350,7 @@ Got that?  Good.
 
 Lastly, your program must output the blockchain in JSON format.  You can read about [JSON on Wikipedia](https://en.wikipedia.org/wiki/JSON).  The format must be as described below, but your whitespace doesn't matter.  We are going to check it via a JSON parser.  
 
-You SHOULD be using the JSON library that comes with your programming language!  No need to reinvent the wheel here.
+You SHOULD be using the JSON library that comes with your programming language!  No need to reinvent the wheel here.  It is VERY tedious to hand-code JSON output.  See the Languages section, above, for how to do this.
 
 Your output for the genesis block (file blk00000-b0.blk), which is saved to a file, should look like the following:
 

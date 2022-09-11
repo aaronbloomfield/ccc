@@ -44,7 +44,6 @@
 <p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
-<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
 <button class='tablinks' onclick="openTab(event,'tlanguages')">Languages</button>
 <button class='tablinks' onclick="openTab(event,'tprovided-files')">Provided Files</button>
 <button class='tablinks' onclick="openTab(event,'tother-files')">Other Files</button>
@@ -60,13 +59,15 @@
 <p>Your program will take in a file that contains one or more blocks from the Bitcoin blockchain; these blocks are in binary format. Your program must read these blocks in, check the blockchain for a set of possible errors, and then output the result in JSON format.</p>
 <p>Your program will provide exactly one line of output to the standard output: either “no errors X blocks” (case sensitive!) or the specific error and block number (“error 5 block 17”) – we describe the error numbers below. In the case of multiple errors, your program should report then terminate on the first discovered error. In addition, it will create a JSON file if there were no errors – if the input file name was blk00000.blk, then it will create a JSON file named blk00000.blk.json. If there are errors, it is fine to create the JSON file or not – it will not be checked. The format of this file is described below.</p>
 <p>The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain – specifically before any BIPs were proposed and enacted. Thus, the blocks will not contain fields such as the height number. Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).</p>
+<p>You will need to be familiar with the <a href='../../slides/bitcoin.html#/'>Bitcoin slide set</a>, specifically the first four sections: on <a href='../../slides/bitcoin.html#/merkle'>Merkle trees</a>, <a href='../../slides/bitcoin.html#/datatypes'>data types used</a>, <a href='../../slides/bitcoin.html#/concepts'>Bitcoin concepts and terminology</a>, and the <a href='../../slides/bitcoin.html#/blockchain'>blockchain description</a>.</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
-<p>You will need to be familiar with the <a href='../../slides/bitcoin.html#/'>Bitcoin slide set</a>, specifically the first four sections: on <a href='../../slides/bitcoin.html#/merkle'>Merkle trees</a>, <a href='../../slides/bitcoin.html#/datatypes'>data types used</a>, <a href='../../slides/bitcoin.html#/concepts'>Bitcoin concepts and terminology</a>, and the <a href='../../slides/bitcoin.html#/blockchain'>blockchain description</a>.</p>
 </div><div id='tlanguages' class='tabcontent'><h3 id='languages'>Languages</h3>
 <p>In theory, this can be implemented in any language. In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for. Four languages that can currently be used: C (using <code>gcc</code>), C++ (using <code>g++</code>), Java (using OpenJDK 11), and Python (using Python 3.10.x). If you want to use a different language, let’s have a chat about it, as it will take some time to ensure that the grading system can handle it.</p>
-<p>This assignment specifically is intended for you to use the default packages that come with the given programming language. In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries). However, you are welcome to – and probably should – use any JSON libraries.</p>
+<p>This assignment specifically is intended for you to use packages that handle the JSON processing for your programming language. In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries). However, you are welcome to – and probably should – use any JSON libraries.</p>
+<p><strong>Python:</strong> To output JSON in Python, you create a dictionary (with nested dictionaries and lists, as necessary), and then use the <code>json</code> library (included with Python) to output the JSON; see <a href='https://www.w3schools.com/python/python_json.asp'>here</a> for a tutorial.</p>
+<p><strong>Java:</strong> In Java, a number of tutorials (<a href='https://www.javatpoint.com/java-json-example'>1</a>, <a href='https://www.tutorialspoint.com/json/json_java_example.htm'>2</a>, <a href='https://www.geeksforgeeks.org/working-with-json-data-in-java/'>3</a>, etc.) recommend using the <a href='https://github.com/fangyidong/json-simple'>json-simple</a> package from <a href='https://www.json.org/json-en.html'>json.org</a>; you can download the .jar file from <a href='https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-simple/json-simple-1.1.1.jar'>here</a>. Version 1.1.1 of that file (<code>json-simple-1.1.1.jar</code>) will be put into the directory along with your source code; thus, you should NOT include it in the files that you submit. To use it you will need to update your classpath on both the compilation (<code>javac -cp json-simple-1.1.1.jar:. BTCParse.java</code>) and execution (<code>java -cp json-simple-1.1.1.jar:. BTCParse</code>); these updates will have to be made to the Makefile and parse.sh files, respectively, that you submit. The first of those tutorials (<a href='https://www.javatpoint.com/java-json-example'>this one</a>) has example code that outputs in JSON using this library. Lastly, it’s fine if the compilation line complains about a deprecated API, as long as the compilation result is still successful.</p>
+<p><strong>Others:</strong> If there is another language that you want to use, please speak to us, and we will work to get it configured on the submission system. You will have to let us know at least two days before the submission deadline so that we can configure it in time.</p>
 </div><div id='tprovided-files' class='tabcontent'><h3 id='provided-files'>Provided files</h3>
 <p>We have a number of files of the blockchain itself. Blockchain block counting is indexed from 0 (the genesis block), so a file that contains the first 10 blocks will contain blocks 0-9. Note that not all of the files below contain the genesis block!</p>
 <ul>
@@ -102,6 +103,9 @@ python3 btc-parse.py $@</code></pre>
 <p>And for Java:</p>
 <pre><code>#!/bin/bash
 java BTCParse $@</code></pre>
+<p>Note that you may have to add a flag to modify the class path if you are using the suggested JSON library in Java, as described in the Languages section above. If so, your parse.sh file may look something like this:</p>
+<pre><code>#!/bin/bash
+java -cp json-simple-1.1.1.jar:. BTCParse $@</code></pre>
 <h4 id='makefile'>Makefile</h4>
 <p>You will also have to submit a <code>Makefile</code> that will be used to compile your program, if needed. For languages that do not need compilation (such as Python), just put in a single <code>echo</code> statement so that <code>make</code> still runs properly. This is the same as in the <a href='../intro/index.html'>previous assignments</a> (<a href='../intro/index.md'>md</a>).</p>
 </div><div id='tpart-1-parsing' class='tabcontent'><h3 id='part-1-parsing'>Part 1: Parsing</h3>
@@ -293,7 +297,7 @@ $</code></pre>
 <p>Got that? Good.</p>
 </div><div id='tpart-3-output' class='tabcontent'><h3 id='part-3-output'>Part 3: Output</h3>
 <p>Lastly, your program must output the blockchain in JSON format. You can read about <a href='https://en.wikipedia.org/wiki/JSON'>JSON on Wikipedia</a>. The format must be as described below, but your whitespace doesn’t matter. We are going to check it via a JSON parser.</p>
-<p>You SHOULD be using the JSON library that comes with your programming language! No need to reinvent the wheel here.</p>
+<p>You SHOULD be using the JSON library that comes with your programming language! No need to reinvent the wheel here. It is VERY tedious to hand-code JSON output. See the Languages section, above, for how to do this.</p>
 <p>Your output for the genesis block (file blk00000-b0.blk), which is saved to a file, should look like the following:</p>
 <pre><code>{
     "blocks": [
