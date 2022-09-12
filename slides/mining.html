@@ -538,24 +538,14 @@ line-height:120%;
 
 
 ## Lite Hash Rate (LHR)
-- Nvidia makes graphics cards
-  - Well, really only the GPUs...
-- And everybody was buying their cards to mine cryptocurrency
-  - Which priced out their primary market: gamers
+- Nvidia makes graphics card GPUs
+  - And everybody was buying their cards to mine cryptocurrency
+    - Which priced out their primary market: gamers
 - Nvidia's solution: create LHR cards
-  - Since nobody bothers to mine Bitcoin on GPUs...
   - Make the card recognize mining of Ethash, and "lock" the GPU for 20 seconds
-- But this only affects Ethash, not any other mining algorithm!
-
-
-
-## Lite Hash Rate (LHR)
-- Nvidia accidentally released a driver that disabled this
-  - So now everybody knows software (firmware) can get around it
+  - But this only affects Ethash, not any other mining algorithm!
 - Mining programs figured out how to *dual-mine*
-  - It mines Ethash at half GPU usage
-  - And another coin for the other half
-  - See [this dual-mining page for T-rex](https://github.com/trexminer/T-Rex/wiki/Dual-mining), for example
+  - It mines Ethash at half GPU usage and another coin for the other half
 - Nvidia gave up on this in May 2022 and removed LHR in recent drivers
 
 
@@ -600,7 +590,7 @@ line-height:120%;
 
 <!-- .slide: class="cclogo-slide" -->
 ## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum and PoS
-- Currently, Ethereum is proof-of-work (hash algorithm: Ethash)
+- Originally Ethereum was proof-of-work (hash algorithm: Ethash)
 - It has a [difficulty bomb](https://docs.ethhub.io/questions-about-ethereum/what-is-the-difficulty-bomb/), aka "Ice Age"
   - At certain block numbers, the difficulty increases significantly
   - See [this graph](https://i.imgur.com/ac1xV3l.png) from [here](https://docs.ethhub.io/questions-about-ethereum/what-is-the-difficulty-bomb/)
@@ -609,6 +599,16 @@ line-height:120%;
   - Change to PoS (in the works for some time now)
 - The new Ethereum PoS proposal is called ETH2
   - Or the "Casper protocol"
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum's move to PoS
+- Phase 0: December 2020: create the "Beacon Chain", a PoS blockchain
+- Phase 1: mid-September 2022: change Ethereum from PoW to PoS
+  - First PoS block: ...
+- Phase 2: sometime in 2023: allow shards
+  - We'll see [sharding in the scalability slide set](scalability.html#/sharding) 
 
 
 
