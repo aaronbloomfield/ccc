@@ -488,7 +488,8 @@ $
   1. Given an ECDSA public/private key pair...
   2. Perform SHA-256 on the (binary of the) public key
   3. Perform RIPEMD-160 on that (binary) SHA-256 result
-  4. Prefix that with the version number 0 (a single 0x00 byte) for the main network
+  4. Prefix that with the version number 0 (a single 0x00 byte) for a "standard" (P2PKH) invoice address
+     - See the [list of used version numbers](https://en.bitcoin.it/wiki/List_of_address_prefixes)
   5. Generate the checksum: Perform SHA-256 twice on the (binary) RIPEMD-160 result, and take the first 4 bytes
   6. The key is the version (0x00), the RIPEMD-160 result, and the checksum concatenated together
   7. Convert to a byte string using base58 encoding
@@ -506,7 +507,7 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 - SHA-256 on the public key:
   0b7c28c9b7290c98d7438e70b3d3f7c848fbd7d1dc194ff83f4f7cc9b1378e98
 - RIPEMD-160 on that: f54a5851e9372b87810a8e60cdd2e7cfd80b6e31
-- Prefix that with 0x00 for the main network:
+- Prefix that with 0x00 for a "standard" (P2PKH) address:
   00f54a5851e9372b87810a8e60cdd2e7cfd80b6e31
 - Generate the checksum:
   - Perform SHA-256 twice on RIPEMD-160 result: 
@@ -535,6 +536,15 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
   - Formally: the number of confirmations of a block is the number of successive blocks since then in the blockchain
 - The more confirmations, the more confident you are that the transaction will not change
   - We'll talk later about how many confirmations, how to attack this, etc.
+
+
+
+## Difficulty / target
+- The target (and thus difficulty) is *deterministically* computed by each node
+  - Based on the average time taken every 2016 blocks (2 weeks)
+  - Each node computes it separately
+- The `nBits` field encodes this
+  - We'll see how later
 </code></pre>
   </textarea></section>
 
