@@ -843,7 +843,7 @@ Size: varies; how many: txn_out_count
 | 1-75 | (push) | Push that many (following) bytes onto the stack |
 | 118&nbsp;=&nbsp;0x76 | OP_DUP | s.push(s.top()) |
 | 169&nbsp;=&nbsp;0xa9 | OP_HASH160 | s.push(RIPEMD160(SHA256(s.pop()))) |
-| 136&nbsp;=&nbsp;0x88 | OP_EQUAL_ VERIFY | OP_EQUAL: s.push(s.top()==s.top()); OP_VERIFY: abort if s.top() is false |
+| 136&nbsp;=&nbsp;0x88 | OP_EQUAL_ VERIFY | OP_EQUAL: s.push(s.pop()==s.pop()); OP_VERIFY: abort if s.top() is false |
 | 172&nbsp;=&nbsp;0xac | OP_CHECKSIG | Check the sig of the *previous* TXN |
 
 
@@ -1181,7 +1181,7 @@ OP_HASH160 <pubKeyHash> OP_EQUAL
 <sig>
 --------
 OP_HASH160
-<pubKeyHash>
+<expectedScriptHash>
 OP_EQUAL
 ```
 - This is a *special form*
@@ -1205,7 +1205,7 @@ OP_HASH160 <pubKeyHash> OP_EQUAL
 ... many more opcodes in this script
 --------
 OP_HASH160
-<pubKeyHash>
+<expectedScriptHash>
 OP_EQUAL
 ```
 
@@ -1358,12 +1358,12 @@ sha256(sha256(<version><marker><flag><txins><txouts>
 
 ## Bitcoin transaction types
 - Ones we've seen in detail
-  - P2PK (to public key)
-  - P2SH (to script hash)
-  - P2PKH (to public key hash)
+  - P2PK (pay to public key)
+  - P2SH (pay to script hash)
+  - P2PKH (pay to public key hash)
 - Witness transaction types
-  - P2WPKH: (to witness public key hash)
-  - P2WSH: (to witness script hash)
+  - P2WPKH: (pay to witness public key hash)
+  - P2WSH: (pay to witness script hash)
 - Others we haven't seen
   - [P2MS](https://learnmeabitcoin.com/technical/p2ms): Pay to multi-sig
 - And, of course, custom scripts
