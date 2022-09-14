@@ -1038,6 +1038,15 @@ As the top of the stack has true at the end, the script is verified and the tran
   - There was no abort() called by any of the script opcodes; AND
   - There were no invalid (disabled) opcodes attempted to be executed
 - If any one of these are false, the TXN is invalid, and the node will not process it (or add it to a block)
+
+
+
+## Bitcoin multiple outputs
+- Lets say that Alice (A) wants to redeem a UTXO for BTC to send 1 BTC each to Bob (B), Charlie (C), and Dani (D)
+  - We'll ignore fees here
+- Her transaction has *three outputs*
+  - Each output has a separate P2PKH output script based on the BTC addresses of B, C, and D
+  - This transaction creates 3 UTXOs, indexed 0 (for B) through 2 (for D)
     </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n" id='checkmultisig'><textarea>
@@ -1208,7 +1217,7 @@ OP_EQUAL
 - But Bitcoin currently needs about 200 EH/s $=200 \ast 10^{18}$ H/s
   - In 10 minutes, that's $1.2 \ast 10^{23}$ H/s for a block
 - So other things have to change other than the nonce:
-  - Transaction order: given 3,000 transactions, that's about $3000! \approx 4.1 \ast 10^{9130}$ possible orderings
+  - Transaction order: given 2,000 transactions in a block, that's about $2000! \approx 3.3 \ast 10^{5735}$ possible orderings
   - Transaction input or output ordering
     - This modifies the transaction itself!
       - And thus the transaction hash
@@ -1470,6 +1479,18 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
   - [Reference](https://en.bitcoin.it/wiki/Atomic_swap)
     </textarea></section>
 
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Cross-chain Atomic Swap
+- Alice creates a random secret value $s$, and a hash $h=hash(s)$
+- Alice tells Bob the hash $h$ of $s$, but not $s$ itself
+- Alice & Bob each create transactions such that:
+  - Once $s$ (not $h$!) is known, the value can be redeemed by the other party
+  - We will know when $s$ is known, as it will hash to $h$
+- Once Alice redeems her transaction, she reveals $s$ on the blockchain
+  - Bob uses that value of $s$ to redeem his transaction
+- There are also timeouts in case the other party does not proceed
+    </textarea></section>
+
   <section data-markdown data-separator="^\n\n\n" id='xchainpt1'><textarea>
 ## Cross-chain Atomic Swap
 - Alice generates a secret (random) value $x$, and reveals only $h(x)$ to Bob
@@ -1591,6 +1612,14 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 
     <section id="attacks" data-markdown class="center"><textarea>
 # Attacks
+
+<img src="../slides/images/logos/btc-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/btg-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/erg-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/firo-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/xlm-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -1684,7 +1713,7 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
   - On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
     - Due to a purchase of hashpower from (likely) Nicehash
 - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo had one in January 2021
-- [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold had one in May 2018 and also January 2020
+- [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold had one in May 2018 and January 2020
 
 
 
@@ -1706,7 +1735,7 @@ Either side submitting a refund TXN early: the refund TXNs are time-locked, so t
 - Number of confirmations typically required (via [2miners](https://2miners.com)):
   - [![xlm logo](../slides/images/logos/xlm-coin-symbol.svg)](https://coinmarketcap.com/currencies/stellar/) XLM: 0 blocks (5 seconds) (TXNs are irreversible)
   - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 6 blocks (about 1 hour) for "standard" transactions
-  - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH: 120 blocks (about 1 hour)
+  - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH: 240 blocks (about 1 hour)
   - [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) RVN: 100 blocks (about 2 hours)
   - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) FIRO: 100 blocks (about 9 hours)
   - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 60 blocks (about 10 hours) for "large" transactions
