@@ -51,6 +51,7 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
+- Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
 - Due Tue, 9/6, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
