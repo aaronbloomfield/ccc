@@ -9,9 +9,9 @@ In this assignment you will read in, validate, and then output the Bitcoin block
 
 Your program will take in a file that contains one or more blocks from the Bitcoin blockchain; these blocks are in binary format.  Your program must read these blocks in, check the blockchain for a set of possible errors, and then output the result in JSON format.
 
-Your program will provide exactly one line of output to the standard output: either "no errors X blocks" (case sensitive!) or the specific error and block number ("error 5 block 17") -- we describe the error numbers below.  In the case of multiple errors, your program should report then terminate on the first discovered error.  In addition, it will create a JSON file if there were no errors -- if the input file name was blk00000.blk, then it will create a JSON file named blk00000.blk.json.  If there are errors, it is fine to create the JSON file or not -- it will not be checked.  The format of this file is described below.
+Your program will provide exactly one line of output to the standard output: either `no errors X blocks` (case sensitive! and always pluralize "blocks") or the specific error and block number (`error 5 block 17`) -- we describe the error numbers below.  In the case of multiple errors, your program should report then terminate on the first discovered error.  In addition, it will create a JSON file if there were no errors -- if the input file name was blk00000.blk, then it will create a JSON file named blk00000.blk.json.  If there are errors, it is fine to create the JSON file or not -- it will not be checked.  The format of this file is described below.
 
-The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain -- specifically before any BIPs were proposed and enacted.  Thus, the blocks will not contain fields such as the height number.  Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).
+The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain -- specifically before any [BIPs](https://github.com/bitcoin/bips) were proposed and enacted.  Thus, the blocks will not contain fields such as the height number.  Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).
 
 You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the first four sections: on [Merkle trees](../../slides/bitcoin.html#/merkle), [data types used](../../slides/bitcoin.html#/datatypes), [Bitcoin concepts and terminology](../../slides/bitcoin.html#/concepts), and the [blockchain description](../../slides/bitcoin.html#/blockchain).
 
@@ -23,15 +23,13 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 ### Languages
 
-In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Four languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.10.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it.
+In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Four languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.10.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it.  You will have to let us know at least two days before the submission deadline so that we can configure it in time.
 
 This assignment specifically is intended for you to use packages that handle the JSON processing for your programming language.  In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries).  However, you are welcome to -- and probably should -- use any JSON libraries.
 
 **Python:** To output JSON in Python, you create a dictionary (with nested dictionaries and lists, as necessary), and then use the `json` library (included with Python) to output the JSON; see [here](https://www.w3schools.com/python/python_json.asp) for a tutorial.
 
 **Java:** In Java, a number of tutorials ([1](https://www.javatpoint.com/java-json-example), [2](https://www.tutorialspoint.com/json/json_java_example.htm), [3](https://www.geeksforgeeks.org/working-with-json-data-in-java/), etc.) recommend using the [json-simple](https://github.com/fangyidong/json-simple) package from [json.org](https://www.json.org/json-en.html); you can download the .jar file from [here](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-simple/json-simple-1.1.1.jar).  Version 1.1.1 of that file (`json-simple-1.1.1.jar`) will be put into the directory along with your source code; thus, you should NOT include it in the files that you submit.  To use it you will need to update your classpath on both the compilation (`javac -cp json-simple-1.1.1.jar:. BTCParse.java`) and execution (`java -cp json-simple-1.1.1.jar:. BTCParse`); these updates will have to be made to the Makefile and parse.sh files, respectively, that you submit.  The first of those tutorials ([this one](https://www.javatpoint.com/java-json-example)) has example code that outputs in JSON using this library.  Lastly, it's fine if the compilation line complains about a deprecated API, as long as the compilation result is still successful.
-
-**Others:** If there is another language that you want to use, please speak to us, and we will work to get it configured on the submission system.  You will have to let us know at least two days before the submission deadline so that we can configure it in time.
 
 ### Provided files
 
@@ -253,15 +251,15 @@ Some important notes to remember:
 - Bitcoin uses a double hashing, so each hash is really the sha256 hash of the sha256 hash of the data itself
 - This assignment is *NOT* using Fast Merkle trees
 
-For testing the Merkle tree hashes, we provide a few particular blocks that have a given number of transactions:
+For testing the Merkle tree hashes, we provide a few particular blocks that have a given number of transactions.  The "Block xxx" link is to a blockchain explorer, which displays the value of the Merkle tree hash.
 
-- Block 170 ([blk00000-b170.blk](blk00000-b170.blk)) is the first block with 2 transactions
-- Block 586 ([blk00000-b586.blk](blk00000-b586.blk)) is the first block with 3 transactions
-- Block 546 ([blk00000-b546.blk](blk00000-b546.blk)) is the first block with 4 transactions
-- Block 26,816 ([blk00000-b26816.blk](blk00000-b26816.blk)) is the first block with 5 transactions
-- Block 2,812 ([blk00000-b2812.blk](blk00000-b2812.blk)) is the first block with 6 transactions
-- Block 49,820 ([blk00000-b49820.blk](blk00000-b49820.blk)) is the first block with 7 transactions
-- Block 53,066 ([blk00000-b53066.blk](blk00000-b53066.blk)) is the first block with 8 transactions
+- [Block 170](https://www.blockchain.com/btc/block/170), in file [blk00000-b170.blk](blk00000-b170.blk), is the first block with 2 transactions
+- [Block 586](https://www.blockchain.com/btc/block/586), in file [blk00000-b586.blk](blk00000-b586.blk), is the first block with 3 transactions
+- [Block 546](https://www.blockchain.com/btc/block/546), in file [blk00000-b546.blk](blk00000-b546.blk), is the first block with 4 transactions
+- [Block 26,816](https://www.blockchain.com/btc/block/26816), in file [blk00000-b26816.blk](blk00000-b26816.blk), is the first block with 5 transactions
+- [Block 2,812](https://www.blockchain.com/btc/block/2812), in file [blk00000-b2812.blk](blk00000-b2812.blk), is the first block with 6 transactions
+- [Block 49,820](https://www.blockchain.com/btc/block/49820), in file [blk00000-b49820.blk](blk00000-b49820.blk), is the first block with 7 transactions
+- [Block 53,066](https://www.blockchain.com/btc/block/53066), in file [blk00000-b53066.blk](blk00000-b53066.blk), is the first block with 8 transactions
 
 #### Merkle tree example
 
@@ -320,7 +318,7 @@ $ python3
 
 In Python, given a hash, the `.digest()` method returns it in binary format, and the `.hexdigest()` method returns it in an ASCII hex representation.
 
-This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block), displayed in big-Endian format.  Thus, our Endian-ness is reversed.  So we can un-reverse (?) it; note that we are recomputing `hash2` with `.digest()`, rather than `.hexdigest()`, to get it's value in binary:
+This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block), displayed in big-Endian format.  Thus, our Endian-ness is reversed from what is displayed in the block.  So we can un-reverse (?) it; note that we are recomputing `hash2` with `.digest()`, rather than `.hexdigest()`, to get it's value in binary:
 
 ```
 >>> hash2 = sha256(hash1).digest() 
@@ -332,7 +330,7 @@ This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/G
 >>>
 ```
 
-Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block).
+Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block).  This is also displayed in the block:
 
 And then we can get all fancy and do all that in one line:
 
@@ -348,7 +346,7 @@ Got that?  Good.
 
 ### Part 3: Output
 
-Lastly, your program must output the blockchain in JSON format.  You can read about [JSON on Wikipedia](https://en.wikipedia.org/wiki/JSON).  The format must be as described below, but your whitespace doesn't matter.  We are going to check it via a JSON parser.  
+Your program must output the blockchain in JSON format.  You can read about [JSON on Wikipedia](https://en.wikipedia.org/wiki/JSON).  The format must be as described below, but your whitespace doesn't matter.  We are going to check it via a JSON parser.  
 
 You SHOULD be using the JSON library that comes with your programming language!  No need to reinvent the wheel here.  It is VERY tedious to hand-code JSON output.  See the Languages section, above, for how to do this.
 
@@ -402,8 +400,8 @@ A bunch of notes:
 
 - We don't need to list the magic number in the JSON file -- it's always the same, and was verified when the blockchain was read in (technically it's not part of the block, it's part of the file format)
 - Likewise, we don't need to include the block size, since that's not as important in JSON
-- You can put in additional fields if you would like -- but the fields shown above must be there; in the output above, both `timestamp_readable` and `file_position` are NOT required fields
-- All hexadecimal values should NOT have a leading '0x'
+- You can put in additional fields if you would like -- but the fields shown above must be there; the only exception is that, in the output above, both `timestamp_readable` and `file_position` are NOT required fields
+- Hexadecimal values should NOT have a leading '0x'
 - Integer values should not have quotes around them (that's a JSON feature), but all other values should be enclosed in double quotes (not single quotes -- a JSON restriction)
 - If you have a list if items in an array, JSON is not happy with a comma after the last one; you can see this after the 'lock_time' value -- there is no comma after its value 0 (yes, this is stupid, but that's JSON for you)
 - You'll notice that the 'height' field is at the end -- you won't know, when starting to read the file, how many blocks are therein.  So we put that at the end.  This is just the total number of blocks in the file.
@@ -432,5 +430,5 @@ You should also use the [check_genesis_json.py](check_genesis_json.py.html) ([sr
 You must submit three files:
 
 - `Makefile`: if your program needs compilation, then running `make` will perform that compilation.  If it does not need compiling, then just have something such as `echo "hello world"` as the action for the default target.
-- `parse.sh`: a bash script that will execute your (compiled) program with any provided command-line options.  An example of these are shown above.
+- `parse.sh`: a bash script that will execute your (compiled) program with any provided command-line options.  An example of this is shown above.
 - The source code itself, likely something like `btcscript.py` or `BTCScript.java`

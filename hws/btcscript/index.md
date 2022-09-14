@@ -190,6 +190,8 @@ IMPORTANT NOTE: For the `OP_CHECKMULTISIG`, it should have ONLY the keys/signatu
 
 In this part you will create the scripts for a [cross-chain transaction](../../slides/bitcoin.html#/xchain).  Typically this would be for two different cryptocurrencies.  However, since we only have learned Bitcoin Script, we will use that for both parts.  There are many cryptocurrencies that are forks of Bitcoin, and thus have the same scripting language, so the same program could work for them.  Or a completely different cryptocurrency, with a different scripting language, would have an analogous script.  However, to test this we will be using two *different* Bitcoin testing blockchains.  
 
+Below you will be obtaining a Bitcoin key pair and funds on a separate Bitcoin blockchain.  You will be creating *three* script producing functions in scripts.py.  The first one, `atomicswap_scriptPubKey()`, will create the [TXN 1 and TXN 3 from the slides](../../slides/bitcoin.html#/xchainpt1).  This script will be used for BOTH of these transactions (with different parameters, of course) on the two different blockchains by the provided code.  The second function, `atomcswap_scriptSig_redeem()`, will be when Alice or Bob knows the secret value and is redeeming the BTC.  This is used in steps 5 and 6 on [cross-chain atomic swap procedure slide](../../slides/bitcoin.html#/atomicsteps).  The third function, `atomcswap_scriptSig_refund()`, will create the time-out redeeming script, which is [TXN 2 and TXN 2 from the slides](../../slides/bitcoin.html#/xchainpt1).  Again, this will be used on both blockchains by the provided code.  There are some requirements for what has to be in these scripts, described below (in "Notes and hints").
+
 In addition to the lecture slides, you may want to refer to the [Atomic swap article](https://en.bitcoin.it/wiki/Atomic_swap) in the [Bitcoin wiki](https://en.bitcoin.it/wiki/Main_Page).
 
 So far we have been using tBTC on the Bitcoin Testnet.  For this part we will also be using the BlockCypher Testnet -- this is also a fake Bitcoin network for testing, and it operates just like the Bitcoin Testnet we've been using.  Bitcoin on this other testnet will be abbreviated as BCY (for BlockCYpher testnet).  Note that we have been using [blockcypher.com](https://live.blockcypher.com/) to view all of our transactions, since that site can view both of these Bitcoin test networks.
@@ -208,17 +210,19 @@ As an overview, this is what is going to happen.
 To set this up, we need to create Bitcoin keypairs for the BlockCypher testnet, and use a faucet to give us some coins.  The process for creating keys and funding the accounts is different for the BCY test network.
 
 1. Create an account at [https://accounts.blockcypher.com/](https://accounts.blockcypher.com/), which will allow you to get an API token.  Your token will be a hex number such as 0123456789abcdef0123456789abcdef.  Save this token somewhere safe!  You are welcome to record it in scripts.py (`blockcypher_api_token` is set aside for that), but that's completely optional.
-2. To create keys, you will need to run the following from the command line, putting your token in there instead of `API_TOKEN`.  You should do this twice, one for you and once for Bob.
+2. You will need to be able to run the `curl` program from the command-line.  Try running it without any parameters to see if it is installed.  If not, you will have to install it -- web searches for how to install curl will guide your way.
+3. To create keys, you will need to run the following from the command line, putting your token in there instead of `API_TOKEN`.  You should do this twice, one for you and once for Bob.
    ```
 curl -X POST 'https://api.blockcypher.com/v1/bcy/test/addrs?token=API_TOKEN'
 ```
-3. Save those tokens in scripts.py; yours go into `my_private_key_bcy_str` and `my_invoice_address_bcy_str`, and Bob's go into `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`.  Note that the `curl` command returns 4 values, but we only need to save two for each of the accounts.  Also note that the format of the private key is different for this network -- this one is hex encoded, whereas the one for the tBTC network was base-58 encoded.  The provided code base properly handles this difference.
-4. Only Bob needs BCY funds.  You can fund his account via the following command, replacing both Bob's address for `BOB_BCY_ADDRESS` and your token for `API_TOKEN`:
+4. Save those tokens in scripts.py; yours go into `my_private_key_bcy_str` and `my_invoice_address_bcy_str`.  Note that the `curl` command returns 4 values, but we only need to save two for each of the accounts (you are welcome to save the others, if you would like -- just name the variables appropriately).  Also note that the format of the private key is different for this network -- this one is hex encoded, whereas the one for the tBTC network was base-58 encoded.  The provided assignment code properly handles this difference.
+5. Run that `curl` command again for Bob's keys, and save them into `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`.  
+6. Only Bob needs BCY funds.  You can fund his account via the following command, replacing both Bob's address for `BOB_BCY_ADDRESS` and your token for `API_TOKEN`:
    ```
 curl -d '{"address": "BOB_BCY_ADDRESS", "amount": 100000}' https://api.blockcypher.com/v1/bcy/test/faucet?token=API_TOKEN
 ```
-5. The above command will return a transaction hash; save that in `txid_bob_bcy_funding`.  If you run `./bitcoinctl.py geturls` it will display the full URL that you can use to view that funding transaction.
-6. We will need to split Bob's funds into parts, just like we did in the setup, above.  Make sure that you have Bob's private key and invoice address set in scripts.py (in `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`), as well as the transaction hash that funded the wallet (in `txid_bob_bcy_funding`).  Lastly, look at the URL for that funding transaction (you can get that via `./bitcoinctl.py geturls`) and determine the UTXO index -- that needs to be set in `utxo_index`.  The run `./bitcoinctl.py splitbcy` -- notice that the command is `splitbcy`, not `split`!  Record the transaction hash returned from that execution run in `txid_bob_bcy_split`.
+7. The above command will return a transaction hash; save that in `txid_bob_bcy_funding`.  If you run `./bitcoinctl.py geturls` it will display the full URL that you can use to view that funding transaction.
+8. We will need to split Bob's funds into parts, just like we did in the setup, above.  Make sure that you have Bob's private key and invoice address set in scripts.py (in `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`), as well as the transaction hash that funded the wallet (in `txid_bob_bcy_funding`).  Lastly, look at the URL for that funding transaction (you can get that via `./bitcoinctl.py geturls`) and determine the UTXO index -- that needs to be set in `utxo_index`.  The run `./bitcoinctl.py splitbcy` -- notice that the command is `splitbcy`, not `split`!  Record the transaction hash returned from that execution run in `txid_bob_bcy_split`.
 
 Whew!  The setup for this part is all done!  Now onto the scripting part....
 
@@ -246,6 +250,16 @@ Once you have written the script in the `atomicswap_scriptPubKey()` function, yo
 2. Bob transmits [TXN 3](../../slides/bitcoin.html#/xchainpt2) to the BCY network, which was also created by the `atomicswap_scriptPubKey()` function.  Be sure to set the `utxo_index` variable in scripts.py to a valid index before running this part!  This is run via `./bitcoinctl.py part4b`.  Save the transaction hash for this in the `txid_atomicswap_bob_send_bcy` variable. 
 3. Alice (you) can redeem TXN 3 on the BCY network, which reveals the secret.  Be sure to set the `utxo_index` variable in scripts.py to a valid index before running this part!  This is run via `./bitcoinctl.py part4c`.  Save the transaction hash into `txid_atomicswap_alice_redeem_bcy`.
 4. Bob can new redeem TXN 1 on the tBTC network, since he knows the secret which Alice just revealed via her redemption above.  Be sure to set the `utxo_index` variable in scripts.py to a valid index before running this part!  This is run via `./bitcoinctl.py part4d`.  Save the transaction hash into `txid_atomicswap_bob_redeem_tbtc`.
+
+#### Hints and notes
+
+- The `atomicswap_scriptPubKey()` function will create [TXN 1 and TXN 3 from the slides](../../slides/bitcoin.html#/xchainpt1); because this has to check for two cases, it has to have an if/else structure
+  - The first case (providing the hash) has to check the hash of the passed secret and also verify that it's signed by B (for TXN 1) or A (for TXN 2)
+  - The second case (timeout) has to check that it's signed by A and B (multi-sig!)
+- The `atomcswap_scriptSig_redeem()`, used in steps 5 and 6 on [cross-chain atomic swap procedure slide](../../slides/bitcoin.html#/atomicsteps), just provides the hash and signature
+- The `atomcswap_scriptSig_refund()`, which is [TXN 2 and TXN 2 from the slides](../../slides/bitcoin.html#/xchainpt1), has to check the signature and also the locktime
+  - This has to check one signature (A for TXN 1, B for TXN 2, although that is passed as a parameter)
+  - This will need to use `OP_CHECKLOCKTIMEVERIFY`, and you can see an example of that opcode's usage [here](../../slides/bitcoin.html#/locktime)
 
 
 ### Part 5: Return tBTC

@@ -270,7 +270,9 @@ atomic_swap_secret = 0
 
 # This function provides the pubKey script (aka output script) that will set
 # up the atomic swap.  This function is run by both Alice (aka you) and Bob,
-# but on different networks (tBTC for you/Alice, and BCY for Bob).
+# but on different networks (tBTC for you/Alice, and BCY for Bob).  This is
+# used to create TXNs 1 and 3, which are described at
+# http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.
 def atomicswap_scriptPubKey(public_key_sender, public_key_recipient, hash_of_secret):
     return [ 
              # fill this in
@@ -278,15 +280,18 @@ def atomicswap_scriptPubKey(public_key_sender, public_key_recipient, hash_of_sec
 
 # This is the ScriptSig that the receiver will use to redeem coins.  It's
 # provided in full so that you can write the atomicswap_scriptPubKey()
-# function, above.
+# function, above.  This creates the "normal" redeeming script, shown in steps 5 and 6 at 
+# http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/atomicsteps.
 def atomcswap_scriptSig_redeem(sig_recipient, secret):
     return [
         sig_recipient, secret, OP_TRUE,
     ]
 
-# This is the ScriptSig for sending coins back to the sender if unredeemed.
-# It's is provided in full so that you can write the atomicswap_scriptPubKey()
-# function, above.
+# This is the ScriptSig for sending coins back to the sender if unredeemed; it
+# is provided in full so that you can write the atomicswap_scriptPubKey
+# () function, above.  This is used to create TXNs 2 and 4, which are
+# described at
+# http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.
 def atomcswap_scriptSig_refund(sig_sender, sig_recipient):
     return [
         sig_recipient, sig_sender, OP_FALSE,

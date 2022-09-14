@@ -281,7 +281,9 @@ atomic_swap_secret <font color="#990000">=</font> <font color="#993399">0</font>
 
 <i><font color="#9A1900"># This function provides the pubKey script (aka output script) that will set</font></i>
 <i><font color="#9A1900"># up the atomic swap.  This function is run by both Alice (aka you) and Bob,</font></i>
-<i><font color="#9A1900"># but on different networks (tBTC for you/Alice, and BCY for Bob).</font></i>
+<i><font color="#9A1900"># but on different networks (tBTC for you/Alice, and BCY for Bob).  This is</font></i>
+<i><font color="#9A1900"># used to create TXNs 1 and 3, which are described at</font></i>
+<i><font color="#9A1900"># http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>public_key_sender<font color="#990000">,</font> public_key_recipient<font color="#990000">,</font> hash_of_secret<font color="#990000">):</font>
     <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
              <i><font color="#9A1900"># fill this in</font></i>
@@ -289,15 +291,18 @@ atomic_swap_secret <font color="#990000">=</font> <font color="#993399">0</font>
 
 <i><font color="#9A1900"># This is the ScriptSig that the receiver will use to redeem coins.  It's</font></i>
 <i><font color="#9A1900"># provided in full so that you can write the atomicswap_scriptPubKey()</font></i>
-<i><font color="#9A1900"># function, above.</font></i>
+<i><font color="#9A1900"># function, above.  This creates the "normal" redeeming script, shown in steps 5 and 6 at </font></i>
+<i><font color="#9A1900"># http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/atomicsteps.</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">atomcswap_scriptSig_redeem</font></b><font color="#990000">(</font>sig_recipient<font color="#990000">,</font> secret<font color="#990000">):</font>
     <b><font color="#0000FF">return</font></b> <font color="#990000">[</font>
         sig_recipient<font color="#990000">,</font> secret<font color="#990000">,</font> OP_TRUE<font color="#990000">,</font>
     <font color="#990000">]</font>
 
-<i><font color="#9A1900"># This is the ScriptSig for sending coins back to the sender if unredeemed.</font></i>
-<i><font color="#9A1900"># It's is provided in full so that you can write the atomicswap_scriptPubKey()</font></i>
-<i><font color="#9A1900"># function, above.</font></i>
+<i><font color="#9A1900"># This is the ScriptSig for sending coins back to the sender if unredeemed; it</font></i>
+<i><font color="#9A1900"># is provided in full so that you can write the atomicswap_scriptPubKey</font></i>
+<i><font color="#9A1900"># () function, above.  This is used to create TXNs 2 and 4, which are</font></i>
+<i><font color="#9A1900"># described at</font></i>
+<i><font color="#9A1900"># http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">atomcswap_scriptSig_refund</font></b><font color="#990000">(</font>sig_sender<font color="#990000">,</font> sig_recipient<font color="#990000">):</font>
     <b><font color="#0000FF">return</font></b> <font color="#990000">[</font>
         sig_recipient<font color="#990000">,</font> sig_sender<font color="#990000">,</font> OP_FALSE<font color="#990000">,</font>
