@@ -1052,13 +1052,13 @@ As the top of the stack has true at the end, the script is verified and the tran
   <section data-markdown data-separator="^\n\n\n" id='checkmultisig'><textarea>
 ## OP_CHECKMULTISIG
 - A way to check that one (or more) signatures match one (or more) keys ([reference](https://en.bitcoin.it/wiki/OP_CHECKMULTISIG))
-- Given many public keys, and many signatures, make sure each signature matches one key
+- Given multiple public keys and multiple signatures, make sure each signature matches one key
   - But keys are checked in order...
 - On the stack (from top-to-bottom):
-  - The number, $n$, of public keys; can use OP_1, OP_2, OP_3, etc.
-  - That many public keys
-  - The number, $m$, of signatures; can use OP_1, OP_2, OP_3, etc.
-  - That many signatures
+  - The number, $n$, of public keys; use OP_1, OP_2, OP_3, etc.
+  - The $n$ public keys
+  - The number, $m$, of signatures; use OP_1, OP_2, OP_3, etc.
+  - The $m$ signatures
   - Due to a bug, OP_0 must be on the stack also
 </textarea></section>
 
@@ -1257,7 +1257,7 @@ OP_EQUAL
       <img src="images/bitcoin/blocks/blocks.dot.3.svg" style="border-radius:10px;margin-top:0;margin-bottom:0;width:80%">
     </td>
     <td style="vertical-align: middle;">
-      <p style="text-align: center;">... becomes ...<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>(new parts in red)<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
+      <p style="text-align: center;">... becomes ...<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>(new parts<br>are colored<br>differently)<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
     </td>
     <td>
       <img src="images/bitcoin/blocks/blocks.dot.6.svg" style="border-radius:10px;margin-top:0;width:80%">
@@ -1332,6 +1332,21 @@ sha256(sha256(<version><marker><flag><txins><txouts>
 
 
 
+## Bitcoin block size
+- A bitcoin block can only be 4 Kb in size
+  - But how many transactions is that?
+- A Bitcoin block can also only have 20,000 signature operations (sigops) per block
+  - OP_CHECKMULTISIG [uses 20](https://en.bitcoin.it/wiki/OP_CHECKMULTISIG)
+- The witness changes allow 4 million weight units (WU) per block
+  - Pre-segwit bytes weigh 4 WU (max of 1 Mb block size)
+  - Sigwit witness data bytes weigh 1 WU each (max of 4 Mb)
+    - But there is typically data other than witness data in the block...
+- Theoretical limit of 4 Mb block size (if all witness TXNs)
+  - Typically between 1,500 and 2,000 TXNs per block
+    - See the latest block [here](https://bitcoinblockexplorers.com/blocks)
+
+
+
 ## Problems with P2PKH transactions
 - Back to the hash of the public key version
 - Problem: once redeemed, the public key for the UTXO is thus known
@@ -1365,7 +1380,7 @@ OP_RETURN
 - Such a UTXO could never be spent
 </textarea></section>
 
-<section data-markdown data-separator="^\n\n\n"><textarea>
+<section data-markdown data-separator="^\n\n\n" id="locktime"><textarea>
 ## Lock coins until a future time
 Output script:
 ```
@@ -1382,9 +1397,9 @@ OP_CHECKSIG
   - Really the block's timestamp field
   - Is compared to the transaction's lock_time field
 - `OP_DROP`: pop top element from the stack and discard it
+</textarea></section>
 
-
-
+<section data-markdown data-separator="^\n\n\n"><textarea>
 ## Transaction Puzzle
 Output script of [this transaction](https://www.blockchain.com/btc/tx/a4bfa8ab6435ae5f25dae9d89e4eb67dfa94283ca751f393c1ddc5a837bbc31b) from 12/12/2012:
 ```
@@ -1516,7 +1531,7 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
 - Bob broadcasts TXN3 (original payment one)
     </textarea></section>
 
-  <section data-markdown data-separator="^\n\n\n" data-transition='none'><textarea>
+  <section data-markdown data-separator="^\n\n\n" data-transition='none' id="atomicsteps"><textarea>
 ## Cross-chain Atomic Swap
 1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
 2. Alice submits TXN1 to the network
@@ -1528,9 +1543,9 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
 <p style="font-size: small">&nbsp;</p>
 
 Is this secure?  Can it be reversed at any step?
+    </textarea></section>
 
-
-
+  <section data-markdown data-separator="^\n\n\n" data-transition='none'><textarea>
 ## Cross-chain Atomic Swap
 1. Alice creates TXN1 (payment) & B-signed TXN2 (refund)
 2. Alice submits TXN1 to the network
