@@ -81,9 +81,9 @@ def create_CHECKSIG_signature(txin, txout, txin_scriptPubKey, private_key):
 # to the private key above
 split_txid = txid_initial
 
-# How much BTC is in that UTXO; the faucet is currently only giving 0.001
+# How much BTC is in that UTXO; the faucet is currently only giving 0.0001
 # tBTC, so this should not have to change.
-split_amount_to_split = 0.001
+split_amount_to_split = 0.0001
 
 # How many UTXO indices to split it into.  Note that it will actually split
 # into one less, and use the last one as the transaction fee. It will make
@@ -114,7 +114,7 @@ utxo_index = 0
 # there is no miner fee, and it will not be mined into a block.  Setting it
 # to 90% of the value of the UTXO index is reasonable.  Note that the amount
 # in a UTXO index is split_amount_to_split / split_into_n.
-send_amount = 0.00009
+send_amount = 0.000009
 
 
 #------------------------------------------------------------

@@ -67,25 +67,25 @@ We cannot vouch for any of these solutions; we just collected a bunch of Piazza 
 
 ### Testnet
 
-As we do not want to have to buy, and possibly lose, real BTC, we are going to use a test network.  Because the coins we are going to be using are not "real" Bitcoins, we will use the abbreviation 'tBTC' instead of 'BTC'.  When using a test network, you get coins for free via a "faucet" -- in the same way that a water faucet provides water once turned on, so does a testnet faucet provide tBTC when requested.  The particular one we are using is [Yet Another Bitcoin Testnet Faucet](https://testnet-faucet.mempool.co/).
+As we do not want to have to buy, and possibly lose, real BTC, we are going to use a test network.  Because the coins we are going to be using are not "real" Bitcoins, we will use the abbreviation 'tBTC' instead of 'BTC'.  When using a test network, you get coins for free via a "faucet" -- in the same way that a water faucet provides water once turned on, so does a testnet faucet provide tBTC when requested.  The particular one we are using is [Bitcoin Testnet Faucet](https://bitcoinfaucet.uo1.net/send.php).
 
 
 
 1. You will need to generate a tBTC key pair.  Run `./bitcoinctl.py genkey`, and record both the public and private keys.  While these keys are not valid on the main Bitcoin test network -- the have a different value for the [version byte](../../slides/bitcoin.html#/btcaddress) in the invoice address -- you will need them throughout this assignment.
     - Save both the tBTC private key and the tBTC address into the scripts.py file into `private_key_str` and `invoice_address`, respectively
-2. Go to the [Testnet Faucet](https://testnet-faucet.mempool.co/) page and enter the tBTC address key provided in the previous step.  You will be provided a transaction ID.  You can then view your transaction at [https://live.blockcypher.com/](https://live.blockcypher.com/) -- put the transaction ID in the search box and be sure to select 'Bitcoin Testnet' for the search.
+2. Go to the [Testnet Faucet](https://bitcoinfaucet.uo1.net/send.php) page and enter the tBTC address key provided in the previous step.  You will be provided a transaction ID (search down the web page for the transaction page that has your BTC address).  You can then view your transaction at [https://live.blockcypher.com/](https://live.blockcypher.com/) -- put the transaction ID in the search box and be sure to select 'Bitcoin Testnet' for the search.
     - Enter the transaction ID in scripts.py in `txid_initial`
     - Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address -- the amount that address holds should be the amount that the faucet provided to you (likely 0.001 tBTC)
       - It may take up to 10 minutes or so for the transaction that funded your wallet to be mined into the blockchain
     - Verify that you can view the transaction at https://live.blockcypher.com/btc-testnet/tx/&lt;txid&gt; where &lt;txid&gt; is your transaction id
       - Note that the testnets often perform many transfers in one transaction -- so the total amount transacted may be more than 0.001 tBTC, but the amount paid to your wallet should be 0.001 tBTC
     - You can also get these URLs by running `./bitcoinctl.py geturls`.  As you fill in more transaction hashes throughout this assignment, re-running this will show an increasing list of URLs.
-3. That transaction gave only one UTXO, and we would like multiple UTXOs to use -- this way we can use one per question part, and we have a few extra if something ends up not working correctly.
+3. That transaction gave only one UTXO, and we would like multiple UTXO indices to use -- this way we can use one per question part, and we have a few extra if something ends up not working correctly.
     - Look at the section of scripts.py that deals with splitting coins.  The default values there are probably correct, but check anyway -- see the comments therein for details
       - Check the transaction -- via the URL from above -- that gave you the coins, and make sure you have the right UTXO index (which is stored in the `utxo_index` variable in scripts.py).  If you get an error such as "witness script detected in tx without witness data", then it probably means your UTXO index is wrong.
     - Run `./bitcoinctl.py split` to split your coins.  This uses the values in the splitting coins section of scripts.py.
       - If this works properly, it will present back a Python dictionary that will take up many lines.  If it doesn't work, it will give you an error in just a few lines.
-    - Look at the wallet info URL (run `./bitcoinctl.py geturls` to get the URL), and note the transaction hash of the split transaction -- it should be the top transaction listed, and will have 10 different outputs.  The transaction hash itself is also listed in the output from the split transaction -- it's the `hash` field of the dictionary, and is about a half a dozen lines down.  Record that transaction id in scripts.py as `txid_split`
+    - Look at the *wallet* info URL (run `./bitcoinctl.py geturls` to get the URL), and note the transaction hash of the split transaction -- it should be the top transaction listed, and will have 9 or 10 different outputs.  The transaction hash itself is also listed in the output from the split transaction -- it's the `hash` field of the dictionary, and is about a half a dozen lines down.  Record that transaction id in scripts.py as `txid_split`
 
 Be careful not to lose the information (keys and TXIDs) that you recorded above.  To prevent abuse, the faucet only allows one transaction per 12 hours for a given IP address or tBTC address.  If you need more during that 12 hour window, or you are running into 'exceeded limit' issues, you can try requesting it through your cell phone.  If you put it on cellular (meaning disconnect from UVA's network), it will report a very different IP address to the faucet.
 
@@ -125,7 +125,7 @@ To complete this transaction, you need to complete four things:
 
 - The `P2PKH_scriptSig(...)` function provides the sigscript needed to redeem the UTXO being spent.  The UTXO that is being redeemed -- one of the split UTXO indices from above -- requires a P2PKH sigScript to redeem one of the indices.
 - The `P2PKH_scriptPubKey(address)` function defines the pubKey script (aka output script).  This was discussed in lecture in the [P2PKH transaction](../../slides/bitcoin.html#/p2pkh) slides.  This script creates a new UTXO, payable to the faucet address, that is also a P2PKH script.  The parameter is of type `P2PKHBitcoinAddress`, which is what the `P2PKHBitcoinAddress.from_pubkey(public_key)` call (shown above) returns; a variable this type can be put directly into a script.
-- Set the transaction to be spent via the `txid_utxo` variable; the default is the transaction ID that was split (i.e., the `txid_split`).
+- Set the transaction to be spent via the `txid_utxo` variable; the default is the transaction ID that was split (i.e., the `txid_split`), which is probably the correct value.
 - Set the output index to spend via `utxo_index`; it is currently set to 0.  Recall that output indices start from 0, not 1.  Be sure to pick an unspent index!  If you have to run this multiple times, you may have to change this value to an unspent index.
 
 When you have finished the script, you can run it via `./bitcoinctl.py part1`; it will report an error if you get it wrong.  If it works, you will see a JSON dictionary printed to the screen.  Record the transaction ID of that transaction in `txid_p2pkh`.  The TXID is the 'hash' field in the dictionary that is printed to the screen when run.  You can then run `./bitcoinctl.py geturls` to get the URL for the transaction that you just executed.  It may take up to 10 minutes for it to be mined into the blockchain.
@@ -219,7 +219,7 @@ curl -X POST 'https://api.blockcypher.com/v1/bcy/test/addrs?token=API_TOKEN'
 5. Run that `curl` command again for Bob's keys, and save them into `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`.  
 6. Only Bob needs BCY funds.  You can fund his account via the following command, replacing both Bob's address for `BOB_BCY_ADDRESS` and your token for `API_TOKEN`:
    ```
-curl -d '{"address": "BOB_BCY_ADDRESS", "amount": 100000}' https://api.blockcypher.com/v1/bcy/test/faucet?token=API_TOKEN
+curl -d '{"address": "BOB_BCY_ADDRESS", "amount": 100000}' "https://api.blockcypher.com/v1/bcy/test/faucet?token=API_TOKEN"
 ```
 7. The above command will return a transaction hash; save that in `txid_bob_bcy_funding`.  If you run `./bitcoinctl.py geturls` it will display the full URL that you can use to view that funding transaction.
 8. We will need to split Bob's funds into parts, just like we did in the setup, above.  Make sure that you have Bob's private key and invoice address set in scripts.py (in `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`), as well as the transaction hash that funded the wallet (in `txid_bob_bcy_funding`).  Lastly, look at the URL for that funding transaction (you can get that via `./bitcoinctl.py geturls`) and determine the UTXO index -- that needs to be set in `utxo_index`.  The run `./bitcoinctl.py splitbcy` -- notice that the command is `splitbcy`, not `split`!  Record the transaction hash returned from that execution run in `txid_bob_bcy_split`.
