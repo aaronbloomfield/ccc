@@ -18,7 +18,9 @@ You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.h
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Thu, 9/15: added the last bullet point guarantee in the Validation section
 
 
 ### Languages
@@ -175,6 +177,7 @@ Test this well!  We are going to provide all sorts of messed-up files to your pr
   - Note that the actual Bitcoin block chain files downloaded by the BTC client do not assure they are in order!
 - There will be no 'orphan' blocks -- each block will be the successor to the block immediately before it
   - Obviously that doesn't apply to the first block in the file
+- If there is an error in the file, it will be one of the 6 errors listed above.  Other errors that may occur are not ones that you have to check for.  As an example, an error where the block size (the send half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error.
 
 Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the "no errors X blocks" or "error 5 block 17" line -- we'll get rid of the other output in the next section.
 

@@ -51,7 +51,10 @@
 <p>The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain – specifically before any <a href="https://github.com/bitcoin/bips">BIPs</a> were proposed and enacted. Thus, the blocks will not contain fields such as the height number. Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).</p>
 <p>You will need to be familiar with the <a href="../../slides/bitcoin.html#/">Bitcoin slide set</a>, specifically the first four sections: on <a href="../../slides/bitcoin.html#/merkle">Merkle trees</a>, <a href="../../slides/bitcoin.html#/datatypes">data types used</a>, <a href="../../slides/bitcoin.html#/concepts">Bitcoin concepts and terminology</a>, and the <a href="../../slides/bitcoin.html#/blockchain">blockchain description</a>.</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. --></p>
+<ul>
+<li>Thu, 9/15: added the last bullet point guarantee in the Validation section</li>
+</ul>
 <h3 id="languages">Languages</h3>
 <p>In theory, this can be implemented in any language. In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for. Four languages that can currently be used: C (using <code>gcc</code>), C++ (using <code>g++</code>), Java (using OpenJDK 11), and Python (using Python 3.10.x). If you want to use a different language, let’s have a chat about it, as it will take some time to ensure that the grading system can handle it. You will have to let us know at least two days before the submission deadline so that we can configure it in time.</p>
 <p>This assignment specifically is intended for you to use packages that handle the JSON processing for your programming language. In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries). However, you are welcome to – and probably should – use any JSON libraries.</p>
@@ -160,6 +163,7 @@ $</code></pre>
 <ul>
 <li>Obviously that doesn’t apply to the first block in the file</li>
 </ul></li>
+<li>If there is an error in the file, it will be one of the 6 errors listed above. Other errors that may occur are not ones that you have to check for. As an example, an error where the block size (the send half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error.</li>
 </ul>
 <p>Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the “no errors X blocks” or “error 5 block 17” line – we’ll get rid of the other output in the next section.</p>
 <h3 id="testing">Testing</h3>
