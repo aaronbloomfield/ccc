@@ -43,6 +43,7 @@ All the logos herein are from sources whose licenses allow redistribution in thi
 1. [![](mim-coin-symbol.svg){class=cclogo}](mim-coin-symbol.svg) Maker (MKR) from [abracadabra.money](https://abracadabra.money/) (specifically, [here](https://abracadabra.money/img/PixelMIM.12c48248.svg)), and is used under free use guidelines <br clear='all'>
 1. [![](mkr-coin-symbol.svg){class=cclogo}](mkr-coin-symbol.svg) Maker (MKR) from [cryptologos.cc](https://cryptologos.cc/maker) <br clear='all'>
 1. [![](nmc-coin-symbol.svg){class=cclogo}](nmc-coin-symbol.svg) Namecoin (NMC) from [cryptologos.cc](https://cryptologos.cc/namecoin) <br clear='all'>
+1. [![](neox-coin-symbol.svg){class=cclogo}](neox-coin-symbol.svg) Neoxa (NEOX) was from the [NEOX 2miner's page](https://neox.2miners.com/), but they don't own the copyright -- that's owned by [Neoxa](https://www.neoxa.net/), and is included under free use guidelines<br clear='all'>
 1. [![](ppc-coin-symbol.svg){class=cclogo}](ppc-coin-symbol.svg) Peercoin (PPC) from [cryptologos.cc](https://cryptologos.cc/peercoin) <br clear='all'>
 1. [![](rvn-coin-symbol.svg){class=cclogo}](rvn-coin-symbol.svg) Ravencoin (RVN) adapted from [this image from Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ravencoin-logo.png) <br clear='all'>
 1. [![](sai-coin-symbol.svg){class=cclogo}](sai-coin-symbol.svg) Sai (SAI) is from [here](https://saistats.com/) and is used under free use guidelines <br clear='all'>
