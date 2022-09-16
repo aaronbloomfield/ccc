@@ -63,6 +63,7 @@ line-height:120%;
 [Proof-of-$X$](#/proofofx)  
 [DAGs](#/dags)  
 [Forks & Orphan Nodes](#/forks)  
+[Attacks](#/attacks)  
 	</textarea></section>
 
 <!-- ============================================================ -->
@@ -1104,6 +1105,149 @@ Note that UTXOs are not only in the bottom level
 
 </section>
   
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="attacks" data-markdown class="center"><textarea>
+# Attacks
+
+<img src="../slides/images/logos/btc-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/btg-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/erg-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/firo-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
+<img src="../slides/images/logos/xlm-coin-symbol.svg" class="cclogosubtitle">
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Double spending
+- Submit two TXNs spending the same UTXO
+- Prevented by:
+  - The "valid block check" that miners & nodes perform checks for
+    - Non-malicious nodes will not vote to approve a node that double spends
+      - Or that spends an already-spent UTXO
+  - Having a witness hash for a transaction that cannot be changed
+
+
+
+<!-- .slide: class="right-float-img" -->
+<img src='images/bitcoin/attack/attack.dot.1.svg' style='width:130px'>
+
+## 51% attack
+- Given the initial state in some block, say 1000
+
+
+
+<!-- .slide: class="right-float-img" -->
+<img src='images/bitcoin/attack/attack.dot.2.svg' style='width:130px'>
+
+## 51% attack
+- Mallory spends a UTXO
+  - On something that has a quick delivery, such as a digital asset
+  - Or a in-person transaction where she takes possession of a physical item
+
+
+
+<!-- .slide: class="right-float-img" -->
+<img src='images/bitcoin/attack/attack.dot.3.svg' style='width:130px'>
+
+## 51% attack
+- Seller waits some number of confirmations...
+  - Say, 3 (in reality, more like 100)
+- Then the seller assumes the TXN will not change
+  - Because there have been the desired number of confirmations
+- The digital asset is then sent
+  - Or the physical item changes hands
+
+
+
+<!-- .slide: class="right-float-img" -->
+<img src='images/bitcoin/attack/attack.dot.4.svg' style='height:773px'>
+
+## 51% attack
+- The original spender tries to spend the UTXO again
+  - Mine it into a block
+- Node adoption policy: longest chain
+  - The longest "chain" of blocks, starting from the genesis block, is the valid chain
+- But how to make the rest of the network accept the second spending of the UTXO?
+  - Make that second TXN part of the new longest chain
+
+
+
+<!-- .slide: class="right-float-img" -->
+<img src='images/bitcoin/attack/attack.dot.5.svg' style='height:773px'>
+
+## 51% attack
+- But how to make the rest of the network accept it?
+  - Make that second TXN part of the new longest chain
+- Solution
+  - Have to mine more than the rest of the network
+  - Thus, must have 51% (or more) of the network mining capability, hence the name
+- If the attacker...
+  - Who has 51% (or more) of the mining power...
+- ... can ever create the longest chain...
+- Then they have "double spent" the UTXO!
+  - Not *true* double spending, but close...
+
+
+
+## Longest Chain Adoption Policy
+- Miners are incentivized to always accept the longest chain as the "valid" chain
+  - That chain has the greatest chance of becoming the "accepted" chain
+    - After a certain number of confirmations
+  - Any blocks mined on a different (and shorter) chain yield no reward, since their mined BTC are not part of the longest chain
+    - No reward means no incentive
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## 51% attack
+- But is this viable?
+  - As no one person is going to have 51% of the BTC mining / [hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
+- But a mining pool might for other cyrptocurrencies
+- Consider the [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Ravencoin [pool from 2miners](https://2miners.com/rvn-mining-pool)
+  - On Feb 1st, 2022, their pool had a 1.44 Th/s hash rate
+    - The network hashrate then was 5.13 Th/s
+    - Thus, they had 1.44/5.13 = 28% of the total hash rate
+  - On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
+    - Due to a purchase of hashpower from (likely) Nicehash
+- [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo had one in January 2021
+- [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold had one in May 2018 and January 2020
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Required confirmations
+
+<img src='images/bitcoin/attack/attack.dot.6.svg' style='773px'>
+
+- Envision: we have two longest chains, and miners are split between the two
+  - Neither has yet become "longer"
+- What if the miner for block 1001, version 1, were to immediately spend those mined BTC
+  - And then the version 2 chain were to become the longer (and thus accepted) chain?
+- Solution: wait until $n$ confirmations have occurred before allowing spending of the BTC
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## Confirmations
+- Number of confirmations typically required (via [2miners](https://2miners.com)):
+  - [![xlm logo](../slides/images/logos/xlm-coin-symbol.svg)](https://coinmarketcap.com/currencies/stellar/) XLM: 0 blocks (5 seconds) (TXNs are irreversible)
+  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 6 blocks (about 1 hour) for "standard" transactions
+  - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH: 240 blocks (about 1 hour) (maybe different w/PoS)
+  - [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) RVN: 100 blocks (about 2 hours)
+  - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) FIRO: 100 blocks (about 9 hours)
+  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 60 blocks (about 10 hours) for "large" transactions
+  - [![erg logo](../slides/images/logos/erg-coin-symbol.svg)](https://coinmarketcap.com/currencies/ergo/) ERG: 720 blocks (about 1 day)
+- This is based on many factors: block speed, overall network hash rate, and the value of the coin
+    </textarea></section>
+
+
+</section>
+
+
 <!-- ============================================================ -->
 	
       </div>
