@@ -20,6 +20,7 @@ You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.h
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
 
+- Sat, 9/17: clarified the Python example in the Merkle tree section (no content changes, but a bit better of an explanation)
 - Thu, 9/15: added the last bullet point guarantee in the Validation section
 
 
@@ -321,7 +322,15 @@ $ python3
 
 In Python, given a hash, the `.digest()` method returns it in binary format, and the `.hexdigest()` method returns it in an ASCII hex representation.
 
-This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block), displayed in big-Endian format.  Thus, our Endian-ness is reversed from what is displayed in the block.  So we can un-reverse (?) it; note that we are recomputing `hash2` with `.digest()`, rather than `.hexdigest()`, to get it's value in binary:
+The Merkle tree root value of `3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a` can be seen in the block data itself; the relevant snippet of the hexdump of the block data is:
+
+```
+00000020                                       3b a3 ed fd  |            ;...| 
+00000030  7a 7b 12 b2 7a c7 2c 3e  67 76 8f 61 7f c8 1b c3  |z{..z.,>gv.a....| 
+00000040  88 8a 51 32 3a 9f b8 aa  4b 1e 5e 4a              |..Q2:...K.^J    | 
+```
+
+Most sites, such as [this one](https://en.bitcoin.it/wiki/Genesis_block), display these hash values in the *other* Endian format.  So we can un-reverse (?) it.  Note that in the code below we are recomputing `hash2` with `.digest()`, rather than `.hexdigest()`, to get it's value in binary:
 
 ```
 >>> hash2 = sha256(hash1).digest() 
@@ -333,7 +342,7 @@ This is the Merkle tree root in the [genesis block](https://en.bitcoin.it/wiki/G
 >>>
 ```
 
-Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block).  This is also displayed in the block:
+Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the [genesis block](https://en.bitcoin.it/wiki/Genesis_block).
 
 And then we can get all fancy and do all that in one line:
 

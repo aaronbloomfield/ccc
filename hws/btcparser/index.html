@@ -63,6 +63,7 @@
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. </p>
 <ul>
+<li>Sat, 9/17: clarified the Python example in the Merkle tree section (no content changes, but a bit better of an explanation)</li>
 <li>Thu, 9/15: added the last bullet point guarantee in the Validation section</li>
 </ul>
 </div><div id='tlanguages' class='tabcontent'><h3 id='languages'>Languages</h3>
@@ -282,7 +283,11 @@ $</code></pre>
 '3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a' 
 &gt;&gt;&gt;</code></pre>
 <p>In Python, given a hash, the <code>.digest()</code> method returns it in binary format, and the <code>.hexdigest()</code> method returns it in an ASCII hex representation.</p>
-<p>This is the Merkle tree root in the <a href='https://en.bitcoin.it/wiki/Genesis_block'>genesis block</a>, displayed in big-Endian format. Thus, our Endian-ness is reversed from what is displayed in the block. So we can un-reverse (?) it; note that we are recomputing <code>hash2</code> with <code>.digest()</code>, rather than <code>.hexdigest()</code>, to get it’s value in binary:</p>
+<p>The Merkle tree root value of <code>3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a</code> can be seen in the block data itself; the relevant snippet of the hexdump of the block data is:</p>
+<pre><code>00000020                                       3b a3 ed fd  |            ;...| 
+00000030  7a 7b 12 b2 7a c7 2c 3e  67 76 8f 61 7f c8 1b c3  |z{..z.,&gt;gv.a....| 
+00000040  88 8a 51 32 3a 9f b8 aa  4b 1e 5e 4a              |..Q2:...K.^J    | </code></pre>
+<p>Most sites, such as <a href='https://en.bitcoin.it/wiki/Genesis_block'>this one</a>, display these hash values in the <em>other</em> Endian format. So we can un-reverse (?) it. Note that in the code below we are recomputing <code>hash2</code> with <code>.digest()</code>, rather than <code>.hexdigest()</code>, to get it’s value in binary:</p>
 <pre><code>&gt;&gt;&gt; hash2 = sha256(hash1).digest() 
 &gt;&gt;&gt; hash2ba = bytearray(hash2) 
 &gt;&gt;&gt; hash2ba.reverse() 
@@ -290,7 +295,7 @@ $</code></pre>
 &gt;&gt;&gt; hash 
 '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b' 
 &gt;&gt;&gt;</code></pre>
-<p>Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the <a href='https://en.bitcoin.it/wiki/Genesis_block'>genesis block</a>. This is also displayed in the block:</p>
+<p>Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the <a href='https://en.bitcoin.it/wiki/Genesis_block'>genesis block</a>.</p>
 <p>And then we can get all fancy and do all that in one line:</p>
 <pre><code>&gt;&gt;&gt; # enter txn = ... as above
 &gt;&gt;&gt; from hashlib import sha256 
