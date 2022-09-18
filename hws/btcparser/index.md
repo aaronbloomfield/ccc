@@ -20,6 +20,7 @@ You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.h
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
 
+- Sat, 9/17: clarified the output requirements in the Output section (so requirements changes, only clarifications)
 - Sat, 9/17: clarified the Python example in the Merkle tree section (no content changes, but a bit better of an explanation)
 - Thu, 9/15: added the last bullet point guarantee in the Validation section
 
@@ -358,7 +359,19 @@ Got that?  Good.
 
 ### Part 3: Output
 
-Your program must output the blockchain in JSON format.  You can read about [JSON on Wikipedia](https://en.wikipedia.org/wiki/JSON).  The format must be as described below, but your whitespace doesn't matter.  We are going to check it via a JSON parser.  
+There are two types of output: the output printed to standard output regrading the parsing result (errors or not) of the run, and the JSON output file.  If there are errors, then the status of the JSON file does not matter (complete, missing, partially written, etc.), as it will not be checked.
+
+#### Standard Output
+
+There should be printed to standard output via `print()` in Python or `System.out.println()` in Java.  There should always be exactly one line of output regardless of the result of the parsing.
+
+If no errors are detected, it should output: `no errors X blocks`, where `X` is the total number of blocks (which is one off from the height).  This should use the plural "blocks" even if there is only one block in the file.
+
+If an error is found, it should output: `error 1 block 3`.  This counts the blocks in the file, and the first block is block 0.  As mentioned above, if there are multiple errors, then the first one found should be reported, and then the program should terminate.
+
+#### JSON file
+
+Your program must output the blockchain in JSON format to a file.  The file name is the same as the input file with ".json" appended to it.  So if you are using the genesis block (file blk00000-b0.blk), the output file name is blk00000-b0.blk.json.  You can read about [JSON on Wikipedia](https://en.wikipedia.org/wiki/JSON).  The format must be as described below, but your whitespace doesn't matter.  We are going to check it via a JSON parser.  
 
 You SHOULD be using the JSON library that comes with your programming language!  No need to reinvent the wheel here.  It is VERY tedious to hand-code JSON output.  See the Languages section, above, for how to do this.
 
