@@ -299,7 +299,7 @@ $
 
 There is only one transaction in this block.  With a preamble of 8 bytes, a header of 80 bytes, and a transaction count of 1 byte (since it's a compactSize unsigned integer with value of 1), the transaction has to start at byte 89 (0x59).  This is the row with address 0x00000050, and the start of the transaction is the last 7 bytes on that line (`01 00 00 00 01 00 00`), and continues until the end of the block.
 
-Putting all those bytes together gives us the (ASCII) hex of the transaction, which is stored in a `txn` variable:
+Putting all those bytes together gives us the (ASCII) hex of the transaction, which we store in a `txn` variable:
 
 ```
 txn="01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000"

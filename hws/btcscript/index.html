@@ -62,7 +62,7 @@
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='tlanguages' class='tabcontent'><h3 id='languages'>Languages</h3>
-<p>This assignment uses the <a href='https://pypi.org/project/python-bitcoinlib/'>Python bitcoinlib package</a>; (documentation is <a href='https://python-bitcoinlib.readthedocs.io/en/latest/'>here</a>, if you are interested, but you probably won’t need it). Thus, this assignment must be completed in Python. You can install the package via <code>pip install python-bitcoinlib</code> (you may need to use <code>pip3</code> on your system). This is installed on the VirtualBox image.</p>
+<p>This assignment uses the <a href='https://pypi.org/project/python-bitcoinlib/'>python-bitcoinlib package</a>; (documentation is <a href='https://python-bitcoinlib.readthedocs.io/en/latest/'>here</a>, if you are interested, but you probably won’t need it). Thus, this assignment must be completed in Python. You can install the package via <code>pip install python-bitcoinlib</code> (you may need to use <code>pip3</code> on your system). This is installed on the VirtualBox image.</p>
 <p>We provide you with a few files to use:</p>
 <ul>
 <li><a href='scripts.py.html'>scripts.py</a> (<a href='scripts.py'>src</a>): you will modify this file throughout this assignment. The progression of items in that file mirrors the progression of the assignment steps herein. This is the only file that you will submit. We would expect that you would be able to understand everything in this file by the end of the assignment</li>
@@ -94,7 +94,7 @@
 <p>Installing OpenSSL via homebrew would still lead to errors in past semesters. These errors report a problem with the “libeay32” library. Here are some solutions that helped in the past:</p>
 <ul>
 <li>Installing OpenSSL as per <a href='https://www.davidseek.com/ruby-on-m1/'>https://www.davidseek.com/ruby-on-m1/</a></li>
-<li>You can replace the OpenSSL library that bitcoinlib calls. In the bitcoin package, in <code>/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/bitcoin</code> (that may differ on your machine), in <code>core/key.py</code>, replace <code>_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')</code> or <code>ctypes.util.find_library('ssl')</code> or <code>ctypes.util.find_library('libeay32')</code> with <code>_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')</code> or <code>ctypes.util.find_library('ssl'))</code>.</li>
+<li>You can replace the OpenSSL library that python-bitcoinlib calls. In the bitcoin package, in <code>/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/bitcoin</code> (that may differ on your machine), in <code>core/key.py</code>, replace <code>_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')</code> or <code>ctypes.util.find_library('ssl')</code> or <code>ctypes.util.find_library('libeay32')</code> with <code>_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')</code> or <code>ctypes.util.find_library('ssl'))</code>.</li>
 </ul>
 <p>We cannot vouch for any of these solutions; we just collected a bunch of Piazza responses from the previous semester.</p>
 </div><div id='ttestnet' class='tabcontent'><h3 id='testnet'>Testnet</h3>
@@ -107,13 +107,13 @@
 <li>Go to the <a href='https://bitcoinfaucet.uo1.net/send.php'>Testnet Faucet</a> page and enter the tBTC address key provided in the previous step. You will be provided a transaction ID (search down the web page for the transaction page that has your BTC address). You can then view your transaction at <a href='https://live.blockcypher.com/'>https://live.blockcypher.com/</a> – put the transaction ID in the search box and be sure to select ‘Bitcoin Testnet’ for the search.
 <ul>
 <li>Enter the transaction ID in scripts.py in <code>txid_initial</code></li>
-<li>Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address – the amount that address holds should be the amount that the faucet provided to you (likely 0.001 tBTC)
+<li>Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address – the amount that address holds should be the amount that the faucet provided to you (likely 0.0001 tBTC)
 <ul>
 <li>It may take up to 10 minutes or so for the transaction that funded your wallet to be mined into the blockchain</li>
 </ul></li>
 <li>Verify that you can view the transaction at https://live.blockcypher.com/btc-testnet/tx/&lt;txid&gt; where &lt;txid&gt; is your transaction id
 <ul>
-<li>Note that the testnets often perform many transfers in one transaction – so the total amount transacted may be more than 0.001 tBTC, but the amount paid to your wallet should be 0.001 tBTC</li>
+<li>Note that the testnets often perform many transfers in one transaction – so the total amount transacted may be more than 0.0001 tBTC, but the amount paid to your wallet should be 0.0001 tBTC</li>
 </ul></li>
 <li>You can also get these URLs by running <code>./bitcoinctl.py geturls</code>. As you fill in more transaction hashes throughout this assignment, re-running this will show an increasing list of URLs.</li>
 </ul></li>

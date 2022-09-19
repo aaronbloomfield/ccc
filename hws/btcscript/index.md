@@ -19,7 +19,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 ### Languages
 
-This assignment uses the [Python bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is installed on the VirtualBox image.
+This assignment uses the [python-bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is installed on the VirtualBox image.
 
 We provide you with a few files to use:
 
@@ -49,7 +49,7 @@ We provide you with a few files to use:
 
 - "Error validating transaction: Transaction ... referenced by input 0 has lesser than 3 outputs" means the UTXO index you provided is too high
 - "Error validating transaction: Error running script for input 0 referencing ... at 0: Script was NOT verified successfully" is when the scripts don't work together
-
+- A "409 Conflict {}" error occurs when you attempt to spend a UTXO that's already been spent; this usually happens when you forget to set `utxo_index` to an unspent index
 
 
 #### Mac OS X issues
@@ -59,8 +59,7 @@ If you have a M1 Mac, there are a few issues you should be aware of.
 Installing OpenSSL via homebrew would still lead to errors in past semesters.  These errors report a problem with the "libeay32" library.  Here are some solutions that helped in the past:
 
 - Installing OpenSSL as per [https://www.davidseek.com/ruby-on-m1/](https://www.davidseek.com/ruby-on-m1/)
-- 
-You can replace the OpenSSL library that bitcoinlib calls.  In the bitcoin package, in `/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/bitcoin` (that may differ on your machine), in `core/key.py`, replace `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl')` or `ctypes.util.find_library('libeay32')` with `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl'))`.
+- You can replace the OpenSSL library that python-bitcoinlib calls.  In the bitcoin package, in `/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/bitcoin` (that may differ on your machine), in `core/key.py`, replace `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl')` or `ctypes.util.find_library('libeay32')` with `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl'))`.
 
 We cannot vouch for any of these solutions; we just collected a bunch of Piazza responses from the previous semester.
 
@@ -75,10 +74,10 @@ As we do not want to have to buy, and possibly lose, real BTC, we are going to u
     - Save both the tBTC private key and the tBTC address into the scripts.py file into `private_key_str` and `invoice_address`, respectively
 2. Go to the [Testnet Faucet](https://bitcoinfaucet.uo1.net/send.php) page and enter the tBTC address key provided in the previous step.  You will be provided a transaction ID (search down the web page for the transaction page that has your BTC address).  You can then view your transaction at [https://live.blockcypher.com/](https://live.blockcypher.com/) -- put the transaction ID in the search box and be sure to select 'Bitcoin Testnet' for the search.
     - Enter the transaction ID in scripts.py in `txid_initial`
-    - Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address -- the amount that address holds should be the amount that the faucet provided to you (likely 0.001 tBTC)
+    - Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address -- the amount that address holds should be the amount that the faucet provided to you (likely 0.0001 tBTC)
       - It may take up to 10 minutes or so for the transaction that funded your wallet to be mined into the blockchain
     - Verify that you can view the transaction at https://live.blockcypher.com/btc-testnet/tx/&lt;txid&gt; where &lt;txid&gt; is your transaction id
-      - Note that the testnets often perform many transfers in one transaction -- so the total amount transacted may be more than 0.001 tBTC, but the amount paid to your wallet should be 0.001 tBTC
+      - Note that the testnets often perform many transfers in one transaction -- so the total amount transacted may be more than 0.0001 tBTC, but the amount paid to your wallet should be 0.0001 tBTC
     - You can also get these URLs by running `./bitcoinctl.py geturls`.  As you fill in more transaction hashes throughout this assignment, re-running this will show an increasing list of URLs.
 3. That transaction gave only one UTXO, and we would like multiple UTXO indices to use -- this way we can use one per question part, and we have a few extra if something ends up not working correctly.
     - Look at the section of scripts.py that deals with splitting coins.  The default values there are probably correct, but check anyway -- see the comments therein for details
@@ -282,3 +281,5 @@ The only file you need to submit to Gradescope is scripts.py.  There will be a f
 - Ensure that the final balance of the tBTC wallet (from `my_invoice_address_str`) is zero
 
 **Rate Limiter:** The various aspects of this program are verified by checking via blockcyper.com's API to obtain the wallet, transaction, balance, etc.  As with most websites, there is a rate limiter, and if there are too many requests in too little a time period, then it will block requests to that IP address for some period.  If everybody submits the assignment around the same time, this rate limiter will kick in, and the auto-grader will reports lots of errors.  We will re-run the auto-grader at a later point to ensure that it is evaluated properly, but you will not see useful results when you submit your assignment.  We have set up a proxy to help this issue (it caches previously made requests).  However, if there are still too many requests, it will still run into the rate limiter.  Unfortunately, there is nothing more we can do about this.
+
+**Autograder notes:** As we know, a transaction is not considered valid until it is mined into the blockchain.  It may be that your transaction has not yet been mined, which means it will report as not having happened.  This means some of the visible tests when you submit your assignment could fail.  As long as you submitted the transaction, you do not need to worry about it -- we will re-run the auto-grader a day or two later to catch all these cases.
