@@ -74,6 +74,72 @@ Template for first line:
   <section>
 
     <section>
+<img src="https://thumbor.bigedition.com/bitcoin-baller/3x-QkV4zXbWyW58dsbeclQBiN5I=/800x0/filters:quality(80)/granite-web-prod/72/4f/724fcb692ca44c5fb905747724b2e1b6.jpeg" class="stretch" style="padding:0">
+</section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 8: Mon, Sep 19th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
+- [Homeworks](../hws/index.html)
+  - The tentative HW schedule is on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
+  - [HW P3: BTC parser](../hws/btcparser/index.html) is due tomorrow (Tue, 9/20); how is it going?
+  - [HW P4: BTC scripting](../hws/btcscript/index.html) will be ready on Wednesday and due Tue, 9/27
+  - HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/ethereum-whitepaper.pdf)) is due Wed, 9/28
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
+  - HW S4 (private Ethereum blockchain) will be out shortly
+    - We'll chat about the due date on the next slide
+- Office hours
+  - Mine are Wed from 10am to noon in Rice 402
+  - TA office hours are in Rice 442 and are: Monday evenings 4-8, Tuesday 11-2, Thu 12-2, and Fri 11-2
+  - This is all on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Schedule
+- Only HW P3 is ready!!!  Please don't start any of the others early!
+- Week of Mon, 9/19 (this week)
+  - [HW P3 (BTC parser)](../hws/btcparser/index.html) due on Tuesday
+- Week of Mon, 9/26
+  - [HW P4 (BTC scripting)](../hws/btcscript/index.html) due on Tuesday
+  - HW S3 (read some of the [Ethereum whitepaper](https://ethereum.org/en/whitepaper)) due on Wednesday
+- Week of Mon, 10/3
+  - No class on Monday due to fall break
+  - HW [S5 (dApp intro)](../hws/dappintro/index.html) due on *Thursday* (this is flexible)
+- Week of Mon, 10/10:
+  - No assignments due
+  - Midterm on Wednesday
+- Week of Mon, 10/17:
+  - [HW P5 (gradebook)](../hws/gradebook/index.html) due on Tuesday
+
+The question is: when should [HW S4 (private Ethereum blockchain)](../hws/ethprivate/index.html) be due?
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## News & Recap
+- [Ethereum's Merge](https://en.wikipedia.org/wiki/Ethereum#Ethereum_2.0) happened last Thursday (9/16) morning around 1 a.m.
+  - Ethereum moved to a proof-of-stake (PoS) blockchain from a proof-of-work (PoW) blockchain
+  - This had lots of implications:
+    - A lot of GPUs were mining Ethereum, as it was one of the most profitable coins mineable on a GPU
+      - These GPUs all moved to mining other PoW coins
+    - These other PoW coins' prices dipped a bit (many miners tend to sell right away), but not a lot
+    - The coins earned per GPU went down by maybe 75%
+      - Consider a nVidia 3090 GPU: it [now earns about `$`0.50 per day](https://2cryptocalc.com/gpu/24h/3090/1), when it used to earn about `$`2 per day
+        - As electricity to run it costs about `$`1, that's not much profit anymore
+        - In the heyday, it used to make `$`4 to `$`5 per day
+      - Decrease mostly due to the increased hash rate; see that for [RVN](https://www.coinwarz.com/mining/ravencoin/hashrate-chart), [BEAM](https://www.coinwarz.com/mining/beam/hashrate-chart), etc.
+        - And see how [Ethereum's dropped](https://www.coinwarz.com/mining/ethereum/hashrate-chart)
+    - GPU prices have tanked; consider the price graph of a [MSI RTX 3090 GPU](https://camelcamelcamel.com/product/B08HR9D2JS)
+- Recap: Last time we worked through the [Bitcoin script](../slides/bitcoin.html#/script) column of slides
+  - Today finish Bitcoin (remaining [Bitcoin script](../slides/bitcoin.html#/script) slides and [cross-chain transactions](../slides/bitcoin.html#/xchain)), then start on [mining](../slides/mining.html#/)
+  - We'll start [here](../slides/bitcoin.html#/6/26)
+</textarea></section>
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+    <section>
 
 <blockquote class="twitter-tweet twitter-center"><p lang="en" dir="ltr">With inflation at 7.5%, you lose half your money in 9 years. The only way to outperform that consistently, that I have found, is crypto. Just this year I’ve already lost half my money.</p>&mdash; rm (@sprainhill) <a href="https://twitter.com/sprainhill/status/1492861918419329025?ref_src=twsrc%5Etfw">February 13, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
@@ -94,7 +160,7 @@ Template for first line:
 - Office hours
   - Mine are Wed from 10am to noon in Rice 402
   - TA office hours are in Rice 442 and are: Monday evenings 4-8, Tuesday 11-2, Thu 12-2, and Fri 11-2
-  - This is all on the Collab landing page
+  - This is all on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -143,7 +209,7 @@ style="padding:0;object-fit:none;object-position:47% 54%">
 - Office hours
   - Mine are Wed from 10am to noon in Rice 402
   - TA office hours are in Rice 442 and are: Monday evenings 4-8, Tuesday 11-2, Thu 12-2, and Fri 11-2
-  - This is all on the Collab landing page
+  - This is all on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -173,13 +239,13 @@ style="padding:0;object-fit:none;object-position:47% 54%">
     - How did it go?
     - Late policy: 25% off per day
   - HW S2, due today, is a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/))
-    - A PDF of it is also in Collab's Resources (named [bitcoin.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin.pdf))
+    - A PDF of it is also in Collab's Resources (named [bitcoin-whitepaper.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
   - [HW P2: ECDSA](../hws/ecdsa/index.html) is ready, and is due Tue, Sep 13th
     - In general, I will plan to have the HWs ready by Wednesday's lecture
 - Office hours
   - Mine are Wed from 10am to noon in Rice 402
   - TA office hours are in Rice 442 and are: Monday evenings 4-8, Tuesday 11-2, Thu 12-2, and Fri 11-2
-  - This is all on the Collab landing page
+  - This is all on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -210,13 +276,13 @@ style="padding:0;object-fit:none;object-position:47% 54%">
     - Late policy: 25% off per day
   - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), due this Wed, Sep 7th
     - That may be delayed to Mon, Sep 12th, but no guarantees; I'll post tonight if it is delayed
-    - A PDF of it is also in Collab's Resources (named [bitcoin.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin.pdf))
+    - A PDF of it is also in Collab's Resources (named [bitcoin-whitepaper.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
   - HW P2 (due Tue, Sep 13th) will be on ECDSA, and will be ready this week
     - In general, I will plan to have the HWs ready by Wednesday's lecture
 - Office hours
   - Mine are Wed from 10am to noon in Rice 402
   - TA office hours are in Rice 442 and are: Monday evenings 4-8, Tuesday 11-2, Thu 12-2, and Fri 11-2
-  - This is all on the Collab landing page
+  - This is all on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -248,7 +314,7 @@ style="padding:0;object-fit:none;object-position:47% 54%">
     - Submission automatically opens up Saturday at noon
   - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), due Sep 7th
     - That may be delayed to Sep 12th, but no guarantees
-    - A PDF of it is also in Collab's Resources (named [bitcoin.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin.pdf))
+    - A PDF of it is also in Collab's Resources (named [bitcoin-whitepaper.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
 - Upcoming HWs (not yet ready!)
   - HW P2 (due Tue, Sep 13th) will be on ECDSA, and will be ready early next week
   - HW P3 (due Tue, Sep 20th) will be on Bitcoin's blockchain
@@ -257,7 +323,7 @@ style="padding:0;object-fit:none;object-position:47% 54%">
   - Mine are Wed from 10am to noon in Rice 402
   - TA office hours are Monday evenings 4-8, Tuesday 11-2, Thu 12-2, and Fri 11-2
     - Room: Rice 442; they start tomorrow
-  - This is all on the Collab landing page
+  - This is all on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -320,11 +386,11 @@ style="padding:0;object-fit:none;object-position:47% 54%">
 - Current course enrollment: 100/100 with 22 on the wait list
 - Homeworks
   - HW S1: course introduction survey is due tomorrow (Aug 30) by midnight
-    - The link is on the Collab landing page; summary on Wednesday
+    - The link is on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9); summary on Wednesday
   - [HW P1: Cryptocurrency Introductory](../hws/intro/index.html) is due next Tuesday (Sep 6th) by midnight
     - Not yet ready!  I'll post on Piazza tonight when it is
   - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), due in early September
-    - A PDF of it is also in Collab's Resources (named [bitcoin.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin.pdf))
+    - A PDF of it is also in Collab's Resources (named [bitcoin-whitepaper.pdf](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
 - Upcoming HWs (not yet ready!)
   - HW P2 (due Tue, Sep 13th) will be on ECDSA
   - HW P3 (due Tue, Sep 20th) will be on Bitcoin's blockchain
@@ -334,7 +400,7 @@ style="padding:0;object-fit:none;object-position:47% 54%">
   - TA office hours are Monday evenings 5-8, Tuesday 11-2, Thu 12-2, and Fri 11-2
     - We don't yet have a room reservation, and it's unclear when they will start
     - I'll post on Piazza if they are going to start before Wednesday's lecture
-  - This all will be on the Collab landing page
+  - This all will be on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
