@@ -82,6 +82,7 @@ line-height:120%;
 ## Disclaimer
 - All the numbers shown here were accurate and current as of the time this slide set was updated
   - September 13, 2022  <!-- change each semester -->
+    - Specifically, before Ethereum went to PoS (and all their hash power went elsewhere)
   - But they are likely all different now
 - However, they are (generally) consistent throughout the slide set
   - And the exact numbers don't matter as much to explain the concepts
@@ -103,14 +104,14 @@ line-height:120%;
   - A generational improvement over Bitcoin
   - Allows for much more complicated programs
   - Hash algorithm: Keccak-256 (aka SHA3)
-  - Is (did?) move to proof-of-stake
+  - It just moved to proof-of-stake
 
 
 
 ## Why a higher difficulty?
 - As more people mine -- to get the reward -- the time between blocks decreases
   - Each coin is designed to have a fixed time between blocks
-  - Bitcoin: 10 minutes; Ravencoin: 1 minute; Ethereum: 12 seconds
+  - Bitcoin: 10 minutes; Ravencoin: 1 minute; Ethereum: (previously) 12-15 seconds
 - Mining too fast will exhaust the available coin and and devalue the coin's value
 
 
@@ -283,9 +284,20 @@ line-height:120%;
   - How many times harder the current block is than the original block
 - For [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364), that's about 99,253.60
 - To avoid confusion, I will refer to this as *network difficulty*
-- You can see the current [RVN network difficulty](https://2miners.com/rvn-network-difficulty)
+- You can see the current [RVN network difficulty](https://www.coinwarz.com/mining/ravencoin/difficulty-chart)
   - And also the current [BTC network difficulty](https://www.coinwarz.com/mining/bitcoin/difficulty-chart)
 - [This page at the Bitcoin wiki](https://en.bitcoin.it/wiki/Difficulty) describes difficulty computation in more detail (and provides C++ code)
+
+
+
+## Miner reported difficulty
+- Another way to look at it:
+  - Let $d_n$ be the network difficulty (say, 100k)
+  - Let $d_o$ be the original difficulty of block 1 ($2^{32}=4.29G$)
+- The current target is as hard as the product of those two: $t = d_n * d_o$
+    - For [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364), the network difficulty was 100.3417k
+        - (RVN historical difficulty can be found [here](https://www.coinwarz.com/mining/ravencoin/difficulty-chart))
+    - Making the target as hard as $100k * 4.3G = 4.29T$
 
 
 
@@ -301,14 +313,26 @@ line-height:120%;
 
 
 
+## Mining pools
+- The chance of you getting a Bitcoin block is really low
+- But if you team up with other people, you can all contribute, and if the group gets a block the reward is distributed among the members
+- This is a *mining pool*
+- For Proof-of-Work (PoW) coins, members get a percentage of the value of the pooled profit based on the amount of work they put in
+- But how to compute that?
+  - More on that in a bit...
+
+
+
 ## Miner reported difficulty
 - A mining program will report the difficulty of a *share*
   - For now, a *share* is a nonce found that has a lot of leading 0's, even if it is not enough to solve the block
   - "134.25 T", for example
-  - I'll refer to this as the *share difficulty* to avoid confusion
-- If the share had 42 leading zero bits, then it would report a share difficulty of $2^{42} = 4.4$ T
+  - I'll refer to this as the *share difficulty*, or $d_s$, to avoid confusion
+  - Share difficulty is set by the mining pool
+- If a share requires 42 leading zero bits, then it would report a share difficulty of $2^{42} = 4.4$ T
   - 44 leading zero bits yields a share difficulty of $17.6$ T
-  - The target for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364) needed 48 leading zero bits, so that required a share of about 281.5 T or higher
+  - The target for [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364) needed 48 leading zero bits
+    - $s_d=2^{48} = 281.5$ T
 
 <!--
 ## Miner reported difficulty
@@ -326,34 +350,13 @@ line-height:120%;
 
 
 
-## Miner reported difficulty
-- Another way to look at it:
-  - Let $nd$ be the network difficulty (say, 113k)
-  - Let $od$ be the original difficulty of block 1 ($2^{32}=4.29G$)
-- The current difficulty, $cd$, is just the product of those two: $cd = nd * od$
-    - For [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364), the network difficulty was 100.3417k
-        - (RVN historical difficulty can be found [here](https://www.coinwarz.com/mining/ravencoin/difficulty-chart)
-    - Making the total difficulty then be: $100k * 4.3G = 4.29T$
-        - Which is quite close to our estimate of 426.3 from the last slide
-
-
-
-## Mining pools
-- The chance of you getting a Bitcoin block is really low
-- But if you team up with other people, you can all contribute, and if the group gets a block the reward is distributed among the members
-- This is a *mining pool*
-- For Proof-of-Work (PoW) coins, members get a percentage of the value of the pooled profit based on the amount of work they put in
-- But how to compute that?
-
-
-
 ## Mining shares
 - Any *good* nonce is reported to the mining pool, even if it is not enough to solve the block
   - Consider the [2miners RVN mining pool](https://rvn.2miners.com/), which has *pdiff* (pool mining difficulty) of 4.295 G
   - So any nonce found that has a difficulty of $4.295$ G$ = 4.295 * 10^9$ or higher will be reported to the mining pool
 - It is thus expexcted to take $log_2(4.295G) = 2^{32}$ hashes to get a share
   - So a 50 Mh/s GPU (the Nvidia 3090) would expect to get a share every 85.9 seconds
-- The *pdiff* value keeps the bandwidth to the mining pool down while also allowing an estimate of the work performed
+- The share value keeps the bandwidth to the mining pool down while also allowing an estimate of the work performed
 
 <!--
 ## Miner reported difficulty
@@ -463,8 +466,9 @@ line-height:120%;
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Mining
-- In order for mining to occur, there has to be a way for some entity to mine a block
-- But how to decide who gets to mine it?
+- In order for transactions to occur, there has to be a way for some entity to "certify" a block
+  - So far the only certification method we've seen is proof-of-work mining
+- But how to decide who gets to do it?
   - Since there is a reward involved, everybody wants to be that one entity!
 
 
@@ -558,8 +562,8 @@ line-height:120%;
 
 
 ## Proof of Authority (PoA)
-- A small number of accounts are *signers*
-  - They for a *clique*
+- A small number (possibly 1) of accounts are *signers*
+  - They form a *clique*
   - One signer mines a block
   - Then a majority (>50%) of the clique must agree
 - Not great for a decentralized cryptocurrency!
@@ -573,14 +577,14 @@ line-height:120%;
 ## Proof of Stake (PoS)
 - Those with a *stake* in the cryptocurrency...
   - ... meaning they hold enough of it...
-- Can be the ones to present a mined block to the network
+- Can be the ones to present a certified block to the network
   - They put their cryptocurrency "on the line" to vouch for the validity of the block
   - And they get the miner reward
 - But what if the block is invalid?
-  - Then the miner loses some of their cryptocurrency
+  - Then the certifier loses some of their cryptocurrency
     - Called "slashing"
   - While not unknown, it rarely happens
-- Miners are instead called *validators*
+- Those who can certify blocks are instead called *validators*
 
 
 
@@ -589,7 +593,7 @@ line-height:120%;
   - Amount of currency held
   - Length of currency held
 - Implementations vary by cryptocurrency
-  - Presumably there is a way that those with less "stake" will be able to be the validators less often
+  - Typically there is a way that those with less "stake" will be able to be the validators less often
 - Coins that use this: Tezos, Cosmos, Peercoin, Tendermint, the ETH2 upgrade
   - ETH2 requires a minimum of 32 ETH to participate in PoS
 
@@ -605,15 +609,17 @@ line-height:120%;
   - Migrate it to a later date (as has happened so far)
   - Change to PoS (in the works for some time now)
 - The new Ethereum PoS proposal is called ETH2
-  - Or the "Casper protocol"
+  - Or the Paris Network Upgrade
+  - It went live on September 15, 2022
 
 
 
 <!-- .slide: class="cclogo-slide" -->
 ## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum's move to PoS
 - Phase 0: December 2020: create the "Beacon Chain", a PoS blockchain
-- Phase 1: mid-September 2022: change Ethereum from PoW to PoS
-  - First PoS block: ...
+- Phase 1: September 15, 2022: change Ethereum from PoW to PoS
+  - Last PoW block: [15,537,393](https://etherscan.io/block/15537393)
+  - First PoS block: [15,537,394](https://etherscan.io/block/15537394)
 - Phase 2: sometime in 2023: allow shards
   - We'll see [sharding in the scalability slide set](scalability.html#/sharding) 
 
@@ -655,7 +661,7 @@ line-height:120%;
 
 ## Nothing-at-stake problem
 - All coins must address this somehow
-- ETH2 / Casper:
+- ETH2:
   - Part of your stake is a "deposit" on the validity of the block
   - If that block does not make it into the full block chain, you lose that deposit
 
@@ -708,7 +714,8 @@ line-height:120%;
 <!-- .slide: class="cclogo-slide" -->
 ## PoH and block verification
 - With ![btc logo](../slides/images/logos/btc-coin-symbol.svg#cclogo) Bitcoin, we have to compute the Merkle tree hash
-  - Given $n$ transactions and an infinite computing power, it takes $\Theta(\log n)$ steps to build the tree
+  - Given $n$ transactions, it takes $\Theta(n)$ steps to build the tree
+  - Given infinite computing power, it takes $\Theta(\log n)$ steps
 - In ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo) Solana, each transaction can be verified in parallel
   - Just check that it goes one link back to another valid TXN
   - Given $n$ transactions and an infinite computing power, it can be done in $\Theta(1)$ time
@@ -741,7 +748,11 @@ line-height:120%;
 
 <!-- .slide: class="cclogo-slide" -->
 ## [![neox logo](../slides/images/logos/neox-coin-symbol.svg)](https://coinmarketcap.com/currencies/neoxa/) Neoxa: Proof-of-Game
-- ...
+- [Neoxa's whitepaper](https://www.neoxa.net/whitepaper)
+- Intent is to reward video game players for actions taken in the game itself
+  - See the table on [whitepaper page 3](https://www.neoxa.net/whitepaper)
+- Pro: trying to get in early on the intersection of games and cryptocurrency
+- Cons: so many to list here, where to start?
 
 
 
@@ -881,9 +892,9 @@ Note that UTXOs are not only in the bottom level
 
 ## DAG size
 - You can see DAG sizes at https://minerstat.com/dag-size-calculator
-- Ethereum is over 4 Gb (as of Feb 2022)
+- Ethereum's is over 5 Gb (as of Sep 2022) <!-- change each semester -->
   - This means that graphics cards with less than 4 Gb cannot mine ETH
-- Consider Ravencoin, whose DAG is currently at 3.2 Gb (as of Feb 2022)
+- Consider Ravencoin, whose DAG is currently at 3.5 Gb (as of Sep 2022)
   - Based on the expected DAG growth...
     - 4 Gb GPUS will no longer be able to mine it around July 2023
     - 6 Gb GPUS will no longer be able to mine it around Mar 2027
@@ -1001,7 +1012,7 @@ Note that UTXOs are not only in the bottom level
   - Other miners will likely pick it up
   - Wallet software (or equivalent) will re-send it if it "disappears"
     - Or at least notify you that it was not mined
-- This is why we can't all mine the blockchian in this class!
+- This is an issue if we all could mine the blockchain in this class
   - There is no effective way to ensure it is not discarded
 
 
@@ -1043,6 +1054,7 @@ Note that UTXOs are not only in the bottom level
   - That point could be when:
     - Some number (say, 75%) of the miners have adopted this change
     - After some date/time
+    - ETH 2: when the Total Terminal Difficulty reaches (or exceeds) exactly $5.875*10^{22}$
 - Example: Bitcoin's [Segregated Witness](bitcoin.html#/segwit) from 2015
   - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
 
@@ -1091,6 +1103,7 @@ Note that UTXOs are not only in the bottom level
 - The [Ravencoin (RVN) source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin)
 - Changes:
   - 1000x as many coins
+  - 1 minute block time instead of 10 minutes
   - Native support for assets
     - Could be NFTs, but can represent any digital or physical item
   - Different PoW hashes to be ASIC resistant
@@ -1130,12 +1143,12 @@ Note that UTXOs are not only in the bottom level
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Double spending
-- Submit two TXNs spending the same UTXO
+- Definition: when one submits two TXNs spending the same UTXO
 - Prevented by:
   - The "valid block check" that miners & nodes perform checks for
     - Non-malicious nodes will not vote to approve a node that double spends
       - Or that spends an already-spent UTXO
-  - Having a witness hash for a transaction that cannot be changed
+  - In Bitcoin: having a witness hash for a transaction that cannot be changed
 
 
 
@@ -1143,6 +1156,8 @@ Note that UTXOs are not only in the bottom level
 <img src='images/bitcoin/attack/attack.dot.1.svg' style='width:130px'>
 
 ## 51% attack
+- This is an attack primarily on PoW blockchains
+  - But still possible on PoS blockchains as well
 - Given the initial state in some block, say 1000
 
 
@@ -1162,7 +1177,7 @@ Note that UTXOs are not only in the bottom level
 
 ## 51% attack
 - Seller waits some number of confirmations...
-  - Say, 3 (in reality, more like 100)
+  - Say, 3 (in reality, likely many more)
 - Then the seller assumes the TXN will not change
   - Because there have been the desired number of confirmations
 - The digital asset is then sent
@@ -1204,7 +1219,7 @@ Note that UTXOs are not only in the bottom level
 - Miners are incentivized to always accept the longest chain as the "valid" chain
   - That chain has the greatest chance of becoming the "accepted" chain
     - After a certain number of confirmations
-  - Any blocks mined on a different (and shorter) chain yield no reward, since their mined BTC are not part of the longest chain
+  - Any blocks mined on a different (and shorter) chain yield no reward, since their mined coins are not part of the longest chain
     - No reward means no incentive
 
 
@@ -1212,12 +1227,11 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="cclogo-slide" -->
 ## 51% attack
 - But is this viable?
-  - As no one person is going to have 51% of the BTC mining / [hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
-- But a mining pool might for other cyrptocurrencies
+  - As no one person is going to have 51% of the [BTC mining / hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
+- But a mining pool might for other cryptocurrencies
 - Consider the [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Ravencoin [pool from 2miners](https://2miners.com/rvn-mining-pool)
-  - On Feb 1st, 2022, their pool had a 1.44 Th/s hash rate
-    - The network hashrate then was 5.13 Th/s
-    - Thus, they had 1.44/5.13 = 28% of the total hash rate
+  - See what percentage they have now:
+    - Divide the pool hash rate by the network hash rate
   - On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
     - Due to a purchase of hashpower from (likely) Nicehash
 - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo had one in January 2021
@@ -1232,7 +1246,7 @@ Note that UTXOs are not only in the bottom level
 
 - Envision: we have two longest chains, and miners are split between the two
   - Neither has yet become "longer"
-- What if the miner for block 1001, version 1, were to immediately spend those mined BTC
+- What if the miner for block 1001, version 1, were to immediately spend those mined coins
   - And then the version 2 chain were to become the longer (and thus accepted) chain?
 - Solution: wait until $n$ confirmations have occurred before allowing spending of the BTC
 
