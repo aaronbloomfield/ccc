@@ -88,6 +88,7 @@
 <ul>
 <li>“Error validating transaction: Transaction … referenced by input 0 has lesser than 3 outputs” means the UTXO index you provided is too high</li>
 <li>“Error validating transaction: Error running script for input 0 referencing … at 0: Script was NOT verified successfully” is when the scripts don’t work together</li>
+<li>A “409 Conflict {}” error occurs when you attempt to spend a UTXO that’s already been spent; this usually happens when you forget to set <code>utxo_index</code> to an unspent index</li>
 </ul>
 <h4 id='mac-os-x-issues'>Mac OS X issues</h4>
 <p>If you have a M1 Mac, there are a few issues you should be aware of.</p>
@@ -287,6 +288,7 @@ address = P2PKHBitcoinAddress.from_pubkey(public_key)</code></pre>
 <li>Ensure that the final balance of the tBTC wallet (from <code>my_invoice_address_str</code>) is zero</li>
 </ul>
 <p><strong>Rate Limiter:</strong> The various aspects of this program are verified by checking via blockcyper.com’s API to obtain the wallet, transaction, balance, etc. As with most websites, there is a rate limiter, and if there are too many requests in too little a time period, then it will block requests to that IP address for some period. If everybody submits the assignment around the same time, this rate limiter will kick in, and the auto-grader will reports lots of errors. We will re-run the auto-grader at a later point to ensure that it is evaluated properly, but you will not see useful results when you submit your assignment. We have set up a proxy to help this issue (it caches previously made requests). However, if there are still too many requests, it will still run into the rate limiter. Unfortunately, there is nothing more we can do about this.</p>
+<p><strong>Autograder notes:</strong> As we know, a transaction is not considered valid until it is mined into the blockchain. It may be that your transaction has not yet been mined, which means it will report as not having happened. This means some of the visible tests when you submit your assignment could fail. As long as you submitted the transaction, you do not need to worry about it – we will re-run the auto-grader a day or two later to catch all these cases.</p>
 </div><script>document.getElementById('defaultOpen').click();</script></body>
 </html>
 

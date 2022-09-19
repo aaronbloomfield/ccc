@@ -89,7 +89,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 5. Wed, Sep 7: [encryption](../slides/encryption.html#/); [Bitcoin](../slides/bitcoin.html#/) (actual: finished encryption, Bitcoin to the end of the second column ("Blockchain types used", slide 4.6))
 6. Mon, Sep 12: [Bitcoin](../slides/bitcoin.html#/) (actual: finished the Blockchain Description column of slides)
 7. Wed, Sep 14: [Bitcoin](../slides/bitcoin.html#/) (actual: Bitcoin scripting through the end of P2SH, which is slide 7.26)
-8. Mon, Sep 19: [Bitcoin](../slides/bitcoin.html#/)
+8. Mon, Sep 19: [Bitcoin](../slides/bitcoin.html#/) (actual: finished Bitcoin)
 9. Wed, Sep 21: [mining](../slides/mining.html#/)
 10. Mon, Sep 26: [mining](../slides/mining.html#/)
 11. Wed, Sep 28: [Ethereum](../slides/ethereum.html#/)

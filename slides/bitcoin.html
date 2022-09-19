@@ -1495,13 +1495,13 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Cross-chain Atomic Swap
-- Alice creates a random secret value $s$, and a hash $h=hash(s)$
-- Alice tells Bob the hash $h$ of $s$, but not $s$ itself
+- Alice creates a random secret value $x$, and a hash $h=hash(x)$
+- Alice tells Bob the hash $h$ of $x$, but not $x$ itself
 - Alice & Bob each create transactions such that:
-  - Once $s$ (not $h$!) is known, the value can be redeemed by the other party
-  - We will know when $s$ is known, as it will hash to $h$
-- Once Alice redeems her transaction, she reveals $s$ on the blockchain
-  - Bob uses that value of $s$ to redeem his transaction
+  - Once $x$ (not $h$!) is known, the value can be redeemed by the other party
+  - We will know when $x$ is known, as it will hash to $h$
+- Once Alice redeems her transaction, she reveals $x$ on the blockchain
+  - Bob uses that value of $x$ to redeem his transaction
 - There are also timeouts in case the other party does not proceed
     </textarea></section>
 
@@ -1511,7 +1511,7 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
 - Alice creates "payment" TXN1: transfer $w$ BTC to Bob if:
   1. $x$ is known and output TXN is signed by Bob
   2. OR if the output TXN is signed by both Alice & Bob
-- Formally, TXN1: <span style="color: skyblue">Pay $w$ BTC to \<B's public key\> if ($x$ for $h(x)$ known and signed by B) or (signed by A & B)</span>
+- Formally, TXN1: <span style="color: skyblue">Pay $w$ BTC if either ($x$ for $h(x)$ known and signed by B) or (signed by A & B)</span>
 - Alice creates "refund" TXN2: a time-locked TXN to return the coins to herself
   - Formally, TXN2: <span style="color: skyblue">Pay $w$ BTC from TXN1 to \<A's public key\>, locked 48 hours in the future, signed by A</span>
   - Alice asks Bob to sign the TXN2 (time-lock one)
@@ -1523,7 +1523,7 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
 - Bob creates "payment" TXN3: transfer $v$ AltCoins to Alice if:
   - $x$ is known and output TXN is signed by Alice
   - OR if the output TXN is signed by both Alice & Bob
-- Formally, TXN3: <span style="color: skyblue">Pay $v$ alt-coins to \<A-public-key\> if ($x$ for $h(x)$ known and signed by A) or (signed by A & B)</span>
+- Formally, TXN3: <span style="color: skyblue">Pay $v$ alt-coins if either ($x$ for $h(x)$ known and signed by A) or (signed by A & B)</span>
 - Bob creates "refund" TXN4: a time-locked TXN to return the coins to himself
   - Formally, TXN4: <span style="color: skyblue">Pay $v$ alt-coins from TXN3 to \<B's public key\>, locked 24 hours in the future, signed by B</span>
   - Bob asks Alice to sign the TXN4 (time-lock one)
