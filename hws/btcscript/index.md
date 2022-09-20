@@ -9,8 +9,6 @@ In this assignment you will be writing a series of Bitcoin scripts to enact tran
 
 There are four separate Bitcoin scripts that you will need to write.  You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the [Bitcoin Script](../../slides/bitcoin.html#/script) and [Cross-Chain Transactions](../../slides/bitcoin.html#/xchain) sections.  You will also need to refer to the [Bitcoin Script page](https://en.bitcoin.it/wiki/Script).
 
-You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the discussion about the format for the blockchain.
-
 
 ### Changelog
 
@@ -19,7 +17,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 ### Languages
 
-This assignment uses the [python-bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is installed on the VirtualBox image.
+This assignment uses the [python-bitcoinlib package](https://pypi.org/project/python-bitcoinlib/); (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is all installed on the VirtualBox image.
 
 We provide you with a few files to use:
 
@@ -36,13 +34,13 @@ We provide you with a few files to use:
 
 #### General Hints
 
-1. **UTXO indices:** each transaction has one more more UTXO indices -- each transaction output creates a separate UTXO index.  To find out what UTXO index you need to use, *view the transaction on the blockcypher.com website*.  All UTXO indices start from 0, like arrays.  In particular, for your funding transaction, your UTXO index will probably not be 0.  You need to set the `utxo_index` variable for **EACH** transaction to the right UTXO index.
+1. **UTXO indices:** each transaction has one more more UTXO indices -- each transaction output creates a separate UTXO index.  To find out what UTXO index you need to use, *view the transaction on the blockcypher.com website* (the URL for that will be discussed shortly).  All UTXO indices start from 0, like arrays.  In particular, for your funding transaction, your UTXO index will probably not be 0.  You need to set the `utxo_index` variable for **EACH** transaction to the right UTXO index.
 2. After each transaction, there is a place to store the transaction hash.  Be diligent about doing this -- it's really easy to lose track of which of a dozen transaction hashes is which.  Keeping them in the stated variables will help with this.
-3. Don't modify the variable or function names in the scripts.py file.  Otherwise the provided functions, and our grading routines, will not work.  You can *add* functions and variables, but don't change the ones currently there.
+3. Don't modify the variable or function names in the scripts.py file.  Otherwise the provided functions, and our grading routines, will not work.  You can *add* functions and variables with different names, but don't change the ones currently there.
 4. For *EACH* transaction, you will need to set the `utxo_index` variable -- there is just one such variable in the scripts.py file.  If you get an error stating that the UTXO index is already spent, it's likely that you forgot to set this variable.
 5. Some errors with Bitcoin scripts can be determined prior to broadcasting it on the Bitcoin test network.  This is done by the `VerifyScript()` method, which the provided code base calls for you before any attempted broadcast transaction.  So if you see an error such as, `verifyerror: "bitcoin.core.scripteval.VerifyOpFailedError: EvalScript: OP_EQUALVERIFY failed`, or similar, it means that the Bitcoin library was able to detect that your script would not work, and did not broadcast the transaction.
-6. We provide you with a `create_CHECKSIG_signature()` function in the scripts.py file -- use it!  See the comments there for details as to how.
-7. To save you the tedious task of having to learn the [Python Bitcoin library](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/)) -- which you probably would never use again -- much of the library interaction has been handled for you by the provided code.  But in order for that to work, you have to proceed through this homework in the order written.
+6. We provide you with a `create_CHECKSIG_signature()` function in the scripts.py file -- use it!  See the comments in that file for details as to how.
+7. To save you the tedious task of having to learn the [Python Bitcoin library](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/)) -- which you probably would never use again -- much of the library interaction has been handled for you by the provided code (specifically [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py))).  But in order for that to work, you have to proceed through this homework in the order written.
 8. If you want to put the number 2 onto the stack, you can't just use the integer value 2.  Instead, you have to use the `OP_2` opcode.  In fact, `OP_2` happens to have integer value 82, and the integer value 2 has a different meaning.
 
 #### Common Errors
@@ -50,43 +48,53 @@ We provide you with a few files to use:
 - "Error validating transaction: Transaction ... referenced by input 0 has lesser than 3 outputs" means the UTXO index you provided is too high
 - "Error validating transaction: Error running script for input 0 referencing ... at 0: Script was NOT verified successfully" is when the scripts don't work together
 - A "409 Conflict {}" error occurs when you attempt to spend a UTXO that's already been spent; this usually happens when you forget to set `utxo_index` to an unspent index
-
+- "witness script detected in tx without witness data": your `utxo_index` is wrong
 
 #### Mac OS X issues
 
 If you have a M1 Mac, there are a few issues you should be aware of.
 
-Installing OpenSSL via homebrew would still lead to errors in past semesters.  These errors report a problem with the "libeay32" library.  Here are some solutions that helped in the past:
+Installing OpenSSL via homebrew has caused errors in past semesters.  These errors report a problem with the "libeay32" library.  Here are some possible solutions that have helped in the past:
 
 - Installing OpenSSL as per [https://www.davidseek.com/ruby-on-m1/](https://www.davidseek.com/ruby-on-m1/)
 - You can replace the OpenSSL library that python-bitcoinlib calls.  In the bitcoin package, in `/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/bitcoin` (that may differ on your machine), in `core/key.py`, replace `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl')` or `ctypes.util.find_library('libeay32')` with `_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl.35')` or `ctypes.util.find_library('ssl'))`.
 
-We cannot vouch for any of these solutions; we just collected a bunch of Piazza responses from the previous semester.
+We cannot vouch for any of these solutions; we just collected a bunch of Piazza responses from previous semesters.
 
 
 ### Testnet
 
-As we do not want to have to buy, and possibly lose, real BTC, we are going to use a test network.  Because the coins we are going to be using are not "real" Bitcoins, we will use the abbreviation 'tBTC' instead of 'BTC'.  When using a test network, you get coins for free via a "faucet" -- in the same way that a water faucet provides water once turned on, so does a testnet faucet provide tBTC when requested.  The particular one we are using is [Bitcoin Testnet Faucet](https://bitcoinfaucet.uo1.net/send.php).
+As we do not want to have to buy, and likely lose, real BTC, we are going to use a Bitcoin test network.  Because the coins we are going to be using are not "real" Bitcoins, we will use the abbreviation 'tBTC' (for testnet-BTC) instead of 'BTC'.  When using a test network, you get coins for free via a *faucet* -- in the same way that a water faucet provides water once turned on, so does a testnet faucet provide free tBTC when requested.
 
-
+You will need around 0.001 ($10^{-3}$) tBTC for this assignment.  You can obtain this all at once, or as needed throughout the assignment.  You will likely have to use multiple faucets, or use the same faucet multiple times (there is a multiple-hour wait between requests to a given faucet) to obtain this amount.
 
 1. You will need to generate a tBTC key pair.  Run `./bitcoinctl.py genkey`, and record both the public and private keys.  While these keys are not valid on the main Bitcoin test network -- the have a different value for the [version byte](../../slides/bitcoin.html#/btcaddress) in the invoice address -- you will need them throughout this assignment.
-    - Save both the tBTC private key and the tBTC address into the scripts.py file into `private_key_str` and `invoice_address`, respectively
-2. Go to the [Testnet Faucet](https://bitcoinfaucet.uo1.net/send.php) page and enter the tBTC address key provided in the previous step.  You will be provided a transaction ID (search down the web page for the transaction page that has your BTC address).  You can then view your transaction at [https://live.blockcypher.com/](https://live.blockcypher.com/) -- put the transaction ID in the search box and be sure to select 'Bitcoin Testnet' for the search.
-    - Enter the transaction ID in scripts.py in `txid_initial`
-    - Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address -- the amount that address holds should be the amount that the faucet provided to you (likely 0.0001 tBTC)
-      - It may take up to 10 minutes or so for the transaction that funded your wallet to be mined into the blockchain
-    - Verify that you can view the transaction at https://live.blockcypher.com/btc-testnet/tx/&lt;txid&gt; where &lt;txid&gt; is your transaction id
-      - Note that the testnets often perform many transfers in one transaction -- so the total amount transacted may be more than 0.0001 tBTC, but the amount paid to your wallet should be 0.0001 tBTC
+    - Save both the tBTC private key and the tBTC address into the scripts.py file into the `private_key_str` and `invoice_address` fields
+2. Using multiple faucets, or multiple requests to the same faucet, you need to obtain around 0.001 ($10^{-3}$) tBTC.  This can be done all at once or as needed throughout the assignment.  A list of faucets is below, but read the through the next step herein before using them.  For each of the faucets below, you will be provided a transaction ID; you may have to search down the web page for the specific transaction that pays to your tBTC address.
+   - [Faucet at bitcoinfaucet.uo1.net](https://bitcoinfaucet.uo1.net/send.php)
+   - [Faucet at testnet.help](https://testnet.help/en/btcfaucet/testnet)
+   - [Faucet at onchain.io](https://onchain.io/bitcoin-testnet-faucet)
+   - [Faucet at kuttler.eu](https://kuttler.eu/en/bitcoin/btc/faucet/)
+   - Feel free to find other faucets via an [appropriate web search](https://duckduckgo.com/?q=bitcoin+testnet+faucet), but if they ask you for any information other than your Bitcoin wallet address and a CAPTCHA, then it's a shady site, and you should use a different one
+3. Each faucet will provide you with a transaction hash where it gave you the tBTC.
+    - Enter each faucet funding transaction ID in scripts.py in `txid_funding_list`; each one is just a separate string in that list
+    - Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address -- the amount that address holds should be the sum of the amounts that the faucet provided to you.
+      - It may take up to 20 minutes or so for a transaction that funded your wallet to be mined into the blockchain
+    - You can then view your transaction at [https://live.blockcypher.com/](https://live.blockcypher.com/) -- put the transaction ID in the search box and be sure to select 'Bitcoin Testnet' for the search.  Verify that you can view the transaction at https://live.blockcypher.com/btc-testnet/tx/&lt;txid&gt; where &lt;txid&gt; is your transaction id
+      - Note that the testnets often perform many transfers in one transaction -- so the total amount transacted may be more than 0.001 ($10^{-3}$) tBTC, but the rest was paid back to them faucet
     - You can also get these URLs by running `./bitcoinctl.py geturls`.  As you fill in more transaction hashes throughout this assignment, re-running this will show an increasing list of URLs.
-3. That transaction gave only one UTXO, and we would like multiple UTXO indices to use -- this way we can use one per question part, and we have a few extra if something ends up not working correctly.
-    - Look at the section of scripts.py that deals with splitting coins.  The default values there are probably correct, but check anyway -- see the comments therein for details
+4. Each faucet transaction gave only one UTXO, and we would like multiple UTXO indices to use -- this way we can use one per question part, and we have a few extra if something ends up not working correctly.
+    - We are going to split the incoming UTXO into multiple smaller UTXOs.  Each of the smaller UTXOs will need to be for 0.0001 ($10^{-4}$) tBTC.  If split into smaller amounts, then the transaction fees will be insufficient to have your transaction mined into the blockchain.
+    - Look at the section of scripts.py that deals with splitting coins.  The default values there will need to be changed
+      - The `split_txid` is the particular transaction hash that you are splitting -- you may have to do a split multiple times, each with a different transaction hash from the faucet
+      - The `split_amount_to_split` is how much is in the incoming UTXO; look this up on [https://live.blockcypher.com](https://live.blockcypher.com) to get the correct amount
+      - The `split_into_n` attempts to determine how many UTXOs to split it into -- basically how many times 0.0001 ($10^{-4}$) evenly divides `split_amount_to_split`; note that it will actually be split into one less, as the remainder is used as the transaction fee
       - Check the transaction -- via the URL from above -- that gave you the coins, and make sure you have the right UTXO index (which is stored in the `utxo_index` variable in scripts.py).  If you get an error such as "witness script detected in tx without witness data", then it probably means your UTXO index is wrong.
     - Run `./bitcoinctl.py split` to split your coins.  This uses the values in the splitting coins section of scripts.py.
       - If this works properly, it will present back a Python dictionary that will take up many lines.  If it doesn't work, it will give you an error in just a few lines.
-    - Look at the *wallet* info URL (run `./bitcoinctl.py geturls` to get the URL), and note the transaction hash of the split transaction -- it should be the top transaction listed, and will have 9 or 10 different outputs.  The transaction hash itself is also listed in the output from the split transaction -- it's the `hash` field of the dictionary, and is about a half a dozen lines down.  Record that transaction id in scripts.py as `txid_split`
+    - Look at the *wallet* info URL (run `./bitcoinctl.py geturls` to get the URL), and note the transaction hash of the split transaction -- it should be the top transaction listed, and will have 9 or 10 different outputs.  The transaction hash itself is also listed in the output from the split transaction -- it's the `hash` field of the dictionary, and is about a half a dozen lines down.  Record that transaction id in scripts.py in `txid_split_list`
 
-Be careful not to lose the information (keys and TXIDs) that you recorded above.  To prevent abuse, the faucet only allows one transaction per 12 hours for a given IP address or tBTC address.  If you need more during that 12 hour window, or you are running into 'exceeded limit' issues, you can try requesting it through your cell phone.  If you put it on cellular (meaning disconnect from UVA's network), it will report a very different IP address to the faucet.
+Be careful not to lose the information (keys and TXIDs) that you recorded above.  To prevent abuse, the faucets only allows one request every so often (1 to 12 hours, depending on the faucet) for a given IP address or tBTC address.  If you need more during that 12 hour window, or you are running into 'exceeded limit' issues, you can try requesting it through a different faucet or through your cell phone.  If you put it on cellular (meaning disconnect from UVA's network), it will report a different IP address to the faucet.
 
 ### Python library
 
@@ -94,8 +102,8 @@ The `python-bitcoinlib` library for Python handles much of the heavy lifting -- 
 
 While the library can do many things, below is a quick summary of the relevant aspects that you will need to know for this assignment.
 
-- Creating Bitcoin scripts is really just putting everything into a list.  All the opcodes are named the same as on the [Bitcoin Script page](https://en.bitcoin.it/wiki/Script).  Creating a script is just as simple as putting the opcodes in a Python list: `[ OP_RETURN ]` is how you would create the [provably unspendable transaction](../../slides/bitcoin.html#/unspendable) discussed in the lecture slides.  Other things that go into scripts -- signatures and public key hashes -- are also just included in such a list.  Assuming you got the types correct, then the library will create the full script from such a list.
-- You will enter your private key into scripts.py as a string.  To convert it to the private key format that the library uses, you pass it to `CBitcoinSecret()`.  The object returned has a `.pub` field, which is the public key (the type of that public key is `CPubKey`).  And that public key can be converted into a Bitcoin address by calling `P2PKHBitcoinAddress.from_pubkey(public_key)`.  In fact, this is almost the exact code used by the provided files to generate keys.  For that we just used random data -- via `os.urandom(32)` -- instead of a pre-defined public key string.  An example:
+- Creating Bitcoin scripts is really just putting everything into a list.  All the opcodes are named the same as on the [Bitcoin Script page](https://en.bitcoin.it/wiki/Script).  For example, here is the the [provably unspendable transaction](../../slides/bitcoin.html#/unspendable) discussed in the lecture slides: `[ OP_RETURN ]`.  Other things that go into scripts -- signatures and public key hashes -- are also just included in such a list.  Assuming you got the types correct, then the library will create the full script from such a list.
+- You will enter your private key into scripts.py as a string.  To convert it to the private key format that the library uses, you pass it to `CBitcoinSecret()`.  The object returned has a `.pub` field, which is the public key (the type of that public key is `CPubKey`).  And that public key can be converted into a Bitcoin address by calling `P2PKHBitcoinAddress.from_pubkey(public_key)`.  In fact, this is almost the exact code used by the [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)) file to generate keys (although for that it just used random data -- via `os.urandom(32)` -- instead of a pre-defined public key string).  Here is an example as to how to convert your keys:
   ```
 private_key = CBitcoinSecret(private_key_str)
 public_key = private_key.pub
@@ -123,7 +131,7 @@ The UTXO indices that you created when you split your tBTC are paid to a standar
 To complete this transaction, you need to complete four things:
 
 - The `P2PKH_scriptSig(...)` function provides the sigscript needed to redeem the UTXO being spent.  The UTXO that is being redeemed -- one of the split UTXO indices from above -- requires a P2PKH sigScript to redeem one of the indices.
-- The `P2PKH_scriptPubKey(address)` function defines the pubKey script (aka output script).  This was discussed in lecture in the [P2PKH transaction](../../slides/bitcoin.html#/p2pkh) slides.  This script creates a new UTXO, payable to the faucet address, that is also a P2PKH script.  The parameter is of type `P2PKHBitcoinAddress`, which is what the `P2PKHBitcoinAddress.from_pubkey(public_key)` call (shown above) returns; a variable this type can be put directly into a script.
+- The `P2PKH_scriptPubKey(address)` function defines the pubKey script (aka output script).  This was discussed in lecture in the [P2PKH transaction](../../slides/bitcoin.html#/p2pkh) slides.  This script creates a new UTXO, payable to the tBTC return address, that is also a P2PKH script.  The parameter is of type `P2PKHBitcoinAddress`, which is what the `P2PKHBitcoinAddress.from_pubkey(public_key)` call (shown above) returns; a variable this type can be put directly into a script.
 - Set the transaction to be spent via the `txid_utxo` variable; the default is the transaction ID that was split (i.e., the `txid_split`), which is probably the correct value.
 - Set the output index to spend via `utxo_index`; it is currently set to 0.  Recall that output indices start from 0, not 1.  Be sure to pick an unspent index!  If you have to run this multiple times, you may have to change this value to an unspent index.
 
@@ -151,7 +159,7 @@ For this part, you will create a transaction to redeem one of the split UTXO ind
 
 You will also need to create the sigScript that redeems this transaction.  This should **ONLY** contain the two values $x$ and $y$ -- their order is up to you, as long as it works with the script you created above.  That script goes into `puzzle_scriptSig()`.  This also does not depend on any signatures, which is why there are no parameters to that function.  Ensure that the previous transaction has been mined into the blockchain, which may take up to 10 minutes -- if you have entered the previous transaction's URL into the `txid_puzzle_txn1` variable, you can get the URL of that transaction via `./bitcoinctl.py geturls`.  When ready, you can send the redeeming trasnaction to the tBTC network via `./bitcoinctl.py part2b` (remember to choose an unspent UTXO index first).  Record the transaction hash into `txid_puzzle_txn2`.
 
-You will notice that the amount in each UTXO index from the split transaction is 0.0001 tBTC.  For the first half of this puzzle transaction, the amount transacted is slightly less (90% of that, or 0.00009).  The difference -- 0.00001 tBTC -- is the transaction fee.  Even though this is a test network, and no actual money is involved, your transaction will not be mined into the blockchain unless you have a transaction fee.  For the second half of this, we need to lower the amount even further, so the amount transacted is 90% of 0.00009, or 0.000081; this lowering is done automatically by the code base provided.  The difference here -- 0.000009 tBTC -- is the transaction fee.  While the test network requires there be *some* transaction fees, it doesn't seem to care much about how much those fees are, which is different than with the real BTC network.  This automatic lowering of the transaction amount will recur elsewhere in this assignment.
+You will notice that the amount in each UTXO index from the split transaction is 0.001 tBTC.  For the first half of this puzzle transaction, the amount transacted is slightly less (90% of that, or 0.0009).  The difference -- 0.0001 tBTC -- is the transaction fee.  Even though this is a test network, and no actual money is involved, your transaction will not be mined into the blockchain unless you have a transaction fee.  For the second half of this, we need to lower the amount even further, so the amount transacted is 90% of 0.0009, or 0.00081; this lowering is done automatically by the code base provided.  The difference here -- 0.00009 tBTC -- is the transaction fee.  While the test network requires there be *some* transaction fees, it doesn't seem to care much about how much those fees are, which is different than with the real BTC network.  This automatic lowering of the transaction amount will recur elsewhere in this assignment.
 
 **NOTE:** The purpose of this part is for your redeeming script to actually check if the values passed in for $x$ and $y$ fulfill the equation.  You need to actually make that computation, not just check for equality for some pre-set values for $x$ and $y$.  This is something we explicitly check for when grading the assignment.
 
@@ -165,13 +173,13 @@ To set this up, you will need to create three more key pairs using `./bitcoinctl
 
 The scenario is this: you are taking on the role of a bank.  Three siblings (Alice, Bob, and Charlie) have deposited money into an account, and it can be redeemed if two of the three -- and also the bank! -- agree to it.  Formally, the transaction must be signed by the bank (i.e., you -- via the keys in the `my_private_key_str` variable) and any two of the three siblings (via their private keys).
 
-This will actually require two transactions.  The first redeems one of the split UTXOs and creates a multi-signature pubKey (output) script.  The second redeems that multi-signature script and pays it to the faucet address.  
+This will actually require two transactions.  The first redeems one of the split UTXOs and creates a multi-signature pubKey (output) script.  The second redeems that multi-signature script and pays it to the tBTC return address.  
 
 1. Transaction 1: tBTC funds are taken from one of your split UTXO indices and put into a new UTXO whose output script requires the multiple signatures
     - The sigScript for this will be taken from your part (1), above -- specifically from `P2PKH_scriptSig()`.  So you don't have to write this again.  If your part (1) worked, then this should work as well.
     - The pubKey script for this you will be writing in the `multisig_scriptPubKey()` function.
     - Once successfully executed, record the transaction hash in the `txid_multisig_txn1` variable.
-2. Transaction 2: tBTC the funds from the multisig UTXO are redeemed and paid back to the faucet address.
+2. Transaction 2: tBTC the funds from the multisig UTXO are redeemed and paid back to the tBTC return address.
     - The sigScript for this you will be writing in the `multisig_scriptSig()` function.
     - The pubKey script for this will be taken from your part (1) above -- specifically from `P2PKH_scriptPubKey()`.  So you don't have to write this again.  If you part (1) worked, then this should work as well.
     - Once successfully executed, record the transaction hash in the `txid_multisig_txn2` variable.
@@ -229,8 +237,8 @@ Whew!  The setup for this part is all done!  Now onto the scripting part....
 
 Because we are swapping between two different Bitcoin test networks, the atomic swap code is really the same -- both are in Bitcoin script.  TXN 1 (from [here in the slides](../../slides/bitcoin.html#/xchainpt1)) and TXN 3 (from [here in the slides](../../slides/bitcoin.html#/xchainpt2)) differ only by the public keys:
 
-- TXN 1: Pay *w* BTC to &lt;B's public key&gt; if (*x* for *h(x)* known and signed by B) or (signed by A & B)
-- TXN 3: Pay *v* BTC to &lt;A's public key&gt; if (*x* for *h(x)* known and signed by A) or (signed by A & B)
+- TXN 1: Pay *w* BTC if either (*x* for *h(x)* known and signed by B) or (signed by A & B)
+- TXN 3: Pay *v* BTC if either (*x* for *h(x)* known and signed by A) or (signed by A & B)
 
 Your script code for this will go into the `atomicswap_scriptPubKey()` function.
 
@@ -263,7 +271,7 @@ Once you have written the script in the `atomicswap_scriptPubKey()` function, yo
 
 ### Part 5: Return tBTC
 
-Once you have completed this assignment, you should pay any unspent tBTC UTXOs back to the faucet address.  You can use the script from part 1 for this -- just change the `utxo_index` value and re-run it until all the UTXO indices are spent.  If you have any other inputs -- perhaps you used the faucet multiple times -- just change the `txid_split` variable (and the `utxo_index` and the `send_amount`), and then call `./bitcoinctl.py part1`.  But be sure to change those values back!!!
+Once you have completed this assignment, you should pay any unspent tBTC UTXOs back to the tBTC return address.  The tBTC return address is in the `return_address` variable in scripts.py.  You can use the script from part 1 for this -- just change the `utxo_index` value and re-run it until all the UTXO indices are spent.  If you have any other inputs -- perhaps you used the faucet multiple times -- just change the `txid_split` variable (and the `utxo_index` and the `send_amount`), and then call `./bitcoinctl.py part1`.  But be sure to change those values back!!!
 
 When done, there should not be any unspent UTXOs remaining!  We are going to test this by seeing if the amount of tBTC left in your wallet address is zero.
 

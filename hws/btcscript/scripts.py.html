@@ -30,10 +30,10 @@ http://www.gnu.org/software/src-highlite">
 <b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#FF0000">'testnet'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># The faucet address that we will pay our tBTC to -- do not change this!</font></i>
-faucet_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB'</font><font color="#990000">)</font>
+faucet_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># The address that we will pay or BCY to -- do not change this!</font></i>
-bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mzvSYQANeVz6ZG2SwJAHj7k5EFy6AoFDy4'</font><font color="#990000">)</font>
+bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'C2SU5E573XwgR41LXZwWfrSf9EGyWzUMQM'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># Yes, we want to broadcast transactions</font></i>
 broadcast_transactions <font color="#990000">=</font> True
@@ -55,10 +55,15 @@ userid <font color="#990000">=</font> <font color="#FF0000">''</font>
 my_private_key_str <font color="#990000">=</font> <font color="#FF0000">""</font>
 my_invoice_address_str <font color="#990000">=</font> <font color="#FF0000">""</font>
 
-<i><font color="#9A1900"># Enter the transaction id (TXID) from the 'Testnet Setup' section of the</font></i>
-<i><font color="#9A1900"># assignment.  This was the transaction that funded your wallet, listed above</font></i>
-<i><font color="#9A1900"># in the `my_invoice_address_str` variable, with tBTC.</font></i>
-txid_initial <font color="#990000">=</font> <font color="#FF0000">""</font>
+<i><font color="#9A1900"># Enter the transaction ids (TXID) from the funding part of the 'Testnet</font></i>
+<i><font color="#9A1900"># Setup' section of the assignment.  Each of these was provided from a faucet</font></i>
+<i><font color="#9A1900"># call.  And obviously replace the empty string in the list with the first</font></i>
+<i><font color="#9A1900"># one you botain..</font></i>
+txid_funding_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#FF0000">""</font><font color="#990000">]</font>
+
+<i><font color="#9A1900"># Don't change this -- it is so we can easily access the first such funding</font></i>
+<i><font color="#9A1900"># transaction.</font></i>
+txid_initial <font color="#990000">=</font> txid_funding_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
 
 <i><font color="#9A1900"># These conversions are so that you can use them more easily in the functions</font></i>
 <i><font color="#9A1900"># below -- don't change these two lines.</font></i>
@@ -87,23 +92,25 @@ txid_initial <font color="#990000">=</font> <font color="#FF0000">""</font>
 <i><font color="#9A1900"># Testnet Setup: splitting coins</font></i>
 
 <i><font color="#9A1900"># The transaction ID that is to be split -- the assumption is that it is the</font></i>
-<i><font color="#9A1900"># transaction hash, above, that funded your account with tBTC; thus, this</font></i>
-<i><font color="#9A1900"># should not have to change.  It must be paid to the address that corresponds</font></i>
-<i><font color="#9A1900"># to the private key above</font></i>
+<i><font color="#9A1900"># transaction hash, above, that funded your account with tBTC.  If you are</font></i>
+<i><font color="#9A1900"># splitting a different faucet transaction, then change this appropriately.</font></i>
+<i><font color="#9A1900"># It must have been paid to the address that corresponds to the private key</font></i>
+<i><font color="#9A1900"># above</font></i>
 split_txid <font color="#990000">=</font> txid_initial
 
-<i><font color="#9A1900"># How much BTC is in that UTXO; the faucet is currently only giving 0.0001</font></i>
-<i><font color="#9A1900"># tBTC, so this should not have to change.</font></i>
-split_amount_to_split <font color="#990000">=</font> <font color="#993399">0.0001</font>
+<i><font color="#9A1900"># How much BTC is in that UTXO; look this up on https://live.blockcypher.com</font></i>
+<i><font color="#9A1900"># to get the correct amount.</font></i>
+split_amount_to_split <font color="#990000">=</font> <font color="#993399">0.001</font>
 
 <i><font color="#9A1900"># How many UTXO indices to split it into.  Note that it will actually split</font></i>
-<i><font color="#9A1900"># into one less, and use the last one as the transaction fee. It will make</font></i>
-<i><font color="#9A1900"># your life SO MUCH EASIER if the split_amount_to_split value, above, is evenly</font></i>
-<i><font color="#9A1900"># divisible by this number.  Setting this to 10 is reasonable.</font></i>
-split_into_n <font color="#990000">=</font> <font color="#993399">10</font>
+<i><font color="#9A1900"># into one less, and use the last one as the transaction fee.</font></i>
+split_into_n <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>split_amount_to_split<font color="#990000">/</font><font color="#993399">0.0001</font><font color="#990000">)</font>
 
-<i><font color="#9A1900"># The transaction ID obtained after successfully splitting the tBTC.</font></i>
-txid_split <font color="#990000">=</font> <font color="#FF0000">""</font>
+<i><font color="#9A1900"># The transaction IDs obtained after successfully splitting the tBTC.</font></i>
+txid_split_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#FF0000">""</font><font color="#990000">]</font>
+
+<i><font color="#9A1900"># Don't change this -- it's so some of our legacy grading code still works.</font></i>
+txid_split <font color="#990000">=</font> txid_split_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
@@ -125,7 +132,7 @@ utxo_index <font color="#990000">=</font> <font color="#993399">0</font>
 <i><font color="#9A1900"># there is no miner fee, and it will not be mined into a block.  Setting it</font></i>
 <i><font color="#9A1900"># to 90% of the value of the UTXO index is reasonable.  Note that the amount</font></i>
 <i><font color="#9A1900"># in a UTXO index is split_amount_to_split / split_into_n.</font></i>
-send_amount <font color="#990000">=</font> <font color="#993399">0.000009</font>
+send_amount <font color="#990000">=</font> <font color="#993399">0.00009</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
