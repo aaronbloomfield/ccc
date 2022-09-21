@@ -40,13 +40,14 @@ All readings are due by the start of lecture that day.  You should expect there 
 
 
 Homeworks
------------
+---------
 
 Reading assignments are due by the start of the lecture that day, and all other homeworks are due by the end of the day of the due date given -- this means by 11:59:59 pm.  The late policies are discussed in the [homework policies page](hw-policies.html) ([md](hw-policies.md)).  Submission is through the Gradescope Collab tool -- all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.
 
 
 #### Larger Programming Homeworks
 
+- Due Tue, 9/27, by midnight: [HW P4: BTC scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
 - Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
 - Due Tue, 9/6, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
