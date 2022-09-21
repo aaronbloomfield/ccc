@@ -66,14 +66,13 @@ Reading assignments are due by the start of the lecture that day, and all other 
 #### Smaller Homeworks
 
 
+- Due Fri, 9/30, by midnight: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html) ([md](../hws/ethprivate/index.md)); see the [Collab landing page][1] for the necessary information
 - Due Wed, 9/28: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/ethereum-whitepaper.pdf)); see above (in the Reading section) for what you can skip
-- Due Wed, 9/7: HW S2: Read the [[Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
+- Due Wed, 9/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
 - Due Tue, 8/30: HW S1: complete the course introduction Google survey (link in Collab)
 
 <!--
 - Due Tue, 3/15: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
-- Due Fri, 2/25: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html) ([md](../hws/ethprivate/index.md))
-- Due Mon, 2/21: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)); see above (in the Reading section) for what you can skip
 -->
 
 

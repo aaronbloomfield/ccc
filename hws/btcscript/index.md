@@ -1,5 +1,5 @@
-Bitcoin Scripting Homework
-==========================
+Bitcoin Scripting
+=================
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
