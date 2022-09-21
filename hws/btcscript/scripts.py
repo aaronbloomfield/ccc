@@ -165,7 +165,7 @@ txid_p2pkh = ""
 puzzle_txn_p = 0
 puzzle_txn_q = 0
 
-# These are the solutions to the equations 2x+y=p and x+2y=q.  You can use an
+# These are the solutions to the equations 3x+y=p and x+3y=q.  You can use an
 # online linear equation solver to find the solutions.
 puzzle_txn_x = 0
 puzzle_txn_y = 0
