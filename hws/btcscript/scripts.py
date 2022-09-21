@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
-# This is the homework file for the BTC Parsing homework, which can be found
-# at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That page describes
-# how to fill in this program.
+# This is the homework submission file for the BTC Scripting homework, which
+# can be found at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That
+# page describes how to fill in this program.
 
 
 from bitcoin.wallet import CBitcoinAddress, CBitcoinSecret
@@ -18,10 +18,10 @@ from bitcoin.core import x
 # ensure we are using the bitcoin testnet and not the real bitcoin network
 SelectParams('testnet')
 
-# The faucet address that we will pay our tBTC to -- do not change this!
-faucet_address = CBitcoinAddress('mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh')
+# The address that we will pay our tBTC to -- do not change this!
+tbtc_return_address = CBitcoinAddress('mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh')
 
-# The address that we will pay or BCY to -- do not change this!
+# The address that we will pay our BCY to -- do not change this!
 bcy_dest_address = CBitcoinAddress('C2SU5E573XwgR41LXZwWfrSf9EGyWzUMQM')
 
 # Yes, we want to broadcast transactions
@@ -295,10 +295,14 @@ def atomcswap_scriptSig_redeem(sig_recipient, secret):
     ]
 
 # This is the ScriptSig for sending coins back to the sender if unredeemed; it
-# is provided in full so that you can write the atomicswap_scriptPubKey
-# () function, above.  This is used to create TXNs 2 and 4, which are
+# is provided in full so that you can write the atomicswap_scriptPubKey()
+# function, above.  This is used to create TXNs 2 and 4, which are
 # described at
-# http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.
+# http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.  In
+# practice, this would be time-locked in the future -- it would include a
+# timestamp and call OP_CHECKLOCKTIMEVERIFY.  Because the time can not be
+# known when the assignment is written, and as it will vary for each student,
+# that part is omitted.
 def atomcswap_scriptSig_refund(sig_sender, sig_recipient):
     return [
         sig_recipient, sig_sender, OP_FALSE,

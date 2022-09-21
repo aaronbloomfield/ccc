@@ -11,9 +11,9 @@ http://www.gnu.org/software/src-highlite">
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">#!/usr/bin/python3</font></i>
 
-<i><font color="#9A1900"># This is the homework file for the BTC Parsing homework, which can be found</font></i>
-<i><font color="#9A1900"># at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That page describes</font></i>
-<i><font color="#9A1900"># how to fill in this program.</font></i>
+<i><font color="#9A1900"># This is the homework submission file for the BTC Scripting homework, which</font></i>
+<i><font color="#9A1900"># can be found at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That</font></i>
+<i><font color="#9A1900"># page describes how to fill in this program.</font></i>
 
 
 <b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>wallet <b><font color="#000080">import</font></b> CBitcoinAddress<font color="#990000">,</font> CBitcoinSecret
@@ -29,10 +29,10 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"># ensure we are using the bitcoin testnet and not the real bitcoin network</font></i>
 <b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#FF0000">'testnet'</font><font color="#990000">)</font>
 
-<i><font color="#9A1900"># The faucet address that we will pay our tBTC to -- do not change this!</font></i>
-faucet_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh'</font><font color="#990000">)</font>
+<i><font color="#9A1900"># The address that we will pay our tBTC to -- do not change this!</font></i>
+tbtc_return_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh'</font><font color="#990000">)</font>
 
-<i><font color="#9A1900"># The address that we will pay or BCY to -- do not change this!</font></i>
+<i><font color="#9A1900"># The address that we will pay our BCY to -- do not change this!</font></i>
 bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'C2SU5E573XwgR41LXZwWfrSf9EGyWzUMQM'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># Yes, we want to broadcast transactions</font></i>
@@ -306,10 +306,14 @@ atomic_swap_secret <font color="#990000">=</font> <font color="#993399">0</font>
     <font color="#990000">]</font>
 
 <i><font color="#9A1900"># This is the ScriptSig for sending coins back to the sender if unredeemed; it</font></i>
-<i><font color="#9A1900"># is provided in full so that you can write the atomicswap_scriptPubKey</font></i>
-<i><font color="#9A1900"># () function, above.  This is used to create TXNs 2 and 4, which are</font></i>
+<i><font color="#9A1900"># is provided in full so that you can write the atomicswap_scriptPubKey()</font></i>
+<i><font color="#9A1900"># function, above.  This is used to create TXNs 2 and 4, which are</font></i>
 <i><font color="#9A1900"># described at</font></i>
-<i><font color="#9A1900"># http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.</font></i>
+<i><font color="#9A1900"># http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.  In</font></i>
+<i><font color="#9A1900"># practice, this would be time-locked in the future -- it would include a</font></i>
+<i><font color="#9A1900"># timestamp and call OP_CHECKLOCKTIMEVERIFY.  Because the time can not be</font></i>
+<i><font color="#9A1900"># known when the assignment is written, and as it will vary for each student,</font></i>
+<i><font color="#9A1900"># that part is omitted.</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">atomcswap_scriptSig_refund</font></b><font color="#990000">(</font>sig_sender<font color="#990000">,</font> sig_recipient<font color="#990000">):</font>
     <b><font color="#0000FF">return</font></b> <font color="#990000">[</font>
         sig_recipient<font color="#990000">,</font> sig_sender<font color="#990000">,</font> OP_FALSE<font color="#990000">,</font>
