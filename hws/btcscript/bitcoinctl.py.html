@@ -156,7 +156,7 @@ http://www.gnu.org/software/src-highlite">
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4c"</font><font color="#990000">:</font>
 		txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>bcy_dest_address<font color="#990000">)</font>
 	<b><font color="#0000FF">else</font></b><font color="#990000">:</font> <i><font color="#9A1900"># all others: pay to the facuet address</font></i>
-		txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>faucet_address<font color="#990000">)</font>
+		txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>tbtc_return_address<font color="#990000">)</font>
 	<i><font color="#9A1900"># second transactions have to lower the send_amount to allow for fees</font></i>
 	factor <font color="#990000">=</font> <font color="#993399">1.0</font>
 	<b><font color="#0000FF">if</font></b> param <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'part2b'</font><font color="#990000">,</font><font color="#FF0000">'part3b'</font><font color="#990000">,</font><font color="#FF0000">'part4c'</font><font color="#990000">,</font><font color="#FF0000">'part4d'</font><font color="#990000">]:</font>

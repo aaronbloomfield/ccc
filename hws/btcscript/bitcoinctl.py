@@ -145,7 +145,7 @@ def handle_txn(param):
 	elif param == "part4c":
 		txout_scriptPubKey = P2PKH_scriptPubKey(bcy_dest_address)
 	else: # all others: pay to the facuet address
-		txout_scriptPubKey = P2PKH_scriptPubKey(faucet_address)
+		txout_scriptPubKey = P2PKH_scriptPubKey(tbtc_return_address)
 	# second transactions have to lower the send_amount to allow for fees
 	factor = 1.0
 	if param in ['part2b','part3b','part4c','part4d']:
