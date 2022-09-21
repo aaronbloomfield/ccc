@@ -39,7 +39,7 @@ http://www.gnu.org/software/src-highlite">
 	<b><font color="#0000FF">elif</font></b> network <font color="#990000">==</font> <font color="#FF0000">'bcy-test'</font><font color="#990000">:</font>
 		url <font color="#990000">=</font> <font color="#FF0000">'https://api.blockcypher.com/v1/bcy/test/txs/push'</font>
 	<b><font color="#0000FF">else</font></b><font color="#990000">:</font>
-		<b><font color="#0000FF">raise</font></b> <b><font color="#000000">InvalidArgumentException</font></b><font color="#990000">(</font><font color="#FF0000">"Network must be one of either 'btc-test3', 'bcy-test'"</font><font color="#990000">)</font>
+		<b><font color="#0000FF">raise</font></b> <b><font color="#000000">Exception</font></b><font color="#990000">(</font><font color="#FF0000">"Network must be one of either 'btc-test3', 'bcy-test'"</font><font color="#990000">)</font>
 	raw_transaction <font color="#990000">=</font> <b><font color="#000000">b2x</font></b><font color="#990000">(</font>tx<font color="#990000">.</font><b><font color="#000000">serialize</font></b><font color="#990000">())</font>
 	headers <font color="#990000">=</font> <font color="#990000">{</font><font color="#FF0000">'content-type'</font><font color="#990000">:</font> <font color="#FF0000">'application/x-www-form-urlencoded'</font><font color="#990000">}</font>
 	<b><font color="#0000FF">if</font></b> broadcast_transactions<font color="#990000">:</font>

@@ -28,7 +28,7 @@ def broadcast_transaction(tx, network):
 	elif network == 'bcy-test':
 		url = 'https://api.blockcypher.com/v1/bcy/test/txs/push'
 	else:
-		raise InvalidArgumentException("Network must be one of either 'btc-test3', 'bcy-test'")
+		raise Exception("Network must be one of either 'btc-test3', 'bcy-test'")
 	raw_transaction = b2x(tx.serialize())
 	headers = {'content-type': 'application/x-www-form-urlencoded'}
 	if broadcast_transactions:
