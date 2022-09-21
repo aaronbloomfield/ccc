@@ -12,7 +12,9 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Wed, 9/21: update to [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)) (just download the new one over the old one) and [scripts.py](scripts.py.html) ([src](scripts.py)) (comment out line 25); for now, the cross-chain transaction part is not working, and should be working soon
 
 
 ### Languages
