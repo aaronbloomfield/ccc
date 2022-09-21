@@ -44,30 +44,28 @@
 <p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
-<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
-<button class='tablinks' onclick="openTab(event,'tpart-1-geth')">Geth</button>
-<button class='tablinks' onclick="openTab(event,'tpart-2-blockchain-connection')">Blockchain Connection</button>
-<button class='tablinks' onclick="openTab(event,'tpart-3-interactive-geth')">Interactive Geth</button>
+<button class='tablinks' onclick="openTab(event,'tpart-1-installation')">Installation</button>
+<button class='tablinks' onclick="openTab(event,'tpart-2-blockchain')">Blockchain</button>
+<button class='tablinks' onclick="openTab(event,'tpart-3-geth')">Geth</button>
 <button class='tablinks' onclick="openTab(event,'tpart-4-get-ether')">Get Ether</button>
 <button class='tablinks' onclick="openTab(event,'tpart-5-extract-key')">Extract Key</button>
 <button class='tablinks' onclick="openTab(event,'tpart-6-send-me-ether')">Send Me Ether</button>
 <button class='tablinks' onclick="openTab(event,'tpart-7-explore-geth')">Explore Geth</button>
-<button class='tablinks' onclick="openTab(event,'tpart-8-blockchain-explorer')">Blockchain Explorer</button>
+<button class='tablinks' onclick="openTab(event,'tpart-8-explorer')">Explorer</button>
 <button class='tablinks' onclick="openTab(event,'tclosing-down')">Closing Down</button>
 <button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
 </div>
 <div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
 <p>We will shortly be developing applications for the Ethereum blockchain. We won’t be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.). Instead, we are going to use a private Ethereum blockchain – a test network – that has been set up for this class. This assignment is to connect to it, explore it, and perform a few operations.</p>
+<p>This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through <code>pip</code> (or <code>pip3</code>). This is already taken care of in the VirtualBox image. Don’t worry if you don’t know Python – we give you the exact code to use. This document also assumes you can install packages on your machine (also not needed for the VirtualBox image).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
-<p>This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through <code>pip</code> (or <code>pip3</code>). This is already taken care of in the VirtualBox image. Don’t worry if you don’t know Python – we give you the exact code to use.</p>
-<p>This document also assumes you can install packages on your machine (also not needed for the VirtualBox image).</p>
-</div><div id='tpart-1-geth' class='tabcontent'><h3 id='part-1-geth'>Part 1: Geth</h3>
-<p>Geth is the program we will be using to connect to the blockchain. It is already taken care of in the VirtualBox image, and you can skip to step 2 if you are using the VB image.</p>
-<p>Geth, which stands for Go Ethereum, is a command-line interface to run an Ethereum node. This particular implementation is written in the Go programming language. You will need to <a href='https://geth.ethereum.org/docs/install-and-build/installing-geth'>install geth</a>. The instructions differ depending on your OS.</p>
+</div><div id='tpart-1-installation' class='tabcontent'><h3 id='part-1-installation'>Part 1: Installation</h3>
+<p>Geth is the program we will be using to connect to the blockchain. It is already taken care of in the VirtualBox image, and you can skip to the next step if you are using the VB image.</p>
+<p>Geth, which stands for Go Ethereum, is a command-line interface to run an Ethereum node. This particular implementation is written in the Go programming language.</p>
+<p>You will need to <a href='https://geth.ethereum.org/docs/install-and-build/installing-geth'>install geth</a>. The instructions differ depending on your OS.</p>
 <p><strong>WARNING:</strong> DO NOT JUST RUN <code>geth</code>! Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a “light” node and over 1 Tb for a “full” node. It also takes a full week (at least) to synchronize all that data.</p>
-</div><div id='tpart-2-blockchain-connection' class='tabcontent'><h3 id='part-2-blockchain-connection'>Part 2: Blockchain Connection</h3>
+</div><div id='tpart-2-blockchain' class='tabcontent'><h3 id='part-2-blockchain'>Part 2: Blockchain</h3>
 <p>Here we will connect to the private blockchain.</p>
 <p><strong>Step 1:</strong> Create a directory to hold the blockchain info – this can be anywhere you want, but we’ll call it <code>/path/to/ethprivate</code> herein.</p>
 <p><strong>Step 2:</strong> In that data directory, copy the course genesis.json file, which can be found in the Collab Resources section, and is linked to off of the Collab landing page. You cannot modify this file – if you do, the genesis block will be different, which will cause the hash to be different, and then your local geth instance will not sync with the course blockchain.</p>
@@ -80,28 +78,40 @@
 <p>There are two things to check to ensure that this worked correctly:</p>
 <ul>
 <li>It should say “Successfully wrote genesis state”</li>
-<li>The genesis block hash, shown above as <code>XXXXXX..XXXXXX</code>, should exactly match what is listed on the Collab landing page</li>
+<li>The genesis block hash, shown above as <code>XXXXXX..XXXXXX</code>, should exactly match what is listed on the Collab landing page; it will have an ellipsis (the “..”) in the middle of it</li>
 </ul>
-<p><strong>Step 4:</strong> Create a <code>geth/static-nodes.json</code> file in your data directory. The <code>geth/</code> sub-directory will have been created by the previous step. This file lists a static node so you can connect to our blockchain – one of the departmental servers will be used for this purpose. That file is also on the Collab landing page. Make sure it goes into the <code>geth/</code> sub-directory!</p>
+<p><strong>Step 4:</strong> Copy the <code>static-nodes.json</code> file into the newly created <code>geth/</code> sub-directory. The <code>geth/</code> sub-directory will have been created by the previous step. This file lists a static node so you can connect to our blockchain – one of the departmental servers will be used for this purpose. That file is also on the Collab landing page. Make sure it goes into the <code>geth/</code> sub-directory!</p>
 <p><strong>Step 5:</strong> Start geth. Run the following command, changing three things: (1) the userid to your own, (2) the data directory to what you used above, and (3) the networkid value to the <code>chainId</code> to the value on the Collab landing page.</p>
 <pre><code>geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncmode full --gcmode "archive"</code></pre>
 <p>It’s a long command, and we’ll be adding more command-line flags as the semester continues. We recommend you put that command into a script or batch file so you don’t have to re-type it each time.</p>
 <p>There is minimal output when it is running, and we will verify that it has connected properly in a moment.</p>
-</div><div id='tpart-3-interactive-geth' class='tabcontent'><h3 id='part-3-interactive-geth'>Part 3: Interactive geth</h3>
+</div><div id='tpart-3-geth' class='tabcontent'><h3 id='part-3-geth'>Part 3: Geth</h3>
 <p>What is running from the previous part is the Ethereum node, but that is not interactive. You should leave it running while you perform the next few parts of this assignment.</p>
 <p>To enter commands via the keyboard, you have to “attach” to the local Ethereum node. You do this by entering the following command:</p>
 <pre><code>geth attach /path/to/ethprivate/geth.ipc</code></pre>
 <p>If you are in the same directory as geth.ipc, you may have to enter <code>./geth.ipc</code> as the file name. Note that this won’t work unless the geth node, from the previous step, is running. You will then get a prompt, which is just a greater-than sign. This is a JavaScript console.</p>
-<p>If you have this installed on Windows, when you start the geth node, you will see output like <a href='geth-on-windows.png'>this</a> – the text circled in red is the file name for the geth.ipc file (putting <code>geth attach</code> before it). It will likely be either of the following:</p>
+<p>If you have this installed on Windows, when you start the geth node (from the previous step), you will see output like <a href='geth-on-windows.png'>this</a> – the text circled in red is the file name for the geth.ipc file (putting <code>geth attach</code> before it). It will likely be either of the following:</p>
 <pre><code>geth attach \\.\pipe\geth.ipc
 geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
 <p>That second line rendered correctly – it has three sets of backslahses – 4, then 2, then 2. And run it from the directory that your geth.ipc file is in. As before, note that this won’t work unless the geth node, from the previous step, is running.</p>
-<p>In either case, you will then get a prompt, which is just a greater-than sign. This is a JavaScript console.</p>
+<p>In either case, you will then get a prompt, which is just a greater-than sign. This is a JavaScript console. It should look something like this:</p>
+<pre><code>Welcome to the Geth JavaScript console!
+
+instance: Geth/asb2t/v1.10.25-stable-69568c55/linux-amd64/go1.18.5
+at block: 0 (Fri Sep 16 2022 12:52:06 GMT+0000 (UTC))
+ datadir: /path/to/ethprivate
+ modules: admin:1.0 clique:1.0 debug:1.0 engine:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+To exit, press ctrl-d or type exit
+&gt; </code></pre>
 <p>First, let’s wait for it to sync. Since you have saved the static-nodes.json file, it will connect to the course server and start downloading all the blocks in the blockchain. This may take some time, but hopefully less than 5 minutes.</p>
 <p>As it is sync’ing, you can try these commands:</p>
 <ul>
-<li><code>admin.peers.length</code> will tell you how many peers you are connected to – it should be at least 1. Because you ran it with the <code>--maxpeers 1</code>, it probably won’t be greater than 1. If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).</li>
-<li><code>admin.peers</code> will print information on each of those peers. Once established, it should list exactly one peer – the course server, whose ‘enode’ specification is the same as the static-nodes.json file that you downloaded.</li>
+<li><code>admin.peers.length</code> will tell you how many peers you are connected to – it should be at least 1. Because you ran it with the <code>--maxpeers 1</code>, it probably won’t be greater than 1. If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
+<ul>
+<li><strong>Important:</strong> if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not sync’ing.</li>
+</ul></li>
+<li><code>admin.peers</code> will print information on each of those peers. Once established, it should list exactly one peer – the course server, whose ‘enode’ specification is the same as what is in the static-nodes.json file that you downloaded.</li>
 <li><code>eth.blockNumber</code> will return the highest block number in the blockchain that is on your computer. If it is returning zero, then it is not sync’ed (or is not trying to sync).</li>
 <li><code>eth.syncing</code> will either return ‘false’ if it is not syncing, or a JSON dictionary if it is.
 <ul>
@@ -127,11 +137,11 @@ geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
 </ul>
 </div><div id='tpart-4-get-ether' class='tabcontent'><h3 id='part-4-get-ether'>Part 4: Get ether</h3>
 <p>You cannot mine on this blockchain – it has been set up to automatically mine any transaction to the blockchain for you. In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Collab landing page. Each time you use this faucet you will obtain 10 (fake) ETH. <strong>USE THIS RESPONSIBLY!!!</strong> The intent of the faucet is for you to obtain as much funds as you need. But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work. This will make me cranky. If you request funds a few dozen times throughout the semester, that’s totally fine. Even a hundred requests this semester would be fine. But if you are making the requests thousands of times, that’s going to be a problem.</p>
-<p>You should request funds once or twice. After you make the requests – you’ll need your full eth.coinbase account address – you should check that your balance was updated in the geth terminal. You can use <code>eth.getBalance(eth.coinbase)</code>, but that reports it in wei (which has 18 more zeroes). You can also use <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code> to get the value in ether.</p>
+<p>You should request funds once or twice for this assignment. After you make the requests – you’ll need your full eth.coinbase account address – you should check that your balance was updated in the geth terminal. You can use <code>eth.getBalance(eth.coinbase)</code>, but that reports it in wei (which has 18 more zeroes). You can also use <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code> to get the value in ether.</p>
 <p>To verify that you did this part, we are going to check that you have a non-zero balance in your eth.coinbase account.</p>
 </div><div id='tpart-5-extract-key' class='tabcontent'><h3 id='part-5-extract-key'>Part 5: Extract key</h3>
-<p>We need to get the private key of the account you created, as we will need that for our dApp development in future assignments. The private key is encrypted in a .json file in the keystore/ sub-directory of your geth data directory. The file will have a name like: UTC–2022-01-08T19-53-08.823103866Z–0123456789abcdef0123456789abcdef01234567. Note that the last part of that name (“0123456789abcdef0123456789abcdef01234567”) matches the Ethereum address we obtained and that is returned from <code>eth.coinbase</code>.</p>
-<p>First, ensure that the <code>web3</code> and <code>hexbytes</code> Python packages are installed – run <code>pip install web3 hexbytes</code> or <code>pip3 install web3 hexbytes</code>.</p>
+<p>We need to get the private key of the account you created, as we will need that for our dApp development in future assignments. The private key is encrypted in a .json file in the <code>keystore/</code> sub-directory of your geth data directory. The file will have a name like: UTC–2022-01-08T19-53-08.823103866Z–0123456789abcdef0123456789abcdef01234567. Note that the last part of that name (“0123456789abcdef0123456789abcdef01234567”) matches the Ethereum address we obtained and that is returned from <code>eth.coinbase</code>.</p>
+<p>First, ensure that the <code>web3</code> and <code>hexbytes</code> Python packages are installed – run <code>pip install web3 hexbytes</code> or <code>pip3 install web3 hexbytes</code>. This is already done on the VirtualBox image.</p>
 <p>Run python (or python3, depending on your OS). Note that we are going back to Python, and will come back to geth later. In Python, enter the following two lines, changing the values as appropriate to the file name (with full path) and the password for the Ethereum account you created in geth:</p>
 <pre><code>password="password"
 filename="/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567"</code></pre>
@@ -142,7 +152,8 @@ encrypted_key = keyfile.read()
 private_key = w3.eth.account.decrypt(encrypted_key,password)
 import binascii
 binascii.b2a_hex(private_key)</code></pre>
-<p>When you run it, it will look like the following:</p>
+<p>You do not need to know what the above commands do, although you are welcome to look into it. We will be learning about these commands in a future assignment.</p>
+<p>When you run those commands, it will look like the following:</p>
 <pre><code>$ python3
 Python 3.8.10 (default, Nov 26 2021, 20:14:08) 
 [GCC 9.3.0] on linux
@@ -186,22 +197,21 @@ $</code></pre>
 <p>You should explore geth on your own. When you start geth (via <code>geth attach geth.ipc</code>), it lists the modules available:</p>
 <pre><code>Welcome to the Geth JavaScript console!
 
-instance: Geth/v1.10.15-stable-8be800ff/linux-amd64/go1.17.5
-coinbase: 0x0123456789abcdef0123456789abcdef01234567
-at block: 52 (Sat Jan 08 2022 21:49:04 GMT-0500 (EST))
- datadir: /home/crypto/ethprivate
- modules: admin:1.0 clique:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+instance: Geth/asb2t/v1.10.25-stable-69568c55/linux-amd64/go1.18.5
+at block: 0 (Fri Sep 16 2022 12:52:06 GMT+0000 (UTC))
+ datadir: /path/to/ethprivate
+ modules: admin:1.0 clique:1.0 debug:1.0 engine:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
 
 To exit, press ctrl-d or type exit
 &gt; </code></pre>
 <p>Your geth version number may be more recent. The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3). In the console, type the start of the module, a period, and hit the Tab key – it will show you all the possible completions. If you type in the name and it’s a function, it will tell you that. And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well. Lastly, it’s a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript. (You won’t need to know much JavaScript for this course). If you do know Javascript, note that this is a much older version of Javascript, before any of the <code>async</code> functionality was added (if you don’t know Javascript, you can ignore this sentence).</p>
-</div><div id='tpart-8-blockchain-explorer' class='tabcontent'><h3 id='part-8-blockchain-explorer'>Part 8: Blockchain Explorer</h3>
-<p>We have a web-based blockchain explorer for our private Ethereum blockchain. The link to that is on the Collab landing page. Browse that site, and play around with the search functionality. Directions for how to use it are on the main page. Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there – the time of the last update is listed on the main page (the bottom bullet under ‘Statistics’).</p>
+</div><div id='tpart-8-explorer' class='tabcontent'><h3 id='part-8-explorer'>Part 8: Explorer</h3>
+<p>We have a web-based blockchain explorer for our private Ethereum blockchain. The link to that is on the Collab landing page. Browse that site, and play around with the search functionality. Directions for how to use it are on the main page. Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there – the time of the last update is listed on the main page (the second to last bullet under ‘Statistics’).</p>
 <p>Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL.</p>
 </div><div id='tclosing-down' class='tabcontent'><h3 id='closing-down'>Closing down</h3>
 <p>If you are not actively using it, you should shut your geth node down. UVA ITS has given permission to do all this, but they do perform port scans on all machines, so no need to raise their hackles by keeping a geth node up and running when we aren’t using it. You can easily re-launch it when you need it again for a future assignment. Likewise for the console from part (3); if you close down the geth node, the console won’t work.</p>
 </div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
-<p>You will need to fill in the various values from this assignment into the <a href='ethprivate.py.html'>ethprivate.py</a> (<a href='ethprivate.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file is the only file that must be submitted for this assignment; future assignments will have additional Solidity source code submitted as well. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
+<p>You will need to fill in the various values from this assignment into the <a href='ethprivate.py.html'>ethprivate.py</a> (<a href='ethprivate.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file is the only file that must be submitted for this assignment; future assignments will have additional Solidity source code submitted as well. The <code>sanity_checks</code> dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>two</em> forms of submission for this assignment; you must do both.</p>
 <p>Submission 1: You must send 1 (fake) ETH to the course-wide address indicated on the Collab landing page; this was done in part 6, above.</p>
 <p>Submission 2: You should submit your completed <code>ethprivate.py</code> file, and ONLY that file, to Gradescope.</p>
