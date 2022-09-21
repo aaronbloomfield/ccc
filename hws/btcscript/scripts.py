@@ -22,7 +22,7 @@ SelectParams('testnet')
 tbtc_return_address = CBitcoinAddress('mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh')
 
 # The address that we will pay our BCY to -- do not change this!
-bcy_dest_address = CBitcoinAddress('C2SU5E573XwgR41LXZwWfrSf9EGyWzUMQM')
+#bcy_dest_address = CBitcoinAddress('C1wTRPGenfdyCiozDhyQEm45mgWYy7pTum')
 
 # Yes, we want to broadcast transactions
 broadcast_transactions = True
