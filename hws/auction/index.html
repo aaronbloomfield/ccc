@@ -44,7 +44,6 @@
 <p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
-<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
 <button class='tablinks' onclick="openTab(event,'ttask-1-create-nfts')">Create NFTs</button>
 <button class='tablinks' onclick="openTab(event,'ttask-2-auction-contract')">Auction Contract</button>
 <button class='tablinks' onclick="openTab(event,'ttask-3-create-auctions')">Create Auctions</button>
@@ -55,9 +54,6 @@
 <div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
 <p>In this assignment you will write a smart contract, in Solidity, to handle auctions for NFTs. The NFTs will be ERC-721 tokens.</p>
 <p>Once deployed to our private Ethereum blockchain, anybody should be able to mint an NFT and then initiate an auction. Anybody could then submit a bid to the auction. To prevent somebody from placing a bid and then not paying, one has to transfer ETH to the smart contract when a bid is placed – it is the transfer of this ETH that actually places the bid. Anybody who is outbid will have their ETH returned, and they can choose (or not) to place a higher bid. Once the auction is completed, the ETH from the winning bid is transferred to the person who initiated the auction (minus some fees), and the NFT is transferred to the winning bidder.</p>
-</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
 <p>Writing this homework will require completion of the following assignments:</p>
 <ul>
 <li><a href='../ethprivate/index.html'>Connecting to the private Ethereum blockchain</a> (<a href='../ethprivate/index.md'>md</a>)</li>
@@ -66,6 +62,8 @@
 </ul>
 <p>Note that this assignment requires that your <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment is working properly. If you did not get it working properly, then see the next section.</p>
 <p>You will also need to be familiar with the <a href='../../slides/ethereum.html#/'>Ethereum slide set</a>, the <a href='../../slides/solidity.html#/'>Solidity slide set</a>, and the <a href='../../slides/tokens.html#/'>Tokens slide set</a></p>
+</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='ttask-1-create-nfts' class='tabcontent'><h3 id='task-1-create-nfts'>Task 1: Create NFTs</h3>
 <p>You are going to create some NFT images in your NFTmanager.</p>
 <p>You should use your NFT manager that you wrote and deployed in the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. If you were unable to get yours working in that assignment, then speak to me, and I will provide an alternative deployed contract for you to use.</p>

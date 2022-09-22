@@ -44,22 +44,20 @@
 <p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
-<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
 <button class='tablinks' onclick="openTab(event,'tpart-1-create-the-dao')">Create The DAO</button>
 <button class='tablinks' onclick="openTab(event,'tpart-2-web3-interface')">Web3 Interface</button>
 <button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
 </div>
 <div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
 <p>In this assignment you are going to create a Decentralized Autonomous Organization (DAO). The DAO will issue NFT tokens (that you created in the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment) to keep track of who are members, allow members to submit proposals, and allow voting on those proposals. For the purposes of this assignment, a proposal consists of a reason (which can be any string), an amount to pay, and an account address to pay it to. You will then make a Web3 interface for this DAO that will allow anybody with a standard web browser to see the status of the DAO and the proposals.</p>
-</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
 <p>Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:</p>
 <ul>
 <li>That you completed the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment as we will be using your NFTmanager contract for our ERC-721 tokens (if yours is not working, you can use the default ERC721.sol contract provided in that assignment)</li>
 <li>Familiarity with the <a href='../../slides/applications.html#/daos'>Decentralized Autonomous Organizations (DAO)</a> section of the lecture slides</li>
 <li>That you have a working account on the CS departmental servers. If you are unsure, you can view the CS computing page, which has a link to the password reset page (a link to there is on the Collab landing page)</li>
 </ul>
+</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='tpart-1-create-the-dao' class='tabcontent'><h3 id='part-1-create-the-dao'>Part 1: Create the DAO</h3>
 <p>A <a href='../../slides/applications.html#/daos'>Decentralized Autonomous Organization (DAO)</a> allows members to submit and vote on proposals. For the purposes of this assignment, these proposals always have some amount of ether associated with them. A proposal is whether to pay the amount of ether to that particular account address. One example of what to use a DAO for is a charity organization that focuses on one particular type of area (education, environment, etc.): members vote on what to donate money to (and how much to donate), and a successful proposal means that organization receives some amount of ether.</p>
 <p>As far as this assignment is concerned, we are not concerned as to <em>what</em> your DAO is for, only that it works.</p>
@@ -180,7 +178,7 @@ interface IDAO {
 <li><code>wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map</code></li>
 </ul></li>
 </ul>
-<h5 id='background-1'>Background</h5>
+<h5 id='background'>Background</h5>
 <p>You are <em>encouraged</em> to look at the examples of web3 usage provided so far in class, and to copy/adapt the code therein. The ones we have seen are:</p>
 <ul>
 <li>choices.php: for the Choices contract in <a href='../dappintro/index.html'>dApp Introduction assignment</a> (<a href='../dappintro/index.md'>md</a>)</li>

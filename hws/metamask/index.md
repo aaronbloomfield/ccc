@@ -8,13 +8,6 @@ Metamask Assignment
 
 You are going to create a web interface for the Auctioneer contract you created in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  This web interface will allow for the creation of NFTs and the ability to start and stop auctions, as well as bidding on running auctions.  The web page you create will reside on the departmental servers, just like with the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment. 
 
-### Changelog
-
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
-
-
-### Background
-
 Writing this homework will require completion of the following assignments:
 
 - [Private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index))
@@ -22,6 +15,10 @@ Writing this homework will require completion of the following assignments:
 - [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md))
 - [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) (this is for the experience with web3; the artifacts of that assignment are not needed for the current one)
 - [dApp Auction](../auction/index.html) ([md](../auction/index.md))
+
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 #### Auctioneer

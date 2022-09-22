@@ -10,13 +10,6 @@ In this assignment you will write a smart contract, in Solidity, to handle aucti
 
 Once deployed to our private Ethereum blockchain, anybody should be able to mint an NFT and then initiate an auction.  Anybody could then submit a bid to the auction.  To prevent somebody from placing a bid and then not paying, one has to transfer ETH to the smart contract when a bid is placed -- it is the transfer of this ETH that actually places the bid.  Anybody who is outbid will have their ETH returned, and they can choose (or not) to place a higher bid.  Once the auction is completed, the ETH from the winning bid is transferred to the person who initiated the auction (minus some fees), and the NFT is transferred to the winning bidder.
 
-### Changelog
-
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
-
-
-### Background
-
 Writing this homework will require completion of the following assignments:
 
 - [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md))
@@ -26,6 +19,11 @@ Writing this homework will require completion of the following assignments:
 Note that this assignment requires that your [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment is working properly.  If you did not get it working properly, then see the next section.
 
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), and the [Tokens slide set](../../slides/tokens.html#/)
+
+
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Task 1: Create NFTs

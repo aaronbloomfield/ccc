@@ -9,18 +9,15 @@ In this assignment you are going to create a Python program to perform [arbitrag
 
 Regardless of what you named your token cryptocurrency, we are going to refer to it as 'TC' here (for Token Cryptocurrency).
 
-### Changelog
-
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
-
-
-### Background
-
 Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:
 
 - That you completed the [DEX](../dex/index.html) ([md](../dex/index.md)) assignment as we will be using that.  If you didn't get yours working, contact us, and we will provide a few deployed TokenDEXes for you.
 - That you completed the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment as we will be using your TokenCC contract.
 - Familiarity with the [arbitrage trading](../../slides/applications.html#/arbitrage) section of the lecture slides
+
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### TokenDEX

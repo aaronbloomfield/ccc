@@ -44,8 +44,7 @@
 <p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
-<button class='tablinks' onclick="openTab(event,'tbackground')">Background</button>
-<button class='tablinks' onclick="openTab(event,'tfake-eth-price')">(fake) ETH Price</button>
+<button class='tablinks' onclick="openTab(event,'teth-price')">ETH Price</button>
 <button class='tablinks' onclick="openTab(event,'tdetails')">Details</button>
 <button class='tablinks' onclick="openTab(event,'tinterface')">Interface</button>
 <button class='tablinks' onclick="openTab(event,'tfees')">Fees</button>
@@ -58,9 +57,6 @@
 </div>
 <div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
 <p>In this assignment you are going to create a Decentralized Cryptocurrency Exchange (hereafter: DEX) for the token cryptocurrency (hereafter: TC) you created in the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency. The DEX will use the <a href='../../slides/applications.html#/cpamm'>Constant Product Automated Market Maker (CPAMM)</a> method for determining the exchange rates.</p>
-</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-</div><div id='tbackground' class='tabcontent'><h3 id='background'>Background</h3>
 <p>Writing this homework will require completion of the following assignments:</p>
 <ul>
 <li><a href='../ethprivate/index.html'>Connecting to the private Ethereum blockchain</a> (<a href='../ethprivate/index.md'>md</a>)</li>
@@ -69,7 +65,9 @@
 </ul>
 <p>Note that this assignment requires that your <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment is working properly. If you did not get it working properly, then contact us. You are expected to use your TokenCC code from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. While you are welcome to use that deployment or re-deploy it, we suspect that you will likely have to re-deploy it many times as you are testing your DEX. Be sure to save the contract address of the final deployment that you will use when you submit the assignment.</p>
 <p>You will also need to be familiar with the <a href='../../slides/ethereum.html#/'>Ethereum slide set</a>, the <a href='../../slides/solidity.html#/'>Solidity slide set</a>, the <a href='../../slides/tokens.html#/'>Tokens slide set</a>, and the <a href='../../slides/applications.html'>Blockchain Applications</a> slide set. The last one is most relevant, as it discusses how DEXes work.</p>
-</div><div id='tfake-eth-price' class='tabcontent'><h3 id='fake-eth-price'>(fake) ETH price</h3>
+</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+</div><div id='teth-price' class='tabcontent'><h3 id='eth-price'>ETH price</h3>
 <p>To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH. Both of these contracts fulfill the <a href='IEtherPriceOracle.sol.html'>IEtherPriceOracle.sol</a> (<a href='IEtherPriceOracle.sol'>src</a>) interface:</p>
 <pre><code>interface IEtherPriceOracle is IERC165 {
         function getEtherPriceInCents() external view returns (uint);

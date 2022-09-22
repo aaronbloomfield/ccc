@@ -47,15 +47,14 @@
 <h3 id="overview">Overview</h3>
 <p>In this assignment you are going to create a Python program to perform <a href="../../slides/applications.html#/arbitrage">arbitrage trading</a> on the blockchain. Your trading will be between a number of different of your TokenDEX instances from the <a href="../dex/index.html">DEX</a> (<a href="../dex/index.md">md</a>) assignment.</p>
 <p>Regardless of what you named your token cryptocurrency, we are going to refer to it as ‘TC’ here (for Token Cryptocurrency).</p>
-<h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-<h3 id="background">Background</h3>
 <p>Beyond general experience with programming Solidity (which you have at this point it the course), this assignment requires:</p>
 <ul>
 <li>That you completed the <a href="../dex/index.html">DEX</a> (<a href="../dex/index.md">md</a>) assignment as we will be using that. If you didn’t get yours working, contact us, and we will provide a few deployed TokenDEXes for you.</li>
 <li>That you completed the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment as we will be using your TokenCC contract.</li>
 <li>Familiarity with the <a href="../../slides/applications.html#/arbitrage">arbitrage trading</a> section of the lecture slides</li>
 </ul>
+<h3 id="changelog">Changelog</h3>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 <h3 id="tokendex">TokenDEX</h3>
 <p>You will need to deploy five (or so) instances of your TokenDEX. The intent is to have a difference in exchange rates between these, and your program below will take advantage of these differences. Before you deploy them, however, read this section through.</p>
 <p>There is a lot to do to get this all set up: you have to deploy a TokenCC contract, five (or so) DEXes, initialize all the DEXes via <code>createPool()</code>, and then perform some trades to create a difference in the exchange rates. While this can all be done manually, we can automate that via a smart contract. Consider the following method:</p>

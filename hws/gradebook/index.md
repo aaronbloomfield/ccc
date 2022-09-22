@@ -13,20 +13,17 @@ Note: I'm not going to to keep *real* grades in the gradebook.  In addition to t
 
 Admittedly, a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts.  But it will introduce you to the concepts involved in developing smart contracts.  And there are many very similar applications that would only require a few tweaks to the gradebook contract.  There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.
 
-
-### Changelog
-
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
-
-
-### Background
-
 Writing this homework will require completion of the following assignments:
 
 - [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md))
 - [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md))
 
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), and the [Solidity slide set](../../slides/solidity.html#/).
+
+
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Part 1: Gradebook contract
