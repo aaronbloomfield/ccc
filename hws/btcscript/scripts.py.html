@@ -33,7 +33,7 @@ http://www.gnu.org/software/src-highlite">
 tbtc_return_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># The address that we will pay our BCY to -- do not change this!</font></i>
-<i><font color="#9A1900">#bcy_dest_address = CBitcoinAddress('C1wTRPGenfdyCiozDhyQEm45mgWYy7pTum')</font></i>
+bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># Yes, we want to broadcast transactions</font></i>
 broadcast_transactions <font color="#990000">=</font> True
@@ -176,8 +176,9 @@ txid_p2pkh <font color="#990000">=</font> <font color="#FF0000">""</font>
 puzzle_txn_p <font color="#990000">=</font> <font color="#993399">0</font>
 puzzle_txn_q <font color="#990000">=</font> <font color="#993399">0</font>
 
-<i><font color="#9A1900"># These are the solutions to the equations 3x+y=p and x+3y=q.  You can use an</font></i>
-<i><font color="#9A1900"># online linear equation solver to find the solutions.</font></i>
+<i><font color="#9A1900"># These are the solutions to the linear equations specified in the homework</font></i>
+<i><font color="#9A1900"># assignment.  You can use an online linear equation solver to find the</font></i>
+<i><font color="#9A1900"># solutions.</font></i>
 puzzle_txn_x <font color="#990000">=</font> <font color="#993399">0</font>
 puzzle_txn_y <font color="#990000">=</font> <font color="#993399">0</font>
 

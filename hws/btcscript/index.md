@@ -14,7 +14,9 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
 
-- Wed, 9/21: update to [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)) (just download the new one over the old one) and [scripts.py](scripts.py.html) ([src](scripts.py)) (comment out line 25); for now, the cross-chain transaction part is not working, and should be working soon
+- Wed, 9/21: a bunch of updates were committed by 9:30 pm; if you downloaded the files before that, please check through these updates.  If you download the files after that, then you do not need to make any changes.
+  - Re-download [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py))
+  - Line 25 of [scripts.py](scripts.py.html) ([src](scripts.py)) should be exactly: `bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')` (it should not be commented out, and it has a different invoice address)
 
 
 ### Languages
@@ -207,32 +209,30 @@ IMPORTANT NOTE: For the `OP_CHECKMULTISIG` (or `OP_CHECKMULTISIGVERIFY`), it sho
 
 ### Part 4: Cross-chain
 
-**Note: we are having issues with one of the Bitcoin invoice addresses and the current version of bitcoin-pythonlib.  This should be fixed in the next day or two, but for now, please wait on working on this section.**
+In this part you will create the scripts for a [cross-chain transaction](../../slides/bitcoin.html#/xchain).  Typically this would be for two different cryptocurrencies.  However, since we only have learned Bitcoin Script, we will use that for both parts.  There are many cryptocurrencies that are forks of Bitcoin, and thus have the same scripting language, so the same program could work for them.  A completely different cryptocurrency, with a different scripting language, would have an analogous script.  However, to test this we will be using two *different* Bitcoin testing blockchains.
 
-~~In this part you will create the scripts for a [cross-chain transaction](../../slides/bitcoin.html#/xchain).  Typically this would be for two different cryptocurrencies.  However, since we only have learned Bitcoin Script, we will use that for both parts.  There are many cryptocurrencies that are forks of Bitcoin, and thus have the same scripting language, so the same program could work for them.  A completely different cryptocurrency, with a different scripting language, would have an analogous script.  However, to test this we will be using two *different* Bitcoin testing blockchains.~~
+Below you will be obtaining a Bitcoin key pair and funds on a separate Bitcoin blockchain.  There will be *three* script producing functions in scripts.py, although you only have to create one.  The first one, `atomicswap_scriptPubKey()`, will create the [TXN 1 and TXN 3 from the slides](../../slides/bitcoin.html#/xchainpt1); this is the one that you have to create.  This script will be used for BOTH of these transactions (with different parameters, of course) on the two different blockchains by the provided code in [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)).  The second function, `atomcswap_scriptSig_redeem()`, will be when Alice or Bob knows the secret value and is redeeming the BTC; we provide this function for you in scripts.py.  This is used in steps 5 and 6 on [cross-chain atomic swap procedure slide](../../slides/bitcoin.html#/atomicsteps).  The third function, `atomcswap_scriptSig_refund()`, will create the time-out redeeming script, which is [TXN 2 and TXN 4 from the slides](../../slides/bitcoin.html#/xchainpt1); we also provide this function for you in scripts.py.  Again, this will be used on both blockchains by the provided code.  There are some requirements for what has to be in these scripts, described below (in "Notes and hints").
 
-~~Below you will be obtaining a Bitcoin key pair and funds on a separate Bitcoin blockchain.  There will be *three* script producing functions in scripts.py, although you only have to create one.  The first one, `atomicswap_scriptPubKey()`, will create the [TXN 1 and TXN 3 from the slides](../../slides/bitcoin.html#/xchainpt1); this is the one that you have to create.  This script will be used for BOTH of these transactions (with different parameters, of course) on the two different blockchains by the provided code in [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)).  The second function, `atomcswap_scriptSig_redeem()`, will be when Alice or Bob knows the secret value and is redeeming the BTC; we provide this function for you in scripts.py.  This is used in steps 5 and 6 on [cross-chain atomic swap procedure slide](../../slides/bitcoin.html#/atomicsteps).  The third function, `atomcswap_scriptSig_refund()`, will create the time-out redeeming script, which is [TXN 2 and TXN 4 from the slides](../../slides/bitcoin.html#/xchainpt1); we also provide this function for you in scripts.py.  Again, this will be used on both blockchains by the provided code.  There are some requirements for what has to be in these scripts, described below (in "Notes and hints").~~
+In addition to the lecture slides, you may want to refer to the [Atomic swap article](https://en.bitcoin.it/wiki/Atomic_swap) in the [Bitcoin wiki](https://en.bitcoin.it/wiki/Main_Page).
 
-~~In addition to the lecture slides, you may want to refer to the [Atomic swap article](https://en.bitcoin.it/wiki/Atomic_swap) in the [Bitcoin wiki](https://en.bitcoin.it/wiki/Main_Page).~~
+So far we have been using tBTC on the Bitcoin Testnet.  For this part we will also be using the BlockCypher Testnet -- this is also a Bitcoin network for testing, and it operates just like the Bitcoin Testnet we've been using.  Bitcoin on this other testnet will be abbreviated as BCY (for BlockCYpher testnet).  Note that we have been using [blockcypher.com](https://live.blockcypher.com/) to view all of our transactions, since that site can display transactions and invoice addresses on both of these Bitcoin test networks.
 
-~~So far we have been using tBTC on the Bitcoin Testnet.  For this part we will also be using the BlockCypher Testnet -- this is also a Bitcoin network for testing, and it operates just like the Bitcoin Testnet we've been using.  Bitcoin on this other testnet will be abbreviated as BCY (for BlockCYpher testnet).  Note that we have been using [blockcypher.com](https://live.blockcypher.com/) to view all of our transactions, since that site can display transactions and invoice addresses on both of these Bitcoin test networks.~~
+In this part, you and Bob will be exchanging coins through a cross-chain transaction.  You will need to be familiar with the [cross-chain transaction section of the Bitcoin slide set](../../slides/bitcoin.html#/xchain).  You are going to take on the role of Alice in the lecture slides.
 
-~~In this part, you and Bob will be exchanging coins through a cross-chain transaction.  You will need to be familiar with the [cross-chain transaction section of the Bitcoin slide set](../../slides/bitcoin.html#/xchain).  You are going to take on the role of Alice in the lecture slides.~~
+As an overview, this is what is going to happen.
 
-~~As an overview, this is what is going to happen.~~
+1. You (Alice) are going to create a transaction to send tBTC to Bob.  You will send it from the account you have been using so far (saved in `my_private_key_str` and `my_invoice_address_str` in scripts.py).  Bob will receive it in the account that was created for him above (`bob_private_key_str` and `bob_invoice_address_str` in scripts.py).  This corresponds to [part 1 of the cross-chain transaction](../../slides/bitcoin.html#/xchainpt1) -- again, you are taking on the role of Alice.  You will only be creating TXN1 from that slide; we are omitting TXN2.
+2. Bob will create a transaction to send BCY to you.  Both you and Bob will need to create invoice addresses and public keys for the BCY testnet, which we guide you through below.  This corresponds to [part 2 of the cross-chain transaction](../../slides/bitcoin.html#/xchainpt2) -- again, you are taking on the role of Alice.  You will only be creating TXN3 from that slide; we are omitting TXN4.
+3. You (Alice) will redeem TXN3 on the BCY network, exposing the hidden secret.
+4. Bob, now knowing the hidden secret, will then redeem TXN1 on the tBTC network.
 
-1. ~~You (Alice) are going to create a transaction to send tBTC to Bob.  You will send it from the account you have been using so far (saved in `my_private_key_str` and `my_invoice_address_str` in scripts.py).  Bob will receive it in the account that was created for him above (`bob_private_key_str` and `bob_invoice_address_str` in scripts.py).  This corresponds to [part 1 of the cross-chain transaction](../../slides/bitcoin.html#/xchainpt1) -- again, you are taking on the role of Alice.  You will only be creating TXN1 from that slide; we are omitting TXN2.~~
-2. ~~Bob will create a transaction to send BCY to you.  Both you and Bob will need to create invoice addresses and public keys for the BCY testnet, which we guide you through below.  This corresponds to [part 2 of the cross-chain transaction](../../slides/bitcoin.html#/xchainpt2) -- again, you are taking on the role of Alice.  You will only be creating TXN3 from that slide; we are omitting TXN4.~~
-3. ~~You (Alice) will redeem TXN3 on the BCY network, exposing the hidden secret.~~
-4. ~~Bob, now knowing the hidden secret, will then redeem TXN1 on the tBTC network.~~
+#### BCY Setup
 
-#### ~~BCY Setup~~
+To set this up, we need to create Bitcoin keypairs for the BlockCypher testnet, and use a faucet to give us some coins.  The process for creating keys and funding the accounts is different for the BCY test network.  The BCY blockchain uses a different [version byte](../../slides/bitcoin.html#/btcaddress) in the invoice address, so we cannot re-use the invoice addresses generated above for the BCY blockchain.
 
-~~To set this up, we need to create Bitcoin keypairs for the BlockCypher testnet, and use a faucet to give us some coins.  The process for creating keys and funding the accounts is different for the BCY test network.  The BCY blockchain uses a different [version byte](../../slides/bitcoin.html#/btcaddress) in the invoice address, so we cannot re-use the invoice addresses generated above for the BCY blockchain.~~
-
-1. ~~Create an account at [https://accounts.blockcypher.com/](https://accounts.blockcypher.com/), which will allow you to get an API token.  Your token will be a hex number such as 0123456789abcdef0123456789abcdef.  Save this token somewhere safe!  You are welcome to record it in scripts.py (`blockcypher_api_token` is set aside for that), but that's completely optional.~~
-2. ~~You will need to be able to run the `curl` program from the command-line.  Try running it without any parameters to see if it is installed.  If not, you will have to install it -- [web searches for how to install curl](https://duckduckgo.com/?q=how+to+install+curl) will guide your way.  It is already installed on the VirtualBox image.~~
-3. ~~To create keys, you will need to run the following from the command line, putting your token in there instead of `API_TOKEN`.  You should do this twice, one for you and once for Bob.~~
+1. Create an account at [https://accounts.blockcypher.com/](https://accounts.blockcypher.com/), which will allow you to get an API token.  Your token will be a hex number such as 0123456789abcdef0123456789abcdef.  Save this token somewhere safe!  You are welcome to record it in scripts.py (`blockcypher_api_token` is set aside for that), but that's completely optional.
+2. You will need to be able to run the `curl` program from the command-line.  Try running it without any parameters to see if it is installed.  If not, you will have to install it -- [web searches for how to install curl](https://duckduckgo.com/?q=how+to+install+curl) will guide your way.  It is already installed on the VirtualBox image.
+3. To create keys, you will need to run the following from the command line, putting your token in there instead of `API_TOKEN`.  You should do this twice, one for you and once for Bob.
    ```
 curl -X POST 'https://api.blockcypher.com/v1/bcy/test/addrs?token=API_TOKEN'
 ```
@@ -290,6 +290,8 @@ When done, there should not be any unspent UTXOs remaining!  We are going to tes
 You do not need to do this for the extra BCY in your account(s).
 
 ### Submission
+
+**NOTE:** Make sure all the transactions are mined into the blockchain BEFORE you submit them.  If you go to the URL for that particular transaction, as long as it has at least one confirmation, it is considered mined into the blockchain.
 
 The only file you need to submit to Gradescope is scripts.py.  There will be a few sanity checks made when you submit it.  Those checks are:
 

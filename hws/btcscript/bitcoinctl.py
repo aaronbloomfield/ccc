@@ -79,16 +79,19 @@ def get_urls(_):
 		print("Your tBTC wallet:  \thttps://" + urlbase + "/address/" + my_invoice_address_str)
 	if bob_invoice_address_str != "":
 		print("Bob's tBTC wallet:  \thttps://" + urlbase + "/address/" + bob_invoice_address_str)
-	tbtc_txids = {"Initial TXN:    ":txid_initial,
-			 "Split TXN:      ":txid_split,
-			 "\nPart 1: P2PKH TX:":txid_p2pkh,
-			 "\nPart 2a: puzzle TX 1:":txid_puzzle_txn1,
-			 "Part 2b: puzzle TX 2:":txid_puzzle_txn2,
-			 "\nPart 3a: multisig TX 1:":txid_multisig_txn1,
-			 "Part 3b: multisig TX 2:":txid_multisig_txn2,
-			"\nPart 4a: your send TX:":txid_atomicswap_alice_send_tbtc,
-			"Part 4d: B's redeem TX:":txid_atomicswap_bob_redeem_tbtc,
-			 }
+	tbtc_txids = {}
+	for i in range(len(txid_funding_list)):
+		tbtc_txids["Initial funding TXN " + str(i+1) + ":"] = txid_funding_list[i]
+	for i in range(len(txid_split_list)):
+		tbtc_txids["Split TXN " + str(i+1) + ":     "] = txid_split_list[i]
+	tbtc_txids["\nPart 1: P2PKH TX:"] = txid_p2pkh
+	tbtc_txids["\nPart 2a: puzzle TX 1:"] = txid_puzzle_txn1
+	tbtc_txids["Part 2b: puzzle TX 2:"] = txid_puzzle_txn2
+	tbtc_txids["\nPart 3a: multisig TX 1:"] = txid_multisig_txn1
+	tbtc_txids["Part 3b: multisig TX 2:"] = txid_multisig_txn2
+	tbtc_txids["\nPart 4a: your send TX:"] = txid_atomicswap_alice_send_tbtc
+	tbtc_txids["Part 4d: B's redeem TX:"] = txid_atomicswap_bob_redeem_tbtc
+
 	for k,v in tbtc_txids.items():
 		if v != "":
 			print(k + "\thttps://" + urlbase + "/tx/" + v)
@@ -164,7 +167,7 @@ def handle_txn(param):
 	elif param == "part3b":
 		txin_scriptPubKey = multisig_scriptPubKey()
 		txin = CMutableTxIn(COutPoint(lx(txid_multisig_txn1), utxo_index))
-		txin_scriptSig = multisig_scriptSig(txin, txout, txin_scriptPubKey, sender_private_key)
+		txin_scriptSig = multisig_scriptSig(txin, txout, txin_scriptPubKey)
 	elif param == "part4b":
 		bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
 		bob_invoice_addr_bcy = P2PKHBitcoinAddress.from_pubkey(bob_prikey_bcy.pub)

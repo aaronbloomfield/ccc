@@ -22,7 +22,7 @@ SelectParams('testnet')
 tbtc_return_address = CBitcoinAddress('mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh')
 
 # The address that we will pay our BCY to -- do not change this!
-#bcy_dest_address = CBitcoinAddress('C1wTRPGenfdyCiozDhyQEm45mgWYy7pTum')
+bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')
 
 # Yes, we want to broadcast transactions
 broadcast_transactions = True
@@ -165,8 +165,9 @@ txid_p2pkh = ""
 puzzle_txn_p = 0
 puzzle_txn_q = 0
 
-# These are the solutions to the equations 3x+y=p and x+3y=q.  You can use an
-# online linear equation solver to find the solutions.
+# These are the solutions to the linear equations specified in the homework
+# assignment.  You can use an online linear equation solver to find the
+# solutions.
 puzzle_txn_x = 0
 puzzle_txn_y = 0
 

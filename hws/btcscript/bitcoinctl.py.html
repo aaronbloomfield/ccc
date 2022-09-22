@@ -90,16 +90,19 @@ http://www.gnu.org/software/src-highlite">
 		<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"Your tBTC wallet:  \thttps://"</font> <font color="#990000">+</font> urlbase <font color="#990000">+</font> <font color="#FF0000">"/address/"</font> <font color="#990000">+</font> my_invoice_address_str<font color="#990000">)</font>
 	<b><font color="#0000FF">if</font></b> bob_invoice_address_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
 		<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"Bob's tBTC wallet:  \thttps://"</font> <font color="#990000">+</font> urlbase <font color="#990000">+</font> <font color="#FF0000">"/address/"</font> <font color="#990000">+</font> bob_invoice_address_str<font color="#990000">)</font>
-	tbtc_txids <font color="#990000">=</font> <font color="#990000">{</font><font color="#FF0000">"Initial TXN:    "</font><font color="#990000">:</font>txid_initial<font color="#990000">,</font>
-			 <font color="#FF0000">"Split TXN:      "</font><font color="#990000">:</font>txid_split<font color="#990000">,</font>
-			 <font color="#FF0000">"\nPart 1: P2PKH TX:"</font><font color="#990000">:</font>txid_p2pkh<font color="#990000">,</font>
-			 <font color="#FF0000">"\nPart 2a: puzzle TX 1:"</font><font color="#990000">:</font>txid_puzzle_txn1<font color="#990000">,</font>
-			 <font color="#FF0000">"Part 2b: puzzle TX 2:"</font><font color="#990000">:</font>txid_puzzle_txn2<font color="#990000">,</font>
-			 <font color="#FF0000">"\nPart 3a: multisig TX 1:"</font><font color="#990000">:</font>txid_multisig_txn1<font color="#990000">,</font>
-			 <font color="#FF0000">"Part 3b: multisig TX 2:"</font><font color="#990000">:</font>txid_multisig_txn2<font color="#990000">,</font>
-			<font color="#FF0000">"\nPart 4a: your send TX:"</font><font color="#990000">:</font>txid_atomicswap_alice_send_tbtc<font color="#990000">,</font>
-			<font color="#FF0000">"Part 4d: B's redeem TX:"</font><font color="#990000">:</font>txid_atomicswap_bob_redeem_tbtc<font color="#990000">,</font>
-			 <font color="#990000">}</font>
+	tbtc_txids <font color="#990000">=</font> <font color="#990000">{}</font>
+	<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>txid_funding_list<font color="#990000">)):</font>
+		tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Initial funding TXN "</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">":"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_funding_list<font color="#990000">[</font>i<font color="#990000">]</font>
+	<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>txid_split_list<font color="#990000">)):</font>
+		tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Split TXN "</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>i<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">":     "</font><font color="#990000">]</font> <font color="#990000">=</font> txid_split_list<font color="#990000">[</font>i<font color="#990000">]</font>
+	tbtc_txids<font color="#990000">[</font><font color="#FF0000">"\nPart 1: P2PKH TX:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_p2pkh
+	tbtc_txids<font color="#990000">[</font><font color="#FF0000">"\nPart 2a: puzzle TX 1:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_puzzle_txn1
+	tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Part 2b: puzzle TX 2:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_puzzle_txn2
+	tbtc_txids<font color="#990000">[</font><font color="#FF0000">"\nPart 3a: multisig TX 1:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_multisig_txn1
+	tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Part 3b: multisig TX 2:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_multisig_txn2
+	tbtc_txids<font color="#990000">[</font><font color="#FF0000">"\nPart 4a: your send TX:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_atomicswap_alice_send_tbtc
+	tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Part 4d: B's redeem TX:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_atomicswap_bob_redeem_tbtc
+
 	<b><font color="#0000FF">for</font></b> k<font color="#990000">,</font>v <b><font color="#0000FF">in</font></b> tbtc_txids<font color="#990000">.</font><b><font color="#000000">items</font></b><font color="#990000">():</font>
 		<b><font color="#0000FF">if</font></b> v <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
 			<b><font color="#0000FF">print</font></b><font color="#990000">(</font>k <font color="#990000">+</font> <font color="#FF0000">"\thttps://"</font> <font color="#990000">+</font> urlbase <font color="#990000">+</font> <font color="#FF0000">"/tx/"</font> <font color="#990000">+</font> v<font color="#990000">)</font>
@@ -175,7 +178,7 @@ http://www.gnu.org/software/src-highlite">
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part3b"</font><font color="#990000">:</font>
 		txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">multisig_scriptPubKey</font></b><font color="#990000">()</font>
 		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_multisig_txn1<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
-		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">multisig_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> sender_private_key<font color="#990000">)</font>
+		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">multisig_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">)</font>
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4b"</font><font color="#990000">:</font>
 		bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
 		bob_invoice_addr_bcy <font color="#990000">=</font> P2PKHBitcoinAddress<font color="#990000">.</font><b><font color="#000000">from_pubkey</font></b><font color="#990000">(</font>bob_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">)</font>
