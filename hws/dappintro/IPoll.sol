@@ -6,8 +6,8 @@
 pragma solidity ^0.8.16;
 
 
-// This is an interface that specifies a common API for a Polls contract.
-interface IPolls {
+// This is an interface that specifies a common API for a Poll contract.
+interface IPoll {
 
 	// the data that will be stored on the blockchain -- a tuple containing
 	// the ID of the choice, the name of the choice, and how many votes it
