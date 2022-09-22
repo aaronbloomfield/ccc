@@ -14,9 +14,9 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
 
-- Wed, 9/21: a bunch of updates were committed by 9:30 pm; if you downloaded the files before that, please check through these updates.  If you download the files after that, then you do not need to make any changes.
-  - Re-download [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py))
-  - Line 25 of [scripts.py](scripts.py.html) ([src](scripts.py)) should be exactly: `bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')` (it should not be commented out, and it has a different invoice address)
+- Wed, 9/21: a bunch of updates were committed by 9:30 pm; if you downloaded the files before that, please ensure you make the following changes.  If you download the files after that, then you do not need to make any changes.
+  - Re-download [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)); just replace the old one with the new version
+  - Line 25 of [scripts.py](scripts.py.html) ([src](scripts.py)) should be exactly: `bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')` (it should not be commented out, and it has a different invoice address than before)
 
 
 ### Languages
