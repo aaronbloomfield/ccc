@@ -85,7 +85,7 @@
 <p>Formally, you must implement a <code>TokenDEX</code> contract that implements the <a href='IDEX.sol.html'>IDEX.sol</a> (<a href='IDEX.sol'>src</a>) interface. Your contract opening line MUST be: <code>contract TokenDEX is DEX</code>. Note that the <code>DEX</code> interface extends the <code>IERC165</code> interface, so you will have to implement the <code>supportsInterface()</code> function as well. The functions in this interface are shown below, and much more detail is provided in the <a href='IDEX.sol.html'>IDEX.sol</a> (<a href='IDEX.sol'>src</a>) file.</p>
 <p>Note that many of these functions are just the getter functions from <code>public</code> variables; which ones are described in the full source file.</p>
 <pre><code>// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 
 import "./IERC165.sol";
 import "./IEtherPriceOracle.sol";
@@ -266,7 +266,7 @@ interface IDEX is IERC165 {
 </div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
 <p>To help you test your code, below is a method that will test the first case from the example above – the <code>createPool()</code> step. This is intended to be done on the Javascript development environment in Remix. This file is saved as <a href='DEXtest.sol.html'>DEXtest.sol</a> (<a href='DEXtest.sol'>src</a>).</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 
 import "./TokenDEX.sol";
 import "./TokenCC.sol";

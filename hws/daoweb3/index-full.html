@@ -43,6 +43,7 @@
 </head>
 <body>
 <h1 id="daos-and-web3">DAOs and Web3</h1>
+<p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>) | <a href="index.html">view tabbed version</a></p>
 <h3 id="overview">Overview</h3>
 <p>In this assignment you are going to create a Decentralized Autonomous Organization (DAO). The DAO will issue NFT tokens (that you created in the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment) to keep track of who are members, allow members to submit proposals, and allow voting on those proposals. For the purposes of this assignment, a proposal consists of a reason (which can be any string), an amount to pay, and an account address to pay it to. You will then make a Web3 interface for this DAO that will allow anybody with a standard web browser to see the status of the DAO and the proposals.</p>
 <h3 id="changelog">Changelog</h3>
@@ -60,7 +61,7 @@
 <p>Your contract must implement the provided DAO interface below. Your contract opening line must be: <code>contract DAO is IDAO, IERC165 {</code>. This interface was adapted from the <a href="https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol">open-source code for The ÐAO</a>, but was heavily modified to both work with current versions of Solidity and to fit better with this assignment. In particular, we removed a number of features, since this assignment is really about Web3: splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc. In a real DAO, these would need to be implemented as well.</p>
 <p>The file is <a href="IDAO.sol.html">IDAO.sol</a> (<a href="IDAO.sol">src</a>). That file has many comments to explain how it works; those comments are not shown below. While there is a lot listed in the interface, there are really only five or so functions that you have to implement; the rest are just <code>public</code> variables.</p>
 <pre><code>// SPDX-License-Identifier: GPL
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 
 interface IDAO {
 

@@ -1,6 +1,8 @@
 DAOs and Web3
 =============
 
+[Go up to the CCC HW page](../index.html) ([md](../index.md))
+
 ### Overview
 
 In this assignment you are going to create a Decentralized Autonomous Organization (DAO).  The DAO will issue NFT tokens (that you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment) to keep track of who are members, allow members to submit proposals, and allow voting on those proposals.  For the purposes of this assignment, a proposal consists of a reason (which can be any string), an amount to pay, and an account address to pay it to.  You will then make a Web3 interface for this DAO that will allow anybody with a standard web browser to see the status of the DAO and the proposals.
@@ -32,7 +34,7 @@ The file is [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)).  That file has many com
 
 ```
 // SPDX-License-Identifier: GPL
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 
 interface IDAO {
 

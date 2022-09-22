@@ -62,7 +62,7 @@ Note that many of these functions are just the getter functions from `public` va
 
 ```
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 
 import "./IERC165.sol";
 import "./IEtherPriceOracle.sol";
@@ -238,7 +238,7 @@ To help you test your code, below is a method that will test the first case from
 
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 
 import "./TokenDEX.sol";
 import "./TokenCC.sol";

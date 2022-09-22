@@ -80,7 +80,7 @@ There are some very strict submission requirements for this submission so that w
 1. Your contract MUST be in a file called `TokenCC.sol`.
 2. You must put your name and userid as the second line of the file (right after the SPDX line).
 3. Your contract opening line MUST be: `contract TokenCC is ITokenCC, ERC20 {`; this will inherit the other contracts and interfaces (Context, IERC20, ERC20, and IERC165).
-4. The pragma line should be: `pragma solidity ^0.8.7;`.
+4. The pragma line should be: `pragma solidity ^0.8.16;`.
 5. You are NOT to submit any of the *files* for the interfaces above (Context.sol, IERC20.sol, ITokenCC.sol, or IERC165.sol), nor the ERC20.sol file.  And don't include the code from those files in your TokenCC.sol file.  You should `import` them in `TokenCC.sol` as such: `import "./ITokenCC.sol";` and `import "./ERC20.sol";` -- those two files import all the other contracts and interfaces.  The necessary files will be put into the appropriate directory on Gradescope when it attempts to compile your program.
 6. You should not submit any files other than the `TokenCC.sol` file for this part of the assignment; all your code must be in that `TokenCC.sol` file.
 7. You cannot edit the [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)) file -- any changes have to go into your `TokenCC.sol` file.
@@ -180,7 +180,7 @@ There are some very strict submission requirements for this submission so that w
 1. You must put your name and userid as the second line of the file (right after the SPDX line)
 2. Your contract MUST be in a file called `NFTmanager.sol` -- note the capitalization!
 3. Your contract line MUST be: `contract NFTmanager is INFTmanager, ERC721 {`; this will inherit all the other necessary interfaces and contracts.
-4. The pragma line should be: `pragma solidity ^0.8.7;`
+4. The pragma line should be: `pragma solidity ^0.8.16;`
 5. You are NOT to submit any of the *files* for the interfaces above (ERC721, IERC721, INFTmanager, or IERC165.sol), nor copy-and-paste that code in your file.  You should `import` them in `NFTmanager.sol`; they will be put into the appropriate directory on Gradescope when it attempts to compile your program
 6. You cannot submit any files other than the ones in the list above; any other code must be in your `NFTmanager.sol` file
 

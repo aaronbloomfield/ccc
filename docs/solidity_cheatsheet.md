@@ -40,7 +40,7 @@ Consider this contract:
 
 ```
 // SPDX-License-Identifier: Unlicensed
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 contract GetBalance {
     function getBalance(address a) public view returns (uint) {
         return a.balance;

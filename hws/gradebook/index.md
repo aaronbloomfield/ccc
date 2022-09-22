@@ -48,7 +48,7 @@ Formally, your contract will need to be named `Gradebook`, and saved in a file n
 
 ```
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.16;
 
 // See the actual IGradebook.sol file, linked to above, for much more detailed comments
 
