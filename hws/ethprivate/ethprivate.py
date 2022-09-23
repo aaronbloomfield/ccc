@@ -35,17 +35,35 @@ contracts = {
 # assignment.
 other = {
 	
+	# This is the block number that contains the transaction where you
+	# received ether from the faucet (if you did this multiple times, pick
+	# one); it should be an integer.
+	'faucet_txn_block_number': None,
+
+	# This is the transaction hash where you received ether from the faucet;
+	# if you did this multiple times, use the same one as in the field above.
+	# Be sure to include the leading '0x'; case does not matter.
+	'faucet_txn_hash': None,
+
+	# This is the URL on the blockchain explorer that resolves to the
+	# transaction (not the block!) indicated by the above transaction hash.
+	# You see the blockchain explorer when you get to part 8 of the
+	# assignment, and this can be filled in then.
+	'faucet_txn_url': None,
+
 	# This is the block number that contains the transaction where you sent me
 	# 1 (fake) ETH; it should be an integer.
-	'txn_block_number': None,
+	'send_txn_block_number': None,
 
 	# This is the transaction hash where you sent me 1 (fake) ETH.  Be sure to
 	# include the leading '0x'; case does not matter.
-	'txn_hash': None,
+	'send_txn_hash': None,
 
 	# This is the URL on the blockchain explorer that resolves to the
-	# transaction (not the block!) indicated by the transaction hash, above.
-	'txn_url': None,
+	# transaction (not the block!) indicated by the above transaction hash.
+	# You see the blockchain explorer when you get to part 8 of the
+	# assignment, and this can be filled in then.
+	'send_txn_url': None,
 
 }
 

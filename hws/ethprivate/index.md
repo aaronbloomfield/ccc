@@ -23,9 +23,13 @@ We will shortly be developing applications for the Ethereum blockchain.  We won'
 
 This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through `pip` (or `pip3`).  This is already taken care of in the VirtualBox image.  Don't worry if you don't know Python -- we give you the exact code to use.  This document also assumes you can install packages on your machine (also not needed for the VirtualBox image).
 
+As you proceed through this assignment, you will be filling in values into the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file, which is the only file you will submit at the end.
+
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Fri, 9/23: The fields in the `other` dictionary in [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) have now changed. The previous three fields (`txn_block_number`, `txn_hash`, `txn_url`) are now named `send_txn_block_number`, `send_txn_hash`, `send_txn_url`.  Three additional fields (`faucet_txn_block_number`, `faucet_txn_hash`, `faucet_txn_url`) were added, which deal with the transaction where you received ether from the faucet.
 
 
 ### Part 1: Installation
@@ -147,6 +151,8 @@ You cannot mine on this blockchain -- it has been set up to automatically mine a
 
 You should request funds once or twice for this assignment.  After you make the requests -- you'll need your full eth.coinbase account address -- you should check that your balance was updated in the geth terminal.  You can use `eth.getBalance(eth.coinbase)`, but that reports it in wei (which has 18 more zeroes).  You can also use `web3.fromWei(eth.getBalance(eth.coinbase), "ether")` to get the value in ether.
 
+You will determine the transaction hash and the block number for this transaction later in this assignment (in part 8).
+
 To verify that you did this part, we are going to check that you have a non-zero balance in your eth.coinbase account.
 
 
@@ -219,7 +225,7 @@ You can then send me 1 (fake) ETH:
 eth.sendTransaction({from:eth.coinbase, to:'0xffffffffffffffffffffffffffffffffffffffff', value:web3.toWei(1,"ether"), gas:21000});
 ```
 
-You have to replace the 'to' field with the address found on the Collab landing page.  Note that we replaced your account address with `eth.coinbase`.  This will print out a hex string -- save it!  That's the hash of the transaction, and we'll need it shortly.  It will be something long like: 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd.
+You have to replace the 'to' field with the address found on the Collab landing page.  Note that we replaced your account address with `eth.coinbase`.  This will print out a hex string -- save it!  That's the hash of the transaction, and we'll need it shortly.  It will be something long like: 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd.  This goes into the `send_txn_hash` filed in ethprivate.py.
 
 **NOTE:** Be sure you cut-and-paste the destination account properly!  It's easy to mis-type the account, and send the ether to the wrong place where it can never be accessed again.
 
@@ -257,7 +263,9 @@ Your geth version number may be more recent.  The modules are listed on the 7th 
 
 We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Collab landing page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the second to last bullet under 'Statistics').
 
-Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL.
+Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL.  You should also see the block number listed there as well. These go into the `send_txn_url` and `send_txn_block_number` fields in ethprivate.py.
+
+For the transaction where you received funds from the faucet, from part 4 of this assignment, you will need to determine the transaction hash, block number, and URL in the explorer.  You can look for your specific eth.coinbase account address -- either on the page of all addresses, or use the search box in the upper right.  The very first transaction (which will be on the bottom of the list) is likely the faucet transaction.  Copy the transaction hash (not the 'from' or 'to'), and note the block number.  You can copy the transaction hash by clicking on the copy icon (<img src="copy.svg" style="width:18px;vertical-align:middle">) in the explorer.  Also click on that transaction to get the URL in the explorer.  These three will have to entered into the respective fields in the `other` dictionary (`faucet_txn_block_number`, `faucet_txn_hash`, `faucet_txn_url`).  
 
 ### Closing down
 
