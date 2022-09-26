@@ -73,11 +73,87 @@ Template for first line:
 
   <section>
 
+    <section class="center"><img src="https://miro.medium.com/max/720/0*FnV9Mxx7SpjSCtJR" class="stretch" style="padding:0"><p class="center">From <a href='https://medium.com/blockchain/the-top-10-crypto-memes-dcc1e50e09d9'>here</a></p><!-- comic for lecture 10 --></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 10: Mon, Sep 26th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`19,054; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,320; [ETH gas](https://etherscan.io/gastracker): 23 gwei => `$`0.64
+- [Homeworks](../hws/index.html) (tentative schedule is on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9))
+  - [HW P4: BTC scripting](../hws/btcscript/index.html) is due tomorrow: how is it going?
+    - You need to verify that your transactions went through; if they didn't, then 
+      - Try checking https://www.blockchain.com/explorer instead of https://live.blockcypher.com
+      - Try re-sending your transactions
+    - The auto-grader better reports problems, but that runs into issues with the proxy...
+  - HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/ethereum-whitepaper.pdf)) is due this Wed, 9/28
+    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
+  - [HW S4 (private Ethereum blockchain)](../hws/ethprivate/index.html) is out, and due this Fri, 9/30
+    - It should only take about an hour to complete; details on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
+    - Submission will open up later today
+    - I had to make a late change to the submission file [ethprivate.py](../hws/ethprivate/ethprivate.py.html)
+- Announcements continued on the next slide...
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Lecture 10: Mon, Sep 26th
+- Grades
+  - You have until the end of Friday to submit a regrade request for the BTC quiz
+  - [HW P3: BTC parser](../hws/btcparser/index.html) was returned.  Timeout issue? submit a support request.
+- Regrades: for a quiz, use Gradescope; for anything auto-graded, submit a support request
+- Office hours
+  - Mine are Wed from 10am to noon in Rice 402
+  - TA office hours are in Rice 442: Mon 4-8, Tue 11-2, Thu 12-2, and Fri 11-2
+  - This is all on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
+- We are going to start today on [Ethereum](../slides/ethereum.html#/), and come back later to [Mining](../slides/mining.html#/) later
+  - Next up: [Solidity](../slides/solidity.html#/)
+- You will need a portable computer, with geth installed and configured, for class *next* Wednesday (10/5)
+  - When you complete [HW S4 (private Ethereum blockchain)](../hws/ethprivate/index.html) HW, it will be properly configured
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## What should we name our cyrptocurrency?
+- We now have a private Ethereum blockchain running for this class
+  - Real Ethereum's currency is called *eth* or *ether*
+- What should we call ours?
+- Some ideas:
+  - CoinCoin
+  - Faether
+  - Hoothereum
+  - Re:Ether
+- Submit your ideas via [anonymous feedback in Collab](https://collab.its.virginia.edu/portal/directtool/b166e2b1-f967-4df0-8e7e-1b25f58a30e2/)!
+</textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Upcoming Schedule
+- Week of Mon, 9/26 (this week)
+  - Monday's lecture: [Ethereum](../slides/ethereum.html#/)
+  - [HW P4 (BTC scripting)](../hws/btcscript/index.html) due on Tuesday
+  - HW S3 (read some of the [Ethereum whitepaper](https://ethereum.org/en/whitepaper)) due on Wednesday
+  - Wednesday's lecture: [Solidity](../slides/solidity.html#/)
+  - [HW S4 (private Ethereum blockchain)](../hws/ethprivate/index.html) due on Friday
+- Week of Mon, 10/3
+  - No class on Monday due to fall break
+  - Wednesday's lecture: [Solidity](../slides/solidity.html#/) in-class exercise
+  - [HW S5 (dApp intro)](../hws/dappintro/index.html) due on *Friday* (this is flexible)
+- Week of Mon, 10/10:
+  - No assignments due
+  - Monday's lecture: finish [Mining](../slides/mining.html#/) / [Ethereum](../slides/ethereum.html#/) / [Solidity](../slides/solidity.html#/)
+  - Midterm on Wednesday
+- Week of Mon, 10/17:
+  - [HW P5 (gradebook)](../hws/gradebook/index.html) due on Tuesday
+  - Monday's lecture: finish [Mining](../slides/mining.html#/) / [Ethereum](../slides/ethereum.html#/) / [Solidity](../slides/solidity.html#/), start on [Tokens](../slides/tokens.html#/)
+  </textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
     <section class="center"><img src="https://assets.amuniversal.com/e6388620c8c601366722005056a9545d" class="stretch" style="padding:0"><p class="center">From <a href='https://dilbert.com/search_results?terms=blockchain'>here</a></p><!-- comic for lecture 9 --></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 9: Wed, Sep 21st
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`19,301; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,348; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 14 gwei => `$`0.90
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`19,301; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,348; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 14 gwei => `$`0.40
 - [Homeworks](../hws/index.html) (tentative schedule is on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9))
   - [HW P3: BTC parser](../hws/btcparser/index.html) was due yesterday; how did it go?
     - We will handle "reasonable" timeouts after the grades are returned
@@ -123,7 +199,7 @@ Template for first line:
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 8: Mon, Sep 19th
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`19,129; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,347; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 14 gwei => `$`0.90
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`19,129; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,347; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 14 gwei => `$`0.40
 - [Homeworks](../hws/index.html)
   - The tentative HW schedule is on the [Collab landing page](https://collab.its.virginia.edu/portal/site/e9ad2fbb-faca-414b-9df1-6f9019e765e9)
   - [HW P3: BTC parser](../hws/btcparser/index.html) is due tomorrow (Tue, 9/20); how is it going?
@@ -187,7 +263,7 @@ The question is: when should [HW S4 (private Ethereum blockchain)](../hws/ethpri
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 7: Wed, Sep 14th
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`20,170; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,588; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 22 gwei => `$`1.66
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`20,170; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,588; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 22 gwei => `$`0.73
 - [Homeworks](../hws/index.html)
   - [HW P2: ECDSA](../hws/ecdsa/index.html) was due yesterday
     - How did it go?
@@ -231,7 +307,7 @@ style="padding:0;object-fit:none;object-position:47% 54%"><p class='center'>From
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 6: Mon, Sep 12th
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`22,297; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,728; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 42 gwei => `$`3.46
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`22,297; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,728; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 42 gwei => `$`1.52
 - [Homeworks](../hws/index.html): the tabbed versions of the HW pages are now the default
   - [HW P1: Cryptocurrency Introductory](../hws/intro/index.html) grades were released last night
     - P homework grades will generally be released the weekend after they are due
@@ -266,7 +342,7 @@ style="padding:0;object-fit:none;object-position:47% 54%"><p class='center'>From
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 5: Wed, Sep 7th
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`18,924; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,544; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 37 gwei => `$`2.72
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`18,924; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,544; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 37 gwei => `$`1.20
 - Final course enrollment: 93/100
 - [Homeworks](../hws/index.html): how are the tabbed versions of the HW pages?
   - [HW P1: Cryptocurrency Introductory](../hws/intro/index-full.html) ([tabbed version](../hws/intro/index.html)) was due yesterday by midnight
@@ -300,7 +376,7 @@ style="padding:0;object-fit:none;object-position:47% 54%"><p class='center'>From
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 4: Mon, Sep 5th
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`19,869; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,603; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 20 gwei => `$`1.53
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`19,869; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,603; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 20 gwei => `$`0.67
 - Current course enrollment: 98/100 with 9 on the wait list
 - [Homeworks](../hws/index.html): how are the tabbed versions of the HW pages?
   - [HW P1: Cryptocurrency Introductory](../hws/intro/index-full.html) ([tabbed version](../hws/intro/index.html)) is due tomorrow (Tuesday, Sep 6th) by midnight
@@ -335,7 +411,7 @@ style="padding:0;object-fit:none;object-position:47% 54%"><p class='center'>From
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 3: Wed, Aug 31st
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`20,097; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,556; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 30 gwei => `$`2.22
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`20,097; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,556; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 30 gwei => `$`0.98
 - Current course enrollment: 100/100 with 16 on the wait list
 - [Homeworks](../hws/index.html)
   - I am experimenting with tabbed versions of the HW pages
@@ -407,7 +483,7 @@ style="padding:0;object-fit:none;object-position:47% 54%"><p class='center'>From
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Lecture 2: Mon, Aug 29th
-- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`20,190; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,515; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 30 gwei => `$`2.16
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`20,190; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`1,515; [ETH gas](https://crypto.com/defi/dashboard/gas-fees): 30 gwei => `$`0.95
 - Current course enrollment: 100/100 with 22 on the wait list
 - Homeworks
   - HW S1: course introduction survey is due tomorrow (Aug 30) by midnight

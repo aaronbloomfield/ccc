@@ -93,8 +93,8 @@ This is just an estimate, and will not always be updated if we veer off track.  
 9. Wed, Sep 21: [mining](../slides/mining.html#/) (actual: mining to slide 5.9)
 10. Mon, Sep 26: [mining](../slides/mining.html#/)
 11. Wed, Sep 28: [Ethereum](../slides/ethereum.html#/)
-12. Wed, Oct 5: [Ethereum](../slides/ethereum.html#/); [Solidity](../slides/solidity.html#/)
-13. Mon, Oct 10: [Solidity](../slides/solidity.html#/)
+12. Wed, Oct 5: [Solidity](../slides/solidity.html#/)
+13. Mon, Oct 10: [Solidity](../slides/solidity.html#/), in particular the in-class exercise
 14. Wed, Oct 12: midterm
 15. Mon, Oct 17: [Tokens](../slides/tokens.html#/)
 16. Wed, Oct 19: [Tokens](../slides/tokens.html#/)
