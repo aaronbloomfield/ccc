@@ -5,17 +5,17 @@ digraph A {
 
 	n [label="{}\nh(L+R)"];
 	n0 [label="{0}\nh(L+R)"];
-	n1 [label="{1}\nh(L+R)"];
+	n1 [label="{1}\nh(R+R)"];
 
-	n00 [label="{00}\nh(L+R)"];
-	n001 [label="{001}\nh(L+R)"];
+	n00 [label="{00}\nh(R+R)"];
+	n001 [label="{001}\nh(R+R)"];
 	n0011 [label="{0011}\n\"3\"\nh(3)"];
 
-	n01 [label="{01}\nh(L+R)"];
-	n011 [label="{011}\nh(L+R)"];
+	n01 [label="{01}\nh(R+R)"];
+	n011 [label="{011}\nh(R+R)"];
 	n0111 [label="{0111}\n\"7\"\nh(7)"];
 
-	n11 [label="{11}\nh(L+R)"];
+	n11 [label="{11}\nh(R+R)"];
 	n111 [label="{111}\nh(L+R)"];
 	n1111 [label="{1111}\n\"f\"\nh(f)"];
 
@@ -91,20 +91,20 @@ digraph B {
 	n0 [label="{0}\nh(L+R)"];
 	n1 [label="{1}\nh(L+R)"];
 
-	n00 [label="{00}\nh(L+R)"];
-	n10 [label="{10}\nh(L+R)",color=red,fillcolor=lightgray,style=filled];
-	n001 [label="{001}\nh(L+R)"];
+	n00 [label="{00}\nh(R+R)"];
+	n10 [label="{10}\nh(R+R)",color=red,fillcolor=lightgray,style=filled];
+	n001 [label="{001}\nh(R+R)"];
 	n0011 [label="{0011}\n\"3\"\nh(3)"];
 
-	n101 [label="{101}\nh(L+R)",color=red,fillcolor=lightgray,style=filled];
+	n101 [label="{101}\nh(R+R)",color=red,fillcolor=lightgray,style=filled];
 	n1011 [label="{1011}\n\"b\"\nh(b)",color=red,fillcolor=lightgray,style=filled];
 
 
-	n01 [label="{01}\nh(L+R)"];
-	n011 [label="{011}\nh(L+R)"];
+	n01 [label="{01}\nh(R+R)"];
+	n011 [label="{011}\nh(R+R)"];
 	n0111 [label="{0111}\n\"7\"\nh(7)"];
 
-	n11 [label="{11}\nh(L+R)"];
+	n11 [label="{11}\nh(R+R)"];
 	n111 [label="{111}\nh(L+R)"];
 	n1111 [label="{1111}\n\"f\"\nh(f)"];
 

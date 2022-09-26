@@ -105,20 +105,20 @@ line-height:120%;
 - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) *Ethereum* is the system / blockchain / network
 - *Ether* or *Eth* (symbol: ETH) is the currency <br clear='all'>
 - A *smart contract* is a program on the Etherem blockchain
-  - Analogous to a Bitcoin script on the blockchain
-- *Solidity* one (of many) programming languages that compiles to Etherem bytecode
+  - Analogous to a Bitcoin script on the Bitcoin blockchain
+- *Solidity* is one (of many) programming languages that compiles to Ethereum bytecode
   - Others: Serpent (Python-like), Vyper (Python-like), Bamboo (Erlang-like), etc.
 
 
 
 ## ETH
 - The currency of Ethereum
-- Current value: see [here](https://finance.yahoo.com/quote/ETH-USD)
+- Current value: see [here](https://coinmarketcap.com/currencies/ethereum/)
 - A *wei* is $1/10^{18}$ ETH
   - Amounts on the blockchain are speified as an integer number of wei
 - A *gwei* (giga-wei) is $1/10^9$ ETH
-  - If 1 ETH is worth `$`2,500, then 1 gwei is worth `$`0.0000025
-  - Or 400,000 gwei to the dollar
+  - If 1 ETH is worth `$`1,250, then 1 gwei is worth `$`0.00000125
+  - Or 800,000 gwei to the dollar
 - TXN fees are typically reported in gwei
 
 
@@ -142,7 +142,7 @@ line-height:120%;
 
 
 ## Change of Perception
-- Think of the Ethereum blockchain as a database...
+- Think of the Ethereum blockchain as an append-only database...
   - ...of current accounts, programs, and tokens (NFTs)
 - We can easily (if slowly) search the blockchain for anything
   - With proper indexing (hash tables!), we can do that in near constant time
@@ -159,6 +159,7 @@ line-height:120%;
   - How many transactions an account has had
   - The current balance of an account
   - These are the current *state*, and not stored directly on the blockchain
+  - The Ethereum Virtual Machine (EVM) keeps track of these, so it's called the *EVM state*
 - Yet others can be determined by "rewinding" the blockchain to a previous point in time
   - How much balance an account had after a given block
   - The result of a specific function call
@@ -168,12 +169,12 @@ line-height:120%;
 ## Tokens
 - A token is a "thing" on the blockchain that represents an asset
   - Perhaps a physical asset, like a deed for a car
-     - The legal basis for this is unclear, at best
+     - (the legal basis for this is unclear, at best)
   - Perhaps a digital asset, like ownership of an image
-  - Perhaps a blockchain asset, like other cryptocurrency
+  - Perhaps a blockchain asset, like another cryptocurrency
 - Ethereum implements them as smart contracts
 - Other cryptocurrencies natively support them (Ravencoin)
-- This is a whole separate lecture, coming soon...
+- This is a whole [separate lecture](tokens.html#/), coming soon...
 
 
 
@@ -181,10 +182,10 @@ line-height:120%;
 - Keypairs use 256-bit ECDSA (with secp256k1); hashing algorithm is SHA3 (aka Keccak-256)
 - Given a 256-bit ECDSA (secp256k1) public/private key pair...
   - Take the SHA3 (aka Keccak-256) hash of the public key
-  - Take the last 20 bytes (160 bits)
+  - Take the last 20 bytes (160 bits) / 40 digits
   - Render that in hexadecimal, and prefix with '0x'
 - Example: 0xb794f5ea0ba39494ce839613fffba74279579268
-- Notably, this address does NOT change like in Bitcoin!
+- Notably, this address does NOT change per transaction like in Bitcoin!
 - This is called an "owned" address
   - ... because a person owns it
     </textarea></section>
@@ -195,9 +196,9 @@ line-height:120%;
 - [EIP-55](https://eips.ethereum.org/EIPS/eip-55) adds one
 - Consider:
   - Ethereum account address are 40 hex digits (20 bytes)
-  - We would expect 37.5% (6/16) of those digits to be the letters a-f
+  - We would expect $6/16 = 37.5$% of those digits to be the letters a-f
   - We can represent them as capitals or lower case, allowing 1 bit of a checksum for each letter digit
-  - A 40 digit address would have about 15 lettered digits
+  - A 40 digit address would have, on average, about 15 lettered digits
 - Benefit: older systems allow for mixed-case addresses, and are thus unaffected
     </textarea></section>
 
@@ -208,7 +209,7 @@ line-height:120%;
   - 0x858d8F4cF6e8dE4e8Eba54D853C7D36015e1f36C
 - Remix, the Solidity compiler, will insist on the checksummed form
 - Ethereum's 15 bit checksum is less than Bitcoin's 32 bits
-  - A mistyped address will be caught in all but $1/(2^{15}) = 0.3$% of cases
+  - A mis-typed address will be missed in $1/(2^{15}) = 0.3$% of cases
   - Bitcoin: $1/(2^{32}) = 0.00000002$% of cases
 - Algorithm: if the $i^{th}$ digit is a letter:
   - Print it in uppercase if the $4 \ast i^{th}$ bit of the hash of the lowercase hexadecimal address is 1
@@ -239,10 +240,24 @@ function toChecksumAddress (address) {
 
 
 
+## How to checksum
+- Some things may require a checksummed address
+  - Solidity does, in some cases
+  - Also some aspects of web3.py
+- Ways to checksum:
+  - Use https://ethsum.netlify.app
+    - Try it with 0x858d8f4cf6e8de4e8eba54d853c7d36015e1f36c
+  - Solidity will warn you and suggest the checksummed address
+    - Just copy-and-paste that into your code
+  - Web3.py has a function for this
+    - We'll see this later
+
+
+
 ## Account Nonce
 - The 'nonce' is an incrementing counter associated with each account
   - Starts at 0
-  - *Each* transaction uses the nonce and then increments it
+  - *Each* transaction uses the nonce and *then* increments it
 - This is NOT stored in the account address
   - But it is stored in the blockchain
   - With proper indexing, finding it is almost $\Theta(1)$
@@ -253,7 +268,7 @@ function toChecksumAddress (address) {
 
 ## Contract addresses
 - Some transactions put a smart contract (program) onto the blockchain
-  - Those need a contract address to be called
+  - Those programs need a *contract address* to be called
 - To generate the contract address:
   - Take the account address of who is executing this transaction
     - That could be an owned address or a contract address
@@ -283,18 +298,21 @@ function toChecksumAddress (address) {
   - And is object-oriented
     - It has inheritance!  Visibilities!
 - A Solidity program is called a "smart contract"
+- Each transaction (and program call) is evaluated on every one of the Ethereum Virtual Machines (EVMs)
+  - And there are a [lot of them](https://ethernodes.org/)
 - But how to prevent an infinite loop in a smart contract?
 
 
 
 ## Gas
-- Each TXN defines the number of "computational steps" the smart contract is allowed to execute
+- Each TXN has a maximum number of "computational steps" the smart contract is allowed to execute
   - Gas price: how much to pay, in ETH, per computational step
-  - Gas limit (aka start gas): the maximum amount of gas to pay
+  - Gas limit (aka *start gas*): the maximum amount of gas to pay
   - Maximum number of allowed steps = gas limit / gas price
 - If your smart contract exceeds the maximum allowed steps, the smart contract is not executed
   - And you lose all your gas!  [Here](https://ethplorer.io/tx/0x70fc74551a132a301e5b4a6c1c6dbbfe23d4a6479501b60c6468cd2f6ba0cf3b) is such a TXN
-- You can see a [graph of historical gas prices](https://ethereumprice.org/gas/)
+- You can see a [graph of historical gas prices](https://ycharts.com/indicators/ethereum_average_gas_price)
+- Current limit: see [here](https://etherscan.io/blocks) (in the "Gas Limit" column)
 
 
 
@@ -305,7 +323,13 @@ function toChecksumAddress (address) {
 - Example to evaluate the transaction:
   - Buy $g$ gas at 200 gwei; total of 200 * 21,000 gwei = 0.0042 ETH
   - As the script executes, it deducts gas from the 21,000 amount
-  - At the end of execution, any extra gas is refunded to the account
+  - At the end of execution, any extra gas is refunded
+- Formally:
+  - Let $p$ be the gas price (200 gwei)
+  - Let $g$ be the maximum gas you are willing to pay (21k)
+  - Let $u$ be the gas actually used: $u \le g$
+  - The maximum transaction fee you are willing to pay is $g \ast p$
+  - The actual transaction fee is $u \ast p \le g \ast p$
 
 
 
@@ -373,15 +397,26 @@ function toChecksumAddress (address) {
 
 
 
+## Ethereum 2.0
+- A few weeks ago Ethereum changed over from proof-of-work (PoW) to proof-of-stake (PoS)
+- Partly to increase scalability, partly to decrease transaction fees
+- It's still a bit early to see how well that worked
+  - Although it will probably be successful
+- Current gas prices seem to be stabilizing around 14 gwei
+  - If Ethereum costs `$`1,250, then a "standard" transaction (21k gas) costs `$`0.37
+  - A large contract deployment (1M gas) costs `$`17.50
+
+
+
 ## Messages
 - We have two known types of transactions so far:
   - That transfer ether from one account to another
   - That deploy a smart contract
-- A message is another type of transaction, but it's one contract calling another
-  - Invoking a smart contract's methods
+- A message is another type of transaction
+  - It's invoking a smart contract's method(s)
 - It also consumes gas!
   - That gas is consumed by the original call
-- You call contract A with 1000 gas
+- You call contract A with 1,000 startgas
   - That call uses 600 gas
   - Contract A calls contract B, which uses 300 gas
   - You only get 100 gas back
@@ -406,12 +441,12 @@ function toChecksumAddress (address) {
 1. Is TXN well-formed and valid?  If not, error.
 2. Fee starts at *start_gas* $\ast$ *gas_price*
     - Determine sending address from the signature
-    - Subract fee from sending account; if not enough, error
+    - Subtract fee from sending account; if not enough, error
 3. set *gas* = *start_gas*, and subtract for each step
 4. Transfer TXN value from sender to receiver
     - If receiver is a contract, execute that code (using gas)
-5. Not enough gas to execute? Revert back to start, but use keep the fees
-6. Else refund unspent gas to sender, send gas consued to miner
+5. Not enough gas to execute? Revert back to start, but keep the fees
+6. Else refund unspent gas to sender, send gas consumed to miner
 
 
 
@@ -429,6 +464,8 @@ function toChecksumAddress (address) {
 - Since London...
     - There is a [base fee](https://ethereum.org/en/developers/docs/gas/#base-fee) -- a minimum amount to pay
     - You can add a [priority fee](https://ethereum.org/en/developers/docs/gas/#priority-fee) to incentivize miners to mine your TXN
+- This is what our course blockchain uses
+- The real Ethereum network is now proof-of-stake
 </textarea></section>
 
 	</section>
