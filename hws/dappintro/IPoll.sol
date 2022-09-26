@@ -18,14 +18,17 @@ interface IPoll {
 		uint votes;
 	}
 
+	// this allows us to learn the purpose of this vote
+	function purpose() external pure returns (string memory);
+
 	// a mapping to keep track of who has voted
-	function voted(address a) external returns (bool);
+	function voted(address a) external view returns (bool);
 
 	// a mapping to store the various chioces
-	function choices(uint i) external returns (Choice memory);
+	function choices(uint i) external view returns (Choice memory);
 
 	// how many choices have been added?
-	function num_choices() external returns (uint);
+	function num_choices() external view returns (uint);
 
 	// the function that adds a choice to be voted upon
 	function addChoice (string memory _name) external;

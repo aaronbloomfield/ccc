@@ -52,6 +52,12 @@ contract Poll is IPoll {
 	// the 'override' keyword here.
 	uint public override num_choices;
 
+	// This allows the voter to know what this poll is voting on.  It's
+	// public, so we get a free getter function called purpose().  As this
+	// purpose() function is implementing the one specified in IPoll.sol, we
+	// have to put the 'override' keyword here.
+	string public override constant purpose = "Vote on your favorite color";
+
 	// The constructor, which runs when it's first deployed to the blockchain;
 	// this adds our voting choices.
 	// YOU HAVE TO CHANGE THE CODE HEREIN -- make up your own choices

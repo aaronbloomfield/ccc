@@ -26,11 +26,11 @@ eth_coinbase = ""
 # the address.
 contracts = {
 
-	# Your deployed Choices contract.  All of the action below on your Choices
+	# Your deployed Polls contract.  All of the action below on your Polls
 	# contract is assumed to be from this one. The address does not need to
 	# be in checksummed form.  It must have been deployed by the eth_coinbase
 	# address, above.
-	'choices': '',
+	'polls': '',
 
 }
 
@@ -40,12 +40,17 @@ contracts = {
 other = {
 	
 	# This is the transaction hash where you voted on your own deployed
-	# Choices contract.
+	# Polls contract.
 	'txn_hash_vote_yours': None,
 
-	# This is the transaction hash where you voted on the course Choices
+	# This is the transaction hash where you voted on the course Polls
 	# contract.
 	'txn_hash_vote_course': None,
+
+	# Are you using the Desktop version of Remix?  If so, then True.  If you
+	# are using the web version at https://remix.ethereum.org, then False.
+	# This is just so we can see how many students are using each one.
+	'using_desktop_remix': None,
 
 }
 
@@ -57,17 +62,33 @@ other = {
 # need to be changed to True (instead of None).
 sanity_checks = {
 	
-	# Did you deploy the Choices contract?
+	# Did you change the various choices in the `addChoice()` calls in the
+	# constructor?  This is from the 'code base' section of the assignment.
+	'make_changes_to_addchoice': False,
+
+	# Did you change the value of the `purpose` variable in the code?  This
+	# is from the 'code base' section of the assignment.
+	'make_changes_to_purpose': False,
+
+	# Did you try out the unit testing section of the homework?  This is from
+	# part 2 (testing) of the assignment.
+	'tried_out_unit_testing': False,
+
+	# Did you deploy your Polls contract?  This is from part 3
+	# (deployment) of the assignment.
 	'deployed_choices_contract': False,
 
-	# Did you make the necessasry changes in your deployed the Choices contract?
-	'make_changes_indeployed_choices_contract': False,
+	# Did you vote on your own Polls contract?  This is from part 3
+	# (deployment) of the assignment.
+	'voted_on_your_poll': False,
 
-	# Did you vote on your own Choices contract?
-	'voted_on_your_choices': False,
+	# Did you view the web page that reads from a Polls contract?  This is
+	# from part 4 (web interface) of the assignment.
+	'explored_web_interface': False,
 
-	# Did you vote on the course-wide Choices contract?
-	'voted_on_course_choices': False,
+	# Did you vote on the course-wide Polls contract?  This is from part 5
+	# (vote) of the assignment.
+	'voted_on_course_poll': False,
 
 }
 

@@ -63,6 +63,12 @@ contract Poll <font color="#008080">is</font> IPoll <font color="#FF0000">{</fon
 	<i><font color="#9A1900">// the 'override' keyword here.</font></i>
 	uint <b><font color="#0000FF">public</font></b> <font color="#008080">override</font> num_choices<font color="#990000">;</font>
 
+	<i><font color="#9A1900">// This allows the voter to know what this poll is voting on.  It's</font></i>
+	<i><font color="#9A1900">// public, so we get a free getter function called purpose().  As this</font></i>
+	<i><font color="#9A1900">// purpose() function is implementing the one specified in IPoll.sol, we</font></i>
+	<i><font color="#9A1900">// have to put the 'override' keyword here.</font></i>
+	string <b><font color="#0000FF">public</font></b> override <font color="#008080">constant</font> purpose <font color="#990000">=</font> <font color="#FF0000">"Vote on your favorite color"</font><font color="#990000">;</font>
+
 	<i><font color="#9A1900">// The constructor, which runs when it's first deployed to the blockchain;</font></i>
 	<i><font color="#9A1900">// this adds our voting choices.</font></i>
 	<i><font color="#9A1900">// YOU HAVE TO CHANGE THE CODE HEREIN -- make up your own choices</font></i>

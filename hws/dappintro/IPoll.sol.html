@@ -29,14 +29,17 @@ http://www.gnu.org/software/src-highlite">
 		<font color="#008080">uint</font> votes<font color="#990000">;</font>
 	<font color="#FF0000">}</font>
 
+	<i><font color="#9A1900">// this allows us to learn the purpose of this vote</font></i>
+	<font color="#008080">function</font> <b><font color="#000000">purpose</font></b><font color="#990000">()</font> external <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+
 	<i><font color="#9A1900">// a mapping to keep track of who has voted</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">voted</font></b><font color="#990000">(</font><font color="#008080">address</font> a<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+	<font color="#008080">function</font> <b><font color="#000000">voted</font></b><font color="#990000">(</font><font color="#008080">address</font> a<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 
 	<i><font color="#9A1900">// a mapping to store the various chioces</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">choices</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Choice</font> memory<font color="#990000">);</font>
+	<font color="#008080">function</font> <b><font color="#000000">choices</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Choice</font> memory<font color="#990000">);</font>
 
 	<i><font color="#9A1900">// how many choices have been added?</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">num_choices</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+	<font color="#008080">function</font> <b><font color="#000000">num_choices</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
 	<i><font color="#9A1900">// the function that adds a choice to be voted upon</font></i>
 	<font color="#008080">function</font> <b><font color="#000000">addChoice</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> external<font color="#990000">;</font>
