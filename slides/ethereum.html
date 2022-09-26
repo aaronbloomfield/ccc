@@ -156,8 +156,7 @@ line-height:120%;
 - Some items are on the blockchain itself
   - A smart contract, a TXN for an account, etc.
 - Others can be inferred or computed from the blockchain
-  - How many transactions an account has had
-  - The current balance of an account
+  - The current balance of an account or a contract
   - These are the current *state*, and not stored directly on the blockchain
   - The Ethereum Virtual Machine (EVM) keeps track of these, so it's called the *EVM state*
 - Yet others can be determined by "rewinding" the blockchain to a previous point in time
@@ -312,7 +311,7 @@ function toChecksumAddress (address) {
 - If your smart contract exceeds the maximum allowed steps, the smart contract is not executed
   - And you lose all your gas!  [Here](https://ethplorer.io/tx/0x70fc74551a132a301e5b4a6c1c6dbbfe23d4a6479501b60c6468cd2f6ba0cf3b) is such a TXN
 - You can see a [graph of historical gas prices](https://ycharts.com/indicators/ethereum_average_gas_price)
-- Current limit: see [here](https://etherscan.io/blocks) (in the "Gas Limit" column)
+- Current block limit: see [here](https://etherscan.io/blocks) (in the "Gas Limit" column)
 
 
 
@@ -391,7 +390,7 @@ function toChecksumAddress (address) {
 - If you pay to little for the gas, the miners will pass it by
 - See the [average gas price](https://etherscan.io/chart/gasprice) over time
 - You can add a "tip" to incentivize miners to include your block faster
-- See [differnt gas fee times](https://crypto.com/defi/dashboard/gas-fees)
+- See [different gas fee times](https://etherscan.io/gastracker)
   - 200 gwei for gas @ 3k USD / ETH for 21k gas is $12.60
   - It turns out fee computation is more complex...
 

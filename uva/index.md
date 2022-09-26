@@ -91,7 +91,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 7. Wed, Sep 14: [Bitcoin](../slides/bitcoin.html#/) (actual: Bitcoin scripting through the end of P2SH, which is slide 7.26)
 8. Mon, Sep 19: [Bitcoin](../slides/bitcoin.html#/) (actual: finished Bitcoin)
 9. Wed, Sep 21: [mining](../slides/mining.html#/) (actual: mining to slide 5.9)
-10. Mon, Sep 26: [mining](../slides/mining.html#/)
+10. Mon, Sep 26: [mining](../slides/mining.html#/) (actual: only Ethereum through slide 3.29 ("Transaction fields"))
 11. Wed, Sep 28: [Ethereum](../slides/ethereum.html#/)
 12. Wed, Oct 5: [Solidity](../slides/solidity.html#/)
 13. Mon, Oct 10: [Solidity](../slides/solidity.html#/), in particular the in-class exercise
