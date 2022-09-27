@@ -1,4 +1,5 @@
 doc:
+	touch index.md
 	cd ../..; make -s
 	source-highlight -s cpp -d *.sol
 	dot -Tsvg -O inheritance.dot
