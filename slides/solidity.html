@@ -108,7 +108,7 @@ line-height:120%;
 
 ## Value types: integers
 - Most used: `uint` (aka `uint256`) and `uint8`
-- Warning: a subtraction into a `uint` that is negative will cause a revert
+- Warning: a subtraction into a `uint` that is negative will cause a reversion
   - A revert is basically an abort -- more on this later
   - And it will not give a useful error message indicating so!
 
@@ -140,7 +140,12 @@ line-height:120%;
 - Used for:
   - Keeping track of who is the contract initiator
   - Addresses of other contracts to call
-- Can convert between `address` and: `uint160` or `bytes20`
+- Can cast between `address` and: `uint160` or `bytes20`
+  ```
+address a = address(0);
+uint160 u = uint160(a);
+bytes20 b = bytes20(u);
+```
 - The address of a caller of a function is in `msg.sender`
 
 
@@ -236,10 +241,10 @@ function setGoStraight() public {
 ## Mappings
 - An associative array (like a hash table) that holds a key-value pair
 ```
-mapping (address => bool) public voters;
-mapping (uint => Choice) public choices;
+mapping (address => bool) public override voted;
+mapping (uint => Choice) internal _choices;
 ```
-  - We'll talk about `public` visibility later
+  - We'll talk about `public`, `internal`, and `override` later
 - To access a mapping value:
 ```
 if ( voters[msg.sender] ) { ... }
@@ -281,19 +286,20 @@ twodmap[3]["foo"]
 ## Is an element in a mapping?
 - Consider:
 ```
-mapping (address => bool) public voters;
+mapping (address => bool) public override voted;
 // this next one was not in the original Poll.sol:
 mapping (address => uint) public how_voted;
 //
 // or:
 //
-mapping (uint => Choice) public choices;
-uint public num_choices;
+mapping (uint => Choice) internal _choices;
+uint public override num_choices;
 ```
 - The `voters` tells if an address has voted
   - If they haven't, then that key's value will be 0 (false)
   - The `how_voted` will tell what they voted for
 - For the Choices, the uint tells how many keys there are
+  - Our code has keys 0 to num_choies-1
 
 
 
@@ -309,7 +315,7 @@ struct Choice {
   - Structs can contain mappings as well
 - They are often kept in a mapping:
 ```
-mapping (uint => Choice) public choices;
+mapping (uint => Choice) internal _choices;
 ```
 - If you put the same `Choice` struct into different mappings, you *might* now have *two* copies of that struct!
 
@@ -404,6 +410,16 @@ assert(1 ether == 1e18);
   - Anything assigned between *different* types of memory is always a copy, as references can't point from one memory type to another
   - State storage, which is on the blockchain, never stores references -- so anything copied to state storage is always a full copy
   - Reference aliasing works in the 2 cases when the memory types are the same and it's not going into state storage: memory to memory, and any storage to local storage
+
+
+
+## Type names
+- For certain types, you have to give a qualifier as to where it is stored
+  - `bytes` and `string`
+- The qualifier is `memory`, `storage`, or `calldata`
+- The type name is *two words*
+  - `string memory`
+  - `bytes storage`
 
 
 
@@ -502,6 +518,14 @@ contract C {
 - [Remix documentation](https://remix-ide.readthedocs.io/en/latest/) (the Solidity IDE)
   - URL: https://remix-ide.readthedocs.io/en/latest/
 
+
+
+
+## Solidity Overview
+- An object-oriented language with C++/Java like syntax
+  - Same set of control structures with the same syntax (for, if/else, while, etc.)
+- A class is called a "contract"
+- Methods are called functions
 
 
 
@@ -611,6 +635,7 @@ import {symbol1 as alias, symbol2} from "filename.sol";
   - Can also be `abstract`
 - `interface`
   - Just like interfaces in Java, or pure abstract classes in C++
+  - By convention, they always start with a capital I (India)
 - `library`
   - Can contain ONLY functions that do not access state
     - Meaning no contract field access
@@ -624,12 +649,12 @@ import {symbol1 as alias, symbol2} from "filename.sol";
   - Via the `is` keyword
 - The super-class (or super-interface) must be defined above or `import`'ed
 ```
-contract Student is Person {
+interface Foo is Bar {
   // ...
 }
 ```
 ```
-interface Foo is Bar {
+contract Student is Person, Learner {
   // ...
 }
 ```
@@ -642,21 +667,22 @@ interface Foo is Bar {
   - All function prototypes in interfaces are assumed to be `virtual`
 - `override`: when a sub-class is replacing an inherited function
   - If the function is multiply inherited, you have to specify which (or all) that it overrides:
-    - `function foo() public override(IERC165,ERC721) {`
+      ```
+function foo() public override(IERC165,ERC721) {
+```
     - This will be needed in the Tokens assignment
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id='abscon'><textarea>
 ## Abstract Contracts
 - A `contract` must have all the methods implemented
-- An `interface` can have no methods implemented
+- An `interface` must have no methods implemented
 - An `abstract contract` can have some methods implemented and some not
   - Part interface, part contract
   - Example: if you inherit from an interface, but only implement some of the methods
-  - Example: if you inherit from a contract and a (different) interface
 
 ```
-abstract contract Foo {
+abstract contract Foo is Bar {
   // ...
 }
 ```
@@ -820,7 +846,8 @@ constructor(uint foo) {
 
 ## Destructor
 - `selfdesctruct()`
-  - Only if enabled
+  - Only if enabled (declared)
+  - Disables the contract permanently
   - Caller claims the ether balance
 
 
@@ -912,7 +939,7 @@ try something {
   - Calling a function
   - Creating a new contract
   - Or anything else
-- If the something reverts, the catch clause is executed
+- If the *something* reverts, the catch clause is executed
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id='payeth'><textarea>
@@ -925,6 +952,7 @@ try something {
 - The amount, in `v`, is in wei
 - The address to pay it to is in `a`
 - This reverts if the contract does not have sufficient balance
+  - Or if it fails for any other reason, such as an invalid address
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
@@ -994,8 +1022,8 @@ contract MyContract {
     uint i = 1 + 2 * 3 - 4;
 }
 ```
-To see the bytecode:
-- Got to [remix.ethereum.org](http://remix.ethereum.org), create a new contract file, and enter the text
+The bytecode was generated via:
+- Going to [remix.ethereum.org](http://remix.ethereum.org), create a new contract file, and enter the text
 - Select the compiler icon on the left, and click 'compile'
 - Select 'compilation details', the 'Assembly' at the bottom
 
@@ -1169,12 +1197,14 @@ contract Poll is IPoll {
 
 
 ## Poll Compilation Artifacts
-- [Poll ABI](../hws/dappintro/Poll.abi)
+- ABI (Application Binary Interface):
+  - [IPoll ABI](../hws/dappintro/IPoll.abi)
+  - [Poll ABI](../hws/dappintro/Poll.abi)
 - Compiled bytecode
   - [Normal](../hws/dappintro/Poll-normal.bin.txt) (5,656 bytes)
   - [Optimized](../hws/dappintro/Poll-optimized.bin.txt) (3,010 bytes)
   - See these on the blockchain explorer as well
-- [EVM opcodes](../hws/dappintro/Poll.asm)
+- [EVM opcodes](../hws/dappintro/Poll.asm) for Poll.sol
 
 
 
@@ -1430,8 +1460,8 @@ contract Test {
   uint public debug1;
   uint public debug2;
 
-  function whyDontYouWork(uint a, uint b, uint c) 
-                          public returns (uint) {
+  function whyYouNotWork(uint a, uint b, uint c) 
+                         public returns (uint) {
     uint x = 10**a;
     debug1 = x;
     x = x / b + c;
@@ -1445,6 +1475,11 @@ contract Test {
 ## Managing setup
 - Some projects will require multiple contracts working together
 - We can create a third contract to manage all this setup
+
+
+
+## Unit testing
+- This is gone over in the [dApp Introduction HW](../hws/dappintro/index.html)
 
 
 
