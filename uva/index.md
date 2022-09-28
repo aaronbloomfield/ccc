@@ -92,7 +92,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 8. Mon, Sep 19: [Bitcoin](../slides/bitcoin.html#/) (actual: finished Bitcoin)
 9. Wed, Sep 21: [mining](../slides/mining.html#/) (actual: mining to slide 5.9)
 10. Mon, Sep 26: [mining](../slides/mining.html#/) (actual: only Ethereum through slide 3.29 ("Transaction fields"))
-11. Wed, Sep 28: [Ethereum](../slides/ethereum.html#/)
+11. Wed, Sep 28: [Ethereum](../slides/ethereum.html#/) (actual: finished the first column of Ethereum; Solidity to slide 4.25)
 12. Wed, Oct 5: [Solidity](../slides/solidity.html#/)
 13. Mon, Oct 10: [Solidity](../slides/solidity.html#/), in particular the in-class exercise
 14. Wed, Oct 12: midterm

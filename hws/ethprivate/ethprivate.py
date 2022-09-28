@@ -5,7 +5,7 @@
 # verification routines will not work properly.
 
 # You are welcome to have additional variables or fields in this file; you
-# just cant remove variables or fields.
+# just can't remove variables or fields.
 
 
 # Who are you?  Name and UVA userid.  The name can be in any human-readable format.
@@ -70,9 +70,9 @@ other = {
 
 # These are various sanity checks, and are meant to help you ensure that you
 # submitted everything that you are supposed to submit.  Other than
-# submitting the necessary files to Gradescope (which checks for those
-# files), all other submission requirements are listed herein.  These values
-# need to be changed to True (instead of None).
+# submitting the necessary files to Gradescope, all other submission
+# requirements are listed herein.  These values need to be changed to True
+# (instead of None).
 sanity_checks = {
 	
 	# Did you explore geth on your own?

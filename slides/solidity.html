@@ -247,11 +247,11 @@ mapping (uint => Choice) internal _choices;
   - We'll talk about `public`, `internal`, and `override` later
 - To access a mapping value:
 ```
-if ( voters[msg.sender] ) { ... }
+if ( voted[msg.sender] ) { ... }
 ```
 - To write to a mapping:
 ```
-voters[msg.sender] = true;
+voted[msg.sender] = true;
 ```
 
 
@@ -746,10 +746,10 @@ mapping (uint => mapping(string => address) )
 ```
 - Creates the following getter functions:
 ```
-function num_assignments() public returns (uint);
-function aliases(address a) public 
+function num_assignments() public view returns (uint);
+function aliases(address a) public view
                   returns (string memory);
-function twodmap(uint id, string s) public
+function twodmap(uint id, string s) public view
                   returns (address);
 ```
 
