@@ -5,7 +5,7 @@
 # verification routines will not work properly.
 
 # You are welcome to have additional variables or fields in this file; you
-# just cant remove variables or fields.
+# just can't remove variables or fields.
 
 
 # Who are you?  Name and UVA userid.  The name can be in any human-readable format.
@@ -27,10 +27,10 @@ eth_coinbase = ""
 contracts = {
 
 	# Your deployed Polls contract.  All of the action below on your Polls
-	# contract is assumed to be from this one. The address does not need to
+	# contract is assumed to be with this one. The address does not need to
 	# be in checksummed form.  It must have been deployed by the eth_coinbase
 	# address, above.
-	'polls': '',
+	'poll': '',
 
 }
 
@@ -40,16 +40,18 @@ contracts = {
 other = {
 	
 	# This is the transaction hash where you voted on your own deployed
-	# Polls contract.
+	# Polls contract in part 3 (deployment) of the assignment.
 	'txn_hash_vote_yours': None,
 
 	# This is the transaction hash where you voted on the course Polls
-	# contract.
+	# contract in part 5 (vote) of the assignment.
 	'txn_hash_vote_course': None,
 
 	# Are you using the Desktop version of Remix?  If so, then True.  If you
 	# are using the web version at https://remix.ethereum.org, then False.
-	# This is just so we can see how many students are using each one.
+	# This is just so we can see how many students are using each one.  If
+	# you used both, choose this optoin based on which one you expect to use
+	# more often in the future.
 	'using_desktop_remix': None,
 
 }
@@ -57,9 +59,9 @@ other = {
 
 # These are various sanity checks, and are meant to help you ensure that you
 # submitted everything that you are supposed to submit.  Other than
-# submitting the necessary files to Gradescope (which checks for those
-# files), all other submission requirements are listed herein.  These values
-# need to be changed to True (instead of None).
+# submitting the necessary files to Gradescope, all other submission
+# requirements are listed herein.  These values need to be changed to True
+# (instead of None).
 sanity_checks = {
 	
 	# Did you change the various choices in the `addChoice()` calls in the

@@ -8,7 +8,7 @@ dApp Introduction
 This homework will take you through the process of compiling, deploying, and running a decentralized application (dApp) on our private Ethereum blockchain.  This assignment does not focus on the programming aspects of Solidity -- that's in a future assignment, as well as the lectures.
 
 
-You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You should have a few (fake) ETH.  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  If you have not successfully completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment then you will not be able to complete this assignment.
+You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You should have a few (fake) ETH from the faucet.  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  If you have not successfully completed that assignment then you will not be able to complete this assignment.
 
 Warning to Mac OS X users: there is one part in this assignment that Safari seems to have issues with.  This part is indicated when you get to it, and you may have to switch to a different browser (Firefox or Chrome) to complete that part.
 
@@ -22,69 +22,78 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 ### Introduction
 
-To deploy and run a smart contract, you need to be able to the standard development tasks -- editing, compilation, and testing.  The last one -- testing -- is tricky, as you have to be running in an environment that simulates a blockchain and (fake) accounts with (fake) ETH.  Once it's compiled, you have to then be able to load it onto the blockchain, whether that blockchain is simulated (for testing) or real (for deployment).
+To deploy and run a smart contract, you need to be able to the standard development tasks -- editing, compilation, testing, and deployment.  The third one -- testing -- is tricky, as you have to be running in an environment that simulates a blockchain and (fake) accounts with (fake) ETH.  Once it's compiled, you have to then be able to load it onto the blockchain, whether that blockchain is simulated (for testing) or real (for deployment).
 
 For the development tasks, we are going to use [Remix](http://remix.ethereum.org), which is an IDE designed specifically for Solidity smart contracts on an Ethereum blockchain.  You can use it online at [remix.ethereum.org](http://remix.ethereum.org), or you can download the latest version on your computer via [remix's github repo](https://github.com/ethereum/remix-desktop/releases).  Each method has it's pros and cons.  
 
-- **Online Remix:** The online site, at [remix.ethereum.org](https://remix.ethereum.org), is quick to use, doesn't require installation, but does not save your changes to your local file -- you have to edit it locally and then copy/paste it into Remix.  The files that it saves remotely are tied to a cookie in your browser, which will mean you cannot edit those online files from a different browser (but you can copy/paste them in again if you have saved them locally).  If you do want to go this route, we suggest editing your code with [sublime](https://www.sublimetext.com/) with the [Ethereum package](https://packagecontrol.io/packages/Ethereum) installed.  And if you make edits to the file on the web page, you have to cut-and-paste them into the local file on your computer to have an updated local copy.  In the past, people have had issues with different browsers.  Chrome and Firefox are known to work.  For the last assignment in this course you will have to use Chrome.
+- **Online Remix:** The online site, at [remix.ethereum.org](https://remix.ethereum.org), is quick to use, doesn't require installation, but does not save your changes to your local drive -- you have to edit it locally and then copy/paste it into Remix.  The files that it saves remotely are tied to a cookie in your browser, which will mean you cannot edit those online files from a different browser (but you can copy/paste them in again if you have saved them locally).  If you do want to go this route, we suggest editing your code with [sublime](https://www.sublimetext.com/) with the [Ethereum package](https://packagecontrol.io/packages/Ethereum) installed.  And if you make edits to the file on the Remix web page, you have to cut-and-paste that back into the local file on your computer so that you have an updated local copy.  In the past, people have had issues with different browsers.  Chrome and Firefox are known to work, but Safari seems to have issues with deployment.  For the last assignment in this course you will have to use Chrome.
 - **Desktop Remix:** The other option -- installing Remix locally -- requires going through the installation process (which is really quick), but makes it much easier to develop locally.  In the past there were some bugs that caused issues, but they were solvable.  To download the package for your OS, see the [Remix download page](https://github.com/ethereum/remix-desktop/releases).  If the desktop version starts running really slowly, try restarting the application.
 
-We recommend to download and install the desktop version, despite the occasional issues, but the choice is yours.  If you do try the desktop version, and it is not working well, you can always switch to the online version.  The directions herein will apply to both options.  Note that all of these tools (the Remix IDE and Sublime with the Ethereum package) are already installed on the VirtualBox image.  Remix's source code is [available on github](https://github.com/ethereum/remix-project), and it is [released under the MIT license](https://github.com/ethereum/remix-project/blob/master/LICENSE); some of the Remix icons are included herein.
+We recommend to download and install the desktop version, despite the occasional issues, but the choice is yours.  If you do try the desktop version, and it is not working well, you can always switch to the online version.  The directions herein will apply to both options, as the user interface is the same.  Note that all of these tools (the Remix IDE and Sublime with the Ethereum package) are already installed on the VirtualBox image.  Remix's source code is [available on github](https://github.com/ethereum/remix-project), and it is [released under the MIT license](https://github.com/ethereum/remix-project/blob/master/LICENSE); some of the Remix icons are included herein.
 
-Remix allows you to develop, compile, and test your code on a simulated blockchain with fake accounts.  It cannot, all by itself, deploy to a blockchain.  For that, we are going to use geth.  We will connect Remix to geth for our deployment, and geth will be the conduit to deploy to the blockchain.  More on that later in this assignment.
+Remix allows you to develop, compile, and test your code on a simulated blockchain with fake accounts.  It cannot, all by itself, deploy to a blockchain.  For that, we are going to use geth.  We will connect Remix to geth for our deployment, and geth will be the conduit to deploy to the blockchain.  More on this later in the assignment.
 
-There are many different tool chains that one can use to compile and deploy smart contracts -- Truffle and Ganache, command-line compilation with solc and deployment with geth, etc.  We had to pick one, and Remix seemed the most logical choice.  We will see how to interact with the blockchain through geth in an in-class activity in the [Solidity lecture slide set](../../slides/solidity.html#/).
+There are many different tool chains that one can use to compile and deploy smart contracts -- Truffle and Ganache, command-line compilation with solc and deployment with geth, etc.  We had to pick one, and Remix seemed the most straight-forward and logical choice.  We will see how to interact with the blockchain through the geth Javascript console in an in-class activity in the [Solidity lecture slide set](../../slides/solidity.html#/).
 
-The same process described herein can be used to deploy on the real Ethereum blockchain.  The only difference is that you would run geth to connect to the real Ethereum blockchain, rather than our private course blockchain.  Everything else stays the same.
+The same process described herein can be used to deploy on the real Ethereum blockchain.  The only difference is that you would run geth to connect to the real Ethereum blockchain, rather than our private course blockchain.  And of course you would need real Ethereum to pay for the gas fees.  Everything else stays exactly the same.
 
 
 ### Code base
 
-For this assignment we will be providing the Solidity code to use: the interface [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) and the smart contract that implements that interface: [Poll.sol](Poll.sol.html) ([src](Poll.sol)).  The code will allow voting for *something* via the blockchain -- an election, your favorite color, or anything else.  Election dApps are fairly common as first examples of Solidity programs.  Note that while you should be able to gain a rough idea of what is going on in the code, the tasks herein are not necessarily to understand the code, but to be able to compile and deploy it.  Understanding the code, and writing your own, is in the next assignment and upcoming course lectures.
+For this assignment we will be providing the Solidity code to use: the interface [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) and a smart contract that implements that interface: [Poll.sol](Poll.sol.html) ([src](Poll.sol)).  The code will allow voting for *something* via the blockchain -- an election, your favorite color, or anything else.  Election dApps are fairly common as first examples of Solidity programs.  Note that while you should be able to gain a rough idea of what is going on in the code, the tasks herein are not to necessarily understand the code, but to be able to compile and deploy it.  Understanding the code, and writing your own, is in the next assignment and upcoming course lectures.
 
-That being said, you will need to make two small modifications to the code.  You are going to start an election on something *other* than the default (which is one's favorite color).  Edit the [Poll.sol](Poll.sol.html) ([src](Poll.sol)) file to add your own choices to your Poll contract.  In particular, you should ONLY change two things: the `addChoice()` calls in the constructor (you can add more or take some away, as needed) and the value of the `purpose` string.  It is important that you do not change any other code in the contract, else it will not work properly when we are testing and grading it!  Please choose something that is not controversial -- there are many great ways to fight for, and to voice opinions for, things that you believe in and that others may find controversial.  Our private Ethereum blockchain for this course is not one of them.
+The IPoll interface, and the implementing Poll contract, allows for only a single election per deployed contract.  This is inefficient -- a better implementation would be to allow a single contract to host many polls.  However, to keep this initial example simple, the contract presented only allows one poll per contract.
+
+While we provide the necessary code, you will need to make two small modifications.  You are going to start an election on something *other* than the default (which is one's favorite color).  Pick something interesting to host a poll for.  Edit the Poll source code to add your own choices to your Poll contract.  In particular, you should ONLY change two things: the `addChoice()` calls in the constructor (you can add more or remove some, as needed) and the value of the `purpose` string.  It is important that you do not change any other code in the contract, else it will not work properly when we are testing and grading it!  Please choose something that is not controversial -- there are many great ways to fight for, and to voice opinions for, things that you believe in and that others may find controversial.  Our private Ethereum blockchain for this course is not one of them.
+
+In addition to your Poll.sol source file, you will have to submit the [dappintro.py](dappintro.py.html) ([src](dappintro.py)) file.  This file will contain the various transaction hashes and account information that you will be generating as you work through this assignment.
 
 
 ### Hints
 
-There are a few very important hints that will make your life SO MUCH easier if you follow them throughout the semester.
+There are a few very important hints that will make your life **SO MUCH** easier if you follow them throughout the semester.
 
-**Directories:** Keep all your Solidity code, for all your assignments, in the same directory.  Much of the code will be re-used between assignments.  There will never be two different files that have the same name.  Some of the later assignments will have a dozen or so files that are included (imported).  And many assignments will use the same set of included (imported) files.  Having everything in the same directory will make it much easier to manage.
+**Directories:** Keep all your Solidity code, for all your assignments in this course, in the same directory.  Much of the code will be re-used between assignments.  There will never be two different files that have the same name.  Some of the later assignments will have a dozen or so files that are included (imported).  And many assignments will use the same set of imported files.  And many assignments will import the same (large) set of files.  Having everything in the same directory will make it much easier to manage.
 
-**Desktop Remix:** Sometimes the desktop version of Remix has issues.  Last semester, about a month after we started using it, it just decided to only present a white screen.  Try to solve it, but be willing to switch to the web browser version if this occurs.  (As a side note, the solution to this white screen issue can be found [here](https://github.com/ethereum/remix-desktop/issues/122))
+**Desktop Remix:** Sometimes the desktop version of Remix has issues.  Last semester, about a month after we started using it, it just decided to only present a white screen.  If issues happen, try to solve it, but be willing to switch to the web browser version if this occurs.  (As a side note, the solution to this white screen issue can be found [here](https://github.com/ethereum/remix-desktop/issues/122)).  If the desktop version starts running really slowly, try restarting the application.
 
 **Web Remix:** The web version of Remix also has issues -- in particular, it saves your code on remote servers, and is tied to a cookie in your web browser.  If you lose the computer, reset your cookies, or are using a different machine, then you will not be able to access your files.  This means you will have to cut-and-paste the code to a locally saved file to ensure you can access it elsewhere.
 
-**Geth node:** You will have to start a local geth node to deploy your contracts.  You did this in the [private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  In the Deployment section, below, you will be adding a number of command-line parameters that will allow you to deploy a smart contract through your local geth node to the blockchain.  Later assignments will be adding yet more command-line parameters to the command to launch a geth node.  Save all these flags in a shell script or batch file, as -- by the end of the semester -- the command will be really long.
+**Geth node:** You will have to start a local geth node to deploy your contracts.  You did this in the [private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  In the Deployment section, below, you will be adding a number of command-line parameters that will allow you to deploy a smart contract through your local geth node to the private course blockchain.  Later assignments will be adding yet more command-line parameters to this command to launch a geth node.  Save all these flags in a shell script or batch file, as -- by the end of the semester -- the command will be quite long.
 
 
 ### Part 1: Remix
 
-Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix provides easy to read compiler error messages and makes it really easy to test your smart contract as you are developing it.  You can either use the online editor at [remix.ethereum.org](http://remix.ethereum.org) or you can install it locally via the [Remix download page](https://github.com/ethereum/remix-desktop/releases).  It is already installed on the VirtualBox image.  The web interface on [remix.ethereum.org](http://remix.ethereum.org) is designed to look just like the IDE, and you are welcome to use either -- the directions herein apply the same to both.  However, if you do use the web interface, make sure you save your text file back to your computer.
+Remix is the IDE for developing Ethereum smart contracts in Solidity.  Remix provides easy to read compiler error messages and makes it really easy to test your smart contract as you are developing it.  You can either use the online editor at [remix.ethereum.org](http://remix.ethereum.org) or you can install it locally via the [Remix download page](https://github.com/ethereum/remix-desktop/releases).  It is already installed on the VirtualBox image.  The web interface on [remix.ethereum.org](http://remix.ethereum.org) is designed to look just like the IDE, and you are welcome to use either -- the directions herein apply the same to both, as they have the same user interface.  However, if you do use the web interface, make sure you save your text file back to your computer.
 
 1. Load up Remix.  The far left column has a number of icons at the top -- the Remix logo (<img src="img/remixLogo.webp" class='icon'>), a file explorer icon (<img src="img/fileManager.webp" class='icon'>), a search icon (<img src="img/search_icon.webp" class='icon'>), a compilation icon (<img src="img/solidityLogo.webp" class='icon'>), and a deploy & run icon (<img src="img/deployAndRun.webp" class='icon'>).  At various times in this tutorial, you may see a debugging icon (<img src="img/debuggerLogo.webp" class='icon'>) beneath these, but we are not going to focus on the debugger in this assignment.  The desktop version may have an additional icon or two, but we can ignore those.  On the bottom are two more icons -- a plugin manager icon (<img src="img/pluginManager.webp" class='icon'>) and settings icon (<img src="img/settings.webp" class='icon'>).
 2. Click on the file explorer icon (<img src="img/fileManager.webp" class='icon'>), click on the contracts folder (if it exists; if not, pick a directory where you want to store the files), and select 'New File' -- name it 'Poll.sol'.  Copy and paste the [Poll.sol](Poll.sol.html) ([src](Poll.sol)) program there.  Do the same with [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)).  You should now have two Solidity files -- Poll.sol and IPoll.sol.
-3. Next we are going to compile it -- click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>).  You may notice a green check mark on the compilation icon -- it might automatically compile it as you type (this does not seem to be consistent across all platforms).  Click on the compilation icon, and click "Compile Poll.sol" (NOT IPoll.sol).  It should compile without errors.
+    - If you are using the desktop version, you can browse the local file system (select 'localhost' in the Workspaces drop-down box) to find the directory where you are going to keep IPoll.sol and Poll.sol
+3. To compile it, click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>) in the far-left pane.  You may notice a green check mark on the compilation icon -- it might automatically compile it as you type (this does not seem to be consistent across all platforms).  Click on the compilation icon, and click "Compile Poll.sol" (NOT IPoll.sol).  It should compile without errors.
     - Remix does allow for compiler optimizations, but we are not going to explore them in this assignment.  For now, don't select any optimizations (meaning leave it as the default options).
-4. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>).  For the Environment, we will stay with "Javascript VM (London)", which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us.  You can see the accounts in the 'Account' drop-down list.
+4. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>) in the far-left pane.  For the Environment, we will stay with "Remix VM (London)", which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us.  You can see the accounts in the 'Account' drop-down list.
 5. Click the orange "Deploy" button.  It's now running on the (simulated) Ethereum blockchain, deployed from the selected (and also simulated) account shown in the "Account" drop-down list.
 6. Test out the deployment
     - Look under "Deployed Contracts", below the "Deploy" button -- click on the arrow to the left of "Poll at ...".  It will show you various buttons to test out your smart contract.
+        - Blue buttons are `view` or `pure` functions -- they do not require writing a transaction to the blockchain
+        - Orange buttons are functions that require sending a transaction to the blockchain
+        - Red buttons (not present in the current contract) are functions that you send some ether along with the transaction tot he blockchain; we'll see these later in the semester
     - Click on "num_choices".  The console (under the code window; you can make it bigger to see what's going on) will state, "call to Poll.num_choices".  The line below that will have a "Debug" button and a down arrow -- click on that arrow.  In the various items that appear, you will see a "decoded output" field that lists the number of choices for this smart contract.
+        - This output will also appear below the blue "num_choices" button.  However, it only appears below the button for `view` and `pure` functions; if it's a regular transaction, you have to look at the decoded output section described above
     - The "choices" button requires a number -- put any valid number in there (non-negative and less than the number of choices), and click that button.  Again, if you expand the returned result, under "decoded output", you will see the values in the Choice struct that was returned.  Note the number of votes is 0.
 	- Let's vote!  Pick the same option you picked above, enter that value into the box.  Then click on the orange "vote" button.
-	    - Note that this button is orange, whereas the others are blue.  Orange indicates that it has to send a transaction to the blockchain to be mined into a block before it takes effect.  The blue buttons are read-only, and do not require mining a transaction into the blockchain.  Fortunately, this simulated environment will auto-mine that transaction.
-	- View the output.  You'll notice that there is nothing in the "decoded output" field (this method basically had a `void` return type), but there is now a "transaction hash" field.  Because it was a (simulated) transaction, the transaction hash is reported back.
+	    - Note that this button is orange, meaning this requires sending your vote as a transaction to the (simulated) blockchain
+	- View the output.  You'll notice that there is nothing in the "decoded output" field (this had no return value -- it's the equivalent of a `void` return type), but there is now a "transaction hash" field.  
 	- Pull up the data on that choice (enter the same choice number next to "choices", and click that blue "choices" button).  You will notice that the number of votes is now 1.
-	- Try to vote again, for any choice.  Notice that it doesn't work -- the console states that "The transaction has been reverted to the initial state".  This particular smart contract prevents double-voting.  It does this by keeping track of who has voted (in the `voters` mapping on line 19), and then ensuring that the current voter has not already voted (the first line of the `vote()` method via a `require()` call).  If a `require()` call fails, then the state of everything is reverted back to what it was before the transaction occurs (although you still lose your gas fees).
+	- Try to vote again, for any choice.  Notice that it doesn't work -- the console states that "The transaction has been reverted to the initial state".  This particular smart contract prevents double-voting.  It does this by keeping track of who has voted (in the `voted` mapping on line 32), and then ensuring that the current voter has not already voted (the first line of the `vote()` method via a `require()` call).  If a `require()` call fails, then the state of everything is reverted back to what it was before the transaction occurs (although you still lose your gas fees).
 	- Switch accounts (choose a different one in the drop-down list under "Account"), and try to vote -- this time it will work, since that (new) account number has not already voted.
 7. Explore compilation again
     - Click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>).  At the bottom of the left pane click on "Compilation Details".  This is showing all the results of the compilation.
-    - Expand the 'bytecode' button.  There is a lot here, and we can ignore most of it.  Scroll down to the very bottom of what just appeared -- the two fields we care about are the "object" field and the "opcodes" field.
-    - The bytecode -> opcodes field are the Ethereum bytecode that the smart contract was compiled down to.  This is similar in concept to the Bitcoin Script, although it has the ability to perform looks (via `JUMP` commands and similar), and is a lot more complex.
-    - The Bytecode -> object field is the raw hex of the compiled program itself -- the bytecodes were compiled to their hexadecimal equivalents.  This very long string (over 4,000 bytes) is what is actually loaded onto the blockchain.  When we deploy our code to the blockchain, below, you will be able to see that bytecode in the transaction.
+        - Expand the 'bytecode' button.  There is a lot here, and we can ignore most of it.  Scroll down to the very bottom of what just appeared -- the two fields we care about are the "object" field and the "opcodes" field.
+            - The bytecode -> opcodes field are the Ethereum bytecode that the smart contract was compiled down to.  This is similar in concept to the Bitcoin Script, although it has the ability to perform looks (via `JUMP` commands and similar), and is a lot more complex.
+            - The bytecode -> object field is the raw hex of the compiled program itself -- the bytecodes were compiled to their hexadecimal equivalents.  This very long string (over 5,000 bytes) is what is actually loaded onto the blockchain.  When we deploy our code to the blockchain, below, you will be able to see that bytecode in the transaction via the blockchain explorer.
     - Back in the left-hand pane, under the "Compilation Details" button is a link to copy the ABI -- click on the copy icon.  In any editor, paste that into a blank file.  This is the Application Binary Interface -- it specifies how to interact with the smart contract.  Think of it like a C++ header file -- it gives the interface, but not the implementation.  One cannot interact with a smart contract without having the ABI.  As you scroll through the ABI, you will notice that all the fields and method are listed there, along with all the various types.
-        - **THIS IS IMPORTANT!**  In future assignments, when you are going to write your own smart contracts, you will need to submit the ABI for each of them along with the source code.  Without the ABI, we will not be able to interact with your smart contract!
+        - **THIS IS IMPORTANT!**  In future assignments, when you are going to write your own smart contracts, you may have to submit the ABI for each of them along with the source code.  Without the ABI, we will not be able to interact with your smart contract!
 8. Explore Remix on your own.  You are going to be spending a lot of time developing smart contracts in Remix. Spending a bit of time learning how it works, and becoming comfortable with the interface, will save you a lot of time in the future.
 
 
@@ -105,9 +114,9 @@ This task will show you how to develop unit tests for your Solidity application.
 6. Add the following method to the Poll_test class
    ```
 function checkChioceCreation() public {
-    Poll p = new Poll();
-    p.addChoice("test1");
-    Assert.equal(uint(p.num_choices()),uint(7),"Choice not added");
+      Poll p = new Poll();
+      p.addChoice("test1");
+      Assert.equal(uint(p.num_choices()),uint(7),"Choice not added");
 }
 ```
     - That method checks that there are 7 choices, as 6 were created by the constructor, and one more was added in this method; you will have to adjust this value if you changed the number of choices in your constructor
@@ -116,9 +125,62 @@ function checkChioceCreation() public {
 
 You do not need to submit the Poll_test.sol file.  The purpose of this section was to show you how to start writing unit tests.  You will need this when you start developing Solidity applications in the next assignment.
 
+The Poll_test.sol file that was auto-generated from the default Poll.sol file is as follows.  You do not need to read through this code; it's only here as a reference.
+
+```
+// SPDX-License-Identifier: GPL-3.0
+        
+pragma solidity >=0.4.22 <0.9.0;
+
+// This import is automatically injected by Remix
+import "remix_tests.sol"; 
+
+// This import is required to use custom transaction context
+// Although it may fail compilation in 'Solidity Compiler' plugin
+// But it will work fine in 'Solidity Unit Testing' plugin
+import "remix_accounts.sol";
+import "../Dropbox/git/ccc/hws/dappintro/Poll.sol";
+
+// File name has to end with '_test.sol', this file can contain more than one testSuite contracts
+contract testSuite {
+
+    /// 'beforeAll' runs before all other tests
+    /// More special functions are: 'beforeEach', 'beforeAll', 'afterEach' & 'afterAll'
+    function beforeAll() public {
+        // <instantiate contract>
+        Assert.equal(uint(1), uint(1), "1 should be equal to 1");
+    }
+
+    function checkSuccess() public {
+        // Use 'Assert' methods: https://remix-ide.readthedocs.io/en/latest/assert_library.html
+        Assert.ok(2 == 2, 'should be true');
+        Assert.greaterThan(uint(2), uint(1), "2 should be greater than to 1");
+        Assert.lesserThan(uint(2), uint(3), "2 should be lesser than to 3");
+    }
+
+    function checkSuccess2() public pure returns (bool) {
+        // Use the return value (true or false) to test the contract
+        return true;
+    }
+    
+    function checkFailure() public {
+        Assert.notEqual(uint(1), uint(1), "1 should not be equal to 1");
+    }
+
+    /// Custom Transaction Context: https://remix-ide.readthedocs.io/en/latest/unittesting.html#customization
+    /// #sender: account-1
+    /// #value: 100
+    function checkSenderAndValue() public payable {
+        // account index varies 0-9, value is in wei
+        Assert.equal(msg.sender, TestsAccounts.getAccount(1), "Invalid sender");
+        Assert.equal(msg.value, 100, "Invalid value");
+    }
+}
+```
+
 ### Part 3: Deployment
 
-At this point we can edit, compile, and test our program on Remix.  We have also made changes to the `addChoice()` calls in the Poll.sol constructor.  Now we are going to use Remix to deploy to our private Ethereum blockchain.
+At this point we can edit, compile, and test our program on Remix.  We have also made changes to the `addChoice()` calls in the Poll.sol constructor, as well as to the `purpose` string.  Now we are going to use Remix to deploy to our private Ethereum blockchain.
 
 #### Start geth
 
@@ -133,7 +195,7 @@ We need to start geth, as we did in the [connecting to the private Ethereum bloc
 - `--vmdebug`: This records information useful for debugging, which is an option that Remix will allow us to do.
 - `--allow-insecure-unlock`: This will allow us to unlock our `eth.coinbase` account via `personal.unlockAccount()`.  Normally this is disabled if the HTTP-RPC server is enabled.  Our particular configuration does not allow any *other* machines to connect to the HTTP-RPC server, and our (fake) ETH is not worth any money, so it is safe enough for us to use for this course.
 - If you are using the desktop version, you will have an additional flag, such as `
---http.corsdomain="package://6fd22d6fe5549ad4c4d8fd3ca0b7816b.mod"`.  This flag will be presented to you when you switch over to deploy through the local geth node, and this is shown [here](remix-cors.webp).  HOWEVER, the particular package hex string will vary by OS and version.  If you are using the desktop version, you will need to add this one as well.
+--http.corsdomain="package://0123456789abcdef0123456789abcdef.mod"`.  HOWEVER, the particular package hex string will vary by OS and version.  This flag will be presented to you when you switch over to deploy through the local geth node, described below.  If you are using the Desktop version, you will have to restart your geth node with that flag.
 
 Our full geth call will look like the following.  The first line contains exactly the flags from the geth command in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment; recall that you have to change the `/path/to/ethprivate` path to match your directory, the userid `mst3k` to your userid, and the chainID (aka the networkid) to match the one for our private Ethereum blockchain.  The second line contains the five additional flags added in this assignment and described above.
 
@@ -144,7 +206,7 @@ geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --max
 
 As mentioned above, you may have to add another parameter or two if you are using the desktop version.  And you should save this in a shell script or batch file.
 
-Moving forward, this will be the standard command to start a geth node; later assignments will add yet more flags; as before, we recommend that you put that command in a shell script or batch file.  The backslash (`\`) is to handle word wrap on the page -- those two lines work on Linux and Mac OS X, but you may have to put it all on one line and removing the backslash (`\`) in Windows.  This will start the local node.  In particular, you will see a line that says, "HTTP server started", which is what our additional options did.  Note that these particular options will only allow Remix that is running -- either as a stand-alone IDE or through the browswer -- *on the same machine* to connect.  So you can't run geth in VirtualBox (or on Amazon AWS) and Remix on your host machine, for example.
+Moving forward, this will be the standard command to start a geth node; later assignments will add yet more flags.  As before, we recommend that you put that command in a shell script or batch file.  The backslash (`\`) is to handle word wrap on the page -- those two lines work on Linux and Mac OS X, but you may have to put it all on one line and remove the backslash (`\`) in Windows.  Once that command is run to start the local node, you will see a line that says, "HTTP server started", which is what our additional options did.  Note that these particular options will only allow the Remix that we are using -- either as a stand-alone IDE or through the browser -- *on the same machine* to connect.  So you can't run geth in VirtualBox (or on Amazon AWS) and Remix on your host machine, for example.
 
 Now that geth is started, we have to attach to it IN A SEPARATE WINDOW via `geth attach /path/to/ethprivate/geth.ipc` (or, in Windows, either `geth attach ipc:\\\\.\\pipe\\geth.ipc` or `geth attach \\.\pipe\geth.ipc`).  Wait for it to finish sync'ing (check `eth.syncing`).  Then `eth.blockNumber` should match the highest block number on our Ethereum blockchain explorer.
 
@@ -156,32 +218,32 @@ You should have Poll.sol loaded into Remix, and you should have made the modific
 
 Read these instructions through before starting them!
 
-1. Change to the Remix deployment tab.
+1. Change to the Remix deployment tab (<img src="img/deployAndRun.webp" class='icon'>).
     - Under 'Environment' select "External Http Provider".  The pop-up window will tell you the options to run geth with, and you have already done that, above.  Ensure that the "Web3 Provider Endpoint", in the pop-up box, says `http://127.0.0.1:8545`.
-        - If you are using the Remix IDE, the pop-up window in Remix will tell you what you should use as your endpoint value (meaning what value to put after the `--http.corsdomain` flag).  See a screen shot of that value [here](remix-cors.webp).  You should restart the geth node with that flag.
+        - If you are using the Remix IDE, the pop-up window in Remix will tell you what you will ned to use as your endpoint value (meaning what value to put after the `--http.corsdomain` flag).  See a screen shot of that value [here](remix-cors.webp).  You will need to restart the geth node with that flag (and possibly re-attach the geth Javascript terminal).  Save that additional flag in your shell script or batch file that you use to start a geth node.
         - Click OK to close that pop-up window
         - Note to Mac OS X users: if you are doing this assignment on remix.etherem.org in Safari, then this is the part that Safari seems to have issues with.  If it is not working for you, then please switch to a different browser (Firefox or Chrome both seem to work fine).  You can then cut-and-paste your code from Remix in Safari to remix in Firefox / Chrome.
     - Underneath the "Environment" drop-down box, it should now say, "Custom (12345678) network", with the chain number of our private blockchain instead of 12345678.
     - You should see your geth account address(es) populated in the "Account" drop-down box, with your `eth.coinbase` one selected
-    - If there are any entries listed under "Deployed contracts" (in the left-hand pane), you can delete them -- this way we won't mix up any previous deployments with the one we are about to do
+    - If there are any entries listed under "Deployed contracts" (in the left-hand pane), you can delete them -- this way we won't mix up any previous deployments (to the simulated blockchain) with the one we are about to do (to the private course blockchain)
 2. Unlock your account in geth
     - In the geth terminal, run the `personal.unlockAccount()` command.  You can run it as `personal.unlockAccount(eth.coinbase,"password",0)` -- filling in your own password -- to unlock it until the end of the session.  It should report back `true`.
     - Note your balance -- enter `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`
 3. Hit Deploy!
     - This what this party is all about!  Click the orange Deploy button.
     - The Remix console (under the editing box) should say, "creation of Poll pending... view on etherscan"
-    - Note that this submitted it as a transaction, but it is not (yet) in the blockchain
+    - Note that this submitted it as a transaction, but it is not (at that moment) on the blockchain
     - As our blockchain auto-mines all transactions, it should take effect very quickly
 4. See what happened
-    - Look at your new balance via `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`.  You will see that your gas fees were deducted.
+    - Look at your new balance in the geth terminal via `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`.  You will see that your gas fees were deducted.
 		- Look back at the Remix console -- it will say something like, `[block:12345 txIndex:0] from: 0x123...bcdef to: Poll.(constructor) value: 0 wei data: 0x608...57221 logs: 0 hash: 0x123...bcdef`
 			- Note the block number (shown in the previous line as 12345) where the transaction occurred
 		- Click on the arrow to the right of the "Debug" button in the console -- this will list the details of the transaction that was mined into the blockchain
-		- Make a note of the transaction hash, as you will need to submit that value as well
+    		- Make a note of the transaction hash, as you will need to submit that value as well
 		- The *contract address* is listed in the left-hand pane, under the deploy button (in the "Deployed Contracts") section)
 		    - Save the contract address -- there is a copy icon to easily copy it -- as you will need to submit that
 		- You can view the information for that transaction on our blockchain explorer -- the block that contained the transaction that deployed your smart contract, the transaction itself, and the account that is the contract address
-		    - You may have to wait up to a minute for the explorer to refresh
+		    - You may have to wait up to a minute for the explorer to refresh the information from the blockchain
 5. Call some methods on your contract
     - If you expand the specific deployed contract, you can see the various methods that it provides.  Call the blue buttoned methods, which are the ones that are read-only methods (and thus do not require writing a transaction to the blockchain) -- `num_choices()`, `choices()`, `voters()`, and `unnecessaryFunction()`.
         - To see if you have voted, click the copy icon to the right of your account drop-down box to copy your account address, then paste that into the 'voters' box and click 'voters' -- it should show false, but you will have to click on the down arrow to the right of the 'debug' button that appeared to see that return value
@@ -191,30 +253,44 @@ Read these instructions through before starting them!
     		- In the console, click the down-arrow to the right of the 'debug' button that appeared -- it lists the transaction hash.  You can view that on the explorer as well
             - You will need to submit the transaction hash where you voted
     - You can call 'voters' again with your coinbase account; it should return true this time
-6. Don't close down Remix!
-    - You are going to need it open and with the Poll.sol compiled, for task 5, next.
+6. View in the explorer
+    - We are going to see some additional functionality in the blockchain explorer
+    - Search for the particular contract -- enter the contract address for your deployed Poll contract in the search box in the upper-right of any page
+    - In the page for the contract, notice that the explorer is able to identify that this contract implements the IPoll interface (the `interfacesImplemented` entry).  We'll discuss the IERC165 interface later in the course.  It does this by checking the result of calling `supportsInterface()`, which we provided the code for in Poll.sol
+    - Look at the transaction list at the bottom of the contract page.  The lowest one is the deployment of the contract itself (it will have a value in the contract address field).  The other entry is when you voted on it.
+    - Click on the transaction hash value for the deployment transaction (the bottom entry in the transaction table).  This brings up the transaction page; of the fields there, notice that the `input` field lists the size of the contract -- about 5.5 Kb.  If we had optimized it during compilation, it would be about 3 Kb.
+    - Go back to the page for the contract.  Click on the transaction hash for the other transaction (the one where you voted).
+    - Notice that there are two new fields being shown -- `functionCall` and `inputDecode`.  
+        - Because the IPoll interface is known to the explorer, it can determine which function was called, which is displayed in the `functionCall` field
+        - The actual parameters passed in during the call is shown in the `inputDecode` field
+        - If there was a return value, that would be shown in a `returnValue` field, which is not present in this example
+        - These two (or three) fields are only displayed when the transaction is a function call
+7. Don't close down Remix!
+    - You are going to need it open and with the Poll.sol compiled, for task 5, below
 
 
 ### Part 4: Web Interface
 
-We wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The code of the web page uses the web3 Javascript library, which is what allows you to connect to the blockchain from Javascript.  In our case, we use it to connect to a node running geth.  The URL for this web page is on the Collab landing page -- once there, enter your smart contract's contract address (with the leading `0x`) for your deployed smart contract, and it will display the choices.
+We wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The code of the poll viewing web page uses the web3 Javascript library, which is what allows you to connect to the blockchain from Javascript.  In our case, we use it to connect to a node running geth that is connected to our private course blockchain.  The URL for this web page is on the Collab landing page -- once there, enter your smart contract's contract address (with the leading `0x`) for your deployed smart contract, and it will display the choices.
 
-You are not expected to understand any of the code on that web page.  This will be gone over in a future assignment, and you will be writing multiple web pages toward the end of the semester to interact with the blockchain.  But not now.
+You are not expected to understand any of the code on that web page.  This will be gone over in future assignments, and you will be writing multiple web pages toward the end of the semester to interact with the blockchain.  But not now.
 
-On the course blockchain explorer, you can find other contract addresses -- look at the transactions page, and see what has something listed in the 'contract address' column.  You can then enter that address into the web page to see what choices your classmates selected.  Note that you won't know who deployed that particular smart contract.  Also note that this web page will only work with the version of the Poll code used in this assignment.  Specifically, it will only work with a smart contract that has the same ABI that the Poll.sol generates; you can see that ABI in the Javascript source code of the web page.
+On the course blockchain explorer, you can find other contract addresses -- look at the transactions page, and see which ones have a value listed in the 'contract address' column.  You can also view just the contract accounts as well.  You can click on a contract address to see which interfaces it implements -- if it implements the IPoll interface, then you can copy that address and use it in the poll viewer web page.  This allows you to see what choices your classmates selected.  You are welcome to vote on their polls, but that is not necessary (see the next section for how to do this).  Note that you won't know who deployed that particular smart contract.  Also note that this web page will only work with the version of the Poll code used in this assignment.  Specifically, it will only work with a smart contract that has the same ABI that IPoll.sol generates; you can see that ABI in the Javascript source code of the poll viewer web page.
 
-How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  Feel free to look over the Javascript code in that web page -- the only other requirement is that a local geth node has to be running with a few specific flags to enable this web page to connect to it (we have not seen those flags yet).  One can also have a web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that in a future assignment as well; that requires a browser plugin, such as [MetaMask](https://metamask.io/), that allows for posting of transactions from a web page using a specific Ethereum account.
+How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  Feel free to look over the Javascript code in that web page -- the only other requirement is that a local geth node has to be running with a few specific additional flags to enable this web page to connect to it (we have not seen those flags yet).  One can also have a web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that in a future assignment as well; that requires a browser plugin, such as [MetaMask](https://metamask.io/), that allows for posting of transactions to a web page using a specific Ethereum account.
 
 
 ### Part 5: Vote!
 
 I have loaded the Poll smart contract onto our private Ethereum blockchain, and you all must vote!  The only information we will tell you is that the contract address for this is on the Collab landing page, and that it fulfills the [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) interface.  You have to figure out what the options are, and then vote for one.  You will need to submit the transaction hash where you voted.
 
-In Remix, you can call a different contract *with the same codebase*.  In particular, it has to have the same ABI.  For this, you can (and should) use the IPoll.sol file.  On the Collab landing page is the address of a deployed Poll contract -- copy that address.  In Remix, in the Deployment pane, switch to IPoll.  Above the "Deployed contracts" list is a blue "At Address" button -- copy the contract address there, and click that button.  This now gives us a connection to a different Poll contract.  Use this to vote.
+In Remix, you can call a different contract *with the same codebase*.  In particular, it has to have the same ABI.  For this, you can (and should) use the IPoll.sol file.  Specifically, you should NOT use Poll.sol, as you do not know if additional functions (such as `unnecessaryFunction()`) are in the deployed contract; only that it implements the functions in IPoll.sol.  On the Collab landing page is the address of a deployed Poll contract -- copy that address.  
+
+In Remix, in the Deployment pane, switch to IPoll.  Switch to the compilation pane, and click "Compile IPoll.sol".  Then switch to the deployment pane.  At the bottom, and above the "Deployed contracts" list is a blue "At Address" button -- copy the contract address there, and click that button.  This now gives us a connection to a different IPoll implementing contract.  Use this to vote.  You have to vote on the course poll.  You are welcome to vote (or not) on your fellow classmates polls; how to find their contract addresses is described above.
 
 Note that Remix may complain that the address is not [checksummed](../../slides/ethereum.html#/checksum).  This is a warning, not an error, and it should still work fine.  Remix will provide, in the warning, the checksummed address -- you are welcome to use that instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
 
-The assumption is that the account you will vote with is your `eth.coinbase` account.  (It's fine if you want to use a different account, but when you submit your information at the end of this assignment, be sure to submit the account that you used for the deployment and voting.) As your account information will be in the `voters` mapping, we will be able to determine who has voted and who has not.  We won't know who voted for what, though, since that information is not kept by this smart contract.  (Well, mostly.  We could look up who voted for what, since it's on the blockchain, but that's a hassle and we aren't going to do that.)  You get credit for this part as along as you vote on my smart contract; it does not matter what choice you vote for.
+The assumption is that the account you will vote with is your `eth.coinbase` account.  It's fine if you want to use a different account address than you used in the last assignment, but when you submit your information at the end of this assignment, be sure to submit the account that you used for the deployment and voting herein.  As your account information will be in the `voted` mapping, we will be able to determine who has voted and who has not.  You get credit for this part as along as you vote on the course smart contract; it does not matter what choice you vote for.
 
 ### Part 6: Closing down
 
@@ -222,13 +298,13 @@ Please turn off your geth node when you are done with this assignment.  You can 
 
 ### Submission
 
-You will need to fill in the various values from this assignment into the [dappintro.py](dappintro.py.html) ([src](dappintro.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
+You will need to fill in the various values from this assignment into the [dappintro.py](dappintro.py.html) ([src](dappintro.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code (only Poll.sol), are the only files that must be submitted.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
 
-There are *three* forms of submission for this assignment; you must do all three.
+There are *three* forms of submission for this assignment; you must do all three.  Other than the Gradescope submission, they are all listed in the `sanity_checks` dictionary.
 
-Submission 1: You must deploy the Poll smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract address and transaction hash of this deployment are entered into the `dappintro.py` file that you submit.
+Submission 1: You must deploy your Poll smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract address and transaction hash of this deployment are entered into the `dappintro.py` file that you submit.
 
-Submission 2: You must vote on both your Poll contract *and also* on the course-wide Poll contract.
+Submission 2: You must vote on both your Poll contract *and also* on the course-wide Poll contract.  The transaction hashes for these two transactions are entered into the `dappintro.py` file.
 
-Submission 3: You should submit your `Poll.sol` file and your completed `dappintro.py` file, and ONLY those two files, to Gradescope (don't submit `IPoll.sol`).  All your Solidity code should be in the first file, and you should specifically import the `IPoll` interface.  Those interface file will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dappintro.py, etc.).
+Submission 3: You should submit your `Poll.sol` file and your completed `dappintro.py` file, and ONLY those two files, to Gradescope (don't submit `IPoll.sol`).  All your Solidity code should be in the first file, and you should specifically import the `IPoll.sol` interface.  Those interface file will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dappintro.py, etc.).

@@ -16,7 +16,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"># verification routines will not work properly.</font></i>
 
 <i><font color="#9A1900"># You are welcome to have additional variables or fields in this file; you</font></i>
-<i><font color="#9A1900"># just cant remove variables or fields.</font></i>
+<i><font color="#9A1900"># just can't remove variables or fields.</font></i>
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
@@ -38,10 +38,10 @@ eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
 contracts <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># Your deployed Polls contract.  All of the action below on your Polls</font></i>
-	<i><font color="#9A1900"># contract is assumed to be from this one. The address does not need to</font></i>
+	<i><font color="#9A1900"># contract is assumed to be with this one. The address does not need to</font></i>
 	<i><font color="#9A1900"># be in checksummed form.  It must have been deployed by the eth_coinbase</font></i>
 	<i><font color="#9A1900"># address, above.</font></i>
-	<font color="#FF0000">'polls'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+	<font color="#FF0000">'poll'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -51,16 +51,18 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># This is the transaction hash where you voted on your own deployed</font></i>
-	<i><font color="#9A1900"># Polls contract.</font></i>
+	<i><font color="#9A1900"># Polls contract in part 3 (deployment) of the assignment.</font></i>
 	<font color="#FF0000">'txn_hash_vote_yours'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the transaction hash where you voted on the course Polls</font></i>
-	<i><font color="#9A1900"># contract.</font></i>
+	<i><font color="#9A1900"># contract in part 5 (vote) of the assignment.</font></i>
 	<font color="#FF0000">'txn_hash_vote_course'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Are you using the Desktop version of Remix?  If so, then True.  If you</font></i>
 	<i><font color="#9A1900"># are using the web version at https://remix.ethereum.org, then False.</font></i>
-	<i><font color="#9A1900"># This is just so we can see how many students are using each one.</font></i>
+	<i><font color="#9A1900"># This is just so we can see how many students are using each one.  If</font></i>
+	<i><font color="#9A1900"># you used both, choose this optoin based on which one you expect to use</font></i>
+	<i><font color="#9A1900"># more often in the future.</font></i>
 	<font color="#FF0000">'using_desktop_remix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
@@ -68,9 +70,9 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 
 <i><font color="#9A1900"># These are various sanity checks, and are meant to help you ensure that you</font></i>
 <i><font color="#9A1900"># submitted everything that you are supposed to submit.  Other than</font></i>
-<i><font color="#9A1900"># submitting the necessary files to Gradescope (which checks for those</font></i>
-<i><font color="#9A1900"># files), all other submission requirements are listed herein.  These values</font></i>
-<i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
+<i><font color="#9A1900"># submitting the necessary files to Gradescope, all other submission</font></i>
+<i><font color="#9A1900"># requirements are listed herein.  These values need to be changed to True</font></i>
+<i><font color="#9A1900"># (instead of None).</font></i>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># Did you change the various choices in the `addChoice()` calls in the</font></i>
