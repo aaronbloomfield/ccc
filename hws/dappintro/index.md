@@ -200,7 +200,7 @@ We need to start geth, as we did in the [connecting to the private Ethereum bloc
 Our full geth call will look like the following.  The first line contains exactly the flags from the geth command in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment; recall that you have to change the `/path/to/ethprivate` path to match your directory, the userid `mst3k` to your userid, and the chainID (aka the networkid) to match the one for our private Ethereum blockchain.  The second line contains the five additional flags added in this assignment and described above.
 
 ```
-geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncnode full --gcmode "archive" \
+geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncmode full --gcmode "archive" \
      --vmdebug --http --http.corsdomain="https://remix.ethereum.org" --http.api web3,eth,debug,personal,net --allow-insecure-unlock
 ```
 
