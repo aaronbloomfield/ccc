@@ -45,6 +45,6 @@ interface IPoll {
 
 	// the implementation for this is provdied in Poll.sol, and it's usage is
 	// explained later in the course
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+	function supportsInterface(bytes4 interfaceId) external pure returns (bool);
 
 }
