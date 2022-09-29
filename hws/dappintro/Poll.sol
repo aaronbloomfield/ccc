@@ -103,7 +103,7 @@ contract Poll is IPoll {
 	// about Tokens.  For now, keep this function exactly as-is.  As it is
 	// not defined in IPoll.sol, we do not need the 'override'
 	// keyword here.
-	function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
+	function supportsInterface(bytes4 interfaceId) external override pure returns (bool) {
 		return interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7;
 	}
 

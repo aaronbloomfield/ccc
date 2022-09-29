@@ -43,4 +43,8 @@ interface IPoll {
 	// an event when a choice is added
 	event choiceAddedEvent (uint indexed _id);
 
+	// the implementation for this is provdied in Poll.sol, and it's usage is
+	// explained later in the course
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+
 }

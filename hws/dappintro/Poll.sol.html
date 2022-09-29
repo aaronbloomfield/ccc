@@ -114,7 +114,7 @@ contract Poll <font color="#008080">is</font> IPoll <font color="#FF0000">{</fon
 	<i><font color="#9A1900">// about Tokens.  For now, keep this function exactly as-is.  As it is</font></i>
 	<i><font color="#9A1900">// not defined in IPoll.sol, we do not need the 'override'</font></i>
 	<i><font color="#9A1900">// keyword here.</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+	<font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external override <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
 		<b><font color="#0000FF">return</font></b> interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IPoll<font color="#990000">).</font>interfaceId <font color="#990000">||</font> interfaceId <font color="#990000">==</font> <font color="#993399">0x01ffc9a7</font><font color="#990000">;</font>
 	<font color="#FF0000">}</font>
 
