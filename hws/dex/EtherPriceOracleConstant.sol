@@ -9,6 +9,8 @@ import "./IEtherPriceOracle.sol";
 
 contract EtherPricerConstant is IEtherPriceOracle {
 
+    string public constant purpose = "A constant EtherPrice oracle that always returns $100.00";
+
     function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {
         return
             interfaceId == type(IEtherPriceOracle).interfaceId ||

@@ -9,6 +9,8 @@ import "./IERC165.sol";
 
 interface IEtherPriceOracle is IERC165 {
 
+	function purpose() external view returns (string memory);
+
 	function getEtherPriceInCents() external view returns (uint);
 
 }

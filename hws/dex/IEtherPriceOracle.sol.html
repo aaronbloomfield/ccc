@@ -20,6 +20,8 @@ import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font
 
 interface IEtherPriceOracle <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
 
+    <font color="#008080">function</font> <b><font color="#000000">purpose</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+
     <font color="#008080">function</font> <b><font color="#000000">getEtherPriceInCents</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
 <font color="#FF0000">}</font>
