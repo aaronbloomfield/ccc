@@ -239,7 +239,6 @@ Read these instructions through before starting them!
 		- Look back at the Remix console -- it will say something like, `[block:12345 txIndex:0] from: 0x123...bcdef to: Poll.(constructor) value: 0 wei data: 0x608...57221 logs: 0 hash: 0x123...bcdef`
 			- Note the block number (shown in the previous line as 12345) where the transaction occurred
 		- Click on the arrow to the right of the "Debug" button in the console -- this will list the details of the transaction that was mined into the blockchain
-    		- Make a note of the transaction hash, as you will need to submit that value as well
 		- The *contract address* is listed in the left-hand pane, under the deploy button (in the "Deployed Contracts") section)
 		    - Save the contract address -- there is a copy icon to easily copy it -- as you will need to submit that
 		- You can view the information for that transaction on our blockchain explorer -- the block that contained the transaction that deployed your smart contract, the transaction itself, and the account that is the contract address
