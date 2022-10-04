@@ -9,8 +9,17 @@ import "./IERC165.sol";
 
 interface IEtherPriceOracle is IERC165 {
 
-	function purpose() external view returns (string memory);
+	// The name (really a description) of the implementing contract
+	function name() external view returns (string memory);
 
-	function getEtherPriceInCents() external view returns (uint);
+	// The currency symbol this is being reported in, such as '$'
+	function symbol() external view returns (string memory);
 
+	// How many decimals this is being reported in; for cents, it's 2
+	function decimals() external view returns (uint);
+
+	// The current price of the (fake) ether
+	function price() external view returns (uint);
+
+	// also supportsInterface() from IERC165.sol
 }

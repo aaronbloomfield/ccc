@@ -20,10 +20,19 @@ import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font
 
 interface IEtherPriceOracle <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
 
-    <font color="#008080">function</font> <b><font color="#000000">purpose</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+    <i><font color="#9A1900">// The name (really a description) of the implementing contract</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
-    <font color="#008080">function</font> <b><font color="#000000">getEtherPriceInCents</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <i><font color="#9A1900">// The currency symbol this is being reported in, such as '$'</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
+    <i><font color="#9A1900">// How many decimals this is being reported in; for cents, it's 2</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">decimals</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// The current price of the (fake) ether</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">price</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// also supportsInterface() from IERC165.sol</font></i>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>
