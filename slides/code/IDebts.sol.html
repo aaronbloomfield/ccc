@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>IDebts.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+
+<i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,</font></i>
+<i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">16</font><font color="#990000">;</font>
+
+<font color="#008080">interface</font> IDebts <font color="#FF0000">{</font>
+
+    <i><font color="#9A1900">// holds in the necessary information about each alias / entry</font></i>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">Entry</font> <font color="#FF0000">{</font>
+        <font color="#008080">uint</font> id<font color="#990000">;</font>            <i><font color="#9A1900">// the index in the 'entries' mapping</font></i>
+        <font color="#008080">string</font> thealias<font color="#990000">;</font>    <i><font color="#9A1900">// their string alias</font></i>
+        <font color="#008080">string</font> name<font color="#990000">;</font>        <i><font color="#9A1900">// their string name</font></i>
+        <font color="#008080">address</font> addr<font color="#990000">;</font>       <i><font color="#9A1900">// their account address</font></i>
+        <font color="#009900">int</font> balance<font color="#990000">;</font>        <i><font color="#9A1900">// how much they owe (if negative) or are owed (if positive)</font></i>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">// allow notification when a debt is entered</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">();</font>
+
+    <i><font color="#9A1900">// allow notification when an alias is entered</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">();</font>
+
+
+    <i><font color="#9A1900">// holds all the alias entry structs from above; as we are going to call</font></i>
+    <i><font color="#9A1900">// this from Javascript, which will not know about the Entry struct type,</font></i>
+    <i><font color="#9A1900">// we have to return a tuple of all the Entry fields (which is what the</font></i>
+    <i><font color="#9A1900">// automatic getter function will do); create it via:</font></i>
+    <i><font color="#9A1900">// mapping (uint =&gt; Entry) public entries;</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">entries</font></b><font color="#990000">(</font>uint<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> address<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">// holds true if that account address has an entry in 'entries'; create it</font></i>
+    <i><font color="#9A1900">// via:</font></i>
+    <i><font color="#9A1900">// mapping (address =&gt; bool) public addressHasEntry;</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">addressHasEntry</font></b><font color="#990000">(</font>address<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">// holds true if that alias has an entry in 'entries'; create it via:</font></i>
+    <i><font color="#9A1900">// mapping (string =&gt; bool) public aliasHasEntry;</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">aliasHasEntry</font></b><font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
+    <i><font color="#9A1900">// given an alias, this will give the index into the 'entries' array for</font></i>
+    <i><font color="#9A1900">// that alias; create it via:</font></i>
+    <i><font color="#9A1900">// mapping (string =&gt; uint) public findByAlias;</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">findByAlias</font></b><font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// given an account address, this will give the index into the 'entries'</font></i>
+    <i><font color="#9A1900">// array for that account address; create it via:</font></i>
+    <i><font color="#9A1900">// mapping (address =&gt; uint) public findByAddress;</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">findByAddress</font></b><font color="#990000">(</font>address<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// how many alias exist in the 'entries' mapping; create it via:</font></i>
+    <i><font color="#9A1900">// uint public num_entries;</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">num_entries</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// add an alias and associated name to the mapping; the address is assumed</font></i>
+    <i><font color="#9A1900">// to be msg.sender</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// enter a debt, in either direction, between the current account and the</font></i>
+    <i><font color="#9A1900">// provided alias</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">payToAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#009900">int</font> amount<font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// the implementation for this is provdied in Debts.sol, and it's usage is</font></i>
+    <i><font color="#9A1900">// explained later in the course</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

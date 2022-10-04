@@ -5,12 +5,7 @@
 
 pragma solidity ^0.8.16;
 
-import "./IDebts.sol";
-
-contract Debts is IDebts {
-
-	/*
-	// Imported from the interface:
+contract Debts {
 
 	// holds in the necessary information about each alias / entry
 	struct Entry {
@@ -26,33 +21,32 @@ contract Debts is IDebts {
 
 	// allow notification when an alias is entered
 	event aliasAddedEvent();
-	*/
+
 
 	// holds all the alias entry structs from above
-	mapping (uint => Entry) public override entries;
+	mapping (uint => Entry) public entries;
 
 	// holds true if that account address has an entry in 'entries'
-	mapping (address => bool) public override addressHasEntry;
+	mapping (address => bool) public addressHasEntry;
 
 	// holds true if that alias has an entry in 'entries'
-	mapping (string => bool) public override aliasHasEntry;
+	mapping (string => bool) public aliasHasEntry;
 
 	// given an alias, this will give the index into the 'entries' array for that alias
-	mapping (string => uint) public override findByAlias;
+	mapping (string => uint) public findByAlias;
 
 	// given an account address, this will give the index into the 'entries' array for that account address
-	mapping (address => uint) public override findByAddress;
+	mapping (address => uint) public findByAddress;
 
 	// how many alias exist in the 'entries' mapping
-	uint public override num_entries;
+	uint public num_entries;
 
 
-	// we don't have to do much here
 	constructor() {
 	}
 
 
-	function addAlias (string memory _alias, string memory _name) override public {
+	function addAlias (string memory _alias, string memory _name) public {
 		// ensure that the alias name does not already exist
 		require(!aliasHasEntry[_alias], "string entry name already exists");
 		// ensure that the sender doesn't already have an alias
@@ -74,9 +68,9 @@ contract Debts is IDebts {
 	}
 
 
-	function payToAlias (string memory _alias, int amount) override public {
+	function payToAlias (string memory _alias, int amount) public {
 		// limit amounts from -100 to +100
-		require (amount >= -100 && amount <= 100, "amounts must be between -100 and 100");
+		require (amount >= -100 && amount <= 100, "Amounts must be between -100 and 100");
 		// amount cannot be zero
 		require (amount != 0, "amount cannot be zero");
 		// ensure that the caller has an alias
@@ -94,11 +88,6 @@ contract Debts is IDebts {
 		entries[to].balance -= amount;
 		// emit the event
 		emit paidEvent();
-	}
-
-
-	function supportsInterface(bytes4 interfaceId) external override pure returns (bool) {
-		return interfaceId == type(IDebts).interfaceId || interfaceId == 0x01ffc9a7;
 	}
 
 }

@@ -192,7 +192,7 @@ if (x.balance < 10 && myAddress.balance >= 10) {...}
   - Indexing with `[]`
 - Operators:
   - Comparisons, bit operators, shift operators
-  - Treats the byte array like a similiarly sized `uint` when performing the operation
+  - Treats the byte array like a similarly sized `uint` when performing the operation
 
 
 
@@ -1259,6 +1259,21 @@ contract Poll is IPoll {
 
 
 
+## Interface
+- Given the code in Debts.sol, let's extract out an interface
+- The [IDebts.sol](code/IDebts.sol.html) interface will have:
+  - The Entry struct
+  - The events
+  - The function prototypes (and public getter methods), all with `external` visibility
+  - The `entries()` function has a tuple return type, not an `Entry memory` return type
+- The [Debts.sol](code/Debts.sol.html) changes:
+  - Import the IDebts interface
+  - Remove (comment out) the Entry struct and the events
+  - All methods change to `override`
+  - Add a `supportsInterface()` method
+
+
+
 ## Deployment
 - A request: please do not go ahead of me in the following deployment steps
 - This has already been deployed on our private Ethereum blockchain
@@ -1274,10 +1289,11 @@ contract Poll is IPoll {
 ## Interacting via geth
 - You should all start up your geth node via:
   ```
-geth --datadir /path/to/ethprivate \
+geth --identity "mst3k" --datadir /path/to/ethprivate \
      --networkid 12345678 --maxpeers 1
 ```
-  - Change `/path/to/ethprivate` and the numerical network ID, of course
+  - Change `/path/to/ethprivate`, your userid, and the numerical network ID, of course
+  - You are welcome to use all the geth flags from the last assignment
 - Once done, you should start a geth terminal in a *new* window/tab:
 ```
 geth attach /path/to/ethprivate/geth.ipc
@@ -1285,10 +1301,18 @@ geth attach /path/to/ethprivate/geth.ipc
 
 
 
+## Your eth.coinbase
+- If your eth.coinbase is *different* than what you submitted in either of the last two assignments
+  - Or you think it might be different, but aren't sure
+- Please fill out the eth.coinbase form linked to from the Collab landing page
+  - This way I can give you credit for participating
+
+
+
 ## Relevant information
 - On the Collab landing page, at the bottom, are a few pieces of information we will need:
   - The smart contract address
-  - The ABI for this smart contract -- you will need to copy that shortly
+  - The ABI for the IDebts.sol interface -- you will need to copy that shortly
   - A link to this part of the slide set so you can copy-and-paste some of the code
 
 
@@ -1336,7 +1360,7 @@ contract.entries.call(0)
   ```
 contract.entries.call(0)[2]
 ```
-- To call a method:
+- To call a (`view` or `pure`) method:
   ```
 contract.thisMethodDoesNotExist.call()
 ```
@@ -1357,7 +1381,6 @@ personal.unlockAccount(eth.coinbase,"password",0)
 - You have to add yourself as an alias
 - Request: please use your UVA userid as the alias itself
   - If you don't want to use your own, make up a believable fake one
-- Remember: please don't start the miner!  I'm doing that for you.
 
 
 
@@ -1377,7 +1400,7 @@ contract.addAlias.sendTransaction("mst3k",
 
 ## View the list of debts
 - We have a web page that allows you to view all the entered aliases and who owes what
-- The URL is...
+- The URL is on the Collab landing page
 
 
 
@@ -1400,9 +1423,10 @@ contract.payToAlias.sendTransaction("mst3k",17,
 ## The result...
 ... how much do I owe???
 
-Also, we have the source code available
+Also, we have the source code available:
 
-The code is in [slides/code/Debt.sol](code/Debts.sol.html) ([src](code/Debts.sol))
+- The original code we developed is in [slides/code/Debts-no-interface.sol](code/Debts-no-interface.sol.html) ([src](code/Debts-no-interface.sol))
+- The updated code (with the interface) is in [slides/code/IDebts.sol](code/IDebts.sol.html) ([src](code/IDebts.sol)) and [slides/code/Debts.sol](code/Debts.sol.html) ([src](code/Debts.sol))
 
 </textarea></section>
 
