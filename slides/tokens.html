@@ -287,9 +287,10 @@ contract EZTokens {
   - But the function is listed in the contract as 0xa9059cbb
   - This 4-byte value is the *function selector*
   - The ABI and the various libraries we use allow the calling routines to call the function selector given the function name and parameters
-  - To determine the function selector:
+  - To determine the function selector, take the hash of the canonical function prototype
+  - Example:
     - Enter "transfer(address,uint256)" into an [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html)
-    - Take the first 4 byte (8 digits)
+    - Take the first 4 byte (8 digits): 0xa9059cbb
 - [Reference](https://solidity-by-example.org/function-selector/)
     </textarea></section>
 
@@ -302,6 +303,7 @@ contract EZTokens {
   ```
   - The first one is only to get a function selector of the current contract
 - An *interface selector* is just the XOR of all the contained function selectors
+  - All the outward-facing ones: public and external only
 - You can get the interface selector via:
   ```
   type(myInterface).interfaceId
@@ -315,7 +317,7 @@ contract EZTokens {
   - `type(T).max`: the maximum value
   - `type(C).name`: the name of the contract
   - `type(I).interfaceId`
-    - A `bytes4` value that is the xor of the function selectors of the (non-inherited) functions in the interface
+    - A `bytes4` value that is the xor of the function selectors of the (non-inherited and outward-facing) functions in the interface
   - (two others we won't see here)
 - Reference is from [this page](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#meta-type) of the [Solidity programming reference](https://docs.soliditylang.org/en/latest/)
 
@@ -340,6 +342,8 @@ contract EZTokens {
          interfaceId == type(IERC165).interfaceId;
 }
 </code></pre>
+
+- Some implementations use `view`, some use `pure`
 
 
 
