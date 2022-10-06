@@ -302,7 +302,7 @@ You will need to fill in the various values from this assignment into the [dappi
 
 There are *three* forms of submission for this assignment; you must do all three.  Other than the Gradescope submission, they are all listed in the `sanity_checks` dictionary.
 
-Submission 1: You must deploy your Poll smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract address and transaction hash of this deployment are entered into the `dappintro.py` file that you submit.
+Submission 1: You must deploy your Poll smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract address of this deployment are entered into the `dappintro.py` file that you submit.
 
 Submission 2: You must vote on both your Poll contract *and also* on the course-wide Poll contract.  The transaction hashes for these two transactions are entered into the `dappintro.py` file.
 

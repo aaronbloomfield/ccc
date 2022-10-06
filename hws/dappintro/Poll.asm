@@ -5,7 +5,7 @@ EVM assembly:
 
 ======= Poll.sol:Poll =======
 EVM assembly:
-    /* "Poll.sol":270:4211  contract Poll is IPoll {... */
+    /* "Poll.sol":270:4220  contract Poll is IPoll {... */
   mstore(0x40, 0x80)
     /* "Poll.sol":2499:2649  constructor() {... */
   callvalue
@@ -168,7 +168,7 @@ tag_9:
   shr
   jump	// in
 tag_10:
-    /* "Poll.sol":270:4211  contract Poll is IPoll {... */
+    /* "Poll.sol":270:4220  contract Poll is IPoll {... */
   jump(tag_11)
     /* "Poll.sol":2814:2987  function addChoice (string memory _name) public override {... */
 tag_5:
@@ -1219,7 +1219,7 @@ tag_103:
   swap1
   pop
   jump	// out
-    /* "Poll.sol":270:4211  contract Poll is IPoll {... */
+    /* "Poll.sol":270:4220  contract Poll is IPoll {... */
 tag_11:
   dataSize(sub_0)
   dup1
@@ -1231,7 +1231,7 @@ tag_11:
 stop
 
 sub_0: assembly {
-        /* "Poll.sol":270:4211  contract Poll is IPoll {... */
+        /* "Poll.sol":270:4220  contract Poll is IPoll {... */
       mstore(0x40, 0x80)
       callvalue
       dup1
@@ -1316,7 +1316,7 @@ sub_0: assembly {
       jump	// in
     tag_12:
       stop
-        /* "Poll.sol":4050:4208  function supportsInterface(bytes4 interfaceId) external pure returns (bool) {... */
+        /* "Poll.sol":4050:4217  function supportsInterface(bytes4 interfaceId) external override pure returns (bool) {... */
     tag_4:
       tag_16
       0x04
@@ -1685,43 +1685,43 @@ sub_0: assembly {
         /* "Poll.sol":3217:3466  function vote (uint _id) public override {... */
       pop
       jump	// out
-        /* "Poll.sol":4050:4208  function supportsInterface(bytes4 interfaceId) external pure returns (bool) {... */
+        /* "Poll.sol":4050:4217  function supportsInterface(bytes4 interfaceId) external override pure returns (bool) {... */
     tag_19:
-        /* "Poll.sol":4120:4124  bool */
+        /* "Poll.sol":4129:4133  bool */
       0x00
-        /* "Poll.sol":4152:4175  type(IPoll).interfaceId */
-      0x53d840e800000000000000000000000000000000000000000000000000000000
-        /* "Poll.sol":4137:4175  interfaceId == type(IPoll).interfaceId */
+        /* "Poll.sol":4161:4184  type(IPoll).interfaceId */
+      0x5227894f00000000000000000000000000000000000000000000000000000000
+        /* "Poll.sol":4146:4184  interfaceId == type(IPoll).interfaceId */
       not(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
       and
-        /* "Poll.sol":4137:4148  interfaceId */
+        /* "Poll.sol":4146:4157  interfaceId */
       dup3
-        /* "Poll.sol":4137:4175  interfaceId == type(IPoll).interfaceId */
+        /* "Poll.sol":4146:4184  interfaceId == type(IPoll).interfaceId */
       not(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
       and
       eq
-        /* "Poll.sol":4137:4204  interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7 */
+        /* "Poll.sol":4146:4213  interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7 */
       dup1
       tag_58
       jumpi
       pop
-        /* "Poll.sol":4194:4204  0x01ffc9a7 */
+        /* "Poll.sol":4203:4213  0x01ffc9a7 */
       0x01ffc9a7
-        /* "Poll.sol":4179:4204  interfaceId == 0x01ffc9a7 */
+        /* "Poll.sol":4188:4213  interfaceId == 0x01ffc9a7 */
       0xe0
       shl
-        /* "Poll.sol":4179:4190  interfaceId */
+        /* "Poll.sol":4188:4199  interfaceId */
       dup3
-        /* "Poll.sol":4179:4204  interfaceId == 0x01ffc9a7 */
+        /* "Poll.sol":4188:4213  interfaceId == 0x01ffc9a7 */
       not(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
       and
       eq
-        /* "Poll.sol":4137:4204  interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7 */
+        /* "Poll.sol":4146:4213  interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7 */
     tag_58:
-        /* "Poll.sol":4130:4204  return interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7 */
+        /* "Poll.sol":4139:4213  return interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7 */
       swap1
       pop
-        /* "Poll.sol":4050:4208  function supportsInterface(bytes4 interfaceId) external pure returns (bool) {... */
+        /* "Poll.sol":4050:4217  function supportsInterface(bytes4 interfaceId) external override pure returns (bool) {... */
       swap2
       swap1
       pop
@@ -4708,6 +4708,6 @@ sub_0: assembly {
       pop
       jump	// out
 
-    auxdata: 0xa264697066735822122017b1f2f741bc7e7e6f16c393d51d24f92cc78d8e6258a85edc5e0d2626f1891e64736f6c63430008100033
+    auxdata: 0xa26469706673582212204f7cc8e1851eeb49e7bf93dd06ec6dc4cfa7e72317b92ec407f1d2fc00e98ab564736f6c63430008100033
 }
 
