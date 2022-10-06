@@ -46,6 +46,11 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// The total number of proposals ever created</font></i>
     <font color="#008080">function</font> <b><font color="#000000">numberOfProposals</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
+    <i><font color="#9A1900">// A string that states how one joins the DAO -- perhaps contacting the</font></i>
+    <i><font color="#9A1900">// deployer, perhaps some other secret means.  Make this something</font></i>
+    <i><font color="#9A1900">// creative!</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">howToJoin</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+
     <i><font color="#9A1900">// This is the amount of ether that has been reserved for proposals.  This</font></i>
     <i><font color="#9A1900">// is increased by the proposal amount when a new proposal is created,</font></i>
     <i><font color="#9A1900">// thus "reserving" those ether from being spent on another proposal</font></i>

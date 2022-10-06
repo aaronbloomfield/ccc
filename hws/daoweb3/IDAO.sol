@@ -35,6 +35,11 @@ interface IDAO {
     // The total number of proposals ever created
     function numberOfProposals() external returns (uint);
 
+    // A string that states how one joins the DAO -- perhaps contacting the
+    // deployer, perhaps some other secret means.  Make this something
+    // creative!
+    function howToJoin() external returns (string memory);
+
     // This is the amount of ether that has been reserved for proposals.  This
     // is increased by the proposal amount when a new proposal is created,
     // thus "reserving" those ether from being spent on another proposal

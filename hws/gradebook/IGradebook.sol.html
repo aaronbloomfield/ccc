@@ -55,10 +55,11 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">instructor</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// The following four functions are ones you must implement</font></i>
+    <i><font color="#9A1900">// The following five functions are ones you must implement</font></i>
 
     <i><font color="#9A1900">// Designates the passed address as a teaching assistant; re-designating</font></i>
-    <i><font color="#9A1900">// an address a TA does not do anything special (no revert).</font></i>
+    <i><font color="#9A1900">// an address a TA does not do anything special (no revert).  Only the</font></i>
+    <i><font color="#9A1900">// instructor OR other TAs can designated TAs.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">designateTA</font></b><font color="#990000">(</font><font color="#008080">address</font> ta<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// Adds an assignment of the given name with the given maximum score.  It</font></i>
@@ -82,6 +83,12 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// the value is truncated, not rounded; so if the average were 16.67%, it</font></i>
     <i><font color="#9A1900">// would return 1666.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">getAverage</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> student<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// This function is how we are going to test your program -- we are going</font></i>
+    <i><font color="#9A1900">// to request TA access.  For this assignment, it will automatically make</font></i>
+    <i><font color="#9A1900">// msg.sender a TA.  In reality, this would revert(), as only the</font></i>
+    <i><font color="#9A1900">// instructor (and other TAs) can make new TAs.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">requestTAAccess</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// The implementation for the following is provided in the HW description</font></i>

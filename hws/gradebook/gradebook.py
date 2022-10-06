@@ -62,9 +62,14 @@ sanity_checks = {
 	# Did you properly deploy your gradebook contract to the blockchain?
 	'deployed_gradebook': False,
 
-	# Did you designate the instructor account as a TA for your gradebook?  If
-	# not, we will not be able to grade your assignment.
-	'designated_us_as_ta': False,
+	# Can we allow ourselves to be a TA via the `requestTAAccess()` function?
+	# If not, we will be unable to grade any of the assignment, and you'll
+	# receive a 0.
+	'requestTAAccess_works': False,
+
+	# Did you make NO OTHER CALLS to your deployed Gradebook contract (the one
+	# whose address is above)?
+	'made_no_other_calls': False,
 
 }
 

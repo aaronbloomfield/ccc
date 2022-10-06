@@ -73,9 +73,14 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Did you properly deploy your gradebook contract to the blockchain?</font></i>
 	<font color="#FF0000">'deployed_gradebook'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Did you designate the instructor account as a TA for your gradebook?  If</font></i>
-	<i><font color="#9A1900"># not, we will not be able to grade your assignment.</font></i>
-	<font color="#FF0000">'designated_us_as_ta'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<i><font color="#9A1900"># Can we allow ourselves to be a TA via the `requestTAAccess()` function?</font></i>
+	<i><font color="#9A1900"># If not, we will be unable to grade any of the assignment, and you'll</font></i>
+	<i><font color="#9A1900"># receive a 0.</font></i>
+	<font color="#FF0000">'requestTAAccess_works'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you make NO OTHER CALLS to your deployed Gradebook contract (the one</font></i>
+	<i><font color="#9A1900"># whose address is above)?</font></i>
+	<font color="#FF0000">'made_no_other_calls'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 

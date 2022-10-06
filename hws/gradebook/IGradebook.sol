@@ -44,10 +44,11 @@ interface IGradebook {
     function instructor() external view returns (address);
 
     //------------------------------------------------------------
-    // The following four functions are ones you must implement
+    // The following five functions are ones you must implement
 
     // Designates the passed address as a teaching assistant; re-designating
-    // an address a TA does not do anything special (no revert).
+    // an address a TA does not do anything special (no revert).  Only the
+    // instructor OR other TAs can designated TAs.
     function designateTA(address ta) external;
 
     // Adds an assignment of the given name with the given maximum score.  It
@@ -71,6 +72,12 @@ interface IGradebook {
     // the value is truncated, not rounded; so if the average were 16.67%, it
     // would return 1666.
     function getAverage(string memory student) external view returns (uint);
+
+    // This function is how we are going to test your program -- we are going
+    // to request TA access.  For this assignment, it will automatically make
+    // msg.sender a TA.  In reality, this would revert(), as only the
+    // instructor (and other TAs) can make new TAs.
+    function requestTAAccess() external;
 
     //------------------------------------------------------------
     // The implementation for the following is provided in the HW description
