@@ -110,7 +110,7 @@ This task will show you how to develop unit tests for your Solidity application.
 3. The plugin will automatically create a sample unit test class for you -- to do this, click on "Generate".  You will see a Poll_test.sol file created.
     - Remix has a bizarre directory choice for where to put this file -- on Linux systems, it goes in `~/tests/`.  You will need to find where it is on your OS via a file search.
 4. Click on the blue "Run" button -- this will run the unit tests.  Some will pass and some will fail, which is expected at this point.  Note that, for unit tests, you do not have to re-compile it each time -- the Run button will do that, if necessary, for you.
-5. Let's make the existing tests pass.  In the `checkFailure()` function, change `Assert.notEquals()` to `Assert.equals()`, and re-run the tests.  They should all pass now.
+5. Let's make the existing tests pass.  In the `checkFailure()` function, change `Assert.notEqual()` to `Assert.equal()`, and re-run the tests.  They should all pass now.
 6. Add the following method to the Poll_test class
    ```
 function checkChioceCreation() public {
@@ -244,14 +244,14 @@ Read these instructions through before starting them!
 		- You can view the information for that transaction on our blockchain explorer -- the block that contained the transaction that deployed your smart contract, the transaction itself, and the account that is the contract address
 		    - You may have to wait up to a minute for the explorer to refresh the information from the blockchain
 5. Call some methods on your contract
-    - If you expand the specific deployed contract, you can see the various methods that it provides.  Call the blue buttoned methods, which are the ones that are read-only methods (and thus do not require writing a transaction to the blockchain) -- `num_choices()`, `choices()`, `voters()`, and `unnecessaryFunction()`.
-        - To see if you have voted, click the copy icon to the right of your account drop-down box to copy your account address, then paste that into the 'voters' box and click 'voters' -- it should show false, but you will have to click on the down arrow to the right of the 'debug' button that appeared to see that return value
+    - If you expand the specific deployed contract, you can see the various methods that it provides.  Call the blue buttoned methods, which are the ones that are read-only methods (and thus do not require writing a transaction to the blockchain) -- `num_choices()`, `choices()`, `voted()`, and `unnecessaryFunction()`.
+        - To see if you have voted, click the copy icon to the right of your account drop-down box to copy your account address, then paste that into the 'voted' box and click 'voted' -- it should show false, but you will have to click on the down arrow to the right of the 'debug' button that appeared to see that return value
     - Vote for your choice!  Enter a number in the 'vote' box for your choice, and click 'vote'
     		- You will see "transact to Poll.vote pending ..." in the console -- it's waiting for the transaction to make it onto the blockchain
             - It should be auto-mined very quickly
     		- In the console, click the down-arrow to the right of the 'debug' button that appeared -- it lists the transaction hash.  You can view that on the explorer as well
             - You will need to submit the transaction hash where you voted
-    - You can call 'voters' again with your coinbase account; it should return true this time
+    - You can call 'voted' again with your coinbase account; it should return true this time
 6. View in the explorer
     - We are going to see some additional functionality in the blockchain explorer
     - Search for the particular contract -- enter the contract address for your deployed Poll contract in the search box in the upper-right of any page

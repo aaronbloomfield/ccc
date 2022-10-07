@@ -139,7 +139,7 @@
 <li>Remix has a bizarre directory choice for where to put this file – on Linux systems, it goes in <code>~/tests/</code>. You will need to find where it is on your OS via a file search.</li>
 </ul></li>
 <li><p>Click on the blue “Run” button – this will run the unit tests. Some will pass and some will fail, which is expected at this point. Note that, for unit tests, you do not have to re-compile it each time – the Run button will do that, if necessary, for you.</p></li>
-<li><p>Let’s make the existing tests pass. In the <code>checkFailure()</code> function, change <code>Assert.notEquals()</code> to <code>Assert.equals()</code>, and re-run the tests. They should all pass now.</p></li>
+<li><p>Let’s make the existing tests pass. In the <code>checkFailure()</code> function, change <code>Assert.notEqual()</code> to <code>Assert.equal()</code>, and re-run the tests. They should all pass now.</p></li>
 <li><p>Add the following method to the Poll_test class</p>
 <pre><code>function checkChioceCreation() public {
    Poll p = new Poll();
@@ -277,12 +277,12 @@ contract testSuite {
 </ul></li>
 <li>Call some methods on your contract
 <ul>
-<li>If you expand the specific deployed contract, you can see the various methods that it provides. Call the blue buttoned methods, which are the ones that are read-only methods (and thus do not require writing a transaction to the blockchain) – <code>num_choices()</code>, <code>choices()</code>, <code>voters()</code>, and <code>unnecessaryFunction()</code>.
+<li>If you expand the specific deployed contract, you can see the various methods that it provides. Call the blue buttoned methods, which are the ones that are read-only methods (and thus do not require writing a transaction to the blockchain) – <code>num_choices()</code>, <code>choices()</code>, <code>voted()</code>, and <code>unnecessaryFunction()</code>.
 <ul>
-<li>To see if you have voted, click the copy icon to the right of your account drop-down box to copy your account address, then paste that into the ‘voters’ box and click ‘voters’ – it should show false, but you will have to click on the down arrow to the right of the ‘debug’ button that appeared to see that return value</li>
+<li>To see if you have voted, click the copy icon to the right of your account drop-down box to copy your account address, then paste that into the ‘voted’ box and click ‘voted’ – it should show false, but you will have to click on the down arrow to the right of the ‘debug’ button that appeared to see that return value</li>
 </ul></li>
 <li>Vote for your choice! Enter a number in the ‘vote’ box for your choice, and click ‘vote’ - You will see “transact to Poll.vote pending …” in the console – it’s waiting for the transaction to make it onto the blockchain - It should be auto-mined very quickly - In the console, click the down-arrow to the right of the ‘debug’ button that appeared – it lists the transaction hash. You can view that on the explorer as well - You will need to submit the transaction hash where you voted</li>
-<li>You can call ‘voters’ again with your coinbase account; it should return true this time</li>
+<li>You can call ‘voted’ again with your coinbase account; it should return true this time</li>
 </ul></li>
 <li>View in the explorer
 <ul>
