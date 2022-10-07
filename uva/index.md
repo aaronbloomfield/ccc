@@ -67,14 +67,11 @@ Reading assignments are due by the start of the lecture that day, and all other 
 #### Smaller Homeworks
 
 
+- Due Fri, 10/7: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
 - Due Fri, 9/30, by midnight: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html) ([md](../hws/ethprivate/index.md)); see the [Collab landing page][1] for the necessary information
 - Due Wed, 9/28: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/ethereum-whitepaper.pdf)); see above (in the Reading section) for what you can skip
 - Due Wed, 9/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
 - Due Tue, 8/30: HW S1: complete the course introduction Google survey (link in Collab)
-
-<!--
-- Due Tue, 3/15: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
--->
 
 
 Lecture progress
@@ -93,8 +90,8 @@ This is just an estimate, and will not always be updated if we veer off track.  
 9. Wed, Sep 21: [mining](../slides/mining.html#/) (actual: mining to slide 5.9)
 10. Mon, Sep 26: [mining](../slides/mining.html#/) (actual: only Ethereum through slide 3.29 ("Transaction fields"))
 11. Wed, Sep 28: [Ethereum](../slides/ethereum.html#/) (actual: finished the first column of Ethereum; Solidity to slide 4.25)
-12. Wed, Oct 5: [Solidity](../slides/solidity.html#/)
-13. Mon, Oct 10: [Solidity](../slides/solidity.html#/), in particular the in-class exercise
+12. Wed, Oct 5: [Solidity](../slides/solidity.html#/) (actual: Solidity through the end of the Debtors example column, including the in-class activity)
+13. Mon, Oct 10: [Solidity](../slides/solidity.html#/)
 14. Wed, Oct 12: midterm
 15. Mon, Oct 17: [Tokens](../slides/tokens.html#/)
 16. Wed, Oct 19: [Tokens](../slides/tokens.html#/)
