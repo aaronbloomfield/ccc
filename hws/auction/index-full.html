@@ -110,11 +110,14 @@
 <li><code>higherBidEvent()</code>: when a new (and higher) bid is placed on an NFT via <code>placebid()</code></li>
 </ul></li>
 </ul>
+<h3 id="iacutioneer-interface">IAcutioneer interface</h3>
 <p>Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file has more comments for this interface.</p>
+<p>Your contract line must be <em>exactly</em>:</p>
+<pre><code>contract Auctioneer is IAuctioneer {</code></pre>
 <pre><code>// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import &quot;./IERC721.sol&quot;;
+import &quot;./IERC165.sol&quot;;
 
 interface IAuctioneer is IERC165 {
 
@@ -169,6 +172,9 @@ interface IAuctioneer is IERC165 {
     event auctionCloseEvent(uint indexed _id);
 
     event higherBidEvent (uint indexed _id);
+
+    // also supportsInterface(), because IAuctioneer inherits from IERC165
+
 }</code></pre>
 <p>This interface is provided in the <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file. This interface extends the <a href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>) interface, which requires the implementation of a <code>supportsInterface()</code> function – your Auctioneer class thus supports two interfaces (IAuctioneer and IERC165).</p>
 <p>To transfer ETH to another account, you can use code such as the following; this was also <a href="../../slides/solidity.html#/payeth">discussed in the Solidity slide set</a>. Note that the address is in variable <code>a</code>, and the value – in wei – is in <code>v</code>:</p>
@@ -180,6 +186,18 @@ Some people are having problems in Remix with determining the return value of a 
 -->
 <p>Test all this thoroughly in Remix! You will need to deploy your Auctioneer contract in Remix’s Javascript environment to test everything working together. Recall that you have to select the right contract to deploy in the “Contract” list, else Remix may not know which one to deploy. Be sure to develop via incremental development, else you will not be able to figure out where your bug is.</p>
 <p>One it works, deploy it to our private Ethereum blockchain. You should test it there as well. You will need to submit the contract address and transaction hash of the deployed Auctioneer. If you deploy it multiple times, just submit the most recent contract address. Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Collab landing page. This web page will make it far easier to see what is going on with your auctions.</p>
+<h4 id="startauction-method"><code>startAuction()</code> method</h4>
+<p>The <code>startAuction()</code> method requires a bit more explanation. The process is as follows:</p>
+<ul>
+<li>Alice will mint an NFT with some NFT manager; any NFT manager can be used for this purpose</li>
+<li>Alice will <code>approve()</code> the auctioneer contract for her newly minted NFT</li>
+<li>Alice will call <code>startAuction()</code>
+<ul>
+<li>As part of this process, the auctioneer will transfer ownership of Alice’s NFT to itself, and revert if it cannot do so</li>
+</ul></li>
+</ul>
+<p>Below is a diagram of the flow of this process.</p>
+<p><img src="../../slides/images/tokens/graphs/tokens.dot.2.svg" /></p>
 <h3 id="task-3-create-auctions">Task 3: Create auctions</h3>
 <p>You should create two auctions in your Auctioneer contract (you’ll create a third one below as well). It’s fine if you create more (such as from testing) – we will only look at the two requested here. These two auctions will use two of your three NFT images. In particular, if you have one NFT that you like more than the others, or is “better”, you will want to save it for the course-wide auction, below.</p>
 <p>Note that you can perform these calls through Remix (via calling an external contract, as described in the <a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>) assignment) or through geth calls (as described in the <a href="../../slides/solidity.html#/debtor">Solidity slide set</a>).</p>
@@ -201,7 +219,7 @@ Some people are having problems in Remix with determining the return value of a 
 <p><strong>MAKE YOUR BIDS REASONABLE!!!</strong> If the current highest bid is 0.5 ETH, don’t suddenly bid 5,000 ETH. Doing so is going to require others who need to bid on that NFT to have to obtain a lot more ETH, which will increase the blockchain size and the difficulty, which will make it harder for everybody else in the class. This will make me very cranky. Any successive bid should be no more than about 1 ETH more than the previous bid.</p>
 <h3 id="notes-and-hints">Notes and Hints</h3>
 <ul>
-<li>We are going to grade this by creating a very short auction – a minute or so. In your <code>startAuction()</code>, only one of them must be non-zero.</li>
+<li>We are going to grade this by creating a very short auction – a minute or so. In your <code>startAuction()</code>, only one of the time parameters must be non-zero.</li>
 <li>When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use <code>safeTransferFrom()</code> instead of <code>transferFrom()</code> (see <a href="https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i">here</a> for details)</li>
 <li>Make sure that <em>anybody</em> can mint an NFT via your NFT Manager</li>
 </ul>

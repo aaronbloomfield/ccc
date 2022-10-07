@@ -1,7 +1,4 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-
-// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
-// and is released under the GPL 3.0 license.
+// SPDX-License-Identifier: ...
 
 pragma solidity ^0.8.16;
 

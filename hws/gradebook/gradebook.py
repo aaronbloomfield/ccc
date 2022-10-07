@@ -71,6 +71,10 @@ sanity_checks = {
 	# whose address is above)?
 	'made_no_other_calls': False,
 
+	# Does your constructor have only one line that states `instructor = msg.sender;`?  
+	# In particular, if you added any other lines for testing, you should
+	# remove those.
+	'constructor_has_one_line': False,
 }
 
 

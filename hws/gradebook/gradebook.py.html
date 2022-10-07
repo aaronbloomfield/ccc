@@ -82,6 +82,10 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># whose address is above)?</font></i>
 	<font color="#FF0000">'made_no_other_calls'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Does your constructor have only one line that states `instructor = msg.sender;`?  </font></i>
+	<i><font color="#9A1900"># In particular, if you added any other lines for testing, you should</font></i>
+	<i><font color="#9A1900"># remove those.</font></i>
+	<font color="#FF0000">'constructor_has_one_line'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 <font color="#990000">}</font>
 
 

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>InterfaceIDs.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">16</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/* this will allow one, in remix, to get the interface IDs of the various interfaces, which is needed for the grading.js grading script for this assignment */</font></i>
+
+import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC721full.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC20Metadata.sol"</font><font color="#990000">;</font>
+
+<font color="#008080">contract</font> InterfaceIDs <font color="#FF0000">{</font>
+    bytes4 <font color="#008080">public</font> idIERC20<font color="#990000">;</font>
+    bytes4 <font color="#008080">public</font> idIERC20Metadata<font color="#990000">;</font>
+    bytes4 <font color="#008080">public</font> idIERC165<font color="#990000">;</font>
+    bytes4 <font color="#008080">public</font> idIERC721Metadata<font color="#990000">;</font>
+    bytes4 <font color="#008080">public</font> idIERC721full<font color="#990000">;</font>
+    bytes4 <font color="#008080">public</font> idIERC721<font color="#990000">;</font>
+
+    <b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// for TokenCC</font></i>
+        idIERC165 <font color="#990000">=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC165<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+        idIERC20 <font color="#990000">=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC20<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+        idIERC20Metadata <font color="#990000">=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC20Metadata<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+        <i><font color="#9A1900">// for NFTmanager (IERC165 is repeated intentionally)</font></i>
+        idIERC165 <font color="#990000">=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC165<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+        idIERC721 <font color="#990000">=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC721<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+        idIERC721Metadata <font color="#990000">=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC721Metadata<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+        idIERC721full <font color="#990000">=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC721full<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

@@ -16,9 +16,10 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">16</font><font color="#990000">;</font>
 
-import <font color="#FF0000">"./IERC721.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC721Metadata.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
 
-interface INFTmanager <font color="#008080">is</font> IERC721 <font color="#FF0000">{</font>
+interface INFTmanager <font color="#008080">is</font> IERC721Metadata <font color="#FF0000">{</font>
 
     <i><font color="#9A1900">// This creates a NFT for `_to` with the pased file name `_uri`.  Note</font></i>
     <i><font color="#9A1900">// that `_uri` is just the filename itself -- the prefix is set via</font></i>

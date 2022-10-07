@@ -86,7 +86,8 @@ http://www.gnu.org/software/src-highlite">
 
     <i><font color="#9A1900">// This function is how we are going to test your program -- we are going</font></i>
     <i><font color="#9A1900">// to request TA access.  For this assignment, it will automatically make</font></i>
-    <i><font color="#9A1900">// msg.sender a TA.  In reality, this would revert(), as only the</font></i>
+    <i><font color="#9A1900">// msg.sender a TA, and has no effect if the sender is already a TA</font></i>
+    <i><font color="#9A1900">// (or instructor).  In reality, this would revert(), as only the</font></i>
     <i><font color="#9A1900">// instructor (and other TAs) can make new TAs.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">requestTAAccess</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
 

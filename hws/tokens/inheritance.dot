@@ -2,21 +2,27 @@ digraph A {
     context [label="contract\nContext"];
     ierc165 [label="interface\nIERC165"];
     ierc20 [label="interface\nIERC20"];
+    ierc20metadata [label="interface\nIERC20Metadata"];
     erc20 [label="contract\nERC20"];
     tokencc [label="contract\nTokenCC",fillcolor="lightgrey",style="filled"];
     itokencc [label="interface\nITokenCC",fillcolor="lightgrey",style="filled"];
 
     // super class -> sub class
-    erc20 -> tokencc;
     context -> erc20;
     ierc20 -> erc20;
+    ierc20metadata -> itokencc;
+    ierc20 -> ierc20metadata;
+    ierc20metadata -> erc20;
     itokencc -> tokencc;
     ierc165 -> itokencc;
+    erc20 -> tokencc;
 }
 
 digraph B { // byzantine.dot..svg
     address [label="library\nAddress"];
     strings [label="library\nStrings"];
+    math [label="library\nMath"];
+    ierc721receiver [label="interface\nIERC721Receiver"];
     ierc721 [label="interface\nIERC721"];
     ierc165 [label="interface\nIERC165"];
     erc721 [label="contract\nERC721"];
@@ -24,7 +30,11 @@ digraph B { // byzantine.dot..svg
     ierc721metadata [label="interface\nIERC721Metadata"];
     erc165 [label="contract\nERC165"];
     inftmanager [label="interface\nINFTmanager",fillcolor="lightgrey",style="filled"];
-    nftmanager [label="NFTmanager",fillcolor="lightgrey",style="filled"];
+    nftmanager [label="contract\nNFTmanager",fillcolor="lightgrey",style="filled"];
+
+    {rank=same; address strings ierc165}
+    {rank=same; ierc721receiver erc165 ierc721}
+    {rank=same; math context ierc721metadata}
 
     // super class -> sub class
     ierc165 -> ierc721;
@@ -33,8 +43,8 @@ digraph B { // byzantine.dot..svg
     erc165 -> erc721;
     ierc721 -> erc721;
     ierc721metadata -> erc721;
-    erc721 -> nftmanager;
+    ierc721metadata -> inftmanager;
     inftmanager -> nftmanager;
     ierc721 -> ierc721metadata;
-    ierc721 -> inftmanager;
+    erc721 -> nftmanager;
 }

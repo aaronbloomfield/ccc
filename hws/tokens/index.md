@@ -41,7 +41,7 @@ You will need to create a logo for your cryptocurrency.  The logo that you submi
 
 The logo itself should be a circular logo with a transparent background outside the circle (just like what is on coinmarketcap.com).  Note that your logo must be readable if the size were reduced to a 32x32 pixel version.  The submission must be a .png file, and it will have to be named `logo.png`.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  You can use this [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background.
 
-For some examples, see [cryptologos.cc](https://cryptologos.cc/) and [this github site](https://github.com/coinwink/cryptocurrency-logos).
+For more examples, see [cryptologos.cc](https://cryptologos.cc/) and [this github site](https://github.com/coinwink/cryptocurrency-logos).
 
 #### Part 1, task 3: Review the starter code
 
@@ -49,17 +49,14 @@ The code we are going to start with is the [OpenZeppelin ERC-20 implementation](
 
 The included code is:
 
-- [Context.sol](Context.sol.html) ([src](Context.sol)) is a better way to get the context rather than `msg.sender` and `msg.data`
-- [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)), as [discussed in lecture](../../slides/tokens.html#/erc165)
-- [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20)
-- [ITokenCC.sol](ITokenCC.sol.html) ([src](ITokenCC.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20); this is an [abstract contract](../../slides/solidity.html#/abscon)
-- [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)), which is the [OpenZeppelin ERC-20 implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol) with the two changes noted below.
+- [Context.sol](Context.sol.html) ([src](Context.sol)) is a better way to get the context rather than `msg.sender` and `msg.data`; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol)
+- [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)), as [discussed in lecture](../../slides/tokens.html#/erc165); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/IERC165.sol)
+- [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol)
+- [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/IERC20Metadata.sol)
+- [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol)
+- [ITokenCC.sol](ITokenCC.sol.html) ([src](ITokenCC.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20)
 
-
-There were a few changes made to the [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)) file from the [OpenZeppelin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol):
-
-- The `import` lines were modified so that they include everything from the current directory
-- The `name()`, `symbol()`, and `decimals()` methods were renamed, as the intent is that you will override them (via public variables) in your TokenCC.sol code.  These renamings were necessary because those three functions are "recommended", but not in the IERC20 interface.
+The *only* changes made to the OpenZeppelin code above is the import paths (but not the files themselves).
 
 You should look over and familiarize yourself with all this code.  The inheritance hierarchy of this code is shown below.
 
@@ -103,7 +100,7 @@ Be sure to thoroughly test this in Remix!  Remember that you have multiple accou
 
 One you have thoroughly tested your ERC-20 token in Remix, you should deploy it to our private Ethereum blockchain.  How to do this was covered in the [dApp Introduction](../dappintro/index.html) assignment, which you may want to refer back to.  You have to deploy this part and the next part from the same account, and you will have to submit that account address at the end.
 
-Save the contract address it was deployed to, as well as the transaction hash from that transaction, as you will need to submit those at the end of this assignment.
+Save the contract address it was deployed to from that transaction, as you will need to submit those at the end of this assignment.
 
 
 #### Part 1, task 6: Send me some money!
@@ -111,7 +108,6 @@ Save the contract address it was deployed to, as well as the transaction hash fr
 You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Collab landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1000000000 total units.  Save the transaction hash of when you sent me your cryptocurrency.
 
 
-----
 
 ### Part 2: ERC-721 Non-Fungible Token
 
@@ -121,7 +117,7 @@ In this part, you will create a non-fungible token that follows the [ERC-721 tok
 
 You will be creating three images for NFTs for this assignment.  (You actually only need two for this assignment, but the third will be needed later on, so we'll create all three now).  The images should be uploaded to the `ipfs/` directory in the Collab workspace in the Resources tool.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Collab, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Collab workspace, only those in the class can view those files -- but that means anybody in the class can view it.
 
-All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You are going to be uploading multiple image files in a future assignment, so please plan your file naming scheme appropriately.  You probably won't need more than three or four such images for the semester, and you are welcome to generate them all now; but you'll just need three different ones for this assignment.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG (.jpg), PNG (.png), and WEBP (.webp) images, please.
+All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You are going to be uploading multiple image files in a future assignment, so please plan your file naming scheme appropriately.  You will need three such images.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG (.jpg), PNG (.png), and WEBP (.webp) images, please.
 
 **NOTE:** The filenames, with the extension, **MUST** be strictly less than 32 characters in length.  This is just for the filename ("mst3k_foo_bar.png"), not the path to that file name.
 
@@ -137,21 +133,25 @@ Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF TH
 
 Pick some fun or funny image.  You are welcome to pick one from Wikipedia.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.
 
+You need three such images.
+
 #### Part 2, task 2: Review the starter code
 
 The code we are going to start with is the [OpenZeppelin ERC-721 implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol).  This code was the same as was discussed in class.  Other than the `import` lines, there have been no changes to the code in this repo.
 
 In addition to some of the files used above (IERC165.sol. ERC165.sol, and Context.sol), there are a few additional files that this part uses; you will need to familiarize yourself with hwo they work.
 
-- [Address.sol](Address.sol.html) ([src](Address.sol)): a library (not a contract!) that provides some useful functions when dealing with Ethereum addresses
-- [Strings.sol](Strings.sol.html) ([src](Strings.sol)): a library (not a contract!) that provides some useful String manipulation functions
-- [Context.sol](Context.sol.html) ([src](Context.sol)): is a better way to get the context rather than `msg.sender` and `msg.data`
-- [ERC165.sol](ERC165.sol.html) ([src](ERC165.sol)): a bare-bones implementation of the `IERC165` interface
-- [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)), as [discussed in lecture](../../tokens.html#/erc721); note that the ERC-721 interface already inherits from the ERC-165 interface
-- [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)), which is the [OpenZeppelin ERC-721 implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol) -- the only changes that were made were to the `import` lines
-- [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)): this add three functions on top of the ERC-721 standard: `name()`, `symbol()`, and `tokenURI()`; the first two are for the NFT manager, the last one is the URI (aka URL) of the image that the NFT represents
+- [Address.sol](Address.sol.html) ([src](Address.sol)) is a library (not a contract!) that provides some useful functions when dealing with Ethereum addresses; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol)
+- [Strings.sol](Strings.sol.html) ([src](Strings.sol)) is a library (not a contract!) that provides some useful String manipulation functions; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol)
+- [Math.sol](Math.sol.html) ([src](Math.sol)) is a library needed for Strings.sol; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/Math.sol)
+- [Context.sol](Context.sol.html) ([src](Context.sol)) is a better way to get the context rather than `msg.sender` and `msg.data`; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol)
+- [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)), as [discussed in lecture](../../slides/tokens.html#/erc165); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/IERC165.sol)
+- [ERC165.sol](ERC165.sol.html) ([src](ERC165.sol)): a bare-bones implementation of the `IERC165` interface; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/ERC165.sol)
+- [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)), as [discussed in lecture](../../tokens.html#/erc721); note that the ERC-721 interface already inherits from the ERC-165 interface; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol)
+- [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)), which is the [OpenZeppelin ERC-721 implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol) -- the only changes that were made were to the `import` lines; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol)
+- [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)): this add three functions on top of the ERC-721 standard: `name()`, `symbol()`, and `tokenURI()`; the first two are for the NFT manager, the last one is the URI (aka URL) of the image that the NFT represents; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Metadata.sol)
 - [INFTmanager.sol](INFTmanager.sol.html) ([src](INFTmanager.sol)): this adds one more function on top of the IERC721Metadata interface: two `mintWithURI()` functiions, which allow creation of NFTs, and setting it's image URI (aka URL) in one function call.  Note that the `mintWithURI()` function will return a token ID, which is just a `uint` that is used to identify (and find) that particular NFT in your token manager.  This is an [abstract contract](../../slides/solidity.html#/abscon).
-- [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)): we won't use the functionality in this interface, but it is needed for the ERC721.sol file to compile.
+- [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)): we won't use the functionality in this interface, but it is needed for the ERC721.sol file to compile.; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol)
 
 Why so many files?  Three of the interfaces (IERC165, IERC721, and IERC721Metadata) are Ethereum standards, and the practice is to include them as-is without modifications.  Three of the files are utilities (Address, Context, and Strings).  The INFTmanager adds one function that we need, and the ERC721.sol is the implementation itself.  We realize that's a lot of files to use, but that's why there are so many of them.
 
@@ -211,7 +211,7 @@ Make sure this works properly in Remix before proceeding onto the next step.
 
 One you have thoroughly tested your ERC-721 token manager in Remix, you should deploy it to our private Ethereum blockchain.  How to do this was covered in the [dApp Introduction](../dappintro/index.html) assignment, which you may want to refer back to.  You don't have to do this from your eth.coinbase account -- you can do it from any account.  However, you have to deploy all the code in this assignment from the same account, and you have to tell us that account when you submit the Google form at the end of this assignment.
 
-Save the contract address, and the transaction hash, for the deployment, as you will need to submit it at the end of this assignment.
+Save the contract address for the deployment, as you will need to submit it at the end of this assignment.
 
 Before final submission of this assignment, you will need to deploy both this token manager and the auction program to our final Ethereum blockchain.  But you don't have to do that yet -- you should ensure it's all working via Remix (in the "JavaScript VM (London)" environment) first.
 
@@ -234,10 +234,10 @@ You will need to fill in the various values from this assignment into the [token
 
 There are *four* forms of submission for this assignment; you must do all four.
 
-Submission 1: You must deploy those two smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract addresses and transaction hashes of these deployments are in the `tokens.py` file that you submit.
+Submission 1: You must deploy those two smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract addresses of these deployments are in the `tokens.py` file that you submit.
 
-Submission 2: You should submit your `TokenCC.sol` and `NFTManager.sol` files and your completed `tokens.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+Submission 2: You will need to upload your cryptocurrency logo (properly named!) to the `cclogos/` directory on Collab, and your three NFT images (also properly named!) to the `ipfs/` directory on Collab.
 
-Submission 3: You will need to upload your cryptocurrency logo (properly named!) to the `cclogos/` directory on Collab, and your three NFT images (also properly named!) to the `ipfs/` directory on Collab.
+Submission 3: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Collab landing page.  The transaction hashes of these go into the `tokens.py` file.
 
-Submission 4: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Collab landing page.
+Submission 4: You should submit your `TokenCC.sol` and `NFTManager.sol` files and your completed `tokens.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

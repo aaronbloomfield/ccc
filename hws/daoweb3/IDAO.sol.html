@@ -124,6 +124,14 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// @param _who The new member to add</font></i>
     <font color="#008080">function</font> <b><font color="#000000">addMember</font></b><font color="#990000">(</font><font color="#008080">address</font> _who<font color="#990000">)</font> external<font color="#990000">;</font>
 
+    <i><font color="#9A1900">// This is how one requests to join the DAO.  Presumably they called</font></i>
+    <i><font color="#9A1900">// howToJoin(), and fulfilled any requirement(s) therein.  In a real</font></i>
+    <i><font color="#9A1900">// application, this would put them into a list for the owner(s) to</font></i>
+    <i><font color="#9A1900">// approve or deny.  For us, this will just revert(), as joining is done</font></i>
+    <i><font color="#9A1900">// through the other functions listed above.  This should also revert if</font></i>
+    <i><font color="#9A1900">// the caller is already a member.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">requestMembership</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
+
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Events to emit</font></i>
 

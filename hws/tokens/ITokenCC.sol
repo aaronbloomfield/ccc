@@ -6,24 +6,24 @@
 pragma solidity ^0.8.16;
 
 import "./IERC165.sol";
-import "./IERC20.sol";
+import "./IERC20Metadata.sol";
 
-interface ITokenCC is IERC165 {
-
-	// This can just be implemented as a public variable, which will cause
-	// Solidity to provide a getter function, and you should also make it
-	// constant.
-    function name() external view returns (string memory);
+interface ITokenCC is IERC20Metadata, IERC165 {
 
 	// This can just be implemented as a public variable, which will cause
 	// Solidity to provide a getter function, and you should also make it
 	// constant.
-    function symbol() external view returns (string memory);
+    //function name() public virtual override pure returns (string memory);
+
+    // This can just be implemented as a public variable, which will cause
+	// Solidity to provide a getter function, and you should also make it
+	// constant.
+    //function symbol() external view returns (string memory);
 
 	// This can just be implemented as a public variable, which will cause
 	// Solidity to provide a getter function, and you should also make it
 	// constant.
-    function decimals() external view returns (uint8);
+    //function decimals() external view returns (uint8);
 
     // We will need this function in a future assignment (Arbitrage Trading),
     // which is why it is in this interface. For now, it should have a single

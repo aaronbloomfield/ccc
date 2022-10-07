@@ -46,18 +46,7 @@
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>) | <a href="index.html">view tabbed version</a></p>
 <h3 id="overview">Overview</h3>
 <p>I need a new gradebook! Because Collab and my favorite spreadsheet programs are just not doing the job anymore. So I’ve decided to keep everybody’s grades in a public blockchain. Your task is to implement this gradebook for me.</p>
-<p>Note: I’m not going to to keep <em>real</em> grades in the gradebook. In addition to the fact that doing so would violate your privacy, it would also be a violation of <a href="https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html">FERPA</a>. So only fake grades will be kept herein.</p>
 <p>Admittedly, a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts. But it will introduce you to the concepts involved in developing smart contracts. And there are many very similar applications that would only require a few tweaks to the gradebook contract. There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.</p>
-<p>Writing this homework will require completion of the following assignments:</p>
-<ul>
-<li><a href="../ethprivate/index.html">Connecting to the private Ethereum blockchain</a> (<a href="../ethprivate/index.md">md</a>)</li>
-<li><a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>)</li>
-</ul>
-<p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a>, and the <a href="../../slides/solidity.html#/">Solidity slide set</a>.</p>
-<h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-<h3 id="part-1-gradebook-contract">Part 1: Gradebook contract</h3>
-<h4 id="overview-1">Overview</h4>
 <p>The gradebook will need to have the following functionalities:</p>
 <ul>
 <li>Assignments can be created; each assignment has a maximum score</li>
@@ -67,8 +56,17 @@
 <li>Only instructors and teaching assistants can create assignments and enter/update grades</li>
 <li>Anybody can get a grade or a student’s average score</li>
 </ul>
-<h4 id="interface">Interface</h4>
-<p>Formally, your contract will need to be named <code>Gradebook</code>, and saved in a file named <code>Gradebook.sol</code>. It will need to implement the <a href="IGradebook.sol.html">IGradebook.sol</a> (<a href="IGradebook.sol">src</a>) interface, which is as follows. <strong>NOTE:</strong> the interface file itself has many more details and specifications in the comments; most of the comments were stripped for what is below.</p>
+<p>Writing this homework will require completion of the following assignments:</p>
+<ul>
+<li><a href="../ethprivate/index.html">Connecting to the private Ethereum blockchain</a> (<a href="../ethprivate/index.md">md</a>)</li>
+<li><a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>)</li>
+</ul>
+<p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a> and the <a href="../../slides/solidity.html#/">Solidity slide set</a>.</p>
+<h3 id="changelog">Changelog</h3>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<h3 id="part-1-igradebook-interface">Part 1: IGradebook interface</h3>
+<h4 id="igradebook-interface">IGradebook Interface</h4>
+<p>Formally, your contract will need to be named <code>Gradebook</code>, and saved in a file named <code>Gradebook.sol</code>. It will need to implement the <a href="IGradebook.sol.html">IGradebook.sol</a> (<a href="IGradebook.sol">src</a>) interface, which is as follows. <strong>NOTE:</strong> the interface file itself has many more details and specifications in the comments; most of the comments were stripped from what is below.</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.16;
 
@@ -113,15 +111,15 @@ interface IGradebook {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }</code></pre>
-<h4 id="supportsinterface"><code>supportsInterface()</code></h4>
+<h4 id="the-supportsinterface-function">The <code>supportsInterface()</code> function</h4>
 <p>We will see the use of <code>supportsInterface()</code> in a lecture and a later assignment. For now, you should use this exact implementation:</p>
 <pre><code>function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return interfaceId == type(IGradebook).interfaceId || interfaceId == 0x01ffc9a7;
 }</code></pre>
 <h3 id="implementation-details">Implementation details</h3>
 <ul>
-<li>Students are all identified by a single string; we’ll use UVA userids</li>
-<li>All entered grades are (unsigned) integers</li>
+<li>Students are all identified by a single string; we’ll use UVA userids (you can make fake but believable UVA userids for your testing)</li>
+<li>All entered grades are unsigned integers</li>
 <li>One cannot have a grade higher than the max score; this should be checked via a <code>require()</code></li>
 <li>While averages can be non-integers, we will return the (truncated) integer value that is 100 times the average. So if somebody’s average was 86.265%, the returned average would be 8626.</li>
 <li>The instructor is assumed to be the account that deploys the smart contract; thus, the only task the constructor needs to do is set the <code>instructor</code> field to <code>msg.sender</code></li>
@@ -129,10 +127,11 @@ interface IGradebook {
 <li>All of your methods and fields will have to have the <code>override</code> qualifier, since they are overriding what is specified in the <code>IGradebook</code> interface</li>
 <li>If a student does not have an entry for a given assignment, then their grade for that assignment is 0; remember that mappings return 0 if a key is not found</li>
 <li>Note that BOTH the instructor and TAs can designate other TAs</li>
+<li>The <code>supportsInterface()</code> function should be exactly as is specified above</li>
 </ul>
 <p>The first six methods (after the two events) are getter functions. As long as you set the visibility of the field in the contract as <code>public</code>, then the getter method is created for you, as <a href="../../slides/solidity.html#/getters">discussed in the lecture slides</a>. For example, for the getter function <code>function num_assignments() external returns (uint)</code>, the appropriate field declaration would be <code>uint public override num_assignments;</code>. The lecture slide details this a bit more.</p>
-<p>The two events, listed at the top of the interface, should be emitted at the appropriate time. The <code>addAssignment()</code> function should emit <code>assignmentCreationEvent()</code> event, and the <code>addGrade()</code> function should emit the <code>gradeEntryEvent()</code> event. Be sure to emit the events <em>after</em> any <code>require()</code> calls!</p>
-<h3 id="address-checksums">Address checksums</h3>
+<p>The two events, listed at the top of the interface, should be emitted at the appropriate time. The <code>addAssignment()</code> function should emit the <code>assignmentCreationEvent()</code> event, and the <code>addGrade()</code> function should emit the <code>gradeEntryEvent()</code> event. Be sure to emit the events <em>after</em> any <code>require()</code> calls! It is often the case (but not required) that the event emission is done at the very end of the function.</p>
+<h4 id="address-checksums">Address checksums</h4>
 <p>Note that Remix may complain if an Ethernet address is not <a href="../../slides/ethereum.html#/checksum">checksummed</a>. This is a warning, not an error, and it should still work fine. But you still have to remove the warning, otherwise the compilation when you submit it will appear to fail. Remix will provide, in the warning, the checksummed address – you are welcome to use that value (cut-and-paste it into your code) instead to silence this warning. You can also use <a href="https://ethsum.netlify.app/">ethsum.netlify.app</a> to checksum an Ethernet address.</p>
 <h3 id="part-2-testing-and-deployment">Part 2: Testing and Deployment</h3>
 <h4 id="testing">Testing</h4>
@@ -153,7 +152,7 @@ addGrade(&quot;mst3k&quot;,1,10);</code></pre></li>
 <p>On the deployed contract, you do not need to designate anybody as a TA – we are going to make ourselves a TA in your gradebook via the <code>requestTAAccess()</code> function, so make sure that works properly.</p>
 <h3 id="part-3-your-average">Part 3: Your average</h3>
 <p>I’ve deployed a gradebook with your (fake) grades. The address for that smart contract is on the Collab landing page. You will need to find out your overall average as well as a few other items of information. Your scores are kept by your UVA userid. These scores are fake, and were randomly generated, so don’t feel bad if your score(s) are low.</p>
-<p>There are two ways you can access the gradebook on the blockchain. One is through Remix, like was done in the <a href="../dappintro/index.html">dApp introduction assignment</a> (<a href="../dappintro/index.md">md</a>) – you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the ‘At Address’ text box in the deployment window. The other way is through geth, like we did in the <a href="../../slides/solidity.html#/debtor">live coding example in class</a> – the geth commands start about 8 slides down in that column. For this you will also need the ABI. You can compile the IGradebook.sol interface, and then copy the ABI – after you compile it, the copy ABI link is at the very bottom of the compilation pane. Note that you may have to reformat that ABI a bit – what you copy is on many lines, and you may have to reformat it to one line.</p>
+<p>There are two ways you can access the gradebook on the blockchain. One is through Remix, like was done in the <a href="../dappintro/index.html">dApp introduction assignment</a> (<a href="../dappintro/index.md">md</a>) – you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the ‘At Address’ text box in the deployment window. The other way is through geth, like we did in the <a href="../../slides/solidity.html#/debtor">live coding example in class</a> – the geth commands start about 8 slides down in that slide column. For this you will also need the ABI. You can compile the IGradebook.sol interface, and then copy the ABI – after you compile it, the copy ABI link is at the very bottom of the compilation pane. Note that you may have to reformat that ABI a bit – what you copy is on many lines, and you may have to reformat it to one line.</p>
 <p>The steps to access the gradebook via Remix are:</p>
 <ul>
 <li>In Remix, compile the IGradebook.sol file (yes, the interface file)</li>

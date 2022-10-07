@@ -70,14 +70,23 @@ You are going to create and deploy a decentralized auction smart contract.  The 
     - `auctionCloseEvent()`: when `closeAuction()` is successfully called
     - `higherBidEvent()`: when a new (and higher) bid is placed on an NFT via `placebid()`
 
+
+### IAcutioneer interface
+
 Formally the task is to develop an `Auctioneer` contract that implements the following `IAuctioneer` interface below.  The provided [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) file has more comments for this interface.
+
+Your contract line must be *exactly*:
+
+```
+contract Auctioneer is IAuctioneer {
+```
 
 
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import "./IERC721.sol";
+import "./IERC165.sol";
 
 interface IAuctioneer is IERC165 {
 
@@ -132,6 +141,9 @@ interface IAuctioneer is IERC165 {
     event auctionCloseEvent(uint indexed _id);
 
     event higherBidEvent (uint indexed _id);
+
+    // also supportsInterface(), because IAuctioneer inherits from IERC165
+
 }
 ```
 
@@ -153,6 +165,20 @@ Some people are having problems in Remix with determining the return value of a 
 Test all this thoroughly in Remix!  You will need to deploy your Auctioneer contract in Remix's Javascript environment to test everything working together.  Recall that you have to select the right contract to deploy in the "Contract" list, else Remix may not know which one to deploy.  Be sure to develop via incremental development, else you will not be able to figure out where your bug is.
 
 One it works, deploy it to our private Ethereum blockchain.  You should test it there as well.  You will need to submit the contract address and transaction hash of the deployed Auctioneer.  If you deploy it multiple times, just submit the most recent contract address.  Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Collab landing page.  This web page will make it far easier to see what is going on with your auctions.
+
+
+#### `startAuction()` method
+
+The `startAuction()` method requires a bit more explanation.  The process is as follows:
+
+- Alice will mint an NFT with some NFT manager; any NFT manager can be used for this purpose
+- Alice will `approve()` the auctioneer contract for her newly minted NFT
+- Alice will call `startAuction()`
+    - As part of this process, the auctioneer will transfer ownership of Alice's NFT to itself, and revert if it cannot do so
+
+Below is a diagram of the flow of this process.
+
+![](../../slides/images/tokens/graphs/tokens.dot.2.svg)
 
 
 ### Task 3: Create auctions
@@ -191,7 +217,7 @@ Lastly, bid on at least *three* auctions that are not your own.  Depending on wh
 
 ### Notes and Hints
 
-- We are going to grade this by creating a very short auction -- a minute or so.  In your `startAuction()`, only one of them must be non-zero.
+- We are going to grade this by creating a very short auction -- a minute or so.  In your `startAuction()`, only one of the time parameters must be non-zero.
 - When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use `safeTransferFrom()` instead of `transferFrom()` (see [here](https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i) for details)
 - Make sure that *anybody* can mint an NFT via your NFT Manager
 

@@ -75,7 +75,8 @@ interface IGradebook {
 
     // This function is how we are going to test your program -- we are going
     // to request TA access.  For this assignment, it will automatically make
-    // msg.sender a TA.  In reality, this would revert(), as only the
+    // msg.sender a TA, and has no effect if the sender is already a TA
+    // (or instructor).  In reality, this would revert(), as only the
     // instructor (and other TAs) can make new TAs.
     function requestTAAccess() external;
 

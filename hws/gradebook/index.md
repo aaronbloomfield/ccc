@@ -9,26 +9,7 @@ Gradebook Smart Contract
 
 I need a new gradebook!  Because Collab and my favorite spreadsheet programs are just not doing the job anymore.  So I've decided to keep everybody's grades in a public blockchain.  Your task is to implement this gradebook for me.
 
-Note: I'm not going to to keep *real* grades in the gradebook.  In addition to the fact that doing so would violate your privacy, it would also be a violation of [FERPA](https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html).  So only fake grades will be kept herein.
-
 Admittedly, a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts.  But it will introduce you to the concepts involved in developing smart contracts.  And there are many very similar applications that would only require a few tweaks to the gradebook contract.  There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.
-
-Writing this homework will require completion of the following assignments:
-
-- [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md))
-- [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md))
-
-You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), and the [Solidity slide set](../../slides/solidity.html#/).
-
-
-### Changelog
-
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
-
-
-### Part 1: Gradebook contract
-
-#### Overview
 
 The gradebook will need to have the following functionalities:
 
@@ -39,9 +20,25 @@ The gradebook will need to have the following functionalities:
 - Only instructors and teaching assistants can create assignments and enter/update grades
 - Anybody can get a grade or a student's average score
 
-#### Interface
+Writing this homework will require completion of the following assignments:
 
-Formally, your contract will need to be named `Gradebook`, and saved in a file named `Gradebook.sol`.  It will need to implement the [IGradebook.sol](IGradebook.sol.html) ([src](IGradebook.sol)) interface, which is as follows.  **NOTE:** the interface file itself has many more details and specifications in the comments; most of the comments were stripped for what is below.
+- [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md))
+- [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md))
+
+You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/) and the [Solidity slide set](../../slides/solidity.html#/).
+
+
+
+### Changelog
+
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+
+
+### Part 1: IGradebook interface
+
+#### IGradebook Interface
+
+Formally, your contract will need to be named `Gradebook`, and saved in a file named `Gradebook.sol`.  It will need to implement the [IGradebook.sol](IGradebook.sol.html) ([src](IGradebook.sol)) interface, which is as follows.  **NOTE:** the interface file itself has many more details and specifications in the comments; most of the comments were stripped from what is below.
 
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -90,7 +87,7 @@ interface IGradebook {
 }
 ```
 
-#### `supportsInterface()`
+#### The `supportsInterface()` function
 
 We will see the use of `supportsInterface()` in a lecture and a later assignment.  For now, you should use this exact implementation:
 
@@ -104,8 +101,8 @@ function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
 
 ### Implementation details
 
-- Students are all identified by a single string; we'll use UVA userids
-- All entered grades are (unsigned) integers
+- Students are all identified by a single string; we'll use UVA userids (you can make fake but believable UVA userids for your testing)
+- All entered grades are unsigned integers
 - One cannot have a grade higher than the max score; this should be checked via a `require()`
 - While averages can be non-integers, we will return the (truncated) integer value that is 100 times the average.  So if somebody's average was 86.265%, the returned average would be 8626.
 - The instructor is assumed to be the account that deploys the smart contract; thus, the only task the constructor needs to do is set the `instructor` field to `msg.sender`
@@ -113,12 +110,13 @@ function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
 - All of your methods and fields will have to have the `override` qualifier, since they are overriding what is specified in the `IGradebook` interface
 - If a student does not have an entry for a given assignment, then their grade for that assignment is 0; remember that mappings return 0 if a key is not found
 - Note that BOTH the instructor and TAs can designate other TAs
+- The `supportsInterface()` function should be exactly as is specified above
 
 The first six methods (after the two events) are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide details this a bit more.
 
-The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit `assignmentCreationEvent()` event, and the `addGrade()` function should emit the `gradeEntryEvent()` event.  Be sure to emit the events *after* any `require()` calls!
+The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit the `assignmentCreationEvent()` event, and the `addGrade()` function should emit the `gradeEntryEvent()` event.  Be sure to emit the events *after* any `require()` calls!  It is often the case (but not required) that the event emission is done at the very end of the function.
 
-### Address checksums
+#### Address checksums
 
 Note that Remix may complain if an Ethernet address is not [checksummed](../../slides/ethereum.html#/checksum).  This is a warning, not an error, and it should still work fine.  But you still have to remove the warning, otherwise the compilation when you submit it will appear to fail.  Remix will provide, in the warning, the checksummed address -- you are welcome to use that value (cut-and-paste it into your code) instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
 
@@ -153,7 +151,7 @@ On the deployed contract, you do not need to designate anybody as a TA -- we are
 
 I've deployed a gradebook with your (fake) grades.  The address for that smart contract is on the Collab landing page.  You will need to find out your overall average as well as a few other items of information.  Your scores are kept by your UVA userid.  These scores are fake, and were randomly generated, so don't feel bad if your score(s) are low.
 
-There are two ways you can access the gradebook on the blockchain.  One is through Remix, like was done in the [dApp introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md)) -- you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the 'At Address' text box in the deployment window.  The other way is through geth, like we did in the [live coding example in class](../../slides/solidity.html#/debtor) -- the geth commands start about 8 slides down in that column.  For this you will also need the ABI.  You can compile the IGradebook.sol interface, and then copy the ABI -- after you compile it, the copy ABI link is at the very bottom of the compilation pane.  Note that you may have to reformat that ABI a bit -- what you copy is on many lines, and you may have to reformat it to one line.
+There are two ways you can access the gradebook on the blockchain.  One is through Remix, like was done in the [dApp introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md)) -- you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the 'At Address' text box in the deployment window.  The other way is through geth, like we did in the [live coding example in class](../../slides/solidity.html#/debtor) -- the geth commands start about 8 slides down in that slide column.  For this you will also need the ABI.  You can compile the IGradebook.sol interface, and then copy the ABI -- after you compile it, the copy ABI link is at the very bottom of the compilation pane.  Note that you may have to reformat that ABI a bit -- what you copy is on many lines, and you may have to reformat it to one line.
 
 The steps to access the gradebook via Remix are:
 
@@ -165,7 +163,7 @@ The steps to access the gradebook via Remix are:
 The steps to access the gradebook via a geth terminal are (adapted from [here](../../solidity.html#/geth)):
 
 - Enter `var addr = "0xffffffffffffffffffffffffffffffffffffffff";`, but with the *real* contract address on the Collab landing page
-- Enter `var abi = [...];`, but with the *real* ABI from the Collab landing page.  Do not put this in quotes, and do not put this in extra square brackets!
+- Enter `var abi = [...];`, but with the *real* ABI of IGradebook from the Collab landing page.  Do not put this in quotes, and do not put this in extra square brackets!
 - Enter `var interface = eth.contract(abi);`
 - Enter `var contract = interface.at(addr);`
 - You can call a `view` or `pure` function via: `contract.function.call()`; parameters, if any, go in the parenthesis of `call()`

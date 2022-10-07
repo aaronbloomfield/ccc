@@ -5,9 +5,10 @@
 
 pragma solidity ^0.8.16;
 
-import "./IERC721.sol";
+import "./IERC721Metadata.sol";
+import "./IERC165.sol";
 
-interface INFTmanager is IERC721 {
+interface INFTmanager is IERC721Metadata {
 
     // This creates a NFT for `_to` with the pased file name `_uri`.  Note
     // that `_uri` is just the filename itself -- the prefix is set via

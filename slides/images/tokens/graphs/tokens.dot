@@ -69,3 +69,83 @@ erc20_e -> dex_e [label="(confirmation)",style=dashed];
 dex_f -> alice_f [label="(confirmation)"];
 
 }
+
+digraph B {
+graph [fontname = "Helvetica"];
+node [fontname = "Helvetica",shape=point,width=0];
+edge [fontname = "Helvetica"];
+
+forcelabels=true;
+labeljust=l;
+rankdir="TB";
+
+// each account timeline header node
+alice_0 [label="Alice",shape=circle,width=1,pos="0,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+erc721_0 [label="ERC721",shape=circle,width=1,pos="3,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+auction_0 [label="Auction",shape=circle,width=1,pos="6,0.75!",color=black,fontcolor=white,style=filled,fillcolor=black];
+
+// timeline end nodes and vertical lines
+alice_end [label="12",pos="0,-4.5!",width=0.2,style=invis];
+alice_0 -> alice_end [arrowhead=none];
+erc721_end [label="12",pos="3,-4.5!",width=0.2,style=invis];
+erc721_0 -> erc721_end [arrowhead=none];
+auction_end [label="12",pos="6,-4.5!",width=0.2,style=invis];
+auction_0 -> auction_end [arrowhead=none];
+
+// visible timeline nodes
+alice_a [label="1",pos="0,-0.5!"];
+alice_b [label="2",pos="0,-1.0!"];
+alice_c [label="1",pos="0,-1.5!"];
+alice_d [label="2",pos="0,-2.0!"];
+alice_e [label="3",pos="0,-2.5!"];
+alice_f [label="4",pos="0,-3.0!"];
+alice_g [label="5",pos="0,-3.5!"];
+alice_h [label="6",pos="0,-4.0!"];
+/*
+alice_g [label="5",pos="0,-3.5!"];
+alice_h [label="6",pos="0,-4.0!"];
+alice_i [label="7",pos="0,-4.5!"];
+alice_j [label="8",pos="0,-5.0!"];
+*/
+
+erc721_a [label="1",pos="3,-0.5!"];
+erc721_b [label="2",pos="3,-1.0!"];
+erc721_c [label="1",pos="3,-1.5!"];
+erc721_d [label="2",pos="3,-2.0!"];
+erc721_e [label="3",pos="3,-2.5!"];
+erc721_f [label="4",pos="3,-3.0!"];
+erc721_g [label="3",pos="3,-3.5!"];
+erc721_h [label="4",pos="3,-4.0!"];
+/*
+erc721_g [label="5",pos="3,-3.5!"];
+erc721_h [label="6",pos="3,-4.0!"];
+erc721_i [label="7",pos="3,-4.5!"];
+erc721_j [label="8",pos="3,-5.0!"];
+*/
+
+auction_a [label="1",pos="6,-0.5!"];
+auction_b [label="2",pos="6,-1.0!"];
+auction_c [label="1",pos="6,-1.5!"];
+auction_d [label="2",pos="6,-2.0!"];
+auction_e [label="3",pos="6,-2.5!"];
+auction_f [label="4",pos="6,-3.0!"];
+auction_g [label="5",pos="6,-3.5!"];
+auction_h [label="6",pos="6,-4.0!"];
+/*
+auction_g [label="5",pos="6,-3.5!"];
+auction_h [label="6",pos="6,-4.0!"];
+auction_i [label="7",pos="6,-4.5!"];
+auction_j [label="8",pos="6,-5.0!"];
+*/
+
+// function calls
+alice_a -> erc721_a [label="mintWithURI()"];
+erc721_b -> alice_b [label="(returns NFT id)"];
+alice_c -> erc721_c [label="approve()"];
+erc721_d -> alice_d [label="(void, no revert)"];
+alice_e -> auction_e [label="startAuction()"];
+auction_f -> erc721_f [label="transferFrom()",style=dashed];
+erc721_g -> auction_g [label="(void, no revert)",style=dashed];
+auction_h -> alice_h [label="(returns auction id)"];
+
+}

@@ -113,6 +113,14 @@ interface IDAO {
     // @param _who The new member to add
     function addMember(address _who) external;
 
+    // This is how one requests to join the DAO.  Presumably they called
+    // howToJoin(), and fulfilled any requirement(s) therein.  In a real
+    // application, this would put them into a list for the owner(s) to
+    // approve or deny.  For us, this will just revert(), as joining is done
+    // through the other functions listed above.  This should also revert if
+    // the caller is already a member.
+    function requestMembership() external;
+
     //------------------------------------------------------------
     // Events to emit
 
