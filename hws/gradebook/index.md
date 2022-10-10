@@ -9,15 +9,15 @@ Gradebook Smart Contract
 
 I need a new gradebook!  Because Collab and my favorite spreadsheet programs are just not doing the job anymore.  So I've decided to keep everybody's grades in a public blockchain.  Your task is to implement this gradebook for me.
 
-Admittedly, a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts.  But it will introduce you to the concepts involved in developing smart contracts.  And there are many very similar applications that would only require a few tweaks to the gradebook contract.  There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.
+Admittedly, keeping a gradebook of private grades being kept on a public blockchain is not the most realistic use of smart contracts.  But it will introduce you to the concepts involved in developing smart contracts.  And there are many very similar applications that would only require a few tweaks to the gradebook contract.  There are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.
 
 The gradebook will need to have the following functionalities:
 
+- The instructor *OR* the teaching assistants can designate others as teaching assistants
 - Assignments can be created; each assignment has a maximum score
-- Grades for students can be entered and updated for a given assignment
-- Anybody can look up any student's grades (again, these are only *fake* grades)
-- The instructor *OR* TAs can designate others as teaching assistants
+- Grades for students can be entered and updated for a given assignment (only unsigned integers)
 - Only instructors and teaching assistants can create assignments and enter/update grades
+- Anybody can look up any student's grades (again, these are only *fake* grades)
 - Anybody can get a grade or a student's average score
 
 Writing this homework will require completion of the following assignments:
@@ -89,7 +89,7 @@ interface IGradebook {
 
 #### The `supportsInterface()` function
 
-We will see the use of `supportsInterface()` in a lecture and a later assignment.  For now, you should use this exact implementation:
+We will see the use of `supportsInterface()` in a future lecture and a later assignment.  For now, you should use this exact implementation:
 
 ```
 function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
@@ -111,14 +111,15 @@ function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
 - If a student does not have an entry for a given assignment, then their grade for that assignment is 0; remember that mappings return 0 if a key is not found
 - Note that BOTH the instructor and TAs can designate other TAs
 - The `supportsInterface()` function should be exactly as is specified above
+- The `requestTAAccess()` will grant *anybody* TA access; it's not realistic in a contract deployed on a public blockchain, but we need it to test your code (the details are in the IGradebook.sol comments for that function)
 
-The first six methods (after the two events) are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide details this a bit more.
+The first six methods (after the two events) in the [IGradebook.sol](IGradebook.sol.html) ([src](IGradebook.sol)) interface are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide details this a bit more.
 
 The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit the `assignmentCreationEvent()` event, and the `addGrade()` function should emit the `gradeEntryEvent()` event.  Be sure to emit the events *after* any `require()` calls!  It is often the case (but not required) that the event emission is done at the very end of the function.
 
 #### Address checksums
 
-Note that Remix may complain if an Ethernet address is not [checksummed](../../slides/ethereum.html#/checksum).  This is a warning, not an error, and it should still work fine.  But you still have to remove the warning, otherwise the compilation when you submit it will appear to fail.  Remix will provide, in the warning, the checksummed address -- you are welcome to use that value (cut-and-paste it into your code) instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
+Note that Remix may complain if an Ethernet address is not [checksummed](../../slides/ethereum.html#/checksum).  This is a warning, not an error, and it will still work fine.  But you still have to remove the warning, otherwise the compilation when you submit it will appear to fail.  Remix will provide, in the warning, the checksummed address -- you are welcome to use that value (cut-and-paste it into your code) instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
 
 
 ### Part 2: Testing and Deployment
