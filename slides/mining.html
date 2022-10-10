@@ -561,16 +561,24 @@ line-height:120%;
 
 
 
+## Terminology
+- The act of *certifying* a block is called different terms with different certification mechanisms
+- Technically *mining* is certification on a proof-of-work blockchain
+  - But, more generally, it encompasses any type of block certification
+- Other terms: signing, validating, etc.
+
+
+
 ## Proof of Authority (PoA)
-- A small number (possibly 1) of accounts are *signers*
+- A small set (possibly singleton) of accounts are *signers*
   - They form a *clique*
-  - One signer mines a block
+  - One signer signs a block
   - Then a majority (>50%) of the clique must agree
 - Not great for a decentralized cryptocurrency!
 - Our course blockchain uses this
   - The clique was defined in the genesis.json file
   - It makes mining (aka signing) much easier in a development setting
-- Biggest use: test networks, development environments, course blockchains
+- Biggest uses: test networks, development environments, course blockchains
 
 
 
@@ -584,7 +592,7 @@ line-height:120%;
   - Then the certifier loses some of their cryptocurrency
     - Called "slashing"
   - While not unknown, it rarely happens
-- Those who can certify blocks are instead called *validators*
+- Those who can certify blocks are called *validators*
 
 
 
@@ -593,7 +601,7 @@ line-height:120%;
   - Amount of currency held
   - Length of currency held
 - Implementations vary by cryptocurrency
-  - Typically there is a way that those with less "stake" will be able to be the validators less often
+  - There is a way that those with less "stake" will be able to be the validators less often
 - Coins that use this: Tezos, Cosmos, Peercoin, Tendermint, the ETH2 upgrade
   - ETH2 requires a minimum of 32 ETH to participate in PoS
 
@@ -602,14 +610,14 @@ line-height:120%;
 <!-- .slide: class="cclogo-slide" -->
 ## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum and PoS
 - Originally Ethereum was proof-of-work (hash algorithm: Ethash)
-- It has a [difficulty bomb](https://docs.ethhub.io/questions-about-ethereum/what-is-the-difficulty-bomb/), aka "Ice Age"
+- It had a [difficulty bomb](https://docs.ethhub.io/questions-about-ethereum/what-is-the-difficulty-bomb/), aka "Ice Age"
   - At certain block numbers, the difficulty increases significantly
-  - See [this graph](https://i.imgur.com/ac1xV3l.png) from [here](https://docs.ethhub.io/questions-about-ethereum/what-is-the-difficulty-bomb/)
+  - See [this graph](https://i.imgur.com/ac1xV3l.png) from the above link
 - Purpose: to force the developers to either:
   - Migrate it to a later date (as has happened so far)
   - Change to PoS (in the works for some time now)
 - The new Ethereum PoS proposal is called ETH2
-  - Or the Paris Network Upgrade
+  - Or the Paris Network Upgrade or the Casper protocol
   - It went live on September 15, 2022
 
 
@@ -893,7 +901,7 @@ Note that UTXOs are not only in the bottom level
 ## DAG size
 - You can see DAG sizes at https://minerstat.com/dag-size-calculator
 - Ethereum's is over 5 Gb (as of Sep 2022) <!-- change each semester -->
-  - This means that graphics cards with less than 4 Gb cannot mine ETH
+  - This means that graphics cards with less than 4 Gb cannot mine (sign, certify, whatever) ETH
 - Consider Ravencoin, whose DAG is currently at 3.5 Gb (as of Sep 2022)
   - Based on the expected DAG growth...
     - 4 Gb GPUS will no longer be able to mine it around July 2023
@@ -917,19 +925,19 @@ Note that UTXOs are not only in the bottom level
 <img src="images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
-  <section data-markdown data-separator="^\n\n\n" data-transition="none" data-transition-speed="fast"><textarea>
+  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Cryptocurrency "Forks"
 - There are four different meanings of "fork" with regard to cryptocurrencies
-  - Uncle / orphan / ommer blocks
-  - Soft fork 
-  - Hard fork
-  - Source code fork
+  1. Uncle / orphan / ommer blocks
+  2. Soft fork 
+  3. Hard fork
+  4. Source code fork
     </textarea></section>
 
 
 <section data-markdown data-transition="none" data-transition-speed="fast" data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="right-float-img" -->
-## Uncle / Orphan / Ommer blocks
+## Type 1: Uncle / Orphan / Ommer
 
 <img src="images/mining/orphan/orphan.dot.1.svg" style="width:100px;padding-left:86px;padding-right:86px">
 
@@ -1025,11 +1033,12 @@ Note that UTXOs are not only in the bottom level
   - The EVM keeps them around in memory
   - They are not the canonical "truth" of the blockchain, though
   - Reason: with a 15 second block time, this is much more likely to occur
+  - They cannot happen on our proof-of-authority blockchain
 
 
 
 <!-- .slide: class="right-float-img" -->
-## Soft forks
+## Type 2: Soft forks
 
 <img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
 
@@ -1061,7 +1070,7 @@ Note that UTXOs are not only in the bottom level
 
 
 <!-- .slide: class="right-float-img-nb-400" -->
-## Hard forks
+## Type 3: Hard forks
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gabel_--_2021_--_7220.jpg/800px-Gabel_--_2021_--_7220.jpg)
 - A change is proposed that some users do *NOT* want to adopt
   - Or that is not backwards-compatible, so some users choose one way and some the other way
@@ -1096,11 +1105,11 @@ Note that UTXOs are not only in the bottom level
 
 
 <!-- .slide: class="cclogo-slide" -->
-## [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Ravencoin (2018)
+## Type 4: Source code fork
 - You can make a new cryptocurrency by:
   - Take a tested open source code base
   - Make a the modifications you want
-- The [Ravencoin (RVN) source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin)
+- The [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) [Ravencoin (RVN) source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin); created in 2018
 - Changes:
   - 1000x as many coins
   - 1 minute block time instead of 10 minutes
@@ -1230,8 +1239,7 @@ Note that UTXOs are not only in the bottom level
   - As no one person is going to have 51% of the [BTC mining / hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
 - But a mining pool might for other cryptocurrencies
 - Consider the [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Ravencoin [pool from 2miners](https://2miners.com/rvn-mining-pool)
-  - See what percentage they have now:
-    - Divide the pool hash rate by the network hash rate
+  - See what percentage they have now by dividing the pool hash rate by the network hash rate
   - On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
     - Due to a purchase of hashpower from (likely) Nicehash
 - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo had one in January 2021

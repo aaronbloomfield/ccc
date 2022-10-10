@@ -77,7 +77,7 @@ line-height:120%;
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## What is a Token
 - A *token* is an *entry* on a blockchain that represents *something* other than a "monetary" transaction
-  - Entry:
+  - Form of the entry:
     - In Ethereum, this would be a smart contract
     - Other blockchains (Tezos, Ravencoin) have native support for tokens
   - The *something* that it represents could be:
@@ -192,7 +192,7 @@ contract EZTokens {
 
 ## Fungible tokens
 - A *fungible* token can be exchanged for an equal amount of the same token
-  - Examples: tokens that represent cryptocurrencies, shares of a *thing*, or weight of votes
+  - Examples: tokens that represent cryptocurrencies, shares of a *thing* such as a stock or equity, or weight of votes
 - A *non-fungible* token cannot be split; it's atomic
   - Examples: tokens that represent real-world items (artwork), digital assets, membership in an organization, etc.
 
@@ -208,7 +208,7 @@ contract EZTokens {
     - Houses, cars, boats, planes, equities
   - Buying a digital asset
     - A digital image, etc.
-- The first three either already have or don't need receipts, and so have no need for an NFT
+- The first three either don't need or already have receipts, and so have no need for an NFT
   - NFTs thus are only useful for the last one
 
 
@@ -234,6 +234,7 @@ contract EZTokens {
 ## What does ownership mean?
 - I suppose you have the rights to publish that picture
   - But how many people who buy NFTs want to do that?
+  - Some NFTs explicitly prevent you publishing the image!
 - Sports networks want to sell NFTs for "moments" in a game
   - I can't imagine they are going to give up broadcasting rights to that "moment"
 
@@ -249,6 +250,7 @@ contract EZTokens {
 - Consider DeviantArt user LiamRSharp
   - He had to shut down [his DeviantArt gallery](https://www.deviantart.com/liamrsharp) because of NFT theft
   - See [this twitter post](https://twitter.com/liamrsharp/status/1471940531554959360?lang=en) and [this reddit post](https://www.reddit.com/r/KotakuInAction/comments/ritysg/twitter_sadly_im_going_to_have_to_completely_shut/)
+  - Once this went viral, DeviantArt did something about it, and he was able to re-open it
 - What prevents somebody from selling an NFT multiple times?
   - Or making minor modifications and re-selling it?
   - *Some* auction sites check for this, but not all, and not reliably
@@ -301,9 +303,9 @@ contract EZTokens {
   this.funcName.selector
   myInterface.funcName.selector
   ```
-  - The first one is only to get a function selector of the current contract
+  - The first one is only to get a function selector of a function in the current contract
 - An *interface selector* is just the XOR of all the contained function selectors
-  - All the outward-facing ones: public and external only
+  - But just the outward-facing ones: public and external only
 - You can get the interface selector via:
   ```
   type(myInterface).interfaceId
@@ -320,6 +322,35 @@ contract EZTokens {
     - A `bytes4` value that is the xor of the function selectors of the (non-inherited and outward-facing) functions in the interface
   - (two others we won't see here)
 - Reference is from [this page](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#meta-type) of the [Solidity programming reference](https://docs.soliditylang.org/en/latest/)
+
+
+
+## Interface / function selectors
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>// SPDX-License-Identifier: GPL-3.0-or-later
+
+pragma solidity ^0.8.16;
+
+interface ISelectors {
+    function doesNothing(uint,bool) external;
+    function onlyReverts(string memory) external;
+    function triad(bytes4) external;
+}
+
+contract Selectors is ISelectors {
+    function doesNothing(uint u, bool b) external { }
+    function onlyReverts(string memory s) external { }
+    function triad(bytes4 b) external { }
+    function onlyMe() internal { }
+
+    constructor() {
+        require (type(ISelectors).interfaceId ==
+                 ISelectors.doesNothing.selector ^ 
+                 ISelectors.onlyReverts.selector ^ 
+                 ISelectors.triad.selector);
+    }
+}
+</code></pre>
 
 
 
@@ -344,6 +375,8 @@ contract EZTokens {
 </code></pre>
 
 - Some implementations use `view`, some use `pure`
+- Function and interface selector: 0x01ffc9a7
+- [OpenZeppelin source code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/IERC165.sol)
 
 
 
@@ -381,6 +414,9 @@ contract EZTokens {
 
 
 ## ERC-20 Interface
+- [OpenZeppelin source code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol) and [contract source code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol)
+
+
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
 >interface IERC20 {
 
@@ -416,53 +452,6 @@ contract EZTokens {
   - `approve()` the DEX for a certain amount (say, $x$) of the cryptocurrency
   - Send *one* transaction to the DEX that also contains ETH
     - The parameters in that transaction include the transferred cryptocurrency info
-
-
-
-## ERC-20 Optional Interface
-- There are three *optional* functions, as described [here](https://eips.ethereum.org/EIPS/eip-20)
-
-<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
->    function name() external view returns (string);
-
-    function symbol() external view returns (string);
-
-    function decimals() external view returns (uint8);
-</code></pre>
-    </textarea></section>
-
-    <section>
-<h2>Our Usage</h2>
-<ul>
-  <li>For the Tokens assignment, we will use:
-<pre class="code-wrapper" style="margin-bottom:-20px"><code class="hljs awk small" style="height:auto;width:120%"
->interface IERC20Metadata is IERC20 {
-
-    function name() external view returns (string memory);
-
-    function symbol() external view returns (string memory);
-
-    function decimals() external view returns (uint8);
-
-    // this must implement the 6 functions from IERC20
-}
-</code></pre>
-</li>
-<li>Our ERC20 code contract will implement that interface
-</li>
-<li>Our TokenCC contract line will be:
-<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
->contract TokenCC is ERC20, IERC165 {
-</code></pre>
-</li></ul>
-</section>
-
-   <section data-markdown data-separator="^\n\n\n"><textarea>
-## Starting Source Code
-- We will all start with the freely available implementation by [OpenZeppelin](https://openzeppelin.com/)
-- Specifically that for ERC-20 tokens:
-  - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol
-- Let's go over that code...
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id="erc20constructor"><textarea>
@@ -478,7 +467,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contr
 
 contract MyToken is ERC20 {
     constructor() ERC20("AaronDollar(TM)", "AD") {
-        _mint(msg.sender, 100 * 10**uint(decimals()));
+        _mint(msg.sender, 100 * 10**10);
     }
 }
 ```
@@ -486,31 +475,105 @@ contract MyToken is ERC20 {
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
+## ERC-20 Optional Interface
+- There are three *optional* functions, as described [here](https://eips.ethereum.org/EIPS/eip-20)
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>interface IERC20Metadata is IERC20 {
+
+    function name() external view returns (string);
+
+    function symbol() external view returns (string);
+
+    function decimals() external view returns (uint8);
+
+}
+</code></pre>
+
+- [OpenZeppelin source code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/IERC20Metadata.sol)
+    </textarea></section>
+
+    <section>
+<h2>Our Usage</h2>
+<ul>
+  <li>For the Tokens assignment, we will use:
+<pre class="code-wrapper" style="margin-bottom:-20px"><code class="hljs awk small" style="height:auto;width:120%"
+>interface ITokenCC is IERC20Metadata, IERC165 {
+
+    // all of IERC20 Metadata is here (name(), symbol(), decimals())
+
+    // all of IERC20 is here (6 functions)
+
+    // IERC165 is here (supportsInterface())
+
+    function requestFunds() external;
+
+}
+</code></pre>
+</li>
+<li>Our ERC20 code contract will implement that interface
+</li>
+<li>Our TokenCC contract line will be:
+<pre class="code-wrapper"><code class="hljs awk" style="height:auto"
+>contract TokenCC is ITokenCC, ERC20 {
+</code></pre>
+</li></ul>
+</section>
+
+   <section data-markdown data-separator="^\n\n\n"><textarea>
+## Implementing our Token Cryptocurrencies
+- Our starting contract line:
+  ```
+contract TokenCC is ITokenCC, ERC20 {
+```
+- We have to implement:
+  - constructor()
+  - name(), decimals(), symbol() for IERC20Metadata
+  - supportsInterface() for IERC165
+  - requestFunds() for ITokenCC
+  - Nothing from IERC20, since we inherit from ERC20
+
+
+
+## Starting Source Code
+- We will all start with the freely available implementation by [OpenZeppelin](https://openzeppelin.com/)
+- Specifically that for ERC-20 tokens:
+  - https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol
+- Let's go over that code...
+   </textarea></section>
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Token Cryptocurrencies
 - See a list at https://erc-tokens.com/
+  - 1,907 such token cryptocurrencies (as of October 2022)
 - Consider [Atomic Wallet](https://atomicwallet.io/)
-  - A wallet that can store (as of March 2022):
+  - A wallet that can store (as of October 2022):
     - 52 blockchain cryptocurrencies
-    - Over 120 token cryptocurrencies
-  - You can see the list on the next slide
+    - [344 ERC-20 token cryptocurrencies](https://atomicwallet.io/prices)
+      - 57 BEP20 tokens: runs on Binance, not Ethereum
+      - 7 TRC20 tokens: runs on TRON, not Ethereum
+  - You can see an (older) list on the next slide
 - We'll be creating one in an upcoming homework
 
 
 
-<img src="images/tokens/atomic-wallet.webp" class="stretch">
+<img src="images/tokens/atomic-wallet.webp" class="stretch" style="padding:0;border-radius:0">
 
 
 
 <!-- .slide: class="cclogo-slide" -->
 ## [![shib logo](../slides/images/logos/shib-coin-symbol.svg)](https://coinmarketcap.com/currencies/shiba-inu/) Consider SHIB
-- As of March 20, 2022:
-  - SHIB's value is `$`0.00002305 (43,384 per USD)
-  - ETH's value is `$`2,851
-  - [ETH gas](https://ethgas.watch/) is 50 gwei, which means `$`3.00 per transaction
-- To buy SHIB, you have to spend `$`3.00 for transaction fees
-  - Or over 130,000 SHIB
+- As of October 9, 2022:
+  - SHIB's value is `$`0.00001105 (90,497 per USD)
+  - ETH's value is `$`1,332
+  - [ETH gas](https://etherscan.io/gastracker) is 29 gwei, which means `$`0.81 per transaction
+- To buy SHIB, you have to spend `$`0.81 for transaction fees
+  - Or over 73,000 SHIB
 - All token cryptocurrency exchanges with the ERC-20 contract have to pay the Ethereum fees!
-- Exchanges such as Coinbase do it differently...
+- Exchanges such as Coinbase do it differently
+- SHIB is #14 on [coinmarketcap.com](https://coinmarketcap.com/)
+  - Because the ERC-20 token minted 549,063,278,876,302 shares (yes, $5.5 \ast 10^{14}$)
+  - Total market cap: `$`6.1 *billion* dollars
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id="dai"><textarea>
@@ -518,7 +581,6 @@ contract MyToken is ERC20 {
 ## [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) DAI / [![weth logo](../slides/images/logos/weth-coin-symbol.svg)](https://coinmarketcap.com/currencies/weth/) WETH Example
 - The code for this is [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#web3py-example)
   - And reproduced on the next slide
-  - Due to a bug in the library, it runs into a parse error
 - DAI: An Ethereum token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
   - When new DAI are minted, the cryptocurrencies used to exchange for them are put into 'vaults' to help DAI retain it's value
 - WETH, for "Wrapped ETH", has a 1-to-1 exchange value with regular ETH
@@ -591,8 +653,25 @@ print("Addr Balance:", addr_balance)
 
 
 
+## Python code for DAI & WETH
+- We'll see how to access blockchains via Python in later assignments
+- Output:
+
+
+```
+===== DAI =====
+Total Supply: 6306220677.598089
+Addr Balance: 6801805.628786693
+
+===== WETH =====
+Total Supply: 4071131.476204834
+Addr Balance: 5149.944966727369
+```
+
+
+
 ## Attacks
-- Consider [this attack](https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/):
+- Consider [this attack](https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/) on an ERC-20 token:
   1. Alice allows Bob to transfer $n>0$ tokens via `approve()`
   2. Later, Alice changes that to $m>0$
   3. Bob notices (2) in the mempool, and quickly spends all $n$ tokens
