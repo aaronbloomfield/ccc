@@ -38,7 +38,7 @@ contracts = {
 other = {
 	
 	# What is your (fake) average in the course gradebook?  This should be a
-	# number out of 100.
+	# number out of 100 with decimals.
 	'your_fake_avg': None,
 
 	# The maximum number of points on the assignment with index 3 in the
@@ -75,6 +75,14 @@ sanity_checks = {
 	# In particular, if you added any other lines for testing, you should
 	# remove those.
 	'constructor_has_one_line': False,
+
+	# Does your `supportsInterface()` function return true for two values?  In
+	# particular, it should be exactly as specified in the homework.
+	'supportsInterface_is_correct': False,
+
+	# Is your gradebook contract opening line *exactly:*
+	# `contract Gradebook is IGradebook {`?
+	'contract_opening_line_is_correct': False,
 }
 
 

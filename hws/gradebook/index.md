@@ -27,11 +27,13 @@ Writing this homework will require completion of the following assignments:
 
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/) and the [Solidity slide set](../../slides/solidity.html#/).
 
-
+In addition to your source code, you will submit an edited version of [gradebook.py](gradebook.py.html) ([src](gradebook.py)).
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Oct 11: added two more required entries to the `sanity_checks` dictionary in [gradebook.py](gradebook.py.html) ([src](gradebook.py)): `'supportsInterface_is_correct'` and `'contract_opening_line_is_correct'`
 
 
 ### Part 1: IGradebook interface
