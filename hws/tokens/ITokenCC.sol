@@ -10,20 +10,16 @@ import "./IERC20Metadata.sol";
 
 interface ITokenCC is IERC20Metadata, IERC165 {
 
-	// This can just be implemented as a public variable, which will cause
-	// Solidity to provide a getter function, and you should also make it
-	// constant.
-    //function name() public virtual override pure returns (string memory);
+    // You'll need a constructor, which should call the ERC20 constructor
+    // and _mint().  This sets the name and symbol, so you don't have to
+    // define those methods (or public variables).
 
-    // This can just be implemented as a public variable, which will cause
-	// Solidity to provide a getter function, and you should also make it
-	// constant.
-    //function symbol() external view returns (string memory);
-
-	// This can just be implemented as a public variable, which will cause
-	// Solidity to provide a getter function, and you should also make it
-	// constant.
-    //function decimals() external view returns (uint8);
+    // You have to implement the decimals() function from the IERC20Metadata
+    // interface.  Because of some peculiarities of Solidity inheritance, you
+    // have to implement these as actual functions, not public variables. And
+    // it has to use the multi-override version of the `override` keyword, as
+    // described in the slides (solidity.html#/multioverride) and the
+    // homework description.
 
     // We will need this function in a future assignment (Arbitrage Trading),
     // which is why it is in this interface. For now, it should have a single
@@ -32,7 +28,7 @@ interface ITokenCC is IERC20Metadata, IERC165 {
     function requestFunds() external;
 
     // You also need to implement supportsInterface(), which is required by
-    // the IERC165 interface.
+    // the IERC165 interface.  You support four interfaces!
 
     // The other methods needed by the IERC20 interface are already
     // implemented for you in the ERC20.sol contract.

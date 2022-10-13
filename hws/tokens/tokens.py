@@ -52,9 +52,13 @@ other = {
 	# sure it is not already used (see the assignment for how to verify this).
 	'cryptocurrency_abbrev': None,
 
-	# The transaction hash where you sent me some of your cryptocurrency.  It
+	# The transaction hash where you sent me 10.0 of your cryptocurrency.  It
 	# must have been done by eth_coinbase, above.
 	'cc_sent_txn_hash': None,
+
+	# The transaction hash where you sent me an NFT.  It must have been done
+	# by eth_coinbase, above.
+	'nft_sent_txn_hash': None,
 
 	# The NFT ID that you sent me.  This is from the nft_manager contract, above.
 	'nft_id_sent': None,
@@ -83,7 +87,7 @@ sanity_checks = {
 	'uploaded_cc_logo': False,
 
 	# Did you mint at least 50 coins of your TokenCC?  Keep in mind that you
-	# have to add a number of decimal places after the number of coins.
+	# have to add a number of decimal places after the number of coins minted.
 	'minted_at_least_50_coins': False,
 
 	# Did you send me exactly 10.0 of your token cryptocurrencty?  If your
@@ -99,18 +103,34 @@ sanity_checks = {
 	# or .webp images.
 	'uploaded_three_nft_images': False,
 
-	# Are the NFT images no larger than 2000x2000?
+	# Are all three NFT images no larger than 2000x2000?
 	'nft_image_sizes_correct': False,
 
 	# Did you name the images correctly?  The names should start with your
 	# userid followed by a underscore, and have the appropriate image
-	# extension.  All filenames must be strictly less than 32 characters in
-	# length. stay open for ONE WEEK after the assignment due date/time?
+	# extension.  All filenames must be strictly less than or equal to 32
+	# characters in length.
 	'image_files_named_correctly': False,
 
 	# Did you send me one of your NFTs?  Which one was specified in
 	# the 'nft_id_sent' field in the 'other' dictionary, above.
 	'sent_nft': False,
+
+	# Does your `supportsInterface()` function in TokenCC return true for the
+	# four interfaces?
+	'tokencc_supportsInterface_is_correct': False,
+
+	# Is your TokenCC contract opening line *exactly:*
+	# `contract TokenCC is ITokenCC, ERC20 {`?
+	'tokencc_opening_line_is_correct': False,
+
+	# Does your `supportsInterface()` function in NFTmanager return true for
+	# the four interfaces?
+	'nftmanager_supportsInterface_is_correct': False,
+
+	# Is your NFTmanager contract opening line *exactly:*
+	# `contract NFTmanager is INFTmanager, ERC721 {`?
+	'nftmanager_opening_line_is_correct': False,
 
 }
 

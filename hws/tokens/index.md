@@ -12,10 +12,11 @@ The actual amount of code developed in this assignment is relatively small.  The
 
 As you develop the items in this assignment, keep in mind that -- on our private Ethereum blockchain -- it is possible to track back whose smart contracts are whose.
 
-You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment as well as the [dApp Introduction](../dappintro/index.html) assignment.  You will also need to be familiar with the [lecture slides on Tokens](../../slides/tokens.html#/).  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You will also need to launch a geth terminal, which is also described in the that assignment.
+You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment as well as the [dApp Introduction](../dappintro/index.html) assignment.  You will also need to be familiar with the [lecture slides on Tokens](../../slides/tokens.html#/).  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.
 
 If you have not successfully completed those two assignments, then you will not be able to complete this assignment.
 
+In addition to your source code, you will submit an edited version of [tokens.py](tokens.py.html) ([src](tokens.py)).
 
 ### Changelog
 
@@ -24,22 +25,22 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 ### Part 1: ERC-20 Fungible Token
 
-In this part, you will create a fungible token that follows the (enhanced) [ERC-20 token standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/).  This token will represent a token cryptocurrency.  You will use this code in future assignments, such as where you will then be creating a decentralized cryptocurrency exchange for the cryptocurrency that you are creating here.
+In this part, you will create a fungible token that follows the (enhanced) [ERC-20 token standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/).  This token will represent a token cryptocurrency.  You will use this code in future assignments, such as where you will be creating a decentralized cryptocurrency exchange for the cryptocurrency that you are creating here.
 
 #### Part 1, task 1: Name your cryptocurrency
 
 You can pick any name that you want.  You can not use the name of the course cryptocurrency or of an [existing cryptocurrency](https://coinmarketcap.com/).  Feel free to be funny and creative here, but please be appropriate in your selection.  Also keep in mind that, in this course, it is possible for somebody to figure out who deployed what cryptocurrency by analyzing the blockchain.  
 
-You will need to create both a name and an abbreviation.  Your name and abbreviation cannot already exist.  To see if an abbreviation exists, see if there is a file with that abbreviation in the `cclogos/` directory in Collab's resources -- if so, then some other student has claimed that abbreviation.  To claim one, put a file named `xyz.png` (where `xyz` is your cryptocurrency abbreviation) there.  You can put a placeholder file there while you work on the logo (below).  Please make the file name be all lower case.
+You will need to create both a name and an abbreviation.  Your name and abbreviation cannot already exist.  To see if an abbreviation exists, see if there is a file with that abbreviation in the `cclogos/` directory in Collab's resources -- if so, then some other student has claimed that abbreviation.  To claim an abbreviation, put a file named `xyz.png` (where `xyz` is your cryptocurrency abbreviation) there.  You can put a placeholder file there while you work on the logo (below).  Please make the file name be all lower case.
 
-Following in the precedent for currently existing cryptocurrencies, abbreviations are at most four characters, but typically three, and possibly two.  You can have letters and numbers, but not symbols; the first character of the abbreviation must be a letter.  The abbreviation when representing the cryptocurrency is always rendered in upper case (i.e., "BTC"), but the logo file name is all lower case with a ".png" extension (i.e., "btc.png").
+Following in the precedent for currently existing cryptocurrencies, abbreviations are at most four characters, typically three, and possibly two.  You can have letters and numbers, but not symbols; the first character of the abbreviation must be a letter.  The abbreviation when representing the cryptocurrency is always rendered in upper case (i.e., "XYZ"), but the logo file name is all lower case with a ".png" extension (i.e., "xyz.png").
 
 
 #### Part 1, task 2: Create a logo
 
 You will need to create a logo for your cryptocurrency.  The logo that you submit should be 512x512 pixels in size.  Use a fun color!  Create a neat logo!  But please make sure the logo is appropriate.  You can look at the types of logos on a site such as [coinmarketcap.com](https://coinmarketcap.com) for ideas.
 
-The logo itself should be a circular logo with a transparent background outside the circle (just like what is on coinmarketcap.com).  Note that your logo must be readable if the size were reduced to a 32x32 pixel version.  The submission must be a .png file, and it will have to be named `logo.png`.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  You can use this [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background.
+The logo itself should be a circular logo with a transparent background outside the circle, just like what is on coinmarketcap.com.  Your logo can also be almost-circular, like some we have -- or will have -- seen: [STORJ](../../slides/images/logos/storj-coin-symbol.svg), [ERG](../../slides/images/logos/erg-coin-symbol.svg), and [MIM](../../slides/images/logos/mim-coin-symbol.svg).  Note that your logo must be readable if the size were reduced to a 32x32 pixel version.  The submission must be a .png file, and it will have to be named `xyz.png`, where "xyz" is your coin abbreviation.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  You can use this [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background outside the circle.
 
 For more examples, see [cryptologos.cc](https://cryptologos.cc/) and [this github site](https://github.com/coinwink/cryptocurrency-logos).
 
@@ -62,7 +63,7 @@ You should look over and familiarize yourself with all this code.  The inheritan
 
 ![](inheritance.dot.1.svg)
 
-Note that the only new files, beyond the the OpenZeppelin implementation, are the two bottom grey nodes.  We added was the ITokenCC abstract contract, and you have to implement the TokenCC contract.
+Note that the only new files, beyond the the OpenZeppelin implementation, are the two bottom grey nodes.  We added was the ITokenCC interface, and you have to implement the TokenCC contract.
 
 
 #### Part 1, task 4: Develop the smart contract
@@ -73,25 +74,26 @@ There are some very strict submission requirements for this submission so that w
 
 1. Your contract MUST be in a file called `TokenCC.sol`.
 2. You must put your name and userid as the second line of the file (right after the SPDX line).
-3. Your contract opening line MUST be: `contract TokenCC is ITokenCC, ERC20 {`; this will inherit the other contracts and interfaces (Context, IERC20, ERC20, and IERC165).
+3. Your contract opening line MUST be: `contract TokenCC is ITokenCC, ERC20 {`; this will inherit the other contracts and interfaces (Context, IERC20, IERC20Metadata, ERC20, and IERC165).
 4. The pragma line should be: `pragma solidity ^0.8.16;`.
-5. You are NOT to submit any of the *files* for the interfaces above (Context.sol, IERC20.sol, ITokenCC.sol, or IERC165.sol), nor the ERC20.sol file.  And don't include the code from those files in your TokenCC.sol file.  You should `import` them in `TokenCC.sol` as such: `import "./ITokenCC.sol";` and `import "./ERC20.sol";` -- those two files import all the other contracts and interfaces.  The necessary files will be put into the appropriate directory on Gradescope when it attempts to compile your program.
-6. You should not submit any files other than the `TokenCC.sol` file for this part of the assignment; all your code must be in that `TokenCC.sol` file.
-7. You cannot edit the [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)) file -- any changes have to go into your `TokenCC.sol` file.
+5. You are NOT to submit any of the *files* for the interfaces above (Context.sol, IERC20.sol, IERC20Metadata.sol, ITokenCC.sol, or IERC165.sol), nor the ERC20.sol file.  And don't include the code from those files in your TokenCC.sol file.  You should `import` them in `TokenCC.sol` as such: `import "./ITokenCC.sol";` and `import "./ERC20.sol";` -- those two files import all the other contracts and interfaces.  The necessary files will be put into the appropriate directory on Gradescope when it compiles your program.
+6. You cannot edit the [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)) file -- any changes have to go into your `TokenCC.sol` file.
 
 Your task is to create a `TokenCC.sol` file with a `TokenCC` contract.  Some notes:
 
-- You have to define the name and symbol when the constructor is called -- you can do this by calling the base class (`ERC20`) constructor that takes two parameters -- to see how to do this, look at [this lecture slide](../../slides/tokens.html#/erc20constructor) and the [Arguments for Base Constructors](https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors) section of the Solidity language reference.
-- You also have to define public variables `name`, `symbol`, and `decimals`, even though you included the first two in the ERC20 constructor call.  (Doing it this way avoids inheritance issues).  These variables should be `constant`, `public`, and `override`.
-- Keep in mind that, because the `_mint()` function is `internal`, it can only be called from code you write.  So your constructor should mint for you a reasonable amount of the cryptocurrency.  
-- You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *three* interfaces: `IERC165`, `IERC20`, and `ITokenCC`
-    - It also extends `Context`, but there are no `external` or `public` methods in `Context`, so there is no interface there to support.
+- You have to define the name and symbol when the constructor is called -- you can do this by calling the base class (`ERC20`) constructor that takes two parameters -- to see how to do this, look at [this lecture slide](../../slides/tokens.html#/erc20constructor) and the [Arguments for Base Constructors](https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors) section of the Solidity language reference.  Defining them via this method means you don't have to create a `name()` method nor a `name` public variable (and likewise for `symbol()` and `symbol`).
+- You cannot define a public variable for `decimals` because of peculiarities of Solidity inheritance; it has to be a function.
+- Keep in mind that, because the `_mint()` function is `internal`, it can only be called from code you write.  So your constructor should mint for you a reasonable amount of the cryptocurrency.
+- You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *four* interfaces: `IERC165`, `IERC20`, `IERC20Metadata`, and `ITokenCC`
+    - Your contract also extends `Context`, but there are no `external` or `public` methods in `Context`, and it's an abstract contract, so there is no interface there to support.
 - You have to implement a `requestFunds()` function that does nothing other than `revert()` -- we will be using that function in a future assignment, which is why it is in this interface.
+- Your `decimals()` function will override a method defined in two ancestors in the inheritance tree -- `ERC20` and `IERC20Metadata`.  You have to use a form of `override` that specifies the multiple items being overridden, as shown [here](../../slides/solidity.html#/multioverride).
 
-Minting considerations:
+Implementation considerations:
 
 - How many decimals you pick is up to you.  Ethereum uses 18; Bitcoin uses 8.  To make this a bit more sane for us to manage, let's choose a number between 8 and 12 (inclusive).
 - How many coins you mint is up to you.  We would recommend no less than 100 coins, and it *must* be at least 50 coins.  On the other end of the spectrum, [SHIB](https://coinmarketcap.com/currencies/shiba-inu/) -- a token cryptocurrency on Ethereum -- minted 549,063,278,876,302 (yes, $5.5 \ast 10^{14}$) coins.  
+	- A million coins, or a billion coins, is not unreasonable here
 	- Keep in mind the amount you are specifying in the mint call is $x \ast 10^d$ where $x$ is how many coins you want to mint and $d$ is the number of decimal places.  So if you want to mint 100 coins, and you are using 10 decimal places, then the amount to mint is 1,000,000,000,000.
 
 Be sure to thoroughly test this in Remix!  Remember that you have multiple accounts in the Javascript deployment environment, so you can transfer your new cryptocurrency back and forth.  Just switch the account in the "Account" drop-down list to initiate a transaction from a different account.
@@ -100,12 +102,12 @@ Be sure to thoroughly test this in Remix!  Remember that you have multiple accou
 
 One you have thoroughly tested your ERC-20 token in Remix, you should deploy it to our private Ethereum blockchain.  How to do this was covered in the [dApp Introduction](../dappintro/index.html) assignment, which you may want to refer back to.  You have to deploy this part and the next part from the same account, and you will have to submit that account address at the end.
 
-Save the contract address it was deployed to from that transaction, as you will need to submit those at the end of this assignment.
+Save the contract address it was deployed to, as you will need to submit those at the end of this assignment.
 
 
 #### Part 1, task 6: Send me some money!
 
-You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Collab landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1000000000 total units.  Save the transaction hash of when you sent me your cryptocurrency.
+You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Collab landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1,000,000,000 (which is $10 \ast 10^8$) total units.  Save the transaction hash of where you sent me your cryptocurrency, as you will need to submit that value.
 
 
 
@@ -117,7 +119,7 @@ In this part, you will create a non-fungible token that follows the [ERC-721 tok
 
 You will be creating three images for NFTs for this assignment.  (You actually only need two for this assignment, but the third will be needed later on, so we'll create all three now).  The images should be uploaded to the `ipfs/` directory in the Collab workspace in the Resources tool.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Collab, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Collab workspace, only those in the class can view those files -- but that means anybody in the class can view it.
 
-All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You are going to be uploading multiple image files in a future assignment, so please plan your file naming scheme appropriately.  You will need three such images.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG (.jpg), PNG (.png), and WEBP (.webp) images, please.
+All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You will need three such images.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG (.jpg), PNG (.png), and WEBP (.webp) images, please.
 
 **NOTE:** The filenames, with the extension, **MUST** be strictly less than 32 characters in length.  This is just for the filename ("mst3k_foo_bar.png"), not the path to that file name.
 
@@ -125,15 +127,15 @@ The images must be no larger than 2000 pixels in either dimension!  Which means 
 
 We don't really care what images you upload, as long as:
 
-1. They are images that are in the public domain, such as from Wikipedia (or similar).  You can do a [Google Images search](https://images.google.com), and in the results, select Tools -> Usage Rights -> Creative Commons licenses.  Meme images are fine.  You are welcome to modify those images.
+1. They are images that are in the public domain, such as from Wikipedia, Reddit, or similar.  You can do a [Google Images search](https://images.google.com), and in the results, select Tools -> Usage Rights -> Creative Commons licenses.  Meme images are fine.  You are welcome to modify those images.
 2. They are appropriate images.  Nothing vulgar, nothing involving nudity, nothing that could be labeled NSFW (not safe for work), or otherwise deemed as offensive.  Basically, nothing that would get me in trouble with an administration that does not have a sense of humor about these things.  Like with the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment, there are many great ways to express your opinions that others may find controversial -- but in an image for a NFT on our private Ethereum blockchain is not really one of them.
 3. The image sizes are as specified above (no larger than 2000x2000).
 
-Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF THE IMAGE.**  The assumption is that you don't actually own the original image, since it's in the public domain.
+Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF THE IMAGE.**  The assumption is that you don't actually own the original image, since it's in the public domain.  Or if you do own the image, then possession of the NFT does not mean you are willing to give up ownership of the original image itself.
 
-Pick some fun or funny image.  You are welcome to pick one from Wikipedia.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.
+Pick some fun or funny image.  You are welcome to pick one from Wikipedia or Reddit or similar.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.
 
-You need three such images.
+You need to upload three such images.
 
 #### Part 2, task 2: Review the starter code
 

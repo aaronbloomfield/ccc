@@ -21,20 +21,16 @@ import <font color="#FF0000">"./IERC20Metadata.sol"</font><font color="#990000">
 
 interface ITokenCC <font color="#008080">is</font> IERC20Metadata<font color="#990000">,</font> IERC165 <font color="#FF0000">{</font>
 
-	<i><font color="#9A1900">// This can just be implemented as a public variable, which will cause</font></i>
-	<i><font color="#9A1900">// Solidity to provide a getter function, and you should also make it</font></i>
-	<i><font color="#9A1900">// constant.</font></i>
-    <i><font color="#9A1900">//function name() public virtual override pure returns (string memory);</font></i>
+    <i><font color="#9A1900">// You'll need a constructor, which should call the ERC20 constructor</font></i>
+    <i><font color="#9A1900">// and _mint().  This sets the name and symbol, so you don't have to</font></i>
+    <i><font color="#9A1900">// define those methods (or public variables).</font></i>
 
-    <i><font color="#9A1900">// This can just be implemented as a public variable, which will cause</font></i>
-	<i><font color="#9A1900">// Solidity to provide a getter function, and you should also make it</font></i>
-	<i><font color="#9A1900">// constant.</font></i>
-    <i><font color="#9A1900">//function symbol() external view returns (string memory);</font></i>
-
-	<i><font color="#9A1900">// This can just be implemented as a public variable, which will cause</font></i>
-	<i><font color="#9A1900">// Solidity to provide a getter function, and you should also make it</font></i>
-	<i><font color="#9A1900">// constant.</font></i>
-    <i><font color="#9A1900">//function decimals() external view returns (uint8);</font></i>
+    <i><font color="#9A1900">// You have to implement the decimals() function from the IERC20Metadata</font></i>
+    <i><font color="#9A1900">// interface.  Because of some peculiarities of Solidity inheritance, you</font></i>
+    <i><font color="#9A1900">// have to implement these as actual functions, not public variables. And</font></i>
+    <i><font color="#9A1900">// it has to use the multi-override version of the `override` keyword, as</font></i>
+    <i><font color="#9A1900">// described in the slides (solidity.html#/multioverride) and the</font></i>
+    <i><font color="#9A1900">// homework description.</font></i>
 
     <i><font color="#9A1900">// We will need this function in a future assignment (Arbitrage Trading),</font></i>
     <i><font color="#9A1900">// which is why it is in this interface. For now, it should have a single</font></i>
@@ -43,7 +39,7 @@ interface ITokenCC <font color="#008080">is</font> IERC20Metadata<font color="#9
     <font color="#008080">function</font> <b><font color="#000000">requestFunds</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// You also need to implement supportsInterface(), which is required by</font></i>
-    <i><font color="#9A1900">// the IERC165 interface.</font></i>
+    <i><font color="#9A1900">// the IERC165 interface.  You support four interfaces!</font></i>
 
     <i><font color="#9A1900">// The other methods needed by the IERC20 interface are already</font></i>
     <i><font color="#9A1900">// implemented for you in the ERC20.sol contract.</font></i>

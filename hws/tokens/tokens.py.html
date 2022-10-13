@@ -63,9 +63,13 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># sure it is not already used (see the assignment for how to verify this).</font></i>
 	<font color="#FF0000">'cryptocurrency_abbrev'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The transaction hash where you sent me some of your cryptocurrency.  It</font></i>
+	<i><font color="#9A1900"># The transaction hash where you sent me 10.0 of your cryptocurrency.  It</font></i>
 	<i><font color="#9A1900"># must have been done by eth_coinbase, above.</font></i>
 	<font color="#FF0000">'cc_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The transaction hash where you sent me an NFT.  It must have been done</font></i>
+	<i><font color="#9A1900"># by eth_coinbase, above.</font></i>
+	<font color="#FF0000">'nft_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The NFT ID that you sent me.  This is from the nft_manager contract, above.</font></i>
 	<font color="#FF0000">'nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
@@ -94,7 +98,7 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<font color="#FF0000">'uploaded_cc_logo'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you mint at least 50 coins of your TokenCC?  Keep in mind that you</font></i>
-	<i><font color="#9A1900"># have to add a number of decimal places after the number of coins.</font></i>
+	<i><font color="#9A1900"># have to add a number of decimal places after the number of coins minted.</font></i>
 	<font color="#FF0000">'minted_at_least_50_coins'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send me exactly 10.0 of your token cryptocurrencty?  If your</font></i>
@@ -110,18 +114,34 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># or .webp images.</font></i>
 	<font color="#FF0000">'uploaded_three_nft_images'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Are the NFT images no larger than 2000x2000?</font></i>
+	<i><font color="#9A1900"># Are all three NFT images no larger than 2000x2000?</font></i>
 	<font color="#FF0000">'nft_image_sizes_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you name the images correctly?  The names should start with your</font></i>
 	<i><font color="#9A1900"># userid followed by a underscore, and have the appropriate image</font></i>
-	<i><font color="#9A1900"># extension.  All filenames must be strictly less than 32 characters in</font></i>
-	<i><font color="#9A1900"># length. stay open for ONE WEEK after the assignment due date/time?</font></i>
+	<i><font color="#9A1900"># extension.  All filenames must be strictly less than or equal to 32</font></i>
+	<i><font color="#9A1900"># characters in length.</font></i>
 	<font color="#FF0000">'image_files_named_correctly'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send me one of your NFTs?  Which one was specified in</font></i>
 	<i><font color="#9A1900"># the 'nft_id_sent' field in the 'other' dictionary, above.</font></i>
 	<font color="#FF0000">'sent_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Does your `supportsInterface()` function in TokenCC return true for the</font></i>
+	<i><font color="#9A1900"># four interfaces?</font></i>
+	<font color="#FF0000">'tokencc_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Is your TokenCC contract opening line *exactly:*</font></i>
+	<i><font color="#9A1900"># `contract TokenCC is ITokenCC, ERC20 {`?</font></i>
+	<font color="#FF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Does your `supportsInterface()` function in NFTmanager return true for</font></i>
+	<i><font color="#9A1900"># the four interfaces?</font></i>
+	<font color="#FF0000">'nftmanager_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Is your NFTmanager contract opening line *exactly:*</font></i>
+	<i><font color="#9A1900"># `contract NFTmanager is INFTmanager, ERC721 {`?</font></i>
+	<font color="#FF0000">'nftmanager_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
