@@ -67,12 +67,22 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># must have been done by eth_coinbase, above.</font></i>
 	<font color="#FF0000">'cc_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The transaction hash where you sent me an NFT.  It must have been done</font></i>
-	<i><font color="#9A1900"># by eth_coinbase, above.</font></i>
+	<i><font color="#9A1900"># The transaction hash where you *sent* me an NFT from YOUR NFTManager</font></i>
+	<i><font color="#9A1900"># (the nft_manager contract, above).  It must have been done by</font></i>
+	<i><font color="#9A1900"># eth_coinbase, above.</font></i>
 	<font color="#FF0000">'nft_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The NFT ID that you sent me.  This is from the nft_manager contract, above.</font></i>
+	<i><font color="#9A1900"># The NFT ID that you sent me from YOUR NFTManager (the nft_manager</font></i>
+	<i><font color="#9A1900"># contract, above).  It must have been done by eth_coinbase, above.</font></i>
 	<font color="#FF0000">'nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The transaction hash where you *created* an NFT on the course-wide NFT</font></i>
+	<i><font color="#9A1900"># manager.  It must have been done by eth_coinbase, above.</font></i>
+	<font color="#FF0000">'course_nft_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The NFT ID that you created on the course-wide NFT manager.  It must</font></i>
+	<i><font color="#9A1900"># have been done by eth_coinbase, above.</font></i>
+	<font color="#FF0000">'course_nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -135,13 +145,16 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># `contract TokenCC is ITokenCC, ERC20 {`?</font></i>
 	<font color="#FF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Does your `supportsInterface()` function in NFTmanager return true for</font></i>
+	<i><font color="#9A1900"># Does your `supportsInterface()` function in NFTManager return true for</font></i>
 	<i><font color="#9A1900"># the four interfaces?</font></i>
 	<font color="#FF0000">'nftmanager_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Is your NFTmanager contract opening line *exactly:*</font></i>
-	<i><font color="#9A1900"># `contract NFTmanager is INFTmanager, ERC721 {`?</font></i>
+	<i><font color="#9A1900"># Is your NFTManager contract opening line *exactly:*</font></i>
+	<i><font color="#9A1900"># `contract NFTManager is INFTManager, ERC721 {`?</font></i>
 	<font color="#FF0000">'nftmanager_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you create a NFT on the course-wide NFT manager?</font></i>
+	<font color="#FF0000">'created_course_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 

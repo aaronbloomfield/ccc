@@ -14,13 +14,13 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
-import <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font>
-import <font color="#FF0000">"./ERC165.sol"</font><font color="#990000">;</font> <i><font color="#9A1900">// this includes IERC165.sol</font></i>
 import <font color="#FF0000">"./IERC721.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./IERC721Receiver.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./IERC721Metadata.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./Address.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./Strings.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./ERC165.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Implementation of </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-721</font></u><i><font color="#9A1900">[ERC721] Non-Fungible Token Standard, including</font></i>
@@ -79,7 +79,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-ownerOf}.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">ownerOf</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <b><font color="#0000FF">virtual</font></b> <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <font color="#008080">address</font> owner <font color="#990000">=</font> _owners<font color="#990000">[</font>tokenId<font color="#990000">];</font>
+        <font color="#008080">address</font> owner <font color="#990000">=</font> <b><font color="#000000">_ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>owner <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC721: invalid token ID"</font><font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> owner<font color="#990000">;</font>
     <font color="#FF0000">}</font>
@@ -222,6 +222,13 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the owner of the `tokenId`. Does NOT revert if token doesn't exist</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_ownerOf</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> internal view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> _owners<font color="#990000">[</font>tokenId<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns whether `tokenId` exists.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Tokens can be managed by their owner or approved accounts via {approve} or {setApprovalForAll}.</font></i>
@@ -230,7 +237,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 <i><font color="#9A1900">     * and stop existing when they are burned (`_burn`).</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">_exists</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> internal view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">return</font></b> _owners<font color="#990000">[</font>tokenId<font color="#990000">]</font> <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">)</font> <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -293,7 +300,17 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 
         <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
 
-        _balances<font color="#990000">[</font>to<font color="#990000">]</font> <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <i><font color="#9A1900">// Check that tokenId was not minted by `_beforeTokenTransfer` hook</font></i>
+        <b><font color="#000000">require</font></b><font color="#990000">(!</font><b><font color="#000000">_exists</font></b><font color="#990000">(</font>tokenId<font color="#990000">),</font> <font color="#FF0000">"ERC721: token already minted"</font><font color="#990000">);</font>
+
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// Will not overflow unless all 2**256 token ids are minted to the same owner.</font></i>
+            <i><font color="#9A1900">// Given that tokens are minted one by one, it is impossible in practice that</font></i>
+            <i><font color="#9A1900">// this ever happens. Might change if we allow batch minting.</font></i>
+            <i><font color="#9A1900">// The ERC fails to describe this case.</font></i>
+            _balances<font color="#990000">[</font>to<font color="#990000">]</font> <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+
         _owners<font color="#990000">[</font>tokenId<font color="#990000">]</font> <font color="#990000">=</font> to<font color="#990000">;</font>
 
         <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
@@ -317,10 +334,17 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 
         <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> tokenId<font color="#990000">);</font>
 
+        <i><font color="#9A1900">// Update ownership in case tokenId was transferred by `_beforeTokenTransfer` hook</font></i>
+        owner <font color="#990000">=</font> ERC721<font color="#990000">.</font><b><font color="#000000">ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
+
         <i><font color="#9A1900">// Clear approvals</font></i>
         <b><font color="#0000FF">delete</font></b> _tokenApprovals<font color="#990000">[</font>tokenId<font color="#990000">];</font>
 
-        _balances<font color="#990000">[</font>owner<font color="#990000">]</font> <font color="#990000">-=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// Cannot overflow, as that would require more tokens to be burned/transferred</font></i>
+            <i><font color="#9A1900">// out than the owner initially received through minting and transferring in.</font></i>
+            _balances<font color="#990000">[</font>owner<font color="#990000">]</font> <font color="#990000">-=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
         <b><font color="#0000FF">delete</font></b> _owners<font color="#990000">[</font>tokenId<font color="#990000">];</font>
 
         <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> tokenId<font color="#990000">);</font>
@@ -349,11 +373,21 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 
         <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
 
+        <i><font color="#9A1900">// Check that tokenId was not transferred by `_beforeTokenTransfer` hook</font></i>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>ERC721<font color="#990000">.</font><b><font color="#000000">ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">)</font> <font color="#990000">==</font> from<font color="#990000">,</font> <font color="#FF0000">"ERC721: transfer from incorrect owner"</font><font color="#990000">);</font>
+
         <i><font color="#9A1900">// Clear approvals from the previous owner</font></i>
         <b><font color="#0000FF">delete</font></b> _tokenApprovals<font color="#990000">[</font>tokenId<font color="#990000">];</font>
 
-        _balances<font color="#990000">[</font>from<font color="#990000">]</font> <font color="#990000">-=</font> <font color="#993399">1</font><font color="#990000">;</font>
-        _balances<font color="#990000">[</font>to<font color="#990000">]</font> <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// `_balances[from]` cannot overflow for the same reason as described in `_burn`:</font></i>
+            <i><font color="#9A1900">// `from`'s balance is the number of token held, which is at least one before the current</font></i>
+            <i><font color="#9A1900">// transfer.</font></i>
+            <i><font color="#9A1900">// `_balances[to]` could overflow in the conditions described in `_mint`. That would require</font></i>
+            <i><font color="#9A1900">// all 2**256 token ids to be minted, which in practice is impossible.</font></i>
+            _balances<font color="#990000">[</font>from<font color="#990000">]</font> <font color="#990000">-=</font> <font color="#993399">1</font><font color="#990000">;</font>
+            _balances<font color="#990000">[</font>to<font color="#990000">]</font> <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
         _owners<font color="#990000">[</font>tokenId<font color="#990000">]</font> <font color="#990000">=</font> to<font color="#990000">;</font>
 
         <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
@@ -428,8 +462,8 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called before any token transfer. This includes minting</font></i>
-<i><font color="#9A1900">     * and burning.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called before any (single) token transfer. This includes minting and burning.</font></i>
+<i><font color="#9A1900">     * See {_beforeConsecutiveTokenTransfer}.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Calling conditions:</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -448,8 +482,8 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
     <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called after any transfer of tokens. This includes</font></i>
-<i><font color="#9A1900">     * minting and burning.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called after any (single) transfer of tokens. This includes minting and burning.</font></i>
+<i><font color="#9A1900">     * See {_afterConsecutiveTokenTransfer}.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Calling conditions:</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -462,6 +496,37 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
         <font color="#008080">address</font> from<font color="#990000">,</font>
         <font color="#008080">address</font> to<font color="#990000">,</font>
         uint256 tokenId
+    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called before "consecutive token transfers" as defined in ERC2309 and implemented in</font></i>
+<i><font color="#9A1900">     * {ERC721Consecutive}.</font></i>
+<i><font color="#9A1900">     * Calling conditions are similar to {_beforeTokenTransfer}.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_beforeConsecutiveTokenTransfer</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> from<font color="#990000">,</font>
+        <font color="#008080">address</font> to<font color="#990000">,</font>
+        uint256<font color="#990000">,</font> <i><font color="#9A1900">/*first*/</font></i>
+        uint96 size
+    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>from <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+            _balances<font color="#990000">[</font>from<font color="#990000">]</font> <font color="#990000">-=</font> size<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+            _balances<font color="#990000">[</font>to<font color="#990000">]</font> <font color="#990000">+=</font> size<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called after "consecutive token transfers" as defined in ERC2309 and implemented in</font></i>
+<i><font color="#9A1900">     * {ERC721Consecutive}.</font></i>
+<i><font color="#9A1900">     * Calling conditions are similar to {_afterTokenTransfer}.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_afterConsecutiveTokenTransfer</font></b><font color="#990000">(</font>
+        address<font color="#990000">,</font> <i><font color="#9A1900">/*from*/</font></i>
+        address<font color="#990000">,</font> <i><font color="#9A1900">/*to*/</font></i>
+        uint256<font color="#990000">,</font> <i><font color="#9A1900">/*first*/</font></i>
+        uint96 <i><font color="#9A1900">/*size*/</font></i>
     <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
 <font color="#FF0000">}</font>
 </tt></pre>

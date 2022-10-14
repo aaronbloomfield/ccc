@@ -113,7 +113,7 @@ You need to transfer some amount of your cryptocurrency.  The address to transfe
 
 ### Part 2: ERC-721 Non-Fungible Token
 
-In this part, you will create a non-fungible token that follows the [ERC-721 token standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/).  This token can represent anything, but we will have it represent some image.  You will use this code in a future assignment, where you will then be creating a decentralized auction for NFTs.
+In this part, you will create a manager for non-fungible tokens (NFT) that follows the [ERC-721 token standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/).  Such a token can represent anything, but we will have it represent some image.  You will use this code in a future assignment, where you will then be creating a decentralized auction for NFTs.
 
 #### Part 2, task 1: NFT images
 
@@ -152,16 +152,18 @@ In addition to some of the files used above (IERC165.sol. ERC165.sol, and Contex
 - [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)), as [discussed in lecture](../../tokens.html#/erc721); note that the ERC-721 interface already inherits from the ERC-165 interface; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol)
 - [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)), which is the [OpenZeppelin ERC-721 implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol) -- the only changes that were made were to the `import` lines; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol)
 - [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)): this add three functions on top of the ERC-721 standard: `name()`, `symbol()`, and `tokenURI()`; the first two are for the NFT manager, the last one is the URI (aka URL) of the image that the NFT represents; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Metadata.sol)
-- [INFTmanager.sol](INFTmanager.sol.html) ([src](INFTmanager.sol)): this adds one more function on top of the IERC721Metadata interface: two `mintWithURI()` functiions, which allow creation of NFTs, and setting it's image URI (aka URL) in one function call.  Note that the `mintWithURI()` function will return a token ID, which is just a `uint` that is used to identify (and find) that particular NFT in your token manager.  This is an [abstract contract](../../slides/solidity.html#/abscon).
 - [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)): we won't use the functionality in this interface, but it is needed for the ERC721.sol file to compile.; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol)
+- [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)): this adds two `mintWithURI()` functions on top of the IERC721Metadata interface, which allow creation of NFTs, and setting it's image URI (aka URL) in one function call.  This also adds a `count()` method, which is how many NFTs have been minted by this manager.  Note that the `mintWithURI()` function will return a token ID, which is just a `uint` that is used to identify (and find) that particular NFT in your token manager.
 
-Why so many files?  Three of the interfaces (IERC165, IERC721, and IERC721Metadata) are Ethereum standards, and the practice is to include them as-is without modifications.  Three of the files are utilities (Address, Context, and Strings).  The INFTmanager adds one function that we need, and the ERC721.sol is the implementation itself.  We realize that's a lot of files to use, but that's why there are so many of them.
+The *only* changes made to the OpenZeppelin code above is the import paths (but not the files themselves).
+
+Why so many files?  Three of the interfaces (IERC165, IERC721, and IERC721Metadata) are Ethereum standards, and the practice is to include them as-is without modifications.  Three of the files are utilities (libraries or abstract contracts): Address, Context, and Strings.  The INFTManager adds one function that we need, and the ERC721.sol is the implementation itself.  ERC165.sol is needed for ERC721 to compile.  We realize that's a lot of files to use, but that's why there are so many of them.
 
 You should look over and familiarize yourself with this code. The inheritance hierarchy of this code is shown below.  Note that two of the entries (`Address` and `Strings`) are type substitutions in `ERC721.sol`.  The last one, `IERC721Recevier` is used as a casting type.
 
 ![](inheritance.dot.2.svg)
 
-Note that the only new files, beyond the the OpenZeppelin implementation, are the two bottom grey nodes.  We added was the INFTmanager abstract contract, and you have to implement the NFTmanager contract. There are a lot of lines because the IERC721 interface needs to be included in many of the files.
+Note that the only new files, beyond the the OpenZeppelin implementation, are the two bottom grey nodes.  We added was the INFTManager abstract contract, and you have to implement the NFTManager contract. There are a lot of lines because the IERC721 interface needs to be included in many of the files.
 
 #### Part 2, task 3: Compile and test the provided code
 
@@ -171,55 +173,60 @@ You should compile the [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)) code in
 
 #### Part 2, task 4: Create an NFT manager for images
 
-We are going to assemble all this code together to create an NFT manager.  Most of the code is already done in the [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)).  We are going to create a smart contract called `NFTmanager` that will work for image URLs (or any other URL).  The updated smart contract will implement the [INFTmanager.sol](INFTmanager.sol.html) ([src](INFTmanager.sol)) interface (and, though inheritance, a number of other interfaces).  
+We are going to assemble all this code together to create an NFT manager.  Most of the code is already done in the [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)).  We are going to create a smart contract called `NFTManager` that will work for image URLs (or any other URL).  The updated smart contract will implement the [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)) interface (and, though inheritance, a number of other interfaces).  
 
 
 There are some very strict submission requirements for this submission so that we can grade it in a sane manner:
 
 1. You must put your name and userid as the second line of the file (right after the SPDX line)
-2. Your contract MUST be in a file called `NFTmanager.sol` -- note the capitalization!
-3. Your contract line MUST be: `contract NFTmanager is INFTmanager, ERC721 {`; this will inherit all the other necessary interfaces and contracts.
+2. Your contract MUST be in a file called `NFTManager.sol` -- note the capitalization!
+3. Your contract line MUST be: `contract NFTManager is INFTManager, ERC721 {`; this will inherit all the other necessary interfaces and contracts.
 4. The pragma line should be: `pragma solidity ^0.8.16;`
-5. You are NOT to submit any of the *files* for the interfaces above (ERC721, IERC721, INFTmanager, or IERC165.sol), nor copy-and-paste that code in your file.  You should `import` them in `NFTmanager.sol`; they will be put into the appropriate directory on Gradescope when it attempts to compile your program
-6. You cannot submit any files other than the ones in the list above; any other code must be in your `NFTmanager.sol` file
+5. You are NOT to submit any of the *files* for the interfaces above (ERC721, IERC721, INFTManager, or IERC165.sol), nor copy-and-paste that code in your file.  You should `import` them in `NFTManager.sol`; they will be put into the appropriate directory on Gradescope when it attempts to compile your program
+6. You cannot submit any files other than the ones in the list above; any other code must be in your `NFTManager.sol` file
 
-An implementation notes:
+Some implementation notes:
 
 - Your `supportsInterface()` function supports four interfaces (see below), and overrides the `supportsInterface()` function from two different ancestors: `ERC721` and `IERC165`.  You will need to specify, via the override keyword, that it does so: `override(IERC165,ERC721)` instead of just `override`.  This is discussed in lecture [here](../../slides/solidity.html#/multioverride).
+- If you want to concatenate strings, such as when returning a value from `tokenURI()`, which must include the base URI, you can use `string.concat(s1,s2)`.  Note that you can concatenate more than two strings via this function call.
+- In Remix, when calling a `view` or `pure` function on a contract, which is a blue button, the return value is displayed right below the button itself.  For a transaction (orange button), you have to look at the JSON data returned to get the return value -- expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the "decoded output" field.  Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh).
 
 The following are the functional requirements for the development of this contract:
 
 - Implementation of the two `mintWithURI()` functions
 	- The one-parameter version assumes that the `address _to` is really `msg.sender` -- just have the one parameter version call the two parameter version with `msg.sender`
-	- Note the string parameter is *just* the filename (`mst3k_foo.jpg`), not the full URI
+	- Note the string parameter is *just* the filename (such as `mst3k_foo.jpg`), not the full URI
   	- It should allow minting by *anybody*
   	- A duplicate URI should cause a reversion
-  	- This *returns* the token ID of the newly minted NFT; the function itself determines what that ID is (likely the next integer in sequence)
-- Implementation of the `supportsInterface()` function for *four* interfaces -- the two ERC721 interfaces (`IERC721`, `IERC721Metadata`), `IERC165`, and `INFTmanager`.
-    - It also extends `Context`, but there are no `external` or `public` methods in `Context`, so there is no interface there to support.
+  	- This *returns* the token ID of the newly minted NFT; the function itself determines what that ID is (the next integer in sequence, an encoded version of the file name, etc.)
+- Implementation of the `supportsInterface()` function for *four* interfaces -- the two ERC721 interfaces (`IERC721`, `IERC721Metadata`), `IERC165`, and `INFTManager`.
+    - Your contract also extends `Context` through ERC721, but there are no `external` or `public` methods in `Context`, so there is no interface there to support.
 - Implementation of `tokenURI()`, which is inherited from `ERC721`
 	- It should revert if an invalid token ID is provided
-	- It should return the *full* URL of the file; the first part of that URL is on the Collab landing page, and the last part of that URL is what was passed into `mintWithURI()`
+	- It should return the *full* URL of the file; the first part of that URL is the base URI from the Collab landing page, and the last part of that URL is what was passed into `mintWithURI()`
 	- This URL base should be hard-coded into the contract itself
 	- You can override the `_baseURI()` function from `ERC721`, and use that in a similar fashion to what is shown in the `tokenURI()` function in `ERC721`
 
-In theory, you should be able to call `mintWithURI()` and capture the return value for the token ID.  While this return value is properly captured when called from another smart contract, Remix does not always report it.  You are allowed to create a `uint public lastCreatedTokenID` (or similar) variable which holds the token ID of the last created token -- what should have been returned by `mintWithURI()`.  THIS WOULD NEVER WORK IN PRACTICE, as it would create a horrible race condition.  But it will work for our purposes, and allows us to get around this apparent but in Remix.
-
-When you are ready to deploy this token manager, be sure to select the appropriate contract ("NFTmanager") from the Contract down-down list in Remix.
+When you are ready to deploy this token manager, be sure to select the appropriate contract ("NFTManager") from the Contract down-down list in Remix.
 
 Make sure this works properly in Remix before proceeding onto the next step.
 
 #### Part 2, task 5: Deployment
 
-One you have thoroughly tested your ERC-721 token manager in Remix, you should deploy it to our private Ethereum blockchain.  How to do this was covered in the [dApp Introduction](../dappintro/index.html) assignment, which you may want to refer back to.  You don't have to do this from your eth.coinbase account -- you can do it from any account.  However, you have to deploy all the code in this assignment from the same account, and you have to tell us that account when you submit the Google form at the end of this assignment.
+Before final submission of this assignment, you will need to deploy both this token manager and the auction program to our final Ethereum blockchain.  But you don't have to do that yet -- you should ensure it's all working via Remix (in the "JavaScript VM (London)" environment) first.
+
+One you have thoroughly tested your ERC-721 token manager in Remix, you should deploy it to our private Ethereum blockchain.  How to do this was covered in the [dApp Introduction](../dappintro/index.html) assignment, which you may want to refer back to.  You don't have to do this from your eth.coinbase account -- you can do it from any account.  However, you have to deploy all the code in this assignment from the same account, and you have to tell us that account when you submit the assignment.
 
 Save the contract address for the deployment, as you will need to submit it at the end of this assignment.
 
-Before final submission of this assignment, you will need to deploy both this token manager and the auction program to our final Ethereum blockchain.  But you don't have to do that yet -- you should ensure it's all working via Remix (in the "JavaScript VM (London)" environment) first.
-
 #### Part 2, task 6: Create two NFTs, and send me one
 
-You should create two NFTs with your deployed contract -- they should be the two images that you created, above.  You need to send me one of them -- the address to transfer it to in on the Collab landing page.  You will need to note the tokenID of the two NFTs -- the one you sent me and the one you kept for yourself -- as you will need to submit those as well.  You are welcome to create more, if you would like, as long as the images for each are unique.  But we only need two for grading.
+You should create two NFTs with *your* deployed contract -- they should be the two of the images that you created, above.  You need to send me one of them -- the address to transfer it to in on the Collab landing page.  You will need to note the tokenID of the two NFTs -- the one you sent me and the one you kept for yourself -- as you will need to submit those as well.  You are welcome to create more, if you would like, as long as the images for each are unique.  But we only need two for grading.
+
+#### Part 2, task 7: Create one NFT on the course manager
+
+Create one NFT for yourself on the course-wide NFT manager, whose address is on the Collab landing page.  This should be the third of the three images you created.  Save the token ID received, and the transaction hash from that transaction, as you will need to submit those values.  The course-wide NFT manager also follows the INFTManager interface.
+
 
 
 ### Troubleshooting
@@ -228,6 +235,7 @@ Some common problems encountered, and their solutions:
 
 - "This contract may be abstract, not implement an abstract parent's methods completely or not invoke an inherited contract's constructor correctly." -- likely this means you are trying to deploy the interface rather than the contract itself.  In Remix, in the Deploy pane, make sure the correct contract (and not an interface!) is selected in the "Contract" drop-down list.
 
+More will be added to this list as further common problems (and their solutions) arise.
 
 ### Submission
 

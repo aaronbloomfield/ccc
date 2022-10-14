@@ -56,12 +56,22 @@ other = {
 	# must have been done by eth_coinbase, above.
 	'cc_sent_txn_hash': None,
 
-	# The transaction hash where you sent me an NFT.  It must have been done
-	# by eth_coinbase, above.
+	# The transaction hash where you *sent* me an NFT from YOUR NFTManager
+	# (the nft_manager contract, above).  It must have been done by
+	# eth_coinbase, above.
 	'nft_sent_txn_hash': None,
 
-	# The NFT ID that you sent me.  This is from the nft_manager contract, above.
+	# The NFT ID that you sent me from YOUR NFTManager (the nft_manager
+	# contract, above).  It must have been done by eth_coinbase, above.
 	'nft_id_sent': None,
+
+	# The transaction hash where you *created* an NFT on the course-wide NFT
+	# manager.  It must have been done by eth_coinbase, above.
+	'course_nft_txn_hash': None,
+
+	# The NFT ID that you created on the course-wide NFT manager.  It must
+	# have been done by eth_coinbase, above.
+	'course_nft_id_sent': None,
 
 }
 
@@ -124,13 +134,16 @@ sanity_checks = {
 	# `contract TokenCC is ITokenCC, ERC20 {`?
 	'tokencc_opening_line_is_correct': False,
 
-	# Does your `supportsInterface()` function in NFTmanager return true for
+	# Does your `supportsInterface()` function in NFTManager return true for
 	# the four interfaces?
 	'nftmanager_supportsInterface_is_correct': False,
 
-	# Is your NFTmanager contract opening line *exactly:*
-	# `contract NFTmanager is INFTmanager, ERC721 {`?
+	# Is your NFTManager contract opening line *exactly:*
+	# `contract NFTManager is INFTManager, ERC721 {`?
 	'nftmanager_opening_line_is_correct': False,
+
+	# Did you create a NFT on the course-wide NFT manager?
+	'created_course_nft': False,
 
 }
 

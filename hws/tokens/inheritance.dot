@@ -29,8 +29,8 @@ digraph B { // byzantine.dot..svg
     context [label="contract\nContext"];
     ierc721metadata [label="interface\nIERC721Metadata"];
     erc165 [label="contract\nERC165"];
-    inftmanager [label="interface\nINFTmanager",fillcolor="lightgrey",style="filled"];
-    nftmanager [label="contract\nNFTmanager",fillcolor="lightgrey",style="filled"];
+    inftmanager [label="interface\nINFTManager",fillcolor="lightgrey",style="filled"];
+    nftmanager [label="contract\nNFTManager",fillcolor="lightgrey",style="filled"];
 
     {rank=same; address strings ierc165}
     {rank=same; ierc721receiver erc165 ierc721}

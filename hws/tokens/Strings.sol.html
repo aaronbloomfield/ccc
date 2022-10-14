@@ -14,52 +14,47 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
+import <font color="#FF0000">"./Math.sol"</font><font color="#990000">;</font>
+
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> String operations.</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> Strings <font color="#FF0000">{</font>
-    bytes16 <font color="#008080">private</font> <font color="#008080">constant</font> _HEX_SYMBOLS <font color="#990000">=</font> <font color="#FF0000">"0123456789abcdef"</font><font color="#990000">;</font>
+    bytes16 <font color="#008080">private</font> <font color="#008080">constant</font> _SYMBOLS <font color="#990000">=</font> <font color="#FF0000">"0123456789abcdef"</font><font color="#990000">;</font>
     uint8 <font color="#008080">private</font> <font color="#008080">constant</font> _ADDRESS_LENGTH <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts a `uint256` to its ASCII `string` decimal representation.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">toString</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <i><font color="#9A1900">// Inspired by OraclizeAPI's implementation - MIT licence</font></i>
-        <i><font color="#9A1900">// https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol</font></i>
-
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#0000FF">return</font></b> <font color="#FF0000">"0"</font><font color="#990000">;</font>
+        unchecked <font color="#FF0000">{</font>
+            <font color="#008080">uint256</font> length <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">log10</font></b><font color="#990000">(</font>value<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+            string <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">string</font></b><font color="#990000">(</font>length<font color="#990000">);</font>
+            <font color="#008080">uint256</font> ptr<font color="#990000">;</font>
+            <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+            assembly <font color="#FF0000">{</font>
+                ptr <font color="#990000">:=</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> length<font color="#990000">))</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">while</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">)</font> <font color="#FF0000">{</font>
+                ptr<font color="#990000">--;</font>
+                <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+                assembly <font color="#FF0000">{</font>
+                    <b><font color="#000000">mstore8</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <b><font color="#000000">byte</font></b><font color="#990000">(</font><b><font color="#000000">mod</font></b><font color="#990000">(</font>value<font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">),</font> _SYMBOLS<font color="#990000">))</font>
+                <font color="#FF0000">}</font>
+                value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">;</font>
+                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">return</font></b> buffer<font color="#990000">;</font>
         <font color="#FF0000">}</font>
-        <font color="#008080">uint256</font> temp <font color="#990000">=</font> value<font color="#990000">;</font>
-        <font color="#008080">uint256</font> digits<font color="#990000">;</font>
-        <b><font color="#0000FF">while</font></b> <font color="#990000">(</font>temp <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            digits<font color="#990000">++;</font>
-            temp <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">;</font>
-        <font color="#FF0000">}</font>
-        bytes <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>digits<font color="#990000">);</font>
-        <b><font color="#0000FF">while</font></b> <font color="#990000">(</font>value <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            digits <font color="#990000">-=</font> <font color="#993399">1</font><font color="#990000">;</font>
-            buffer<font color="#990000">[</font>digits<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">bytes1</font></b><font color="#990000">(</font><b><font color="#000000">uint8</font></b><font color="#990000">(</font><font color="#993399">48</font> <font color="#990000">+</font> <b><font color="#000000">uint256</font></b><font color="#990000">(</font>value <font color="#990000">%</font> <font color="#993399">10</font><font color="#990000">)));</font>
-            value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">;</font>
-        <font color="#FF0000">}</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">string</font></b><font color="#990000">(</font>buffer<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts a `uint256` to its ASCII `string` hexadecimal representation.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#0000FF">return</font></b> <font color="#FF0000">"0x00"</font><font color="#990000">;</font>
+        unchecked <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font>value<font color="#990000">,</font> Math<font color="#990000">.</font><b><font color="#000000">log256</font></b><font color="#990000">(</font>value<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
         <font color="#FF0000">}</font>
-        <font color="#008080">uint256</font> temp <font color="#990000">=</font> value<font color="#990000">;</font>
-        <font color="#008080">uint256</font> length <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-        <b><font color="#0000FF">while</font></b> <font color="#990000">(</font>temp <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            length<font color="#990000">++;</font>
-            temp <font color="#990000">&gt;&gt;=</font> <font color="#993399">8</font><font color="#990000">;</font>
-        <font color="#FF0000">}</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font>value<font color="#990000">,</font> length<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -70,7 +65,7 @@ http://www.gnu.org/software/src-highlite">
         buffer<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"0"</font><font color="#990000">;</font>
         buffer<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"x"</font><font color="#990000">;</font>
         <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> length <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font> i <font color="#990000">&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <font color="#990000">--</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
-            buffer<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> _HEX_SYMBOLS<font color="#990000">[</font>value <font color="#990000">&amp;</font> <font color="#993399">0xf</font><font color="#990000">];</font>
+            buffer<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> _SYMBOLS<font color="#990000">[</font>value <font color="#990000">&amp;</font> <font color="#993399">0xf</font><font color="#990000">];</font>
             value <font color="#990000">&gt;&gt;=</font> <font color="#993399">4</font><font color="#990000">;</font>
         <font color="#FF0000">}</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>value <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"Strings: hex length insufficient"</font><font color="#990000">);</font>
