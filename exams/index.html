@@ -15,19 +15,39 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../markdown.css" />
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
 <h1 id="cryptocurrency-exams">Cryptocurrency: Exams</h1>
-<p><a href="../readme.html">Go up to the main CCC readme</a> (<a
-href="../readme.md">md</a>)</p>
-<p>These are the past exams in the course. I do not have (nor do I make)
-answer keys.</p>
+<p><a href="../readme.html">Go up to the main CCC readme</a> (<a href="../readme.md">md</a>)</p>
+<p>These are the past exams in the course. I do not have (nor do I make) answer keys.</p>
 <ul>
-<li>Spring 2022: <a href="midterm-s22.pdf">midterm</a>, <a
-href="final-s22.pdf">final</a></li>
+<li>Fall 2022: <a href="midterm-f22.pdf">midterm</a></li>
+<li>Spring 2022: <a href="midterm-s22.pdf">midterm</a>, <a href="final-s22.pdf">final</a></li>
 </ul>
 </body>
 </html>
