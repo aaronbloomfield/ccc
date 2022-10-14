@@ -94,10 +94,11 @@
 <p>To enter commands via the keyboard, you have to “attach” to the local Ethereum node. You do this by entering the following command:</p>
 <pre><code>geth attach /path/to/ethprivate/geth.ipc</code></pre>
 <p>If you are in the same directory as geth.ipc, you may have to enter <code>./geth.ipc</code> as the file name. Note that this won’t work unless the geth node, from the previous step, is running. You will then get a prompt, which is just a greater-than sign. This is a JavaScript console.</p>
-<p>If you have this installed on Windows, when you start the geth node (from the previous step), you will see output like <a href='geth-on-windows.png'>this</a> – the text circled in red is the file name for the geth.ipc file (putting <code>geth attach</code> before it). It will likely be either of the following:</p>
+<p>If you have this installed on Windows, when you start the geth node (from the previous step), you will see output like <a href='geth-on-windows.png'>this</a> – the text circled in red is the file name for the geth.ipc file (putting <code>geth attach</code> before it). It will likely be one of the following:</p>
 <pre><code>geth attach \\.\pipe\geth.ipc
+geth attach ipc:\\.\pipe\geth.ipc
 geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
-<p>That second line rendered correctly – it has three sets of backslahses – 4, then 2, then 2. And run it from the directory that your geth.ipc file is in. As before, note that this won’t work unless the geth node, from the previous step, is running.</p>
+<p>That last line rendered correctly – it has three sets of backslahses – 4, then 2, then 2. And run it from the directory that your geth.ipc file is in. As before, note that this won’t work unless the geth node, from the previous step, is running.</p>
 <p>In either case, you will then get a prompt, which is just a greater-than sign. This is a JavaScript console. It should look something like this:</p>
 <pre><code>Welcome to the Geth JavaScript console!
 
