@@ -43,10 +43,10 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># have been deployed by the eth_coinbase address, above.</font></i>
 	<font color="#FF0000">'token_cc'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The NFT Manager (aka ERC-721) contract.  All of the minted NFTs, below,</font></i>
-	<i><font color="#9A1900"># are assumed to come from this contract.  The address does not need to</font></i>
-	<i><font color="#9A1900"># be in checksummed form.  It must have been deployed by the eth_coinbase</font></i>
-	<i><font color="#9A1900"># address, above.</font></i>
+	<i><font color="#9A1900"># The NFT Manager (aka ERC-721) contract.  Two of the minted NFTs, below,</font></i>
+	<i><font color="#9A1900"># are assumed to come from this contract (the third comes from the</font></i>
+	<i><font color="#9A1900"># course-wide contract).  The address does not need to be in checksummed</font></i>
+	<i><font color="#9A1900"># form.  It must have been deployed by the eth_coinbase address, above.</font></i>
 	<font color="#FF0000">'nft_manager'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
 <font color="#990000">}</font>
 
@@ -56,7 +56,8 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># This is the name of your cryptocurrency.  Be creative!  But don't use</font></i>
-	<i><font color="#9A1900"># something that will get me in trouble.</font></i>
+	<i><font color="#9A1900"># something that will get me in trouble.  This can have any printable</font></i>
+	<i><font color="#9A1900"># ASCII character (no emojis) and spaces.</font></i>
 	<font color="#FF0000">'cryptocurrency_name'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The abbreviation for your cryptocurrency: at most 4 letters.  And be</font></i>
@@ -64,25 +65,27 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<font color="#FF0000">'cryptocurrency_abbrev'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The transaction hash where you sent me 10.0 of your cryptocurrency.  It</font></i>
-	<i><font color="#9A1900"># must have been done by eth_coinbase, above.</font></i>
+	<i><font color="#9A1900"># must have been done by eth_coinbase, above.  And it must have used your</font></i>
+	<i><font color="#9A1900"># deployed TokenCC contract, above.</font></i>
 	<font color="#FF0000">'cc_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The transaction hash where you *sent* me an NFT from YOUR NFTManager</font></i>
+	<i><font color="#9A1900"># The transaction hash where you sent me an NFT from YOUR NFTManager</font></i>
 	<i><font color="#9A1900"># (the nft_manager contract, above).  It must have been done by</font></i>
-	<i><font color="#9A1900"># eth_coinbase, above.</font></i>
+	<i><font color="#9A1900"># eth_coinbase, above.  And it must have used your deployed NFTManager</font></i>
+	<i><font color="#9A1900"># contract, above.</font></i>
 	<font color="#FF0000">'nft_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The NFT ID that you sent me from YOUR NFTManager (the nft_manager</font></i>
 	<i><font color="#9A1900"># contract, above).  It must have been done by eth_coinbase, above.</font></i>
 	<font color="#FF0000">'nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The transaction hash where you *created* an NFT on the course-wide NFT</font></i>
+	<i><font color="#9A1900"># The transaction hash from when you created an NFT on the course-wide NFT</font></i>
 	<i><font color="#9A1900"># manager.  It must have been done by eth_coinbase, above.</font></i>
 	<font color="#FF0000">'course_nft_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The NFT ID that you created on the course-wide NFT manager.  It must</font></i>
-	<i><font color="#9A1900"># have been done by eth_coinbase, above.</font></i>
-	<font color="#FF0000">'course_nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<i><font color="#9A1900"># The NFT ID from when you created an NFT on the course-wide NFT manager.</font></i>
+	<i><font color="#9A1900"># It must have been done by eth_coinbase, above.</font></i>
+	<font color="#FF0000">'course_nft_id'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -107,7 +110,7 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Did you upload your cryptocurrency logo to the 'cclogos/' directory?</font></i>
 	<font color="#FF0000">'uploaded_cc_logo'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Did you mint at least 50 coins of your TokenCC?  Keep in mind that you</font></i>
+	<i><font color="#9A1900"># Did you mint at least 100 coins of your TokenCC?  Keep in mind that you</font></i>
 	<i><font color="#9A1900"># have to add a number of decimal places after the number of coins minted.</font></i>
 	<font color="#FF0000">'minted_at_least_50_coins'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
@@ -116,9 +119,13 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># total units sent.</font></i>
 	<font color="#FF0000">'sent_ten_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Can anybody mint an NFT?  Just make sure you don't require() that the</font></i>
-	<i><font color="#9A1900"># minter is the deployer, for example.</font></i>
-	<font color="#FF0000">'anybody_can_mint_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<i><font color="#9A1900"># Does your `supportsInterface()` function in TokenCC return true for the</font></i>
+	<i><font color="#9A1900"># four interfaces?</font></i>
+	<font color="#FF0000">'tokencc_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Is your TokenCC contract opening line *exactly:*</font></i>
+	<i><font color="#9A1900"># `contract TokenCC is ITokenCC, ERC20 {`?</font></i>
+	<font color="#FF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you upload three NFT images?  They must be either .jpg, .png,</font></i>
 	<i><font color="#9A1900"># or .webp images.</font></i>
@@ -133,17 +140,13 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># characters in length.</font></i>
 	<font color="#FF0000">'image_files_named_correctly'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Can anybody mint an NFT?  Just make sure you don't require() that the</font></i>
+	<i><font color="#9A1900"># minter is the deployer, for example.</font></i>
+	<font color="#FF0000">'anybody_can_mint_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you send me one of your NFTs?  Which one was specified in</font></i>
 	<i><font color="#9A1900"># the 'nft_id_sent' field in the 'other' dictionary, above.</font></i>
 	<font color="#FF0000">'sent_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
-
-	<i><font color="#9A1900"># Does your `supportsInterface()` function in TokenCC return true for the</font></i>
-	<i><font color="#9A1900"># four interfaces?</font></i>
-	<font color="#FF0000">'tokencc_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
-
-	<i><font color="#9A1900"># Is your TokenCC contract opening line *exactly:*</font></i>
-	<i><font color="#9A1900"># `contract TokenCC is ITokenCC, ERC20 {`?</font></i>
-	<font color="#FF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does your `supportsInterface()` function in NFTManager return true for</font></i>
 	<i><font color="#9A1900"># the four interfaces?</font></i>
@@ -153,7 +156,7 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># `contract NFTManager is INFTManager, ERC721 {`?</font></i>
 	<font color="#FF0000">'nftmanager_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Did you create a NFT on the course-wide NFT manager?</font></i>
+	<i><font color="#9A1900"># Did you create a NFT on the course-wide NFT manager?  The NFT ID for this was put into the </font></i>
 	<font color="#FF0000">'created_course_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>

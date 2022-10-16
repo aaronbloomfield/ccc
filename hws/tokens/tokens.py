@@ -32,10 +32,10 @@ contracts = {
 	# have been deployed by the eth_coinbase address, above.
 	'token_cc': '',
 
-	# The NFT Manager (aka ERC-721) contract.  All of the minted NFTs, below,
-	# are assumed to come from this contract.  The address does not need to
-	# be in checksummed form.  It must have been deployed by the eth_coinbase
-	# address, above.
+	# The NFT Manager (aka ERC-721) contract.  Two of the minted NFTs, below,
+	# are assumed to come from this contract (the third comes from the
+	# course-wide contract).  The address does not need to be in checksummed
+	# form.  It must have been deployed by the eth_coinbase address, above.
 	'nft_manager': '',
 }
 
@@ -45,7 +45,8 @@ contracts = {
 other = {
 	
 	# This is the name of your cryptocurrency.  Be creative!  But don't use
-	# something that will get me in trouble.
+	# something that will get me in trouble.  This can have any printable
+	# ASCII character (no emojis) and spaces.
 	'cryptocurrency_name': None,
 
 	# The abbreviation for your cryptocurrency: at most 4 letters.  And be
@@ -53,25 +54,27 @@ other = {
 	'cryptocurrency_abbrev': None,
 
 	# The transaction hash where you sent me 10.0 of your cryptocurrency.  It
-	# must have been done by eth_coinbase, above.
+	# must have been done by eth_coinbase, above.  And it must have used your
+	# deployed TokenCC contract, above.
 	'cc_sent_txn_hash': None,
 
-	# The transaction hash where you *sent* me an NFT from YOUR NFTManager
+	# The transaction hash where you sent me an NFT from YOUR NFTManager
 	# (the nft_manager contract, above).  It must have been done by
-	# eth_coinbase, above.
+	# eth_coinbase, above.  And it must have used your deployed NFTManager
+	# contract, above.
 	'nft_sent_txn_hash': None,
 
 	# The NFT ID that you sent me from YOUR NFTManager (the nft_manager
 	# contract, above).  It must have been done by eth_coinbase, above.
 	'nft_id_sent': None,
 
-	# The transaction hash where you *created* an NFT on the course-wide NFT
+	# The transaction hash from when you created an NFT on the course-wide NFT
 	# manager.  It must have been done by eth_coinbase, above.
 	'course_nft_txn_hash': None,
 
-	# The NFT ID that you created on the course-wide NFT manager.  It must
-	# have been done by eth_coinbase, above.
-	'course_nft_id_sent': None,
+	# The NFT ID from when you created an NFT on the course-wide NFT manager.
+	# It must have been done by eth_coinbase, above.
+	'course_nft_id': None,
 
 }
 
@@ -96,7 +99,7 @@ sanity_checks = {
 	# Did you upload your cryptocurrency logo to the 'cclogos/' directory?
 	'uploaded_cc_logo': False,
 
-	# Did you mint at least 50 coins of your TokenCC?  Keep in mind that you
+	# Did you mint at least 100 coins of your TokenCC?  Keep in mind that you
 	# have to add a number of decimal places after the number of coins minted.
 	'minted_at_least_50_coins': False,
 
@@ -105,9 +108,13 @@ sanity_checks = {
 	# total units sent.
 	'sent_ten_tc': False,
 
-	# Can anybody mint an NFT?  Just make sure you don't require() that the
-	# minter is the deployer, for example.
-	'anybody_can_mint_nft': False,
+	# Does your `supportsInterface()` function in TokenCC return true for the
+	# four interfaces?
+	'tokencc_supportsInterface_is_correct': False,
+
+	# Is your TokenCC contract opening line *exactly:*
+	# `contract TokenCC is ITokenCC, ERC20 {`?
+	'tokencc_opening_line_is_correct': False,
 
 	# Did you upload three NFT images?  They must be either .jpg, .png,
 	# or .webp images.
@@ -122,17 +129,13 @@ sanity_checks = {
 	# characters in length.
 	'image_files_named_correctly': False,
 
+	# Can anybody mint an NFT?  Just make sure you don't require() that the
+	# minter is the deployer, for example.
+	'anybody_can_mint_nft': False,
+
 	# Did you send me one of your NFTs?  Which one was specified in
 	# the 'nft_id_sent' field in the 'other' dictionary, above.
 	'sent_nft': False,
-
-	# Does your `supportsInterface()` function in TokenCC return true for the
-	# four interfaces?
-	'tokencc_supportsInterface_is_correct': False,
-
-	# Is your TokenCC contract opening line *exactly:*
-	# `contract TokenCC is ITokenCC, ERC20 {`?
-	'tokencc_opening_line_is_correct': False,
 
 	# Does your `supportsInterface()` function in NFTManager return true for
 	# the four interfaces?
@@ -142,7 +145,7 @@ sanity_checks = {
 	# `contract NFTManager is INFTManager, ERC721 {`?
 	'nftmanager_opening_line_is_correct': False,
 
-	# Did you create a NFT on the course-wide NFT manager?
+	# Did you create a NFT on the course-wide NFT manager?  The NFT ID for this was put into the 
 	'created_course_nft': False,
 
 }

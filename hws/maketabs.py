@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 
 # based on the example at:
 # https://www.w3schools.com/howto/howto_js_tabs.asp
