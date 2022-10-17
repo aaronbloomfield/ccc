@@ -76,7 +76,7 @@ line-height:120%;
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## What is a Token
-- A *token* is an *entry* on a blockchain that represents *something* other than a "monetary" transaction
+- A *token* is an entry on a blockchain that represents *something* other than a "monetary" transaction
   - Form of the entry:
     - In Ethereum, this would be a smart contract
     - Other blockchains (Tezos, Ravencoin) have native support for tokens
@@ -215,8 +215,9 @@ contract EZTokens {
 
 ## How buy an NFT
 - OpenSea at [opensea.io](https://opensea.io)
+  - And their [Bored Ape Yacht Club page](https://opensea.io/collection/boredapeyachtclub)
 - Let's take a look!
-- We'll be seeing MetaMask later this semester...
+- We'll be seeing MetaMask later this semester
 
 
 
@@ -236,7 +237,8 @@ contract EZTokens {
   - But how many people who buy NFTs want to do that?
   - Some NFTs explicitly prevent you publishing the image!
 - Sports networks want to sell NFTs for "moments" in a game
-  - I can't imagine they are going to give up broadcasting rights to that "moment"
+  - They don't give up their broadcasting rights to that "moment"
+  - And you can't broadcast it yourself
 
 
 
@@ -314,7 +316,7 @@ contract EZTokens {
 
 
 ## Solidity Type Information
-- Given a type `T`, a contract 'C', or an interface 'I', you can get information about that type:
+- Given a type `T`, a contract `C`, or an interface `I`, you can get information about that type:
   - `type(T).min`: the minimum value
   - `type(T).max`: the maximum value
   - `type(C).name`: the name of the contract
@@ -404,7 +406,7 @@ contract Selectors is ISelectors {
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Overview
 - Created in 2015, this standard allows for creating *fungible* tokens
-  - Shares in a cryptocurrency, voting power, membership level, equity amount, etc.
+  - Shares in a cryptocurrency, voting power, membership level, equity amount, reputation / karma, etc.
   - See [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#introduction) for other uses
 - Notably, it was written *before* ERC-165
   - So it does *not* have the `supportsInterface()` function
@@ -444,7 +446,7 @@ contract Selectors is ISelectors {
 
 
 <!-- .slide: class="right-float-img" -->
-## Why `approve()` and `transferFrom()`?
+## Why `approve()` & `transferFrom()`?
 ![](images/tokens/graphs/tokens.dot.1.svg)
 - You only want to make one call to the DEX
   - The TokenCC needs to know that the DEX can transfer some of your TC
@@ -461,13 +463,13 @@ contract Selectors is ISelectors {
 ```
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.16;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol";
 
 contract MyToken is ERC20 {
     constructor() ERC20("AaronDollar(TM)", "AD") {
-        _mint(msg.sender, 100 * 10**10);
+        _mint(msg.sender, 1000000 * 10**10);
     }
 }
 ```
@@ -478,8 +480,8 @@ contract MyToken is ERC20 {
 ## ERC-20 Optional Interface
 - There are three *optional* functions, as described [here](https://eips.ethereum.org/EIPS/eip-20)
 
-<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
->interface IERC20Metadata is IERC20 {
+```
+interface IERC20Metadata is IERC20 {
 
     function name() external view returns (string);
 
@@ -488,7 +490,7 @@ contract MyToken is ERC20 {
     function decimals() external view returns (uint8);
 
 }
-</code></pre>
+```
 
 - [OpenZeppelin source code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/IERC20Metadata.sol)
     </textarea></section>
@@ -496,7 +498,7 @@ contract MyToken is ERC20 {
     <section>
 <h2>Our Usage</h2>
 <ul>
-  <li>For the Tokens assignment, we will use:
+  <li>For the Tokens assignment, we will use the <a href="../hws/tokens/ITokenCC.sol.html">ITokenCC.sol</a> interface:
 <pre class="code-wrapper" style="margin-bottom:-20px"><code class="hljs awk small" style="height:auto;width:120%"
 >interface ITokenCC is IERC20Metadata, IERC165 {
 
@@ -511,9 +513,9 @@ contract MyToken is ERC20 {
 }
 </code></pre>
 </li>
-<li>Our ERC20 code contract will implement that interface
+<li>Our TokenCC code contract will implement that interface
 </li>
-<li>Our TokenCC contract line will be:
+<li>The contract line will be:
 <pre class="code-wrapper"><code class="hljs awk" style="height:auto"
 >contract TokenCC is ITokenCC, ERC20 {
 </code></pre>
@@ -528,8 +530,9 @@ contract TokenCC is ITokenCC, ERC20 {
 ```
 - We have to implement:
   - constructor()
-  - name(), decimals(), symbol() for IERC20Metadata
-  - supportsInterface() for IERC165
+  - name(), decimals(), symbol() from IERC20Metadata
+    - name() and decimals() are done for us
+  - supportsInterface() from IERC165
   - requestFunds() for ITokenCC
   - Nothing from IERC20, since we inherit from ERC20
 
@@ -553,7 +556,6 @@ contract TokenCC is ITokenCC, ERC20 {
       - 57 BEP20 tokens: runs on Binance, not Ethereum
       - 7 TRC20 tokens: runs on TRON, not Ethereum
   - You can see an (older) list on the next slide
-- We'll be creating one in an upcoming homework
 
 
 
@@ -572,7 +574,7 @@ contract TokenCC is ITokenCC, ERC20 {
 - All token cryptocurrency exchanges with the ERC-20 contract have to pay the Ethereum fees!
 - Exchanges such as Coinbase do it differently
 - SHIB is #14 on [coinmarketcap.com](https://coinmarketcap.com/)
-  - Because the ERC-20 token minted 549,063,278,876,302 shares (yes, $5.5 \ast 10^{14}$)
+  - Because the ERC-20 token minted 549,063,278,876,302 shares (yes, $5.5 \ast 10^{14}$ or about 550 trillion) coins
   - Total market cap: `$`6.1 *billion* dollars
    </textarea></section>
 
@@ -583,6 +585,7 @@ contract TokenCC is ITokenCC, ERC20 {
   - And reproduced on the next slide
 - DAI: An Ethereum token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
   - When new DAI are minted, the cryptocurrencies used to exchange for them are put into 'vaults' to help DAI retain it's value
+  - We'll see DAI in the upcoming stablecoins lecture
 - WETH, for "Wrapped ETH", has a 1-to-1 exchange value with regular ETH
   - But it follows the ERC-20 standard, so can be used in lieu of ETH when an ERC-20 token cryptocurrency is needed
    </textarea></section>
@@ -654,7 +657,7 @@ print("Addr Balance:", addr_balance)
 
 
 ## Python code for DAI & WETH
-- We'll see how to access blockchains via Python in later assignments
+- We'll see how to access blockchains via Python in future assignments
 - Output:
 
 
@@ -764,25 +767,31 @@ Addr Balance: 5149.944966727369
 
 
 ## Our Usage
-- For an upcoming assignment, we will use:
+- For the tokens assignment, we will use [INFTManager.sol](../hws/tokens/INFTManager.sol.html):
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
->interface IERC721full is IERC721Metadata {
+>interface INFTManager is IERC721Metadata {
 
-    function mintWithURI(address _to, uint _tokenId, string memory _uri) 
-                  external;
+    // This creates a NFT for `_to` with the pased file name `_uri`.  Note
+    // that `_uri` is just the filename itself -- the prefix is set via
+    // overriding _baseURI()
+    function mintWithURI(address _to, string memory _uri) external returns (uint);
 
-    // implementing contracts have to implement the one function from IERC165
-    // (supportsInterface())
+    // This also creates a NFT, but assumes `msg.sender` is who the NFT is
+    // for; it can just call the previous function.
+    function mintWithURI(string memory _uri) external returns (uint);
 
-    // implementing contracts have to implement the 6 functions and 2 events
-    // from IERC20
+    // This is just a count of how many NFTs have been minted with this
+    // manager; it can be a public variable.
+    function count() external returns (uint);
 
-    // implementing contracts have to implement the 3 functions from
-    // IERC721Metadata
+    // Additional functions to implement / override:
+    // supportsInterface(): for the interfaces specified in the HW writeup
+    // _baseURI(): the part of the full path name before the filename itself
+    // tokenURI(): get the file name (with _baseURI() before it) for the passed 
+    //             NFT ID
+
 }</code></pre>
-
-- There is quite the inheritance tree here...
 
 
 
