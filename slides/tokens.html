@@ -382,6 +382,29 @@ contract Selectors is ISelectors {
 
 
 
+## `supportsInterface()`
+- Code provided in the [Gradebook assignment](../hws/gradebook/index.html):
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
+        return interfaceId == type(IGradebook).interfaceId || 
+               interfaceId == 0x01ffc9a7;
+}
+</code></pre>
+
+- 0x01ffc9a7 is the interface selector for IERC165
+  - Hard-coding the value prevented the need to include that interface
+- But we'll include it in future assignments:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
+>function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
+        return interfaceId == type(IGradebook).interfaceId || 
+               interfaceId == type(IERC165).interfaceId;
+}
+</code></pre>
+
+
+
 ## Known interface selectors
 - Our blockchain explorer contains a list of the known function and interface selectors used in this course
   - Click on the "View the known ABIs and interface IDs" link at the bottom of the main page
@@ -493,6 +516,7 @@ interface IERC20Metadata is IERC20 {
 ```
 
 - [OpenZeppelin source code](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/IERC20Metadata.sol)
+- Note that ERC-20 is more of a fungible token *manager* rather than just the token itself
     </textarea></section>
 
     <section>
@@ -502,11 +526,11 @@ interface IERC20Metadata is IERC20 {
 <pre class="code-wrapper" style="margin-bottom:-20px"><code class="hljs awk small" style="height:auto;width:120%"
 >interface ITokenCC is IERC20Metadata, IERC165 {
 
-    // all of IERC20 Metadata is here (name(), symbol(), decimals())
+    // inherits from IERC20Metadata (name(), symbol(), decimals())
 
-    // all of IERC20 is here (6 functions)
+    // inherits from IERC20 (6 functions)
 
-    // IERC165 is here (supportsInterface())
+    // inherits from IERC165 (supportsInterface())
 
     function requestFunds() external;
 
@@ -523,6 +547,11 @@ interface IERC20Metadata is IERC20 {
 </section>
 
    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Inheritance Tree
+![](../hws/tokens/inheritance.dot.1.svg)
+
+
+
 ## Implementing our Token Cryptocurrencies
 - Our starting contract line:
   ```
@@ -533,7 +562,7 @@ contract TokenCC is ITokenCC, ERC20 {
   - name(), decimals(), symbol() from IERC20Metadata
     - name() and decimals() are done for us
   - supportsInterface() from IERC165
-  - requestFunds() for ITokenCC
+  - requestFunds() from ITokenCC
   - Nothing from IERC20, since we inherit from ERC20
 
 
@@ -583,10 +612,10 @@ contract TokenCC is ITokenCC, ERC20 {
 ## [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) DAI / [![weth logo](../slides/images/logos/weth-coin-symbol.svg)](https://coinmarketcap.com/currencies/weth/) WETH Example
 - The code for this is [here](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/#web3py-example)
   - And reproduced on the next slide
-- DAI: An Ethereum token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
+- DAI: An Ethereum ERC-20 token cryptocurrency meant as a stable coin; 1 DAI should equal 1 USD
   - When new DAI are minted, the cryptocurrencies used to exchange for them are put into 'vaults' to help DAI retain it's value
   - We'll see DAI in the upcoming stablecoins lecture
-- WETH, for "Wrapped ETH", has a 1-to-1 exchange value with regular ETH
+- WETH, for "Wrapped ETH", is a ERC-20 token that has a 1-1 exchange value with regular ETH
   - But it follows the ERC-20 standard, so can be used in lieu of ETH when an ERC-20 token cryptocurrency is needed
    </textarea></section>
 
@@ -691,11 +720,6 @@ Addr Balance: 5149.944966727369
   - With a name, symbol, and logo
   - You have to design the logo via [GIMP](https://www.gimp.org/) or similar
 - In the DEX (Decentralized Exchange) assignment, you will be creating an smart contract to exchange your cryptocurrency for our (fake) ETH
-
-
-
-## Inheritance Tree
-![](../hws/tokens/inheritance.dot.1.svg)
 </textarea></section>
 
   </section>
@@ -762,7 +786,7 @@ Addr Balance: 5149.944966727369
     function tokenURI(uint256 _tokenId) external view returns (string);
 }
 </code></pre>
-- Note that ERC-721 is more of a token *manager* rather than just the token itself
+- Note that ERC-721 is more of a non-fungible token *manager* rather than just the token itself
 
 
 
@@ -807,7 +831,8 @@ Addr Balance: 5149.944966727369
 - In the Tokens assignment, you will be creating an NFT manager
   - This is in addition to the cryptocurrency part of this assignment
 - In the Auction assignment, you will be creating an auction smart contract to allow bidding on your NFTs
-- We'll look at the [Tokens assignment](../hws/tokens/index.html)
+- In the MetaMask assignment, you will create a web page that allows easy interaction with your Auction smart contract on the blockchain
+- We'll look at the [Tokens assignment](../hws/tokens/index.html) now
 
 
 
