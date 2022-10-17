@@ -179,7 +179,7 @@ contract EZTokens {
 
 - Which is worth more?
   - Other than convenience
-- Images from [wikipedia](https://en.wikipedia.org/wiki/United_States_dollar)
+- Images from [Wikipedia](https://en.wikipedia.org/wiki/United_States_dollar)
 
 
 
@@ -340,9 +340,9 @@ interface ISelectors {
 }
 
 contract Selectors is ISelectors {
-    function doesNothing(uint u, bool b) external { }
-    function onlyReverts(string memory s) external { }
-    function triad(bytes4 b) external { }
+    function doesNothing(uint u, bool b) external override { }
+    function onlyReverts(string memory s) external override { }
+    function triad(bytes4 b) external override { }
     function onlyMe() internal { }
 
     constructor() {
@@ -394,7 +394,7 @@ contract Selectors is ISelectors {
 
 - 0x01ffc9a7 is the interface selector for IERC165
   - Hard-coding the value prevented the need to include that interface
-- But we'll include it in future assignments:
+- But we'll include the full version in future assignments:
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto;width:120%"
 >function supportsInterface(bytes4 interfaceId) external pure returns (bool) {

@@ -61,12 +61,12 @@ dex_j [label="8",pos="6,-5.0!"];
 */
 
 // function calls
-alice_a -> erc20_a [label="approve()"];
+alice_a -> erc20_a [label="approve(a,i)"];
 erc20_b -> alice_b [label="(confirmation)"];
-alice_c -> dex_c [label="createPool() w/ETH"];
+alice_c -> dex_c [label="exchange(a,b,c)"];
 dex_d -> erc20_d [label="transferFrom()",style=dashed];
 erc20_e -> dex_e [label="(confirmation)",style=dashed];
-dex_f -> alice_f [label="(confirmation)"];
+dex_f -> alice_f [label="(confirmation w/ETH)"];
 
 }
 
