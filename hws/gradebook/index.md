@@ -121,7 +121,7 @@ The two events, listed at the top of the interface, should be emitted at the app
 
 #### Address checksums
 
-Note that Remix may complain if an Ethernet address is not [checksummed](../../slides/ethereum.html#/checksum).  This is a warning, not an error, and it will still work fine.  But you still have to remove the warning, otherwise the compilation when you submit it will appear to fail.  Remix will provide, in the warning, the checksummed address -- you are welcome to use that value (cut-and-paste it into your code) instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
+Note that Remix may complain if an Ethernet address is not [checksummed](../../slides/ethereum.html#/checksum).  Remix will provide, in the error, the checksummed address -- you are welcome to use that value (cut-and-paste it into your code) instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
 
 
 ### Part 2: Testing and Deployment
