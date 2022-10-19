@@ -60,6 +60,7 @@
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here.</p>
 <ul>
 <li>Tue, 10/18: <code>count()</code> in <a href='INFTManager.sol.html'>INFTManager.sol</a> (<a href='INFTManager.sol'>src</a>) was changed to a <code>view</code>, and the contract address for the course-wide NFT manager was changed (the Collab landing page is now correct). Clarified that <code>requestFunds()</code> is likely to be <code>pure</code> in your contract (last bullet point in the ERC-20 section). Clarified how Remix reports return values on transactions and how to determine NFT IDs (last two bullet points in the “implementation notes” part of the ERC-721 section).</li>
+<li>Wed, 10/19: added a <code>nft_id_kept</code> key in the <code>other</code> dictionary in <a href='tokens.py.html'>tokens.py</a> (<a href='tokens.py'>src</a>) for the NFT that you created on your NFT manager and kept for yourself.</li>
 </ul>
 </div><div id='tpart-1-erc-20-fungible-token' class='tabcontent'><h3 id='part-1-erc-20-fungible-token'>Part 1: ERC-20 Fungible Token</h3>
 <p>In this part, you will create a fungible token manager that follows the (enhanced) <a href='https://ethereum.org/en/developers/docs/standards/tokens/erc-20/'>ERC-20 token standard</a>. This token will represent a token cryptocurrency. You will use this code in future assignments, such as where you will be creating a decentralized cryptocurrency exchange for the cryptocurrency that you are creating here.</p>

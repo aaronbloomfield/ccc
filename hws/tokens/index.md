@@ -23,7 +23,7 @@ In addition to your source code, you will submit an edited version of [tokens.py
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
 - Tue, 10/18: `count()` in [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)) was changed to a `view`, and the contract address for the course-wide NFT manager was changed (the Collab landing page is now correct).  Clarified that `requestFunds()` is likely to be `pure` in your contract (last bullet point in the ERC-20 section).  Clarified how Remix reports return values on transactions and how to determine NFT IDs (last two bullet points in the "implementation notes" part of the ERC-721 section).
-
+- Wed, 10/19: added a `nft_id_kept` key in the `other` dictionary in [tokens.py](tokens.py.html) ([src](tokens.py)) for the NFT that you created on your NFT manager and kept for yourself.
 
 ### Part 1: ERC-20 Fungible Token
 

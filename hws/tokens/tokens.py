@@ -64,8 +64,14 @@ other = {
 	# contract, above.
 	'nft_sent_txn_hash': None,
 
-	# The NFT ID that you sent me from YOUR NFTManager (the nft_manager
-	# contract, above).  It must have been done by eth_coinbase, above.
+	# The NFT ID that you created from YOUR NFTManager (the nft_manager
+	# contract, above) and kept (meaning you did not send to the course
+	# instructor).  It must have been done by eth_coinbase, above.
+	'nft_id_kept': None,
+
+	# The NFT ID that you sent to the course instructor from YOUR NFTManager
+	# (the nft_manager contract, above).  It must have been done by
+	# eth_coinbase, above.
 	'nft_id_sent': None,
 
 	# The transaction hash from when you created an NFT on the course-wide NFT
