@@ -32,7 +32,7 @@ interface INFTManager <font color="#008080">is</font> IERC721Metadata <font colo
 
     <i><font color="#9A1900">// This is just a count of how many NFTs have been minted with this</font></i>
     <i><font color="#9A1900">// manager; it can be a public variable.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">count</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">count</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Additional functions to implement / override:</font></i>
     <i><font color="#9A1900">// supportsInterface(): for the interfaces specified in the HW writeup</font></i>

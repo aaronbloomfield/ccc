@@ -21,7 +21,7 @@ interface INFTManager is IERC721Metadata {
 
     // This is just a count of how many NFTs have been minted with this
     // manager; it can be a public variable.
-    function count() external returns (uint);
+    function count() external view returns (uint);
 
     // Additional functions to implement / override:
     // supportsInterface(): for the interfaces specified in the HW writeup

@@ -52,7 +52,10 @@
 <p>If you have not successfully completed those two assignments, then you will not be able to complete this assignment.</p>
 <p>In addition to your source code, you will submit an edited version of <a href="tokens.py.html">tokens.py</a> (<a href="tokens.py">src</a>).</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here.</p>
+<ul>
+<li>Tue, 10/18: <code>count()</code> in <a href="INFTManager.sol.html">INFTManager.sol</a> (<a href="INFTManager.sol">src</a>) was changed to a <code>view</code>, and the contract address for the course-wide NFT manager was changed (the Collab landing page is now correct). Clarified that <code>requestFunds()</code> is likely to be <code>pure</code> in your contract (last bullet point in the ERC-20 section). Clarified how Remix reports return values on transactions and how to determine NFT IDs (last two bullet points in the “implementation notes” part of the ERC-721 section).</li>
+</ul>
 <h3 id="part-1-erc-20-fungible-token">Part 1: ERC-20 Fungible Token</h3>
 <p>In this part, you will create a fungible token manager that follows the (enhanced) <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/">ERC-20 token standard</a>. This token will represent a token cryptocurrency. You will use this code in future assignments, such as where you will be creating a decentralized cryptocurrency exchange for the cryptocurrency that you are creating here.</p>
 <h4 id="part-1-task-1-name-your-cryptocurrency">Part 1, task 1: Name your cryptocurrency</h4>
@@ -109,7 +112,7 @@
 </ul></li>
 </ul></li>
 <li>You have to implement the <code>supportsInterface()</code> method to fulfill the requirements of the <a href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>) contract; remember that your code supports <em>four</em> interfaces: <code>IERC165</code>, <code>IERC20</code>, <code>IERC20Metadata</code>, and <code>ITokenCC</code>. Although your contract also extends <code>Context</code>, there are no <code>external</code> or <code>public</code> methods in <code>Context</code>, and it’s an abstract contract, so there is no interface there to support.</li>
-<li>You have to implement a <code>requestFunds()</code> function that does nothing other than <code>revert()</code> – we will be using that function in a future assignment, which is why it is in this interface.</li>
+<li>You have to implement a <code>requestFunds()</code> function that does nothing other than <code>revert()</code> – we will be using that function in a future assignment, which is why it is in this interface. Since you are just going to call <code>revert()</code>, Solidity will recommend making that a <code>pure</code> function – that’s fine to do in your contract. But the function line in the interface should not have the <code>pure</code> keyword on it, since a use of that function in a future assignment will read/write the contract’s state.</li>
 </ul>
 <p>Be sure to thoroughly test this in Remix! Remember that you have multiple accounts in the Javascript deployment environment, so you can transfer your new cryptocurrency back and forth. Just switch the account in the “Account” drop-down list to initiate a transaction from a different account.</p>
 <h4 id="part-1-task-5-deployment">Part 1, task 5: Deployment</h4>
@@ -170,7 +173,8 @@
 <ul>
 <li>Your <code>supportsInterface()</code> function supports four interfaces (see below), and overrides the <code>supportsInterface()</code> function from two different ancestors: <code>ERC721</code> and <code>IERC165</code>. You will need to specify, via the override keyword, that it does so: <code>override(IERC165,ERC721)</code> instead of just <code>override</code>. This is discussed in lecture <a href="../../slides/solidity.html#/multioverride">here</a>.</li>
 <li>If you want to concatenate strings, such as when returning a value from <code>tokenURI()</code>, which must include the base URI, you can use <code>string.concat(s1,s2)</code> where <code>s1</code> and <code>s2</code> are strings. Note that you can concatenate more than two strings via this function call via additional parameters.</li>
-<li>In Remix, when calling a <code>view</code> or <code>pure</code> function on a contract, which is a blue button, the return value is displayed right below the button itself. For a transaction (orange button), you have to look at the JSON data returned to get the return value – expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the “decoded output” field. Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh).</li>
+<li>In Remix, when calling a <code>view</code> or <code>pure</code> function on a contract, which is a blue button, the return value is displayed right below the button itself. For a transaction (orange button), you have to look at the JSON data returned to get the return value – expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the “decoded output” field. Sometimes Remix doesn’t like to display the value. Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh, and that has to be deployed to the course blockchain for the explorer to see it).</li>
+<li>How you decide on a NFT ID is up to you. The most straight-forward way is to have consecutive integers, and a mapping from that NFT ID to a string. The course NFT manager encodes the string of the filename as a (very long) <code>uint</code>. Either one is acceptable.</li>
 </ul>
 <p>The following are the functional requirements for the development of this contract:</p>
 <ul>

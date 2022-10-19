@@ -20,7 +20,9 @@ In addition to your source code, you will submit an edited version of [tokens.py
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
+
+- Tue, 10/18: `count()` in [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)) was changed to a `view`, and the contract address for the course-wide NFT manager was changed (the Collab landing page is now correct).  Clarified that `requestFunds()` is likely to be `pure` in your contract (last bullet point in the ERC-20 section).  Clarified how Remix reports return values on transactions and how to determine NFT IDs (last two bullet points in the "implementation notes" part of the ERC-721 section).
 
 
 ### Part 1: ERC-20 Fungible Token
@@ -94,7 +96,7 @@ Your task is to create a `TokenCC.sol` file with a `TokenCC` contract.  Some imp
 		- A million coins, or a billion coins, is not unreasonable here
 		- Keep in mind the amount you are specifying in the mint call is $x \ast 10^d$ where $x$ is how many coins you want to mint and $d$ is the number of decimal places.  So if you want to mint 100 coins, and you are using 10 decimal places, then the amount to mint is 1,000,000,000,000.
 - You have to implement the `supportsInterface()` method to fulfill the requirements of the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract; remember that your code supports *four* interfaces: `IERC165`, `IERC20`, `IERC20Metadata`, and `ITokenCC`.  Although your contract also extends `Context`, there are no `external` or `public` methods in `Context`, and it's an abstract contract, so there is no interface there to support.
-- You have to implement a `requestFunds()` function that does nothing other than `revert()` -- we will be using that function in a future assignment, which is why it is in this interface.
+- You have to implement a `requestFunds()` function that does nothing other than `revert()` -- we will be using that function in a future assignment, which is why it is in this interface.  Since you are just going to call `revert()`, Solidity will recommend making that a `pure` function -- that's fine to do in your contract.  But the function line in the interface should not have the `pure` keyword on it, since a use of that function in a future assignment will read/write the contract's state.
 
 
 Be sure to thoroughly test this in Remix!  Remember that you have multiple accounts in the Javascript deployment environment, so you can transfer your new cryptocurrency back and forth.  Just switch the account in the "Account" drop-down list to initiate a transaction from a different account.
@@ -167,7 +169,6 @@ The only new files, beyond the the OpenZeppelin implementation, are the two bott
 
 #### Part 2, task 3: Compile and test the provided code
 
-
 You should compile the [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)) code in Remix.  Deploy it to the Javascript environment and play with the various functions.  Note that you need to understand what the code in that smart contract does!  As this is the provided code, and does not have all the features that we need (yet).
 
 
@@ -188,7 +189,8 @@ Some implementation notes:
 
 - Your `supportsInterface()` function supports four interfaces (see below), and overrides the `supportsInterface()` function from two different ancestors: `ERC721` and `IERC165`.  You will need to specify, via the override keyword, that it does so: `override(IERC165,ERC721)` instead of just `override`.  This is discussed in lecture [here](../../slides/solidity.html#/multioverride).
 - If you want to concatenate strings, such as when returning a value from `tokenURI()`, which must include the base URI, you can use `string.concat(s1,s2)` where `s1` and `s2` are strings.  Note that you can concatenate more than two strings via this function call via additional parameters.
-- In Remix, when calling a `view` or `pure` function on a contract, which is a blue button, the return value is displayed right below the button itself.  For a transaction (orange button), you have to look at the JSON data returned to get the return value -- expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the "decoded output" field.  Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh).
+- In Remix, when calling a `view` or `pure` function on a contract, which is a blue button, the return value is displayed right below the button itself.  For a transaction (orange button), you have to look at the JSON data returned to get the return value -- expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the "decoded output" field.  Sometimes Remix doesn't like to display the value.  Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh, and that has to be deployed to the course blockchain for the explorer to see it).
+- How you decide on a NFT ID is up to you.  The most straight-forward way is to have consecutive integers, and a mapping from that NFT ID to a string.  The course NFT manager encodes the string of the filename as a (very long) `uint`.  Either one is acceptable.
 
 The following are the functional requirements for the development of this contract:
 
