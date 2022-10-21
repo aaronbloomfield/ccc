@@ -107,7 +107,7 @@ sanity_checks = {
 
 	# Did you mint at least 100 coins of your TokenCC?  Keep in mind that you
 	# have to add a number of decimal places after the number of coins minted.
-	'minted_at_least_50_coins': False,
+	'minted_at_least_100_coins': False,
 
 	# Did you send me exactly 10.0 of your token cryptocurrencty?  If your
 	# token cryptocurrency uses 8 decimals, then that will be 1,000,000,000
