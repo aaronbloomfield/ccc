@@ -54,7 +54,8 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># This is the auction ID for the auction in your auctioneer contract whose</font></i>
-	<i><font color="#9A1900"># time should be expired and should be closed.</font></i>
+	<i><font color="#9A1900"># time should be expired and should be closed at the time of the</font></i>
+	<i><font color="#9A1900"># assignment due date.</font></i>
 	<font color="#FF0000">'your_auction_id_1'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the NFT token ID, in your deployed NFT manager, for the above</font></i>
@@ -95,9 +96,18 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># assignment due date/time?</font></i>
 	<font color="#FF0000">'auction_1_expiration'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Are there multiple bids, from at least 2 accounts, on action #1?</font></i>
+	<font color="#FF0000">'auction_1_has_multiple_bids'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you call closeAuction() on auction #1?</font></i>
+	<font color="#FF0000">'auction_1_called_closeAuction'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Will your second auction ('your_auction_id_2', above) stay open for TWO</font></i>
 	<i><font color="#9A1900"># WEEKS after the assignment due date/time?</font></i>
 	<font color="#FF0000">'auction_2_expiration'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Are there multiple bids, from at least 2 accounts, on action #2?</font></i>
+	<font color="#FF0000">'auction_2_has_multiple_bids'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Will the course auction that you submitted ('course_auction_id', above)</font></i>
 	<i><font color="#9A1900"># stay open for ONE WEEK after the assignment due date/time?</font></i>

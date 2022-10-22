@@ -8,36 +8,32 @@ Decentralized NFT Auction
 
 In this assignment you will write a smart contract, in Solidity, to handle auctions for NFTs.  The NFTs will be ERC-721 tokens.
 
-Once deployed to our private Ethereum blockchain, anybody should be able to mint an NFT and then initiate an auction.  Anybody could then submit a bid to the auction.  To prevent somebody from placing a bid and then not paying, one has to transfer ETH to the smart contract when a bid is placed -- it is the transfer of this ETH that actually places the bid.  Anybody who is outbid will have their ETH returned, and they can choose (or not) to place a higher bid.  Once the auction is completed, the ETH from the winning bid is transferred to the person who initiated the auction (minus some fees), and the NFT is transferred to the winning bidder.
+Once deployed to our private Ethereum blockchain, anybody should be able to mint an NFT and then initiate an auction.  Anybody could then submit a bid to the auction.  To prevent somebody from placing a bid and then not paying, one has to transfer ETH to the smart contract when a bid is placed -- it is the transfer of this ETH (along with the associated function call) that actually places the bid.  Anybody who is outbid will have their ETH returned, and they can choose (or not) to place a higher bid.  Once the auction is completed, the ETH from the winning bid is transferred to the person who initiated the auction (minus some fees), and the NFT is transferred to the winning bidder.
 
 Writing this homework will require completion of the following assignments:
 
 - [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md))
 - [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md))
-- [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md))
+- [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)); if you did not get it working properly, then speak to me, and I will provide an alternative deployed contract for you to use.
 
-Note that this assignment requires that your [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment is working properly.  If you did not get it working properly, then see the next section.
+The intent is that you are going to re-use the three NFT images that you created in the Tokens assignment.  You can also create new images, if you would like, as long as you follow the guidelines in that assignment (public domain, nothing that will get me in trouble, file naming, in the `ipfs/` directory, etc.).  As before, in this course, owning the NFT does NOT imply ownership of the image -- the assumption is that you don't actually own the original image, since it's in the public domain.
 
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), and the [Tokens slide set](../../slides/tokens.html#/)
 
+In addition to your source code, you will submit an edited version of [auction.py](auction.py.html) ([src](auction.py)).
 
 ### Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+to add:
 
-### Task 1: Create NFTs
-
-You are going to create some NFT images in your NFTmanager.
-
-You should use your NFT manager that you wrote and deployed in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  If you were unable to get yours working in that assignment, then speak to me, and I will provide an alternative deployed contract for you to use.
-
-You will need to have *three* images for NFTs to be used in this assignment.  The intent is that you will reuse the ones you created for the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  You can also create new images, if you would like, as long as you follow the guidelines in that assignment (public domain, nothing that will get me in trouble, file naming, in the `ipfs/` directory, etc.).  As before, in this course, owning the NFT does NOT imply ownership of the image -- the assumption is that you don't actually own the original image, since it's in the public domain.
-
-Not surprisingly, you will then need to create NFTs for each of your images in your deployed `NFTmanager` smart contract -- you are welcome to do that later as they are needed.
+- start the auction at the reserve price
+- update IAuctioneer.sol, as it's changed
+- no more fixedTime
 
 
-### Task 2: Auction contract
+### Task 1: Auction contract
 
 You are going to create and deploy a decentralized auction smart contract.  The contract you will be creating will allow for a decentralized auction for NFTs.  The intended flow is as follows:
 
@@ -52,12 +48,14 @@ You are going to create and deploy a decentralized auction smart contract.  The 
 - Anybody can then start an auction via the `startAuction()` function, and involves setting the auction duration, reserve (minimum) price, and various other parameters.  If this function does not revert, then the auction will start.
     - The person who started the auction is called the 'initiator'
     - If the Auctioneer can't transfer the NFT ownership to itself, the function should revert
+    - A diagram for this process, including the interaction with the NFTManager contract, is shown below
 - Anybody can bid on the auction -- a bid is placed by transferring ETH to the Auctioneer contract via a call to `placeBid()`, and specifying which auction it is for via a parameter to that function call
     - This function should revert if:
         - If the bid is on an inactive auction or after the auction close time
         - If the amount bid is zero or is less than the reserve price
         - If the amount bid is less than or equal to the current maximum bid
     - Otherwise, if the amount bid is (strictly) higher than the previously highest bid, then the sender is the new winning bidder; the previously highest winning bidder is refunded his/her ether
+    - If one is currently the winning bidder, they can still place a *higher* bid -- their old ether is returned, just like if it were somebody else placing the bid
 - Once we are past the auction end time, the auction can be closed via a call to `closeAuction()`
     - If there are no bids, then NFT ownership is transferred to the initiator; this includes the cases where the bids were all less than the reserve price (those bid attempts would have reverted, and thus no bids would have been collected)
     - If the highest bid is equal to or greater than the reserve price, then the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via `safeTransferFrom()` (*not* `transferFrom()`)
@@ -65,15 +63,16 @@ You are going to create and deploy a decentralized auction smart contract.  The 
 - The auction contract will keep a fee of 1% of the value of a *winning* bid
     - Any auction that does not succeed -- no bids or does not meet the reserve price -- does not collect a fee
     - Anybody can view the fees via the `unpaidFees()` and `totalFees()` functions; the deployer of the auction smart contract, and ONLY that address, can and collect those fees via a call to `collectFees()`
+    - Integer division here is fine; we don't care about rounding issues
 - There are three events that must be emitted at the appropriate times; for each, the parameter is the auction ID:
     - `auctionStartEvent()`: when `startAuction()` is successfully called
     - `auctionCloseEvent()`: when `closeAuction()` is successfully called
     - `higherBidEvent()`: when a new (and higher) bid is placed on an NFT via `placebid()`
 
 
-### IAcutioneer interface
+### Task 2: IAcutioneer interface
 
-Formally the task is to develop an `Auctioneer` contract that implements the following `IAuctioneer` interface below.  The provided [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) file has more comments for this interface.
+This task is to understand the IAuctioneer interface.  Formally the task is to develop an `Auctioneer` contract that implements the following `IAuctioneer` interface below.  The provided [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) file has more comments for this interface.
 
 Your contract line must be *exactly*:
 
@@ -81,9 +80,12 @@ Your contract line must be *exactly*:
 contract Auctioneer is IAuctioneer {
 ```
 
+The interface is as follows.  There are much more detailed comments in the [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) file.
+
 
 ```
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 pragma solidity ^0.8.16;
 
 import "./IERC165.sol";
@@ -94,8 +96,8 @@ interface IAuctioneer is IERC165 {
         uint id;            // the auction id
         uint num_bids;      // how many bids have been placed
         string data;        // a text description of the auction or NFT data
-        uint highestBid;    // the current highest bid
-        uint reserve;       // the minimum bid allowed
+        uint highestBid;    // the current highest bid, in wei
+        uint reserve;       // the minimum bid that can win, in wei
         address winner;     // the current highest bidder
         address initiator;  // who started the auction
         uint tokenId;       // the NFT token ID
@@ -104,7 +106,9 @@ interface IAuctioneer is IERC165 {
         bool fixedTime;     // if the end time is from the start time or last bid
     }
 
+
     // there needs to be a constructor, but those are never listed in an interface
+
 
 
     // the following are just the getter methods for the public variables in the contract
@@ -113,9 +117,9 @@ interface IAuctioneer is IERC165 {
 
     function num_auctions() external view returns (uint);
 
-    function unpaidFees() external view returns (uint);
-
     function totalFees() external view returns (uint);
+
+    function unpaidFees() external view returns (uint);
 
 
     // the following are the methods you need to implement
@@ -125,7 +129,7 @@ interface IAuctioneer is IERC165 {
     function collectFees() external;
 
     function startAuction(uint m, uint h, uint d, string memory _data, 
-                          uint _reserve, bool _fixedTime) external returns (uint);
+                          uint _reserve, bool _fixedTime, uint nftid) external returns (uint);
 
     function closeAuction(uint _id) external;
 
@@ -141,6 +145,7 @@ interface IAuctioneer is IERC165 {
     event auctionCloseEvent(uint indexed _id);
 
     event higherBidEvent (uint indexed _id);
+
 
     // also supportsInterface(), because IAuctioneer inherits from IERC165
 
@@ -171,10 +176,9 @@ One it works, deploy it to our private Ethereum blockchain.  You should test it 
 
 The `startAuction()` method requires a bit more explanation.  The process is as follows:
 
-- Alice will mint an NFT with some NFT manager; any NFT manager can be used for this purpose
+- Alice will first mint an NFT with the NFT manager of this auction contract
 - Alice will `approve()` the auctioneer contract for her newly minted NFT
-- Alice will call `startAuction()`
-    - As part of this process, the auctioneer will transfer ownership of Alice's NFT to itself, and revert if it cannot do so
+- Alice will call `startAuction()`; as part of this process, the auctioneer will transfer ownership of Alice's NFT to itself, and revert if it cannot do so
 
 Below is a diagram of the flow of this process.
 
@@ -200,7 +204,7 @@ You *SHOULD* call `closeAuction()` on this auction.
 
 #### Auction 2
 
-The second auction should end *two weeks* after the assignment is due.  Just get it on the day two weeks later -- we don't really care about the time, as long as the date is 14 days after the assignment due date.  Basically, we want to see an active auction.  This, also, should have a few bids on it.  This auction use the second of your (three) NFTs.  You will be submitting the auction ID for this auction as well as the NFT token ID.
+The second auction should end *two weeks* after the assignment is due.  Just get it on the day two weeks later -- we don't really care about the time, as long as the date is 14 days after the assignment due date.  Basically, we want to see an active auction.  This, also, should have a few bids on it.  This auction use the second of your (three) NFTs.  You will be submitting the auction ID for this auction as well as the NFT token ID.  This should be a fixed closing date (`fixedTime` in `startAuction()` is true).
 
 
 ### Task 4: Class Auctions
@@ -209,7 +213,7 @@ You are going to participate in a class-wide auction manager.
 
 We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
 
-You should use the third of your (three) NFTs.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the auction ID from the auction you created as well as the NFT token ID.  ***YOUR RESERVE*** should be no higher than 5 ETH.
+You should use the third of your (three) NFTs.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the auction ID from the auction you created as well as the NFT token ID.  ***YOUR RESERVE*** should be no higher than 5 ETH.  This should be a fixed closing date (`fixedTime` in `startAuction()` is true).
 
 Lastly, bid on at least *three* auctions that are not your own.  Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on.  That's fine -- you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids.  We are going to judge lateness on this assignment by the Gradescope submission time, and the information you have to submit does not include the transaction hashes of the bids.  We are going to check whether you bid on the auctions by looking if your `eth.coinbase` account, the address of which you will submit below, initiated bids on any one of your classmate's submitted NFT manager addresses by two days after the due date.  Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 
@@ -223,11 +227,12 @@ Lastly, bid on at least *three* auctions that are not your own.  Depending on wh
 
 ### Submission
 
-You will need to fill in the various values from this assignment into the [auction.py](auction.py.html) ([src](auction.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
+You will need to fill in the various values from this assignment into the [auction.py](auction.py.html) ([src](auction.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other requirements to ensure this assignment is fully submitted.
 
-
-There are *two* forms of submission for this assignment; you must do both.
+There are *three* forms of submission for this assignment; you must do all three.
 
 Submission 1: You must deploy those two smart contracts (`NFTmanager` and `Auctioneer`) to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  But the final deployment for the `Auctioneer` should only have the data specified in task 3, above.  It's also fine if you use your `NFTmanager` from a previous assignment.  Save the contract addresses and transaction hash of these deployments, as you will need to submit them below.
 
-Submission 2: You should submit your `Auctioneer.sol` file and your completed `auction.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+Submission 2: You have to create a number of auctions: 2 in your auction manager, and one in the course-wide auction manager.  These have specific close dates, and there should be multiple bids on the first two.  This is detailed in tasks 3 and 4, above.
+
+Submission 3: You should submit your `Auctioneer.sol` file and your completed `auction.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).

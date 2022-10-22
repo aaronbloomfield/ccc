@@ -35,13 +35,11 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
         <font color="#008080">uint</font> num_bids<font color="#990000">;</font>      <i><font color="#9A1900">// how many bids have been placed</font></i>
         <font color="#008080">string</font> data<font color="#990000">;</font>        <i><font color="#9A1900">// a text description of the auction or NFT data</font></i>
         <font color="#008080">uint</font> highestBid<font color="#990000">;</font>    <i><font color="#9A1900">// the current highest bid, in wei</font></i>
-        <font color="#008080">uint</font> reserve<font color="#990000">;</font>       <i><font color="#9A1900">// the minimum bid that can win, in wei</font></i>
         <font color="#008080">address</font> winner<font color="#990000">;</font>     <i><font color="#9A1900">// the current highest bidder</font></i>
         <font color="#008080">address</font> initiator<font color="#990000">;</font>  <i><font color="#9A1900">// who started the auction</font></i>
         <font color="#008080">uint</font> tokenId<font color="#990000">;</font>       <i><font color="#9A1900">// the NFT token ID</font></i>
-        <font color="#008080">uint</font> endTime<font color="#990000">;</font>       <i><font color="#9A1900">// when the auction will end</font></i>
+        <font color="#008080">uint</font> endTime<font color="#990000">;</font>       <i><font color="#9A1900">// when the auction started</font></i>
         <font color="#009900">bool</font> active<font color="#990000">;</font>        <i><font color="#9A1900">// if the auction is active</font></i>
-        <font color="#009900">bool</font> fixedTime<font color="#990000">;</font>     <i><font color="#9A1900">// if the end time is from the start time or last bid</font></i>
     <font color="#FF0000">}</font>
 
 
@@ -53,7 +51,7 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
     <i><font color="#9A1900">// The following can just be the automatically created getter functions</font></i>
     <i><font color="#9A1900">// from public variables</font></i>
 
-    <i><font color="#9A1900">// The address of the NFT Manager for this Auctioneer; it is mean to be</font></i>
+    <i><font color="#9A1900">// The address of the NFT Manager for this Auctioneer; it is meant to be</font></i>
     <i><font color="#9A1900">// created and deployed when the Auctioneer constructor is called.  This</font></i>
     <i><font color="#9A1900">// can just be via the getter method from a public variable.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">nftmanager</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
@@ -87,24 +85,25 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
     <i><font color="#9A1900">// deployer.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">collectFees</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
 
-    <i><font color="#9A1900">// This sets the data for the auction, but the auction time doesn't start</font></i>
-    <i><font color="#9A1900">// until the ERC-721 contract is trasnferred over.  The first three</font></i>
-    <i><font color="#9A1900">// parameters are the number of minutes, hours, and days for the auction</font></i>
-    <i><font color="#9A1900">// to last -- they can't all be zero.  The data parameter is a textual</font></i>
-    <i><font color="#9A1900">// description of the auction, NOT the file name.  The reserve is the</font></i>
-    <i><font color="#9A1900">// minimum price that will win the auction; this amount is in wei</font></i>
-    <i><font color="#9A1900">// (which is 10^-18 eth). The fixedTime parameter is whether the end</font></i>
-    <i><font color="#9A1900">// time (of m,h,d) is from the start time of the auction (if True) or</font></i>
-    <i><font color="#9A1900">// from the last bid (if False).  This returns the auction ID of the</font></i>
-    <i><font color="#9A1900">// newly configured auction.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">startAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> m<font color="#990000">,</font> <font color="#008080">uint</font> h<font color="#990000">,</font> <font color="#008080">uint</font> d<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _data<font color="#990000">,</font> 
-                          <font color="#008080">uint</font> _reserve<font color="#990000">,</font> <font color="#009900">bool</font> _fixedTime<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <i><font color="#9A1900">// Start an auction.  The first three parameters are the number of</font></i>
+    <i><font color="#9A1900">// minutes, hours, and days for the auction to last -- they can't all be</font></i>
+    <i><font color="#9A1900">// zero.  The data parameter is a textual description of the auction, NOT</font></i>
+    <i><font color="#9A1900">// the file name.  The reserve is the minimum price that will win the</font></i>
+    <i><font color="#9A1900">// auction; this amount is in wei(which is 10^-18 eth). The fixedTime</font></i>
+    <i><font color="#9A1900">// parameter is whether the end time (of m,h,d) is from the start time of</font></i>
+    <i><font color="#9A1900">// the auction (if True) or from the last bid (if False).  The nftid is</font></i>
+    <i><font color="#9A1900">// which NFT is being auctioned.  This will transfer over the NFT from</font></i>
+    <i><font color="#9A1900">// the NFTManager to the contract (this must have been approved prior to</font></i>
+    <i><font color="#9A1900">// this call, else revert).  This returns the auction ID of the newly</font></i>
+    <i><font color="#9A1900">// configured auction.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">startAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> m<font color="#990000">,</font> <font color="#008080">uint</font> h<font color="#990000">,</font> <font color="#008080">uint</font> d<font color="#990000">,</font> string <font color="#008080">memory</font> data<font color="#990000">,</font> 
+                          <font color="#008080">uint</font> reserve<font color="#990000">,</font> <font color="#008080">uint</font> nftid<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// This closes out the auction, the ID of which is passed in as a</font></i>
     <i><font color="#9A1900">// parameter, but is only valid after the auction end time.  It will</font></i>
-    <i><font color="#9A1900">// handle the transfer of the ETH (if any bids were placed) and the NFT.</font></i>
-    <i><font color="#9A1900">// Note that anybody can call this function, although it will only close</font></i>
-    <i><font color="#9A1900">// auctions whose time has expired.</font></i>
+    <i><font color="#9A1900">// handle the transfer of the ETH (if any successful bids were placed)</font></i>
+    <i><font color="#9A1900">// and the NFT. Note that anybody can call this function, although it</font></i>
+    <i><font color="#9A1900">// will only close auctions whose time has expired.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">closeAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// When one wants to submit a bid on a NFT; the ID of the auction is</font></i>
@@ -123,7 +122,7 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
 
     <i><font color="#9A1900">// This is emitted when an auction is started in startAuction(); the</font></i>
     <i><font color="#9A1900">// ID is the auction ID.</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">auctionCreateEvent</font></b><font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">auctionStartEvent</font></b><font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
 
     <i><font color="#9A1900">// This is emitted when an auction ends in closeAuction(); the ID is the</font></i>
     <i><font color="#9A1900">// auction ID.</font></i>

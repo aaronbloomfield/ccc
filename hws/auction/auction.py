@@ -43,7 +43,8 @@ contracts = {
 other = {
 	
 	# This is the auction ID for the auction in your auctioneer contract whose
-	# time should be expired and should be closed.
+	# time should be expired and should be closed at the time of the
+	# assignment due date.
 	'your_auction_id_1': None,
 
 	# This is the NFT token ID, in your deployed NFT manager, for the above
@@ -84,9 +85,18 @@ sanity_checks = {
 	# assignment due date/time?
 	'auction_1_expiration': False,
 
+	# Are there multiple bids, from at least 2 accounts, on action #1?
+	'auction_1_has_multiple_bids': False,
+
+	# Did you call closeAuction() on auction #1?
+	'auction_1_called_closeAuction': False,
+
 	# Will your second auction ('your_auction_id_2', above) stay open for TWO
 	# WEEKS after the assignment due date/time?
 	'auction_2_expiration': False,
+
+	# Are there multiple bids, from at least 2 accounts, on action #2?
+	'auction_2_has_multiple_bids': False,
 
 	# Will the course auction that you submitted ('course_auction_id', above)
 	# stay open for ONE WEEK after the assignment due date/time?

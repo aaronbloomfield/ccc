@@ -24,13 +24,11 @@ interface IAuctioneer is IERC165 {
         uint num_bids;      // how many bids have been placed
         string data;        // a text description of the auction or NFT data
         uint highestBid;    // the current highest bid, in wei
-        uint reserve;       // the minimum bid that can win, in wei
         address winner;     // the current highest bidder
         address initiator;  // who started the auction
         uint tokenId;       // the NFT token ID
-        uint endTime;       // when the auction will end
+        uint endTime;       // when the auction started
         bool active;        // if the auction is active
-        bool fixedTime;     // if the end time is from the start time or last bid
     }
 
 
@@ -42,7 +40,7 @@ interface IAuctioneer is IERC165 {
     // The following can just be the automatically created getter functions
     // from public variables
 
-    // The address of the NFT Manager for this Auctioneer; it is mean to be
+    // The address of the NFT Manager for this Auctioneer; it is meant to be
     // created and deployed when the Auctioneer constructor is called.  This
     // can just be via the getter method from a public variable.
     function nftmanager() external view returns (address);
@@ -76,24 +74,25 @@ interface IAuctioneer is IERC165 {
     // deployer.
     function collectFees() external;
 
-    // This sets the data for the auction, but the auction time doesn't start
-    // until the ERC-721 contract is trasnferred over.  The first three
-    // parameters are the number of minutes, hours, and days for the auction
-    // to last -- they can't all be zero.  The data parameter is a textual
-    // description of the auction, NOT the file name.  The reserve is the
-    // minimum price that will win the auction; this amount is in wei
-    // (which is 10^-18 eth). The fixedTime parameter is whether the end
-    // time (of m,h,d) is from the start time of the auction (if True) or
-    // from the last bid (if False).  This returns the auction ID of the
-    // newly configured auction.
-    function startAuction(uint m, uint h, uint d, string memory _data, 
-                          uint _reserve, bool _fixedTime) external returns (uint);
+    // Start an auction.  The first three parameters are the number of
+    // minutes, hours, and days for the auction to last -- they can't all be
+    // zero.  The data parameter is a textual description of the auction, NOT
+    // the file name.  The reserve is the minimum price that will win the
+    // auction; this amount is in wei(which is 10^-18 eth). The fixedTime
+    // parameter is whether the end time (of m,h,d) is from the start time of
+    // the auction (if True) or from the last bid (if False).  The nftid is
+    // which NFT is being auctioned.  This will transfer over the NFT from
+    // the NFTManager to the contract (this must have been approved prior to
+    // this call, else revert).  This returns the auction ID of the newly
+    // configured auction.
+    function startAuction(uint m, uint h, uint d, string memory data, 
+                          uint reserve, uint nftid) external returns (uint);
 
     // This closes out the auction, the ID of which is passed in as a
     // parameter, but is only valid after the auction end time.  It will
-    // handle the transfer of the ETH (if any bids were placed) and the NFT.
-    // Note that anybody can call this function, although it will only close
-    // auctions whose time has expired.
+    // handle the transfer of the ETH (if any successful bids were placed)
+    // and the NFT. Note that anybody can call this function, although it
+    // will only close auctions whose time has expired.
     function closeAuction(uint _id) external;
 
     // When one wants to submit a bid on a NFT; the ID of the auction is
@@ -112,7 +111,7 @@ interface IAuctioneer is IERC165 {
 
     // This is emitted when an auction is started in startAuction(); the
     // ID is the auction ID.
-    event auctionCreateEvent(uint indexed _id);
+    event auctionStartEvent(uint indexed _id);
 
     // This is emitted when an auction ends in closeAuction(); the ID is the
     // auction ID.
