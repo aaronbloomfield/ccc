@@ -65,12 +65,6 @@
 <p>In addition to your source code, you will submit an edited version of <a href='auction.py.html'>auction.py</a> (<a href='auction.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-<p>to add:</p>
-<ul>
-<li>start the auction at the reserve price</li>
-<li>update IAuctioneer.sol, as it’s changed</li>
-<li>no more fixedTime</li>
-</ul>
 </div><div id='ttask-1-auction-contract' class='tabcontent'><h3 id='task-1-auction-contract'>Task 1: Auction contract</h3>
 <p>You are going to create and deploy a decentralized auction smart contract. The contract you will be creating will allow for a decentralized auction for NFTs. The intended flow is as follows:</p>
 <ul>
@@ -92,12 +86,12 @@
 <li>If the Auctioneer can’t transfer the NFT ownership to itself, the function should revert</li>
 <li>A diagram for this process, including the interaction with the NFTManager contract, is shown below</li>
 </ul></li>
+<li>The reserve price is the minimum bid that is considered acceptable for this auction. To make life easier, we can just start out the auction amount at the reserve price. Keep in mind that all monetary amounts are in wei.</li>
 <li>Anybody can bid on the auction – a bid is placed by transferring ETH to the Auctioneer contract via a call to <code>placeBid()</code>, and specifying which auction it is for via a parameter to that function call
 <ul>
 <li>This function should revert if:
 <ul>
 <li>If the bid is on an inactive auction or after the auction close time</li>
-<li>If the amount bid is zero or is less than the reserve price</li>
 <li>If the amount bid is less than or equal to the current maximum bid</li>
 </ul></li>
 <li>Otherwise, if the amount bid is (strictly) higher than the previously highest bid, then the sender is the new winning bidder; the previously highest winning bidder is refunded his/her ether</li>
@@ -135,23 +129,21 @@ import "./IERC165.sol";
 
 interface IAuctioneer is IERC165 {
 
+    // Holds the information for each auction
     struct Auction {
         uint id;            // the auction id
         uint num_bids;      // how many bids have been placed
         string data;        // a text description of the auction or NFT data
         uint highestBid;    // the current highest bid, in wei
-        uint reserve;       // the minimum bid that can win, in wei
         address winner;     // the current highest bidder
         address initiator;  // who started the auction
         uint tokenId;       // the NFT token ID
-        uint endTime;       // when the auction will end
+        uint endTime;       // when the auction started
         bool active;        // if the auction is active
-        bool fixedTime;     // if the end time is from the start time or last bid
     }
 
 
     // there needs to be a constructor, but those are never listed in an interface
-
 
 
     // the following are just the getter methods for the public variables in the contract
@@ -165,14 +157,14 @@ interface IAuctioneer is IERC165 {
     function unpaidFees() external view returns (uint);
 
 
-    // the following are the methods you need to implement
+    // The following are functions you must create
 
     function auctions(uint _id) external view returns (Auction memory);
     
     function collectFees() external;
 
-    function startAuction(uint m, uint h, uint d, string memory _data, 
-                          uint _reserve, bool _fixedTime, uint nftid) external returns (uint);
+    function startAuction(uint m, uint h, uint d, string memory data, 
+                          uint reserve, uint nftid) external returns (uint);
 
     function closeAuction(uint _id) external;
 
@@ -183,7 +175,7 @@ interface IAuctioneer is IERC165 {
 
     // the three events that needs to be emitted at the appropriate times
 
-    event auctionCreateEvent(uint indexed _id);
+    event auctionStartEvent(uint indexed _id);
 
     event auctionCloseEvent(uint indexed _id);
 
@@ -191,7 +183,6 @@ interface IAuctioneer is IERC165 {
 
 
     // also supportsInterface(), because IAuctioneer inherits from IERC165
-
 }</code></pre>
 <p>This interface is provided in the <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file. This interface extends the <a href='IERC165.sol.html'>IERC165.sol</a> (<a href='IERC165.sol'>src</a>) interface, which requires the implementation of a <code>supportsInterface()</code> function – your Auctioneer class thus supports two interfaces (IAuctioneer and IERC165).</p>
 <p>To transfer ETH to another account, you can use code such as the following; this was also <a href='../../slides/solidity.html#/payeth'>discussed in the Solidity slide set</a>. Note that the address is in variable <code>a</code>, and the value – in wei – is in <code>v</code>:</p>
@@ -222,11 +213,13 @@ require(success, "Failed to transfer ETH");</code></pre>
 <p>You can also get classmates to bid on your auction, although that is not required. This auction will use the first of your (three) NFTs. You will be submitting the auction ID for this auction as well as the NFT token ID.</p>
 <p>You <em>SHOULD</em> call <code>closeAuction()</code> on this auction.</p>
 <h4 id='auction-2'>Auction 2</h4>
-<p>The second auction should end <em>two weeks</em> after the assignment is due. Just get it on the day two weeks later – we don’t really care about the time, as long as the date is 14 days after the assignment due date. Basically, we want to see an active auction. This, also, should have a few bids on it. This auction use the second of your (three) NFTs. You will be submitting the auction ID for this auction as well as the NFT token ID. This should be a fixed closing date (<code>fixedTime</code> in <code>startAuction()</code> is true).</p>
+<p>The second auction should end <em>two weeks</em> after the assignment is due. Just get it on the day two weeks later – we don’t really care about the time, as long as the date is 14 days after the assignment due date. Basically, we want to see an active auction. This, also, should have a few bids on it. This auction use the second of your (three) NFTs. You will be submitting the auction ID for this auction as well as the NFT token ID.</p>
+<h4 id='view-your-auctions'>View your auctions</h4>
+<p>There is a web page to view your auctions, and the URL for it is on the Collab landing page. You can also get a link to it from the explorer page for your deployed smart contract. This can be used to view any auction smart contract that implements the IAuctioneer interface. This means you can view the class auctions as well (which are done in the next section).</p>
 </div><div id='ttask-4-class-auctions' class='tabcontent'><h3 id='task-4-class-auctions'>Task 4: Class Auctions</h3>
 <p>You are going to participate in a class-wide auction manager.</p>
 <p>We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page. As above, you can perform these calls through Remix (via calling an external contract, as described in the <a href='../dappintro/index.html'>dApp introduction</a> (<a href='../dappintro/index.md'>md</a>) assignment) or through geth calls (as described in the <a href='../../slides/solidity.html#/'>Solidity slide set</a>).</p>
-<p>You should use the third of your (three) NFTs. You should create an auction that ends <em>one week</em> after the due date of the assignment (again, we are looking for the day – we don’t care too much about the time of day). You will need to submit the auction ID from the auction you created as well as the NFT token ID. <strong><em>YOUR RESERVE</em></strong> should be no higher than 5 ETH. This should be a fixed closing date (<code>fixedTime</code> in <code>startAuction()</code> is true).</p>
+<p>You should use the third of your (three) NFTs. You should create an auction that ends <em>one week</em> after the due date of the assignment (again, we are looking for the day – we don’t care too much about the time of day). You will need to submit the auction ID from the auction you created as well as the NFT token ID. <strong><em>YOUR RESERVE</em></strong> should be no higher than 5 ETH.</p>
 <p>Lastly, bid on at least <em>three</em> auctions that are not your own. Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on. That’s fine – you don’t have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the information you have to submit does not include the transaction hashes of the bids. We are going to check whether you bid on the auctions by looking if your <code>eth.coinbase</code> account, the address of which you will submit below, initiated bids on any one of your classmate’s submitted NFT manager addresses by two days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.</p>
 <p><strong>MAKE YOUR BIDS REASONABLE!!!</strong> If the current highest bid is 0.5 ETH, don’t suddenly bid 5,000 ETH. Doing so is going to require others who need to bid on that NFT to have to obtain a lot more ETH, which will increase the blockchain size and the difficulty, which will make it harder for everybody else in the class. This will make me very cranky. Any successive bid should be no more than about 1 ETH more than the previous bid.</p>
 </div><div id='tnotes-and-hints' class='tabcontent'><h3 id='notes-and-hints'>Notes and Hints</h3>
