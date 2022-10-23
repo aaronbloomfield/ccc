@@ -59,11 +59,12 @@
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 <h3 id="task-1-auction-contract">Task 1: Auction contract</h3>
-<p>You are going to create and deploy a decentralized auction smart contract. The contract you will be creating will allow for a decentralized auction for NFTs. The intended flow is as follows:</p>
+<p>You are going to create and deploy a decentralized auction smart contract. The contract you will be creating will allow for a decentralized auction for NFTs.</p>
+<p>This section is meant as a high-level overview of the process; the detailed specifications are in the next two sections.</p>
 <ul>
-<li>Each Auctioneer contract has a single NFT Manager that manages all of its NFTs; that NFT Manager is created in the constructor. Any user can get the NFT manager via a call to <code>nftmanager()</code>.
+<li>Each Auctioneer contract has a single ERC-721 compliant NFT Manager that manages all of its NFTs; that NFT Manager is created in the constructor. Any user can get the NFT manager via a call to <code>nftmanager()</code>.
 <ul>
-<li>The user has to create the NFT there using the standard methods from the NFTmanager contract that we saw in the Tokens assignment</li>
+<li>The user has to create the NFT on that contract using the standard methods from the NFTmanager contract that we saw in the Tokens assignment</li>
 <li>Once the NFT is minted, the Auctioneer has to be approved, via the <code>approve()</code> function on the NFT manager, to take control of the NFT</li>
 <li>So the expected function calls for this part are:
 <ul>
@@ -73,11 +74,11 @@
 <li>(Note that the above two lines are the only ones needed to be called on the NFT Manager contract for an auction; all successive calls are on the Auctioneer contract)</li>
 </ul></li>
 </ul></li>
-<li>Anybody can then start an auction via the <code>startAuction()</code> function, and involves setting the auction duration, reserve (minimum) price, and various other parameters. If this function does not revert, then the auction will start.
+<li>The user can then start an auction via the <code>startAuction()</code> function, and this involves setting the auction duration, reserve (minimum) price, and various other parameters. If this function does not revert, then the auction will start.
 <ul>
 <li>The person who started the auction is called the ‘initiator’</li>
-<li>If the Auctioneer can’t transfer the NFT ownership to itself, the function should revert</li>
-<li>A diagram for this process, including the interaction with the NFTManager contract, is shown below</li>
+<li>If the Auctioneer can’t transfer the NFT ownership to itself, the function reverts</li>
+<li>A diagram for this process, including the interaction with the NFTManager contract, is shown below (in the next section)</li>
 </ul></li>
 <li>The reserve price is the minimum bid that is considered acceptable for this auction. To make life easier, we can just start out the auction amount at the reserve price. Keep in mind that all monetary amounts are in wei.</li>
 <li>Anybody can bid on the auction – a bid is placed by transferring ETH to the Auctioneer contract via a call to <code>placeBid()</code>, and specifying which auction it is for via a parameter to that function call
@@ -92,15 +93,15 @@
 </ul></li>
 <li>Once we are past the auction end time, the auction can be closed via a call to <code>closeAuction()</code>
 <ul>
-<li>If there are no bids, then NFT ownership is transferred to the initiator; this includes the cases where the bids were all less than the reserve price (those bid attempts would have reverted, and thus no bids would have been collected)</li>
-<li>If the highest bid is equal to or greater than the reserve price, then the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via <code>safeTransferFrom()</code> (<em>not</em> <code>transferFrom()</code>)</li>
+<li>If there are no bids, then NFT ownership is transferred to the initiator</li>
+<li>Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via <code>safeTransferFrom()</code> (<em>not</em> <code>transferFrom()</code>)</li>
 <li>Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created</li>
 </ul></li>
 <li>The auction contract will keep a fee of 1% of the value of a <em>winning</em> bid
 <ul>
 <li>Any auction that does not succeed – no bids or does not meet the reserve price – does not collect a fee</li>
 <li>Anybody can view the fees via the <code>unpaidFees()</code> and <code>totalFees()</code> functions; the deployer of the auction smart contract, and ONLY that address, can and collect those fees via a call to <code>collectFees()</code></li>
-<li>Integer division here is fine; we don’t care about rounding issues</li>
+<li>Integer division here is fine to determine the 1% fee; we don’t care about rounding issues</li>
 </ul></li>
 <li>There are three events that must be emitted at the appropriate times; for each, the parameter is the auction ID:
 <ul>
@@ -110,7 +111,7 @@
 </ul></li>
 </ul>
 <h3 id="task-2-iacutioneer-interface">Task 2: IAcutioneer interface</h3>
-<p>This task is to understand the IAuctioneer interface. Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file has more comments for this interface.</p>
+<p>This task is to understand the IAuctioneer interface. Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file has more comments for this interface. There is a lot that some of these funcctions have to do, and that is specified in the comments in the IAuctioneer.sol file.</p>
 <p>Your contract line must be <em>exactly</em>:</p>
 <pre><code>contract Auctioneer is IAuctioneer {</code></pre>
 <p>The interface is as follows. There are much more detailed comments in the <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file.</p>
@@ -178,15 +179,15 @@ interface IAuctioneer is IERC165 {
     // also supportsInterface(), because IAuctioneer inherits from IERC165
 }</code></pre>
 <p>This interface is provided in the <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file. This interface extends the <a href="IERC165.sol.html">IERC165.sol</a> (<a href="IERC165.sol">src</a>) interface, which requires the implementation of a <code>supportsInterface()</code> function – your Auctioneer class thus supports two interfaces (IAuctioneer and IERC165).</p>
-<p>To transfer ETH to another account, you can use code such as the following; this was also <a href="../../slides/solidity.html#/payeth">discussed in the Solidity slide set</a>. Note that the address is in variable <code>a</code>, and the value – in wei – is in <code>v</code>:</p>
+<p>For a contract to transfer ETH to another account, you can use code such as the following; this was also <a href="../../slides/solidity.html#/payeth">discussed in the Solidity slide set</a>. Note that the address to pay to is in variable <code>a</code>, and the value – in wei – is in <code>v</code>:</p>
 <pre><code>(bool success, ) = payable(a).call{value: v}(&quot;&quot;);
 require(success, &quot;Failed to transfer ETH&quot;);</code></pre>
-<p>As you are testing it, you will notice in Remix that the button for <code>placeBid()</code> is red – that is because this is a <code>payable</code> function. When you call this function, after setting the correct auction ID as the parameter, you will need to transfer some ETH along with the call. In the deployment pane in Remix, just enter a numerical value in the ‘Value’ box, and select the right denomination (wei, gwei, ether, etc.). That amount of ETH will be transferred along with the function call. If the call reverts, then you get that money back (minus the fees). If you have a mistake in your function code, you will likely lose that ETH – this is why we are developing this on the Javascript deployment environment in Remix and then on a private blockchain where the ETH has no value.</p>
+<p>As you are testing it, you will notice in Remix that the button for <code>placeBid()</code> is red – that is because this is a <code>payable</code> function. When you call this function, after setting the correct auction ID as the parameter, you will need to transfer some ETH along with the call. In the deployment pane in Remix, just enter a numerical value in the ‘Value’ box, and select the right denomination (wei, gwei, ether, etc.). That amount of ETH will be transferred along with the function call. If the call reverts, then you get that money back (minus the gas fees, if it tried to send the transaction to the blockchain). If you have a mistake in your function code, you will likely lose that ETH – this is why we are testing this on the Javascript deployment environment in Remix and then on a private blockchain where the ETH has no value.</p>
 <!--
 Some people are having problems in Remix with determining the return value of a transaction -- if this is happening to you, you can create a function such as `getPendingAuctionID()` that, given an address, returns the pending (but not yet started) auction ID for that address.  We will not check for this function.
 -->
 <p>Test all this thoroughly in Remix! You will need to deploy your Auctioneer contract in Remix’s Javascript environment to test everything working together. Recall that you have to select the right contract to deploy in the “Contract” list, else Remix may not know which one to deploy. Be sure to develop via incremental development, else you will not be able to figure out where your bug is.</p>
-<p>One it works, deploy it to our private Ethereum blockchain. You should test it there as well. You will need to submit the contract address and transaction hash of the deployed Auctioneer. If you deploy it multiple times, just submit the most recent contract address. Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Collab landing page. This web page will make it far easier to see what is going on with your auctions.</p>
+<p>One it works, deploy it to our private Ethereum blockchain. You should test it there as well. You will need to submit the contract address of the deployed Auctioneer. If you deploy it multiple times, just submit the most recent contract address. Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Collab landing page; a link to this will also be shown on the explorer page for your Auctioneer contract. This auctions web page will make it far easier to see what is going on with your auctions. Note that the explorer will only display this link if it knows that the contract implements IAuctioneer, and it only knows that if your <code>supportsInterface()</code> method is written and correct.</p>
 <h4 id="startauction-method"><code>startAuction()</code> method</h4>
 <p>The <code>startAuction()</code> method requires a bit more explanation. The process is as follows:</p>
 <ul>
@@ -222,12 +223,14 @@ Some people are having problems in Remix with determining the return value of a 
 <li>We are going to grade this by creating a very short auction – a minute or so. In your <code>startAuction()</code>, only one of the time parameters must be non-zero.</li>
 <li>When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use <code>safeTransferFrom()</code> instead of <code>transferFrom()</code> (see <a href="https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i">here</a> for details)</li>
 <li>Make sure that <em>anybody</em> can mint an NFT via your NFT Manager</li>
+<li>Remix does not seem to show return values for transactions to the blockchain (but will do it when deployed to the Javascript environment). You can check the explorer page for your transaction to check the return value.</li>
+<li>To get the current time in a contract, use <code>block.timestamp</code> – it returns a UNIX timestamp. Likely you should keep track of all your times this way. You can search online for UNIX timestamp converters, if you need them. Note that the <code>now</code> keyword, which was used in lieu of <code>block.timestamp</code>, is deprecated, and you should use <code>block.timestamp</code> instead.</li>
 </ul>
 <h3 id="submission">Submission</h3>
 <p>You will need to fill in the various values from this assignment into the <a href="auction.py.html">auction.py</a> (<a href="auction.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The <code>sanity_checks</code> dictionary is intended to be a checklist to ensure that you perform the various other requirements to ensure this assignment is fully submitted.</p>
 <p>There are <em>three</em> forms of submission for this assignment; you must do all three.</p>
-<p>Submission 1: You must deploy those two smart contracts (<code>NFTmanager</code> and <code>Auctioneer</code>) to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it. But the final deployment for the <code>Auctioneer</code> should only have the data specified in task 3, above. It’s also fine if you use your <code>NFTmanager</code> from a previous assignment. Save the contract addresses and transaction hash of these deployments, as you will need to submit them below.</p>
-<p>Submission 2: You have to create a number of auctions: 2 in your auction manager, and one in the course-wide auction manager. These have specific close dates, and there should be multiple bids on the first two. This is detailed in tasks 3 and 4, above.</p>
+<p>Submission 1: You must deploy you <code>Auctioneer</code> smart contract (which will deploy its own <code>NFTmanager</code> contract) to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it. But the final deployment for the <code>Auctioneer</code> should only have the auctions specified in task 3, above. Save the contract addresses of that deployment, as it will go in the auction.py file that you submit below.</p>
+<p>Submission 2: You have to create a number of auctions: two in your auction manager, and one in the course-wide auction manager. These have specific close dates, and there should be multiple bids on the first two. This is detailed in tasks 3 and 4, above.</p>
 <p>Submission 3: You should submit your <code>Auctioneer.sol</code> file and your completed <code>auction.py</code> file, and ONLY those two files, to Gradescope. All your Solidity code should be in that first file, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).</p>
 </body>
 </html>

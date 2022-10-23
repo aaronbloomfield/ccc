@@ -9,11 +9,12 @@ import "./IERC165.sol";
 
 // Some general notes:
 //
-// - All monetary values passed in as parameters to the functions below are in
-//   wei
+// - All monetary values passed in as parameters to the functions below are
+//   in wei
 // - Beyond what is listed below, there is one other method to implement,
 //   based on the interfaces that this interface implements:
 //   supportsInterface() (from IERC165)
+// - See the "Notes and Hints" section of the HW description
 
 
 interface IAuctioneer is IERC165 {
@@ -45,13 +46,14 @@ interface IAuctioneer is IERC165 {
     // can just be via the getter method from a public variable.
     function nftmanager() external view returns (address);
 
-    // How many auctions have been created; those auction IDs are 1 to n(NOT 0
-    // to n-1), where n is the value returned; this can just be via the
-    // getter method from a public variable.
+    // How many auctions have been created on this Auctioneer contract; this
+    // can just be via the getter method from a public variable.
     function num_auctions() external view returns (uint);
 
     // How much fees, in wei, have been collected so far -- the auction
-    // collects 1% fees of *successful* auctions
+    // collects 1% fees of *successful* auctions; these are the total fees
+    // that have been collected, whether paid to the deployer of the contract
+    // or not.
     function totalFees() external view returns (uint);
 
     // How much fees, in wei, have been collected so far but not yet paid to
@@ -61,11 +63,11 @@ interface IAuctioneer is IERC165 {
 
     // The following are functions you must create
 
-    // Gets the auction struct for the passed acution id.  This can not be the
+    // Gets the auction struct for the passed acution id.  This can NOT be the
     // getter method of a public variable because the public variable is
     // going to be of type `Auction storage`, whereas the required return
     // type is `Auction memory`, and Solidity can't automatically convert
-    // between the two.
+    // between the two.  You can just return `_auctions[_id]`, or similar.
     function auctions(uint _id) external view returns (Auction memory);
     
     // The deployer of the contract, and ONLY that address, can collect the
@@ -77,32 +79,42 @@ interface IAuctioneer is IERC165 {
     // Start an auction.  The first three parameters are the number of
     // minutes, hours, and days for the auction to last -- they can't all be
     // zero.  The data parameter is a textual description of the auction, NOT
-    // the file name.  The reserve is the minimum price that will win the
-    // auction; this amount is in wei(which is 10^-18 eth). The fixedTime
-    // parameter is whether the end time (of m,h,d) is from the start time of
-    // the auction (if True) or from the last bid (if False).  The nftid is
-    // which NFT is being auctioned.  This will transfer over the NFT from
-    // the NFTManager to the contract (this must have been approved prior to
-    // this call, else revert).  This returns the auction ID of the newly
+    // the file name; it can't be the empty string.  The reserve is the
+    // minimum price that will win the auction; this amount is in wei
+    // (which is 10^-18 eth), and can be zero.  The nftid is which NFT is
+    // being auctioned.  This function has four things it must do: sanity
+    // checks (verify valid parameters, ensure no auction with that NFT ID is
+    // running), transfer the NFT over to this contract (revert if it can't),
+    // create the Auction struct (which effectively starts the auction), and
+    // emit the appropriate event. This returns the auction ID of the newly
     // configured auction.
     function startAuction(uint m, uint h, uint d, string memory data, 
                           uint reserve, uint nftid) external returns (uint);
 
     // This closes out the auction, the ID of which is passed in as a
-    // parameter, but is only valid after the auction end time.  It will
-    // handle the transfer of the ETH (if any successful bids were placed)
-    // and the NFT. Note that anybody can call this function, although it
-    // will only close auctions whose time has expired.
+    // parameter.  It first does the basic sanity checks (you have to figure
+    // out what).  If bids were placed, then it will transfer the ether to
+    // the initiator.  It will handle the transfer of the  NFT (to the
+    // initiator if no bids were placed or to the winner if bids were placed)
+    // In the latter case, it keeps 1% fees and emits the appropriate event.
+    // The auction is marked as inactive. Note that anybody can call this
+    // function, although it will only close auctions whose time has
+    // expired.
     function closeAuction(uint _id) external;
 
     // When one wants to submit a bid on a NFT; the ID of the auction is
     // passed in as a parameter, and some amount of ETH is transferred with
-    // this function call.  See the homework description for various cases
-    // where this function should revert.
+    // this function call.  So many sanity checks here!  See the homework
+    // description some of various cases where this function should revert;
+    // you get to figure out the rest.  On a successful higher bid, it should
+    // update the auction struct.  Be sure to refund the previous higher
+    // bidder, since they have now been outbid.
     function placeBid(uint _id) payable external;
 
     // The time left (in seconds) for the given auction, the ID of which is
-    // passed in as a parameter.
+    // passed in as a parameter.  This is a convenience function, since it's
+    // much easier to call this rather than get the end time as a UNIX
+    // timestamp.
     function auctionTimeLeft(uint _id) external view returns (uint);
 
 
