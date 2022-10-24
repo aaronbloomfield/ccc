@@ -95,7 +95,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 14. Wed, Oct 12: midterm
 15. Mon, Oct 17: [Tokens](../slides/tokens.html#/) (actual: tokens to slide 5.5)
 16. Wed, Oct 19: [Tokens](../slides/tokens.html#/) (actual: finished tokens, mining to slide 7.10)
-17. Mon, Oct 24: [Tokens](../slides/tokens.html#/); [Consensus](../slides/consensus.html#/)
+17. Mon, Oct 24: [Tokens](../slides/tokens.html#/); [Consensus](../slides/consensus.html#/) (actual: finished mining; consensus to 6.15)
 18. Wed, Oct 26: [Consensus](../slides/consensus.html#/)
 19. Mon, Oct 31: [Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/)
 20. Wed, Nov 2: [Blockchain applications](../slides/applications.html#/)
