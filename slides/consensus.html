@@ -73,13 +73,17 @@ line-height:120%;
 
 	  <section id="satoshi" data-markdown class="center"><textarea>
 # Nakamoto Consensus
+
+<img src="images/logos/btc-coin-symbol.svg" class="cclogosubtitle">
 	  </textarea></section>
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img-nb-400" -->
 ## Nakamoto Consensus
-- Named for Satoshi Nakamoto, the creator of Bitcoin
-- Proof of Work consensus algorithm
-- A miner find a block, and sends it to a node that propagates it to other nodes via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
+![](https://upload.wikimedia.org/wikipedia/commons/7/77/Satoshi_Nakamoto.jpg)
+- Named for Satoshi Nakamoto
+- PoW consensus algorithm
+- A miner find a block, sends it to a node that propagates it to other nodes via the [gossip protocol](https://en.wikipedia.org/wiki/Gossip_protocol)
   - Basically: each node checks it, sends it to a few others, who check it, send it to a few others, etc.
 - Honest nodes agree a block is valid if:
   - It is correctly formed (valid transactions, parses correctly, timely, etc.)
@@ -126,7 +130,7 @@ line-height:120%;
   - Flaky, slow, or malicious nodes
   - Flaky, slow, or malicious communication links
 - Used in:
-  - B777 & B787 flight controls
+  - B777 & B787 flight controls: what if the autopilot receives different results from various sensors?
 
 
 
@@ -240,7 +244,9 @@ line-height:120%;
 
 
 
+<!-- .slide: class="right-float-img-nb-400" -->
 ## Modelling Traitors
+[![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Benedict_Arnold_1color.jpg/589px-Benedict_Arnold_1color.jpg)](https://commons.wikimedia.org/wiki/File:Benedict_Arnold_1color.jpg)
 - We assume that the traitorous generals always take the strategy that is most likely to cause problems
   - The "worst" strategy
 - If they don't take the worst strategy:
@@ -253,7 +259,7 @@ line-height:120%;
 - Either because of a communication failure or a node maliciously not sending such a message
   - The former can be modeled by the latter
   - So we'll assume that the communication lines are reliable
-- This is represented as *null* or the empty set symbol: $\emptyset$
+- A missing message is represented as *null* or the empty set symbol: $\emptyset$
 - The generals have pre-agreed that a majority of non-votes has a *default action*
   - We'll assume a majority of $\emptyset$ votes means retreat
 - Thus, messages are one of three values: {$A,R,\emptyset$}
@@ -263,12 +269,16 @@ line-height:120%;
 ## Toward a solution
 - The generals are numbered 0 to $n-1$
 - Each has an array $v$ that holds the opinion of each of the generals
-- Byzantine fault tolerance requires that all loyal generals (nodes, etc.) take the same action
+- Byzantine fault tolerance requires that all the *loyal* generals (nodes, etc.) take the same action
   - Remember: messages are (currently) "oral" with no digital signatures
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## Insight
+
+<img src="images/consensus/bgp/communication.svg" style="width:45%">
+
 - If we can solve the *communication* problem...
   - Specifically if we can ensure that all loyal generals agree on the same values in the array $v$
 - Then we can solve the Byzantine Generals Problem
@@ -322,9 +332,9 @@ line-height:120%;
 ## Communication
 <img src="images/consensus/bgp/2gen.svg" style="width:45%">
 
-- One general (the commander) needs to communicate his/her opinion to the other generals (here, lieutenants)
+- One general (here, the commander) needs to communicate his/her opinion to the other generals (here, lieutenants)
   - In the full BGP, all generals have to do this with all the others
-  - Here, the receiving generals are called lieutenants for this
+  - The receiving generals are called lieutenants for this
 - After hearing an order from the commander, each lieutenant will *verify* it with each other lieutenant
 
 
@@ -355,23 +365,24 @@ line-height:120%;
 
 
 ## Three Generals Problem
+- The requirements for this to succeed are:
+  1. All *loyal* participants should take the same action, else it's a military disaster (rout)
+     - No requirement for the traitorous generals
+  2. If the commander is loyal, then every loyal lieutenant obeys the same order
+  3. Every loyal lieutenant must agree on what the other loyal participants said
 - Assumptions:
-  - All *loyal* participants should take the same action, else it's a military disaster (rout)
   - *Loyal* lieutenants always obey the commander's order
   - *Traitorous*  lieutenants take the action that will lead to a disaster
   - Messages are "oral" and cannot be verified
     - No digital signatures (yet)
-- The requirements for this to succeed are:
-  1. All loyal *lieutenants* obey the same order
-  2. If the commander is loyal, then every loyal lieutenant obeys the same order
-  3. Every loyal lieutenant must agree on what the other loyal participants said
 
 
 
 ## Analogies
-- The full Byzantine Generals Problem wants all loyal generals to take the same action
+- The full Byzantine Generals Problem (BGP) wants all loyal generals to take the same action
 - The Three Generals problem is modeling their communication, and only wants the participants to take the same action
   - Although the commander, if loyal, needs to take the same action as the (loyal) lieutenants
+- We'll use the three generals problem to solve the full BGP next
 
 
 
@@ -603,7 +614,7 @@ This implies:
 - If there were really no traitors, then the lieutenants would not need to communicate with each other
 - The commander communicates with his/her $n-1$ lieutenants, so it's $\Theta(n)$
   - We are assuming a broadcast is $\Theta(n)$, not $\Theta(1)$
-- In practice, this case is treated as $OM(1)$ for communication purposes
+- In practice, this case is treated as $OM(1)$ for communication purposes, as we don't know that there are zero traitors
 </textarea></section>
 
     <section data-markdown data-separator="^\n" data-transition="fade" data-transition-speed="fast"><textarea>
