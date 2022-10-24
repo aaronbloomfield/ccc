@@ -27,7 +27,7 @@ interface IAuctioneer is IERC165 {
         uint highestBid;    // the current highest bid, in wei
         address winner;     // the current highest bidder
         address initiator;  // who started the auction
-        uint tokenId;       // the NFT token ID
+        uint nftid;         // the NFT token ID
         uint endTime;       // when the auction started
         bool active;        // if the auction is active
     }
@@ -60,16 +60,19 @@ interface IAuctioneer is IERC165 {
     // the deployer -- the auction collects 1% fees of *successful* auctions
     function unpaidFees() external view returns (uint);
 
+    // Gets the auction struct for the passed acution id.  If one lists out
+    // the individual fields of the Auction struct, then one can just have
+    // this be a public mapping (otherwise you run into problems
+    // with "Auction memory" versus "Auction storage")
+    function auctions(uint id) external view
+            returns (uint, uint, string memory, uint, address, address, uint, uint, bool);
+
+    // Who is the deployer of this contract
+    function deployer() external returns (address);
+
 
     // The following are functions you must create
 
-    // Gets the auction struct for the passed acution id.  This can NOT be the
-    // getter method of a public variable because the public variable is
-    // going to be of type `Auction storage`, whereas the required return
-    // type is `Auction memory`, and Solidity can't automatically convert
-    // between the two.  You can just return `_auctions[_id]`, or similar.
-    function auctions(uint _id) external view returns (Auction memory);
-    
     // The deployer of the contract, and ONLY that address, can collect the
     // fees that this auction contract has accumulated; a call to this by any
     // other address should revert.  This causes the fees to be paid to the
@@ -100,7 +103,7 @@ interface IAuctioneer is IERC165 {
     // The auction is marked as inactive. Note that anybody can call this
     // function, although it will only close auctions whose time has
     // expired.
-    function closeAuction(uint _id) external;
+    function closeAuction(uint id) external;
 
     // When one wants to submit a bid on a NFT; the ID of the auction is
     // passed in as a parameter, and some amount of ETH is transferred with
@@ -109,13 +112,13 @@ interface IAuctioneer is IERC165 {
     // you get to figure out the rest.  On a successful higher bid, it should
     // update the auction struct.  Be sure to refund the previous higher
     // bidder, since they have now been outbid.
-    function placeBid(uint _id) payable external;
+    function placeBid(uint id) payable external;
 
     // The time left (in seconds) for the given auction, the ID of which is
     // passed in as a parameter.  This is a convenience function, since it's
     // much easier to call this rather than get the end time as a UNIX
     // timestamp.
-    function auctionTimeLeft(uint _id) external view returns (uint);
+    function auctionTimeLeft(uint id) external view returns (uint);
 
 
     // The following are the events that need to be emitted at the appropriate
@@ -123,14 +126,14 @@ interface IAuctioneer is IERC165 {
 
     // This is emitted when an auction is started in startAuction(); the
     // ID is the auction ID.
-    event auctionStartEvent(uint indexed _id);
+    event auctionStartEvent(uint indexed id);
 
     // This is emitted when an auction ends in closeAuction(); the ID is the
     // auction ID.
-    event auctionCloseEvent(uint indexed _id);
+    event auctionCloseEvent(uint indexed id);
 
     // This is emitted when a new bid is placed that is higher than the
     // existing highest bid; the ID is the auction ID.
-    event higherBidEvent (uint indexed _id);
+    event higherBidEvent (uint indexed id);
 
 }

@@ -95,7 +95,7 @@ interface IAuctioneer is IERC165 {
         uint highestBid;    // the current highest bid, in wei
         address winner;     // the current highest bidder
         address initiator;  // who started the auction
-        uint tokenId;       // the NFT token ID
+        uint nftid;         // the NFT token ID
         uint endTime;       // when the auction started
         bool active;        // if the auction is active
     }
@@ -114,30 +114,33 @@ interface IAuctioneer is IERC165 {
 
     function unpaidFees() external view returns (uint);
 
+    function auctions(uint id) external view 
+            returns (uint, uint, string memory, uint, address, address, uint, uint, bool);
+
+    function deployer() external returns (address);    
+
 
     // The following are functions you must create
 
-    function auctions(uint _id) external view returns (Auction memory);
-    
     function collectFees() external;
 
     function startAuction(uint m, uint h, uint d, string memory data, 
                           uint reserve, uint nftid) external returns (uint);
 
-    function closeAuction(uint _id) external;
+    function closeAuction(uint id) external;
 
-    function placeBid(uint _id) payable external;
+    function placeBid(uint id) payable external;
 
-    function auctionTimeLeft(uint _id) external view returns (uint);
+    function auctionTimeLeft(uint id) external view returns (uint);
 
 
     // the three events that needs to be emitted at the appropriate times
 
-    event auctionStartEvent(uint indexed _id);
+    event auctionStartEvent(uint indexed id);
 
-    event auctionCloseEvent(uint indexed _id);
+    event auctionCloseEvent(uint indexed id);
 
-    event higherBidEvent (uint indexed _id);
+    event higherBidEvent (uint indexed id);
 
 
     // also supportsInterface(), because IAuctioneer inherits from IERC165
