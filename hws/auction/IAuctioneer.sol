@@ -14,7 +14,8 @@ import "./IERC165.sol";
 // - Beyond what is listed below, there is one other method to implement,
 //   based on the interfaces that this interface implements:
 //   supportsInterface() (from IERC165)
-// - See the "Notes and Hints" section of the HW description
+// - See the "Notes and Hints" section of the HW description for more such 
+//   notes
 
 
 interface IAuctioneer is IERC165 {
@@ -90,8 +91,10 @@ interface IAuctioneer is IERC165 {
     // running), transfer the NFT over to this contract (revert if it can't),
     // create the Auction struct (which effectively starts the auction), and
     // emit the appropriate event. This returns the auction ID of the newly
-    // configured auction.  Note that only the owner of a NFT can start an
-    // auction for it, and this should be checked via require().
+    // configured auction.  These auction IDs have to start from 0 for the
+    // auctions.php web page to work properly.  Note that only the owner of a
+    // NFT can start an auction for it, and this should be checked via
+    // require().
     function startAuction(uint m, uint h, uint d, string memory data, 
                           uint reserve, uint nftid) external returns (uint);
 

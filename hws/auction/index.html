@@ -66,7 +66,7 @@
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here.</p>
 <ul>
-<li>Added Thu, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via <code>require()</code>.</li>
+<li>Added Tue, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via <code>require()</code>. Also clarified about the behavior of <code>block.timestamp</code> (in the “Notes and Hints” section) and that auction IDs have to start from 0 for the auctions.php page to work.</li>
 </ul>
 </div><div id='ttask-1-auction-contract' class='tabcontent'><h3 id='task-1-auction-contract'>Task 1: Auction contract</h3>
 <p>You are going to create and deploy a decentralized auction smart contract. The contract you will be creating will allow for a decentralized auction for NFTs.</p>
@@ -236,7 +236,20 @@ require(success, "Failed to transfer ETH");</code></pre>
 <li>Make sure that <em>anybody</em> can mint an NFT via your NFT Manager</li>
 <li>Remix does not seem to show return values for transactions to the blockchain (but will do it when deployed to the Javascript environment). You can check the explorer page for your transaction to check the return value.</li>
 <li>To get the current time in a contract, use <code>block.timestamp</code> – it returns a UNIX timestamp. Likely you should keep track of all your times this way. You can search online for UNIX timestamp converters, if you need them. Note that the <code>now</code> keyword, which was used in lieu of <code>block.timestamp</code>, is deprecated, and you should use <code>block.timestamp</code> instead.</li>
+<li>In order for the auctions.php web page to work, you have to start numbering your auction IDs from 0.</li>
 </ul>
+<h4 id='block.timestamp-behavior'><code>block.timestamp</code> behavior</h4>
+<p><code>block.timestamp</code> behaves differently on the Javascript blockchain in Remix and on the course blockchain. Consider the following contract:</p>
+<pre><code>// SPDX-License-Identifier: Unlicensed
+pragma solidity ^0.8.16;
+contract BlockTimestamp {
+    function getTimestamp() public view returns (uint) {
+        return block.timestamp;
+    }
+}</code></pre>
+<p>On the Javascript blockchain in Remix, this will always return the current time as per the system clock; this means it will give a different value every second. On the course blockchain, it will always return the time of the <em>last block</em>. If you click the button and then wait 10 seconds, the first one (Javascript) will show a new timestamp, whereas the second one (course blockchain) will not show any update unless a new block was added to the blockchain in that time.</p>
+<p>This has implications for calling <code>closeAuction()</code>. Let’s assume you have some code therein such as: <code>require (auctions[id].endTime &lt; block.timestamp, "...");</code>. This will revert if the current time is not yet after the auction end time. So let’s assume that the current time is <em>after</em> the auction end time. In the Javascript environment, this will work fine, since <code>block.timestamp</code> is always the current system time. If you are trying to call this on the course blockchain, Remix will try to guess <code>block.timestamp</code> based on the last block (<em>not</em> the block it is about to be created for the transaction). If there are no other blocks on the blockchain that were added after the auction end time, Remix will predict that this transaction will revert, since it thinks that the require condition will evaluate to false based on it’s estimate of <code>block.timestamp</code> from the last block. What will really happen is that the transaction will be put into a new block, whose timestamp will be (we are assuming) after the auction end time, and the <code>require()</code> will pass this test.</p>
+<p>Putting in the <code>require()</code> shown above is completely acceptable. This section is just explaining the difference in behavior that you will see, and that Remix will state that it is going to revert when, in this one case, it will not.</p>
 </div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
 <p>You will need to fill in the various values from this assignment into the <a href='auction.py.html'>auction.py</a> (<a href='auction.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The <code>sanity_checks</code> dictionary is intended to be a checklist to ensure that you perform the various other requirements to ensure this assignment is fully submitted.</p>
 <p>There are <em>three</em> forms of submission for this assignment; you must do all three.</p>

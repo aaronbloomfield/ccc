@@ -26,7 +26,7 @@ In addition to your source code, you will submit an edited version of [auction.p
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
-- Added Thu, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via `require()`.
+- Added Tue, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via `require()`.  Also clarified about the behavior of `block.timestamp` (in the "Notes and Hints" section) and that auction IDs have to start from 0 for the auctions.php page to work.
 
 ### Task 1: Auction contract
 
@@ -228,6 +228,28 @@ Lastly, bid on at least *three* auctions that are not your own.  Depending on wh
 - Make sure that *anybody* can mint an NFT via your NFT Manager
 - Remix does not seem to show return values for transactions to the blockchain (but will do it when deployed to the Javascript environment).  You can check the explorer page for your transaction to check the return value.
 - To get the current time in a contract, use `block.timestamp` -- it returns a UNIX timestamp.  Likely you should keep track of all your times this way.  You can search online for UNIX timestamp converters, if you need them.  Note that the `now` keyword, which was used in lieu of `block.timestamp`, is deprecated, and you should use `block.timestamp` instead.
+- In order for the auctions.php web page to work, you have to start numbering your auction IDs from 0.
+
+#### `block.timestamp` behavior
+
+`block.timestamp` behaves differently on the Javascript blockchain in Remix and on the course blockchain.  Consider the following contract:
+
+```
+// SPDX-License-Identifier: Unlicensed
+pragma solidity ^0.8.16;
+contract BlockTimestamp {
+    function getTimestamp() public view returns (uint) {
+        return block.timestamp;
+    }
+}
+```
+
+On the Javascript blockchain in Remix, this will always return the current time as per the system clock; this means it will give a different value every second.  On the course blockchain, it will always return the time of the *last block*.  If you click the button and then wait 10 seconds, the first one (Javascript) will show a new timestamp, whereas the second one (course blockchain) will not show any update unless a new block was added to the blockchain in that time.
+
+This has implications for calling `closeAuction()`.  Let's assume you have some code therein such as: `require (auctions[id].endTime < block.timestamp, "...");`.  This will revert if the current time is not yet after the auction end time.  So let's assume that the current time is *after* the auction end time.  In the Javascript environment, this will work fine, since `block.timestamp` is always the current system time.  If you are trying to call this on the course blockchain, Remix will try to guess `block.timestamp` based on the last block (*not* the block it is about to be created for the transaction).  If there are no other blocks on the blockchain that were added after the auction end time, Remix will predict that this transaction will revert, since it thinks that the require condition will evaluate to false based on it's estimate of `block.timestamp` from the last block.  What will really happen is that the transaction will be put into a new block, whose timestamp will be (we are assuming) after the auction end time, and the `require()` will pass this test.
+
+Putting in the `require()` shown above is completely acceptable.  This section is just explaining the difference in behavior that you will see, and that Remix will state that it is going to revert when, in this one case, it will not.
+
 
 ### Submission
 

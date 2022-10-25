@@ -25,7 +25,8 @@ import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font
 <i><font color="#9A1900">// - Beyond what is listed below, there is one other method to implement,</font></i>
 <i><font color="#9A1900">//   based on the interfaces that this interface implements:</font></i>
 <i><font color="#9A1900">//   supportsInterface() (from IERC165)</font></i>
-<i><font color="#9A1900">// - See the "Notes and Hints" section of the HW description</font></i>
+<i><font color="#9A1900">// - See the "Notes and Hints" section of the HW description for more such </font></i>
+<i><font color="#9A1900">//   notes</font></i>
 
 
 interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
@@ -101,8 +102,10 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
     <i><font color="#9A1900">// running), transfer the NFT over to this contract (revert if it can't),</font></i>
     <i><font color="#9A1900">// create the Auction struct (which effectively starts the auction), and</font></i>
     <i><font color="#9A1900">// emit the appropriate event. This returns the auction ID of the newly</font></i>
-    <i><font color="#9A1900">// configured auction.  Note that only the owner of a NFT can start an</font></i>
-    <i><font color="#9A1900">// auction for it, and this should be checked via require().</font></i>
+    <i><font color="#9A1900">// configured auction.  These auction IDs have to start from 0 for the</font></i>
+    <i><font color="#9A1900">// auctions.php web page to work properly.  Note that only the owner of a</font></i>
+    <i><font color="#9A1900">// NFT can start an auction for it, and this should be checked via</font></i>
+    <i><font color="#9A1900">// require().</font></i>
     <font color="#008080">function</font> <b><font color="#000000">startAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> m<font color="#990000">,</font> <font color="#008080">uint</font> h<font color="#990000">,</font> <font color="#008080">uint</font> d<font color="#990000">,</font> string <font color="#008080">memory</font> data<font color="#990000">,</font> 
                           <font color="#008080">uint</font> reserve<font color="#990000">,</font> <font color="#008080">uint</font> nftid<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
