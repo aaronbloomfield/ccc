@@ -24,7 +24,9 @@ In addition to your source code, you will submit an edited version of [auction.p
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
+
+- Added Thu, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via `require()`.
 
 ### Task 1: Auction contract
 

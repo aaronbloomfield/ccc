@@ -90,7 +90,8 @@ interface IAuctioneer is IERC165 {
     // running), transfer the NFT over to this contract (revert if it can't),
     // create the Auction struct (which effectively starts the auction), and
     // emit the appropriate event. This returns the auction ID of the newly
-    // configured auction.
+    // configured auction.  Note that only the owner of a NFT can start an
+    // auction for it, and this should be checked via require().
     function startAuction(uint m, uint h, uint d, string memory data, 
                           uint reserve, uint nftid) external returns (uint);
 
