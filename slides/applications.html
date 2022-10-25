@@ -88,7 +88,9 @@ line-height:120%;
 
 
 
+<!-- .slide: class="right-float-img-nb-400" -->
 ## Order Book Method
+[![](https://upload.wikimedia.org/wikipedia/commons/1/10/Order_Book%2C_depth_of_market.jpg)](https://upload.wikimedia.org/wikipedia/commons/1/10/Order_Book%2C_depth_of_market.jpg)
 - Example: [gate.io](https://www.gate.io/)
   - See the USDT orders for [BTC](https://www.gate.io/trade/BTC_USDT), [ETH](https://www.gate.io/trade/ETH_USDT), and [RVN](https://www.gate.io/trade/RVN_USDT)
   - The red values are those that are selling {BTC,ETH,RVN} for USDT
@@ -105,11 +107,13 @@ line-height:120%;
   - You have to either wait until somebody agrees to your exchange terms
     - Or set a low price to sell immediately
   - Your funds are "locked" up until either the exchange happens or you cancel the order
-- Very few Decentralized Exchanges use this
+- Very few decentralized exchanges use this
 
 
 
+<!-- .slide: class="right-float-img-nb-400" -->
 ## Liquidity Pool
+[![](https://finematics.com/wp-content/uploads/2020/07/lp-pools-768x361.png)](https://finematics.com/liquidity-pools-explained/)
 - A liquidity pool starts off with a specific ratio of tokens
   - 50%:50%, for example
   - The ratio is the *dollar value*, not the number of tokens
@@ -122,7 +126,7 @@ line-height:120%;
 
 
 ## Automated Market Maker Method (AMM)
-- Basic idea: as you buy more of currency A, by selling currency B...
+- Basic idea: as you buy, from a pool, currency A by selling currency B...
   - The price of currency A goes up (since there is less in the pool, it must be more in demand)
   - The price of currency B goes down (since there is more in the pool, it must be less in demand)
 - To keep the 50:50 price ratio constant...
@@ -179,7 +183,7 @@ line-height:120%;
   - Exchange rate: 1 fETH = 10 TC
   - Total pool value: `$`200,000
 - 25 fETH are exchanged for 250 TC (both are worth $25)
-  - Minus a (small) fee
+  - Minus a (small) fee that we'll ignore
 - The pool now has 99,975 fETH and 1,000,250 TC
   - Exchange rate: 1 fETH = 10.005 TC
   - The more liquidity in a pool, the less the price changes with each exchange
@@ -192,7 +196,6 @@ line-height:120%;
 - We start with (only) 100 fETH
 - We buy 990 TC for 99 fETH, as per the exchange rate
   - We now have 1 fETH and 990 TC
-  - We are ignoring fees
   - The exchange has 199 fETH and 10 TC
 - New exchange rate: 199 fETH and 10 TC: 1 fETH $\approx$ 0.05 TC
 - We then buy our 99 fETH back for $99 \ast 0.05$ TC $= 4.95$ TC
@@ -224,7 +227,7 @@ line-height:120%;
   - Or 6 fETH and 20 TC
 - This is too low a liqudity to be viable
   - But it makes the graphs easy to understand
-- These examples are all the person *buying* 10 fETH for some amount of TC
+- These examples are all the person *buying* 10 fETH by paying some amount of TC
   - The DEX's ETH balance decreases by 10
   - The DEX's TC balance increases by different amounts
 </textarea></section>
@@ -262,15 +265,15 @@ line-height:120%;
   - Determine the value of $x$ to keep this invariant
   - Not surprisingly, it's $x=100$
 - You get $125-100=25$ fETH for your 200 TC
-  - Minus fees  
+  - Minus fees that we'll ignore for now 
 - So you can't abuse it in the same way
 
 
 
 ## Exchange rates
 - They are only a snapshot; they change as the currencies are bought or sold
-- Assume $x$ of currency A and $y$ of currency B
-  - And that $x \ast y = k$
+- Assume the pool has $x$ of currency A and $y$ of currency B
+  - And let $k = x \ast y$
 - $x$ of coin A for $y$ of coin B
   - Exchange rate: $x/y$ of A for 1 B
 - $y$ of coin B for $x$ of coin A
@@ -296,7 +299,7 @@ line-height:120%;
 - To make a profit:
   - Exchange 1 fETH for 20 TC via DEX B
   - Exchange that 20 TC for 2 fETH via DEX A
-- This is called *Arbitrage Trading*
+- This is called *arbitrage trading*
 - This helps equalize exchange rates between DEXs
   - And fees are paid for each exchange
 </textarea></section>
@@ -366,9 +369,10 @@ line-height:120%;
 - Some typical reasons:
   - Need a lot of liquidity in multiple currencies
   - Many people don't know about it
-- Two unique reasons:
+- Three unique reasons:
   - Impermanent loss (aka Divergence Loss)
   - Rug pulls
+  - Bugs
 
 
 
@@ -480,12 +484,23 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
 
 
+<!-- .slide: class="right-float-img-nb-400" -->
 ## Rug Pulls
+[![](https://bitcoinist.com/wp-content/uploads/2022/02/pull.jpg)](https://bitcoinist.com/rug-pull-dont-fooled-ways-detect-someones-scam-you/)
 - When the DEX owner runs off with your coins
 - Recall `selfdestruct()`
   - Whomever calls it gets all the coins that the contract controls
   - We can easily ensure only the deployer can call it, and have it transfer the TC in the process
 - In 2021, an estimated 7.7 billion was stolen in rug pulls ([source](https://www.bitchecker.com/en-US/articles/67))
+
+
+
+<!-- .slide: class="right-float-img" -->
+![](images/applications/aku-nft-lock.webp)
+## Bugs
+- This was an NFT auction, not a DEX, but...
+- [AkuDreams NFT project earns $34 million that its team will never be able to withdraw](https://web3isgoinggreat.com/?id=akudreams-earns-34-million-team-will-never-be-able-to-withdraw)
+  - Also: [Aku Ethereum NFT Launch Ends With $34M Locked in Flawed Smart Contract](https://decrypt.co/98530/aku-ethereum-nft-launch-ends-with-34m-locked-in-flawed-smart-contract)
 
 
 
@@ -515,7 +530,9 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 
 
 
+<!-- .slide: class="right-float-img" -->
 ## [Uniswap](https://uniswap.org/)
+![](images/logos/uniswap-uni-logo.svg)
 - Version 1 in 2018; v2 in 2020, and v3 in 2021
 - V2 had `$`135 *billion* in value
 - Information about Uniswap is [here](https://uniswap.org/blog/uniswap-v3)
@@ -532,11 +549,7 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
   - [Liquidity pools](https://www.youtube.com/watch?v=dVJzcFDo498)
   - [Automated Market Makers](https://www.youtube.com/watch?v=1PbZMudPP5E)
   - [impermanent loss](https://www.youtube.com/watch?v=_m6Mowq3Ptk)
-  - Not yet watched:
   - [Rug pulls](https://www.youtube.com/watch?v=YFaqng3YESE)
-  - blockchain bridges
-  - sushiswap
-  - how to reduce risk as a liquidity provider
 </textarea></section>
 
   </section>
