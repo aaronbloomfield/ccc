@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.5.0) (token/ERC20/IERC20.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
@@ -18,6 +18,20 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Interface of the ERC20 standard as defined in the EIP.</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">interface</font> IERC20 <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when `value` tokens are moved from one account (`from`) to</font></i>
+<i><font color="#9A1900">     * another (`to`).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Note that `value` may be zero.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> from<font color="#990000">,</font> address <font color="#008080">indexed</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when the allowance of a `spender` for an `owner` is set by</font></i>
+<i><font color="#9A1900">     * a call to {approve}. `value` is the new allowance.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">Approval</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> owner<font color="#990000">,</font> address <font color="#008080">indexed</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
+
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the amount of tokens in existence.</font></i>
 <i><font color="#9A1900">     */</font></i>
@@ -76,20 +90,6 @@ http://www.gnu.org/software/src-highlite">
         <font color="#008080">address</font> to<font color="#990000">,</font>
         uint256 amount
     <font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
-
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when `value` tokens are moved from one account (`from`) to</font></i>
-<i><font color="#9A1900">     * another (`to`).</font></i>
-<i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * Note that `value` may be zero.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> from<font color="#990000">,</font> address <font color="#008080">indexed</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
-
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Emitted when the allowance of a `spender` for an `owner` is set by</font></i>
-<i><font color="#9A1900">     * a call to {approve}. `value` is the new allowance.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">Approval</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> owner<font color="#990000">,</font> address <font color="#008080">indexed</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>

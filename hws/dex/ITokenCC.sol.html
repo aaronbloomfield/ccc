@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>ITokenCC.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+
+<i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,</font></i>
+<i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">16</font><font color="#990000">;</font>
+
+import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC20Metadata.sol"</font><font color="#990000">;</font>
+
+interface ITokenCC <font color="#008080">is</font> IERC20Metadata<font color="#990000">,</font> IERC165 <font color="#FF0000">{</font>
+
+    <i><font color="#9A1900">// You'll need a constructor, which should call the ERC20 constructor</font></i>
+    <i><font color="#9A1900">// and _mint().  This sets the name and symbol, so you don't have to</font></i>
+    <i><font color="#9A1900">// define those methods (or public variables).</font></i>
+
+    <i><font color="#9A1900">// You have to implement the decimals() function from the IERC20Metadata</font></i>
+    <i><font color="#9A1900">// interface.  Because of some peculiarities of Solidity inheritance, you</font></i>
+    <i><font color="#9A1900">// have to implement these as actual functions, not public variables. And</font></i>
+    <i><font color="#9A1900">// it has to use the multi-override version of the `override` keyword, as</font></i>
+    <i><font color="#9A1900">// described in the slides (solidity.html#/multioverride) and the</font></i>
+    <i><font color="#9A1900">// homework description.</font></i>
+
+    <i><font color="#9A1900">// We will need this function in a future assignment (Arbitrage Trading),</font></i>
+    <i><font color="#9A1900">// which is why it is in this interface. For now, it should have a single</font></i>
+    <i><font color="#9A1900">// line: `revert();`.  You can make your implementation `pure` as well</font></i>
+    <i><font color="#9A1900">// (the compiler will warn you about that).</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">requestFunds</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// You also need to implement supportsInterface(), which is required by</font></i>
+    <i><font color="#9A1900">// the IERC165 interface.  You support four interfaces!</font></i>
+
+    <i><font color="#9A1900">// The other methods needed by the IERC20 interface are already</font></i>
+    <i><font color="#9A1900">// implemented for you in the ERC20.sol contract.</font></i>
+
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

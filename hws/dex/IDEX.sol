@@ -3,10 +3,14 @@
 // This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
 // and is released under the GPL 3.0 license.
 
+// x is the ether liquidity, with 18 decimals
+// y is the token liquidity, with a variable number of decimals
+// k = x * y, and will have somewhere around 30 decimals
+
 pragma solidity ^0.8.16;
 
 import "./IERC165.sol";
-import "./EtherPricer.sol";
+import "./IEtherPriceOracle.sol";
 
 interface IDEX is IERC165 {
 
@@ -22,9 +26,16 @@ interface IDEX is IERC165 {
 	//------------------------------------------------------------
 	// Getting the exchange rates and prices
 
-	// How many decimals the token is shown to; this is from the ERC-20 token
-	// manager itself.
-	function tokenDecimals() external view returns (uint);
+	// How many decimals the token is shown to.  This can just call the ERC-20
+    // contract to get that information, or you can save it in public
+    // variable.  As the other asset is ether, we know that is to 18
+    // decimals, and thus do not need a corresponding function for ether.
+	function decimals() external view returns (uint);
+
+    // Get the symbol of the ERC-20 cryptocurrency.  This can just call the
+    // ERC-20 contract to get that information, or you can save it in public
+    // variable
+    function symbol() external returns (string memory);
 
 	// Get the price of 1 ETH using the EtherPricer contract; return it in
 	// cents.  This just gets the price from the EtherPricer contract.
@@ -45,22 +56,21 @@ interface IDEX is IERC165 {
 	// variable.
 	function k() external view returns (uint);
 
-	// How much ether is in the pool; this can just be a public variable. This
-	// is with all the decimal places, so 1.5 ETH -- which has 18 decimals --
-	// would be 1,500,000,000,000,000,000.  This can just be a public variable.
-	function etherLiquidity() external view returns (uint);
+	// How much ether is in the pool; this can just be a public variable. This is
+    // in wei, so 1.5 ETH -- which has 18 decimals -- would return
+    // 1,500,000,000,000,000,000.  This can just be a public variable.
+	function x() external view returns (uint);
 
 	// How many tokens are in the pool; this can just be a public variable. As
 	// with the previous, this is returned with all the decimals.  So 15 of
 	// the token cryptocurrency coin, which has (say) 10 decimals, this would
-	// return 15,000,000,000.  This can just be a public variable.
-	function tokenLiquidity() external view returns (uint);
+	// return 150,000,000,000.  This can just be a public variable.
+	function y() external view returns (uint);
 
 	// Get the amount of pool liquidity in USD (actually cents) using the
 	// EtherPricer contract.  We assume that the ETH and the token
 	// cryptocurrency have the same value, and we know (from the EtherPricer
-	// smart contract) how much the ETH is worth.  This can just be a public
-	// variable.
+	// smart contract) how much the ETH is worth.
 	function getPoolLiquidityInUSDCents() external view returns (uint);
 
 	// How much ETH does the address have in the pool.  This is the number in
@@ -89,7 +99,7 @@ interface IDEX is IERC165 {
 	// contract address of the EtherPricer contract being used, and can be
 	// updated later via the setEtherPricer() function.
 	function createPool(uint _tokenAmount, uint _feeNumerator, uint _feeDenominator, 
-						address _erc20token, address _etherpricer) external payable;
+						address _erc20token, address _etherPricer) external payable;
 
 	//------------------------------------------------------------
 	// Fees
@@ -99,15 +109,16 @@ interface IDEX is IERC165 {
 	function feeNumerator() external view returns (uint);
 
 	// Get the denominator of the fee fraction; this can just be a public
-	// variable.
+    // variable.
 	function feeDenominator() external view returns (uint);
 
-	// Get the amount of ether fees accumulated (for all addresses) so far;
-	// this can just be a public variable.
+	// Get the amount of fees accumulated, in wei, for all addresses so far; this
+    // can just be a public variable.
 	function feesEther() external view returns (uint);
 
-	// Get the amount of token fees accumulated (for all addresses) so far;
-	// this can just be a public variable.
+	// Get the amount of token fees accumulated for all addresses so far; this
+    // can just be a public variable.  This will have as many decimals as the
+    // token cryptocurrency has.
 	function feesToken() external view returns (uint);
 
 	//------------------------------------------------------------
@@ -149,25 +160,21 @@ interface IDEX is IERC165 {
 
 	// This gets the address of the etherPricer being used so that we can
 	// verify we are using the correct one; this can just be a public variable.
-	function etherPricerAddress() external returns (address);
+	function etherPricer() external returns (address);
 
 	// Get the address of the ERC-20 token manager being used for the token
 	// cryptocurrency; this can just be a public variable.
-	function erc20TokenAddress() external returns (address);
-
-	// Get the abbreviation of the ERC-20 cryptocurrency; this can just call
-	// the ERC-20 contract to get that information.
-	function getTokenCCAbbreviation() external returns (string memory);
+	function erc20Address() external returns (address);
 
 	//------------------------------------------------------------
 	// Functions for efficiency
 
 	// this function is just to lower the number of calls to the contract from
-	// the web page; it just returns the information in many of the above
-	// calls as a single call.  The information it returns is a tuple and is,
-	// in order:
+    // the dex.php web page; it just returns the information in many of the
+    // above calls as a single call.  The information it returns is a tuple
+    // and is, in order:
 	//
-	// 0: the address of *this* DEX contract
+	// 0: the address of *this* DEX contract (address)
 	// 1: token cryptocurrency abbreviation (string memory)
 	// 2: token cryptocurrnecy name (string memory)
 	// 3: ERC-20 token cryptocurrency address (address)
@@ -185,7 +192,7 @@ interface IDEX is IERC165 {
 	//------------------------------------------------------------
 	// Inherited functions
 
-	// From IERC165.sol:
+	// From IERC165.sol; this contract supports two interfaces.
 	// function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }

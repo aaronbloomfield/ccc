@@ -19,6 +19,9 @@ Note that this assignment requires that your [Ethereum Tokens](../tokens/index.h
 
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), the [Tokens slide set](../../slides/tokens.html#/), and the [Blockchain Applications](../../slides/applications.html) slide set.  The last one is most relevant, as it discusses how DEXes work.
 
+Your token cryptocurrency has a name and a symbol.  In this assignment, we will just refer to it as "TCC".
+
+In addition to your source code, you will submit an edited version of [dex.py](dex.py.html) ([src](dex.py)).
 
 ### Changelog
 
@@ -31,13 +34,26 @@ To simulate changing market conditions, we have deployed two smart contracts to 
 
 ```
 interface IEtherPriceOracle is IERC165 {
-        function getEtherPriceInCents() external view returns (uint);
+
+    // The name (really a description) of the implementing contract
+    function name() external view returns (string memory);
+
+    // The currency symbol this is being reported in, such as '$'
+    function symbol() external view returns (string memory);
+
+    // How many decimals this is being reported in; for cents, it's 2
+    function decimals() external view returns (uint);
+
+    // The current price, in cents, of the (fake) ether
+    function price() external view returns (uint);
+
+    // also supportsInterface() from IERC165.sol
 }
 ```
 
-Thus, it provides only two functions: the `getEtherPriceInCents()` and `supportsInterface()` from the [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)) contract.  The `getEtherPriceInCents()` will return the current price in cents.  Thus, if the price is $99.23 per (fake) ETH, it would return `9923`.
+The `price()` function will return the current price in cents.  Thus, if the price is $99.23 per (fake) ETH, it would return `9923`.
 
-As mentioned, there are two deployed contracts that implemented this interface, the contract addresses of which are on the Collab landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)).  You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.
+As mentioned, there are two deployed contracts that implemented this interface, the contract addresses of which are on the Collab landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPriceOracleConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPricerConstant.sol)).  You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.
 
 The second one is a variable version, whose price ranges greatly, but generally averages (over time) around $100 in price.  As there is no true randomness on a fully deterministic blockchain, the value is based on the current block number.  So while this will change at each block, it will not change until a new block is mined.  The implementation for the variable version is not being provided, but it follows the interface above.
 
@@ -55,10 +71,11 @@ As far as this assignment is concerned, there will only be *one* DEX for each to
 
 Formally, you must implement a `TokenDEX` contract that implements the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) interface.  Your contract opening line MUST be: `contract TokenDEX is DEX`.  Note that the `DEX` interface extends the `IERC165` interface, so you will have to implement the `supportsInterface()` function as well.  The functions in this interface are shown below, and much more detail is provided in the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) file.
 
-Note that many of these functions are just the getter functions from `public` variables; which ones are described in the full source file.
+Note that many of these functions are just the getter functions from `public` variables; which ones are described in the full source file.  Also note that $x$ is the amount of ether liquidity (with 18 decimals) and $y$ is the amount of token liqudity (with 8-12 decimals).
 
 ```
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 pragma solidity ^0.8.16;
 
 import "./IERC165.sol";
@@ -66,87 +83,52 @@ import "./IEtherPriceOracle.sol";
 
 interface IDEX is IERC165 {
 
-	//------------------------------------------------------------
-	// Events
+    // Events
+    event liquidityChangeEvent();
 
-	event liquidityChangeEvent();
+    // Getting the exchange rates and prices
+    function decimals() external view returns (uint);
+    function symbol() external returns (string memory);
+    function getEtherPrice() external view returns (uint);
+    function getTokenPrice() external view returns (uint);
 
-	//------------------------------------------------------------
-	// Getting the exchange rates and prices
+    // Getting the liquidity of the pool or part thereof
+    function k() external view returns (uint);
+    function x() external view returns (uint);
+    function y() external view returns (uint);
+    function getPoolLiquidityInUSDCents() external view returns (uint);
+    function etherLiquidityForAddress(address who) external returns (uint);
+    function tokenLiquidityForAddress(address who) external returns (uint);
 
-	function tokenDecimals() external view returns (uint);
+    // Pool creation
+    function createPool(uint _tokenAmount, uint _feeNumerator, uint _feeDenominator, 
+                        address _erc20token, address _etherPricer) external payable;
 
-	function getEtherPrice() external view returns (uint);
+    // Fees
+    function feeNumerator() external view returns (uint);
+    function feeDenominator() external view returns (uint);
+    function feesEther() external view returns (uint);
+    function feesToken() external view returns (uint);
 
-	function getTokenPrice() external view returns (uint);
+    // Managing pool liquidity
+    function addLiquidity() external payable;
+    function removeLiquidity(uint amountEther) external;
 
-	//------------------------------------------------------------
-	// Getting the liquidity of the pool or part thereof
+    // Exchanging currencies
+    function exchangeEtherForToken() external payable;
+    function exchangeTokenForEther(uint amountToken) external;
 
-	function k() external view returns (uint);
+    // Functions for debugging and grading
+    function setEtherPricer(address p) external;
+    function etherPricer() external returns (address);
+    function erc20Address() external returns (address);
 
-	function etherLiquidity() external view returns (uint);
+    // Functions for efficiency
+    function getDEXinfo() external returns (address, string memory, string memory, 
+                            address, uint, uint, uint, uint, uint, uint, uint, uint);
 
-	function tokenLiquidity() external view returns (uint);
-
-	function getPoolLiquidityInUSDCents() external view returns (uint);
-
-	function etherLiquidityForAddress(address who) external returns (uint);
-
-	function tokenLiquidityForAddress(address who) external returns (uint);
-
-	//------------------------------------------------------------
-	// Pool creation
-
-	function createPool(uint tokenAmount, uint feeNumerator, uint feeDenominator, 
-						address erc20token, address etherpricer) external payable;
-
-	//------------------------------------------------------------
-	// Fees
-
-	function feeNumerator() external view returns (uint);
-
-	function feeDenominator() external view returns (uint);
-
-	function feesEther() external view returns (uint);
-
-	function feesToken() external view returns (uint);
-
-	//------------------------------------------------------------
-	// Managing pool liquidity
-
-	function addLiquidity() external payable;
-
-	function removeLiquidity(uint amountEther) external;
-
-	//------------------------------------------------------------
-	// Exchanging currencies
-
-	function exchangeEtherForToken() external payable;
-
-	function exchangeTokenForEther(uint amountToken) external;
-
-	//------------------------------------------------------------
-	// Functions for debugging and grading
-
-	function setEtherPricer(address p) external;
-
-	function etherPricerAddress() external returns (address);
-
-	function erc20TokenAddress() external returns (address);
-
-	function getTokenCCAbbreviation() external returns (string memory);
-
-	//------------------------------------------------------------
-	// Functions for efficiency
-
-	function getDEXinfo() external returns (address, string memory, string memory, 
-							address, uint, uint, uint, uint, uint, uint, uint, uint);
-
-	//------------------------------------------------------------
-	// Inherited functions
-
-	// function supportsInterface(bytes4 interfaceId) external view returns (bool);
+    // Inherited functions
+    // function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }
 ```
@@ -155,10 +137,11 @@ Here are all the files you will need:
 
 - [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)): the interface, above, that your contract will need to implement; that file has many more comments in the file to describe what each function does
 - [IEtherPriceOracle.sol](IEtherPriceOracle.sol.html) ([src](IEtherPriceOracle.sol)): the interface that the two pricing smart contracts implement; the contract addresses for these are on the Collab landing page
-- [EtherPricerConstant.sol](EtherPricerConstant.sol.html) ([src](EtherPricerConstant.sol)) is the contract implementation of IEtherPriceOracle.sol that always returns 100 in cents (formally: `10000`); note that the source code for the variable version is not being made available
+- [EtherPricerConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPriceOracleConstant.sol)) is the contract implementation of IEtherPriceOracle.sol that always returns 100 in cents (formally: `10000`); note that the source code for the variable version is not being made available
 - [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)): the ERC-165 interface, which the DEX interface extends
-- [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)): the same file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, which your token cryptocurrency implements
-- [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)): The full ERC-20 interface, which the IERC20Metadata contract extends
+- [ITokenCC.sol](ITokenCC.sol.html) ([src](ITokenCC.sol)): the same file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, which your token cryptocurrency implements
+- [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)): the same file from the Ethereum Tokens assignment, which ITokenCC extends
+- [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)): the same file from the Ethereum Tokens assignment, which IERC20Metadata extends
 - [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) is a file to help test the TokenDEX contract, and is explained in detail below
 
 When you want to test your program, this is the expected flow to get it started, whether to the Javascript blockchain in Remix or to our private Ethereum blockchain:
@@ -171,11 +154,11 @@ As far this this assignment is concerned, the exchange rate between our (fake) E
 
 ### Fees
 
-Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEhter` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
+Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out (either ether or token) -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEhter` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
 
 ***NOTE:*** the ONLY functions that remove fees are `exchangeEtherForToken()` and `exchangeTokenForEther()`, and they only remove the fee from the amount paid *out*.  The other functions (specifically `addLiquidity()` and `removeLiquidity()`) do not deduct fees.
 
-Managing fee payout is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which had different times that the DEX held their liquidity, and each of which gets a cut -- proportional to their liquidity -- of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be balanced with the other currency so that they can be added in appropriate proportions.
+Managing fee payout to the liquidity providers is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which had different times that the DEX held their liquidity, and each of which gets a cut -- proportional to their liquidity -- of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be balanced with the other currency so that they can be added in appropriate proportions.
 
 For this assignment, we are not going to handle distributing fees back to the liquidity providers -- we are just going to accumulate them into the `feesEhter` and `feesToken` variables.  We realize that this inability to retrieve the fees would result in lost ETH or TC.  That's fine for this assignment, even if it would not be fine in a real world situation.
 
@@ -305,7 +288,7 @@ As you work through the other test cases, one of them (transaction 2) will be pa
 
 This part has three different steps.  This may require a few runs to get it right -- that's fine, just be sure to submit the various values (contract addresses and transaction hashes) from the last deployment.
 
-Step 1: You will need to have deployed your TokenCC smart contract, from the previous assignment, to the blockchain, and you will need to know its contract address.  You are welcome to use the deployed one from the previous assignment, or re-deploy it for this one.
+Step 1: You will need to have deployed your TokenCC smart contract, from the previous assignment, to the blockchain, and you will need to know its contract address.  You are welcome to use the deployed one from the previous assignment, or re-deploy it for this one.  You may want to have it mint a *lot* of your token cryptocurrency.  If you mint, say, 1 million TCC, then you can use that same contract on successive DEX tests, putting in 100 (or 1000 or whatever) TCC each time.
 
 Step 2: Deploy your DEX to the private Ethereum blockchain.  So that it will work properly with all of your other classmates' DEX implementations, we have some strict requirements for the deployment:
 
@@ -313,22 +296,22 @@ Step 2: Deploy your DEX to the private Ethereum blockchain.  So that it will wor
 - You need to call `createPool()`
 	- You must fund it with 100 (fake) ether.  *Do not put a different amount in!*
 	    - This implies initializing the TokenCC and allowing the DEX to transfer it via `approve()`
-	- You can put as many or as little of your token in as you like (but no less than 10.0 coins).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in no more than half of what you own, and you can certainly put in less.
+	- You can put as many or as little of your token in as you like (but no less than 10.0 TCC).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in no more than half of what you own, and you can certainly put in less.
 	    - Or you can just mint a million of your TC, and put in 1,000 each time you run another test
-- Do not call either `addLiquidity()` or `removeLiquidity()` yet
+- For your *final* deployment -- meaning what you are going to submit when you turn the assignment in -- do not call either `addLiquidity()` or `removeLiquidity()` yet
 
 Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page.  To register your DEX, fill out the contract address form at the bottom of that page.  You will see your DEX values populate one of the table rows -- make sure they are correct.  Note that the current ETH price is listed at the top of the page.
 
 ### Send me Money
 
-I will need some of your token cryptocurrency to test your DEX for grading purposes.  While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract.  Please send me 10.0 coins.  This means that if your TokenCC has 10 decimal places, then the value you need to send me is 100,000,000,000.  The address to send this to is on the Collab landing page.
+I will need some of your token cryptocurrency to test your DEX for grading purposes.  While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract.  Please send me 10.0 coins.  This means that if your TokenCC has 10 decimal places, then the value you need to send me is 100,000,000,000.  The address to send this to is on the Collab landing page.  If you are using the exact same deployed contract (meaning the same contract address), then you don't have to send me this again.  You can check how much of your TCC is owned by looking at that account page in the blockchain explorer.  
 
 
 ### Exchanges
 
 Now that your exchange is registered, you can view all the exchanges.  You should see your exchange in there, along with your cryptocurrency's logo.  The stats of each exchange are listed in that table.
 
-You need to make 4 total exchanges with DEXes other than you own (meaning four or more different exchanges, but with four *different* DEXes).  As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether.  Or you can mine ether and use that to exchange for the others.
+You need to make 4 total exchanges with DEXes other than you own (meaning four or more different exchanges, but with four *different* DEXes).  You are welcome to exchange for more if you want to own more.  As you accumulate more TCC from other students, you can see them on the blockchain explorer page for your account.  As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether.  Or you can get more ether from the faucet and use that to exchange for the others.
 
 Depending on when you submit your assignment, there may not be other DEXes to interact with.  That's fine – you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the exchanges. We are going to check whether you exchange for the other token cryptocurrencies by looking if your eth.coinbase account, the address of which you will submit below, initiated exchanges on any one of your classmate's submitted DEX addresses by a few days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 
@@ -342,6 +325,6 @@ There are *three* forms of submission for this assignment; you must do all three
 
 Submission 1: Deploy the TokenDEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well, either from the previous assignment or again for this one.  These were likely done in the deployment section, above.
 
-Submission 2: You should submit your `TokenDEX.sol` and `TokenCC.sol` files and your completed `auction.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+Submission 2: You should submit your `TokenDEX.sol` and `TokenCC.sol` files and your completed `dex.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).
 
 Submission 3: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.
