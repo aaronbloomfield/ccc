@@ -7,7 +7,7 @@ pragma solidity ^0.8.16;
 
 import "./IEtherPriceOracle.sol";
 
-contract EtherPricerConstant is IEtherPriceOracle {
+contract EtherPriceOracleConstant is IEtherPriceOracle {
 
     string public constant name = "A constant EtherPrice oracle that always returns $100.00";
 
@@ -18,9 +18,7 @@ contract EtherPricerConstant is IEtherPriceOracle {
     uint public constant price = 10000; // in cents
 
     function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {
-        return
-            interfaceId == type(IEtherPriceOracle).interfaceId ||
-            interfaceId == type(IERC165).interfaceId;
+        return interfaceId == type(IEtherPriceOracle).interfaceId || interfaceId == type(IERC165).interfaceId;
     }
 
 }

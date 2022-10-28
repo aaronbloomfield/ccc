@@ -5,43 +5,60 @@
 
 pragma solidity ^0.8.16;
 
-import "./TokenDEX.sol";
+import "./DEX.sol";
 import "./TokenCC.sol";
-import "./EtherPricerConstant.sol";
+import "./EtherPriceOracleConstant.sol";
 
-contract DEXtest {
+contract DEXtestfull {
+
+    TokenCC public tc;
+    DEX public dex;
+
+    constructor() {
+        tc = new TokenCC();
+        dex = new DEX();
+    }
 
 	function test() public payable {
- 		require (msg.value > 15 ether, "Must call with more than 15 ether");
-        TokenCC cc = new TokenCC();
-        TokenDEX dex = new TokenDEX();
-        EtherPricerConstant pricer = new EtherPricerConstant();
-        cc.approve(address(dex),cc.totalSupply());
+ 		require (msg.value == 15 ether, "Must call test() with 15 ether");
 
-        // initial deposit of 10 ETH and 100 TC
-	    try dex.createPool{value: 10 ether}(100*10**cc.decimals(), 0, 1000, address(cc), address(pricer)) {
+        // Step 1: deploy the dex
+        IEtherPriceOracle pricer = new EtherPriceOracleConstant();
+        tc.approve(address(dex),tc.totalSupply());
+
+        // Step 1 tests: DEX is depoloyed
+        require(dex.k() == 0, "k value not 0 after DEX creation()");
+        require(dex.x() == 0, "x value not 0 after DEX creation()");
+        require(dex.y() == 0, "y value not 0 after DEX creation()");
+
+        // Step 2: createPool() is called with 10 (fake) ETH and 100 TC
+	    try dex.createPool{value: 10 ether}(100*10**tc.decimals(), 0, 1000, address(tc), address(pricer)) {
             // do nothing
         } catch Error(string memory reason) {
             require (false, string(abi.encodePacked("createPool() call reverted: ",reason)));
         }
+        
+        // Step 2 tests
         require(dex.k() == 1e31, "k value not correct after createPool()");
-        // the next line assumes you are sending in 10 ETH; adjust as necessary,
-        // but this amount matches the worked-out example in the homework description
-        require(dex.etherLiquidity() == 10 * 1e18, "x value not correct after createPool()");
-        // the next line assumes that you are putting in 100 TC; adjust as necessary,
-        // but this amount matches the worked-out example in the homework description
-        require(dex.tokenLiquidity() == 100 * 10**(cc.decimals()), "y value not correct after createPool()");
+        require(dex.x() == 10 * 1e18, "x value not correct after createPool()");
+        require(dex.y() == 100 * 10**(tc.decimals()), "y value not correct after createPool()");
 
-        // insert code for the example's transaction 1 here
+        // Step 3: transaction 1, where 2.5 ETH is provided to the DEX for exchange
 
-        // insert code for the example's transaction 2 here
+        // Step 3 tests
 
-        // insert code for the addLiquidity() example here
+        // Step 4: transaction 2, where 120 TC is provided to the DEX for exchange
+  
+        // Step 4 tests
+
+        // Step 5: addLiquidity() is called with 1 (fake) ETH and 40 TC
+
+        // Step 5 tests
 
         // finish up
-        require(false,"end fail"); // huh?
+        require(false,"end fail"); // huh?  see why in the homework description!
 	}
-
+ 
     receive() external payable { } // see note in the HW description
 
 }
