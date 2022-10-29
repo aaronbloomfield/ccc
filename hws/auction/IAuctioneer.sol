@@ -29,7 +29,7 @@ interface IAuctioneer is IERC165 {
         address winner;     // the current highest bidder
         address initiator;  // who started the auction
         uint nftid;         // the NFT token ID
-        uint endTime;       // when the auction started
+        uint endTime;       // when the auction ends
         bool active;        // if the auction is active
     }
 
