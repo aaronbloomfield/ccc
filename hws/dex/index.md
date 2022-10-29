@@ -342,7 +342,7 @@ contract DEXtest {
     }
 
 	function test() public payable {
- 		require (msg.value == 13 ether, "Must call test() with 15 ether");
+ 		require (msg.value == 13 ether, "Must call test() with 13 ether");
 
         // Step 1: deploy the dex
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
@@ -407,7 +407,7 @@ To use this file, deploy it and then call `test()` with with 13 ether.  There ar
   - The `catch` block executes if the function call reverts via `revert()` or `require()`
   - This particular version of the catch block prints out the error message obtained from the second parameter of `require()` for ease of debugging
 - You will notice the last line of the function is: `require(false,"end fail")`, and this will *always* revert.  If that line were not present, and all the tests pass, then our account will lose the 16 ether we passed in.  While we can reset the account, that requires a Remix restart (or other measures).  What we want is on a means to check that all the tests pass, but get a full refund for all of the payments (including the payment to `createPool()`, in this example).  That's the purpose of this line -- if it reverts on that line, we know all the previous tests passed, but the reversion causes our account to be refunded the (fake) ETH we passed in.
-- We call the function with 15 ether is so that we have enough for the initial `createPool()` call (which uses 10 ether), the successive transaction 1 listed above (which uses 2.5 ether), and a bit extra for gas.
+- We call the function with 13 ether is so that we have enough for the initial `createPool()` call (which uses 10 ether), the successive transaction 1 listed above (which uses 2.5 ether), and a bit extra for gas.
 
 
 

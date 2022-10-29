@@ -20,7 +20,7 @@ contract DEXtest {
     }
 
 	function test() public payable {
- 		require (msg.value == 15 ether, "Must call test() with 15 ether");
+ 		require (msg.value == 13 ether, "Must call test() with 13 ether");
 
         // Step 1: deploy the dex
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
