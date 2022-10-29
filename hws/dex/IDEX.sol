@@ -196,7 +196,7 @@ interface IDEX is IERC165, IERC20Receiver {
     //------------------------------------------------------------
     // Inherited functions
 
-    // From IERC165.sol; this contract supports two interfaces.
+    // From IERC165.sol; this contract supports three interfaces
     // function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }

@@ -52,7 +52,7 @@
 <li><a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>)</li>
 <li><a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>)</li>
 </ul>
-<p>Note that this assignment requires that your <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment is working properly. If you did not get it working properly, then contact us. You are expected to use your TokenCC code from the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment. You are welcome to use that deployment or re-deploy it; however, you may find that you have to re-deploy it many times as you are testing your DEX. Be sure to save the contract address of the final deployment that you will use when you submit the assignment.</p>
+<p>Note that this assignment requires that your <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment is working properly. If you did not get it working properly, then contact us. You are expected to use your TokenCC code from the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment. You have to amke a small modification to your TokenCC.sol file and then re-deploy it; however, you may find that you have to re-deploy it many times as you are testing your DEX. Be sure to save the contract address of the final deployment that you will use when you submit the assignment.</p>
 <p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a>, the <a href="../../slides/solidity.html#/">Solidity slide set</a>, the <a href="../../slides/tokens.html#/">Tokens slide set</a>, and the <a href="../../slides/applications.html">Blockchain Applications</a> slide set. The last one is most relevant, as it discusses how a DEX works.</p>
 <p>In addition to your source code, you will submit an edited version of <a href="dex.py.html">dex.py</a> (<a href="dex.py">src</a>).</p>
 <h3 id="changelog">Changelog</h3>
@@ -95,9 +95,37 @@
 }</code></pre>
 <p>This function overrides the <code>_afterTokenTransfer()</code> function in the <a href="../tokens/ERC20.sol.html">ERC20.sol</a> (<a href="../tokens/ERC20.sol">src</a>) contract; this “hook” is called any time a token is transferred. Our overridden function above will first check if the <code>to</code> is a contract by checking if it has a non-zero code size, and that both addresses are non-zero (<code>from</code> is zero on a mint operation, and <code>to</code> is zero on a burn operation); owned accounts always have zero length code. If so, it will attempt to call the <code>onERC20Received()</code> function, if it exists; since it’s in a try-catch block, nothing happens if it the function does not exist. If that function does not exist, then it does nothing (we could have had it revert in the <code>catch</code> as well).</p>
 <p>The net effect of these two changes is that any time your TokenCC is transferred to a contract, it will attempt to notify that contract that it just received some ERC-20 tokens.</p>
-<h3 id="details">Details</h3>
+<p>Lastly, we recommend minting a large amount of coins (a million or so, which is multiplied by <span class="math inline">10<sup><em>d</em></sup></span>, where <span class="math inline"><em>d</em></span> is how many decimals your coin uses). This will allow you to use the same TokenCC deployment for multiple DEX deployments and tests.</p>
+<p>The next section describes a way to “turn off” the functionality of the <code>onERC20Received()</code> function.</p>
+<h3 id="background">Background</h3>
+<h4 id="exchange-method">Exchange method</h4>
 <p>Your DEX must follow the <a href="../../slides/applications.html#/cpamm">CPAMM (Constant Product Automated Market Maker</a> method as discussed in the lecture slides. Once deployed, there will be some liquidity that must be added to the DEX before trading can start. Anybody can then exchange some of our (fake) ETH for your token cryptocurrency. This, combined with the varying price of our (fake) ETH, will cause the price of your token cryptocurrency to fluctuate significantly. At the end of the assignment you will register your DEX with the course-wide DEX web page so that the entire class can see all of the exchangeable token cryptocurrencies.</p>
+<h4 id="number-of-dexes">Number of DEXes</h4>
 <p>As far as this assignment is concerned, there will only be <em>one</em> DEX for each token cryptocurrency. You may have deployed multiple ones to test your code, but for our class trading we will only be using the one DEX that you deploy at the end. Specifically, the “official” DEX for a given cryptocurrency is going to be the <em>most recent one deployed</em> (this is so the explorer knows which one to use). Thus, for this assignment, <a href="../../slides/applications.html#/arbitrage">arbitrage trading</a> is not possible, since that requires trading between two or more exchanges that exchange the same pairs of tokens. Furthermore, we are not going to be implementing <a href="../../slides/applications.html#/routing">routing</a>.</p>
+<h4 id="obtaining-a-balance">Obtaining a balance</h4>
+<p>To get the ether balance of a given account, you just use the <code>balance</code> property. You may have to cast it as a <code>address</code> first, as such: <code>address(a).balance</code>. This reports the ether balance in wei. To get the ERC-20 balance, you call the <code>balanceOf()</code> function, which reports it with as many decimals as the ERC-20 contract uses (call <code>decimals()</code> to find out how many).</p>
+<h4 id="receive"><code>receive()</code></h4>
+<p>A contract can receive either in one of two ways. The first is to have a <code>payable</code> function is called along with some ether transfer. This was done in the <code>placeBid()</code> function in the <a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>) assignment.</p>
+<p>To receive ether without a function call – meaning to receive a regular ether transfer – a special function called <code>receive()</code> must be present. It doesn’t have to <em>do</em> anything, necessarily, but it does have to be declared. Note that, in this assignment, our <code>receive()</code> function is going to have to do quite a bit. This function has a special form:</p>
+<pre><code>receive() payable external override {
+    // ...
+}</code></pre>
+<p>Note that there is no <code>function</code> keyword! Other than the different syntax, and the special case when it is called, it operates like any other function. It can take any action, including reverting (which will abort the transfer). In our case, this is how we are going to exchange ether for TC – we will transfer ether in, which will call <code>receive()</code>, and the TC will be transferred back to the caller. As our <code>receive()</code> function is overriding what is in an interface (described below), we also put the <code>override</code> keyword there.</p>
+<h4 id="transferring-ether">Transferring ether</h4>
+<p>To transfer ether to an address <code>a</code>, you could use the following:</p>
+<pre><code>(bool success, ) = payable(a).call{value: amount}(&quot;&quot;);
+require (success, &quot;payment didn&#39;t work&quot;);</code></pre>
+<p>A bunch of notes on this:</p>
+<ul>
+<li>The variable <code>a</code> can be an address or a specific contract. In the DEXtest.sol file, shown below, you can pay the DEX, which is stored in a <code>dex</code> variable, via <code>payable(dex)</code></li>
+<li>The parameter to call is the empty string</li>
+<li>The amount, in the <code>amount</code> variable, is in wei; you can also specify it as <code>1 ether</code></li>
+<li>The <code>payable</code> keyword is casting it to a payable address, as you can’t transfer ether to a non-payable address</li>
+<li>This will work for both owned addresses and contract addresses (as long as the contract address has a <code>receive()</code> function)</li>
+</ul>
+<h4 id="onerc20received"><code>onERC20Received()</code></h4>
+<p>The <code>onERC20Received()</code> function will be called any time TC is transferred to a contract. We are going to use this to initiate an exchange – one just has to transfer the TC to the DEX, and then the DEX will compute the amount of ether to send back.</p>
+<p>However, there are some times where we may NOT want <code>onERC20Received()</code> to do anything. In particular, both <code>addLiquidity()</code> and <code>removeLiquidity()</code> will initiate a ERC-20 transfer, but we probably <em>don’t</em> want <code>onERC20Received()</code> to be called at that point (it’s not an exchange). So we are going to want to have a way to “turn off” the functionality of <code>onERC20Received()</code>. The easiest way to do this is to have an <code>internal</code> contract variable, such as <code>adjustingLiquidity</code>, that is normally set to <code>false</code>. In <code>addLiquidity()</code> and <code>removeLiquidity()</code>, you set it to <code>true</code> when you are about to initiate the transfer, and then set it to <code>false</code> when done.</p>
 <h3 id="interface">Interface</h3>
 <p>Formally, you must implement a <code>DEX</code> contract that implements the <a href="IDEX.sol.html">IDEX.sol</a> (<a href="IDEX.sol">src</a>) interface. Your contract opening line MUST be: <code>contract DEX is IDEX</code>. Note that the <code>IDEX</code> interface extends the <code>IERC165</code> interface, so you will have to implement the <code>supportsInterface()</code> function as well. The functions in this interface are shown below, and much more detail is provided in the comments in the <a href="IDEX.sol.html">IDEX.sol</a> (<a href="IDEX.sol">src</a>) file.</p>
 <p>Note that many of these functions are just the getter functions from <code>public</code> variables; which ones are described in the full source file and also below. Also note that <span class="math inline"><em>x</em></span> is the amount of ether liquidity (with 18 decimals) and <span class="math inline"><em>y</em></span> is the amount of token liqudity (with 8-12 decimals).</p>
@@ -154,7 +182,7 @@ interface IDEX is IERC165, IERC20Receiver {
     function getDEXinfo() external returns (address, string memory, string memory, 
                             address, uint, uint, uint, uint, uint, uint, uint, uint);
 
-    // Inherited functions
+    // From IERC165.sol; this contract supports three interfaces
     // function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }</code></pre>
@@ -177,13 +205,13 @@ interface IDEX is IERC165, IERC20Receiver {
 <li><a href="IERC20.sol.html">IERC20.sol</a> (<a href="IERC20.sol">src</a>): what IERC20Metadata extends</li>
 </ul></li>
 <li><a href="IERC20Receiver.sol.html">IERC20Receiver.sol</a> (<a href="IERC20Receiver.sol">src</a>) which was described above</li>
-<li><a href="DEXtest.sol.html">DEXtest.sol</a> (<a href="DEXtest.sol">src</a>) is a file to help test the TokenDEX contract, and is explained in detail below</li>
+<li><a href="DEXtest.sol.html">DEXtest.sol</a> (<a href="DEXtest.sol">src</a>) is a file to help test the DEX contract, and is explained in detail below</li>
 </ul>
 <p>When you want to test your program, this is the expected flow to get it started, whether to the Javascript blockchain in Remix or to our private Ethereum blockchain:</p>
 <ul>
-<li>Deploy your TokenDEX contract and (if necessary) your TokenCC contract.</li>
-<li>Approve your TokenDEX contract for some amount of your TokenCC supply via <code>approve()</code> on your TokenCC contract.</li>
-<li>Call <code>createPool()</code> on your TokenDEX. Choose how much TokenCC supply to use (you don’t have to use it all, but must use at least 10.0 TC), and put in the appropriate EtherPricer contract address. You will have to transfer in some ether with this call.</li>
+<li>Deploy your DEX contract and (if necessary) your TokenCC contract.</li>
+<li>Approve your DEX contract for some amount of your TokenCC supply via <code>approve()</code> on your TokenCC contract.</li>
+<li>Call <code>createPool()</code> on your DEX. Choose how much TokenCC supply to use (you don’t have to use it all, but must use at least 10.0 TC), and put in the appropriate EtherPricer contract address. You will have to transfer in some ether with this call.</li>
 </ul>
 <p>As far this this assignment is concerned, the exchange rate between our (fake) ETH and your token cryptocurrency is initially set based on the ratio of what you send in via <code>createPool()</code>. The overall value of the DEX is based on the current (fake) ETH price. So if you have 100 (fake) ETH, and the price of the (fake) ETH is $99.23, then the ETH liquidity is $9,923; the value of the DEX is twice that, or $19,846.</p>
 <h3 id="fees">Fees</h3>
@@ -287,7 +315,8 @@ interface IDEX is IERC165, IERC20Receiver {
 </ul></li>
 </ul>
 <h3 id="testing">Testing</h3>
-<p>To help you test your code, below is a method that will test the first case from the example above – the <code>createPool()</code> step. This is intended to be done on the Javascript development environment in Remix. This file is saved as <a href="DEXtest.sol.html">DEXtest.sol</a> (<a href="DEXtest.sol">src</a>).</p>
+<h4 id="dextest-testing-contract">DEXtest testing contract</h4>
+<p>To help you test your code, below is a method that will test the first case from the example above – the <code>createPool()</code> step. This is intended to be done on the Javascript development environment in Remix and NOT on the course blockchain. This file is saved as <a href="DEXtest.sol.html">DEXtest.sol</a> (<a href="DEXtest.sol">src</a>).</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
 // This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
@@ -310,7 +339,7 @@ contract DEXtest {
     }
 
     function test() public payable {
-        require (msg.value == 15 ether, &quot;Must call test() with 15 ether&quot;);
+        require (msg.value == 13 ether, &quot;Must call test() with 15 ether&quot;);
 
         // Step 1: deploy the dex
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
@@ -353,19 +382,21 @@ contract DEXtest {
     receive() external payable { } // see note in the HW description
 
 }</code></pre>
+<h4 id="using-dextest">Using DEXtest</h4>
 <p>To use this file, deploy it and then call <code>test()</code> with with 13 ether. There are a few new concepts here, and various notes as well:</p>
 <ul>
 <li>When compiling it, you may get a message that the size exceeds the maximum limit for the blockchain – that’s because it’s compiling a whole bunch of code, including all of the code of the imported files as well as the code in this file. This large code size is fine, since we are only using it to test on the Javascript environment, which does not have this size limit, despite the warning. So you can click on ‘force send’ in the Remix pop-up box. Or you can enable compiler optimizations to get rid of that warning.</li>
-<li>You will need to have your <code>TokenCC.sol</code> file in the same directory so that it can compile and run
+<li>You will need to have your (updated) <code>TokenCC.sol</code> file in the same directory so that it can compile and run
 <ul>
 <li>And the amount of your token cryptocurrency that is minted must be greater than 100</li>
 </ul></li>
+<li>You may have to increase the default gas limit when calling this function. If it runs out of gas, the Javascript environment just says it reverted, but does not say why. Just add one more zero to the gas limit box (30 million instead of 3 million), and you should be fine.</li>
 <li>This code verifies that the first example, above, works correctly (the example that calls <code>createPool()</code>)
 <ul>
 <li>This also does not enable any fees (the <code>feeNumerator</code> parameter is set to 0), just like the example above.</li>
 <li>It is left to you to add in additional code to test the other cases above, or when fees are enabled.</li>
 </ul></li>
-<li>The <code>test()</code> function creates it’s own copy of your token cryptocurrency (in the <code>cc</code> variable) as well as a copy of your DEX (in the <code>dex</code> variable). Notice the use of the <code>new</code> keyword here. Thus, they are not modifying any ones that you have previously deployed.</li>
+<li>The constructor creates it’s own copy of your token cryptocurrency (in the <code>cc</code> variable) as well as a copy of your DEX (in the <code>dex</code> variable). These are done there to save gas usage when calling the <code>test()</code> function. Notice the use of the <code>new</code> keyword here. Thus, they are not modifying any ones that you have previously deployed.</li>
 <li>This code will adapt to however many decimals your token cryptocurrency uses via the various calls to <code>cc.decimals()</code></li>
 <li>There is a try-catch block here
 <ul>
@@ -376,24 +407,17 @@ contract DEXtest {
 <li>This particular version of the catch block prints out the error message obtained from the second parameter of <code>require()</code> for ease of debugging</li>
 </ul></li>
 <li>You will notice the last line of the function is: <code>require(false,"end fail")</code>, and this will <em>always</em> revert. If that line were not present, and all the tests pass, then our account will lose the 16 ether we passed in. While we can reset the account, that requires a Remix restart (or other measures). What we want is on a means to check that all the tests pass, but get a full refund for all of the payments (including the payment to <code>createPool()</code>, in this example). That’s the purpose of this line – if it reverts on that line, we know all the previous tests passed, but the reversion causes our account to be refunded the (fake) ETH we passed in.</li>
-<li>We call the function with 13 ether is so that we have enough for the initial <code>createPool()</code> call (which uses 10 ether), the successive transaction 1 listed above (which uses 2.5 ether), and a bit extra for gas.</li>
+<li>We call the function with 15 ether is so that we have enough for the initial <code>createPool()</code> call (which uses 10 ether), the successive transaction 1 listed above (which uses 2.5 ether), and a bit extra for gas.</li>
 </ul>
-<p>As you work through the other test cases, one of them (transaction 2) will be paying ether <em>back</em>. And, in this case, it is paying it back to the <code>DEXtest</code> smart contract. Smart contracts can receive ether in two ways: as part of a <code>payable</code> function, or through a general transfer of ether. In order to make the second one work for a smart contract, you will have to put, in <code>DEXtest</code>, the following function: <code>receive() external payable { }</code>. Note that this function doesn’t have to actually <em>do</em> anything – hence the empty curly brackets – but it must be present. It is listed in the code above and the <a href="DEXtest.sol.html">DEXtest.sol</a> (<a href="DEXtest.sol">src</a>) file.</p>
-<p>Notes to add:</p>
+<h4 id="general-debugging-hints">General debugging hints</h4>
+<p>We have collected a number of debugging hints here.</p>
 <ul>
-<li>add ‘return’ in the middle for testing a failed require()</li>
-<li>why the end fail is there</li>
-<li>about code size issues, gas, increasing the gas limit, and how remix can’t tell if it ran out of gas</li>
-<li>debugging in remix</li>
-<li>put require before any subtraction</li>
-<li>how to get balance</li>
-<li>gas check in dextest</li>
-<li>remind about capturing intermediate state</li>
-<li>why contract creation is in the constructor (for gas)</li>
-<li>how to pass in ether with a contract call</li>
-<li>they have to “turn off” the action of onERC20Received() when adjusting liquidity</li>
-<li>explain how to implement <code>receive()</code> with <code>override</code></li>
-<li>supports one more interface (IERC20Receiver)</li>
+<li>The debugger in Remix is not all that useful, as it can only debug in EVM opcode form, and does not do a good job to map the EVM opcodes back to the Solidity source code. And of course we don’t have print statements.</li>
+<li>Put in a LOT of <code>require()</code> statements. You can always remove them later. For example, on each subtraction, put in a require that the first value is greater than or equal to the second, and with a different error message each time. This way it will revert with a known error message. Otherwise, a subtraction that yields a negative value will revert with no error message and with no line number.</li>
+<li>You may get an oddball reversion, and are unable to trace it. Put a line in your code such as <code>require(false,"got here");</code> and then re-run it. Move that line around until you figure out what line in your source code is causing the reversion.</li>
+<li>It may be that something is not working, and you can’t tell why. To help figure out the solution, you will need to see what the various values are in the middle of the function execution – this is capturing the intermediate state. To do this, you can create a number of contract variables (<code>uint public debug1</code>, for example) and save your intermediate state to them. When you get to the point that is causing a problem, put a <code>return</code> right before it. This way the function will successfully complete, and you can look at the debug variables to see what your intermediate state is.</li>
+<li>Don’t you wish you had gdb or lldb to help debug all this?</li>
+<li>Did you turn off the functionality of <code>onERC20Received()</code> via a contract variable, as described above? Otherwise, adding or removing liquidity will call the <code>onERC20Received()</code> function, which is probably not what you want to do.</li>
 </ul>
 <h3 id="deployment">Deployment</h3>
 <p>This part has three different steps. This may require a few runs to get it right – that’s fine, just be sure to submit the various values (contract addresses and transaction hashes) from the last deployment.</p>
@@ -424,8 +448,8 @@ contract DEXtest {
 <h3 id="submission">Submission</h3>
 <p>You will need to fill in the various values from this assignment into the <a href="dex.py.html">dex.py</a> (<a href="dex.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>three</em> forms of submission for this assignment; you must do all three.</p>
-<p>Submission 1: Deploy the TokenDEX smart contract to the private Ethereum blockchain. Your TokenCC will need to have been deployed as well, either from the previous assignment or again for this one. These were likely done in the deployment section, above.</p>
-<p>Submission 2: You should submit your <code>TokenDEX.sol</code> and <code>TokenCC.sol</code> files and your completed <code>dex.py</code> file, and ONLY those three files, to Gradescope. All your Solidity code should be in the first two files, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).</p>
+<p>Submission 1: Deploy the DEX smart contract to the private Ethereum blockchain. Your TokenCC will need to have been deployed as well. These were likely done in the deployment section, above.</p>
+<p>Submission 2: You should submit your <code>DEX.sol</code> and <code>TokenCC.sol</code> files and your completed <code>dex.py</code> file, and ONLY those three files, to Gradescope. All your Solidity code should be in the first two files, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).</p>
 <p>Submission 3: Register your DEX smart contract with the course-wide exchange. This, also, was likely done in the deployment section, above.</p>
 </body>
 </html>
