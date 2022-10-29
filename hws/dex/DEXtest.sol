@@ -9,7 +9,7 @@ import "./DEX.sol";
 import "./TokenCC.sol";
 import "./EtherPriceOracleConstant.sol";
 
-contract DEXtestfull {
+contract DEXtest {
 
     TokenCC public tc;
     DEX public dex;
@@ -24,7 +24,6 @@ contract DEXtestfull {
 
         // Step 1: deploy the dex
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
-        tc.approve(address(dex),tc.totalSupply());
 
         // Step 1 tests: DEX is depoloyed
         require(dex.k() == 0, "k value not 0 after DEX creation()");
@@ -32,10 +31,12 @@ contract DEXtestfull {
         require(dex.y() == 0, "y value not 0 after DEX creation()");
 
         // Step 2: createPool() is called with 10 (fake) ETH and 100 TC
-	    try dex.createPool{value: 10 ether}(100*10**tc.decimals(), 0, 1000, address(tc), address(pricer)) {
+        bool success = tc.approve(address(dex),100*10**tc.decimals());
+        require (success,"Failed to approve TC before createPool()");
+        try dex.createPool{value: 10 ether}(100*10**tc.decimals(), 0, 1000, address(tc), address(pricer)) {
             // do nothing
         } catch Error(string memory reason) {
-            require (false, string(abi.encodePacked("createPool() call reverted: ",reason)));
+            require (false, string.concat("createPool() call reverted: ",reason));
         }
         
         // Step 2 tests
@@ -57,7 +58,7 @@ contract DEXtestfull {
 
         // finish up
         require(false,"end fail"); // huh?  see why in the homework description!
-	}
+    }
  
     receive() external payable { } // see note in the HW description
 

@@ -22,8 +22,9 @@ http://www.gnu.org/software/src-highlite">
 
 import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./IEtherPriceOracle.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC20Receiver.sol"</font><font color="#990000">;</font>
 
-interface IDEX <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
+interface IDEX <font color="#008080">is</font> IERC165<font color="#990000">,</font> IERC20Receiver <font color="#FF0000">{</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Events</font></i>
@@ -154,13 +155,16 @@ interface IDEX <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">// Exchanging currencies</font></i>
 
     <i><font color="#9A1900">// Swaps ether for token.  The amount of ETH is passed in as payment along</font></i>
-    <i><font color="#9A1900">// with this call.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">exchangeEtherForToken</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
+    <i><font color="#9A1900">// with this call.  Note that the receive() function is of a special form, </font></i>
+    <i><font color="#9A1900">// and does not have the `function` keyword.</font></i>
+    <b><font color="#000000">receive</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
 
     <i><font color="#9A1900">// Swap token for ether.  The ERC-20 smart contract for the token</font></i>
     <i><font color="#9A1900">// cryptocurrency must be approved to transfer that much into the DEX,</font></i>
     <i><font color="#9A1900">// and the appropriate amount of ETH is paid back to the caller.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">exchangeTokenForEther</font></b><font color="#990000">(</font><font color="#008080">uint</font> amountToken<font color="#990000">)</font> external<font color="#990000">;</font>
+    <i><font color="#9A1900">// This function is defined in the IERC20Receiver.sol file</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// function onERC20Received(address from, uint amount) external returns (bool);</font></i>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Functions for debugging and grading</font></i>

@@ -58,6 +58,32 @@ The second one is a variable version, whose price ranges greatly, but generally 
 You should use the first (constant) one while you are debugging your code.  You will need to use the second (variable) one when you make your final deployment.  The current variable price of our (fake) ETH is shown on the DEX web page, which is described below.  The addresses for these two contracts (constant and variable) are on the Collab landing page.
 
 
+### TokenCC
+
+You will be using your TokenCC contract from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  However, you will need to make two changes to your contract.  These are to your TokenCC.sol file, *NOT* to the interface.
+
+The first change is that you will have to import the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) file.  This file defines the `IERC20Receiver` interface which defines only one function: `onERC20Received()`.  Our TokenCC contracts are going to call this function any time tokens are transferred to a contract.  There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.
+
+We also have to include the following function, adapted from [here](https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function), in our TokenCC.sol file:
+
+```
+function _afterTokenTransfer(address from, address to, uint256 amount) internal override {
+    if ( to.code.length > 0  && from != address(0) && to != address(0) ) {
+        // token recipient is a contract, notify them
+        try IERC20Receiver(to).onERC20Received(from, amount) returns (bool success) {
+            require(success,"ERC-20 receipt rejected by destination of transfer");
+        } catch {
+            // the notification failed (maybe they don't implement the `IERC20Receiver` interface?)
+        }
+    }
+}
+```
+
+This function overrides the `_afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size, and that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation); owned accounts always have zero length code.  If so, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` as well).
+
+The net effect of these two changes is that any time your TokenCC is transferred to a contract, it will attempt to notify that contract that it just received some ERC-20 tokens.
+
+
 
 ### Details
 
@@ -79,7 +105,7 @@ pragma solidity ^0.8.16;
 import "./IERC165.sol";
 import "./IEtherPriceOracle.sol";
 
-interface IDEX is IERC165 {
+interface IDEX is IERC165, IERC20Receiver {
 
     // Events
     event liquidityChangeEvent();
@@ -112,9 +138,9 @@ interface IDEX is IERC165 {
     function addLiquidity() external payable;
     function removeLiquidity(uint amountEther) external;
 
-    // Exchanging currencies
-    function exchangeEtherForToken() external payable;
-    function exchangeTokenForEther(uint amountToken) external;
+    // Exchanging currencies (the second one is from the IERC20Receiver interface)
+    receive() external payable;
+    // function onERC20Received(address from, uint amount) external returns (bool);
 
     // Functions for debugging and grading
     function setEtherPricer(address p) external;
@@ -135,7 +161,7 @@ This may seem like a lot, as there are 25 functions (including `supportsInterfac
 
 - Twelve of them are just `public` variables: `k`, `x`, `y`, `decimals`, `feeNumerator`, `feeDenominator`, `feesToken`, `feesEther`, `etherLiquidityForAddress`, `tokenLiquidityForAddress`, `etherPricer`, and `erc20Address`
 - Eight of them are one-line (or very short) functions: `symbol()`, `getEtherPrice()`, `getTokenPrice()`, `getPoolLiquidityInUSDCents()`, `setEtherPricer()`, `getDEXinfo()`, `supportsInterface()`, and the constructor
-- That leaves only 5 significant functions to implement: `createPool()`, `addLiquidity()`, `removeLiquidity()`, `exchangeEtherForToken()`, and `exchangeTokenForEther()`
+- That leaves only 5 significant functions to implement: `createPool()`, `addLiquidity()`, `removeLiquidity()`, `receive()`, and `onERC20Received()`
 
 Here are all the files you will need:
 
@@ -147,6 +173,7 @@ Here are all the files you will need:
 	- [ITokenCC.sol](ITokenCC.sol.html) ([src](ITokenCC.sol)): what your token cryptocurrency implements
 	- [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)): what ITokenCC extends
 	- [IERC20.sol](IERC20.sol.html) ([src](IERC20.sol)): what IERC20Metadata extends
+- [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) which was described above
 - [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)) is a file to help test the TokenDEX contract, and is explained in detail below
 
 When you want to test your program, this is the expected flow to get it started, whether to the Javascript blockchain in Remix or to our private Ethereum blockchain:
@@ -252,7 +279,7 @@ import "./DEX.sol";
 import "./TokenCC.sol";
 import "./EtherPriceOracleConstant.sol";
 
-contract DEXtestfull {
+contract DEXtest {
 
     TokenCC public tc;
     DEX public dex;
@@ -262,12 +289,11 @@ contract DEXtestfull {
         dex = new DEX();
     }
 
-    function test() public payable {
-        require (msg.value == 15 ether, "Must call test() with 15 ether");
+	function test() public payable {
+ 		require (msg.value == 15 ether, "Must call test() with 15 ether");
 
         // Step 1: deploy the dex
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
-        tc.approve(address(dex),tc.totalSupply());
 
         // Step 1 tests: DEX is depoloyed
         require(dex.k() == 0, "k value not 0 after DEX creation()");
@@ -275,10 +301,12 @@ contract DEXtestfull {
         require(dex.y() == 0, "y value not 0 after DEX creation()");
 
         // Step 2: createPool() is called with 10 (fake) ETH and 100 TC
+        bool success = tc.approve(address(dex),100*10**tc.decimals());
+        require (success,"Failed to approve TC before createPool()");
         try dex.createPool{value: 10 ether}(100*10**tc.decimals(), 0, 1000, address(tc), address(pricer)) {
             // do nothing
         } catch Error(string memory reason) {
-            require (false, string(abi.encodePacked("createPool() call reverted: ",reason)));
+            require (false, string.concat("createPool() call reverted: ",reason));
         }
         
         // Step 2 tests
@@ -300,7 +328,7 @@ contract DEXtestfull {
 
         // finish up
         require(false,"end fail"); // huh?  see why in the homework description!
-    }
+	}
  
     receive() external payable { } // see note in the HW description
 
@@ -340,7 +368,9 @@ Notes to add:
 - remind about capturing intermediate state
 - why contract creation is in the constructor (for gas)
 - how to pass in ether with a contract call
-
+- they have to "turn off" the action of onERC20Received() when adjusting liquidity
+- explain how to implement `receive()` with `override`
+- supports one more interface (IERC20Receiver)
 
 ### Deployment
 

@@ -20,7 +20,7 @@ import <font color="#FF0000">"./DEX.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color="#990000">;</font>
 
-<font color="#008080">contract</font> DEXtestfull <font color="#FF0000">{</font>
+<font color="#008080">contract</font> DEXtest <font color="#FF0000">{</font>
 
     TokenCC <font color="#008080">public</font> tc<font color="#990000">;</font>
     DEX <font color="#008080">public</font> dex<font color="#990000">;</font>
@@ -35,7 +35,6 @@ import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color=
 
         <i><font color="#9A1900">// Step 1: deploy the dex</font></i>
         <font color="#008080">IEtherPriceOracle</font> pricer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EtherPriceOracleConstant</font></b><font color="#990000">();</font>
-        tc<font color="#990000">.</font><b><font color="#000000">approve</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font>dex<font color="#990000">),</font>tc<font color="#990000">.</font><b><font color="#000000">totalSupply</font></b><font color="#990000">());</font>
 
         <i><font color="#9A1900">// Step 1 tests: DEX is depoloyed</font></i>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">k</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"k value not 0 after DEX creation()"</font><font color="#990000">);</font>
@@ -43,10 +42,12 @@ import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color=
         <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">y</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"y value not 0 after DEX creation()"</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Step 2: createPool() is called with 10 (fake) ETH and 100 TC</font></i>
+        <font color="#009900">bool</font> success <font color="#990000">=</font> tc<font color="#990000">.</font><b><font color="#000000">approve</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font>dex<font color="#990000">),</font><font color="#993399">100</font><font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">());</font>
+        <b><font color="#000000">require</font></b> <font color="#990000">(</font>success<font color="#990000">,</font><font color="#FF0000">"Failed to approve TC before createPool()"</font><font color="#990000">);</font>
         <b><font color="#0000FF">try</font></b> dex<font color="#990000">.</font>createPool<font color="#FF0000">{</font>value<font color="#990000">:</font> <font color="#993399">10</font> ether<font color="#FF0000">}</font><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1000</font><font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>tc<font color="#990000">),</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>pricer<font color="#990000">))</font> <font color="#FF0000">{</font>
             <i><font color="#9A1900">// do nothing</font></i>
         <font color="#FF0000">}</font> <b><font color="#0000FF">catch</font></b> <b><font color="#000000">Error</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> reason<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#000000">require</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <b><font color="#000000">string</font></b><font color="#990000">(</font>abi<font color="#990000">.</font><b><font color="#000000">encodePacked</font></b><font color="#990000">(</font><font color="#FF0000">"createPool() call reverted: "</font><font color="#990000">,</font>reason<font color="#990000">)));</font>
+            <b><font color="#000000">require</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> string<font color="#990000">.</font><b><font color="#000000">concat</font></b><font color="#990000">(</font><font color="#FF0000">"createPool() call reverted: "</font><font color="#990000">,</font>reason<font color="#990000">));</font>
         <font color="#FF0000">}</font>
         
         <i><font color="#9A1900">// Step 2 tests</font></i>
