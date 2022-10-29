@@ -26,18 +26,16 @@ eth_coinbase = ""
 # the address.
 contracts = {
 
-	# The Token Cryptocurrency contract.  It's fine if this is the same as
-	# from the Tokens assignment, or if you re-deployed it for this
-	# assignment. All of the other information in this file is assumed to be
-	# from this TokenCC contract.  The address does not need to be in
-	# checksummed form.  It must have been deployed by the eth_coinbase
-	# address, above.
+	# The Token Cryptocurrency contract.  As you had to make a few changes,
+	# you will have had to re-deploy it for this assignment.  The address
+	# does not need to be in checksummed form.  It must have been deployed by
+	# the eth_coinbase address, above.
 	'token_cc': '',
 
-	# Your TokenDEX contract.  All of the actions in this file are assumed to
-	# be from this contract.  The address does not need to be in checksummed
+	# Your DEX contract.  All of the actions in this file are assumed to be
+	# from this contract.  The address does not need to be in checksummed
 	# form.  It must have been deployed by the eth_coinbase address, above.
-	'token_dex': '',
+	'dex': '',
 }
 
 
@@ -45,7 +43,7 @@ contracts = {
 # assignment.
 other = {
 	
-	# nothing is required in this diectionary for this assignment
+	# nothing is required in this dictionary for this assignment
 
 }
 
@@ -66,7 +64,7 @@ sanity_checks = {
 	'called_createpoool_with_100_eth': False,
 
 	# Is your DEX initialized with the *variable* EtherPricer contract?
-	'initialized_dex_with_variable_etherpricer': False,
+	'initialized_dex_with_variable_etherpriceoracle': False,
 
 	# Did you send me exactly 10.0 of your token cryptocurrencty?  If your
 	# token cryptocurrency uses 8 decimals, then that will be 1,000,000,000

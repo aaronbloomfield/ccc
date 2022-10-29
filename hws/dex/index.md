@@ -461,8 +461,8 @@ You will need to fill in the various values from this assignment into the [dex.p
 
 There are *three* forms of submission for this assignment; you must do all three.
 
-Submission 1: Deploy the DEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well.  These were likely done in the deployment section, above.
+Submission 1: Deploy the DEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well.  These were likely done in the deployment section, above.  You have to call `createPool()` with exactly 100 (fake) ether, some number of TC (no less than 10.0 TC), and the address of the variable EtherPriceOracle.
 
-Submission 2: You should submit your `DEX.sol` and `TokenCC.sol` files and your completed `dex.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).
+Submission 2: You should submit your `DEX.sol`, your (updated) `TokenCC.sol` files, and your completed `dex.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).
 
 Submission 3: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.
