@@ -25,7 +25,7 @@
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
-
+    //ligma cope
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -45,7 +45,7 @@
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
 <button class='tablinks' onclick="openTab(event,'ttask-1-auction-contract')">Auction Contract</button>
-<button class='tablinks' onclick="openTab(event,'ttask-2-iacutioneer-interface')">IAcutioneer Interface</button>
+<button class='tablinks' onclick="openTab(event,'ttask-2-iauctioneer-interface')">IAuctioneer Interface</button>
 <button class='tablinks' onclick="openTab(event,'ttask-3-create-auctions')">Create Auctions</button>
 <button class='tablinks' onclick="openTab(event,'ttask-4-class-auctions')">Class Auctions</button>
 <button class='tablinks' onclick="openTab(event,'tnotes-and-hints')">Notes And Hints</button>
@@ -120,7 +120,7 @@
 <li><code>higherBidEvent()</code>: when a new (and higher) bid is placed on an NFT via <code>placebid()</code></li>
 </ul></li>
 </ul>
-</div><div id='ttask-2-iacutioneer-interface' class='tabcontent'><h3 id='task-2-iacutioneer-interface'>Task 2: IAcutioneer interface</h3>
+</div><div id='ttask-2-iauctioneer-interface' class='tabcontent'><h3 id='task-2-iauctioneer-interface'>Task 2: IAuctioneer interface</h3>
 <p>This task is to understand the IAuctioneer interface. Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file has more comments for this interface. There is a lot that some of these funcctions have to do, and that is specified in the comments in the IAuctioneer.sol file.</p>
 <p>Your contract line must be <em>exactly</em>:</p>
 <pre><code>contract Auctioneer is IAuctioneer {</code></pre>
@@ -167,7 +167,7 @@ interface IAuctioneer is IERC165 {
 
 
     // The following are functions you must create
-
+    
     function collectFees() external;
 
     function startAuction(uint m, uint h, uint d, string memory data, 
