@@ -26,6 +26,7 @@ In addition to your source code, you will submit an edited version of [auction.p
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
+- Add Sun, 10/30: The course-wide auctioneer address changed, and the Collab landing page has the new version
 - Added Tue, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via `require()`.  Also clarified about the behavior of `block.timestamp` (in the "Notes and Hints" section) and that auction IDs have to start from 0 for the auctions.php page to work.
 
 ### Task 1: Auction contract
