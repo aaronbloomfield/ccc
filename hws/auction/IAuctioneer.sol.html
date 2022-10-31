@@ -72,7 +72,7 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
     <i><font color="#9A1900">// the deployer -- the auction collects 1% fees of *successful* auctions</font></i>
     <font color="#008080">function</font> <b><font color="#000000">unpaidFees</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// Gets the auction struct for the passed acution id.  If one lists out</font></i>
+    <i><font color="#9A1900">// Gets the auction struct for the passed auction id.  If one lists out</font></i>
     <i><font color="#9A1900">// the individual fields of the Auction struct, then one can just have</font></i>
     <i><font color="#9A1900">// this be a public mapping (otherwise you run into problems</font></i>
     <i><font color="#9A1900">// with "Auction memory" versus "Auction storage")</font></i>
