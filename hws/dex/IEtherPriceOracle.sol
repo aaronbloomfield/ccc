@@ -18,7 +18,7 @@ interface IEtherPriceOracle is IERC165 {
 	// How many decimals this is being reported in; for cents, it's 2
 	function decimals() external view returns (uint);
 
-	// The current price of the (fake) ether
+	// The current price, in cents, of the (fake) ether
 	function price() external view returns (uint);
 
 	// also supportsInterface() from IERC165.sol
