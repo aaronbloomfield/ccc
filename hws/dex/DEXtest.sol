@@ -40,9 +40,9 @@ contract DEXtest {
         }
         
         // Step 2 tests
-        require(dex.k() == 1e31, "k value not correct after createPool()");
+        require(dex.k() == 1e21 * 10**tc.decimals(), "k value not correct after createPool()");
         require(dex.x() == 10 * 1e18, "x value not correct after createPool()");
-        require(dex.y() == 100 * 10**(tc.decimals()), "y value not correct after createPool()");
+        require(dex.y() == 100 * 10**tc.decimals(), "y value not correct after createPool()");
 
         // Step 3: transaction 1, where 2.5 ETH is provided to the DEX for exchange
 

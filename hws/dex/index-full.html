@@ -56,7 +56,7 @@
 <p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a>, the <a href="../../slides/solidity.html#/">Solidity slide set</a>, the <a href="../../slides/tokens.html#/">Tokens slide set</a>, and the <a href="../../slides/applications.html">Blockchain Applications</a> slide set. The last one is most relevant, as it discusses how a DEX works.</p>
 <p>In addition to your source code, you will submit an edited version of <a href="dex.py.html">dex.py</a> (<a href="dex.py">src</a>).</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there are no significant changes to report.</p>
 <h3 id="eth-price">ETH price</h3>
 <p>To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH. Both of these contracts fulfill the <a href="IEtherPriceOracle.sol.html">IEtherPriceOracle.sol</a> (<a href="IEtherPriceOracle.sol">src</a>) interface:</p>
 <pre><code>interface IEtherPriceOracle is IERC165 {
@@ -81,7 +81,8 @@
 <p>You should use the first (constant) one while you are debugging your code. You will need to use the second (variable) one when you make your final deployment. The current variable price of our (fake) ETH is shown on the DEX web page, which is described below. The addresses for these two contracts (constant and variable) are on the Collab landing page.</p>
 <h3 id="tokencc">TokenCC</h3>
 <p>You will be using your TokenCC contract from the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment. However, you will need to make two changes to your contract. These are to your TokenCC.sol file, <em>NOT</em> to the interface.</p>
-<p>The first change is that you will have to import the <a href="IERC20Receiver.sol.html">IERC20Receiver.sol</a> (<a href="IERC20Receiver.sol">src</a>) file. This file defines the <code>IERC20Receiver</code> interface which defines only one function: <code>onERC20Received()</code>. Our TokenCC contracts are going to call this function any time tokens are transferred to a contract. There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.</p>
+<p>When tokens are transferred to any contract address, our TokenCC code will attempt to call an <code>onERC20Received()</code> function on that contract, ignoring the error if the contract does not implement the <code>IERC20Receiver</code> interface. This will also not be attempted on an owned account.</p>
+<p>The first change is that you will have to import the <a href="IERC20Receiver.sol.html">IERC20Receiver.sol</a> (<a href="IERC20Receiver.sol">src</a>) file. This file defines the <code>IERC20Receiver</code> interface which defines only one function: <code>onERC20Received()</code>. Our TokenCC contracts are going to call this function any time tokens are transferred to another contract. There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.</p>
 <p>We also have to include the following function, adapted from <a href="https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function">here</a>, in our TokenCC.sol file:</p>
 <pre><code>function _afterTokenTransfer(address from, address to, uint256 amount) internal override {
     if ( to.code.length &gt; 0  &amp;&amp; from != address(0) &amp;&amp; to != address(0) ) {
@@ -342,7 +343,7 @@ contract DEXtest {
     function test() public payable {
         require (msg.value == 13 ether, &quot;Must call test() with 13 ether&quot;);
 
-        // Step 1: deploy the dex
+        // Step 1: deploy the ether price oracle
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
 
         // Step 1 tests: DEX is deployed
@@ -360,9 +361,9 @@ contract DEXtest {
         }
         
         // Step 2 tests
-        require(dex.k() == 1e31, &quot;k value not correct after createPool()&quot;);
+        require(dex.k() == 1e21 * 10**tc.decimals(), &quot;k value not correct after createPool()&quot;);
         require(dex.x() == 10 * 1e18, &quot;x value not correct after createPool()&quot;);
-        require(dex.y() == 100 * 10**(tc.decimals()), &quot;y value not correct after createPool()&quot;);
+        require(dex.y() == 100 * 10**tc.decimals(), &quot;y value not correct after createPool()&quot;);
 
         // Step 3: transaction 1, where 2.5 ETH is provided to the DEX for exchange
 
@@ -440,7 +441,7 @@ contract DEXtest {
 <li>For your <em>final</em> deployment – meaning what you are going to submit when you turn the assignment in – do not call either <code>addLiquidity()</code> or <code>removeLiquidity()</code> yet</li>
 </ul>
 <p>Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page. To register your DEX, fill out the contract address form at the bottom of that page. You will see your DEX values populate one of the table rows – make sure they are correct. Note that the current ETH price is listed at the top of the page.</p>
-<h3 id="send-some-tc">Send some TC</h3>
+<h3 id="send-tc">Send TC</h3>
 <p>We will need some of your token cryptocurrency to test your DEX for grading purposes. While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract. Please send me 10.0 coins. This means that if your TokenCC has 10 decimal places, then the value you need to send me is 100,000,000,000. The address to send this to is on the Collab landing page. If you are using the exact same deployed contract (meaning the same contract address), then you don’t have to send me this again. You can check how much of your TC is owned by looking at that account page in the blockchain explorer.</p>
 <h3 id="exchanges">Exchanges</h3>
 <p>Now that your exchange is registered, you can view all the exchanges. You should see your exchange in there, along with your cryptocurrency’s logo. The stats of each exchange are listed in that table.</p>

@@ -23,7 +23,7 @@ In addition to your source code, you will submit an edited version of [dex.py](d
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there are no significant changes to report.
 
 
 ### ETH price
@@ -62,7 +62,9 @@ You should use the first (constant) one while you are debugging your code.  You 
 
 You will be using your TokenCC contract from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  However, you will need to make two changes to your contract.  These are to your TokenCC.sol file, *NOT* to the interface.
 
-The first change is that you will have to import the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) file.  This file defines the `IERC20Receiver` interface which defines only one function: `onERC20Received()`.  Our TokenCC contracts are going to call this function any time tokens are transferred to a contract.  There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.
+When tokens are transferred to any contract address, our TokenCC code will attempt to call an `onERC20Received()` function on that contract, ignoring the error if the contract does not implement the `IERC20Receiver` interface.  This will also not be attempted on an owned account.
+
+The first change is that you will have to import the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) file.  This file defines the `IERC20Receiver` interface which defines only one function: `onERC20Received()`.  Our TokenCC contracts are going to call this function any time tokens are transferred to another contract.  There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.
 
 We also have to include the following function, adapted from [here](https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function), in our TokenCC.sol file:
 
@@ -342,10 +344,10 @@ contract DEXtest {
         dex = new DEX();
     }
 
-	function test() public payable {
- 		require (msg.value == 13 ether, "Must call test() with 13 ether");
+    function test() public payable {
+        require (msg.value == 13 ether, "Must call test() with 13 ether");
 
-        // Step 1: deploy the dex
+        // Step 1: deploy the ether price oracle
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
 
         // Step 1 tests: DEX is deployed
@@ -363,9 +365,9 @@ contract DEXtest {
         }
         
         // Step 2 tests
-        require(dex.k() == 1e31, "k value not correct after createPool()");
+        require(dex.k() == 1e21 * 10**tc.decimals(), "k value not correct after createPool()");
         require(dex.x() == 10 * 1e18, "x value not correct after createPool()");
-        require(dex.y() == 100 * 10**(tc.decimals()), "y value not correct after createPool()");
+        require(dex.y() == 100 * 10**tc.decimals(), "y value not correct after createPool()");
 
         // Step 3: transaction 1, where 2.5 ETH is provided to the DEX for exchange
 
@@ -381,7 +383,7 @@ contract DEXtest {
 
         // finish up
         require(false,"end fail"); // huh?  see why in the homework description!
-	}
+    }
  
     receive() external payable { } // see note in the HW description
 
@@ -441,7 +443,7 @@ Step 2: Deploy your DEX to the private Ethereum blockchain.  So that it will wor
 
 Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page.  To register your DEX, fill out the contract address form at the bottom of that page.  You will see your DEX values populate one of the table rows -- make sure they are correct.  Note that the current ETH price is listed at the top of the page.
 
-### Send some TC
+### Send TC
 
 We will need some of your token cryptocurrency to test your DEX for grading purposes.  While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract.  Please send me 10.0 coins.  This means that if your TokenCC has 10 decimal places, then the value you need to send me is 100,000,000,000.  The address to send this to is on the Collab landing page.  If you are using the exact same deployed contract (meaning the same contract address), then you don't have to send me this again.  You can check how much of your TC is owned by looking at that account page in the blockchain explorer.  
 

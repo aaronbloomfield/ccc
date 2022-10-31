@@ -21,7 +21,7 @@ interface IDEX is IERC165, IERC20Receiver {
     // This event must be emitted whenever the amount of liquidity
     // (either ether or token cryptocurrency) changes.  This is from the
     // methods: createPool(), addLiquidity(), removeLiquidity()
-    // exchangeEtherForToken(), and exchangeTokenForEther().
+    // receive(), and onERC20Received().
     event liquidityChangeEvent();
 
     //------------------------------------------------------------
