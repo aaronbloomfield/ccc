@@ -73,7 +73,7 @@ class MyHTMLParser(HTMLParser):
 
 replacements = [ ("Ec","EC"),("Io","I/O"),("Tbtc","tBTC"),("P2Pkh","P2PKH"),("Tokendex","TokenDEX"),
 				 ("Web3.Py","Web3.py"),("Nft","NFT"),("Nfts","NFTs"),("Dao","DAO"),("Eth","ETH"),
-				 ("Fake","(fake)"),("Erc","ERC"),("Html","HTML"),("Iacutioneer","IAcutioneer"),
+				 ("Fake","(fake)"),("Erc","ERC"),("Html","HTML"),("Iauctioneer","IAuctioneer"),
 				 ("Igradebook","IGradebook"),("Tc","TC"),("Tokencc","TokenCC")]
 
 parser = MyHTMLParser()

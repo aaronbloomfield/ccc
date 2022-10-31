@@ -68,7 +68,7 @@ This section is meant as a high-level overview of the process; the detailed spec
     - `higherBidEvent()`: when a new (and higher) bid is placed on an NFT via `placebid()`
 
 
-### Task 2: IAcutioneer interface
+### Task 2: IAuctioneer interface
 
 This task is to understand the IAuctioneer interface.  Formally the task is to develop an `Auctioneer` contract that implements the following `IAuctioneer` interface below.  The provided [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) file has more comments for this interface.  There is a lot that some of these funcctions have to do, and that is specified in the comments in the IAuctioneer.sol file.
 

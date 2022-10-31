@@ -61,7 +61,7 @@ interface IAuctioneer is IERC165 {
     // the deployer -- the auction collects 1% fees of *successful* auctions
     function unpaidFees() external view returns (uint);
 
-    // Gets the auction struct for the passed acution id.  If one lists out
+    // Gets the auction struct for the passed auction id.  If one lists out
     // the individual fields of the Auction struct, then one can just have
     // this be a public mapping (otherwise you run into problems
     // with "Auction memory" versus "Auction storage")
