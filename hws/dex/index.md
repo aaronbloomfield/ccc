@@ -15,7 +15,7 @@ Completion this homework will require completion of the following assignments:
 - [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md))
 - [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md))
 
-Note that this assignment requires that your [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment is working properly.  If you did not get it working properly, then contact us.  You are expected to use your TokenCC code from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment. You have to amke a small modification to your TokenCC.sol file and then re-deploy it; however, you may find that you have to re-deploy it many times as you are testing your DEX.  Be sure to save the contract address of the final deployment that you will use when you submit the assignment.
+Note that this assignment requires that your [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment is working properly.  If you did not get it working properly, then contact us.  You are expected to use your TokenCC code from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment. You have to make a small modification to your TokenCC.sol file and then re-deploy it; however, you may find that you have to re-deploy it many times as you are testing your DEX.  Be sure to save the contract address of the final deployment that you will use when you submit the assignment.
 
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), the [Tokens slide set](../../slides/tokens.html#/), and the [Blockchain Applications](../../slides/applications.html) slide set.  The last one is most relevant, as it discusses how a DEX works.
 
@@ -145,7 +145,7 @@ However, there are some times where we may NOT want `onERC20Received()` to do an
 
 Formally, you must implement a `DEX` contract that implements the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) interface.  Your contract opening line MUST be: `contract DEX is IDEX`.  Note that the `IDEX` interface extends the `IERC165` interface, so you will have to implement the `supportsInterface()` function as well.  The functions in this interface are shown below, and much more detail is provided in the comments in the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) file.
 
-Note that many of these functions are just the getter functions from `public` variables; which ones are described in the full source file and also below.  Also note that $x$ is the amount of ether liquidity (with 18 decimals) and $y$ is the amount of token liqudity (with 8-12 decimals).
+Note that many of these functions are just the getter functions from `public` variables; which ones are described in the full source file and also below.  Also note that $x$ is the amount of ether liquidity (with 18 decimals) and $y$ is the amount of token liquidity (with 8-12 decimals).
 
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -238,11 +238,11 @@ As far this this assignment is concerned, the exchange rate between our (fake) E
 
 Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out (either ether or token) -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEther` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
 
-***NOTE:*** the ONLY functions that remove fees are `exchangeEtherForToken()` and `exchangeTokenForEther()`, and they only remove the fee from the amount paid *out*.  The other functions (specifically `addLiquidity()` and `removeLiquidity()`) do not deduct fees.
+***NOTE:*** the ONLY functions that remove fees are `receive()` and `onERC20Received()`, and they only remove the fee from the amount paid *out*.  The other functions (specifically `addLiquidity()` and `removeLiquidity()`) do not deduct fees.
 
 Managing fee payout to the liquidity providers is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which had different times that the DEX held their liquidity, and each of which gets a cut -- proportional to their liquidity -- of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be balanced with the other currency so that they can be added in appropriate proportions.
 
-For this assignment, we are not going to handle distributing fees back to the liquidity providers -- we are just going to accumulate them into the `feesEhter` and `feesToken` variables.  This means that this inability to retrieve the fees will result in lost ETH and TC.  That's fine for this assignment, even if it would not be fine in a real world situation.
+For this assignment, we are not going to handle distributing fees back to the liquidity providers -- we are just going to accumulate them into the `feesEther` and `feesToken` variables.  This means that this inability to retrieve the fees will result in lost ETH and TC.  That's fine for this assignment, even if it would not be fine in a real world situation.
 
 ### Example
 
@@ -322,7 +322,7 @@ To help you test your code, below is a method that will test the first case from
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
+// This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
 pragma solidity ^0.8.16;
@@ -347,7 +347,7 @@ contract DEXtest {
         // Step 1: deploy the dex
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
 
-        // Step 1 tests: DEX is depoloyed
+        // Step 1 tests: DEX is deployed
         require(dex.k() == 0, "k value not 0 after DEX creation()");
         require(dex.x() == 0, "x value not 0 after DEX creation()");
         require(dex.y() == 0, "y value not 0 after DEX creation()");
