@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
+// This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
 // x is the ether liquidity, with 18 decimals
@@ -180,7 +180,7 @@ interface IDEX is IERC165, IERC20Receiver {
     //
     // 0: the address of *this* DEX contract (address)
     // 1: token cryptocurrency abbreviation (string memory)
-    // 2: token cryptocurrnecy name (string memory)
+    // 2: token cryptocurrency name (string memory)
     // 3: ERC-20 token cryptocurrency address (address)
     // 4: k (uint)
     // 5: ether liquidity (uint)
