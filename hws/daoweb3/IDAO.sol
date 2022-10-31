@@ -106,6 +106,9 @@ interface IDAO {
     // @return Whether the proposed transaction has been executed or not
     function executeProposal(uint _proposalID) external returns (bool);
 
+    // Returns if the passed address is a member of this DAO.
+    function isMember(address _who) external returns (bool);
+
     // Adds the passed member.  Any current member of the DAO can add members.
     // Membership is indicated by an NFT token, so one must be transfered to
     // this member as part of this call.  This can only be called by a member

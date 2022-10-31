@@ -117,6 +117,9 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// @return Whether the proposed transaction has been executed or not</font></i>
     <font color="#008080">function</font> <b><font color="#000000">executeProposal</font></b><font color="#990000">(</font><font color="#008080">uint</font> _proposalID<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 
+    <i><font color="#9A1900">// Returns if the passed address is a member of this DAO.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">isMember</font></b><font color="#990000">(</font><font color="#008080">address</font> _who<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+
     <i><font color="#9A1900">// Adds the passed member.  Any current member of the DAO can add members.</font></i>
     <i><font color="#9A1900">// Membership is indicated by an NFT token, so one must be transfered to</font></i>
     <i><font color="#9A1900">// this member as part of this call.  This can only be called by a member</font></i>
