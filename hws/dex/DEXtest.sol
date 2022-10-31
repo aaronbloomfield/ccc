@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
+// This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
 pragma solidity ^0.8.16;
@@ -22,10 +22,10 @@ contract DEXtest {
 	function test() public payable {
  		require (msg.value == 13 ether, "Must call test() with 13 ether");
 
-        // Step 1: deploy the dex
+        // Step 1: deploy the ether price oracle
         IEtherPriceOracle pricer = new EtherPriceOracleConstant();
 
-        // Step 1 tests: DEX is depoloyed
+        // Step 1 tests: DEX is deployed
         require(dex.k() == 0, "k value not 0 after DEX creation()");
         require(dex.x() == 0, "x value not 0 after DEX creation()");
         require(dex.y() == 0, "y value not 0 after DEX creation()");
