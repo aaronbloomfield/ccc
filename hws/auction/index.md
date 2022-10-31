@@ -26,7 +26,8 @@ In addition to your source code, you will submit an edited version of [auction.p
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
-- Add Sun, 10/30: The course-wide auctioneer address changed, and the Collab landing page has the new version
+- Added Mon, 10/31: Clarified that you have to submit `NFTManager.sol` as well, but the submission on Gradescope will catch it if you do not do so
+- Added Sun, 10/30: The course-wide auctioneer address changed, and the Collab landing page has the new version
 - Added Tue, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via `require()`.  Also clarified about the behavior of `block.timestamp` (in the "Notes and Hints" section) and that auction IDs have to start from 0 for the auctions.php page to work.
 
 ### Task 1: Auction contract
@@ -262,4 +263,4 @@ Submission 1: You must deploy you `Auctioneer` smart contract (which will deploy
 
 Submission 2: You have to create a number of auctions: two in your auction manager, and one in the course-wide auction manager.  These have specific close dates, and there should be multiple bids on the first two.  This is detailed in tasks 3 and 4, above.
 
-Submission 3: You should submit your `Auctioneer.sol` file and your completed `auction.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
+Submission 3: You should submit your `Auctioneer.sol` file and your completed `auction.py` file to Gradescope.  You will also likely need to submit your `NFTManager.sol` file from the last assignment.  All your Solidity code should be in that first file, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
