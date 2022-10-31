@@ -33,10 +33,10 @@ import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color=
     <font color="#008080">function</font> <b><font color="#000000">test</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#FF0000">{</font>
         <b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">==</font> <font color="#993399">13</font> ether<font color="#990000">,</font> <font color="#FF0000">"Must call test() with 13 ether"</font><font color="#990000">);</font>
 
-        <i><font color="#9A1900">// Step 1: deploy the dex</font></i>
+        <i><font color="#9A1900">// Step 1: deploy the ether price oracle</font></i>
         <font color="#008080">IEtherPriceOracle</font> pricer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EtherPriceOracleConstant</font></b><font color="#990000">();</font>
 
-        <i><font color="#9A1900">// Step 1 tests: DEX is depoloyed</font></i>
+        <i><font color="#9A1900">// Step 1 tests: DEX is deployed</font></i>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">k</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"k value not 0 after DEX creation()"</font><font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">x</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"x value not 0 after DEX creation()"</font><font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">y</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"y value not 0 after DEX creation()"</font><font color="#990000">);</font>

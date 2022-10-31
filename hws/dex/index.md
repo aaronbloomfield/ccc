@@ -115,6 +115,7 @@ receive() payable external override {
 
 Note that there is no `function` keyword!  Other than the different syntax, and the special case when it is called, it operates like any other function.  It can take any action, including reverting (which will abort the transfer).  In our case, this is how we are going to exchange ether for TC -- we will transfer ether in, which will call `receive()`, and the TC will be transferred back to the caller.  As our `receive()` function is overriding what is in an interface (described below), we also put the `override` keyword there.
 
+In Remix, you can invoke the `receive()` function by sending some ether without a function call.  To do this, put the amount in the "Value" box of the Deployment pane, set the right unit (ether, gwei, or wei), and then click on the "Transact" button at the very bottom of the contract (below the "Low level interactions" header).  This is just like transferring ether in geth.  Note that the Javascript environment seems to hang on some platforms when doing this, but if you are connected to the course blockchain, that seems to work fine.
 
 #### Transferring ether
 
