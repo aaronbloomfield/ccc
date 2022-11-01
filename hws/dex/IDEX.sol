@@ -133,7 +133,7 @@ interface IDEX is IERC165, IERC20Receiver {
     function addLiquidity() external payable;
 
     // Remove liquidity -- both ether and token -- from the pool.  The ETH is
-    // paid to the caller, and the token cryptocurrency is transfered back as
+    // paid to the caller, and the token cryptocurrency is transferred back as
     // well.  If the parameter amount is more than the amount the address has
     // stored in the pool, this should revert.  See the homework description
     // for how fees are managed and paid out, but note that this function

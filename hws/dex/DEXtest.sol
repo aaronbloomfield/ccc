@@ -9,6 +9,8 @@ import "./DEX.sol";
 import "./TokenCC.sol";
 import "./EtherPriceOracleConstant.sol";
 
+// See the homework description for how to use this program
+
 contract DEXtest {
 
     TokenCC public tc;
