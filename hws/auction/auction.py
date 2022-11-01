@@ -63,7 +63,7 @@ other = {
 	# open for one week past the assignment due date.
 	'course_auction_id': None,
 
-	# This is the NFT token ID, in your deployed NFT manager, for the above
+	# This is the NFT token ID, in the class-wide NFT manager, for the above
 	# auction.
 	'course_nft_token_id': None,
 
