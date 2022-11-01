@@ -55,6 +55,11 @@ other = {
 # need to be changed to True (instead of None).
 sanity_checks = {
 	
+	# For the TokenCC that you are using for this assignment, did you make the
+	# changes required in the DEX homework?  This is adding the
+	# `_afterTokenTransfer()` function.
+	'modified_tokencc': False,
+
 	# Did you register your DEX with the course dex.php web page? This implies
 	# that you deployed both TokenDEX and TokenCC to the private Ethereum
 	# blockchain.
@@ -63,12 +68,17 @@ sanity_checks = {
 	# Did you call createPool() on your DEX with *exactly* 100 (fake) ETH? 
 	'called_createpoool_with_100_eth': False,
 
+	# When you called createPool(), did you send in at least 10.0 of your TC?
+	# You can use more, if you would like.
+	'called_createpoool_with_10_tc': False,
+
 	# Is your DEX initialized with the *variable* EtherPricer contract?
 	'initialized_dex_with_variable_etherpriceoracle': False,
 
 	# Did you send me exactly 10.0 of your token cryptocurrencty?  If your
 	# token cryptocurrency uses 8 decimals, then that will be 1,000,000,000
-	# total units sent.
+	# total units sent.  This is from the TokenCC that you deployed in
+	# the 'contracts' section, above.
 	'sent_me_10_of_your_cc': False,
 
 	# Did you, or will you, make 4 exchanges on somebody else's DEX?  These

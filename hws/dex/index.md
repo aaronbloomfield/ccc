@@ -15,7 +15,7 @@ Completion this homework will require completion of the following assignments:
 - [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md))
 - [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md))
 
-Note that this assignment requires that your [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment is working properly.  If you did not get it working properly, then contact us.  You are expected to use your TokenCC code from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment. You have to make a small modification to your TokenCC.sol file and then re-deploy it; however, you may find that you have to re-deploy it many times as you are testing your DEX.  Be sure to save the contract address of the final deployment that you will use when you submit the assignment.
+You are expected to use your TokenCC code from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment. If you did not get it working properly, then contact us.  You have to make a small modification to your TokenCC.sol file and then re-deploy it; however, you may find that you have to re-deploy it many times as you are testing your DEX.  Be sure to save the contract address of the final deployment that you will use when you submit the assignment.
 
 You will also need to be familiar with the [Ethereum slide set](../../slides/ethereum.html#/), the [Solidity slide set](../../slides/solidity.html#/), the [Tokens slide set](../../slides/tokens.html#/), and the [Blockchain Applications](../../slides/applications.html) slide set.  The last one is most relevant, as it discusses how a DEX works.
 
@@ -51,7 +51,7 @@ interface IEtherPriceOracle is IERC165 {
 
 The `price()` function will return the current price in cents.  Thus, if the price is $99.23 per (fake) ETH, it would return `9923`.
 
-As mentioned, there are two deployed contracts that implemented this interface, the contract addresses of which are on the Collab landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPriceOracleConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPricerConstant.sol)).  You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.
+There are two deployed contracts that implemented this interface, the contract addresses of which are on the Collab landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPriceOracleConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPriceOracleConstant.sol)).  You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.
 
 The second one is a variable version, whose price ranges greatly, but generally averages (over time) around $100 in price.  As there is no true randomness on a fully deterministic blockchain, the value is based on the highest block number and/or the latest block hash.  So while this will change at each block, it will not change until a new block is created.  The implementation for the variable version is not being provided, but it implements the IEtherPriceOracle interface above.
 
@@ -62,11 +62,11 @@ You should use the first (constant) one while you are debugging your code.  You 
 
 You will be using your TokenCC contract from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  However, you will need to make two changes to your contract.  These are to your TokenCC.sol file, *NOT* to the interface.
 
-When tokens are transferred to any contract address, our TokenCC code will attempt to call an `onERC20Received()` function on that contract, ignoring the error if the contract does not implement the `IERC20Receiver` interface.  This will also not be attempted on an owned account.
+When tokens are transferred to any contract address, our TokenCC code will attempt to call an `onERC20Received()` function on that contract, ignoring the error if the contract does not implement the `IERC20Receiver` interface.  Calling this method will also not be attempted on an owned account.
 
-The first change is that you will have to import the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) file.  This file defines the `IERC20Receiver` interface which defines only one function: `onERC20Received()`.  Our TokenCC contracts are going to call this function any time tokens are transferred to another contract.  There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.
+The first change is that you will have to import the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) file.  This file defines the `IERC20Receiver` interface which defines only one function: `onERC20Received()`.  Our TokenCC contracts are going to call this function any time tokens are transferred to another contract.  There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.  Note that your TokenCC contract does NOT implement this interface; it just needs to know about it so it can call a function (`onERC20Received()`) on *another* contract that implements this interface.
 
-We also have to include the following function, adapted from [here](https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function), in our TokenCC.sol file:
+The second change is that we have to include the following function, adapted from [here](https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function), in our TokenCC.sol file:
 
 ```
 function _afterTokenTransfer(address from, address to, uint256 amount) internal override {
@@ -81,13 +81,15 @@ function _afterTokenTransfer(address from, address to, uint256 amount) internal 
 }
 ```
 
-This function overrides the `_afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size, and that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation); owned accounts always have zero length code.  If so, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` as well).
+This function overrides the `_afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size; owned accounts always have zero length code.  It also checks that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation).  If it passed those checks, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` as well).
 
 The net effect of these two changes is that any time your TokenCC is transferred to a contract, it will attempt to notify that contract that it just received some ERC-20 tokens.
 
-Lastly, we recommend minting a large amount of coins (a million or so, which is multiplied by $10^d$, where $d$ is how many decimals your coin uses).  This will allow you to use the same TokenCC deployment for multiple DEX deployments and tests.
+Lastly, we recommend minting a large amount of coins (a million or so, which is multiplied by $10^d$, where $d$ is how many decimals your coin uses).  This will allow you to use the same deployed TokenCC contract for multiple DEX deployments and tests.
 
 The next section describes a way to "turn off" the functionality of the `onERC20Received()` function.
+
+Lastly, you will need to send me 10.0 of your TC.  But do this from the final deployment -- we remind you about that below.
 
 ### Background
 
@@ -97,11 +99,11 @@ Your DEX must follow the [CPAMM (Constant Product Automated Market Maker](../../
 
 #### Number of DEXes
 
-As far as this assignment is concerned, there will only be *one* DEX for each token cryptocurrency.  You may have deployed multiple ones to test your code, but for our class trading we will only be using the one DEX that you deploy at the end.  Specifically, the "official" DEX for a given cryptocurrency is going to be the *most recent one deployed* (this is so the explorer knows which one to use).  Thus, for this assignment, [arbitrage trading](../../slides/applications.html#/arbitrage) is not possible, since that requires trading between two or more exchanges that exchange the same pairs of tokens.  Furthermore, we are not going to be implementing [routing](../../slides/applications.html#/routing).
+As far as this assignment is concerned, there will only be *one* DEX for each token cryptocurrency.  You may have deployed multiple ones to test your code, but for our class trading we will only be using the one DEX that you register with the DEX web page, described below.  Thus, for this assignment, [arbitrage trading](../../slides/applications.html#/arbitrage) is not possible, since that requires trading between two or more exchanges that exchange the same pairs of tokens.  Furthermore, we are not going to be implementing [routing](../../slides/applications.html#/routing).
 
 #### Obtaining a balance
 
-To get the ether balance of a given account, you just use the `balance` property.  You may have to cast it as a `address` first, as such: `address(a).balance`.  This reports the ether balance in wei.  To get the ERC-20 balance, you call the `balanceOf()` function, which reports it with as many decimals as the ERC-20 contract uses (call `decimals()` to find out how many).
+To get the ether balance of a given account, you just use the `balance` property.  You may have to cast it as a `address` first, as such: `address(a).balance`.  This reports the ether balance in wei.  To get the ERC-20 balance, you call the `balanceOf()` function on the TokenCC contract, which reports it with as many decimals as the ERC-20 contract uses (call `decimals()` to find out how many).
 
 #### `receive()`
 
@@ -110,14 +112,14 @@ A contract can receive either in one of two ways.  The first is to have a `payab
 To receive ether without a function call -- meaning to receive a regular ether transfer -- a special function called `receive()` must be present.  It doesn't have to *do* anything, necessarily, but it does have to be declared.  Note that, in this assignment, our `receive()` function is going to have to do quite a bit.  This function has a special form:
 
 ```
-receive() payable external override {
+receive() payable external { // might need 'override' also
     // ...
 }
 ```
 
-Note that there is no `function` keyword!  Other than the different syntax, and the special case when it is called, it operates like any other function.  It can take any action, including reverting (which will abort the transfer).  In our case, this is how we are going to exchange ether for TC -- we will transfer ether in, which will call `receive()`, and the TC will be transferred back to the caller.  As our `receive()` function is overriding what is in an interface (described below), we also put the `override` keyword there.
+Note that there is no `function` keyword!  Other than the different syntax, and the special case when it is called, it operates like any other function.  It can take any action, including reverting (which will abort the transfer).  In our case, this is how we are going to exchange ether for TC.  To initiate an exchange of ether for TC, we transfer ether in, which will call `receive()`, and the TC will be transferred back to the caller.  As our `receive()` function is overriding what is in an interface (described below), we also put the `override` keyword there.
 
-In Remix, you can invoke the `receive()` function by sending some ether without a function call.  To do this, put the amount in the "Value" box of the Deployment pane, set the right unit (ether, gwei, or wei), and then click on the "Transact" button at the very bottom of the contract (below the "Low level interactions" header).  This is just like transferring ether in geth.  Note that the Javascript environment seems to hang on some platforms when doing this, but if you are connected to the course blockchain, that seems to work fine.
+In Remix, you can invoke the `receive()` function by sending some ether without a function call.  To do this, put the amount in the "Value" box of the Deployment pane, set the right unit (ether, gwei, or wei), and then click on the "Transact" button at the very bottom of the contract (below the "Low level interactions" header).  This is just like transferring ether in geth.  Note that the Javascript environment seems to hang on some platforms when doing this, but if you are connected to the course blockchain, then it seems to work fine.
 
 #### Transferring ether
 
@@ -139,9 +141,9 @@ A bunch of notes on this:
 
 #### `onERC20Received()`
 
-The `onERC20Received()` function will be called any time TC is transferred to a contract.  We are going to use this to initiate an exchange -- one just has to transfer the TC to the DEX, and then the DEX will compute the amount of ether to send back.
+The `onERC20Received()` function will be called any time TC is transferred to a contract.  We are going to use this to initiate an exchange of TC for ether -- one just has to transfer the TC to the DEX, and then the DEX will compute the amount of ether to send back.
 
-However, there are some times where we may NOT want `onERC20Received()` to do anything.  In particular, both `addLiquidity()` and `removeLiquidity()` will initiate a ERC-20 transfer, but we probably *don't* want `onERC20Received()` to be called at that point (it's not an exchange).  So we are going to want to have a way to "turn off" the functionality of `onERC20Received()`.  The easiest way to do this is to have an `internal` contract variable, such as `adjustingLiquidity`, that is normally set to `false`.  In `addLiquidity()` and `removeLiquidity()`, you set it to `true` when you are about to initiate the transfer, and then set it to `false` when done.
+However, there are some times where we may NOT want `onERC20Received()` to do anything.  In particular, `addLiquidity()` (and possibly `removeLiquidity()`) will initiate a ERC-20 transfer (via calling `transferFrom()`), but we probably *don't* want `onERC20Received()` to be called at that point (it's not an exchange).  So we are going to want to have a way to "turn off" the functionality of `onERC20Received()`.  The easiest way to do this is to have an `internal` contract variable, such as `adjustingLiquidity`, that is normally set to `false`.  In `addLiquidity()` and `removeLiquidity()`, you set it to `true` when you are about to initiate the transfer, and then set it to `false` when done.
 
 
 ### Interface
@@ -171,8 +173,8 @@ interface IDEX is IERC165, IERC20Receiver {
 
     // Getting the liquidity of the pool or part thereof
     function k() external view returns (uint);
-    function x() external view returns (uint);
-    function y() external view returns (uint);
+    function x() external view returns (uint); // amount of eth
+    function y() external view returns (uint); // amount of tc
     function getPoolLiquidityInUSDCents() external view returns (uint);
     function etherLiquidityForAddress(address who) external returns (uint);
     function tokenLiquidityForAddress(address who) external returns (uint);
@@ -220,7 +222,7 @@ Here are all the files you will need:
 
 - [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)): the interface, above, that your contract will need to implement; that file has many more comments in the file to describe what each function does
 - [IEtherPriceOracle.sol](IEtherPriceOracle.sol.html) ([src](IEtherPriceOracle.sol)): the interface that the two pricing smart contracts implement; the contract addresses for these are on the Collab landing page
-- [EtherPricerConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPriceOracleConstant.sol)) is the contract implementation of IEtherPriceOracle.sol that always returns 100 in cents (formally: `10000`); note that the source code for the variable version is not being made available
+- [EtherPriceOracleConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPriceOracleConstant.sol)) is the contract implementation of IEtherPriceOracle.sol that always returns 100 in cents (formally: `10000`); note that the source code for the variable version is not being made available
 - Files from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment:
 	- [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)): the ERC-165 interface, which most things implement
 	- [ITokenCC.sol](ITokenCC.sol.html) ([src](ITokenCC.sol)): what your token cryptocurrency implements
@@ -233,7 +235,7 @@ When you want to test your program, this is the expected flow to get it started,
 
 - Deploy your DEX contract and (if necessary) your TokenCC contract.
 - Approve your DEX contract for some amount of your TokenCC supply via `approve()` on your TokenCC contract.
-- Call `createPool()` on your DEX.  Choose how much TokenCC supply to use (you don't have to use it all, but must use at least 10.0 TC), and put in the appropriate EtherPricer contract address.  You will have to transfer in some ether with this call.
+- Call `createPool()` on your DEX.  Choose how much TokenCC supply to use (you don't have to use it all, but must use at least 10.0 TC), and put in the appropriate EtherPriceOracle contract address.  You will have to transfer in some ether with this call.
 
 As far this this assignment is concerned, the exchange rate between our (fake) ETH and your token cryptocurrency is initially set based on the ratio of what you send in via `createPool()`.  The overall value of the DEX is based on the current (fake) ETH price.  So if you have 100 (fake) ETH, and the price of the (fake) ETH is $99.23, then the ETH liquidity is $9,923; the value of the DEX is twice that, or $19,846.
 
@@ -427,28 +429,25 @@ We have collected a number of debugging hints here.
 
 ### Deployment
 
-This part has three different steps.  This may require a few runs to get it right -- that's fine, just be sure to submit the various values (contract addresses and transaction hashes) from the last deployment.
+This part has three different steps.  This may require a few runs to get it right -- that's fine, just be sure to submit the various values (contract addresses and transaction hashes) from the most recent deployment.
 
-Step 1: You will need to have deployed your TokenCC smart contract, from the previous assignment, to the blockchain, and you will need to know its contract address.  You are welcome to use the deployed one from the previous assignment, or re-deploy it for this one.  You may want to have it mint a *lot* of your token cryptocurrency.  If you mint, say, 1 million TC, then you can use that same contract on successive DEX tests, putting in 100 (or 1000 or whatever) TC each time.
+Step 1: You will need to have deployed your (updated) TokenCC smart contract to the private Ethereum blockchain, and you will need to know its contract address.
 
-Step 2: Deploy your DEX to the private Ethereum blockchain.  So that it will work properly with all of your other classmates' DEX implementations, we have some strict requirements for the deployment:
+Step 2: Deploy your DEX smart contract to the private Ethereum blockchain.  So that it will work properly with all of your other classmates' DEX implementations, we have some strict requirements for the deployment:
 
-- It must be initialized with the *variable* EtherPricer contract for the price of our (fake) ether.  While you are welcome to use the constant one for testing, you MUST use the variable one for the final deployment.
+- It must be initialized with the *variable* EtherPriceOracle contract for the price of our (fake) ether.  While you are welcome to use the constant one for testing, you MUST use the variable one for the final deployment.
+    - Keep in mind that you can always update it via the `setEtherPricer()` function if you initialize it with the wrong one
 - You need to call `createPool()`
 	- You must fund it with 100 (fake) ether.  *Do not put a different amount in!*
-	    - This implies initializing the TokenCC and allowing the DEX to transfer it via `approve()`
 	- You can put as many or as little of your token in as you like (but no less than 10.0 TC).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in no more than half of what you own, and you can certainly put in less.
-	    - Or you can just mint a million of your TC, and put in 1,000 each time you run another test
+        - Or you can just mint a million of your TC, and put in 1,000 each time you run another test
+        - This implies initializing the TokenCC and allowing the DEX to transfer it via `approve()`
 - For your *final* deployment -- meaning what you are going to submit when you turn the assignment in -- do not call either `addLiquidity()` or `removeLiquidity()` yet
 
 Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page.  To register your DEX, fill out the contract address form at the bottom of that page.  You will see your DEX values populate one of the table rows -- make sure they are correct.  Note that the current ETH price is listed at the top of the page.
 
-### Send TC
 
-We will need some of your token cryptocurrency to test your DEX for grading purposes.  While you sent me some in a previous homework, that was likely with a differently deployed TokenCC smart contract.  Please send me 10.0 coins.  This means that if your TokenCC has 10 decimal places, then the value you need to send me is 100,000,000,000.  The address to send this to is on the Collab landing page.  If you are using the exact same deployed contract (meaning the same contract address), then you don't have to send me this again.  You can check how much of your TC is owned by looking at that account page in the blockchain explorer.  
-
-
-### Exchanges
+#### Exchanges
 
 Now that your exchange is registered, you can view all the exchanges.  You should see your exchange in there, along with your cryptocurrency's logo.  The stats of each exchange are listed in that table.
 
@@ -461,11 +460,12 @@ Depending on when you submit your assignment, there may not be other DEXes to in
 
 You will need to fill in the various values from this assignment into the [dex.py](dex.py.html) ([src](dex.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
-
-There are *three* forms of submission for this assignment; you must do all three.
+There are *four* forms of submission for this assignment; you must do all four.
 
 Submission 1: Deploy the DEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well.  These were likely done in the deployment section, above.  You have to call `createPool()` with exactly 100 (fake) ether, some number of TC (no less than 10.0 TC), and the address of the variable EtherPriceOracle.
 
-Submission 2: You should submit your `DEX.sol`, your (updated) `TokenCC.sol` files, and your completed `dex.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).
+Submission 2: Send 10.0 TC to the address listed on the Collab landing page.  This means that if your TokenCC has 10 decimal places, then the value you need to send is 100,000,000,000.  You can check how much of your TC is owned by any account by looking at that account page in the blockchain explorer.  
 
-Submission 3: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.
+Submission 3: You should submit your `DEX.sol`, your (updated) `TokenCC.sol` files, and your completed `dex.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).
+
+Submission 4: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.

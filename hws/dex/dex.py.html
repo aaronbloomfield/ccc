@@ -66,6 +66,11 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
+	<i><font color="#9A1900"># For the TokenCC that you are using for this assignment, did you make the</font></i>
+	<i><font color="#9A1900"># changes required in the DEX homework?  This is adding the</font></i>
+	<i><font color="#9A1900"># `_afterTokenTransfer()` function.</font></i>
+	<font color="#FF0000">'modified_tokencc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you register your DEX with the course dex.php web page? This implies</font></i>
 	<i><font color="#9A1900"># that you deployed both TokenDEX and TokenCC to the private Ethereum</font></i>
 	<i><font color="#9A1900"># blockchain.</font></i>
@@ -74,12 +79,17 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Did you call createPool() on your DEX with *exactly* 100 (fake) ETH? </font></i>
 	<font color="#FF0000">'called_createpoool_with_100_eth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># When you called createPool(), did you send in at least 10.0 of your TC?</font></i>
+	<i><font color="#9A1900"># You can use more, if you would like.</font></i>
+	<font color="#FF0000">'called_createpoool_with_10_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Is your DEX initialized with the *variable* EtherPricer contract?</font></i>
 	<font color="#FF0000">'initialized_dex_with_variable_etherpriceoracle'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send me exactly 10.0 of your token cryptocurrencty?  If your</font></i>
 	<i><font color="#9A1900"># token cryptocurrency uses 8 decimals, then that will be 1,000,000,000</font></i>
-	<i><font color="#9A1900"># total units sent.</font></i>
+	<i><font color="#9A1900"># total units sent.  This is from the TokenCC that you deployed in</font></i>
+	<i><font color="#9A1900"># the 'contracts' section, above.</font></i>
 	<font color="#FF0000">'sent_me_10_of_your_cc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you, or will you, make 4 exchanges on somebody else's DEX?  These</font></i>
