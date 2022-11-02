@@ -14,16 +14,41 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,</font></i>
 <i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
 
+import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">16</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// This file is heavily adapted from the DAO interface at</font></i>
 <i><font color="#9A1900">// https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol</font></i>
 
-<font color="#008080">interface</font> IDAO <font color="#FF0000">{</font>
+interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// A struct to hold all of our proposal data</font></i>
+
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">Proposal</font> <font color="#FF0000">{</font>
+        <font color="#008080">address</font> recipient<font color="#990000">;</font>      <i><font color="#9A1900">// The address where the `amount` will go to if the proposal is accepted</font></i>
+        <font color="#008080">uint</font> amount<font color="#990000">;</font>            <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
+        <font color="#008080">string</font> description<font color="#990000">;</font>     <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
+        <font color="#008080">uint</font> votingDeadline<font color="#990000">;</font>    <i><font color="#9A1900">// A unix timestamp, denoting the end of the voting period</font></i>
+        <font color="#009900">bool</font> open<font color="#990000">;</font>              <i><font color="#9A1900">// True if the proposal's votes have yet to be counted, otherwise False</font></i>
+        <font color="#009900">bool</font> proposalPassed<font color="#990000">;</font>    <i><font color="#9A1900">// True if the votes have been counted, and the majority said yes</font></i>
+        <font color="#008080">uint</font> yea<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens in favor of the proposal; updated upon each yea vote</font></i>
+        <font color="#008080">uint</font> nay<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens opposed to the proposal; updated upon each nay vote</font></i>
+        <font color="#008080">address</font> creator<font color="#990000">;</font>        <i><font color="#9A1900">// Address of the shareholder who created the proposal</font></i>
+    <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// These are all just variables; some of which are set in the constructor</font></i>
     <i><font color="#9A1900">// and never changed</font></i>
+
+    <i><font color="#9A1900">// Obtain a given proposal.   If one lists out the individual fields of</font></i>
+    <i><font color="#9A1900">// the Proposal struct, then one can just have this be a public mapping</font></i>
+    <i><font color="#9A1900">// (otherwise you run into problems with "Proposal memory"</font></i>
+    <i><font color="#9A1900">// versus "Proposal storage"</font></i>
+    <i><font color="#9A1900">// @param i The proposal ID to obtain</font></i>
+    <i><font color="#9A1900">// @return The proposal for that ID</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">proposals</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">,</font>uint<font color="#990000">,</font><font color="#008080">string</font> memory<font color="#990000">,</font>uint<font color="#990000">,</font><font color="#009900">bool</font><font color="#990000">,</font><font color="#009900">bool</font><font color="#990000">,</font>uint<font color="#990000">,</font>uint<font color="#990000">,</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">// The minimum debate period that a generic proposal can have, in seconds;</font></i>
     <i><font color="#9A1900">// this can be set to any reasonable for testing, but should be set to 10</font></i>
@@ -60,30 +85,11 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// amount.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">reservedEther</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
-    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// A struct to hold all of our proposal data</font></i>
-
-    <b><font color="#0000FF">struct</font></b> <font color="#008080">Proposal</font> <font color="#FF0000">{</font>
-        <font color="#008080">address</font> recipient<font color="#990000">;</font>      <i><font color="#9A1900">// The address where the `amount` will go to if the proposal is accepted</font></i>
-        <font color="#008080">uint</font> amount<font color="#990000">;</font>            <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
-        <font color="#008080">string</font> description<font color="#990000">;</font>     <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
-        <font color="#008080">uint</font> votingDeadline<font color="#990000">;</font>    <i><font color="#9A1900">// A unix timestamp, denoting the end of the voting period        </font></i>
-        <font color="#009900">bool</font> open<font color="#990000">;</font>              <i><font color="#9A1900">// True if the proposal's votes have yet to be counted, otherwise False</font></i>
-        <font color="#009900">bool</font> proposalPassed<font color="#990000">;</font>    <i><font color="#9A1900">// True if the votes have been counted, and the majority said yes</font></i>
-        <font color="#008080">uint</font> yea<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens in favor of the proposal; updated upon each yea vote</font></i>
-        <font color="#008080">uint</font> nay<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens opposed to the proposal; updated upon each nay vote</font></i>
-        <font color="#008080">address</font> creator<font color="#990000">;</font>        <i><font color="#9A1900">// Address of the shareholder who created the proposal</font></i>
-    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// Who is the curator (owner / deployer) of this contract?</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">curator</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Functions to implement</font></i>
-
-    <i><font color="#9A1900">// Obtain a given proposal; this will have to be a separate function,</font></i>
-    <i><font color="#9A1900">// rather than a getter for public mapping, due to the difference in</font></i>
-    <i><font color="#9A1900">// public getter return types (Proposal memory versus Proposal storage)</font></i>
-    <i><font color="#9A1900">// @param i The proposal ID to obtain</font></i>
-    <i><font color="#9A1900">// @return The proposal for that ID</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">proposals</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Proposal</font> memory<font color="#990000">);</font>
 
     <i><font color="#9A1900">// This allows the function to receive ether without having a payable</font></i>
     <i><font color="#9A1900">// function -- it doesn't have to have any code in its body, but it does</font></i>
@@ -117,13 +123,15 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// @return Whether the proposed transaction has been executed or not</font></i>
     <font color="#008080">function</font> <b><font color="#000000">executeProposal</font></b><font color="#990000">(</font><font color="#008080">uint</font> _proposalID<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 
-    <i><font color="#9A1900">// Returns if the passed address is a member of this DAO.</font></i>
+    <i><font color="#9A1900">// Returns true if the passed address is a member of this DAO, false</font></i>
+    <i><font color="#9A1900">// otherwise.  This likely has to call the NFTManager, so it's not just a</font></i>
+    <i><font color="#9A1900">// public variable.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">isMember</font></b><font color="#990000">(</font><font color="#008080">address</font> _who<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 
-    <i><font color="#9A1900">// Adds the passed member.  Any current member of the DAO can add members.</font></i>
-    <i><font color="#9A1900">// Membership is indicated by an NFT token, so one must be transfered to</font></i>
-    <i><font color="#9A1900">// this member as part of this call.  This can only be called by a member</font></i>
-    <i><font color="#9A1900">// of the DAO, and should revert otherwise.</font></i>
+    <i><font color="#9A1900">// Adds the passed member.  For this assignment, any current member of the</font></i>
+    <i><font color="#9A1900">// DAO can add members. Membership is indicated by an NFT token, so one</font></i>
+    <i><font color="#9A1900">// must be transfered to this member as part of this call.  This can only</font></i>
+    <i><font color="#9A1900">// be called by a member of the DAO, and should revert otherwise.</font></i>
     <i><font color="#9A1900">// @param _who The new member to add</font></i>
     <font color="#008080">function</font> <b><font color="#000000">addMember</font></b><font color="#990000">(</font><font color="#008080">address</font> _who<font color="#990000">)</font> external<font color="#990000">;</font>
 
@@ -134,6 +142,9 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// through the other functions listed above.  This should also revert if</font></i>
     <i><font color="#9A1900">// the caller is already a member.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">requestMembership</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// also supportsInterface() from IERC165</font></i>
+
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Events to emit</font></i>
@@ -156,6 +167,7 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">// @param proposalID The proposal that was closed</font></i>
     <i><font color="#9A1900">// @param result Whether the proposal was successful or not</font></i>
     <font color="#008080">event</font> <b><font color="#000000">ProposalTallied</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> proposalID<font color="#990000">,</font> <font color="#009900">bool</font> result<font color="#990000">);</font>
+
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>

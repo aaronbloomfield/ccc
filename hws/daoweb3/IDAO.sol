@@ -3,16 +3,41 @@
 // This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
 // and is released under the GPL 3.0 license.
 
+import "./IERC165.sol";
+
 pragma solidity ^0.8.16;
 
 // This file is heavily adapted from the DAO interface at
 // https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol
 
-interface IDAO {
+interface IDAO is IERC165 {
+
+    //------------------------------------------------------------
+    // A struct to hold all of our proposal data
+
+    struct Proposal {
+        address recipient;      // The address where the `amount` will go to if the proposal is accepted
+        uint amount;            // The amount to transfer to `recipient` if the proposal is accepted.
+        string description;     // The amount to transfer to `recipient` if the proposal is accepted.
+        uint votingDeadline;    // A unix timestamp, denoting the end of the voting period
+        bool open;              // True if the proposal's votes have yet to be counted, otherwise False
+        bool proposalPassed;    // True if the votes have been counted, and the majority said yes
+        uint yea;               // Number of Tokens in favor of the proposal; updated upon each yea vote
+        uint nay;               // Number of Tokens opposed to the proposal; updated upon each nay vote
+        address creator;        // Address of the shareholder who created the proposal
+    }
 
     //------------------------------------------------------------
     // These are all just variables; some of which are set in the constructor
     // and never changed
+
+    // Obtain a given proposal.   If one lists out the individual fields of
+    // the Proposal struct, then one can just have this be a public mapping
+    // (otherwise you run into problems with "Proposal memory"
+    // versus "Proposal storage"
+    // @param i The proposal ID to obtain
+    // @return The proposal for that ID
+    function proposals(uint i) external returns (address,uint,string memory,uint,bool,bool,uint,uint,address);
 
     // The minimum debate period that a generic proposal can have, in seconds;
     // this can be set to any reasonable for testing, but should be set to 10
@@ -49,30 +74,11 @@ interface IDAO {
     // amount.
     function reservedEther() external returns (uint);
 
-    //------------------------------------------------------------
-    // A struct to hold all of our proposal data
-
-    struct Proposal {
-        address recipient;      // The address where the `amount` will go to if the proposal is accepted
-        uint amount;            // The amount to transfer to `recipient` if the proposal is accepted.
-        string description;     // The amount to transfer to `recipient` if the proposal is accepted.
-        uint votingDeadline;    // A unix timestamp, denoting the end of the voting period        
-        bool open;              // True if the proposal's votes have yet to be counted, otherwise False
-        bool proposalPassed;    // True if the votes have been counted, and the majority said yes
-        uint yea;               // Number of Tokens in favor of the proposal; updated upon each yea vote
-        uint nay;               // Number of Tokens opposed to the proposal; updated upon each nay vote
-        address creator;        // Address of the shareholder who created the proposal
-    }
+    // Who is the curator (owner / deployer) of this contract?
+    function curator() external returns (address);
 
     //------------------------------------------------------------
     // Functions to implement
-
-    // Obtain a given proposal; this will have to be a separate function,
-    // rather than a getter for public mapping, due to the difference in
-    // public getter return types (Proposal memory versus Proposal storage)
-    // @param i The proposal ID to obtain
-    // @return The proposal for that ID
-    function proposals(uint i) external returns (Proposal memory);
 
     // This allows the function to receive ether without having a payable
     // function -- it doesn't have to have any code in its body, but it does
@@ -106,13 +112,15 @@ interface IDAO {
     // @return Whether the proposed transaction has been executed or not
     function executeProposal(uint _proposalID) external returns (bool);
 
-    // Returns if the passed address is a member of this DAO.
+    // Returns true if the passed address is a member of this DAO, false
+    // otherwise.  This likely has to call the NFTManager, so it's not just a
+    // public variable.
     function isMember(address _who) external returns (bool);
 
-    // Adds the passed member.  Any current member of the DAO can add members.
-    // Membership is indicated by an NFT token, so one must be transfered to
-    // this member as part of this call.  This can only be called by a member
-    // of the DAO, and should revert otherwise.
+    // Adds the passed member.  For this assignment, any current member of the
+    // DAO can add members. Membership is indicated by an NFT token, so one
+    // must be transfered to this member as part of this call.  This can only
+    // be called by a member of the DAO, and should revert otherwise.
     // @param _who The new member to add
     function addMember(address _who) external;
 
@@ -123,6 +131,9 @@ interface IDAO {
     // through the other functions listed above.  This should also revert if
     // the caller is already a member.
     function requestMembership() external;
+
+    // also supportsInterface() from IERC165
+
 
     //------------------------------------------------------------
     // Events to emit
@@ -145,4 +156,5 @@ interface IDAO {
     // @param proposalID The proposal that was closed
     // @param result Whether the proposal was successful or not
     event ProposalTallied(uint indexed proposalID, bool result);
+
 }

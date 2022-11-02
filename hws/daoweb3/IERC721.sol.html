@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts v4.4.1 (token/ERC721/IERC721.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (token/ERC721/IERC721.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
@@ -50,6 +50,26 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
     <font color="#008080">function</font> <b><font color="#000000">ownerOf</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Safely transfers `tokenId` token from `from` to `to`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `from` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
+<i><font color="#9A1900">     * - `tokenId` token must exist and be owned by `from`.</font></i>
+<i><font color="#9A1900">     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.</font></i>
+<i><font color="#9A1900">     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> from<font color="#990000">,</font>
+        <font color="#008080">address</font> to<font color="#990000">,</font>
+        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
+        bytes calldata data
+    <font color="#990000">)</font> external<font color="#990000">;</font>
+
+    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients</font></i>
 <i><font color="#9A1900">     * are aware of the ERC721 protocol to prevent tokens from being forever locked.</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -58,7 +78,7 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
 <i><font color="#9A1900">     * - `from` cannot be the zero address.</font></i>
 <i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
 <i><font color="#9A1900">     * - `tokenId` token must exist and be owned by `from`.</font></i>
-<i><font color="#9A1900">     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.</font></i>
+<i><font color="#9A1900">     * - If the caller is not `from`, it must have been allowed to move this token by either {approve} or {setApprovalForAll}.</font></i>
 <i><font color="#9A1900">     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
@@ -72,7 +92,9 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Transfers `tokenId` token from `from` to `to`.</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.</font></i>
+<i><font color="#9A1900">     * WARNING: Note that the caller is responsible to confirm that the recipient is capable of receiving ERC721</font></i>
+<i><font color="#9A1900">     * or else they may be permanently lost. Usage of {safeTransferFrom} prevents loss, though the caller must</font></i>
+<i><font color="#9A1900">     * understand this adds an external call which potentially creates a reentrancy vulnerability.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Requirements:</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -105,15 +127,6 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
     <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the account approved for `tokenId` token.</font></i>
-<i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * Requirements:</font></i>
-<i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * - `tokenId` must exist.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">getApproved</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">);</font>
-
-    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Approve or remove `operator` as an operator for the caller.</font></i>
 <i><font color="#9A1900">     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -126,31 +139,20 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
     <font color="#008080">function</font> <b><font color="#000000">setApprovalForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> _approved<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the account approved for `tokenId` token.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - `tokenId` must exist.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">getApproved</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns if the `operator` is allowed to manage all of the assets of `owner`.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * See {setApprovalForAll}</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">isApprovedForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
-
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Safely transfers `tokenId` token from `from` to `to`.</font></i>
-<i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * Requirements:</font></i>
-<i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * - `from` cannot be the zero address.</font></i>
-<i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
-<i><font color="#9A1900">     * - `tokenId` token must exist and be owned by `from`.</font></i>
-<i><font color="#9A1900">     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.</font></i>
-<i><font color="#9A1900">     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.</font></i>
-<i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
-        bytes calldata data
-    <font color="#990000">)</font> external<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>
