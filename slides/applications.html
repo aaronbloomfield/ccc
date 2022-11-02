@@ -488,8 +488,8 @@ $loss = \frac{2*\sqrt{price\\_ratio}}{1+price\\_ratio}-1$
 ## Rug Pulls
 [![](https://bitcoinist.com/wp-content/uploads/2022/02/pull.jpg)](https://bitcoinist.com/rug-pull-dont-fooled-ways-detect-someones-scam-you/)
 - When the DEX owner runs off with your coins
-- Recall `selfdestruct()`
-  - Whomever calls it gets all the coins that the contract controls
+- Recall `selfdestruct(address)`
+  - The parameter passed in gets all the ether that the contract controls
   - We can easily ensure only the deployer can call it, and have it transfer the TC in the process
 - In 2021, an estimated 7.7 billion was stolen in rug pulls ([source](https://www.bitchecker.com/en-US/articles/67))
 
@@ -625,10 +625,9 @@ function () { ... }
 ```
 - In current versions of Solidity (0.8.x):
 ```
-fallback() external payable { }
 receive() external payable { }
 ```
-- The functions don't have to *do* anything, but they do need to exist
+- The function doesn't have to *do* anything, but it does need to exist
   - Otherwise a transfer of ether to the contract will revert
     </textarea></section>
 

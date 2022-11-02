@@ -98,7 +98,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 17. Mon, Oct 24: [Tokens](../slides/tokens.html#/); [Consensus](../slides/consensus.html#/) (actual: finished mining; consensus to 6.15)
 18. Wed, Oct 26: [Consensus](../slides/consensus.html#/) (actual: consensus to end of signed messages column)
 19. Mon, Oct 31: [Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/) (actual: finished consensus, applications to 3.34)
-20. Wed, Nov 2: [Blockchain applications](../slides/applications.html#/)
+20. Wed, Nov 2: [Blockchain applications](../slides/applications.html#/) (actual: finished applications)
 21. Mon, Nov 7: [Stablecoins](../slides/stablecoins.html#/)
 22. Wed, Nov 9: [zkSNARKs](../slides/zksnarks.html#/)
 23. Mon, Nov 14: [Scalability](../slides/scalability.html#/)
