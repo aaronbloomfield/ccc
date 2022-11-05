@@ -106,6 +106,8 @@ The files you will need are:
 - [IERC721Metadata.sol](../tokens/IERC721Metadata.sol.html) ([src](../tokens/IERC721Metadata.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 - [IERC721.sol](../tokens/IERC721.sol.html) ([src](../tokens/IERC721.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 
+You will need the [IDAO.abi](IDAO.abi) file, which contains the ABI for the IDAO interface -- you'll need this when writing your Javascript code to interact with the interface.
+
 You will also need your NFTManager.sol file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, and any other .sol files that are needed to allow that to compile (such as ERC721.sol, Strings.sol. Address.sol, etc.).
 
 The requirements on this section are intentionally vague -- the intent is to let you program your DAO any way you want.  The only requirement is that your DAO must fulfill the spirit of the [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)) interface.  As far as we are concerned, a proposal description primarily consists of a single string -- perhaps it's a URL, perhaps a statement, etc.
@@ -189,8 +191,6 @@ You are welcome to look at the blockchain explorer code as well, but that won't 
 
 ### Javascript
 
-You will need the [IDAO.abi](IDAO.abi) file...
-
 Most function calls execute quickly.  But some, such as those querying a blockchain, can take some time to return a value.  In Javascript, these are called `async` functions.  While `async` functions might execute quickly, Javascript assumes they will take some time.  You have two options here -- you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return.  If you choose the first option, it will hang until that `async` call completes.  If you choose the second option, it will move on, and later (in another thread) execute that code block when the `async` call does finally complete.
 
 Consider the following Javascript code; this is from poll.php, which was used to display the Poll of your smart contract from the [dApp Introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment.
@@ -205,25 +205,26 @@ abi = [...]; // the source has the full ABI, which is removed here for clarity
 contract = new web3.eth.Contract(abi,contractAddress);
 
 const getNumChoices = async() => {
-	return await contract.methods.num_choices().call();
+    return await contract.methods.num_choices().call();
 }
 
 const getChoiceInfo = async(i) => {
-	let x = await contract.methods.choices(i).call();
-	return [x.name,x.votes];
+    let x = await contract.methods.choices(i).call();
+    return [x.name,x.votes];
 }
 
 const setChoiceInfo = async(i) => {
-	getChoiceInfo(i).then(l => { document.getElementById("choice_"+i).innerHTML = l[0]; 
-								 document.getElementById("votes_"+i).innerHTML = l[1];
-		                         document.getElementById("total_votes").innerHTML = parseInt(document.getElementById("total_votes").innerHTML) + parseInt(l[1]); 
-		                        });
+    getChoiceInfo(i).then(l => { document.getElementById("choice_"+i).innerHTML = l[0]; 
+                                 document.getElementById("votes_"+i).innerHTML = l[1];
+                                 // this next line is not thread-safe!!!
+                                 document.getElementById("total_votes").innerHTML = parseInt(document.getElementById("total_votes").innerHTML) + parseInt(l[1]);
+                                });
 }
 ```
 
 Four variables are defined:
 
-- The `contractAddress` line is the hard-coded address of the Choices smart contract.  You should also hard-code the address, although this will mean editing the HTML file if you re-deploy it to a different smart contract address
+- The `contractAddress` line is the hard-coded address of the Poll smart contract.  You should also hard-code the address, although this will mean editing the HTML file if you re-deploy it to a different smart contract address
 - The `web3` variable is the connection to the geth node itself.  The value for `URL` is provided on the Collab landing page.  Note that the value for `URL` must be in quotes.
 - The `abi` variable is the ABI for the contract itself.  This should be replaced by the entire ABI, not just `[...]`.  You can obtain this via Remix -- in the Compilation tab, after you compile, there is a copy link next to the text "ABI" at the bottom of that pane.  Note that you will have to remove all white space in what you copy from Remix.  You can also copy the ABI for this assignment from the Collab landing page.
 - The `contract` variable is the connection to the specific smart contract that we are accessing.
@@ -232,8 +233,8 @@ You will notice that many of the fields and methods here are the same as in geth
 
 We then define three `async` functions:
 
-- `getNumChoices()` is a function that takes in no parameters (the parameters -- or lack thereof -- are listed in the parenthesis after the `async` keyword).  This calls the `num_choices` getter function in the [Choices.sol](../dappintro/Choices.sol.html) contract.  Note that we have to put `await` in front of it, since that is also an `async` call, and we wait it to wait (aka block) until the function eventually returns.  And, unlike in geth, we put parentheses both after `num_choices` and after `call`.  This function waits until `num_choices()` returns, and then returns that value.
-- `getChioceInfo()` is a function that takes in one parameter, the choice ID -- that parameter is indicated in the parenthesis after the `async` keyword.  This calls `choices()` which is a getter function for the Choice struct from [Choices.sol](../dappintro/Choices.sol.html).  Note that this function also waits (blocks) until that call completes, as indicated by the `await` keyword.  The obtained struct has three fields -- `id`, `name`, and `votes`.  This function returns two of them in a list.
+- `getNumChoices()` is a function that takes in no parameters (the parameters -- or lack thereof -- are listed in the parenthesis after the `async` keyword).  This calls the `num_choices` getter function in the [Poll.sol](../dappintro/Poll.sol.html) contract, which implements the [IPoll.sol](../dappintro/IPoll.sol.html) interface.  Note that we have to put `await` in front of it, since that is also an `async` call, and we wait it to wait (aka block) until the function eventually returns.  And, unlike in geth, we put parentheses both after `num_choices` and after `call`.  This function waits until `num_choices()` returns, and then returns that value.
+- `getChioceInfo()` is a function that takes in one parameter, the choice ID -- that parameter is indicated in the parenthesis after the `async` keyword.  This calls `choices()` which is a getter function for the Choice struct from [Poll.sol](../dappintro/Poll.sol.html).  Note that this function also waits (blocks) until that call completes, as indicated by the `await` keyword.  The obtained struct has three fields -- `id`, `name`, and `votes`.  This function returns two of them in a list.
 - `setChioceInfo()` is a function that takes in one parameter, the choice ID -- that parameter is indicated in the parenthesis after the `async` keyword.  This function calls `getChoiceInfo()` to get the Choice fields from the smart contract.  You will notice the `.then(` part -- we are specifying the code block to execute when the async call returns.  This function will not block -- it kicks off the call to `getChoiceInfo()`, and immediately returns.  Once `getChoiceInfo()` does return the data (remember: a list containing the name and votes of the choice), it will execute the code block.  Note the `l =>` part -- this is binding the return value from `getChioceInfo()`, which is a list, to the variable `l`, which is then used in the code block.  The details of the code block will be discussed below, but it basically updates a few fields of the HTML page.
 
 
@@ -241,22 +242,26 @@ To call this code, we use the following:
 
 ```
 function loadTable() {
-	// The "main" part of this script -- once we know how many choices there are.
-	document.getElementById("total_votes").innerHTML = "0";
-	getNumChoices().then(val => {
-		// set that value in the "Total number of choices:"  paragraph
-		document.getElementById("num_choices").innerHTML = val;
-		// create the table body to list the votes and choices
-		text = "<tr><th>Votes</th><th>Choice</th></tr>";
-		// for each of the choices, create a separate table row with unique IDs
-		for ( var i = 0; i < val; i++ )
-			text += "<tr><td id='votes_" + i + "'></td><td id='choice_" + i + "'></td></tr>";
-		// write the table to the HTML page; this must happen BEFORE we start filling in the votes and choices
-		document.getElementById("choice_list").innerHTML = text;
-		// call the async function that will fill in the number of votes and choices into the table
-		for ( var i = 0; i < val; i++ )
-			setChoiceInfo(i);
-	});
+    // The "main" part of this script -- once we know how many choices there are.
+    document.getElementById("total_votes").innerHTML = "0";
+    getNumChoices().then(val => {
+        // set that value in the "Total number of choices:"  paragraph
+        document.getElementById("num_choices").innerHTML = val;
+        // create the table body to list the votes and choices
+        text = "<tr><th>ID</th><th>Votes</th><th>Choice</th></tr>";
+        // for each of the choices, create a separate table row with unique IDs
+        for ( var i = 0; i < val; i++ )
+            text += "<tr><td id='id_" + i + "'>" + i + "</td><td id='votes_" + i + "'></td><td id='choice_" + i + "'></td></tr>";
+        // write the table to the HTML page; this must happen BEFORE we start filling in the votes and choices
+        document.getElementById("choice_list").innerHTML = text;
+        // call the async function that will fill in the number of votes and choices into the table
+        for ( var i = 0; i < val; i++ )
+            setChoiceInfo(i);
+    });
+    getPurpose().then(val => {
+        // update the purpose field
+        document.getElementById("purpose").innerHTML = val;
+    });
 }
 
 loadTable();
@@ -291,7 +296,7 @@ Below is some sample HTML code to start with:
 	<body style="margin-top:0">
 		<h2>DAO Information</h2>
 		<p>The DAO information is:</p>
-		<p>Total proposals: <span id="total_proposals">loading...</span></p>
+		<p>Total proposals: <span id="total_proposals">loading...</span></p> <!-- line 12 -->
 		<table id="dlist center"></table>
 		<script>
 // Javascript code here
@@ -302,10 +307,11 @@ Below is some sample HTML code to start with:
 
 A few notes:
 
+- Comments in HTML start with `<!-- ` and end with ` -->`; you don't have to use them, but you'll see comments throughout the example code
 - You'll have to fill in the Javascript code, adapted from above, where indicated
 - For the styling -- in the `<style></style>` tags -- you can leave it blank or cut-and-paste the style information from any of the above mentioned reference pages (choices.php, debts.php, auctions.php, or dex.php) -- they all have the same CSS code.
 - You'll notice that the table has no rows -- the `loadTable()` Javascript function adds them.
-- The 'total proposals' line does not have a value in there.  Once that value is determined (done in a function analogous to the `getNumChoices()` function), you can update that value via the code `document.getElementById('total_proposals').innerHTML = var;`, where `var` is the Javascript variable that holds the number of proposals.  This looks for the element with the id of `total_propsals`, which is the `<span>` element on line 12, and updates the value inside (meaning it replaces "loading...").
+- The 'total proposals' line does not have a value.  Once that value is determined (done in a function analogous to the `getNumChoices()` function), you can update that value via the code `document.getElementById('total_proposals').innerHTML = var;`, where `var` is the Javascript variable that holds the number of proposals.  This looks for the element with the id of `total_propsals`, which is the `<span>` element on line 12, and updates the value inside (meaning it replaces "loading...").
 
 
 ### Events
@@ -317,15 +323,15 @@ There are multiple ways to see when *something* happens on a blockchain, and the
 A web3 *subscription* is when the web3 library is listening for an event or multiple events.  To do so, we specify the specific contract that we are listening to.  Consider the following code:
 
 ```
-function subscribeToChoiceEvents() {
-	var options = { address: '0x01234567890abcdef01234567890abcdef012345' };
-	var sub = web3.eth.subscribe('logs', options, function(err,event) {
-		if ( !err )
-			console.log("event error: "+event);
-	});
-	// pay attention to these subscription events:
-	sub.on('data', event => loadTable() )
-	sub.on('error', err => { throw err })
+function subscribeToPollEvents() {
+    var options = { address: '0xCa569cb05889F1372116158666c36a70A2fc8111' };
+    var sub = web3.eth.subscribe('logs', options, function(err,event) {
+        if ( !err )
+            console.log("event error: "+event);
+    });
+    // pay attention to these subscription events:
+    sub.on('data', event => loadTable() )
+    sub.on('error', err => { throw err })
 }
 
 subscribeToChoiceEvents();
@@ -389,7 +395,7 @@ Your task is for your `dao.html` page to display all the relevant information ab
 
 <img src="dao-screenshot.webp" style="border:1px solid black">
 
-Note: ***ALL*** of your HTML, CSS, and Javascript code must in the dao.html file.  The *only* thing that can be separate is the web3.js file, which is included in the HTML template above.
+You don't have to implement the copy link in the Creator column.  Note that ***ALL*** of your HTML, CSS, and Javascript code must in the dao.html file.  The *only* thing that can be separate is the web3.js file, which is included in the HTML template above.
 
 Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due, and one which will stay open for one week after the assignment (just get the right date; we don't care what time on that day).  The third one is up to you.
 
