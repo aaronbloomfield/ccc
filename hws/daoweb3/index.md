@@ -29,79 +29,82 @@ As far as this assignment is concerned, we are not concerned as to *what* your D
 
 Your contract must implement the provided IDAO interface below.   Your contract opening line must be: `contract DAO is IDAO {`.  This interface was adapted from the [open-source code for The &ETH;AO](https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol), but was heavily modified to both work with current versions of Solidity and to fit better with this assignment.  In particular, we removed a number of features, since this assignment is really about Web3; what was removed included splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc.  In a real DAO, these would need to be implemented as well.
 
-The file is [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)).  That file has many comments to explain how it works; those comments are not shown below.  While there is a lot listed in the interface, there are really only five or so functions that you have to implement; the rest are just `public` variables.
+The file is [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)).  That file has many comments to explain how it works; those comments are not shown below.  
 
 
 ```
-// SPDX-License-Identifier: GPL
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+import "./IERC165.sol";
+
 pragma solidity ^0.8.16;
 
-interface IDAO {
+interface IDAO is IERC165 {
 
-    // Public variables
-
-    function minProposalDebatePeriod() external returns (uint);
-
-    function tokens() external returns (address);
-
-    function purpose() external returns (string memory);
-
-    function votedYes(address a, uint pid) external returns (bool);
-
-    function votedNo(address a, uint pid) external returns (bool);
-
-    function numberOfProposals() external returns (uint);
-
-    function reservedEther() external returns (uint);
-
-
-    // Proposal struct
-
+    // A struct to hold all of our proposal data
     struct Proposal {
-        address recipient;
-        uint amount;
-        string description;
-        uint votingDeadline;
-        bool open;
-        bool proposalPassed;
-        uint yea;
-        uint nay;
-        address creator;
+        address recipient;      // The address where the `amount` will go to if the proposal is accepted
+        uint amount;            // The amount to transfer to `recipient` if the proposal is accepted.
+        string description;     // The amount to transfer to `recipient` if the proposal is accepted.
+        uint votingDeadline;    // A UNIX timestamp, denoting the end of the voting period
+        bool open;              // True if the proposal's votes have yet to be counted, otherwise False
+        bool proposalPassed;    // True if the votes have been counted, and the majority said yes
+        uint yea;               // Number of Tokens in favor of the proposal; updated upon each yea vote
+        uint nay;               // Number of Tokens opposed to the proposal; updated upon each nay vote
+        address creator;        // Address of the shareholder who created the proposal
     }
 
+    //------------------------------------------------------------
+    // These are all just public variables; some of which are set in the
+    // constructor and never changed
 
+    function proposals(uint i) external view returns (address,uint,string memory,uint,bool,bool,uint,uint,address);
+    function minProposalDebatePeriod() external view returns (uint);
+    function tokens() external view returns (address);
+    function purpose() external view returns (string memory);
+    function votedYes(address a, uint pid) external view returns (bool);
+    function votedNo(address a, uint pid) external view returns (bool);
+    function numberOfProposals() external view returns (uint);
+    function howToJoin() external view returns (string memory);
+    function reservedEther() external view returns (uint);
+    function curator() external view returns (address);
+
+    //------------------------------------------------------------
     // Functions to implement
 
-    function proposals(uint i) external returns (Proposal memory);
-
     receive() external payable;
+    function newProposal(address recipient, uint amount, string memory description, 
+                          uint debatingPeriod) external payable returns (uint);
+    function vote(uint proposalID, bool supportsProposal) external;
+    function closeProposal(uint proposalID) external;
+    function isMember(address who) external view returns (bool);
+    function addMember(address who) external;
+    function requestMembership() external;
 
-    function newProposal(address _recipient, uint _amount, string memory _description, 
-                          uint _debatingPeriod) external payable returns (uint);
+    // also supportsInterface() from IERC165
 
-    function vote(uint _proposalID, bool _supportsProposal) external;
+    // Events to emit
 
-    function executeProposal(uint _proposalID) external returns (bool);
+    event NewProposal(uint indexed proposalID, address indexed recipient, uint indexed amount, string description);
+    event Voted(uint indexed proposalID, bool indexed position, address indexed voter);
+    event ProposalClosed(uint indexed proposalID, bool indexed result);
 
-    function addMember(address _who) external;
-
-
-    // Events
-
-    event ProposalAdded(uint indexed proposalID, address recipient, uint amount, string description);
-
-    event Voted(uint indexed proposalID, bool position, address indexed voter);
-
-    event ProposalTallied(uint indexed proposalID, bool result);
 }
 ```
+
+This may look like a lot, but it's not quite as much as it seems:
+
+- Ten of the functions are just public variables
+- Six of the functions are 3 lines or less (including the constructor and `supportsInterface()`)
+- That only leaves three significant functions to implement: `newProposal()`, `vote()`, and `closeProposal()`
+
 
 The files you will need are:
 
 - [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)): what you have to implement
-- [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)): this is unchanged from all previous assignments
-- [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
-- [IERC721.sol](IERC721.sol.html) ([src](IERC721.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
+- [IERC165.sol](../tokens/IERC165.sol.html) ([src](../tokens/IERC165.sol)): this is unchanged from all previous assignments
+- [IERC721Metadata.sol](../tokens/IERC721Metadata.sol.html) ([src](../tokens/IERC721Metadata.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
+- [IERC721.sol](../tokens/IERC721.sol.html) ([src](../tokens/IERC721.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 
 You will also need your NFTManager.sol file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, and any other .sol files that are needed to allow that to compile (such as ERC721.sol, Strings.sol. Address.sol, etc.).
 
@@ -109,23 +112,40 @@ The requirements on this section are intentionally vague -- the intent is to let
 
 Don't overthink this!  The intent is just for you to get a working DAO.  It doesn't have to be perfect.  In fact, this is the easier part of this homework, since we've all written a bunch of Solidity programs by now.  The longest methods here are 8 lines.
 
-##### Notes
+#### Notes
 
-- Your `NFTmanager` contract has `mintWithURI()` that takes in a URL.  But we don't need the URLs for this -- just having the NFT is sufficient to indicate membership; the contract can check that the calling address has the NFT via a call to the `balanceOf()` function.  So what to do with your token URI field?  
-    - You can remove it from the contract, if you'd like.  But that seems to be more work than is necessary.
-    - The [Strings.sol](../tokens/Strings.sol.html) ([src](../tokens/Strings.sol)) file has a `toString()` method that can take in an `uint` and return a `string`.  Since you know how many NFTs have been issued (via the `count()` function), you can just use that value as the URI.
-- The `tokens` field is just an `address` of your NFTmanager, and you will have to cast it to call a function: `NFTmanager(tokens).mintWithURL(...);`, for example.
-- If you just want to transfer (fake) ether to the contract in Remix without calling a `payable` function, enter the amount in the "Value" box of the deployment pane, choose the right denomination, and click the "Transact" button in the "Low level interactions" box at the bottom of the deployed contract info.  This works in any of the deployment environments.  Note that this will call your `receive()` function (which doesn't have to do anything for this assignment, but it must be there).
-- You have to specify a recipient for each proposal -- you can create additional accounts (via `personal.newAccount()` in geth) to use as recipients.  Or send it to a classmate's account.  Or send it to the faucet account.  Any of those is fine.
-
-##### Solidity concepts
-
-A new Solidity concepts to introduce, and some reminders.
 
 - You can create a `constant` variable if the value is not going to change.  This is done via `uint constant public override minProposalDebatePeriod = 600;`.  This saves gas versus not having it be a constant
 - Recall how `receive()` works -- this was described in the "Background" section of the [DEX assignment](../dex/index.html) ([md](../dex/index.md))
 - The code to transfer ether to an address shown under the interface in the "IAuctioneer Interface" section of the [Auction assignment](../auction/index.html) ([md](../auction/index.md))
 - Creating another contract upon deployment is shown in the constructor of [DEXtest.sol](../dex/DEXtest.sol.html) ([src](../dex/DEXtest.sol)) from the [DEX assignment](../dex/index.html) ([md](../dex/index.md)); having your DAO deploy it's own NFTManager will make life easier for you
+- The `tokens` field is just an `address` of your NFTmanager, and you will have to cast it to call a function: `NFTmanager(tokens).mintWithURL(...);`, for example.
+- If you just want to transfer (fake) ether to the contract in Remix without calling a `payable` function, enter the amount in the "Value" box of the deployment pane, choose the right denomination, and click the "Transact" button in the "Low level interactions" box at the bottom of the deployed contract info.  This works in any of the deployment environments.  Note that this will call your `receive()` function (which doesn't have to do anything for this assignment, but it must be there).
+- You have to specify a recipient for each proposal -- you can create additional accounts (via `personal.newAccount()` in geth) to use as recipients.  Or send it to a classmate's account.  Or send it to the faucet account.  Any of those is fine.
+
+
+#### Unique URIs in NFTManager
+
+Your NFTManager, from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, should have required a unique URI for each NFT minted.  For this assignment we don't care *what* the URI is, only that they have a NFT.  In particular, for this assignment, the URI does not need to resolve to an actual image.  This also means that you don't have to change the `_baseURI()` function from what you wrote in the previous assignment.  For that matter, you don't have to change anything in your NFTManager.sol file at all for this assignment (assuming you got it working).
+
+However, you still have to have a unique URI for each one.  One way to do this is to use their account address.  The [Strings.sol](../tokens/Strings.sol.html) ([src](../tokens/Strings.sol)) file was used in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment (it was imported by [ERC721.sol](../tokens/ERC721.sol.html) ([src](../tokens/ERC721.sol))).  You will also need [Math.sol](../tokens/Math.sol.html) ([src](../tokens/Math.sol)) for Strings.sol to compile.  Strings.sol has a `toHexString()` function that takes in an `address` as a parameter.  This function will convert the address into an ASCII hex string with the leading '0x'.  However, this hex string will be 42 characters long, and our NFTManager doesn't allow more than 32 character strings.  You can use the following `substring()` method to reduce it to a 32 character string:
+
+```
+function substring(string memory str, uint startIndex, uint endIndex) public pure returns (string memory) {
+    bytes memory strBytes = bytes(str);
+    bytes memory result = new bytes(endIndex-startIndex);
+    for(uint i = startIndex; i < endIndex; i++)
+        result[i-startIndex] = strBytes[i];
+    return string(result);
+}
+```
+
+You would call it such as:
+
+```
+string memory uri = substring(Strings.toHexString(addr),2,34);
+```
+
 
 
 ### Web3 Introduction
@@ -136,7 +156,7 @@ There are a few strict requirements for this section: *all* of your code -- both
 
 This is not a class on user interfaces, so we are not expecting an amazing looking website -- we are going to grade it on the functionality, not the appearance.  That being said, it needs to be readable and navigatable.
 
-##### Setup
+#### Setup
 
 - Log into your CS server account.  You can try using ssh from the command line: `ssh mst3k@portal.cs.virginia.edu` (works in Linux, Mac OS X, and Windows Subsystem for Linux).  You can also download [SecureCRT](https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=65a00a3cdb11db404f32fb671d9619bb), which is a GUI ssh client.
     - Don't know your password, or you never received it?  Follow the reset password link on the CS computing page (a link to which  is on the Collab landing page)
@@ -154,11 +174,11 @@ wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js
 wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map
 ```
 
-##### Background
+#### Background
 
 You are *encouraged* to look at the examples of web3 usage provided so far in class, and to copy/adapt the code therein.  Note that you can copy from the materials provided by the course, NOT your classmates!  The ones we have seen are:
 
-- choices.php: for the Choices contract in [dApp Introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md))
+- polls.php: for the Poll contract in [dApp Introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md))
 - debts.php: for the in-class coding exercise in [the solidity slide set](../../slides/solidity.html#/debtor)
 - auction.php: for the Auctioneer contract in [dApp Auction assignment](../auction/index.html) ([md](../auction/index.md))
 - dex.php: for the DEXes in [DEX assignment](../dex/index.html) ([md](../dex/index.md))
@@ -169,9 +189,11 @@ You are welcome to look at the blockchain explorer code as well, but that won't 
 
 ### Javascript
 
+You will need the [IDAO.abi](IDAO.abi) file...
+
 Most function calls execute quickly.  But some, such as those querying a blockchain, can take some time to return a value.  In Javascript, these are called `async` functions.  While `async` functions might execute quickly, Javascript assumes they will take some time.  You have two options here -- you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return.  If you choose the first option, it will hang until that `async` call completes.  If you choose the second option, it will move on, and later (in another thread) execute that code block when the `async` call does finally complete.
 
-Consider the following Javascript code; this is from choices.php, which was used to display the Choices of your smart contract from the [dApp Introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment.
+Consider the following Javascript code; this is from poll.php, which was used to display the Poll of your smart contract from the [dApp Introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment.
 
 ```
 var contractAddress = '0x01234567890abcdef01234567890abcdef012345';
@@ -245,6 +267,11 @@ We'll get to `document.getElementById()` shortly, but it's just updating part of
 As mentioned above, you are *encouraged* to use the code provided in the pages that the course has used so far.  A number of Javascript functions therein will be of use in formatting your display -- in particular, `convertTimestamp()`, `short_hash()`, and `copy_link()`.
 
 
+#### Debugging Javascript
+
+Your web browser can load up the developer window (ctrl-shift-C, perhaps).  This window has a Console tab, which is quite useful for debugging Javascript.  You will likely have to reload the page *after* you have opened up the developer window.  This console is just like the geth console -- you can type Javascript commands into it, and access variables that were defined in the `<script>` sections of your webpage.  In your Javascript code, you can use `console.log()` to print out values to this Javascript console.  This is useful in debugging, and can be called from regular and `async` functions.
+
+
 ### HTML and CSS
 
 We assume you are familiar with the basics of HTML.  If not, you can quickly come up to speed with [an appropriate web search](https://duckduckgo.com/?q=html+tutorial).
@@ -281,7 +308,11 @@ A few notes:
 - The 'total proposals' line does not have a value in there.  Once that value is determined (done in a function analogous to the `getNumChoices()` function), you can update that value via the code `document.getElementById('total_proposals').innerHTML = var;`, where `var` is the Javascript variable that holds the number of proposals.  This looks for the element with the id of `total_propsals`, which is the `<span>` element on line 12, and updates the value inside (meaning it replaces "loading...").
 
 
-### Subscriptions
+### Events
+
+There are multiple ways to see when *something* happens on a blockchain, and they all involve listening for events that were emitted by the contracts (or the EVM itself).
+
+#### Subscriptions
 
 A web3 *subscription* is when the web3 library is listening for an event or multiple events.  To do so, we specify the specific contract that we are listening to.  Consider the following code:
 
@@ -309,6 +340,48 @@ There are a number of things going on here:
 - We call all this via the `subscribeToChoiceEvents()` call, which is on the last line of the above code block -- this only needs to be called once, and it will execute the code any time an event is emitted by the contract.
 
 There are a number of aspects of events that we are not covering in this assignment -- in particular, one can listen for specific events, or specific events with specific parameters; see the first answer [here](https://ethereum.stackexchange.com/questions/35997/how-to-listen-to-events-using-web3-v1-0) for an example.  One can also listen for the mining of a block -- the dex.php code does this, as that is how it knows to update the (fake) ETH price (to see how, search for "newBlockHeaders" in the source code for dex.php).  The dex.php also updates a single row when a transaction occurs.
+
+
+#### Past Events
+
+This part is not required at all for this assignment, but was included for completeness.  Feel free to skip it if you are not interested.
+
+You can find all the past events that a contract (or many contracts) emitted.  The blockchain explorer uses this to find when an NFT was minted or transferred, or when a TokenCC is minted or transferred; both emit the `Transfer()` event (this is done in the ERC20.sol or ERC721.sol contract).  In Javascript, you use the `getPastLogs()` function.  
+
+As an example, we will examine a NFTManager contract.  Pick any deployed NFTManager, and get it's address.  You'll also need it's ABI; you can get the INFTManager's abi via this file: [INFTManager.abi](../tokens/INFTManager.abi) (use the one for INFTManager.sol; there are a bunch in that file).
+
+Go to any of the .php pages that *already* load up the web3 Javascript library.  Load up the Javascript console (ctrl-shift-C).
+
+Enter the following two commands, putting in the appropriate values:
+
+```
+// the address of the contract you want to get the past events of, such as your NFTManager:
+var addr='0x01234567890abcdef01234567890abcdef012345'
+// the ABI of the 
+var abi = [...]
+```
+
+You can then pull up the past logs via:
+
+```
+logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:'latest',address:addr})
+```
+
+You can then examine the `logs variable`.  For the course-wide NFTManager from the tokens assignment, this is the result (you may see something slightly different, especially if it's a different semester):
+
+![](js-events.webp)
+
+The relevant fields are:
+
+- The `address` is the address of the contract that emitted the event
+- The `topics[0]` field is the hash of the name of the event.  If you enter `Transfer(address,address,uint256)` into an [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html), you will get this exact hash.  That prototype is from the [IERC721.sol](../tokens/IERC721.sol.html) ([src](../tokens/IERC721.sol)) file.
+- `topics[1]` through `topics[3]` contain any `indexed` parameters (in `Transfer()`, all are indexed).
+    - Since this was a mint, the `from` was the 0 address, which is why `topics[1]` is also the zero address
+    - It was issued to the contract at `0xa4124d15c004af47e4407bae6a13e2d0e0e4d043`; you have to remove a bunch of leading zeros to get the actual address
+    - The NFT ID was `0x636e773977785f7361642e6a7067000000000000000000000000000000000000`, which in base-10 is `44974148043982904058537301730497507547781710262921643124073893516105207513088`
+- If there were any non-`indexed` parameters, they would be in the `data` field
+
+The `logs` variable is a list of these entries, and one can quickly go through them to examine what events occurred.
 
 ### Your task
 

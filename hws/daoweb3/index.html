@@ -48,7 +48,7 @@
 <button class='tablinks' onclick="openTab(event,'tweb3-introduction')">Web3 Introduction</button>
 <button class='tablinks' onclick="openTab(event,'tjavascript')">Javascript</button>
 <button class='tablinks' onclick="openTab(event,'thtml-and-css')">HTML And CSS</button>
-<button class='tablinks' onclick="openTab(event,'tsubscriptions')">Subscriptions</button>
+<button class='tablinks' onclick="openTab(event,'tevents')">Events</button>
 <button class='tablinks' onclick="openTab(event,'tyour-task')">Your Task</button>
 <button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
 </div>
@@ -67,102 +67,107 @@
 <p>A <a href='../../slides/applications.html#/daos'>Decentralized Autonomous Organization (DAO)</a> allows members to submit and vote on proposals. For the purposes of this assignment, these proposals always have some amount of ether associated with them. A proposal is whether to pay the amount of ether to a particular account address, which is also specified in the proposal. One example of what to use a DAO for is a charity organization that focuses on one particular type of area (education, environment, etc.): members vote on what to donate money to (and how much to donate), and a successful proposal means that organization receives the amount of ether specified in the proposal.</p>
 <p>As far as this assignment is concerned, we are not concerned as to <em>what</em> your DAO is for, only that it works.</p>
 <p>Your contract must implement the provided IDAO interface below. Your contract opening line must be: <code>contract DAO is IDAO {</code>. This interface was adapted from the <a href='https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol'>open-source code for The ÐAO</a>, but was heavily modified to both work with current versions of Solidity and to fit better with this assignment. In particular, we removed a number of features, since this assignment is really about Web3; what was removed included splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc. In a real DAO, these would need to be implemented as well.</p>
-<p>The file is <a href='IDAO.sol.html'>IDAO.sol</a> (<a href='IDAO.sol'>src</a>). That file has many comments to explain how it works; those comments are not shown below. While there is a lot listed in the interface, there are really only five or so functions that you have to implement; the rest are just <code>public</code> variables.</p>
-<pre><code>// SPDX-License-Identifier: GPL
+<p>The file is <a href='IDAO.sol.html'>IDAO.sol</a> (<a href='IDAO.sol'>src</a>). That file has many comments to explain how it works; those comments are not shown below.</p>
+<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+
+import "./IERC165.sol";
+
 pragma solidity ^0.8.16;
 
-interface IDAO {
+interface IDAO is IERC165 {
 
-    // Public variables
-
-    function minProposalDebatePeriod() external returns (uint);
-
-    function tokens() external returns (address);
-
-    function purpose() external returns (string memory);
-
-    function votedYes(address a, uint pid) external returns (bool);
-
-    function votedNo(address a, uint pid) external returns (bool);
-
-    function numberOfProposals() external returns (uint);
-
-    function reservedEther() external returns (uint);
-
-
-    // Proposal struct
-
+    // A struct to hold all of our proposal data
     struct Proposal {
-        address recipient;
-        uint amount;
-        string description;
-        uint votingDeadline;
-        bool open;
-        bool proposalPassed;
-        uint yea;
-        uint nay;
-        address creator;
+        address recipient;      // The address where the `amount` will go to if the proposal is accepted
+        uint amount;            // The amount to transfer to `recipient` if the proposal is accepted.
+        string description;     // The amount to transfer to `recipient` if the proposal is accepted.
+        uint votingDeadline;    // A UNIX timestamp, denoting the end of the voting period
+        bool open;              // True if the proposal's votes have yet to be counted, otherwise False
+        bool proposalPassed;    // True if the votes have been counted, and the majority said yes
+        uint yea;               // Number of Tokens in favor of the proposal; updated upon each yea vote
+        uint nay;               // Number of Tokens opposed to the proposal; updated upon each nay vote
+        address creator;        // Address of the shareholder who created the proposal
     }
 
+    //------------------------------------------------------------
+    // These are all just public variables; some of which are set in the
+    // constructor and never changed
 
+    function proposals(uint i) external view returns (address,uint,string memory,uint,bool,bool,uint,uint,address);
+    function minProposalDebatePeriod() external view returns (uint);
+    function tokens() external view returns (address);
+    function purpose() external view returns (string memory);
+    function votedYes(address a, uint pid) external view returns (bool);
+    function votedNo(address a, uint pid) external view returns (bool);
+    function numberOfProposals() external view returns (uint);
+    function howToJoin() external view returns (string memory);
+    function reservedEther() external view returns (uint);
+    function curator() external view returns (address);
+
+    //------------------------------------------------------------
     // Functions to implement
 
-    function proposals(uint i) external returns (Proposal memory);
-
     receive() external payable;
+    function newProposal(address recipient, uint amount, string memory description, 
+                          uint debatingPeriod) external payable returns (uint);
+    function vote(uint proposalID, bool supportsProposal) external;
+    function closeProposal(uint proposalID) external;
+    function isMember(address who) external view returns (bool);
+    function addMember(address who) external;
+    function requestMembership() external;
 
-    function newProposal(address _recipient, uint _amount, string memory _description, 
-                          uint _debatingPeriod) external payable returns (uint);
+    // also supportsInterface() from IERC165
 
-    function vote(uint _proposalID, bool _supportsProposal) external;
+    // Events to emit
 
-    function executeProposal(uint _proposalID) external returns (bool);
+    event NewProposal(uint indexed proposalID, address indexed recipient, uint indexed amount, string description);
+    event Voted(uint indexed proposalID, bool indexed position, address indexed voter);
+    event ProposalClosed(uint indexed proposalID, bool indexed result);
 
-    function addMember(address _who) external;
-
-
-    // Events
-
-    event ProposalAdded(uint indexed proposalID, address recipient, uint amount, string description);
-
-    event Voted(uint indexed proposalID, bool position, address indexed voter);
-
-    event ProposalTallied(uint indexed proposalID, bool result);
 }</code></pre>
+<p>This may look like a lot, but it’s not quite as much as it seems:</p>
+<ul>
+<li>Ten of the functions are just public variables</li>
+<li>Six of the functions are 3 lines or less (including the constructor and <code>supportsInterface()</code>)</li>
+<li>That only leaves three significant functions to implement: <code>newProposal()</code>, <code>vote()</code>, and <code>closeProposal()</code></li>
+</ul>
 <p>The files you will need are:</p>
 <ul>
 <li><a href='IDAO.sol.html'>IDAO.sol</a> (<a href='IDAO.sol'>src</a>): what you have to implement</li>
-<li><a href='IERC165.sol.html'>IERC165.sol</a> (<a href='IERC165.sol'>src</a>): this is unchanged from all previous assignments</li>
-<li><a href='IERC721Metadata.sol.html'>IERC721Metadata.sol</a> (<a href='IERC721Metadata.sol'>src</a>): this unchanged from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment</li>
-<li><a href='IERC721.sol.html'>IERC721.sol</a> (<a href='IERC721.sol'>src</a>): this unchanged from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment</li>
+<li><a href='../tokens/IERC165.sol.html'>IERC165.sol</a> (<a href='../tokens/IERC165.sol'>src</a>): this is unchanged from all previous assignments</li>
+<li><a href='../tokens/IERC721Metadata.sol.html'>IERC721Metadata.sol</a> (<a href='../tokens/IERC721Metadata.sol'>src</a>): this unchanged from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment</li>
+<li><a href='../tokens/IERC721.sol.html'>IERC721.sol</a> (<a href='../tokens/IERC721.sol'>src</a>): this unchanged from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment</li>
 </ul>
 <p>You will also need your NFTManager.sol file from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment, and any other .sol files that are needed to allow that to compile (such as ERC721.sol, Strings.sol. Address.sol, etc.).</p>
 <p>The requirements on this section are intentionally vague – the intent is to let you program your DAO any way you want. The only requirement is that your DAO must fulfill the spirit of the <a href='IDAO.sol.html'>IDAO.sol</a> (<a href='IDAO.sol'>src</a>) interface. As far as we are concerned, a proposal description primarily consists of a single string – perhaps it’s a URL, perhaps a statement, etc.</p>
 <p>Don’t overthink this! The intent is just for you to get a working DAO. It doesn’t have to be perfect. In fact, this is the easier part of this homework, since we’ve all written a bunch of Solidity programs by now. The longest methods here are 8 lines.</p>
-<h5 id='notes'>Notes</h5>
-<ul>
-<li>Your <code>NFTmanager</code> contract has <code>mintWithURI()</code> that takes in a URL. But we don’t need the URLs for this – just having the NFT is sufficient to indicate membership; the contract can check that the calling address has the NFT via a call to the <code>balanceOf()</code> function. So what to do with your token URI field?
-<ul>
-<li>You can remove it from the contract, if you’d like. But that seems to be more work than is necessary.</li>
-<li>The <a href='../tokens/Strings.sol.html'>Strings.sol</a> (<a href='../tokens/Strings.sol'>src</a>) file has a <code>toString()</code> method that can take in an <code>uint</code> and return a <code>string</code>. Since you know how many NFTs have been issued (via the <code>count()</code> function), you can just use that value as the URI.</li>
-</ul></li>
-<li>The <code>tokens</code> field is just an <code>address</code> of your NFTmanager, and you will have to cast it to call a function: <code>NFTmanager(tokens).mintWithURL(...);</code>, for example.</li>
-<li>If you just want to transfer (fake) ether to the contract in Remix without calling a <code>payable</code> function, enter the amount in the “Value” box of the deployment pane, choose the right denomination, and click the “Transact” button in the “Low level interactions” box at the bottom of the deployed contract info. This works in any of the deployment environments. Note that this will call your <code>receive()</code> function (which doesn’t have to do anything for this assignment, but it must be there).</li>
-<li>You have to specify a recipient for each proposal – you can create additional accounts (via <code>personal.newAccount()</code> in geth) to use as recipients. Or send it to a classmate’s account. Or send it to the faucet account. Any of those is fine.</li>
-</ul>
-<h5 id='solidity-concepts'>Solidity concepts</h5>
-<p>A new Solidity concepts to introduce, and some reminders.</p>
+<h4 id='notes'>Notes</h4>
 <ul>
 <li>You can create a <code>constant</code> variable if the value is not going to change. This is done via <code>uint constant public override minProposalDebatePeriod = 600;</code>. This saves gas versus not having it be a constant</li>
 <li>Recall how <code>receive()</code> works – this was described in the “Background” section of the <a href='../dex/index.html'>DEX assignment</a> (<a href='../dex/index.md'>md</a>)</li>
 <li>The code to transfer ether to an address shown under the interface in the “IAuctioneer Interface” section of the <a href='../auction/index.html'>Auction assignment</a> (<a href='../auction/index.md'>md</a>)</li>
 <li>Creating another contract upon deployment is shown in the constructor of <a href='../dex/DEXtest.sol.html'>DEXtest.sol</a> (<a href='../dex/DEXtest.sol'>src</a>) from the <a href='../dex/index.html'>DEX assignment</a> (<a href='../dex/index.md'>md</a>); having your DAO deploy it’s own NFTManager will make life easier for you</li>
+<li>The <code>tokens</code> field is just an <code>address</code> of your NFTmanager, and you will have to cast it to call a function: <code>NFTmanager(tokens).mintWithURL(...);</code>, for example.</li>
+<li>If you just want to transfer (fake) ether to the contract in Remix without calling a <code>payable</code> function, enter the amount in the “Value” box of the deployment pane, choose the right denomination, and click the “Transact” button in the “Low level interactions” box at the bottom of the deployed contract info. This works in any of the deployment environments. Note that this will call your <code>receive()</code> function (which doesn’t have to do anything for this assignment, but it must be there).</li>
+<li>You have to specify a recipient for each proposal – you can create additional accounts (via <code>personal.newAccount()</code> in geth) to use as recipients. Or send it to a classmate’s account. Or send it to the faucet account. Any of those is fine.</li>
 </ul>
+<h4 id='unique-uris-in-nftmanager'>Unique URIs in NFTManager</h4>
+<p>Your NFTManager, from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment, should have required a unique URI for each NFT minted. For this assignment we don’t care <em>what</em> the URI is, only that they have a NFT. In particular, for this assignment, the URI does not need to resolve to an actual image. This also means that you don’t have to change the <code>_baseURI()</code> function from what you wrote in the previous assignment. For that matter, you don’t have to change anything in your NFTManager.sol file at all for this assignment (assuming you got it working).</p>
+<p>However, you still have to have a unique URI for each one. One way to do this is to use their account address. The <a href='../tokens/Strings.sol.html'>Strings.sol</a> (<a href='../tokens/Strings.sol'>src</a>) file was used in the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment (it was imported by <a href='../tokens/ERC721.sol.html'>ERC721.sol</a> (<a href='../tokens/ERC721.sol'>src</a>)). You will also need <a href='../tokens/Math.sol.html'>Math.sol</a> (<a href='../tokens/Math.sol'>src</a>) for Strings.sol to compile. Strings.sol has a <code>toHexString()</code> function that takes in an <code>address</code> as a parameter. This function will convert the address into an ASCII hex string with the leading ‘0x’. However, this hex string will be 42 characters long, and our NFTManager doesn’t allow more than 32 character strings. You can use the following <code>substring()</code> method to reduce it to a 32 character string:</p>
+<pre><code>function substring(string memory str, uint startIndex, uint endIndex) public pure returns (string memory) {
+    bytes memory strBytes = bytes(str);
+    bytes memory result = new bytes(endIndex-startIndex);
+    for(uint i = startIndex; i &lt; endIndex; i++)
+        result[i-startIndex] = strBytes[i];
+    return string(result);
+}</code></pre>
+<p>You would call it such as:</p>
+<pre><code>string memory uri = substring(Strings.toHexString(addr),2,34);</code></pre>
 </div><div id='tweb3-introduction' class='tabcontent'><h3 id='web3-introduction'>Web3 Introduction</h3>
 <p>You are going to write a web interface that shows the status of your DAO and the proposals therein. This web page will only read from the blockchain.</p>
 <p>There are a few strict requirements for this section: <em>all</em> of your code – both HTML and Javascript – must be in a <em>single</em> file called <code>dao.html</code>. That file must be in your <code>~/public_html/</code> directory on your CS server account. This means that the URL for your page will be <code>https://www.cs.virginia.edu/~mst3k/dao.html</code>, where <code>mst3k</code> is your userid.</p>
 <p>This is not a class on user interfaces, so we are not expecting an amazing looking website – we are going to grade it on the functionality, not the appearance. That being said, it needs to be readable and navigatable.</p>
-<h5 id='setup'>Setup</h5>
+<h4 id='setup'>Setup</h4>
 <ul>
 <li><p>Log into your CS server account. You can try using ssh from the command line: <code>ssh mst3k@portal.cs.virginia.edu</code> (works in Linux, Mac OS X, and Windows Subsystem for Linux). You can also download <a href='https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=65a00a3cdb11db404f32fb671d9619bb'>SecureCRT</a>, which is a GUI ssh client.</p>
 <ul>
@@ -184,10 +189,10 @@ cd ~/public_html/
 wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js
 wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map</code></pre></li>
 </ul>
-<h5 id='background'>Background</h5>
+<h4 id='background'>Background</h4>
 <p>You are <em>encouraged</em> to look at the examples of web3 usage provided so far in class, and to copy/adapt the code therein. Note that you can copy from the materials provided by the course, NOT your classmates! The ones we have seen are:</p>
 <ul>
-<li>choices.php: for the Choices contract in <a href='../dappintro/index.html'>dApp Introduction assignment</a> (<a href='../dappintro/index.md'>md</a>)</li>
+<li>polls.php: for the Poll contract in <a href='../dappintro/index.html'>dApp Introduction assignment</a> (<a href='../dappintro/index.md'>md</a>)</li>
 <li>debts.php: for the in-class coding exercise in <a href='../../slides/solidity.html#/debtor'>the solidity slide set</a></li>
 <li>auction.php: for the Auctioneer contract in <a href='../auction/index.html'>dApp Auction assignment</a> (<a href='../auction/index.md'>md</a>)</li>
 <li>dex.php: for the DEXes in <a href='../dex/index.html'>DEX assignment</a> (<a href='../dex/index.md'>md</a>)</li>
@@ -195,8 +200,9 @@ wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map</code></p
 <p>The links to all of these are on the Collab landing page.</p>
 <p>You are welcome to look at the blockchain explorer code as well, but that won’t be as useful for this assignment. When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on. Loading up the developer console make make it easier to view the code, and – later on – see any Javascript errors. Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.</p>
 </div><div id='tjavascript' class='tabcontent'><h3 id='javascript'>Javascript</h3>
+<p>You will need the <a href='IDAO.abi'>IDAO.abi</a> file…</p>
 <p>Most function calls execute quickly. But some, such as those querying a blockchain, can take some time to return a value. In Javascript, these are called <code>async</code> functions. While <code>async</code> functions might execute quickly, Javascript assumes they will take some time. You have two options here – you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return. If you choose the first option, it will hang until that <code>async</code> call completes. If you choose the second option, it will move on, and later (in another thread) execute that code block when the <code>async</code> call does finally complete.</p>
-<p>Consider the following Javascript code; this is from choices.php, which was used to display the Choices of your smart contract from the <a href='../dappintro/index.html'>dApp Introduction</a> (<a href='../dappintro/index.md'>md</a>) assignment.</p>
+<p>Consider the following Javascript code; this is from poll.php, which was used to display the Poll of your smart contract from the <a href='../dappintro/index.html'>dApp Introduction</a> (<a href='../dappintro/index.md'>md</a>) assignment.</p>
 <pre><code>var contractAddress = '0x01234567890abcdef01234567890abcdef012345';
 
 let web3 = new Web3('URL');
@@ -257,6 +263,8 @@ const setChoiceInfo = async(i) =&gt; {
 loadTable();</code></pre>
 <p>We’ll get to <code>document.getElementById()</code> shortly, but it’s just updating part of the HTML page. You will notice that this calls <code>getNumChoices()</code>, an <code>async</code> function, and gives it a code block to execute when that function does return. Like Python, there is no <code>main()</code> function, so we have to call <code>loadTable()</code> to kick all this off.</p>
 <p>As mentioned above, you are <em>encouraged</em> to use the code provided in the pages that the course has used so far. A number of Javascript functions therein will be of use in formatting your display – in particular, <code>convertTimestamp()</code>, <code>short_hash()</code>, and <code>copy_link()</code>.</p>
+<h4 id='debugging-javascript'>Debugging Javascript</h4>
+<p>Your web browser can load up the developer window (ctrl-shift-C, perhaps). This window has a Console tab, which is quite useful for debugging Javascript. You will likely have to reload the page <em>after</em> you have opened up the developer window. This console is just like the geth console – you can type Javascript commands into it, and access variables that were defined in the <code>&lt;script&gt;</code> sections of your webpage. In your Javascript code, you can use <code>console.log()</code> to print out values to this Javascript console. This is useful in debugging, and can be called from regular and <code>async</code> functions.</p>
 </div><div id='thtml-and-css' class='tabcontent'><h3 id='html-and-css'>HTML and CSS</h3>
 <p>We assume you are familiar with the basics of HTML. If not, you can quickly come up to speed with <a href='https://duckduckgo.com/?q=html+tutorial'>an appropriate web search</a>.</p>
 <p>Below is some sample HTML code to start with:</p>
@@ -285,7 +293,9 @@ loadTable();</code></pre>
 <li>You’ll notice that the table has no rows – the <code>loadTable()</code> Javascript function adds them.</li>
 <li>The ‘total proposals’ line does not have a value in there. Once that value is determined (done in a function analogous to the <code>getNumChoices()</code> function), you can update that value via the code <code>document.getElementById('total_proposals').innerHTML = var;</code>, where <code>var</code> is the Javascript variable that holds the number of proposals. This looks for the element with the id of <code>total_propsals</code>, which is the <code>&lt;span&gt;</code> element on line 12, and updates the value inside (meaning it replaces “loading…”).</li>
 </ul>
-</div><div id='tsubscriptions' class='tabcontent'><h3 id='subscriptions'>Subscriptions</h3>
+</div><div id='tevents' class='tabcontent'><h3 id='events'>Events</h3>
+<p>There are multiple ways to see when <em>something</em> happens on a blockchain, and they all involve listening for events that were emitted by the contracts (or the EVM itself).</p>
+<h4 id='subscriptions'>Subscriptions</h4>
 <p>A web3 <em>subscription</em> is when the web3 library is listening for an event or multiple events. To do so, we specify the specific contract that we are listening to. Consider the following code:</p>
 <pre><code>function subscribeToChoiceEvents() {
     var options = { address: '0x01234567890abcdef01234567890abcdef012345' };
@@ -308,6 +318,33 @@ subscribeToChoiceEvents();</code></pre>
 <li>We call all this via the <code>subscribeToChoiceEvents()</code> call, which is on the last line of the above code block – this only needs to be called once, and it will execute the code any time an event is emitted by the contract.</li>
 </ul>
 <p>There are a number of aspects of events that we are not covering in this assignment – in particular, one can listen for specific events, or specific events with specific parameters; see the first answer <a href='https://ethereum.stackexchange.com/questions/35997/how-to-listen-to-events-using-web3-v1-0'>here</a> for an example. One can also listen for the mining of a block – the dex.php code does this, as that is how it knows to update the (fake) ETH price (to see how, search for “newBlockHeaders” in the source code for dex.php). The dex.php also updates a single row when a transaction occurs.</p>
+<h4 id='past-events'>Past Events</h4>
+<p>This part is not required at all for this assignment, but was included for completeness. Feel free to skip it if you are not interested.</p>
+<p>You can find all the past events that a contract (or many contracts) emitted. The blockchain explorer uses this to find when an NFT was minted or transferred, or when a TokenCC is minted or transferred; both emit the <code>Transfer()</code> event (this is done in the ERC20.sol or ERC721.sol contract). In Javascript, you use the <code>getPastLogs()</code> function.</p>
+<p>As an example, we will examine a NFTManager contract. Pick any deployed NFTManager, and get it’s address. You’ll also need it’s ABI; you can get the INFTManager’s abi via this file: <a href='../tokens/INFTManager.abi'>INFTManager.abi</a> (use the one for INFTManager.sol; there are a bunch in that file).</p>
+<p>Go to any of the .php pages that <em>already</em> load up the web3 Javascript library. Load up the Javascript console (ctrl-shift-C).</p>
+<p>Enter the following two commands, putting in the appropriate values:</p>
+<pre><code>// the address of the contract you want to get the past events of, such as your NFTManager:
+var addr='0x01234567890abcdef01234567890abcdef012345'
+// the ABI of the 
+var abi = [...]</code></pre>
+<p>You can then pull up the past logs via:</p>
+<pre><code>logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:'latest',address:addr})</code></pre>
+<p>You can then examine the <code>logs variable</code>. For the course-wide NFTManager from the tokens assignment, this is the result (you may see something slightly different, especially if it’s a different semester):</p>
+<p><img src='js-events.webp'></img></p>
+<p>The relevant fields are:</p>
+<ul>
+<li>The <code>address</code> is the address of the contract that emitted the event</li>
+<li>The <code>topics[0]</code> field is the hash of the name of the event. If you enter <code>Transfer(address,address,uint256)</code> into an <a href='https://emn178.github.io/online-tools/keccak_256.html'>online Keccak generator</a>, you will get this exact hash. That prototype is from the <a href='../tokens/IERC721.sol.html'>IERC721.sol</a> (<a href='../tokens/IERC721.sol'>src</a>) file.</li>
+<li><code>topics[1]</code> through <code>topics[3]</code> contain any <code>indexed</code> parameters (in <code>Transfer()</code>, all are indexed).
+<ul>
+<li>Since this was a mint, the <code>from</code> was the 0 address, which is why <code>topics[1]</code> is also the zero address</li>
+<li>It was issued to the contract at <code>0xa4124d15c004af47e4407bae6a13e2d0e0e4d043</code>; you have to remove a bunch of leading zeros to get the actual address</li>
+<li>The NFT ID was <code>0x636e773977785f7361642e6a7067000000000000000000000000000000000000</code>, which in base-10 is <code>44974148043982904058537301730497507547781710262921643124073893516105207513088</code></li>
+</ul></li>
+<li>If there were any non-<code>indexed</code> parameters, they would be in the <code>data</code> field</li>
+</ul>
+<p>The <code>logs</code> variable is a list of these entries, and one can quickly go through them to examine what events occurred.</p>
 </div><div id='tyour-task' class='tabcontent'><h3 id='your-task'>Your task</h3>
 <p>Your task is for your <code>dao.html</code> page to display all the relevant information about the DAO’s proposals and balance. It should update every time an event is received; it can update the entire table rather than a specific row. A screen shot of the information we are looking for is below. Note that you should display this information, but the exact formatting is up to you. And if you want to display more, that’s fine too. A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.</p>
 <p><img src='dao-screenshot.webp' style='border:1px solid black'></p>
