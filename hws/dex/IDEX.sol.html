@@ -47,7 +47,7 @@ interface IDEX <font color="#008080">is</font> IERC165<font color="#990000">,</f
     <i><font color="#9A1900">// Get the symbol of the ERC-20 cryptocurrency.  This can just call the</font></i>
     <i><font color="#9A1900">// ERC-20 contract to get that information, or you can save it in public</font></i>
     <i><font color="#9A1900">// variable</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Get the price of 1 ETH using the EtherPricer contract; return it in</font></i>
     <i><font color="#9A1900">// cents.  This just gets the price from the EtherPricer contract.</font></i>
@@ -87,12 +87,12 @@ interface IDEX <font color="#008080">is</font> IERC165<font color="#990000">,</f
 
     <i><font color="#9A1900">// How much ETH does the address have in the pool.  This is the number in</font></i>
     <i><font color="#9A1900">// wei.  This can be just be a public mapping variable.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">etherLiquidityForAddress</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">etherLiquidityForAddress</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// How much of the token cryptocurrency does the address have in the pool.</font></i>
     <i><font color="#9A1900">// This is with however many decimals the token cryptocurrency has.  This</font></i>
     <i><font color="#9A1900">// can be just be a public mapping variable.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">tokenLiquidityForAddress</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">tokenLiquidityForAddress</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Pool creation</font></i>
@@ -175,11 +175,11 @@ interface IDEX <font color="#008080">is</font> IERC165<font color="#990000">,</f
 
     <i><font color="#9A1900">// This gets the address of the etherPricer being used so that we can</font></i>
     <i><font color="#9A1900">// verify we are using the correct one; this can just be a public variable.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">etherPricer</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">etherPricer</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Get the address of the ERC-20 token manager being used for the token</font></i>
     <i><font color="#9A1900">// cryptocurrency; this can just be a public variable.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">erc20Address</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">erc20Address</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Functions for efficiency</font></i>
@@ -201,7 +201,7 @@ interface IDEX <font color="#008080">is</font> IERC165<font color="#990000">,</f
     <i><font color="#9A1900">// 9: token decimals (uint)</font></i>
     <i><font color="#9A1900">// 10: fees collected in ether (uint)</font></i>
     <i><font color="#9A1900">// 11: fees collected in the token CC (uint)</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">getDEXinfo</font></b><font color="#990000">()</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> 
+    <font color="#008080">function</font> <b><font color="#000000">getDEXinfo</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> 
                             address<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
