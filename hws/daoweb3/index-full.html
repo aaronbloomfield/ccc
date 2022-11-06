@@ -296,7 +296,7 @@ loadTable();</code></pre>
 <h4 id="subscriptions">Subscriptions</h4>
 <p>A web3 <em>subscription</em> is when the web3 library is listening for an event or multiple events. To do so, we specify the specific contract that we are listening to. Consider the following code:</p>
 <pre><code>function subscribeToPollEvents() {
-    var options = { address: &#39;0xCa569cb05889F1372116158666c36a70A2fc8111&#39; };
+    var options = { address: &#39;0x01234567890abcdef01234567890abcdef012345&#39; };
     var sub = web3.eth.subscribe(&#39;logs&#39;, options, function(err,event) {
         if ( !err )
             console.log(&quot;event error: &quot;+event);
@@ -319,30 +319,30 @@ subscribeToChoiceEvents();</code></pre>
 <h4 id="past-events">Past Events</h4>
 <p>This part is not required at all for this assignment, but was included for completeness. Feel free to skip it if you are not interested.</p>
 <p>You can find all the past events that a contract (or many contracts) emitted. The blockchain explorer uses this to find when an NFT was minted or transferred, or when a TokenCC is minted or transferred; both emit the <code>Transfer()</code> event (this is done in the ERC20.sol or ERC721.sol contract). In Javascript, you use the <code>getPastLogs()</code> function.</p>
-<p>As an example, we will examine a NFTManager contract. Pick any deployed NFTManager, and get it’s address. You’ll also need it’s ABI; you can get the INFTManager’s abi via this file: <a href="../tokens/INFTManager.abi">INFTManager.abi</a> (use the one for INFTManager.sol; there are a bunch in that file).</p>
-<p>Go to any of the .php pages that <em>already</em> load up the web3 Javascript library. Load up the Javascript console (ctrl-shift-C).</p>
-<p>Enter the following two commands, putting in the appropriate values:</p>
-<pre><code>// the address of the contract you want to get the past events of, such as your NFTManager:
-var addr=&#39;0x01234567890abcdef01234567890abcdef012345&#39;
-// the ABI of the 
-var abi = [...]</code></pre>
+<p>As an example, we will examine a NFTManager contract. Pick any deployed NFTManager, and get it’s address. Go to any of the .php pages that <em>already</em> load up the web3 Javascript library. Load up the Javascript console (ctrl-shift-C). Enter the following commands, putting in the appropriate value (the address of the NFTManager we are getting the events of):</p>
+<pre><code>var addr=&#39;0x01234567890abcdef01234567890abcdef012345&#39;</code></pre>
 <p>You can then pull up the past logs via:</p>
 <pre><code>logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:&#39;latest&#39;,address:addr})</code></pre>
-<p>You can then examine the <code>logs variable</code>. For the course-wide NFTManager from the tokens assignment, this is the result (you may see something slightly different, especially if it’s a different semester):</p>
+<p>You can then examine the <code>logs</code> variable by just typing <code>logs</code> in the Javascript console. For the course-wide NFTManager from the tokens assignment, this is the result (you may see different values, but the concepts are the same):</p>
 <p><img src="js-events.webp" /></p>
 <p>The relevant fields are:</p>
 <ul>
 <li>The <code>address</code> is the address of the contract that emitted the event</li>
-<li>The <code>topics[0]</code> field is the hash of the name of the event. If you enter <code>Transfer(address,address,uint256)</code> into an <a href="https://emn178.github.io/online-tools/keccak_256.html">online Keccak generator</a>, you will get this exact hash. That prototype is from the <a href="../tokens/IERC721.sol.html">IERC721.sol</a> (<a href="../tokens/IERC721.sol">src</a>) file.</li>
-<li><code>topics[1]</code> through <code>topics[3]</code> contain any <code>indexed</code> parameters (in <code>Transfer()</code>, all are indexed).
+<li>The <code>topics[0]</code> field is the hash of the name of the event. If you enter <code>Transfer(address,address,uint256)</code> into an <a href="https://emn178.github.io/online-tools/keccak_256.html">online Keccak generator</a>, you will get this exact hash. That event prototype is from the <a href="../tokens/IERC721.sol.html">IERC721.sol</a> (<a href="../tokens/IERC721.sol">src</a>) file.</li>
+<li><code>topics[1]</code> through <code>topics[3]</code> contain any <code>indexed</code> parameters (in <code>Transfer()</code>, all three parameters are indexed).
 <ul>
-<li>Since this was a mint, the <code>from</code> was the 0 address, which is why <code>topics[1]</code> is also the zero address</li>
-<li>It was issued to the contract at <code>0xa4124d15c004af47e4407bae6a13e2d0e0e4d043</code>; you have to remove a bunch of leading zeros to get the actual address</li>
-<li>The NFT ID was <code>0x636e773977785f7361642e6a7067000000000000000000000000000000000000</code>, which in base-10 is <code>44974148043982904058537301730497507547781710262921643124073893516105207513088</code></li>
+<li>Since this was a mint call, the <code>from</code> was the 0 address, which is why <code>topics[1]</code> is also the zero address</li>
+<li><code>topics[2]</code> tells us it was issued to the contract at <code>0xa4124d15c004af47e4407bae6a13e2d0e0e4d043</code>; you have to remove a bunch of leading zeros to get the actual address</li>
+<li>The NFT ID is in <code>topics[3]</code>, and is <code>0x636e773977785f7361642e6a7067000000000000000000000000000000000000</code>, which in base-10 is <code>44974148043982904058537301730497507547781710262921643124073893516105207513088</code></li>
 </ul></li>
-<li>If there were any non-<code>indexed</code> parameters, they would be in the <code>data</code> field</li>
+<li>If there were any non-<code>indexed</code> parameters in the event, they would be in the <code>data</code> field</li>
 </ul>
-<p>The <code>logs</code> variable is a list of these entries, and one can quickly go through them to examine what events occurred.</p>
+<p>The <code>logs</code> variable is a list of these entries, and one can quickly go through them in a <code>for</code> loop to examine what events were emitted.</p>
+<p>Lastly, this can be done in the geth terminal as well. However, the version of Javascript in geth is quite old, and doesn’t have the <code>async</code> functionality, so we have to use different syntax:</p>
+<pre><code>var addr=&quot;0x01234567890abcdef01234567890abcdef012345&quot;
+filter=web3.eth.filter({fromBlock:0,toBlock:&#39;latest&#39;,address:addr})
+eth.getLogs(filter.options)</code></pre>
+<p>The result, though, is (more or less) the same.</p>
 <h3 id="your-task">Your task</h3>
 <p>Your task is for your <code>dao.html</code> page to display all the relevant information about the DAO’s proposals and balance. It should update every time an event is received; it can update the entire table rather than a specific row. A screen shot of the information we are looking for is below. Note that you should display this information, but the exact formatting is up to you. And if you want to display more, that’s fine too. A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.</p>
 <p><img src="dao-screenshot.webp" style="border:1px solid black"></p>
@@ -351,9 +351,9 @@ var abi = [...]</code></pre>
 <h3 id="submission">Submission</h3>
 <p>You will need to fill in the various values from this assignment into the <a href="daoweb3.py.html">daoweb3.py</a> (<a href="daoweb3.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>four</em> forms of submission for this assignment; you must do all four.</p>
-<p>Submission 1: You should submit your <code>DAO.sol</code> file and your <code>dao.html</code> file, along with your completed <code>daoweb3.py</code> file, and ONLY those files, to Gradescope. If you need NFTManager.sol for it to compile, then submit that as well. All other imported files will be provided by Gradescope. Please make sure the capitalization of the file name is correct! <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).</p>
-<p>Submission 2: You must deploy your DAO smart contract to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it.</p>
-<p>Submission 3: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where <code>mst3k</code> is your userid. This means it needs to be in your <code>~/public_html</code> directory on the departmental servers. You should have web.js (or web3.min.js) in that website directory as well. Needless to say, it should properly connect to your deployed DAO smart contract.</p>
-<p>Submission 4: You need to add some data to your DAO contract, as specified above. In particular, that means at least three proposals (one of which has expired, one of which stays open for one week). Also make the specified Ethernet account address – indicated on the Collab landing page – a member of your DAO so that that address can perform tasks on your DAO to grade it.</p>
+<p>Submission 1: You must deploy your DAO smart contract to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it.</p>
+<p>Submission 2: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where <code>mst3k</code> is your userid. This means it needs to be in your <code>~/public_html</code> directory on the departmental servers. You should have web.js (or web3.min.js) in that website directory as well. Needless to say, it should properly connect to your deployed DAO smart contract.</p>
+<p>Submission 3: You need to add some data to your DAO contract, as specified above. In particular, that means at least three proposals (one of which has expired, one of which stays open for one week). Also make the specified Ethernet account address – indicated on the Collab landing page – is a member of your DAO so that that address can perform tasks on your DAO to grade it.</p>
+<p>Submission 4: You should submit your <code>DAO.sol</code> file, your <code>dao.html</code> file, and your completed <code>daoweb3.py</code> file, and ONLY those three files, to Gradescope. All other imported files will be provided by Gradescope (including NFTManager.sol, if needed). <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).</p>
 </body>
 </html>

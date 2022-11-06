@@ -324,7 +324,7 @@ A web3 *subscription* is when the web3 library is listening for an event or mult
 
 ```
 function subscribeToPollEvents() {
-    var options = { address: '0xCa569cb05889F1372116158666c36a70A2fc8111' };
+    var options = { address: '0x01234567890abcdef01234567890abcdef012345' };
     var sub = web3.eth.subscribe('logs', options, function(err,event) {
         if ( !err )
             console.log("event error: "+event);
@@ -354,17 +354,10 @@ This part is not required at all for this assignment, but was included for compl
 
 You can find all the past events that a contract (or many contracts) emitted.  The blockchain explorer uses this to find when an NFT was minted or transferred, or when a TokenCC is minted or transferred; both emit the `Transfer()` event (this is done in the ERC20.sol or ERC721.sol contract).  In Javascript, you use the `getPastLogs()` function.  
 
-As an example, we will examine a NFTManager contract.  Pick any deployed NFTManager, and get it's address.  You'll also need it's ABI; you can get the INFTManager's abi via this file: [INFTManager.abi](../tokens/INFTManager.abi) (use the one for INFTManager.sol; there are a bunch in that file).
-
-Go to any of the .php pages that *already* load up the web3 Javascript library.  Load up the Javascript console (ctrl-shift-C).
-
-Enter the following two commands, putting in the appropriate values:
+As an example, we will examine a NFTManager contract.  Pick any deployed NFTManager, and get it's address.  Go to any of the .php pages that *already* load up the web3 Javascript library.  Load up the Javascript console (ctrl-shift-C).  Enter the following commands, putting in the appropriate value (the address of the NFTManager we are getting the events of):
 
 ```
-// the address of the contract you want to get the past events of, such as your NFTManager:
 var addr='0x01234567890abcdef01234567890abcdef012345'
-// the ABI of the 
-var abi = [...]
 ```
 
 You can then pull up the past logs via:
@@ -373,21 +366,32 @@ You can then pull up the past logs via:
 logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:'latest',address:addr})
 ```
 
-You can then examine the `logs variable`.  For the course-wide NFTManager from the tokens assignment, this is the result (you may see something slightly different, especially if it's a different semester):
+You can then examine the `logs` variable by just typing `logs` in the Javascript console.  For the course-wide NFTManager from the tokens assignment, this is the result (you may see different values, but the concepts are the same):
 
 ![](js-events.webp)
 
 The relevant fields are:
 
 - The `address` is the address of the contract that emitted the event
-- The `topics[0]` field is the hash of the name of the event.  If you enter `Transfer(address,address,uint256)` into an [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html), you will get this exact hash.  That prototype is from the [IERC721.sol](../tokens/IERC721.sol.html) ([src](../tokens/IERC721.sol)) file.
-- `topics[1]` through `topics[3]` contain any `indexed` parameters (in `Transfer()`, all are indexed).
-    - Since this was a mint, the `from` was the 0 address, which is why `topics[1]` is also the zero address
-    - It was issued to the contract at `0xa4124d15c004af47e4407bae6a13e2d0e0e4d043`; you have to remove a bunch of leading zeros to get the actual address
-    - The NFT ID was `0x636e773977785f7361642e6a7067000000000000000000000000000000000000`, which in base-10 is `44974148043982904058537301730497507547781710262921643124073893516105207513088`
-- If there were any non-`indexed` parameters, they would be in the `data` field
+- The `topics[0]` field is the hash of the name of the event.  If you enter `Transfer(address,address,uint256)` into an [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html), you will get this exact hash.  That event prototype is from the [IERC721.sol](../tokens/IERC721.sol.html) ([src](../tokens/IERC721.sol)) file.
+- `topics[1]` through `topics[3]` contain any `indexed` parameters (in `Transfer()`, all three parameters are indexed).
+    - Since this was a mint call, the `from` was the 0 address, which is why `topics[1]` is also the zero address
+    - `topics[2]` tells us it was issued to the contract at `0xa4124d15c004af47e4407bae6a13e2d0e0e4d043`; you have to remove a bunch of leading zeros to get the actual address
+    - The NFT ID is in `topics[3]`, and is `0x636e773977785f7361642e6a7067000000000000000000000000000000000000`, which in base-10 is `44974148043982904058537301730497507547781710262921643124073893516105207513088`
+- If there were any non-`indexed` parameters in the event, they would be in the `data` field
 
-The `logs` variable is a list of these entries, and one can quickly go through them to examine what events occurred.
+The `logs` variable is a list of these entries, and one can quickly go through them in a `for` loop to examine what events were emitted.
+
+Lastly, this can be done in the geth terminal as well.  However, the version of Javascript in geth is quite old, and doesn't have the `async` functionality, so we have to use different syntax:
+
+```
+var addr="0x01234567890abcdef01234567890abcdef012345"
+filter=web3.eth.filter({fromBlock:0,toBlock:'latest',address:addr})
+eth.getLogs(filter.options)
+```
+
+The result, though, is (more or less) the same.
+
 
 ### Your task
 
@@ -407,12 +411,10 @@ You will need to fill in the various values from this assignment into the [daowe
 
 There are *four* forms of submission for this assignment; you must do all four.
 
-Submission 1: You should submit your `DAO.sol` file and your `dao.html` file, along with your completed `daoweb3.py` file, and ONLY those files, to Gradescope.  If you need NFTManager.sol for it to compile, then submit that as well.  All other imported files will be provided by Gradescope.  Please make sure the capitalization of the file name is correct!  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).
+Submission 1: You must deploy your DAO smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  
 
-Submission 2: You must deploy your DAO smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  
+Submission 2: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory as well.  Needless to say, it should properly connect to your deployed DAO smart contract.
 
-Submission 3: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory as well.  Needless to say, it should properly connect to your deployed DAO smart contract.
+Submission 3: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Collab landing page -- is a member of your DAO so that that address can perform tasks on your DAO to grade it.
 
-Submission 4: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Collab landing page -- a member of your DAO so that that address can perform tasks on your DAO to grade it.
-
-
+Submission 4: You should submit your `DAO.sol` file, your `dao.html` file, and your completed `daoweb3.py` file, and ONLY those three files, to Gradescope.  All other imported files will be provided by Gradescope (including NFTManager.sol, if needed).   **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).
