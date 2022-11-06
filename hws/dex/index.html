@@ -66,7 +66,10 @@
 <p>You will also need to be familiar with the <a href='../../slides/ethereum.html#/'>Ethereum slide set</a>, the <a href='../../slides/solidity.html#/'>Solidity slide set</a>, the <a href='../../slides/tokens.html#/'>Tokens slide set</a>, and the <a href='../../slides/applications.html'>Blockchain Applications</a> slide set. The last one is most relevant, as it discusses how a DEX works.</p>
 <p>In addition to your source code, you will submit an edited version of <a href='dex.py.html'>dex.py</a> (<a href='dex.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there are no significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here.</p>
+<ul>
+<li>Sun, 11/6: edited <a href='IDEX.sol.html'>IDEX.sol</a> (<a href='IDEX.sol'>src</a>) to make a few more functions <code>view</code> functions. This shouldn’t affect anybody much, since Remix will have warned you to make the function a <code>view</code>.</li>
+</ul>
 </div><div id='teth-price' class='tabcontent'><h3 id='eth-price'>ETH price</h3>
 <p>To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH. Both of these contracts fulfill the <a href='IEtherPriceOracle.sol.html'>IEtherPriceOracle.sol</a> (<a href='IEtherPriceOracle.sol'>src</a>) interface:</p>
 <pre><code>interface IEtherPriceOracle is IERC165 {

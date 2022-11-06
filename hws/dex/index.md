@@ -23,7 +23,9 @@ In addition to your source code, you will submit an edited version of [dex.py](d
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there are no significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.
+
+- Sun, 11/6: edited [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) to make a few more functions `view` functions.  This shouldn't affect anybody much, since Remix will have warned you to make the function a `view`.
 
 
 ### ETH price

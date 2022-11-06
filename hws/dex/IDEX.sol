@@ -36,7 +36,7 @@ interface IDEX is IERC165, IERC20Receiver {
     // Get the symbol of the ERC-20 cryptocurrency.  This can just call the
     // ERC-20 contract to get that information, or you can save it in public
     // variable
-    function symbol() external returns (string memory);
+    function symbol() external view returns (string memory);
 
     // Get the price of 1 ETH using the EtherPricer contract; return it in
     // cents.  This just gets the price from the EtherPricer contract.
@@ -76,12 +76,12 @@ interface IDEX is IERC165, IERC20Receiver {
 
     // How much ETH does the address have in the pool.  This is the number in
     // wei.  This can be just be a public mapping variable.
-    function etherLiquidityForAddress(address who) external returns (uint);
+    function etherLiquidityForAddress(address who) external view returns (uint);
 
     // How much of the token cryptocurrency does the address have in the pool.
     // This is with however many decimals the token cryptocurrency has.  This
     // can be just be a public mapping variable.
-    function tokenLiquidityForAddress(address who) external returns (uint);
+    function tokenLiquidityForAddress(address who) external view returns (uint);
 
     //------------------------------------------------------------
     // Pool creation
@@ -164,11 +164,11 @@ interface IDEX is IERC165, IERC20Receiver {
 
     // This gets the address of the etherPricer being used so that we can
     // verify we are using the correct one; this can just be a public variable.
-    function etherPricer() external returns (address);
+    function etherPricer() external view returns (address);
 
     // Get the address of the ERC-20 token manager being used for the token
     // cryptocurrency; this can just be a public variable.
-    function erc20Address() external returns (address);
+    function erc20Address() external view returns (address);
 
     //------------------------------------------------------------
     // Functions for efficiency
@@ -190,7 +190,7 @@ interface IDEX is IERC165, IERC20Receiver {
     // 9: token decimals (uint)
     // 10: fees collected in ether (uint)
     // 11: fees collected in the token CC (uint)
-    function getDEXinfo() external returns (address, string memory, string memory, 
+    function getDEXinfo() external view returns (address, string memory, string memory, 
                             address, uint, uint, uint, uint, uint, uint, uint, uint);
 
     //------------------------------------------------------------
