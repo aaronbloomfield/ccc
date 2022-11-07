@@ -37,9 +37,9 @@ for entry in os.scandir():
 
 print()
 for (name,cv) in sorted(l):
-	filename = 'images/logos/' + name + '-coin-symbol.svg'
+	filename = name + '-coin-symbol.svg'
 	if name == 'lunc':
-		filename = 'images/logos/luna-coin-symbol.svg'
-	print ('- <img src="' + filename + '" class="cclogo"> ' + \
-		coins[name][0] + ' (<a href="https://coinmarketcap.com/currencies/' + coins[name][1] + \
-		'/">' + name.upper() + '</a>): %.2f%%' % cv)
+		filename = 'lunac-coin-symbol.svg'
+	print ('- [![' + name.lower() + ' logo](../slides/images/logos/' + filename + ')](https://coinmarketcap.com/currencies/' + \
+		coins[name][1] + '/) ' + coins[name][0] + ' (' + name.upper() + '): %.2f%%' % cv)
+		

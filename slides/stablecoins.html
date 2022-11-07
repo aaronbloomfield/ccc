@@ -77,16 +77,42 @@ line-height:120%;
 	  </textarea></section>
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Motivations
+- A big criticism is that cryptocurrencies are too volatile
+  - Stablecoins attempt to solve this
+- What if you think a cryptocurrency is going to drop in value?
+  - Exchange your shares for a stablecoin, then when it plunges, you buy more shares back
+  - If you did this with actual US Dollars, you would be paying capital gains taxes on these transactions
+    - And short-term sales pay *much* more in taxes
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Review: Types of currencies
+
+<img src="images/tokens/dollar-bill.webp" style="padding:0;border-radius:0">
+
+- Commodity currency: made from actual valuable commodities, such as gold
+- Representative currency: one that is backed up by a valuable "thing", such as gold
+- Fiat currency: established by the government "by fiat"
+  - What the US dollar is (now)
+- Cryptocurrency (obviously)
+
+
+
 ## Stablecoins
-- A coin whose value is meant to not be *non-*volatile
-- Usually tagged in value to a fiat currency
-  - We'll use the US Dollar
+- A coin whose value is meant to not be *non*-volatile
+- Usually *pegged* in value to a fiat currency
+  - Most use the US Dollar
+  - Thus, `$`1 is called the coin's *peg*
 
 
 
 ## Stablecoin categories
+- *Collateral:* property (such as securities) pledged by a borrower to protect the interests of the lender ([ref](https://www.merriam-webster.com/dictionary/collateral))
 - *Collateralized* stablecoins means that there is some collateral (financial investment) backing up the value of the stablecoin
   - Ideally as much collateral as the value of the minted stablecoin
+  - Collateral could be cryptocurrency or fiat currency (typically not both)
   - If less, then it's *undercollateralized*
 - *Uncollateralized* means there is no collateral backing up the value of the stablecoin
   - Fiat currencies are uncollateralized
@@ -94,16 +120,16 @@ line-height:120%;
 
 
 ## Stablecoin categories
-- The obvious definitions...
-  - *Centralized* means it is run by a single company or entity
-    - Government, corporation, individual, etc.
-  - *Decentralized* means it's not run by a single company or entity
-    - Instead by a group, DAO, or algorithm
-    - These are often called *algorithmic*
+- *Centralized* means it is run by a single company or entity
+  - Government, corporation, individual, etc.
+  - They may *use* a smart contract to manage the stablecoin, but it's still a single entity that manages it
+- *Decentralized* means it's not run by a single company or entity
+  - Instead by a group, DAO, or algorithm
+  - Often by a smart contract; these are often called *algorithmic*
 
 
 
-## Types
+## Stablecoin Types
 
 <table>
 <thead>
@@ -113,30 +139,24 @@ line-height:120%;
 <th>Decentralized</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+  <tr>
 <th style="border-bottom:0;border-right:1px solid">Collateralized</th>
 <td>custodial<br>stablecoins<br>(USDC, USDT)</td>
-<td>Algorithmic<br>&nbsp;<br>(SAI, DAI)</td>
+<td>algorithmic<br>&nbsp;<br>(SAI, DAI)</td>
+</tr>
+<tr>
+<th style="border-bottom:0;border-right:1px solid">Non-collateralized</th>
+<td>central bank digital currency<br>(XPD)</td>
+<td>algorithmic<br>(FEI, TRIBE,<br>FRAX, TOMB)</td>
 </tr>
 <tr>
 <th style="border-right:1px solid">Un(der)-collateralized</td>
-<td>central bank digital currency<br>(XPD)</td>
+<td>???<br>???</td>
 <td>undercollateralized stablecoins, seigniorage shares</td>
 </tr>
 </tbody>
 </table>
-
-
-- Synthetics ?
-
-
-
-## Review: Types of currencies
-- Commodity currency: made from actual valuable commodities, such as gold
-- Representative currency: one that is backed up by a valuable "thing", such as gold
-- Fiat currency: established by the government "by fiat"
-  - What the US dollar is (now)
-- Cryptocurrency (obviously)
 
 
 
@@ -207,8 +227,10 @@ line-height:120%;
 - Defining characteristics:
   1. A single entity manages the coin
      - The entity could be a bank, company, non-profit, consortium, etc.
+     - That entity is typically *not* a smart contract
+       - Although they may operate through a smart contract
   2. When coins are purchased, the fiat money used for the purchase goes somewhere it can be retrieved
-     - Investments, equities, bank account, safe, etc.
+     - Investments, equities, bank account, safe, under a mattress, etc.
 
 
 
@@ -216,6 +238,14 @@ line-height:120%;
 ## [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD coin (USDC)
 
 - Managed by a consortium named Centre, which is founded by Coinbase (and others)
+- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 3rd largest market capitalization (`$`42 billion as of 11/6/22) 
+  - After Bitcoin (`$`409 billion) and Ethereum (`$`200 billion)
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD coin (USDC)
+
 - Backed by actual monetary investments in various accounts
   - An accounting agency (Grant Thornton) attests monthly to these deposits
 - If you buy one, the money you pay goes into these accounts
@@ -226,27 +256,36 @@ line-height:120%;
 
 
 <!-- .slide: class="cclogo-slide" -->
-## [![usdc logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/) Tether (USDT)
+## [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/) Tether (USDT)
 
 - Similar to USDC in how it works
 - Run by Tether Ltd
-- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 3rd largest market capitalization (`$`83 billion as of 5/1/22) 
-  - After Bitcoin (`$`734 billion) and Ethereum (`$`340 billion)
-  - USD Coin is 5th at `$`49 billion
-- Scandal-ridden
-  - 2019: NY AG accuses Tether of hiding a `$`850 million loss
-  - It's really unclear where their reserves are held
+- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 3rd largest market capitalization (`$`69 billion as of 11/6/22) 
+- Scandal-ridden (next slide)
   - Many accusations that their reserves are much less than the 1:1 ratio they claim
 - Not backed by the US government in any way!
 
 
 
-## Tether Scandals
+<!-- .slide: class="cclogo-slide" -->
+## [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/)  Tether Issues
+- February 3, 2021: [Tether pays `$`18.5 million in penalties; NY Attorney General alleges they don't have the cash reserves they claim](https://web3isgoinggreat.com/?id=tether-pays-18-5-million-in-penalties)
+- December 4, 2021: [Tether mints `$`3 billion in two weeks](https://web3isgoinggreat.com/?id=tether-mints-3-billion-in-two-weeks)
+- January 1, 2022: [Tether adds `$`1 billion to their supply](https://web3isgoinggreat.com/?id=tether-adds-1-billion)
+- May 12, 2022: [Tether drops below `$`0.95](https://web3isgoinggreat.com/?id=tether-loses-peg-drops-below-095)
 
 
 
 ## Disadvantages
-- Risky investments
+- The centralized entity may make risky investments
+  - What happens when they lose much of that collateral?
+  - If their investments gain value, the owners of the stablecoins aren't getting any of the growth
+- Lack of transparency about how *much* collateral there is
+  - Even with the "attestations" about the collateral backings
+- It's still controlled by a centralized agency
+  - Could the government withhold your money?  Perhaps
+- It's not regulated like the US Dollar is
+  - That can be a good thing or a bad thing
 </textarea></section>
 
   </section>
@@ -399,9 +438,10 @@ line-height:120%;
   - Coefficient of Variation (CV) is the standard deviation divided by the mean
     - It describes the variability of a sample relative to the average
     - Usually expressed as a percentage
+    - 0% means no variation
   - For [![sai logo](../slides/images/logos/sai-coin-symbol.svg)](https://coinmarketcap.com/currencies/single-collateral-dai/) SAI, it's 1.33%
-  - For [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) DAI, it's 0.92%
-  - For [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH, it's 147.9%
+  - For [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) DAI, it's 0.88%
+  - For [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH, it's 140.1%
 - We can also see it as a graph...
   - I included SAI data until the end of 2019; DAI was introduced Nov 19, 2019; SAI's price has fluctuated quite a lot since then
 
@@ -428,42 +468,89 @@ line-height:120%;
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="cclogo-slide" -->
-## Introduction
-- The two categories are:
-  - Undercollateralized stablecoins: FRAX, FEI, IRON, OHM, Gyroscope
-    - backing: diversified portfolio, seigniorage shares as backstop; peg mechanism: redemption; risks: market risks, oracle dependency
-    - [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) of those, [FEI](https://coinmarketcap.com/currencies/fei-usd/) has the highest market capitalization (#100 as of 5-23-22)  
-  - Seigniorage shares: Basis, Maker (backstop), Undercollateralized stablecoins (backstop)
-    - backing: confidence; peg mechanism: supply expansion and contraction; risks: death spiral, oracle dependency
+## Two Sub-categories
+- Uncollateralized or Under-collateralized stablecoins: FRAX, FEI, IRON, OHM, Gyroscope
+  - There can be little or no collateral backing the stablecoin
+    - Zero collateral backing usually doesn't interest many investors, so most are under-collateralized
+  - Of those, [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) FEI has the highest market capitalization (#91 as of 11-6-22)  
+- Seigniorage shares: Basis, Maker (as a backstop), Tomb, Frax
+  - Similar to the previous category, but uses a different mechanism to maintain the peg
 
 
 
 <!-- .slide: class="cclogo-slide" -->
-## FEI
+## Under-collateralized: [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) FEI
 - [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei [FEI](https://coinmarketcap.com/currencies/fei-usd/) is a stable coin pegged at `$`1 USD
+  - Launched in March 2021
   - Main website is [fei.money](https://fei.money/); [whitepaper](https://fei.money/static/media/whitepaper.7d5e2986.pdf)
+  - An ERC-20 token on the Ethereum blockchain
 - [![tribe logo](../slides/images/logos/tribe-coin-symbol.svg)](https://coinmarketcap.com/currencies/tribe/) [TRIBE](https://coinmarketcap.com/currencies/tribe/) is its governance (DAO) token
+  - The TRIBE DAO can allow:
+    - More DEXes to be used (Uniswap was the only one at first)
+    - More assets to be used as collateral
+    - Etc.
 
 
 
+## Collateralized stablecoin disadvantages
+- With many stablecoins, you can withdraw your collateral at any time
+- But what if:
+  - A lot of people, or a whale, withdraw at once?
+  - The price has fluctuated greatly?
+- This could lower the overall price
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei (FEI)
+- FEI will not allow withdrawal of collateral
+  - The collateral is locked into the contract, and used to help maintain the peg
+  - One can trade the FEI for other assets, of course
+    - But that's not "redeeming" one's collateral, but few would see the difference
+  - They call this *Price Controlled Value* (PCV)
+    - Used to help maintain the peg
+- Direct incentives
+  - FEI holders get benefits from holding or using FEI
+  - Examples: better interest rates, DEX transaction fees, etc.
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei (FEI)
+- If the price drops below the peg...
+  - Then the liquidity is used to buy back FEI tokens, increasing supply
+  - Thus increasing the price
+- If the price rises above the peg...
+  - Then there is more demand than supply
+  - More FEI tokens are issued until the price stabilizes
+    - Usually distributed to existing stakers or holders
+
+
+
+<!-- .slide: class="right-float-img nopad" -->
 ## Seigniorage
 
-> Seigniorage: the cost of a unit of currency minus the cost to create it ([source](https://www.investopedia.com/terms/s/seigniorage.asp))
+(pronounced *senior-idge*; [source](https://www.investopedia.com/terms/s/seigniorage.asp))
+
+> Seigniorage: the cost of a unit of currency minus the cost to create it 
 
 Examples:
-  - A USD `$`20 bill cost 11.5&cent; to make in 2019
-    - Seigniorage: `$`19.885
-  - A USD `$`100 bill cost 14.2&cent; to make in 2019
-    - Seigniorage: `$`99.858
-  - A USD penny cost 1.5&cent; to make in 2016
-    - Seigniorage: -0.5&cent;
+
+<img src='https://upload.wikimedia.org/wikipedia/commons/2/2e/US_One_Cent_Obv.png' style='background:transparent;width:200px'>
+
+- A USD `$`20 bill cost 11.5&cent; to make in 2019
+  - Seigniorage: `$`19.885
+- A USD `$`100 bill cost 14.2&cent; to make in 2019
+  - Seigniorage: `$`99.858
+- A USD penny cost 1.5&cent; to make in 2016
+  - Seigniorage: -0.5&cent;
 
 
 
-## Seigniorage Stablecoins
+## Seigniorage: Keeping the peg
 - An algorithmic (aka decentralized) stablecoin
 - If the value of stablecoin rises above the peg, then more are minted
-  - Usually distributed to existing holders
+  - Usually distributed to existing stakers or holders
 - If the value of the stable coin dips below the peg...
   - A bond is issued: basically an IOU for more of the stablecoin
   - Those bonds are sold for lower than the peg amount
@@ -472,17 +559,64 @@ Examples:
 
 
 
+<!-- .slide: class="right-float-img nopad" -->
+## Seigniorage: Keeping the peg
+![](https://upload.wikimedia.org/wikipedia/commons/1/1d/Cribbage_board_with_pegs2.jpg)
+- Some (not many!) will burn coins that holders *have*
+  - This means that the amount you own can *vary*
+  - Few people like this
+- Which is more important: keeping the peg, or keeping your account balance the same?
+  - Most would choose the latter, but these coins choose the former
+
+
+
+## Seigniorage: the name
+- There is a *cost* to making this money
+  - The bonds are issued at a lower price, then sold at a higher price
+  - Or one loses their shares if they are burned
+- Hence the name: *seigniorage* is the value of the money minus the cost to make the money
+
+
+
+<!-- .slide: class="right-float-img nopad" -->
+## Seigniorage Stablecoins
+![](https://sciencevibe.com/wp-content/uploads/2017/01/sc-death-spiral.jpg)
+- But what if it never rises to the peg?
+  - Then more bonds are issued as the price decreases
+  - As the price drops, people lose faith, decreasing demand to buy the bonds
+  - The price continues to decrease
+  - This repeats as the price continues to drop
+- This is called the *death sprial*
+  - A disadvantage of this type of mechanism to maintain a peg
+
+
+
+
 <!-- .slide: class="cclogo-slide" -->
 ## Seigniorage Stablecoins
-- But what if the coin's price never rises back up to the peg?
-  - Perhaps people lose faith, the market tanks, etc.
 - These coins have often had trouble holding their peg
-- Consider the [top seigniorage coins by market cap](https://www.coingecko.com/en/categories/seigniorage) (as of July 2022):
+- Consider the [top seigniorage coins by market cap](https://www.coingecko.com/en/categories/seigniorage) (as of 11-6-22):
   - [![frax logo](../slides/images/logos/frax-coin-symbol.svg)](https://coinmarketcap.com/currencies/frax/) [FRAX](https://coinmarketcap.com/currencies/frax/) (#47 overall, #1 top seigniorage) has been fairly stable
-  - Number 2 is TerraClassic, which we discuss elsewhere
-  - Number 3 is a variant of FRAX
-  - [![tomb logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/tomb/) [TOMB](https://coinmarketcap.com/currencies/tomb/) (#792 overall, #4 seigniorage) has not been stable at all
-  - The next highest is #871 overall, so clearly not used much
+  - Number 2 is Frax Share, the DAO for FRAX, at #95
+  - Number 3 is Terra Classic USD, at #120
+    - We'll talk about this shortly; it's a "stablecoin" worth 3.5&cent;
+  - [![tomb logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/tomb/) [TOMB](https://coinmarketcap.com/currencies/tomb/) (#918 overall) has not been stable at all
+    - A "stablecoin" worth 3.1&cent;
+  - The next highest is #955 overall, so clearly it's not used much
+  - The one after that is #2,781...
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![frax logo](../slides/images/logos/frax-coin-symbol.svg)](https://coinmarketcap.com/currencies/frax/) FRAX
+- An ERC-20 token on Ethereum, launched in November 2020
+- It's "Fractional-Algorithmic", aka hybrid
+  - Some of it is collateralized, some of it is algorithmic
+- If it is trading below the `$`1 peg...
+  - The ratio of collateralized to algorithmic is *increased* (more collateral) to bring the price back up
+- If it is trading above the `$`1 peg...
+  - The ratio of collateralized to algorithmic is *decreased* (more algorithmic) to bring the price back up
+  - Has been fairly stable, relative to other seigniorage stablecoins
 </textarea></section>
 
   </section>
@@ -496,7 +630,9 @@ Examples:
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img nopad" -->
 ## Oracles
+![](https://upload.wikimedia.org/wikipedia/en/f/f0/The_Oracle_%28i%29.gif)
 - A smart contract can only use the data on the blockchain
 - Complex situations require more data than that:
   - Current exchange rates
@@ -606,6 +742,7 @@ contract Oracle {
   - Company is called Terraform Labs
   - Allows devs to build custom blockchains for dApps
 - [![luna logo](../slides/images/logos/lunac-coin-symbol.svg)](https://coinmarketcap.com/currencies/terra-luna/) LUNA Classic ([LUNAC](https://coinmarketcap.com/currencies/terra-luna/)) is the (volatile) cryptocurrency <br clear='all'>
+  - Was backed by billions in Bitcoin
   - Previously just LUNA; had a high of `$`118.74 on April 5, 2022
   - Terra vs LUNAC is like the difference between Ethereum & ETH
 - [![ustc logo](../slides/images/logos/ustc-coin-symbol.svg)](https://coinmarketcap.com/currencies/terrausd/) USD Terra Classic ([USTC](https://coinmarketcap.com/currencies/terrausd/)) (previously just UST) is the stablecoin that was pegged at `$`1 USD <br clear='all'>
@@ -678,6 +815,7 @@ contract Oracle {
 ## Looping Stablecoin buys
 - What if you could use your aUST to borrow more USTC
   - As aUST is a stablecoin and can be collateral to obtain more USTC
+    - Perhaps using an intermediary coin between aUST and USTC
   - Then you can invest the USTC into more aUST
   - Then take use that aUST to borrow more USTC
   - And so on...
@@ -697,7 +835,7 @@ contract Oracle {
 - The founder of the company had full access to the Bitcoin liquidity
   - It wasn't, say, locked in a smart contract
   - Or controlled by a DAO that required many people's votes to liquidate
-- This allowed him to plunder these assets and (eventually) transfer them to himself
+- This allowed him to plunder these assets and (gradually) transfer them to himself
 
 
 
@@ -733,16 +871,16 @@ contract Oracle {
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="cclogo-slide" -->
-## Coefficient of Variation Comparison
+## Coefficient of Variations
 
-- [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) Dai (DAI): 0.92%
-- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ether (ETH): 147.85%
-- [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei USD (FEI): 4.09%
-- [![luna logo](../slides/images/logos/lunac-coin-symbol.svg)](https://coinmarketcap.com/currencies/terra-luna/) Luna Classic (LUNAC): 169.13%
+- [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) Dai (DAI): 0.88%
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ether (ETH): 140.08%
+- [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei (FEI): 3.70%
+- [![lunc logo](../slides/images/logos/lunac-coin-symbol.svg)](https://coinmarketcap.com/currencies/terra-luna/) Luna Classic (LUNC): 179.94%
 - [![sai logo](../slides/images/logos/sai-coin-symbol.svg)](https://coinmarketcap.com/currencies/single-collateral-dai/) Sai (SAI): 1.33%
-- [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD Coin (USDC): 0.50%
-- [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/) Tether (USDT): 1.66%
-- [![xpd logo](../slides/images/logos/xpd-coin-symbol.svg)](https://coinmarketcap.com/currencies/petrodollar/) PetroDollar (XPD): 57.84%
+- [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD Coin (USDC): 0.48%
+- [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/) Tether (USDT): 1.62%
+- [![xpd logo](../slides/images/logos/xpd-coin-symbol.svg)](https://coinmarketcap.com/currencies/petrodollar/) PetroDollar (XPD): 57.92%
 </textarea></section>
   </section>
 

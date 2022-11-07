@@ -1,6 +1,6 @@
 To update the "SAI/DAI price versus ETH price" graph:
 
-- Download the latest data
+- Download the latest data (log in to coingecko.com, then on each page use the 'export as' link at the bottom; as of Nov 2022, it always downloads the max range regardless of what the web page shows)
 	- DAI prices, in `dai-usd-max.csv`, from [https://www.coingecko.com/en/coins/dai/historical_data](https://www.coingecko.com/en/coins/dai/historical_data)
 	- ETH prices, in `eth-usd-max.csv`, from [https://www.coingecko.com/en/coins/ethereum/historical_data](https://www.coingecko.com/en/coins/ethereum/historical_data)
 	- As SAI is no longer used, that CSV does not have to be updated
@@ -17,7 +17,7 @@ To update the CV values:
 	- USDT prices, in `usdt-usd-max.csv`, from [https://www.coingecko.com/en/coins/tether/historical_data](https://www.coingecko.com/en/coins/tether/historical_data)
 	- XPD prices, in `xpd-usd-max.csv`, from [https://www.coingecko.com/en/coins/petrodollar/historical_data](https://www.coingecko.com/en/coins/petrodollar/historical_data)
 	- FEI prices, in `fei-usd-max.csv`, from [https://www.coingecko.com/en/coins/fei-usd/historical_data](https://www.coingecko.com/en/coins/fei-usd/historical_data)
-	- LUNC / LUNAC prices, in `fei-usd-max.csv`, from [https://www.coingecko.com/en/coins/terra-luna-classic/historical_data](https://www.coingecko.com/en/coins/terra-luna-classic/historical_data)
+	- LUNC / LUNAC prices, in `lunc-usd-max.csv`, from [https://www.coingecko.com/en/coins/terra-luna-classic/historical_data](https://www.coingecko.com/en/coins/terra-luna-classic/historical_data)
 - Note that those last 5 are in the .gitignore so as not to increase the repo size significantly
 - Run `./get-cv.py`
 - Copy and paste the Markdown list output into the Conclusions section of stablecoins.html
