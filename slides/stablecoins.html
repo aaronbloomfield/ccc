@@ -84,6 +84,8 @@ line-height:120%;
   - Exchange your shares for a stablecoin, then when it plunges, you buy more shares back
   - If you did this with actual US Dollars, you would be paying capital gains taxes on these transactions
     - And short-term sales pay *much* more in taxes
+- Creating a stablecoin can still make the creators money
+  - Even if it doesn't make as much as, say, BTC or ETH
 
 
 
@@ -111,11 +113,12 @@ line-height:120%;
 ## Stablecoin categories
 - *Collateral:* property (such as securities) pledged by a borrower to protect the interests of the lender ([ref](https://www.merriam-webster.com/dictionary/collateral))
 - *Collateralized* stablecoins means that there is some collateral (financial investment) backing up the value of the stablecoin
-  - Ideally as much collateral as the value of the minted stablecoin
+  - Ideally as much as the value of the minted stablecoin
+    - If less, then it's *under-collateralized*
   - Collateral could be cryptocurrency or fiat currency (typically not both)
-  - If less, then it's *undercollateralized*
 - *Uncollateralized* means there is no collateral backing up the value of the stablecoin
   - Fiat currencies are uncollateralized
+- *Hybrid* stablecoins use some of both categories
 
 
 
@@ -157,22 +160,6 @@ line-height:120%;
 </tr>
 </tbody>
 </table>
-
-
-
-## Stablecoin categories
-- Fiat-collateralized
-  - Rely on a centralized institution with reserves
-  - Examples: Tether, USD Coin, TrueUSD
-- Crypto-collateralized
-  - Use cryptocurrency assets as collateral
-  - Examples: Dai (DAI) & Maker (MKR); Havven (HAV) & nUSD, Bitshares (BTS) BitUSD
-- Algorithmic non-collateralized
-  - Use software-based economic models to maintain stability
-  - Examples: Basis, Kowala, Carbon, Fragments
-- Hybrid stablecoins
-  - A blend of the above approaches
-  - Examples: Reserve, Saga, Aurora - Boreal
 
 
 
@@ -866,13 +853,29 @@ contract Oracle {
 
     <section id="conclusion" data-markdown class="center"><textarea>
 # Conclusions
-    
+
+<img src="images/logos/dai-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/fei-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/lunac-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/sai-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/usdc-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/usdt-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/xpd-coin-symbol.svg" class="cclogosubtitle">
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
+## So many choices...
+- Stablecoins have been created using a large number of algorithms
+  - Some algorithms have not really succeeded
+  - But may in the future; FRAX was the first seigniorage coin to do well
+- The most stable have been the collateralized versions (USDC, USTC, SAI, and DAI)
+- New algorithms will surely come out
+
+
+
 <!-- .slide: class="cclogo-slide" -->
 ## Coefficient of Variations
-
 - [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) Dai (DAI): 0.88%
 - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ether (ETH): 140.08%
 - [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei (FEI): 3.70%
@@ -881,6 +884,14 @@ contract Oracle {
 - [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD Coin (USDC): 0.48%
 - [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/) Tether (USDT): 1.62%
 - [![xpd logo](../slides/images/logos/xpd-coin-symbol.svg)](https://coinmarketcap.com/currencies/petrodollar/) PetroDollar (XPD): 57.92%
+
+
+
+## Sketchy-ness
+- Stablecoins still are subject to scams and sketchy-ness
+- And, for some, the government can take away your funds
+- But are still not regulated
+  - Or taxed, until you sell them
 </textarea></section>
   </section>
 
