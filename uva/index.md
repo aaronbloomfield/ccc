@@ -47,6 +47,13 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
+- Due Tue, 11/15 by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
+- Due Wed, 11/9 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
+- Due Tue, 11/1 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
+- Due Tue, 10/25, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
+- Due Tue, 10/18, by midnight: [HW P5: dApp Gradebook](../hws/gradebook/index.html) ([md](../hws/gradebook/index.md))
+- Due Tue, 9/27, by midnight: [HW P4: Bitcoin scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
+- Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 9/27, by midnight: [HW P4: BTC scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
 - Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
@@ -55,13 +62,6 @@ Reading assignments are due by the start of the lecture that day, and all other 
 <!--
 - Due Tue, 11/22 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
 - Due Tue, 11/15 by midnight: [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
-- Due Tue, 11/8 by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
-- Due Tue, 11/1 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
-- Due Tue, 10/25 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
-- Due Tue, 10/18, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
-- Due Tue, 10/4?, by midnight: [HW P5: dApp Gradebook](../hws/gradebook/index.html) ([md](../hws/gradebook/index.md))
-- Due Tue, 9/27, by midnight: [HW P4: Bitcoin scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
-- Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 -->
 
 #### Smaller Homeworks
@@ -99,7 +99,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 18. Wed, Oct 26: [Consensus](../slides/consensus.html#/) (actual: consensus to end of signed messages column)
 19. Mon, Oct 31: [Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/) (actual: finished consensus, applications to 3.34)
 20. Wed, Nov 2: [Blockchain applications](../slides/applications.html#/) (actual: finished applications)
-21. Mon, Nov 7: [Stablecoins](../slides/stablecoins.html#/)
+21. Mon, Nov 7: [Stablecoins](../slides/stablecoins.html#/) (actual: stablecoins to slide 7.13)
 22. Wed, Nov 9: [zkSNARKs](../slides/zksnarks.html#/)
 23. Mon, Nov 14: [Scalability](../slides/scalability.html#/)
 24. Wed, Nov 16: [Scalability](../slides/scalability.html#/)
