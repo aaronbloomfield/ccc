@@ -124,7 +124,7 @@ Don't overthink this!  The intent is just for you to get a working DAO.  It does
 - The `tokens` field is just an `address` of your NFTmanager, and you will have to cast it to call a function: `NFTmanager(tokens).mintWithURL(...);`, for example.
 - If you just want to transfer (fake) ether to the contract in Remix without calling a `payable` function, enter the amount in the "Value" box of the deployment pane, choose the right denomination, and click the "Transact" button in the "Low level interactions" box at the bottom of the deployed contract info.  This works in any of the deployment environments.  Note that this will call your `receive()` function (which doesn't have to do anything for this assignment, but it must be there).
 - You have to specify a recipient for each proposal -- you can create additional accounts (via `personal.newAccount()` in geth) to use as recipients.  Or send it to a classmate's account.  Or send it to the faucet account.  Any of those is fine.
-
+- For reasons you will see below, it will make it *much* easier if your DAO creates proposals IDs starting at 0; this way your web page can use other DAOs that follow the IDAO interface.
 
 #### Unique URIs in NFTManager
 
@@ -393,9 +393,9 @@ eth.getLogs(filter.options)
 The result, though, is (more or less) the same.
 
 
-### Your task
+### Web page
 
-Your task is for your `dao.html` page to display all the relevant information about the DAO's proposals and balance.  It should update every time an event is received; it can update the entire table rather than a specific row.  A screen shot of the information we are looking for is below.  Note that you should display this information, but the exact formatting is up to you.  And if you want to display more, that's fine too.  A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.
+Your task is to create a `dao.html` web page to display all the relevant information about the DAO's proposals and balance.  It should update every time an event is received; it can update the entire table rather than a specific row.  A screen shot of the information we are looking for is below.  Note that you should display this information, but the exact formatting is up to you.  And if you want to display more, that's fine too.  A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.
 
 <img src="dao-screenshot.webp" style="border:1px solid black">
 
@@ -403,13 +403,22 @@ You don't have to implement the copy link in the Creator column.  Note that ***A
 
 Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due, and one which will stay open for one week after the assignment (just get the right date; we don't care what time on that day).  The third one is up to you.
 
+As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO -- just change the address in your dao.html file.  But be sure to change it back to your own DAO!  Note that it needs to work on your DAO by the time you submit it!  The address for the course-wide DAO is on the Collab landing page.
+
+
+### Course DAO
+
+You need to join the course-wide DAO and vote on one of the proposals.  The address for the course-wide DAO is on the Collab landing page.  This DAO also follows the [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)) interface.
+
+To join, you can just call `requestMembership()`.  Although `requestMembership()` is supposed to revert in your code, in the course-wide DAO it will just add you as a member.  You then need to vote on one of the proposals.  It doesn't matter which proposal you vote on, or how you vote.  Save the transaction hash from when you voted, as you will have to submit that.
+
 
 ### Submission
 
 You will need to fill in the various values from this assignment into the [daoweb3.py](daoweb3.py.html) ([src](daoweb3.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
 
-There are *four* forms of submission for this assignment; you must do all four.
+There are *five* forms of submission for this assignment; you must do all five.
 
 Submission 1: You must deploy your DAO smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  
 
@@ -417,4 +426,6 @@ Submission 2: You need to have your dao.html properly working at https://www.cs.
 
 Submission 3: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Collab landing page -- is a member of your DAO so that that address can perform tasks on your DAO to grade it.
 
-Submission 4: You should submit your `DAO.sol` file, your `dao.html` file, and your completed `daoweb3.py` file, and ONLY those three files, to Gradescope.  All other imported files will be provided by Gradescope (including NFTManager.sol, if needed).   **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).
+Submission 4: You need to join the course-wide DAO and vote on one of the proposals.
+
+Submission 5: You should submit your `DAO.sol` file, your `dao.html` file, and your completed `daoweb3.py` file, and ONLY those three files, to Gradescope.  All other imported files will be provided by Gradescope (including NFTManager.sol, if needed).   **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).

@@ -39,7 +39,9 @@ contracts = {
 # assignment.
 other = {
 	
-	# nothing is required in this diectionary for this assignment
+	# The transaction hash where you voted on one of the course-wide DAO
+	# proposals.  It doesn't matter which one you voted for or how you voted.
+	'dao_vote_txn': None,
 
 }
 
@@ -63,6 +65,14 @@ sanity_checks = {
 	# https://www.cs.virginia.edu/~mst3k/dao.html, where 'mst3k' is your
 	# userid?
 	'dao_url_is_correct': False,
+
+	# Does your dao.html web page specifically load up the information
+	# on *your* DAO, and the latest version (that has the three proposals
+	# mentioned above?)
+	'dao_contract_addr_is_correct': False,
+
+	# Did you join the course-wide DAO and vote on one of the proposals?
+	'voted_on_course_dao': False,
 
 }
 

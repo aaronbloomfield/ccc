@@ -50,7 +50,9 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># assignment.</font></i>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
-	<i><font color="#9A1900"># nothing is required in this diectionary for this assignment</font></i>
+	<i><font color="#9A1900"># The transaction hash where you voted on one of the course-wide DAO</font></i>
+	<i><font color="#9A1900"># proposals.  It doesn't matter which one you voted for or how you voted.</font></i>
+	<font color="#FF0000">'dao_vote_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -74,6 +76,14 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># https://www.cs.virginia.edu/~mst3k/dao.html, where 'mst3k' is your</font></i>
 	<i><font color="#9A1900"># userid?</font></i>
 	<font color="#FF0000">'dao_url_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Does your dao.html web page specifically load up the information</font></i>
+	<i><font color="#9A1900"># on *your* DAO, and the latest version (that has the three proposals</font></i>
+	<i><font color="#9A1900"># mentioned above?)</font></i>
+	<font color="#FF0000">'dao_contract_addr_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you join the course-wide DAO and vote on one of the proposals?</font></i>
+	<font color="#FF0000">'voted_on_course_dao'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
