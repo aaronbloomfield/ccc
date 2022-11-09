@@ -32,3 +32,7 @@ These are smaller homeworks that take less time.  They are often readings or sel
 - S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)): you can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
 - [S4: Private Ethereum Blockchain](ethprivate/index.html) ([md](ethprivate/index.md))
 - [S5: dApp Introduction](dappintro/index.html) ([md](dappintro/index.md))
+
+### Homework dependencies
+
+<img src="hwflow.svg" style="width:300px">
