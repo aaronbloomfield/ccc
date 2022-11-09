@@ -189,7 +189,7 @@ interface IDAO is IERC165 {
     // @param voter Who voted
     event Voted(uint indexed proposalID, bool indexed position, address indexed voter);
 
-    // Called whenever a proposal is successfully closed via `executeProposal()`
+    // Called whenever a proposal is successfully closed via `closeProposal()`
     //
     // @param proposalID The proposal that was closed
     // @param result Whether the proposal was successful or not
