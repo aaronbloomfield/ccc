@@ -19,7 +19,7 @@ interface IPoll {
 	}
 
 	// this allows us to learn the purpose of this vote
-	function purpose() external pure returns (string memory);
+	function purpose() external view returns (string memory);
 
 	// a mapping to keep track of who has voted
 	function voted(address a) external view returns (bool);
