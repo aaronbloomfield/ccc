@@ -200,7 +200,7 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">// @param voter Who voted</font></i>
     <font color="#008080">event</font> <b><font color="#000000">Voted</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> proposalID<font color="#990000">,</font> <font color="#009900">bool</font> <font color="#008080">indexed</font> position<font color="#990000">,</font> address <font color="#008080">indexed</font> voter<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// Called whenever a proposal is successfully closed via `executeProposal()`</font></i>
+    <i><font color="#9A1900">// Called whenever a proposal is successfully closed via `closeProposal()`</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// @param proposalID The proposal that was closed</font></i>
     <i><font color="#9A1900">// @param result Whether the proposal was successful or not</font></i>
