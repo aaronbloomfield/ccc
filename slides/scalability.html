@@ -78,6 +78,7 @@ line-height:120%;
 <section data-markdown data-separator="^\n\n\n"><textarea>
 ## BTC transactions per second
 [![](images/timely/btc-tps.webp)](https://www.blockchain.com/charts/transactions-per-second)
+<!-- to generate this graph: set to 7 day average, 3 year history, the right-click and "open image in new tab" -->
 
 
 
@@ -95,8 +96,9 @@ line-height:120%;
 - Bitcoin: about 3-7 TPS
     - Theoretical maximum of 10-12 TPS
     - About 350k per day
-- Ethereum: about 10 TPS
+- Ethereum, pre PoS: about 10 TPS
     - About 850k per day
+- Ethereum, post PoS: estimated upwards of 100,000 TPS
 - VISA: about 6,000 TPS in 2020 ([source](https://www.statista.com/statistics/261327/number-of-per-card-credit-card-transactions-worldwide-by-brand-as-of-2011/))
     - About 500M per day
     - Even higher during the holiday shopping season
@@ -104,7 +106,7 @@ line-height:120%;
 
 
 ## Fundamental problem
-- How do we allow a crytpocurrency system to grow...
+- How do we allow a cryptocurrency system to grow...
   - As more people use it and more transactions occur
 - While also:
   - Preserving security
@@ -212,11 +214,11 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 ## Current blockchain stats
 - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) Bitcoin averages:
     - $<$10 minute block time
-    - $\approx$3 Mb block size when busy, but [about 1.5 Mb lately](https://www.blockchain.com/charts/avg-block-size)
-    - [1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block)
-    - [About 260,000 TXNs per day](https://www.blockchain.com/charts/n-transactions)
+    - $\approx$3 Mb block size when busy, but [about 1.2 Mb lately](https://www.blockchain.com/charts/avg-block-size)
+    - [1,600 - 1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block)
+    - [About 245,000 TXNs per day](https://www.blockchain.com/charts/n-transactions)
         - Which is about 3 transactions per second
-- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum: 
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum (post PoS): 
     - [13 seconds block time](https://etherscan.io/chart/blocktime)
     - [600 Mb per day](https://messari.io/charts/ethereum/blk-size-byte)
         - About 90 Kb block size
@@ -227,9 +229,9 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 
 
 ## Current blockchain stats
-- [Bitcoin's blockchain size](https://ycharts.com/indicators/bitcoin_blockchain_size) is $\approx$400 GB (as of 4/16/22)
+- [Bitcoin's blockchain size](https://ycharts.com/indicators/bitcoin_blockchain_size) is $\approx$436 GB (as of 11/9/22)
     - And increasing at about 150 Mb per day
-- Ethereum's full blockchain is about 1.5 Tb
+- Ethereum's full blockchain is about 1.7 Tb
     - And increasing at about 600 Mb per day!
 - This won't be sustainable with increased adoption
 
@@ -348,7 +350,8 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 <!-- .slide: class="cclogo-slide" -->
 ## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum 2.0 (aka Eth2)
 - The long-awaited switch to PoS from PoW
-- TPS is expected to increase from 15 TPS to "tens of thousands"
+    - Finally happened in September 2022
+- TPS is expected to increase from 10-15 TPS to "tens of thousands"
 - Idea: split up the workload into many blockchains in parallel (shards)
     - Have them share a common consensus proof-of-stake blockchain
     - Changing any one shard would require a modification to the consensus blockchain
@@ -361,8 +364,8 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 Roll-out is in three phases:
 1. "Phase 0" or "Beacon Chain", launched December 1, 2020
     - Creation of the *Beacon Chain*, the proof-of-stake consensus blockchain of ETH2.0
-2. "Phase 1" or "[The Merge](https://ethereum.org/en/upgrades/merge/)", expected in Q3 2022.
-    - This will merge the Beacon Chain with the current Ethereum network, and cause a switch from PoW to PoS
+2. "Phase 1" or "[The Merge](https://ethereum.org/en/upgrades/merge/)", occurred on Sep 15, 2022
+    - This merged the Beacon Chain with the current Ethereum network, and caused a switch from PoW to PoS
     - This has been delayed many, many, many times
 3. "Phase 2" or "Shard chains", expected in 2023
     - State execution will be on the shard chains
