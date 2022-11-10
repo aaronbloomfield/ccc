@@ -8,7 +8,7 @@ digraph A {
     signer [shape=plaintext,label="signer"];
     output [shape=plaintext,label="price:\n$100"];
 
-    signer -> oracle [label="update($100.0)"];
+    signer -> oracle [label="update($100)"];
     oracle -> output;
 }
 
@@ -31,8 +31,8 @@ digraph B {
     signer1 -> oracle [label="$101"];
     signer2 -> oracle [label="$99"];
     signer3 -> oracle [label="$100"];
-    signer4 -> oracle [label="$98"];
-    signer5 -> oracle [label="$103"];
+    signer4 -> oracle [label="$102"];
+    signer5 -> oracle [label="$99"];
     signer6 -> oracle [label="$101"];
     signer7 -> oracle [label="$102"];
     oracle -> output;
@@ -56,7 +56,7 @@ digraph C {
 
     signer1 -> oracle [label="$101"];
     signer2 -> oracle [label="$99"];
-    signer3 -> oracle [label="$100"];
+    signer3 -> oracle [label="$102"];
     signer4 -> oracle [label="$0",fontcolor=red,color=red];
     signer5 -> oracle [label="$0",fontcolor=red,color=red];
     signer6 -> oracle [label="$101"];

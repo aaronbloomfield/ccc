@@ -94,13 +94,15 @@ line-height:120%;
 
 ## Transactions per second (TPS)
 - Bitcoin: about 3-7 TPS
+    - 3 TPS is about 260k TXNs per day
     - Theoretical maximum of 10-12 TPS
-    - About 350k per day
 - Ethereum, pre PoS: about 10 TPS
-    - About 850k per day
-- Ethereum, post PoS: estimated upwards of 100,000 TPS
+    - 10 TPS is about 864k TXNs per day
+- Ethereum, post PoS: about 13 TPS
+    - 13 TPS is about 1.1M TXNs per day
+    - Estimated upper limit of 100,000 TPS
 - VISA: about 6,000 TPS in 2020 ([source](https://www.statista.com/statistics/261327/number-of-per-card-credit-card-transactions-worldwide-by-brand-as-of-2011/))
-    - About 500M per day
+    - 6k TPS is about 518M per day
     - Even higher during the holiday shopping season
 
 
@@ -215,16 +217,15 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) Bitcoin averages:
     - $<$10 minute block time
     - $\approx$3 Mb block size when busy, but [about 1.2 Mb lately](https://www.blockchain.com/charts/avg-block-size)
-    - [1,600 - 1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block)
-    - [About 245,000 TXNs per day](https://www.blockchain.com/charts/n-transactions)
-        - Which is about 3 transactions per second
+    - [1,600 - 1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block) (60 sec/min * 10 min * 3 TPS)
+    - [About 245,000 TXNs per day](https://www.blockchain.com/charts/n-transactions) ($\approx$2.8 TPS)
 - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum (post PoS): 
     - [13 seconds block time](https://etherscan.io/chart/blocktime)
-    - [600 Mb per day](https://messari.io/charts/ethereum/blk-size-byte)
-        - About 90 Kb block size
-    - [1,100,000 TXNs per day](https://etherscan.io/chart/tx/)
-        - Which is about 165 per block
-    - About 12 transactions per second
+    - About 90 Kb block size
+        - That's [600 Mb per day](https://messari.io/charts/ethereum/blk-size-byte) added to the blockchain per day!
+    - [1.1M TXNs per day](https://etherscan.io/chart/tx/) ($\approx$12.7 TPS)
+        - Which is about 165 TXNs per block
+    - About 13 transactions per second
 
 
 

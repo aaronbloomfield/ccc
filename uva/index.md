@@ -100,7 +100,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 19. Mon, Oct 31: [Consensus](../slides/consensus.html#/); [Blockchain applications](../slides/applications.html#/) (actual: finished consensus, applications to 3.34)
 20. Wed, Nov 2: [Blockchain applications](../slides/applications.html#/) (actual: finished applications)
 21. Mon, Nov 7: [Stablecoins](../slides/stablecoins.html#/) (actual: stablecoins to slide 7.13)
-22. Wed, Nov 9: [zkSNARKs](../slides/zksnarks.html#/)
+22. Wed, Nov 9: [zkSNARKs](../slides/zksnarks.html#/) (actual: finished stablecoins, scalability to 4.6)
 23. Mon, Nov 14: [Scalability](../slides/scalability.html#/)
 24. Wed, Nov 16: [Scalability](../slides/scalability.html#/)
 25. Mon, Nov 21: [Algorand](../slides/algorand.html#/)
