@@ -25,6 +25,7 @@ In addition to your source code, you will submit an edited version of [dex.py](d
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.
 
+- Wed, 11/10: bug fix to [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)); see the pinned Piazza post for how to integrate this quickly into your code
 - Sun, 11/6: edited [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) to make a few more functions `view` functions.  This shouldn't affect anybody much, since Remix will have warned you to make the function a `view`.
 
 

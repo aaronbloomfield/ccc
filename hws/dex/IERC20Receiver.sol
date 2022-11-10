@@ -16,19 +16,15 @@ interface IERC20Receiver {
      *
      * The selector can be obtained in Solidity with `IERC20Receiver.onERC20Received.selector`.
      */
-    function onERC20Received(address from, uint amount) external returns (bool);
+    function onERC20Received(address from, uint amount, address erc20) external returns (bool);
 }
 
 /* to use this code, put the following in your ERC-20 implementation:
 
     function _afterTokenTransfer(address from, address to, uint256 amount) internal override {
-        if (to.code.length > 0) {
+        if ( to.code.length > 0  && from != address(0) && to != address(0) ) {
             // token recipient is a contract, notify them
-            try IERC20Receiver(to).onERC20Receive(from, amount) returns (bool success) {
-                // the recipient returned a bool, TODO validate if they returned true
-            } catch {
-                // the notification failed (maybe they don't implement the `IERC20Receiver` interface?)
-            }
+            IERC20Receiver(to).onERC20Received(from, amount, address(this));
         }
     }
 
