@@ -37,7 +37,7 @@ eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
 <i><font color="#9A1900"># the address.</font></i>
 contracts <font color="#990000">=</font> <font color="#990000">{</font>
 
-	<i><font color="#9A1900"># nothing is required in this diectionary for this assignment</font></i>
+	<i><font color="#9A1900"># nothing is required in this dictionary for this assignment</font></i>
 
 <font color="#990000">}</font>
 
@@ -46,7 +46,7 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># assignment.</font></i>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
-	<i><font color="#9A1900"># nothing is required in this diectionary for this assignment</font></i>
+	<i><font color="#9A1900"># nothing is required in this dictionary for this assignment</font></i>
 
 <font color="#990000">}</font>
 
@@ -57,11 +57,18 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># files), all other submission requirements are listed herein.  These values </font></i>
 <i><font color="#9A1900"># need to be changed to True (instead of None).</font></i>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
-	
-	<i><font color="#9A1900"># Does your program produce NO other output other than one call to the output() function?</font></i>
+
+	<i><font color="#9A1900"># Can your code handle *both* types of URI connections:</font></i>
+	<i><font color="#9A1900"># whether 'connection_is_ipc' (in arbitrage_config.py) is both True and</font></i>
+	<i><font color="#9A1900"># False?</font></i>
+	<font color="#FF0000">'can_handle_both_types_of_connections'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Does your program produce NO other output other than one call to the</font></i>
+	<i><font color="#9A1900"># output() function?</font></i>
 	<font color="#FF0000">'no_output_other_than_output_call'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># In your transactions, do you always set the gasPrice to 10 gwei?</font></i>
+	<i><font color="#9A1900"># In your transactions, do you always set the gasPrice to a fixed value of</font></i>
+	<i><font color="#9A1900"># 10 gwei?</font></i>
 	<font color="#FF0000">'gasprice_set_to_10_gwei'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>

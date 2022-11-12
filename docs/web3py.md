@@ -7,7 +7,7 @@ Web3.py Introduction
 
 This section is an introduction to using web3 in Python.
 
-##### Starting Python
+#### Starting Python
 
 Run Python.  You can put these commands into a script file, or type these commands directly into a Python interpreter.
 
@@ -22,7 +22,7 @@ from hexbytes import HexBytes
 
 All the code below assumes those two import lines are present.
 
-##### Connect to the blockchain
+#### Connect to the blockchain
 
 In Python, you can connect to the blockchain in a few different ways.  The difference is if you are going to connect via the geth.ipc file or through the course server endpoint.
 
@@ -44,12 +44,19 @@ w3 = Web3(Web3.WebsocketProvider('wss://<your-provider-url>'))
 
 The full URL for the course server is on the Collab landing page.
 
+If you are using a proof-of-authority blockchain, you have to execute the following two commands after you initialize the `w3` variable:
+
+```
+from web3.middleware import geth_poa_middleware
+w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+```
+
 To see if you are connected, you can try:
 
 - `w3.isConnected()`, which should return `True`
 - `w3.eth.get_block('latest')`, which should return the latest block
 
-##### Calling a `view` or `pure` function on a smart contract
+#### Calling a `view` or `pure` function on a smart contract
 
 Calling a `view` or `pure` function is much like with geth -- we define an address and an ABI variable, then create the interface and then the contract.  For this example, we'll call a method on our TokenDEX contract.
 
@@ -76,7 +83,7 @@ contract.functions.k().call()
 
 Notice that we have to put parenthesis after both the method name of `k` and after the `call`.  Parameters, if there were any, would go in the parenthesis after the method name, not in the `call()` parentheses.
 
-##### Transactions
+#### Transactions
 
 In geth, we would unlock our account with our password, and then call `sendTransaction()`.  To do this in Python is a bit more complicated.
 
@@ -86,7 +93,7 @@ First, we need the private key in decrypted form.  This was done in the [Private
 private_key = hexbytes.HexBytes('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef')
 ```
 
-You will note that this is a slightly different form than what you got when you decrypted your key -- the hex byte data is the same, it just is in a `hexbytes.HexBytes()` constructor.
+You will note that this is a slightly different form than what you got when you decrypted your key -- the hex byte data is the same, it just is in a `hexbytes.HexBytes()` constructor.  In particular, the leading 'b' was removed from the string value (the one before the single quote).
 
 We also need to define our account address that we have the private key for:
 
@@ -94,7 +101,7 @@ We also need to define our account address that we have the private key for:
 my_address='0x0123456789abcdef0123456789abcdef01234567';
 ```
 
-This address has to be in correct check-summed form -- you can run it through [ethsum.netlify.app](https://ethsum.netlify.app/) to get the check-summed version.
+This address has to be in correct check-summed form -- you can run it through [ethsum.netlify.app](https://ethsum.netlify.app/) to get the check-summed version.  You can also use the Web3.py library to checksum and address: `Web3.toChecksumAddress(addr)`.
 
 Once we have the private key, we have to take three steps: create the transaction, sign it, and then transmit it to the blockchain.
 
@@ -113,7 +120,7 @@ Parameters, if there were any, would go in the parenthesis after the method name
 
 Other fields could be added as well -- if we wanted to send some wei in with the transaction, such as to a `payable` function, then we would add a `value` key with the (integer) wei amount as the value.
 
-If all we wanted to do was to just pay ETH, and not call a function, we would just create a dict:
+If all we wanted to do was to just pay ETH, and not call a function, we would just create a dictionary:
 
 ```
 transaction = {
@@ -139,7 +146,7 @@ ret = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
 
 That's it!  The transaction was sent to the blockchain.
 
-##### Transaction details
+#### Transaction details
 
 The return value of `sendRawTransaction()` was saved into the `ret` variable.  We can then get that transaction information:
 
@@ -158,20 +165,23 @@ w3.eth.get_transaction(ret)
 This is the same information that you can find in the blockchain explorer.
 
 
-##### Gas estimation
+#### Gas estimation
 
 Web3 can estimate how much gas your transaction will use.  Once you have created your transaction object, you can just call: `gas = w3.eth.estimateGas(transaction)`.  Note that this is an *estimate*, not a fully accurate count.  In particular, if there is an if/else path, then it can't always know which path it will take.  Although an estimate, it is sufficient for our purposes.  Lastly, note that this is the amount of gas, and once you supply it with a amount of wei per gas, you can convert that into a actual price in ether.
 
 
-##### Reverts
+#### Return values and reverts
 
-It turns out it is often (but not always!) possible to get the reason for a reversion.  The code below will attempt to do just that (code adapted from [here](https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/)).
+It turns out it is often (but not always!) possible to get the return value for a transaction or the reason for a reversion.  Note that calls do not need any special code to get the return value, only transactions.  The code below will attempt to do just that (code adapted from [here](https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/)).
 
 
 ```
-def printRevertReason(w3,txhash):
-    # adapted from https://snakecharmers.ethereum.org/web3py-revert-reason-parsing/
-    tx = w3.eth.get_transaction(txhash)
+def getTXNResult(w3,txhash):
+    try:
+        tx = w3.eth.get_transaction(txhash)
+    except Exception as e:
+        print("Error getting transaction:",e)
+        return None
     replay_tx = {
         'to': tx['to'],
         'from': tx['from'],
@@ -181,20 +191,15 @@ def printRevertReason(w3,txhash):
     }
     # replay the transaction locally:
     try:
-        w3.eth.call(replay_tx, tx.blockNumber - 1)
+        ret = w3.eth.call(replay_tx, tx.blockNumber - 1)
+        return (True,ret)
     except Exception as e: 
-        print(e)
+        return (False,str(e))
 ```
 
-This function is provided in the config.py code given with the homework.
+This function is provided in the code given with the homework.
 
 
-##### Limitations
-
-There does not seem to be a viable way to get the return value of a *transaction*, only of a *call*.
-
-
-##### Read more
+#### Read more
 
 The functionality of web3.py is similar to what we know of from geth, but the formatting of the function calls is different.  You can see full API [here](https://web3py.readthedocs.io/en/latest/index.html).
-
