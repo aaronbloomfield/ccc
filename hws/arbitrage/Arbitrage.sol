@@ -6,8 +6,8 @@
 pragma solidity ^0.8.16;
 
 import "./TokenCC.sol";
-import "./TokenDEX.sol";
-import "./EtherPricerConstant.sol";
+import "./DEX.sol";
+import "./EtherPriceOracleConstant.sol";
 
 contract Arbitrage {
 
@@ -20,7 +20,7 @@ contract Arbitrage {
     constructor() {
         deployer = msg.sender;
         tokencc = address(new TokenCC());
-        etherpricer = address(new EtherPricerConstant());
+        etherpricer = address(new EtherPriceOracleConstant());
     }
 
     // creates the DEXes and the TokenCC, and sends the ETH and TC; to avoid
@@ -30,9 +30,9 @@ contract Arbitrage {
         require (msg.value > numdex * amt_eth * 1 ether, "Must supply enough eth");
         // create and fund the DEXes
         for ( uint i = num_dexes; i < num_dexes+numdex; i++ ) {
-            dexes[i] = payable(address(new TokenDEX()));
+            dexes[i] = payable(address(new DEX()));
             TokenCC(tokencc).approve(dexes[i],amt_tc * 10**TokenCC(tokencc).decimals());
-            TokenDEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
+            DEX(dexes[i]).createPool{value: amt_eth * 1 ether}(amt_tc * 10**TokenCC(tokencc).decimals(), 
                                      3, 1000, tokencc, etherpricer);
         }
         num_dexes += numdex;
@@ -44,10 +44,15 @@ contract Arbitrage {
         require (msg.value > 10 ether, "Must supply enough eth");
         // excahnge with the DEXes
         uint balance = TokenCC(tokencc).balanceOf(address(this));
-        TokenDEX(dexes[1]).exchangeEtherForToken{value: 1 ether}();
-        TokenDEX(dexes[2]).exchangeEtherForToken{value: 2 ether}();
-        TokenDEX(dexes[3]).exchangeEtherForToken{value: 3 ether}();
-        TokenDEX(dexes[4]).exchangeEtherForToken{value: 4 ether}();
+        bool success;
+        (success,) = address(dexes[1]).call{value: 1 ether}("");
+        require(success,"DEX exchange call 1 didn't succeed");
+        (success,) = address(dexes[2]).call{value: 2 ether}("");
+        require(success,"DEX exchange call 2 didn't succeed");
+        (success,) = address(dexes[3]).call{value: 3 ether}("");
+        require(success,"DEX exchange call 3 didn't succeed");
+        (success,) = address(dexes[4]).call{value: 4 ether}("");
+        require(success,"DEX exchange call 4 didn't succeed");
         // give the sender the TC obtained
         uint xferamt = TokenCC(tokencc).balanceOf(address(this)) - balance;
         TokenCC(tokencc).transfer(msg.sender,xferamt);

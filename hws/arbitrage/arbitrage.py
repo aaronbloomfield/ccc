@@ -1,7 +1,7 @@
-# Submission information for the DAO & Web3 HW
-# https://aaronbloomfield.github.io/ccc/hws/daoweb3/
+# Submission information for the Arbitrage HW
+# https://aaronbloomfield.github.io/ccc/hws/arbitrage/
 
-# The filename of this file must be 'dex.py', else the submission
+# The filename of this file must be 'arbitrage.py', else the submission
 # verification routines will not work properly.
 
 # You are welcome to have additional variables or fields in this file; you

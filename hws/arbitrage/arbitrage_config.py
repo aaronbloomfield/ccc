@@ -14,12 +14,6 @@ config = {
     'tokencc_addr': '0x123456789abcdef0123456789abcdef123456789',
 }
 
-# This should do nothing for now -- we are going to use it when grading.  You
-# should call this first thing once the program starts, but after the import
-# lines.
-def hook():
-    pass
-
 # This will print the output into the format required by the homework.  It
 # should not be changed.
 def output(ethAmt, tcAmt, fees, holdings):
