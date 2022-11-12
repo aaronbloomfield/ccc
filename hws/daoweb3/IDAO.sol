@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
+// This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
 import "./IERC165.sol";

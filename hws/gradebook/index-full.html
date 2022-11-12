@@ -5,35 +5,41 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Gradebook Smart Contract</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
   <script>
   function openTab(evt, tabName) {
     // Declare all variables
     var i, tabcontent, tablinks;
-  
+
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
-  
+
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-  
+
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
   </script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="gradebook-smart-contract">Gradebook Smart Contract</h1>
@@ -136,9 +142,9 @@ interface IGradebook {
 <h4 id="testing">Testing</h4>
 <p>You will invariably run into issues testing and debugging your code. We have a few tips and tricks.</p>
 <ul>
-<li>Use <code>require()</code>. A lot. And be sure to use the <a href="../../slides/solidity.html#/require">two-parameter version of <code>require()</code></a>.</li>
-<li>Keep in mind the <a href="../../slides/solidity.html#/debugging">Solidity testing &amp; debugging ideas</a> from the lecture slides</li>
-<li>Once you have tested it in the Javascript deployment environment, you will want to interact with our private blockchain, as described in the <a href="../dappintro/index.html">dApp introduction</a> assignment. Remember that, in Remix, when you initiate a transaction (orange button) – rather than a call (blue button) – you can then view it on the explorer (once it is mined into the blockchain and the explorer updates).</li>
+<li><p>Use <code>require()</code>. A lot. And be sure to use the <a href="../../slides/solidity.html#/require">two-parameter version of <code>require()</code></a>.</p></li>
+<li><p>Keep in mind the <a href="../../slides/solidity.html#/debugging">Solidity testing &amp; debugging ideas</a> from the lecture slides</p></li>
+<li><p>Once you have tested it in the Javascript deployment environment, you will want to interact with our private blockchain, as described in the <a href="../dappintro/index.html">dApp introduction</a> assignment. Remember that, in Remix, when you initiate a transaction (orange button) – rather than a call (blue button) – you can then view it on the explorer (once it is mined into the blockchain and the explorer updates).</p></li>
 <li><p>In Remix you are going to end up calling a bunch of functions to initialize your smart contract for testing – for example, to create a few assignments, add some scores, etc. Once you know those functions work properly, you can put them in the constructor, as such. This will save you time, but <strong>BE SURE</strong> to remove those lines once you are finished testing it and prior to submission. For example:</p>
 <pre><code>designateTA(0x0123456789abcdef0123456789abcdef01234567);
 addAssignment(&quot;HW1&quot;,10);
