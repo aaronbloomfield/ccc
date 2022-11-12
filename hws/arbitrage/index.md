@@ -84,7 +84,7 @@ You will need to read the [introduction to web3.py](../../docs/web3py.html) ([md
 
 #### When to make an trade
 
-Your program will need to compute it's *holdings*, which is the dollar amount of all the ETH and TC that it has.  You can assume some fixed price for ETH (say, $100) and for TC (say, $1) for initial testing -- but that means that your DEXes should have about 100 times as much TC as ETH.  Eventually you will need to use the variable price for ether and the correct value for TC.
+Your program will need to compute it's *holdings*, which is the dollar amount of all the ETH and TC that it has.  You can assume some fixed price for ETH (say, $100) and for TC (say, $1) for initial testing -- but that means that your DEXes should have about 100 times as much TC as ETH.  
 
 You will first need to obtain the various information (prices, $x$/$y$/$k$ values at each DEX, etc.).  Then you will need to make a *profitable trade*.  A profitable trade is defined here as a trade where the overall value of *holdings*, in USD, increases.  You must account for gas fees when determining this!  The formula to determine if you will make a profit is whether:
 
@@ -146,9 +146,9 @@ A few notes on those:
 
 Your assignment is to create a program that attempts to make a profit by arbitrage trading.  For the purposes of this assignment, a *profit* means an increase in the value of your holdings in USD; the holdings are computed from the amount of ETH and TC your program controls as well as the current price of each.  
 
-You must take gas estimation into account!  Otherwise, if you were only to make 0.001 ETH, but it costs 0.002 ETH in gas, you are losing money.  How to estimate gas fees is discussed on the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)) page -- once you create a transaction, you call `eth.estimateGas()`.  Note that if you are exchanging TC for ETH, then your gas fees will be double, as you have to call `approve()` first on the TokenCC contract, and then `exchangeTokenForEther()` on the DEX.  In this case, for our purposes, you can just estimate the gas for the first transaction and just double it.  The expected gas values will be in the tens of thousands of gas -- 36,000 to 65,000 is a reasonable guess, but yours may be higher or lower.
+You must take gas estimation into account!  Otherwise, if you were only to make 0.001 ETH, but it costs 0.002 ETH in gas, you are losing money.  How to estimate gas fees is discussed on the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)) page -- once you create a transaction, you call `eth.estimateGas()`.  The expected gas values will be in the tens of thousands of gas -- 36,000 to 65,000 is a reasonable guess, but yours may be higher or lower.
 
-When providing a transaction, you also have to supply the gasPrice.  **For this assignment, we will select a standard 10 gwei as the gas price.**  The gas estimate (perhaps doubled) times the gas cost (10 gwei) will allow you to compute the cost of gas in ether, which is the $g$ variable in the formulas above.
+When providing a transaction, you also have to supply the gasPrice.  **For this assignment, we will select a standard 10 gwei as the gas price.**  The gas estimate times the gas cost (10 gwei) will allow you to compute the cost of gas in ether, which is the $g$ variable in the formulas above.
 
 Your program must be in Python.  It must be named `arbitrage_trading.py`.
 
@@ -182,7 +182,7 @@ You may assume that the arbitrage_config.py will always be present and properly 
 
 - `account_address`: the address of the Ethereum account that this program is controlling -- it is the balance that this account has, in both ETH and TC, that constitutes the holdings of this account
 - `account_private_key`: the (decrypted) private key for that account, used to initiate transactions; this must be in the exact format shown above
-    - You will have obtained the decrypted version of your private key in the [Private Ethereum Blockchain](ethprivate/index.html) -- you may have to run through that part again if you lost it or are now using a different key
+    - You will have obtained the decrypted version of your private key in the [Private Ethereum Blockchain](../ethprivate/index.html) assignment -- you may have to run through that part again if you lost it or are now using a different key
     - That key was likely in the form `b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'` -- just copy the hex code (meaning without the leading `b'` and trailing `'`) into the `HexBytes()` constructor to make it the same format as the code above.
 - `connection_is_ipc`: whether the connection URI (which is on the next line in this file) is a geth.ipc file or a URL -- this will determine how the web3 provider is created
     - Your code MUST be able to handle both types of connections!

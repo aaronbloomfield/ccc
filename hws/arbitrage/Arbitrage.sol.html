@@ -12,8 +12,9 @@ http://www.gnu.org/software/src-highlite -->
 import <font color="#FF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./DEX.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC20Receiver.sol"</font><font color="#990000">;</font>
 
-<font color="#008080">contract</font> Arbitrage <font color="#FF0000">{</font>
+contract Arbitrage <font color="#008080">is</font> IERC20Receiver <font color="#FF0000">{</font>
 
     <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>uint <font color="#990000">=&gt;</font> <font color="#008080">address</font> payable<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> dexes<font color="#990000">;</font>
     uint <font color="#008080">public</font> num_dexes<font color="#990000">;</font>
@@ -72,5 +73,8 @@ import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color=
     <i><font color="#9A1900">// this allows this contract to receive a payment</font></i>
     <b><font color="#000000">receive</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable <font color="#FF0000">{</font> <font color="#FF0000">}</font>
 
+    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font>address <i><font color="#9A1900">/* from */</font></i><font color="#990000">,</font> uint <i><font color="#9A1900">/* amount */</font></i><font color="#990000">,</font> address <i><font color="#9A1900">/* erc20 */</font></i><font color="#990000">)</font> external <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>

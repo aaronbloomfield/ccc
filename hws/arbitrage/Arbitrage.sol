@@ -8,8 +8,9 @@ pragma solidity ^0.8.16;
 import "./TokenCC.sol";
 import "./DEX.sol";
 import "./EtherPriceOracleConstant.sol";
+import "./IERC20Receiver.sol";
 
-contract Arbitrage {
+contract Arbitrage is IERC20Receiver {
 
     mapping (uint => address payable) public dexes;
     uint public num_dexes;
@@ -68,4 +69,7 @@ contract Arbitrage {
     // this allows this contract to receive a payment
     receive() external payable { }
 
+    function onERC20Received(address /* from */, uint /* amount */, address /* erc20 */) external pure returns (bool) {
+        return true;
+    }
 }
