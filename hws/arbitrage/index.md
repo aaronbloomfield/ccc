@@ -169,7 +169,6 @@ config = {
     'dex_addrs': ['0x123456789abcdef0123456789abcdef123456789', '0x123456789abcdef0123456789abcdef123456789', 
                   '0x123456789abcdef0123456789abcdef123456789', '0x123456789abcdef0123456789abcdef123456789',
                   '0x123456789abcdef0123456789abcdef123456789'],
-    'dex_fees': 0.005, # 0.5%, or from the DEX assignment: feeNumerator = 5, feeDenominator = 1000
     'tokencc_addr': '0x123456789abcdef0123456789abcdef123456789',
     'max_eth_to_trade': 10.0,
     'max_tc_to_trade': 100.0,
@@ -250,14 +249,14 @@ When testing this code, you can open up the appropriate WebSocket port when you 
 
 To help you in your testing, we have deployed six DEXes that all trade the same coin, but at different rates.  The coin is Dragon Dice Coin (DDC), whose image is shown to the right.  The six different DEXes all trade at a *fixed* exchange rate -- which means that multiple trades will *not* change their $x$, $y$, or $k$ values.  This is not realistic in a real-world situation, of course, but it is useful for testing.  The six different DEXes have the icons of different sided dice, which correspond to their exchange rates:
 
-- [![](img/d4c.webp){style='width:50px;vertical-align:middle'}](img/d4c.webp){target='_blank'} D4 exchanges at a rate of 1:4 (ETH:TC)
-- [![](img/d6c.webp){style='width:50px;vertical-align:middle'}](img/d6c.webp){target='_blank'} D6 exchanges at a rate of 1:6 (ETH:TC)
-- [![](img/d8c.webp){style='width:50px;vertical-align:middle'}](img/d8c.webp){target='_blank'} D8 exchanges at a rate of 1:8 (ETH:TC)
-- [![](img/d10c.webp){style='width:50px;vertical-align:middle'}](img/d10c.webp){target='_blank'} D10 exchanges at a rate of 1:10 (ETH:TC)
-- [![](img/d12c.webp){style='width:50px;vertical-align:middle'}](img/d12c.webp){target='_blank'} D12 exchanges at a rate of 1:12 (ETH:TC)
-- [![](img/d20c.webp){style='width:50px;vertical-align:middle'}](img/d20c.webp){target='_blank'} D20 exchanges at a rate of 1:20 (ETH:TC)
+- [![](img/d4c.webp){style='width:50px;vertical-align:middle'}](img/d4c.webp){target='_blank'} D4 exchanges at a rate of 1:4 (ETH:DDC)
+- [![](img/d6c.webp){style='width:50px;vertical-align:middle'}](img/d6c.webp){target='_blank'} D6 exchanges at a rate of 1:6 (ETH:DDC)
+- [![](img/d8c.webp){style='width:50px;vertical-align:middle'}](img/d8c.webp){target='_blank'} D8 exchanges at a rate of 1:8 (ETH:DDC)
+- [![](img/d10c.webp){style='width:50px;vertical-align:middle'}](img/d10c.webp){target='_blank'} D10 exchanges at a rate of 1:10 (ETH:DDC)
+- [![](img/d12c.webp){style='width:50px;vertical-align:middle'}](img/d12c.webp){target='_blank'} D12 exchanges at a rate of 1:12 (ETH:DDC)
+- [![](img/d20c.webp){style='width:50px;vertical-align:middle'}](img/d20c.webp){target='_blank'} D20 exchanges at a rate of 1:20 (ETH:DDC)
 
-Just to clarify: all six of these DEXes exchange the same DDC coin, but at different exchange rates.  The individual dice images are used for the images of the DEXes; the multi-dice image to the right is the image of the coin.  The DEXes all follow the [IDEX.sol](../dex/IDEX.sol.html) ([src](../dex/IDEX.sol) interface, and the DDC coin follows the [ITokenCC.sol](../tokens/ITokenCC.sol.html) ([src](../tokens/ITokenCC.sol)) interface.
+Just to clarify: all six of these DEXes exchange the same DDC coin, but at different exchange rates.  The individual dice images are used for the images of the DEXes; the multi-die image to the right is the image of the coin.  The DEXes all follow the [IDEX.sol](../dex/IDEX.sol.html) ([src](../dex/IDEX.sol)) interface, and the DDC coin follows the [ITokenCC.sol](../tokens/ITokenCC.sol.html) ([src](../tokens/ITokenCC.sol)) interface.
 
 The addresses of all these DEXes, as well as DDC, are on the Collab landing page.
 
@@ -271,11 +270,11 @@ Of course, you can also exchange ether for DDC with any of the DEXes to obtain D
 
 The problem with fixed exchange rates is that it is easy to deplete the DEX of funds -- one could exchange 1 ETH for 20 TC via the D20 DEX, then back for 5 ETH via the D4 DEX, and repeat forever.  This would deplete the reserves of the DEXes and also cause the blockchain size to balloon.  It would also prevent other students from using the DEXes.  For this reason, there are three limiters in effect for DDC and these DEXes:
 
-- You may not make more than 1 exchange to a given DEX every 5 minutes (300 seconds).  This is checked by looking at the block timestamp.  Remix will not always be able to judge correctly when 5 minutes has passed; see the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) for details (in the "Notes and Hints" tab, under "`block.timestamp()` behavior").  This time limit is per DEX, so if you exchange with one DEX, you can still exchange with another right away.
+- You may not make more than 1 exchange to a given DEX every 5 minutes (300 seconds).  This is checked by looking at the block timestamp.  Remix will not always be able to judge correctly when 5 minutes has passed; see the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) for details (in the "Notes and Hints" tab, under "`block.timestamp()` behavior").  This time limit is per DEX, so if you exchange with one DEX, you can still exchange with another DEX right away.
 - You may not receive more than 10,000 ether from all of these DEXes combined.  This is a total, and is independent of how much you have paid back to the DEXes.  Thus, if you exchange for 10,000 ether from one of the DEXes, and then exchange it back for DDC with that same DEX, this limit will still take effect and none of these six DEXes will allow any further exchanges for ether.  Thus, you should try exchanging for smaller values (say, 10 ether).
 - You may not own more than 100,000 DDC at any one time.  Unlike the previous limitation, this is a single snapshot, so if you are at the limit, and you exchange some back, you can then exchange for more DDC.
 
-These values can be changed by the course instructor, although that may take some time (i.e., it's not instantaneous).  However, you should use smaller amounts -- don't start by trading in a huge amount of ether, or all of your DDC, as this will cause you to hit your limits very quickly.
+These values can be changed by the course instructor, although that may take some time (i.e., it's not instantaneous).  However, you should use smaller amounts in your testing -- don't start by trading in a huge amount of ether, or all of your DDC, as this will cause you to hit your limits very quickly.
 
 Keep in mind that the difficult part of this assignment is making the calculations.  During testing you can have your code make those calculations, print out the result (and lots of intermediate values), but not make the actual trade on the blockchain.  When you finally submit your solution, it should print out exactly one line, as described above, and make the trade.
 
@@ -283,7 +282,33 @@ Lastly, these DEXes have the ability to be "turned off" so that any attempt at a
 
 #### Usage
 
-The different DEX addresses are on the Collab landing page, and also provided in the arbitrage_config.py file.  THe intent is for you to comment out different DEXes in that file so that you can test it with different pairs.  The provided [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Collab landing page does.
+The different DEX addresses are on the Collab landing page, and also provided in the arbitrage_config.py file.  The intent is for you to comment out different DEXes in that file so that you can test it with different pairs.  The provided [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Collab landing page does.
+
+Let's assume a standard price ratio of 1:10 (ETH:DDC).  This means that the arbitrage_config.py file will have lines such as:
+
+```
+'price_eth': 100.00,
+'price_tc': 10.0, 
+```
+
+This is as is provided in the arbitrage_config.py file on the Collab landing page.  Furthermore, the provided file can has your `dex_addrs` key formatted as follows:
+
+```
+'dex_addrs': [
+              '0x123456789abcdef0123456789abcdef123456789', # d4 dex
+              '0x123456789abcdef0123456789abcdef123456789', # d6 dex
+              '0x123456789abcdef0123456789abcdef123456789', # d8 dex
+              '0x123456789abcdef0123456789abcdef123456789', # d10 dex
+              '0x123456789abcdef0123456789abcdef123456789', # d12 dex
+              '0x123456789abcdef0123456789abcdef123456789', # d20 dex
+             ],
+```
+
+You can easily comment out different DEXes for your testing.  The following three examples assume the prices listed above ($10 for DDC and $100 for ETH).
+
+- If only the lower three DEXes that are available (d4, d6, and d8), then it will be more profitable to exchange DDC for ETH at the lowest numbered DEX available.  Exchanging 4 DDC ($40) for 1 ETH ($100) at the d4 DEX will generate a profit of $60 minus fees.  This is better than exchanging at the d6 DEX (profit of $40 minus fees) and the d8 DEX (profit of $20 minus fees).
+- If only the upper three DEXes available, then the most profitable exchange will be the highest numbered DEX.  Exchanging 1 ETH ($100) for 20 DDC ($200) will generate a profit of $100 minus fees.  This is better than exchanging at the d12 DEX (profit of $20 minus fees).
+- The d10 DEX is never profitable.  It exchanges at the same rate as the current prices, but once fees (both DEX and gas) are subtracted, money will be lost.
 
 #### Examples
 
