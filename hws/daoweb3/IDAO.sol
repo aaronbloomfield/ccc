@@ -84,13 +84,13 @@ interface IDAO is IERC165 {
     // @return A description of what one has to do to join this DAO
     function howToJoin() external view returns (string memory);
 
-    // This is the amount of ether that has been reserved for proposals.  This
-    // is increased by the proposal amount when a new proposal is created,
-    // thus "reserving" those ether from being spent on another proposal
-    // while this one is still being voted upon.  If a proposal succeeds,
-    // then the proposal amount is paid out.  In either case, once the voting
-    // period for the proposal ends, this amount is reduced by the proposal
-    // amount.
+    // This is the amount of ether (in wei) that has been reserved for
+    // proposals.  This is increased by the proposal amount when a new
+    // proposal is created, thus "reserving" those ether from being spent on
+    // another proposal while this one is still being voted upon.  If a
+    // proposal succeeds, then the proposal amount is paid out.  In either
+    // case, once the voting period for the proposal ends, this amount is
+    // reduced by the proposal amount.
     //
     // @return The amount of ether, in wei, reserved for proposals
     function reservedEther() external view returns (uint);

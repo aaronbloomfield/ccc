@@ -95,13 +95,13 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">// @return A description of what one has to do to join this DAO</font></i>
     <font color="#008080">function</font> <b><font color="#000000">howToJoin</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// This is the amount of ether that has been reserved for proposals.  This</font></i>
-    <i><font color="#9A1900">// is increased by the proposal amount when a new proposal is created,</font></i>
-    <i><font color="#9A1900">// thus "reserving" those ether from being spent on another proposal</font></i>
-    <i><font color="#9A1900">// while this one is still being voted upon.  If a proposal succeeds,</font></i>
-    <i><font color="#9A1900">// then the proposal amount is paid out.  In either case, once the voting</font></i>
-    <i><font color="#9A1900">// period for the proposal ends, this amount is reduced by the proposal</font></i>
-    <i><font color="#9A1900">// amount.</font></i>
+    <i><font color="#9A1900">// This is the amount of ether (in wei) that has been reserved for</font></i>
+    <i><font color="#9A1900">// proposals.  This is increased by the proposal amount when a new</font></i>
+    <i><font color="#9A1900">// proposal is created, thus "reserving" those ether from being spent on</font></i>
+    <i><font color="#9A1900">// another proposal while this one is still being voted upon.  If a</font></i>
+    <i><font color="#9A1900">// proposal succeeds, then the proposal amount is paid out.  In either</font></i>
+    <i><font color="#9A1900">// case, once the voting period for the proposal ends, this amount is</font></i>
+    <i><font color="#9A1900">// reduced by the proposal amount.</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// @return The amount of ether, in wei, reserved for proposals</font></i>
     <font color="#008080">function</font> <b><font color="#000000">reservedEther</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
