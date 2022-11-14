@@ -291,7 +291,7 @@ Let's assume a standard price ratio of 1:10 (ETH:DDC).  This means that the arbi
 'price_tc': 10.0, 
 ```
 
-This is as is provided in the arbitrage_config.py file on the Collab landing page.  Furthermore, the provided file can has your `dex_addrs` key formatted as follows:
+This is as is provided in the arbitrage_config.py file on the Collab landing page.  Furthermore, the provided file has the `dex_addrs` list formatted as follows:
 
 ```
 'dex_addrs': [
