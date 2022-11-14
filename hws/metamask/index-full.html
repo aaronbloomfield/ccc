@@ -51,13 +51,32 @@
 <li><a href="../ethprivate/index.html">Private Ethereum Blockchain</a> (<a href="../ethprivate/index">md</a>)</li>
 <li><a href="../daoweb3/index.html">DAO &amp; web3</a> (<a href="../daoweb3/index.md">md</a>) (this is for the experience with web3; the artifacts of that assignment are not needed for the current one)</li>
 <li><a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>)</li>
-<li><a href="../arbitrage/index.html">Arbitrage trading</a> (<a href="../arbitrage/index.md">md</a>) (this is for the experience with web3; the artifacts of that assignment are not needed for the current one)</li>
+<li><a href="../arbitrage/index.html">Arbitrage trading</a> (<a href="../arbitrage/index.md">md</a>) (this is also for the experience with web3; the artifacts of that assignment are not needed for the current one)</li>
 <li><a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>)</li>
 </ul>
+<p>We are going to use your Auctioneer contract, from the <a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>) assignment. You will also need your NFTmanager contract, from the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment, as well. If you did not get yours working, then contact the course staff, and we can deploy them for you to use. Otherwise, deploy your Auctioneer contract to the blockchain, and save the contract address, as it will be needed below.</p>
+<p>In addition to your source code, you will submit an edited version of <a href="metamask.py.html">metamask.py</a> (<a href="metamask.py">src</a>).</p>
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-<h4 id="auctioneer">Auctioneer</h4>
-<p>We are going to use your Auctioneer contract, from the <a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>) assignment. You will also need your NFTmanager contract, from the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment, as well. If you did not get yours working, then contact the course staff, and we can deploy them for you to use. Otherwise, deploy your Auctioneer contract to the blockchain, and save the contract address, as it will be needed below.</p>
+<h3 id="code-change">Code Change</h3>
+<p>To make your life easier, we are going to have you make a few small code changes to your <code>Auctioneer.sol</code> file, the updated version of which should be called <code>Auctioneer2.sol</code>. We want to add a <code>mintNFT()</code> function that calls the <code>mintWithURI()</code> function on it’s NFTManager. Having this function in your auction contract will make it much easier to write the web page, as you will only have to interact with one contract.</p>
+<p>We are going to use the following IAuctioneer2 interface:</p>
+<pre><code>interface IAuctioneer2 is IAuctioneer {
+    function mintNFT(string memory uri) external returns (uint);
+}</code></pre>
+<p>This just adds that one function.</p>
+<p>The changes are as follows:</p>
+<ul>
+<li>Copy your <code>Auctioneer.sol</code> file to <code>Auctioneer2.sol</code>; all further changes herein are to the <code>Auctioneer2.sol</code> file</li>
+<li>Download <a href="IAuctioneer2.sol.html">IAuctioneer2.sol</a> (<a href="IAuctioneer2.sol">src</a>) file</li>
+<li>Your <code>Auctioneer2.sol</code> should import <code>IAuctioneer2.sol</code> instead of <code>IAuctioneer.sol</code>, and extend <code>IAuctioneer2</code> instead of <code>IAuctioneer</code></li>
+<li>Your <code>supportsInterface()</code> should now support the <code>IAuctioneer2</code> interface in addition to the others it currently supports</li>
+<li>You should add the following function to your <code>IAuctioneer2</code> contract:</li>
+</ul>
+<pre><code>function mintWithURI(string memory uri) public returns (uint) {
+    NFTManager(nftmanager).mintWithURI(uri);
+}</code></pre>
+<p>That’s it!</p>
 <h3 id="metamask-setup">MetaMask Setup</h3>
 <p><img src="metamask-pop-up.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>This assignment uses the <a href="https://metamask.io/">MetaMask</a> extension to Google Chrome. Unfortunately, it does not run in any other browser; meaning you can’t use Firefox, Safari, Edge, or Internet Explorer. You have to use Chrome for this assignment.</p>
@@ -80,7 +99,7 @@
 <li>Change the explorer URL to the URL of the course explorer (on the Collab landing page)</li>
 <li>Then click save</li>
 </ul></li>
-<li>Back in the network selection box, you should now be able to select “localhost:8545” as your network – this is going to connect to the get node that we will be starting in a moment</li>
+<li>Back in the network selection box, you should now be able to select “localhost:8545” as your network – this is going to connect to the geth node that we will be starting in a moment</li>
 </ul></li>
 <li>Obtain your decrypted private key for the account that you want to use. This was done in Part 4 of the <a href="../ethprivate/index.html#part-4-extract-private-key">Private Ethereum Blockchain</a> (<a href="../ethprivate/index">md</a>) assignment, and you also used that in the <a href="../arbitrage/index.html">Arbitrage trading</a> (<a href="../arbitrage/index.md">md</a>) assignment. It will be a hex value of the form <code>0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef</code></li>
 <li>Start your geth node. Among any other flags that you are using, you need to supply the <code>--http</code> flag when you start geth
@@ -97,7 +116,8 @@
 <li>You will likely want to rename the account – MetaMask just calls them “account 1”, “account 2”, etc., and makes it hard to delete “account 1”. To rename your account, in the MetaMask window in the image to the right, click on the vertical ellipsis (⋮) to the right of the account name, then click on “account details”, then click on the pencil/edit icon to the right of the account name.</li>
 </ul></li>
 </ol>
-<p>At this point, the MetaMask extension should be connected to your account on the private Ethereum blockchain – you can tell if this is the case because it will report your balance in the MetaMask window. Note that if you restart Chrome, you may have to enter your MetaMask password. Also, it will say “Not connected” to the left of the account name – that’s fine for now, since we have not yet created a web page for it to connect to. <br clear="all"></p>
+<p>At this point, the MetaMask extension should be connected to your account on the private Ethereum blockchain – you can tell if this is the case because it will report your balance in the MetaMask window. Note that if you restart Chrome, you may have to re-enter your MetaMask password. Also, it will say “Not connected” to the left of the account name – that’s fine for now, since we have not yet created a web page for it to connect to; that “Not connected” is not indicating a the presence (or lack thereof) of a connection to the blockchain.</p>
+<p><br clear="all"></p>
 <!---
 
 ### Background: Function Call Encoding
@@ -191,9 +211,9 @@ let web3mm = new Web3(window.ethereum);</code></pre>
 <h3 id="the-task">The Task</h3>
 <p><img src="final-web-page.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>Finally! We can get to the whole reason for this party.</p>
-<p>Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the <a href="../auction/IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="../auction/IAuctioneer.sol">src</a>) interface. Our web page looked like the image to the right; this is the bottom of the web page, and the auction table itself was above what is shown. Yours need not look similar, but it does need to be usable.</p>
-<p>As you are starting with the web site that was provided to you in the <a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>) assignment (see below for starting on that), the read-only parts of this assignment are already done for you. You will have to change the contract ID, of course – you should hard-code that into your HTML / Javascript code (just replace the address that is there – it may be there multiple times). Note: you have to view that page with an address else most of the relevant code will not be shown. The link to that page with an address is on the Collab landing page.</p>
-<p>For this assignment, you only need to create an interface with four of the Auctioneer functions – <code>createAuction()</code>, <code>closeAuction()</code>, <code>placeBid()</code>, and <code>mintNFT()</code>. You will also need to have a means to transfer the NFT over, which is discussed next. Note that the interface for <code>mintNFT()</code> was provided for you, above. In particular, you do NOT have to create an interface for <code>cancelAuction()</code>. We discussed how to create a HTML form interface, and the Javascript code to make it work, above.</p>
+<p>Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the <a href="../auction/IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="../auction/IAuctioneer.sol">src</a>) interface. Our web page looked like the image to the right; this is the bottom of our web page, and the auction table itself was above what is shown. Yours need not look similar, but it does need to be usable.</p>
+<p>As you are starting with the web site that was provided to you in the <a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>) assignment (see above for starting on that), the read-only parts of this assignment are already done for you. You will have to change the contract ID, of course – you should hard-code that into your HTML / Javascript code (just replace the address that is there – it may be there multiple times). Note: you have to view the original auctions page with an address else most of the relevant code will not be shown. The link to that page with an address is on the Collab landing page.</p>
+<p>For this assignment, you only need to create an interface with four of the Auctioneer functions – <code>startAuction()</code>, <code>closeAuction()</code>, <code>placeBid()</code>, and <code>mintNFT()</code>. You will also need to have a means to transfer the NFT over, which is discussed next. Note that the interface for <code>mintNFT()</code> was provided for you, above. We discussed how to create a HTML form interface, and the Javascript code to make it work, above.</p>
 <p>In addition to those four functions to the Auctioneer, you will also need a function that allows the transfer of an NFT over. This is the <code>safeTransferFrom()</code> function call in <a href="../auctions/IERC721.sol.html">IERC721.sol</a> – and recall that the NFTmanager inherits from that contract. Thus, you will need to create a contract interface to that contract (similar to how <code>auctionContractmm</code> was created) – be sure to use <code>web3mm</code>! You can hard-code the address for the NFTmanager, and you can obtain that by calling <code>nftmanager()</code> on your Auctioneer contract. Note that two of the three parameters are already known – the <code>from</code> (the account that MetaMask uses, which was obtained in the <code>mintNFT()</code> function, above) and the <code>to</code> (the address of the Auctioneer contract). So only the NFT ID is what is needed.</p>
 <p>For the <code>placeBid()</code> function, you will have to take in the amount that they want to bid. This should be a floating-point value of the ether to place the bid for, and your Javascript will have to convert that to wei.</p>
 <p>The forms for these five functions should be on that same page – in particular, you will only be submitting one page, called <code>auctions.html</code> (note the plurality of the filename!). You can put those forms on the bottom, along with the MetaMask connect button described above. As with the <a href="../daoweb3/index.html">DAO &amp; web3</a> (<a href="../daoweb3/index.md">md</a>) assignment, since this is not a course in user interfaces, it will not be graded on it’s beauty. But it still has to be usable.</p>
@@ -210,9 +230,9 @@ let web3mm = new Web3(window.ethereum);</code></pre>
 <li>Ensure that the resulting page does not display any errors (view the console in the developer tools)</li>
 <li>View the source of the web page</li>
 <li>Save that into auctions.html</li>
-<li>Deploy auctions.html to your account on the departmental server</li>
+<li>Deploy auctions.html to your account on the departmental server in your <code>~/public_html/</code> directory</li>
 <li>View that page – ensure it shows the same result, and also has no errors</li>
-<li>Edit that file, and update the ABIs to the new versions: <a href="AuctionManager.abi">AuctionManager.abi</a> for <code>auctioneerAbi</code> and <a href="IERC721full.abi">IERC721.abi</a> for <code>nftManagerAbi</code></li>
+<li>Edit that file, and update the ABIs to the new versions: <a href="IAuctioneer2.abi">IAuctioneer2.abi</a> for <code>auctioneerAbi</code> and <a href="IERC721Metadata.abi">IERC721Metadata.abi</a> for <code>nftManagerAbi</code></li>
 <li>Add the code provided above:
 <ul>
 <li>The declaration of the <code>web3mm</code> variable and the <code>auctionContractmm</code> variable</li>

@@ -1,7 +1,7 @@
-# Submission information for the Ethereum Tokens HW
-# https://aaronbloomfield.github.io/ccc/hws/tokens/
+# Submission information for the Metamask HW
+# https://aaronbloomfield.github.io/ccc/hws/metamask/
 
-# The filename of this file must be 'tokens.py', else the submission
+# The filename of this file must be 'IAuctioneer.py', else the submission
 # verification routines will not work properly.
 
 # You are welcome to have additional variables or fields in this file; you
@@ -26,11 +26,12 @@ eth_coinbase = ""
 # the address.
 contracts = {
 
-	# Your Auctioneer_v2 smart contract.  All of the transactions below are
+	# Your Auctioneer smart contract.  All of the transactions below are
 	# assumed to come from this contract. The address does not need to be in
 	# checksummed form.  It must have been deployed by the eth_coinbase
-	# address, above.
-	'auctioneer_v2': '',
+	# address, above.  This can be re-deployed for this assignment, or the
+	# same one as for your auctions assignment.
+	'auctioneer': '',
 
 }
 
@@ -39,7 +40,7 @@ contracts = {
 # assignment.
 other = {
 	
-	# nothing is required in this diectionary for this assignment
+	# nothing is required in this dictionary for this assignment
 
 }
 
@@ -52,8 +53,8 @@ other = {
 sanity_checks = {
 	
 	# Is the URL of your auctions.html exactly:
-	# https://www.cs.virginia.edu/~mst3k/auctions.html, where 'mst3k' is your
-	# userid?
+	# https://www.cs.virginia.edu/~mst3k/auctions.html
+	# where 'mst3k' is your userid?
 	'auctions_url_is_correct': False,
 
 	# Did you add three auctions to your auctions.html page?  There is no

@@ -9,10 +9,10 @@ http://www.gnu.org/software/src-highlite">
 <title>metamask.py</title>
 </head>
 <body bgcolor="white">
-<pre><tt><i><font color="#9A1900"># Submission information for the Ethereum Tokens HW</font></i>
-<i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/tokens/</font></i>
+<pre><tt><i><font color="#9A1900"># Submission information for the Metamask HW</font></i>
+<i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/metamask/</font></i>
 
-<i><font color="#9A1900"># The filename of this file must be 'tokens.py', else the submission</font></i>
+<i><font color="#9A1900"># The filename of this file must be 'IAuctioneer.py', else the submission</font></i>
 <i><font color="#9A1900"># verification routines will not work properly.</font></i>
 
 <i><font color="#9A1900"># You are welcome to have additional variables or fields in this file; you</font></i>
@@ -37,11 +37,12 @@ eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
 <i><font color="#9A1900"># the address.</font></i>
 contracts <font color="#990000">=</font> <font color="#990000">{</font>
 
-	<i><font color="#9A1900"># Your Auctioneer_v2 smart contract.  All of the transactions below are</font></i>
+	<i><font color="#9A1900"># Your Auctioneer smart contract.  All of the transactions below are</font></i>
 	<i><font color="#9A1900"># assumed to come from this contract. The address does not need to be in</font></i>
 	<i><font color="#9A1900"># checksummed form.  It must have been deployed by the eth_coinbase</font></i>
-	<i><font color="#9A1900"># address, above.</font></i>
-	<font color="#FF0000">'auctioneer_v2'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+	<i><font color="#9A1900"># address, above.  This can be re-deployed for this assignment, or the</font></i>
+	<i><font color="#9A1900"># same one as for your auctions assignment.</font></i>
+	<font color="#FF0000">'auctioneer'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -50,7 +51,7 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># assignment.</font></i>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
-	<i><font color="#9A1900"># nothing is required in this diectionary for this assignment</font></i>
+	<i><font color="#9A1900"># nothing is required in this dictionary for this assignment</font></i>
 
 <font color="#990000">}</font>
 
@@ -63,8 +64,8 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># Is the URL of your auctions.html exactly:</font></i>
-	<i><font color="#9A1900"># https://www.cs.virginia.edu/~mst3k/auctions.html, where 'mst3k' is your</font></i>
-	<i><font color="#9A1900"># userid?</font></i>
+	<i><font color="#9A1900"># https://www.cs.virginia.edu/~mst3k/auctions.html</font></i>
+	<i><font color="#9A1900"># where 'mst3k' is your userid?</font></i>
 	<font color="#FF0000">'auctions_url_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you add three auctions to your auctions.html page?  There is no</font></i>
