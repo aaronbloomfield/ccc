@@ -3,7 +3,7 @@ digraph A {
     node [fontname = "Helvetica",shape=circle,width=1.2,fixedsize=true];
     edge [fontname = "Helvetica"];
 
-    null [shape=point,style=invis,width=0];
+    #null [shape=point,style=invis,width=0];
     hws4 [label="HW S4\nethrpivate"];
     hws5 [label="HW S5\ndappintro"];
     hwp5 [label="HW P5\ngradebook"];
@@ -14,17 +14,20 @@ digraph A {
     hwp10 [label="HW P10\narbitrage"];
     hwp11 [label="HW P11\nmetamask"];
 
-    null -> hws4;
-    hws4 -> hws5;
-    hws5 -> hwp5;
-    hws5 -> hwp6;
+    {rank=same hwp7 hwp8 hwp9}
+
+    #null -> hws4;
+    hws4 -> hws5 [style=dashed];
+    hws5 -> hwp5 [style=dashed];
+    hws5 -> hwp6 [style=dashed];
     hwp6 -> hwp7;
     hwp6 -> hwp8;
     hwp6 -> hwp9;
     hwp8 -> hwp10;
     hwp7 -> hwp11;
-    hwp9 -> hwp11;
-    hwp6 -> hwp10 [style=dashed];
-    hwp6 -> hwp11 [style=dashed];
+    hwp9 -> hwp11 [style=dashed];
+    hwp6 -> hwp10;
+    hwp6 -> hwp11;
+    hwp10 -> hwp11 [style=dashed];
 
 }

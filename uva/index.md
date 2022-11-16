@@ -47,7 +47,7 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
-- Due Tue, 11/15 by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
+- Due Tue, ~~11/15~~ (now 11/29) by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
 - Due Wed, 11/9 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
 - Due Tue, 11/1 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
 - Due Tue, 10/25, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
@@ -101,7 +101,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 20. Wed, Nov 2: [Blockchain applications](../slides/applications.html#/) (actual: finished applications)
 21. Mon, Nov 7: [Stablecoins](../slides/stablecoins.html#/) (actual: stablecoins to slide 7.13)
 22. Wed, Nov 9: [zkSNARKs](../slides/zksnarks.html#/) (actual: finished stablecoins, scalability to 4.6)
-23. Mon, Nov 14: [Scalability](../slides/scalability.html#/)
+23. Mon, Nov 14: [Scalability](../slides/scalability.html#/) (no UVA classes today, so no progress)
 24. Wed, Nov 16: [Scalability](../slides/scalability.html#/)
 25. Mon, Nov 21: [Algorand](../slides/algorand.html#/)
 26. Mon, Nov 28: [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/)

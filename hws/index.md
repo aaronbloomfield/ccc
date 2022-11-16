@@ -35,4 +35,6 @@ These are smaller homeworks that take less time.  They are often readings or sel
 
 ### Homework dependencies
 
+A dashed arrow means the concepts are used, whereas a solid arrow means that the artifacts created (programs) are used.
+
 <img src="hwflow.svg" style="width:300px">
