@@ -102,7 +102,7 @@ This is just an estimate, and will not always be updated if we veer off track.  
 21. Mon, Nov 7: [Stablecoins](../slides/stablecoins.html#/) (actual: stablecoins to slide 7.13)
 22. Wed, Nov 9: [zkSNARKs](../slides/zksnarks.html#/) (actual: finished stablecoins, scalability to 4.6)
 23. Mon, Nov 14: [Scalability](../slides/scalability.html#/) (no UVA classes today, so no progress)
-24. Wed, Nov 16: [Scalability](../slides/scalability.html#/)
+24. Wed, Nov 16: [Scalability](../slides/scalability.html#/) (actual: scalability to 7.11)
 25. Mon, Nov 21: [Algorand](../slides/algorand.html#/)
 26. Mon, Nov 28: [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/); [The Dark Side of Cryptocurrency](../slides/darkside.html#/)
 27. Wed, Nov 30: [The Dark Side of Cryptocurrency](../slides/darkside.html#/)
