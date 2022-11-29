@@ -1,7 +1,7 @@
 # Submission information for the Metamask HW
 # https://aaronbloomfield.github.io/ccc/hws/metamask/
 
-# The filename of this file must be 'IAuctioneer.py', else the submission
+# The filename of this file must be 'metamask.py', else the submission
 # verification routines will not work properly.
 
 # You are welcome to have additional variables or fields in this file; you
@@ -33,6 +33,9 @@ contracts = {
 	# same one as for your auctions assignment.
 	'auctioneer': '',
 
+	# We do not need the contract address of your NFTManager, as we can call
+	# the `nftmanager()` function on your Auctioneer contract to get that.
+
 }
 
 
@@ -49,7 +52,7 @@ other = {
 # submitted everything that you are supposed to submit.  Other than
 # submitting the necessary files to Gradescope (which checks for those
 # files), all other submission requirements are listed herein.  These values
-# need to be changed to True (instead of None).
+# need to be changed to True (instead of False).
 sanity_checks = {
 	
 	# Is the URL of your auctions.html exactly:
@@ -70,7 +73,7 @@ sanity_checks = {
 
 
 # While some of these are optional, you still have to replace those optional
-# ones with the empty string (rather than None).
+# ones with the empty string (instead of None).
 comments = {
 
 	# How long did this assignment take, in hours?  Please format as an
