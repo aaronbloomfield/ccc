@@ -61,7 +61,7 @@ other = {
 # submitted everything that you are supposed to submit.  Other than
 # submitting the necessary files to Gradescope, all other submission
 # requirements are listed herein.  These values need to be changed to True
-# (instead of None).
+# (instead of False).
 sanity_checks = {
 	
 	# Did you change the various choices in the `addChoice()` calls in the
@@ -96,7 +96,7 @@ sanity_checks = {
 
 
 # While some of these are optional, you still have to replace those optional
-# ones with the empty string (rather than None).
+# ones with the empty string (instead of None).
 comments = {
 
 	# How long did this assignment take, in hours?  Please format as an

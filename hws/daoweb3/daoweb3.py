@@ -1,7 +1,7 @@
 # Submission information for the DAO & Web3 HW
 # https://aaronbloomfield.github.io/ccc/hws/daoweb3/
 
-# The filename of this file must be 'dex.py', else the submission
+# The filename of this file must be 'daoweb3.py', else the submission
 # verification routines will not work properly.
 
 # You are welcome to have additional variables or fields in this file; you
@@ -50,7 +50,7 @@ other = {
 # submitted everything that you are supposed to submit.  Other than
 # submitting the necessary files to Gradescope (which checks for those
 # files), all other submission requirements are listed herein.  These values 
-# need to be changed to True (instead of None).
+# need to be changed to True (instead of False).
 sanity_checks = {
 	
 	# Did you add the three required proposals to your DAO?  One should have
@@ -78,7 +78,7 @@ sanity_checks = {
 
 
 # While some of these are optional, you still have to replace those optional
-# ones with the empty string (rather than None).
+# ones with the empty string (instead of None).
 comments = {
 
 	# How long did this assignment take, in hours?  Please format as an
