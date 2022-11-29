@@ -801,11 +801,12 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
   <section data-markdown data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="cclogo-slide" -->
 ## [![zec logo](../slides/images/logos/zec-coin-symbol.svg)](https://coinmarketcap.com/currencies/zcash/) Zcash (ZEC)
-- Website: https://z.cash; blockchain explorer: https://blockchair.com/zcash/
+- Website: https://z.cash
+  - Blockchain explorer: https://blockchair.com/zcash/
 - Source code fork of Bitcoin
-  - So it's useful for transactions, not smart contracts
+  - So it's useful for transactions, but not smart contracts
   - Available online at https://github.com/zcash/zcash
-- Hash function: [Equihash](https://en.wikipedia.org/wiki/Equihash)
+- PoW hash function: [Equihash](https://en.wikipedia.org/wiki/Equihash)
 - Development started in 2013
   - First mined in 2016
 - [Whitepaper](https://zips.z.cash/protocol/protocol.pdf)
@@ -816,7 +817,7 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 - [Zerocoin protocol](https://en.wikipedia.org/wiki/Zerocoin_protocol) was developed by [Professor Matthew Green @ JHU](https://isi.jhu.edu/~mgreen/)
   - An extension to Bitcoin that adds zk-SNARKs
   - Not compatible with regular Bitcoin, though
-- Zcash was the coin that merged the Zerocoin protocol and Bitcoin
+- Zcash was the first coin that merged the Zerocoin protocol and Bitcoin
   - Developed by Green and his graduate students
 - Now managed by the Zcash Foundation and the Electric Coin Company
 
@@ -828,12 +829,12 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 - Two-day process involving multiple people and computers
   - Each successive person didn't know who was the next in line
 - The computers involved were reportedly destroyed
-- [Radiolab podcast about The Ceremony](https://www.wnycstudios.org/podcasts/radiolab/articles/ceremony)
+- [Radiolab podcast about The Ceremony](https://www.wnycstudios.org/podcasts/radiolab/articles/ceremony) (Feb 25, 2021 episode)
 
 
 
 ## Two Address Types
-- "Regular" addresses
+- "Regular" or "Traceable" addresses
   - Traceable like Bitcoin is traceable
   - Called a $t$-address, and starts with a 't'
 - "Shielded" addresses
@@ -845,13 +846,13 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 
 ## Four Transaction Types
 - Z-to-Z: Private transaction
-  - It's know to have occurred, but all the info is not publickly visible
+  - It's know to have occurred, but the information is not publicly visible
 - T-to-T: Public transaction
-  - Just like Bitcoin
+  - Just like Bitcoin, it's traceable
 - Z-to-T: Deshielding transaction
-  - The recipient (only) is known, and it's know that it came from a $z$-address
+  - The recipient (only) is known, and it's known that it came from a $z$-address
 - T-to-Z: Shielding transaction
-  - The sender (only) is known, and it's known that it went to a $z$ address
+  - The sender (only) is known, and it's known that it went to a $z$-address
 
 
 
@@ -883,10 +884,9 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 
 
 <!-- .slide: class="right-float-img" -->
-## Mobile wallet
-
 <img src="https://z.cash/wp-content/uploads/2021/07/featured-wallet-502x1024.png" style="background:transparent">
 
+## Mobile wallet
 - Zecwallet Lite
   - Download from [zecwallet.co](https://www.zecwallet.co/)
 - Supports transactions to and from both shielded and transparent addresses
@@ -898,11 +898,11 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 <!-- .slide: class="right-float-img" -->
 ## Desktop wallet
 
-<img src="https://www.zecwallet.co/assets/img/fullnode-cover.png" style="background:transparent">
+<img src="https://www.zecwallet.co/assets/img/fullnode-cover.png" style="background:transparent;max-width:65%">
 
 - Runs a full node in the P2P cryptocurrency network
   - Just like when we run a geth node
-  - Although, to get *incoming* connections, you have to open a port on your router
+  - To get *incoming* connections, you have to open a port on your router
 - Image from [here](https://www.zecwallet.co/fullnode.html)
 </textarea></section>
 
@@ -917,12 +917,14 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
   <section data-markdown data-separator="^\n\n\n"><textarea>
 <!-- .slide: class="cclogo-slide" -->
 ## [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo (FIRO)
-- Website: https://firo.org/; blockchain explorer: https://explorer.firo.org/
-- Previously known as Zcoin, name changed to Firo in October 2020
+- Website: https://firo.org/
+  - Blockchain explorer: https://explorer.firo.org/
+- Previously known as Zcoin
+  - Name changed to Firo in October 2020
 - Also created at JHU, also based on the Bitcoin source code
 - Also used the Zerocoin protocol
   - Now uses a different protocol called "Sigma"
-- Hash function: Merkle Tree Proof
+- PoW hash function: Merkle Tree Proof
 - Development started in 2014
   - First mined in 2016
 - [Whitepaper](https://lelantus.io/enabling-untraceable-anonymous-payments.pdf)
@@ -932,12 +934,12 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 ## History
 - Started via a Masters paper in 2014; first mined in 2016
   - By the same research group at JHU
-- September 2018: can use TOR or VPN to hide your origin IP
-- December 2018: mining algorithm changed to Merkle Tree proof
-  - More memory intensive, so less likely to be done via ASICs
-- January 2020: implemented Receiver Address Privacy (RAP)
+- Sep 2018: can use TOR or VPN to hide your origin IP
+- Dec 2018: mining algorithm changed to Merkle Tree proof
+  - More memory intensive, so less likely to be viable by ASICs
+- Jan 2020: implemented Receiver Address Privacy (RAP)
   - Single receiving address, but outsiders cannot view transaction history
-- August 2021: the Lelantus Spark protocol adds even more privacy features
+- Aug 2021: the Lelantus Spark protocol adds even more privacy features
 
 
 
@@ -953,10 +955,10 @@ $$E(L(x) \cdot R(x) - O(x))=E(T(x) \cdot H(x))$$
 <!-- .slide: class="right-float-img" -->
 ## Desktop wallet
 
-<img src="images/zksnarks/firo-wallet-modified.webp" style="background:transparent">
+<img src="images/zksnarks/firo-wallet-modified.webp" style="background:transparent;max-width:55%">
 
 - Similar in look to the Bitcoin core wallet
-- Notice the 'anonymize all' button
+- Note the 'anonymize all' button
   - Converts "transparent" balances to "private" balances
   - Similar to Zcash
 - Notice the "anonymous communication with Tor" check box
