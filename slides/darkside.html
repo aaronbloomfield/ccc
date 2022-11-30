@@ -372,7 +372,7 @@ function close() public {
   - Eventually the gas becomes too expensive to continue
   - If 14 days passes with no new king, the game is reset
 - The [source code is available on github](https://github.com/kieranelby/KingOfTheEtherThrone/blob/v1.0/contracts/KingOfTheEtherThrone.sol)
-- (this explanation based on the one [here](https://hackernoon.com/smart-contract-attacks-part-2-ponzi-games-gone-wrong-d5a8b1a98dd8))
+- This explanation based on the one [here](https://hackernoon.com/smart-contract-attacks-part-2-ponzi-games-gone-wrong-d5a8b1a98dd8)
 
 
 
@@ -444,9 +444,9 @@ function withdraw() public {
 
 
 ## Background: Ethereum gas limit
-- Our private blockchain has a gas limit of about 5 million *per block*
+- Our private blockchain has a gas limit of about 30 million *per block*
 - Ethereum Mainnet has a [movable gas limit](https://etherscan.io/chart/gaslimit)
-  - As of April 2022, about 30 million
+  - As of November 2022, about 30 million
 - Nodes vote to increase the limit
   - A higher limit means more TXN fees
   - But longer time to process each block, so more congestion
@@ -457,7 +457,7 @@ function withdraw() public {
 ## GovernMental Ponzi Scheme
 - The game:
   - You place the next highest bid (starting at 1 ETH)
-  - Each sucessive bid is paid as follows:
+  - Each successive bid is paid as follows:
     - 90% to the bidder(s)
       - If user is a referral, then 85% to the bidder(s) and 5% to the referrer
     - 5% to the jackpot
@@ -483,9 +483,11 @@ uint[] public credAmt;
 
 
 ## GovernMental Ponzi Scheme
+- At one point the arrays did fill up, and needed more than 5 million gas to clear
+  - It was holding over 1k ETH at the time
 - Vitalik Buterin (Ethereum's creator) [suggested on reddit to pay 50 ETH to increase the gas limit to 5.1 million](https://www.reddit.com/r/ethereum/comments/4ghzhv/governmentals_1100_eth_jackpot_payout_is_stuck/)
   - His statement is the first comment, no the original post
-- Somebody tries, and after 2 months, [was paid the 1,112 ETH from the contract](https://etherscan.io/tx/0x44054e85737faab41b73de743c3a17bd19fb65cb162e82e7b54e05bdd52d23b9)
+- Somebody tried, and after 2 months, [was paid the 1,112 ETH from the contract](https://etherscan.io/tx/0x44054e85737faab41b73de743c3a17bd19fb65cb162e82e7b54e05bdd52d23b9)
 
 
 
@@ -570,7 +572,7 @@ uint[] public credAmt;
 ## Roulette
 - Gambler wins if `block.timestamp % 15 == 0`
 - But miners can modify the block timestamp
-  - Not by a lot, but by enough to ensure that anybody else loses
+  - Not by a lot, but by enough to ensure that they win, and the other 14 possibilities lose
   - Then ensure that they win
 - This is really only viable if the miner has a significant amount of the mining capability
 
@@ -579,8 +581,9 @@ uint[] public credAmt;
 ## Randomness
 - Never use `block.timestamp` for entropy
 - You can use `block.hash`, but...
-  - You can only use the hash of the *previous* block
+  - That only gets the hash of the *previous* block
   - Since the hash of the current block is not known when the miners are running this code
+- `blockhash(blockNumber)` can go futher back, but not only the [last 256 blocks](https://docs.soliditylang.org/en/v0.4.24/units-and-global-variables.html#block-and-transaction-properties)
 - Which means that one can predict a random function that uses a known seed
 - Perhaps use block.number $\ast$ average block time
 - Blockchains aren't great for randomness!
@@ -688,7 +691,7 @@ function buyTokens() public payable {
 ```
 - Integer division means truncation (floor) of value
 - If the amount is less than 1 ether, then `tokens` will be zero!
-- [Bancor](https://en.wikipedia.org/wiki/Bancor_(cryptocurrency)) tried to do this
+- [Bancor](https://home.bancor.network/), a DeFi trading and stacking protocol, tried to do this
   - Their code was hard to test due to their re-implementation of basic math
 
 
