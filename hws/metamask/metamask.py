@@ -55,12 +55,12 @@ other = {
 # need to be changed to True (instead of False).
 sanity_checks = {
 	
-	# Is the URL of your auctions.html exactly:
-	# https://www.cs.virginia.edu/~mst3k/auctions.html
+	# Is the URL of your metamask.html exactly:
+	# https://www.cs.virginia.edu/~mst3k/metamask.html
 	# where 'mst3k' is your userid?
 	'auctions_url_is_correct': False,
 
-	# Did you add three auctions to your auctions.html page?  There is no
+	# Did you add three auctions to your metamask.html page?  There is no
 	# requirement for the start/end dates/times for these.  They should be
 	# for your three NFTs that you created in the Tokens assignment.
 	'added_three_auctions': False,

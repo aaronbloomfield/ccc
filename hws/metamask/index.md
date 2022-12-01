@@ -23,7 +23,9 @@ In addition to your source code, you will submit an edited version of [metamask.
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
+
+- Thu, 12/1: Clarified that the filename should be metamask.html, not auctions.html (this was a typo in [metamask.py](metamask.py.html) ([src](metamask.py))).
 
 
 
