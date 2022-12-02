@@ -69,6 +69,7 @@
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here.</p>
 <ul>
+<li>Fri, 12/2: The <code>time_ms</code> variable in the <code>showReturnIntegerValue()</code> function should just be the number <code>1000</code></li>
 <li>Thu, 12/1: Clarified that the filename should be metamask.html, not auctions.html (this was a typo in <a href='metamask.py.html'>metamask.py</a> (<a href='metamask.py'>src</a>)).</li>
 </ul>
 </div><div id='tmetamask-setup' class='tabcontent'><h3 id='metamask-setup'>MetaMask Setup</h3>
@@ -205,7 +206,7 @@ let web3mm = new Web3(window.ethereum);</code></pre>
 <pre><code>function showReturnIntegerValue(w3,txnhash,desc) {
   w3.eth.getTransaction(txnhash).then(txn =&gt; {
     if ( txn['blockNumber'] == null ) {
-      await new Promise(resolve =&gt; setTimeout(resolve, time_ms));
+      await new Promise(resolve =&gt; setTimeout(resolve, 1000));
       showReturnIntegerValue(w3,txnhash,desc);
     } else
       w3.eth.call({to:txn['to'],from:txn['from'],data:txn['input'],gas:txn['gas']},txn['blockNumber']-1).then(retval =&gt; {

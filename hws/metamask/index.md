@@ -25,6 +25,7 @@ In addition to your source code, you will submit an edited version of [metamask.
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
+- Fri, 12/2: The `time_ms` variable in the `showReturnIntegerValue()` function should just be the number `1000`
 - Thu, 12/1: Clarified that the filename should be metamask.html, not auctions.html (this was a typo in [metamask.py](metamask.py.html) ([src](metamask.py))).
 
 
@@ -223,7 +224,7 @@ When you call a transaction, your code will be something like what was above: `c
 function showReturnIntegerValue(w3,txnhash,desc) {
   w3.eth.getTransaction(txnhash).then(txn => {
     if ( txn['blockNumber'] == null ) {
-      await new Promise(resolve => setTimeout(resolve, time_ms));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       showReturnIntegerValue(w3,txnhash,desc);
     } else
       w3.eth.call({to:txn['to'],from:txn['from'],data:txn['input'],gas:txn['gas']},txn['blockNumber']-1).then(retval => {
