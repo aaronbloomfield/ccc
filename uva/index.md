@@ -47,7 +47,9 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
-- Due Tue, ~~11/15~~ (now 11/29) by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
+- Due Tue, 11/22 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
+- Cancelled for the fall 2022 semester: [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
+ - Due Tue, ~~11/15~~ (now 11/29) by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
 - Due Wed, 11/9 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
 - Due Tue, 11/1 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
 - Due Tue, 10/25, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
@@ -59,10 +61,6 @@ Reading assignments are due by the start of the lecture that day, and all other 
 - Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
 - Due Tue, 9/6, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
-<!--
-- Due Tue, 11/22 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
-- Due Tue, 11/15 by midnight: [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
--->
 
 #### Smaller Homeworks
 
