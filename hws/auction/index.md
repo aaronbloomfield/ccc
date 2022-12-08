@@ -121,7 +121,7 @@ interface IAuctioneer is IERC165 {
     function auctions(uint id) external view 
             returns (uint, uint, string memory, uint, address, address, uint, uint, bool);
 
-    function deployer() external returns (address);    
+    function deployer() external view returns (address);    
 
 
     // The following are functions you must create

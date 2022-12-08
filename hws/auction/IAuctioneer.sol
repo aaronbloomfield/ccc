@@ -69,7 +69,7 @@ interface IAuctioneer is IERC165 {
             returns (uint, uint, string memory, uint, address, address, uint, uint, bool);
 
     // Who is the deployer of this contract
-    function deployer() external returns (address);
+    function deployer() external view returns (address);
 
 
     // The following are functions you must create
