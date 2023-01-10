@@ -1,7 +1,7 @@
-CS 4501: Cryptocurrency Course
-==============================
+CS 4501: Cryptocurrency
+=======================
 
-This repository contains the course material CS 4501: Cryptocurrency, which is being taught in the fall 2022 semester at the [University of Virginia](https://www.virginia.edu/) by [Aaron Bloomfield](http://www.cs.virginia.edu/~asb2t/).  This repository can be found online at [http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc) and via its github repository at [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).
+This repository contains the course material CS 4501: Cryptocurrency, which is being taught in the spring 2023 semester at the [University of Virginia](https://www.virginia.edu/) by [Aaron Bloomfield](http://www.cs.virginia.edu/~asb2t/).  This repository can be found online at [http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc) and via its github repository at [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).
 
 Students *currently* in the course should view the [uva/index.html](uva/index.html) ([md](uva/index.md)); current students may also want to view the [daily announcements](uva/daily-announcements.html#/).
 

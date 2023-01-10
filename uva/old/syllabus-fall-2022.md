@@ -1,5 +1,5 @@
-CS 4501: Cryptocurrency Syllabus, spring 2023
-=============================================
+CS 4501: Cryptocurrency Syllabus
+================================
 
 [Go up to the CCC UVA page](index.html) ([md](index.md))
 
@@ -7,8 +7,7 @@ CS 4501: Cryptocurrency Syllabus, spring 2023
 
 I realize that nobody reads these through.  So the TL;DR version:
 
-- This course is using Canvas, not Collab; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/59096)
-- One midterm, on Wednesday, March 1st, during lecture; one final, on Saturday, May 6th, from 9am - noon
+- One midterm, on Wed, Oct 12 during lecture; one final, on Tue, Dec 13 from 2-5
 - Grades are 50% homeworks, 15% midterm, 20% final exam, and 15% participation (quizzes & attendance)
 - Everything is going to be auto-graded, but you can submit multiple times; the grades won't be known until the late due date has passed
 - If you encounter any rough spots in the course -- please be patient, and provide constructive feedback, and I'll do my best to get it all fixed
@@ -16,37 +15,36 @@ I realize that nobody reads these through.  So the TL;DR version:
 - Lecture attendance is required, and occasional attendance quizzes will be taken to ensure that
 - Readings will typically have in-class quizzes when they are due
 - Attendance quizzes and reading quizzes are online, so bring a connected device (phone is fine)
-- Due to the size of the course, please contact me via support request; the link is on the Canvas landing page
-- Office hours are posted on the Canvas landing page
+- Due to the size of the course, please contact me via support request; the link is on the Collab landing page
+- Office hours are posted on the Collab landing page
 - I want you to succeed in this course and enjoy it -- if you are having any problems (personal, academic, what-not) that I can help with, please let me know
 
 And now for the really long-winded version...
 
 
-## Spring 2023
+## Fall 2022
 
 ### Course Staff ###
 
-- [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) / aaron at virginia dot edu.  Office: Rice Hall, room 402.  Office hours are posted on the Canvas landing page, and will start the second week of the semester
-- Multiple undergraduate TAs and possibly a Masters TA; their office hours are also posted on the Canvas landing page, and will start the second week of the semester
+- [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) / aaron at virginia dot edu.  Office: Rice Hall, room 402.  Office hours are posted on the Collab landing page, and will start the second week of the semester
+- Four undergraduate TAs (and possibly a Masters TA); their office hours are also posted on the Collab landing page, and will start the second week of the semester
 
 ### Course Info ###
 
-- Lecture: M/W/F 10:00-11:00 in Thornton E303
-- Coordination is through Canvas, not Collab; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/59096)
-- Email: none; fill out a support request instead; the link is on the Canvas landing page
+- Lecture: M/W 2:00-3:15 in Thornton E303
+- Email: none; fill out a support request instead; the link is on the Collab landing page
 - Announcements will be done through the [daily announcements slide set](daily-announcements.html#/)
-- TAs and their office hours will be posted on the Canvas landing page; all office hours start the second day of classes
+<!-- - TAs and their office hours will be posted on the Collab course main page; all office hours start the second day of classes -->
 
 
 **Course content:** All the course content is available free online at 
 [http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc), which is from a public github repository: [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).  All the source code in that repository is released under a [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and all the non-source code material in that repository is released under a [Creative Commons license](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA).  Note that this license and the public availability does NOT apply to the lecture videos.
 
-**Lectures:** Lecture attendance is required.  There will be occasional attendance quizzes to verify this.  These quizzes may be online, so bring a connected device (phone is fine) to take said quizzes.
+**Lectures:** Lecture attendance is required.  There will be occasional attendance quizzes to verify this.  These quizzes will be online, so bring a connected device (phone is fine) to take said quizzes.
 
 **Readings:** No textbook required.  Various online readings will be assigned.  You should expect a reading quiz on the day that a reading is due.  These quizzes will be online, so bring a connected device (phone is fine) to take said quizzes.
 
-**Purchases:** None.  In particular, you will NOT have to purchase any cryptocurrency for this course.  You should be aware of the legal and tax ramifications of purchasing cryptocurrency if you every do want to buy some -- we will discuss these during the course.
+**Purchases:** None.  In particular, you will NOT have to purchase any cryptocurrency for this course.  You should be aware of the legal and tax ramifications of purchasing cryptocurrency if you every do want to buy some -- we will discuss this during the course.
 
 **Course Description:** This course is meant as a general introduction to cryptocurrency.  Students who complete the course will:
 
@@ -57,7 +55,7 @@ And now for the really long-winded version...
 - Be able to develop programs for a specific Blockchain
 - Implement a fully working modern cryptocurrency
 
-**Availability:** It is important to me to be available to my students, and to address their concerns. If you cannot meet with me during office hours, e-mail (or, ideally, submit a support request) and I will try to find the time to meet. That being said, like everybody else I am quite busy, so it may take a day or more to find a time to meet. And if you have any comments on the course - what is working, what is not working, what can be done better, etc. - I am very interested in hearing about them. There is an anonymous feedback tool through Canvas, or you can send me an e-mail (please do NOT email the TAs directly). I tend to get bogged down by e-mail as the semester progresses, so seeing me "in person" (during office hours or right after class) is often a good way to get a more immediate response.
+**Availability:** It is important to me to be available to my students, and to address their concerns. If you cannot meet with me during office hours, e-mail (or, ideally, submit a support request) and I will try to find the time to meet. That being said, like everybody else I am quite busy, so it may take a day or more to find a time to meet. And if you have any comments on the course - what is working, what is not working, what can be done better, etc. - I am very interested in hearing about them. There is an anonymous feedback tool through Collab, or you can send me an e-mail (please do NOT email the TAs directly). I tend to get bogged down by e-mail as the semester progresses, so seeing me "in person" (during office hours or right after class) is often a good way to get a more immediate response.
 
 **Prerequisites:** CS 2150 (Program and Data Representation) or CS 3100 (Data Structures and Algorithms 2) with a grade of C- or above.  As per departmental policy, this pre-req will be checked, and if it is not met, you will be de-registered from the course.
 
@@ -74,7 +72,7 @@ I *expect* that grades will follow the standard decade curve: 90 and above is an
 
 **Course rules:** You are fully responsible for all material presented in class and on the required readings. Exams and due dates are scheduled in advance. A grade of zero will be recorded for missed exams and late assignments unless prior arrangements are made (see below for details) or there are truly extenuating circumstances (which will require appropriate documentation). Assignments turned in after the due date are penalized 25% per day (or fraction thereof) late; this means a maximum of 3 days (i.e. 72 hours) late. 
 
-**Computing Resources:** You are free to develop assignments on any platform/OS you wish. We will provide a [VirtualBox](https://www.virtualbox.org/) image that has all the necessary software already installed and configured.  Thus, your computer must have enough hard drive space (and memory) to use a course VirtualBox image (about 30 Gb will be needed for the install, and then 20 Gb  will be used once the installation files are deleted).  Any computer made in the last 3 years will suffice for these requirements, and many older ones will as well.  It doesn't matter if it's a desktop or notebook; nor does the speed matter.  If you have an M1 Mac, please let me know, as there is a different set of solutions for M1 Macs.
+**Computing Resources:** You are free to develop assignments on any platform/OS you wish. We will provide a [VirtualBox](https://www.virtualbox.org/) image that has all the necessary software already installed and configured.  Thus, your computer must have enough hard drive space (and memory) to use a course VirtualBox image (about 30 Gb will be needed for the install, and then 20 Gb  will be used once the installation files are deleted).  Any computer made in the last 3 years will suffice for these requirements, and many older ones will as well.  It doesn't matter if it's a desktop or notebook; nor does the speed matter.  If you have an M1 Mac, please let me know, as this will affect what you can run.
 
 If you want to develop on your own machine, you will need to install the necessary software.  We will provide links and tutorials for that, but ultimately we cannot be responsible for ensuring 100 students' individual installs all work.
 
@@ -84,12 +82,12 @@ If you want to develop on your own machine, you will need to install the necessa
 
 **Exams:** There will be one midterm exam (worth 15% of the final grade) and one final exam (worth 20% of the final grade).
 
-- Midterm exam: Wednesday, March 1st, during lecture
-- Final exam: Saturday, May 6th, from 9am - noon
+- Midterm exam: Wednesday, October 12th, during lecture
+- Final exam: Tuesday, December 13th, from 2pm to 5pm
 
 Under **NO** circumstances will anybody be allowed to take the final exam early.  You may **ONLY** request to take the final exam at a different time if you have a final exam **CONFLICT**, not a busy final exam schedule.  Since there are no other exams scheduled during that time, it is unlikely that you will have a conflict.
 
-**Regrades:** You may submit graded homeworks and exams for regrading within one week of when they are returned to you (less time for the final due to the end of the semester).  Exam regrades are submitted via Gradescope, and homework regrades are submitted via a support request.  As long as people submit responsibly, I will not institute a frivolous regrade policy that existed in some semesters of CS 2150 (if one is instituted, you will be told of this ahead of time).  This time limit will be strictly enforced.
+**Regrades:** You may submit graded homeworks and exams for regrading within one week of when they are returned to you (less time for the final due to the end of the semester).  Regrades are submitted via Gradescope.  As long as people submit responsibly, I will not institute a frivolous regrade policy that existed in some semesters of CS 2150 (if one is instituted, you will be told of this ahead of time).  This time limit will be strictly enforced.
 
 **Honor pledge:** The UVA Honor Code is in effect for this course.  There is one course specific addition: You may not look at any other student's code for ANY reason, period.  Not to debug, not to help, not to learn.  You may not let another student look at *your* code for any reason.  Needless to say, you cannot copy code from online sources unless the assignment specifically allows it (and in those cases, you must cite your source).  The next paragraph describes this more.
 
