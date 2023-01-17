@@ -1,4 +1,4 @@
-CS 4501: Cryptocurrency Syllabus, spring 2023
+CS 4501: Syllabus for Cryptocurrency (CCC), spring 2023
 =============================================
 
 [Go up to the CCC UVA page](index.html) ([md](index.md))
@@ -12,10 +12,10 @@ I realize that nobody reads these through.  So the TL;DR version:
 - Grades are 50% homeworks, 15% midterm, 20% final exam, and 15% participation (quizzes & attendance)
 - Everything is going to be auto-graded, but you can submit multiple times; the grades won't be known until the late due date has passed
 - If you encounter any rough spots in the course -- please be patient, and provide constructive feedback, and I'll do my best to get it all fixed
-- There will be both larger programming homeworks and smaller tutorial-style  homeworks or readings -- often one of each will be assigned at any given time
+- There will be both larger programming homeworks and smaller tutorial-style  homeworks or readings -- sometimes one of each will be assigned at any given time
 - Lecture attendance is required, and occasional attendance quizzes will be taken to ensure that
 - Readings will typically have in-class quizzes when they are due
-- Attendance quizzes and reading quizzes are online, so bring a connected device (phone is fine)
+- Attendance quizzes and reading quizzes may be online, so bring a connected device (phone is fine)
 - Due to the size of the course, please contact me via support request; the link is on the Canvas landing page
 - Office hours are posted on the Canvas landing page
 - I want you to succeed in this course and enjoy it -- if you are having any problems (personal, academic, what-not) that I can help with, please let me know
@@ -32,7 +32,7 @@ And now for the really long-winded version...
 
 ### Course Info ###
 
-- Lecture: M/W/F 10:00-11:00 in Thornton E303
+- Lecture: M/W/F 10:00-10:50 in Thornton E303
 - Coordination is through Canvas, not Collab; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/59096)
 - Email: none; fill out a support request instead; the link is on the Canvas landing page
 - Announcements will be done through the [daily announcements slide set](daily-announcements.html#/)
@@ -44,11 +44,15 @@ And now for the really long-winded version...
 
 **Lectures:** Lecture attendance is required.  There will be occasional attendance quizzes to verify this.  These quizzes may be online, so bring a connected device (phone is fine) to take said quizzes.
 
-**Readings:** No textbook required.  Various online readings will be assigned.  You should expect a reading quiz on the day that a reading is due.  These quizzes will be online, so bring a connected device (phone is fine) to take said quizzes.
+**Readings:** Due to the rapidly changing nature of this topic, there is no assigned textbook.  Various online readings will be assigned.  You should expect a reading quiz on the day that a reading is due.  These quizzes may be online, so bring a connected device (phone is fine) to take said quizzes.
 
-**Purchases:** None.  In particular, you will NOT have to purchase any cryptocurrency for this course.  You should be aware of the legal and tax ramifications of purchasing cryptocurrency if you every do want to buy some -- we will discuss these during the course.
+**Purchases:** As mentioned above, no textbook is required for this course.  
+In particular, you will NOT have to purchase any cryptocurrency for this course.
+You don't have to purchase anything else for this course.  But you do have to have a relatively modern *notebook* computer -- both for the course content (online meetings and video) and for VirtualBox (see Computing Resources, below).  If you do not have one, or yours breaks during the semester, speak to me as the department can loan you one.
 
-**Course Description:** This course is meant as a general introduction to cryptocurrency.  Students who complete the course will:
+**Course Description:** This course is meant as a general introduction to cryptocurrency.  This course is split into three "modules": introduction and Bitcoin, Ethereum and smart contracts, and Web3.
+
+The course objectives are:
 
 - Understand the theoretical aspects of cryptocurrency
 - Understand the basics of blockchain in general, and the details of a selected number of blockchains
@@ -70,13 +74,10 @@ And now for the really long-winded version...
 
 I *expect* that grades will follow the standard decade curve: 90 and above is an A of some sort (A-, A, or A+), 80 and above is some sort of a B, etc.  **Note:** I reserve the right to modify the weighting (changing the curve, adding pop quizzes, etc.), especially if attendance drops off significantly.  In particular, if the grade averages are very high, then you will need higher than a 90 to get an A-.
 
-**Assignments:** There will be both larger programming homeworks and smaller tutorial-style homeworks.  Often one of each will be currently assigned at any given time, but their due dates will be scheduled so that they are not both due at once.  All assignments will be submitted via Gradescope; source code will be submitted this way.  Many assignments will require you to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission.  Due to the class size, and the limited TA support, all assignments will be auto-graded.  You will need to be familiar with the [homework policies](hw-policies.html) ([md](hw-policies.md)), as you will be bound by them on the assignments.
+**Assignments:** There will be both larger programming homeworks and smaller tutorial-style homeworks.  Often one of each will be currently assigned at any given time, but their due dates will be scheduled so that they are not both due at once.  All assignments will be submitted via Gradescope; source code will be submitted this way.  Many assignments will require you to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission.  
+All submissions are through Gradescope, the link to which is on the Canvas landing page.  Due to the class size, and the limited TA support, all assignments will be auto-graded.  The programming assignments will have their source code submitted.  You will need to be familiar with the [homework policies](hw-policies.html) ([md](hw-policies.md)), as you will be bound by them on the assignments.
 
-**Course rules:** You are fully responsible for all material presented in class and on the required readings. Exams and due dates are scheduled in advance. A grade of zero will be recorded for missed exams and late assignments unless prior arrangements are made (see below for details) or there are truly extenuating circumstances (which will require appropriate documentation). Assignments turned in after the due date are penalized 25% per day (or fraction thereof) late; this means a maximum of 3 days (i.e. 72 hours) late. 
-
-**Computing Resources:** You are free to develop assignments on any platform/OS you wish. We will provide a [VirtualBox](https://www.virtualbox.org/) image that has all the necessary software already installed and configured.  Thus, your computer must have enough hard drive space (and memory) to use a course VirtualBox image (about 30 Gb will be needed for the install, and then 20 Gb  will be used once the installation files are deleted).  Any computer made in the last 3 years will suffice for these requirements, and many older ones will as well.  It doesn't matter if it's a desktop or notebook; nor does the speed matter.  If you have an M1 Mac, please let me know, as there is a different set of solutions for M1 Macs.
-
-If you want to develop on your own machine, you will need to install the necessary software.  We will provide links and tutorials for that, but ultimately we cannot be responsible for ensuring 100 students' individual installs all work.
+**Course rules:** You are fully responsible for all material presented in class and on the required readings. Exams and due dates are scheduled in advance. A grade of zero will be recorded for missed exams and late assignments unless prior arrangements are made (see below for details) or there are truly extenuating circumstances (which will require appropriate documentation). Assignments turned in after the due date are penalized 25% per day (or fraction thereof) late; this means a maximum of 3 days (i.e. 72 hours) late. In most cases, you are free to develop assignments on any language/platform/OS you wish. Some assignments may require a specific operating system setup, or a particular required programming language, which will be provided if necessary.  However, you are responsible for porting your code to the system the class is using and ensuring that it runs correctly for us when we grade your assignment. Our reference system will specified for each assignment, but will generally be Ubuntu Linux.  The Gradescope submission auto-grader will verify this upon submission (and immediately report the results back to you). Most assignments will be graded by automated testing.
 
 **Disabilities:**  The University of Virginia strives to provide accessibility to all students. If you require an accommodation to fully access this course, please contact the Student Disability Access Center (SDAC) at (434) 243-5180 or sdac@virginia.edu. If you are unsure if you require an accommodation, or to learn more about their services, you may contact the SDAC at the number above or by visiting their website at http://studenthealth.virginia.edu/student-disability-access-center/faculty-staff.
 
@@ -89,7 +90,7 @@ If you want to develop on your own machine, you will need to install the necessa
 
 Under **NO** circumstances will anybody be allowed to take the final exam early.  You may **ONLY** request to take the final exam at a different time if you have a final exam **CONFLICT**, not a busy final exam schedule.  Since there are no other exams scheduled during that time, it is unlikely that you will have a conflict.
 
-**Regrades:** You may submit graded homeworks and exams for regrading within one week of when they are returned to you (less time for the final due to the end of the semester).  Exam regrades are submitted via Gradescope, and homework regrades are submitted via a support request.  As long as people submit responsibly, I will not institute a frivolous regrade policy that existed in some semesters of CS 2150 (if one is instituted, you will be told of this ahead of time).  This time limit will be strictly enforced.
+**Regrades:** You may submit graded homeworks and exams for regrading within one week of when they are returned to you (less time for the final due to the end of the semester).  Regrades are submitted via Gradescope (for written assignments) or support requests (for programming assignments).  As long as people submit responsibly, I will not institute a frivolous regrade policy that existed in some semesters of CS 2150 (if one is instituted, you will be told of this ahead of time).  This time limit will be strictly enforced.
 
 **Honor pledge:** The UVA Honor Code is in effect for this course.  There is one course specific addition: You may not look at any other student's code for ANY reason, period.  Not to debug, not to help, not to learn.  You may not let another student look at *your* code for any reason.  Needless to say, you cannot copy code from online sources unless the assignment specifically allows it (and in those cases, you must cite your source).  The next paragraph describes this more.
 

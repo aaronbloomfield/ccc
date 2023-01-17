@@ -16,6 +16,7 @@ There are a number of links and other parts of this course that are **NOT** incl
 - Assignment submission is through the Gradescope tool in Canvas
 - The [Piazza forum for this course](https://piazza.com/class/lcp7o2dt3sb4w8); Canvas can log you in directly -- the Canvas tool link is [here](https://canvas.its.virginia.edu/courses/59096/external_tools/21)
 - The link for the VirtualBox image will be available on the [Canvas landing page][1].  For how to install it, see  [here](https://uva-cs.github.io/pdr/tutorials/01-intro-unix/virtual-box.html).
+- Apparently anonymous feedback is not currently available in Canvas
 
 <!-- no longer available in canvas:
 
