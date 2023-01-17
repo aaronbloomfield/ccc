@@ -39,7 +39,7 @@ Readings
 
 All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
-- None currently assigned!
+- None currently assigned
 
 <!--
 
@@ -57,7 +57,7 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
-- None currently assigned!
+- None currently assigned
 
 <!-- 
 
@@ -79,7 +79,7 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Smaller Homeworks
 
-- None currently assigned!
+- None currently assigned
 
 <!--
 
@@ -92,7 +92,7 @@ Reading assignments are due by the start of the lecture that day, and all other 
 -->
 
 
-Course progress
+Course calendar
 ---------------
 
 | Week # | Week of Monday | Lecture days | HWs due | Topics | Progress |
@@ -104,7 +104,7 @@ Course progress
 | 5 | Feb 13 | M,W,F | P3 (BTC parser) | [Bitcoin](../slides/bitcoin.html#/) | |
 | 6 | Feb 20 | M,W,F | P4 (BTC scripting) | [Ethereum](../slides/ethereum.html#/) | |
 | 7 | Feb 27 | M,W,F | midterm | [Solidity](../slides/solidity.html#/) | |
-| SB | Mar 6 | (none) | (none) |  | |
+|   | Mar 6 | (none) | (none) | (spring break)  | |
 | 8 | Mar 13 | M,W,F | S4, S5 | [Tokens](../slides/tokens.html#/) | |
 | 9 | Mar 20 | M,W,F | P5 (Gradebook) | [Mining](../slides/mining.html#/) | |
 | 10 | Mar 27 | M,W,F | P6 (Tokens) | [Scalability](../slides/scalability.html#/) | |

@@ -5,9 +5,9 @@ These are the graphs that have to be changed each time the lecture is presented.
 
 From the [course introduction slide set](../../../uva/introduction.html#/):
 
-- Cryptocurrency market capitalization, all-time (`cc-market-cap.svg`), from [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/): from [2022-01-18](cc-market-cap-2022-01-18.svg), [2022-08-23](cc-market-cap.svg)
-- Cryptocurrency market capitalization without BTC, all-time (`cc-market-cap-no-btc.svg`), from [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/): from [2022-01-18](cc-market-cap-no-btc-2022-01-18.svg), [2022-08-23](cc-market-cap-no-btc.svg)
-- Bitcoin dominance, all-time (`btc-dominance.svg`), from [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/): from [2022-01-18](btc-dominance-2022-01-18.svg), [2022-08-23](btc-dominance.svg)
+- Cryptocurrency market capitalization, all-time (`cc-market-cap.svg`), from [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/): from [2022-01-18](cc-market-cap-2022-01-18.svg), [2022-08-23](cc-market-cap-2022-08-23.svg), [2023-01-23](cc-market-cap.svg)
+- Cryptocurrency market capitalization without BTC, all-time (`cc-market-cap-no-btc.svg`), from [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/): from [2022-01-18](cc-market-cap-no-btc-2022-01-18.svg), [2022-08-23](cc-market-cap-no-btc-2022-08-23.svg), [2023-01-23](cc-market-cap-no-btc.svg)
+- Bitcoin dominance, all-time (`btc-dominance.svg`), from [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/): from [2022-01-18](btc-dominance-2022-01-18.svg), [2022-08-23](btc-dominance-2022-08-23.svg), [2023-01-23](btc-dominance.svg)
 
 From the [overview slide set](../../overview.html#/).  These should be exported as svg if possible; if not, then 1200x600 rasterized and converted to webp (running `make` will covert .png files to .webp).
 
