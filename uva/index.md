@@ -40,13 +40,12 @@ Readings
 
 All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
-- None currently assigned
+- Due early February (date TBA): HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Canvas [here](https://canvas.its.virginia.edu/files/981134/download?download_frd=1))
 
 <!--
 
 - Due Wed, 9/28: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/ethereum-whitepaper.pdf))
     - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
-- Due Wed, 9/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
 
 -->
 
@@ -58,7 +57,7 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
-- None currently assigned
+- Due Tue, Jan 31st, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
 <!-- 
 
@@ -74,13 +73,12 @@ Reading assignments are due by the start of the lecture that day, and all other 
 - Due Tue, 9/27, by midnight: [HW P4: BTC scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
 - Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
-- Due Tue, 9/6, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
 -->
 
 #### Smaller Homeworks
 
-- None currently assigned
+- HW S1: fill out the Google survey (link on the [Canvas landing page][1]) by the end of the day on Tuesday, Jan 24th
 
 <!--
 
@@ -99,7 +97,7 @@ Course calendar
 | Week # | Week of Monday | Lecture days | HWs due | Topics | Progress |
 |----|----|----|----|----|----|
 | 1 | Jan 16 | W,F |  | [Course introduction](introduction.html#/), [Overview](../slides/overview.html#/) | Wed: finished course intro; Fri: overview to 4.11 |
-| 2 | Jan 23 | M,W,F |  | [Encryption](../slides/encryption.html#/) | |
+| 2 | Jan 23 | M,W,F |  | [Encryption](../slides/encryption.html#/) | Mon: overview to 5.17 |
 | 3 | Jan 30 | M,W,F | P1 (Introduction) | [Encryption](../slides/encryption.html#/) | |
 | 4 | Feb 6 | M,W,F | P2 (ECDSA) | [Bitcoin](../slides/bitcoin.html#/) | |
 | 5 | Feb 13 | M,W,F | P3 (BTC parser) | [Bitcoin](../slides/bitcoin.html#/) | |
