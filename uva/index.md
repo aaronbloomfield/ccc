@@ -40,7 +40,7 @@ Readings
 
 All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
-- Due early February (date TBA): HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Canvas [here](https://canvas.its.virginia.edu/files/981134/download?download_frd=1))
+- Due Friday, February 3rd: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Canvas [here](https://canvas.its.virginia.edu/files/981134/download?download_frd=1))
 
 <!--
 
@@ -57,7 +57,9 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
-- Due Tue, Jan 31st, by midnight: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
+Readings are due by the start of lecture on that day; all other homeworks are due by the end of the day (11:59:59 pm).
+
+- Due Tuesday, January 31st: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
 <!-- 
 
@@ -78,7 +80,10 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Smaller Homeworks
 
-- HW S1: fill out the Google survey (link on the [Canvas landing page][1]) by the end of the day on Tuesday, Jan 24th
+Readings are due by the start of lecture on that day; all other homeworks are due by the end of the day (11:59:59 pm).
+
+- Due Friday, February 3rd: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
+- Due Tuesday, January 24th: HW S1: fill out the Google survey (link on the [Canvas landing page][1]) by the end of the day on Tuesday, Jan 24th
 
 <!--
 
@@ -97,7 +102,7 @@ Course calendar
 | Week # | Week of Monday | Lecture days | HWs due | Topics | Progress |
 |----|----|----|----|----|----|
 | 1 | Jan 16 | W,F |  | [Course introduction](introduction.html#/), [Overview](../slides/overview.html#/) | Wed: finished course intro; Fri: overview to 4.11 |
-| 2 | Jan 23 | M,W,F |  | [Encryption](../slides/encryption.html#/) | Mon: overview to 5.17 |
+| 2 | Jan 23 | M,W,F |  | [Encryption](../slides/encryption.html#/) | Mon: overview to 5.17; Wed: finished overview, encryption to 3.15 |
 | 3 | Jan 30 | M,W,F | P1 (Introduction) | [Encryption](../slides/encryption.html#/) | |
 | 4 | Feb 6 | M,W,F | P2 (ECDSA) | [Bitcoin](../slides/bitcoin.html#/) | |
 | 5 | Feb 13 | M,W,F | P3 (BTC parser) | [Bitcoin](../slides/bitcoin.html#/) | |
