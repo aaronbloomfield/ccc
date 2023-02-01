@@ -59,6 +59,7 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 Readings are due by the start of lecture on that day; all other homeworks are due by the end of the day (11:59:59 pm).
 
+- Due Tuesday, February 7th: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
 - Due Tuesday, January 31st: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
 
 <!-- 
@@ -74,7 +75,6 @@ Readings are due by the start of lecture on that day; all other homeworks are du
 - Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
 - Due Tue, 9/27, by midnight: [HW P4: BTC scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
 - Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
-- Due Tue, 9/13, by midnight: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
 
 -->
 
@@ -103,7 +103,7 @@ Course calendar
 |----|----|----|----|----|----|
 | 1 | Jan 16 | W,F |  | [Course introduction](introduction.html#/), [Overview](../slides/overview.html#/) | Wed: finished course intro; Fri: overview to 4.11 |
 | 2 | Jan 23 | M,W,F |  | [Encryption](../slides/encryption.html#/) | Mon: overview to 5.17; Wed: finished overview, encryption to 3.15; encryption to 5.9 |
-| 3 | Jan 30 | M,W,F | P1 (Introduction) | [Encryption](../slides/encryption.html#/) | Mon: encryption to 6.22 |
+| 3 | Jan 30 | M,W,F | P1 (Introduction) | [Encryption](../slides/encryption.html#/) | Mon: encryption to 6.22; Wed: encryption to 7.14 |
 | 4 | Feb 6 | M,W,F | P2 (ECDSA) | [Bitcoin](../slides/bitcoin.html#/) | |
 | 5 | Feb 13 | M,W,F | P3 (BTC parser) | [Bitcoin](../slides/bitcoin.html#/) | |
 | 6 | Feb 20 | M,W,F | P4 (BTC scripting) | [Ethereum](../slides/ethereum.html#/) | |
