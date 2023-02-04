@@ -16,8 +16,9 @@ You will need to be familiar with the [Encryption slide set](../../slides/encryp
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
 
+- Sat, Feb 4: added the "Corner cases and EC multiplication" part of the "Testing" section.
 
 ### Languages
 
@@ -148,6 +149,8 @@ We know that the prime modulus $p=43$, the order $o=31$, and the base point $G=(
 
 First we determine the slope.  The formula is $m=(y_2−y_1)/(x_2−x_1)=(36-31)/(37-29)=5/8$.  The division $5 \div 8$ in $Z_{43}$ is 6 (confirmation: $6*8 \mod 43 = 5$).  Thus, we know the slope: $m=6$.  To determine the points, we use the [formulas presented in the slides](../../slides/encryption.html#/secp256k1addition):  $x_3=m^2-x_1-x_2=6^2-29-37=13$ and $y_3=m(x_1-x_3)-y_1=6*(29-13)-31=22$, both in $Z_{43}$.  (I've removed all the "mod $p$" parts for clarity.)  Thus, $(29,31) \oplus (37,36) = (13,22)$, and this computation can be verified [here](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=29&py=31&qx=37&qy=36).
 
+**Elliptic point multiplication:** There is an example in the next section ("Testing") that shows elliptic point multiplication, and shows how to avoid cases that will generate the point at infinity as the answer.
+
 **Key generation:** The random value for the private key is $d=16$.  Computing $d \otimes G = 16 \otimes (25,25) = (37,36)$ ([verification](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=16&px=25&py=25)).
 
 **Signing:** The secret $k$ value, which was not shown, was $k=17$.  We compute $R = k \otimes G = 17 \otimes (25,25) = (12,12)$ ([verification](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=17&px=25&py=25)).  The $x$-value of this, 12, is the first part of the signature, and is referred to as lower-case $r$.  We next have to compute $k^{-1}$.  Because $k$ is counting the number of points, the inverse is computed in $Z_{31}$, NOT in $Z_{43}$.  Thus, in $Z_{31}$, $17^{-1} = 11$ ([verification](https://planetcalc.com/3311/?a=17&m=31); also that $11 \ast 17 \mod 31 = 1$).  We know via the command-line parameters that $h=30$ and $d=16$, and we have just computed $r=12$.  We can then compute $s$, which also is computed in $Z_{31}$, NOT $Z_{43}$: $s=k^{−1}(h+r∗d) \mod o = 11 \ast (30 + 12 \ast 16) \mod 31 = 24$.  Thus, the signature is $(r,s)=(12,24)$.
@@ -170,6 +173,43 @@ One type of test that we are going to perform is whether your program can verify
 You are certainly welcome to come up with your own examples to test it with as well -- just make sure BOTH $p$ and $o$ are prime.
 
 Note that if you enter the curve of $a=0$ and $b=7$ into [this site](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43), and enter a different $p$ value, it will tell you the order below the boxes ("The curve has ... points").  You can pick any valid point on that curve as $G$; we just arbitrarily picked one for the examples above.
+
+#### Corner cases and EC multiplication
+
+Let's imagine that you wanted to compute $1000 \otimes (12,31)$ in $Z_{43}$.  We can see that the answer is $(20,3)$ ([verification](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=1000&px=13&py=31)).  But to compute it ourselves, first you we compute the powers of 2 that add to 1,000: $1000=512+256+128+64+32+8$.
+
+Next, we determine $(12,31)$ times the various powers of two by repeatedly adding it to itself:
+
+- $1 \otimes (12,31) = (12,31)$
+- $2 \otimes (12,31) = 1 \otimes (12,31) \oplus 1 \otimes (12,31) = (12,31) \oplus (12,31) = (42,36)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=12&py=31&qx=12&qy=31) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=2&px=12&py=31))
+- $4 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (42,36) \oplus (42,36) = (40,25)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=42&py=36&qx=42&qy=36) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=4&px=12&py=31))
+- $8 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (40,25) \oplus (40,25) = (20,3)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=40&py=25&qx=40&qy=25) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=8&px=12&py=31))
+- $16 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (20,3) \oplus (20,3) = (13,21)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=20&py=3&qx=20&qy=3) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=16&px=12&py=31))
+- $32 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (13,21) \oplus (13,21) = (12,31)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=13&py=21&qx=13&qy=21) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=32&px=12&py=31))
+- $64 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (12,31) \oplus (12,31) = (42,36)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=12&py=31&qx=12&qy=31) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=64&px=12&py=31))
+- $128 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (42,36) \oplus (42,36) = (40,25)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=42&py=36&qx=42&qy=36) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=128&px=12&py=31))
+- $256 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (40,25) \oplus (40,25) = (20,3)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=40&py=25&qx=40&qy=25) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=256&px=12&py=31))
+- $512 \otimes (12,31) = 2 \otimes (12,31) \oplus 2 \otimes (12,31) = (20,3) \oplus (20,3) = (13,21)$ (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=12&py=31&qx=12&qy=31) and [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=512&px=12&py=31))
+
+Note that a lot of the points repeat because it's a small field ($p=43$) with a small order ($o=31$), and the order size is one less than a power of 2.
+
+Next we add up the necessary values.  Recall that elliptic curve addition is commutative (you can add the points in any order and get the same result).  Let's assume we add them left-to-right
+
+- $1000 \otimes (12,31) = 512 \otimes (12,31) \oplus 256 \otimes (12,31) \oplus 128 \otimes (12,31) \oplus 64 \otimes (12,31) \oplus 32 \otimes (12,31) \oplus 8 \otimes (12,31)$
+- $1000 \otimes (12,31) = (13,21) \oplus (20,3) \oplus (40,25) \oplus (42,36) \oplus (12,31) \oplus (20,3)$
+  - As $(13,21) \oplus (20,3) = (21,18)$ we get:
+- $1000 \otimes (12,31) = (21,18) \oplus (40,25) \oplus (42,36) \oplus (12,31) \oplus (20,3)$
+  - As $(21,18) \oplus (40,25) = (38,21)$ we get:
+- $1000 \otimes (12,31) = (38,21) \oplus (42,36) \oplus (12,31) \oplus (20,3)$
+  - As $(38,21) \oplus (42,36) = (12,12)$ we get:
+- $1000 \otimes (12,31) = (12,12) \oplus (12,31) \oplus (20,3)$
+
+And here we run into a problem.  Trying to compute $(12,12) \oplus (12,31)$ is going to yield the point at infinity, as we are [adding two points that form a vertical line](../../slides/encryption.html#/3/22).  We could first compute $(12,12) \oplus (20,3) = (21,25)$, and then finally compute $(21,25) \oplus (12,31) = (20.3)$ (the final answer).  But there are a lot of corner cases for where the two points are in the list that have the same $x$-value.
+
+We are not looking for the most optimal solution, just a working one.
+
+For this assignment, when adding the points together, if you come across two points that have the same $x$-value, just shuffle the list of points and then add them up again.
+
 
 ### Submission
 
