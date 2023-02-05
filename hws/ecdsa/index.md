@@ -73,7 +73,7 @@ There are three elliptic curve point operations that will be needed:
 
 You can test your functions by using two websites: one that does [elliptic curve addition in a field](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43) and one that does [elliptic curve multiplication in a field](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43).  The curve we are using is secp256k1, which sets $a=0$ and $b=7$.  For testing purposes, we recommend setting the prime modulus $p$ to 43; this will give an curve order ($o$) value of 31.  Other valid field sizes (aka $p$ values) are listed in the "Testing" section of this assignment.
 
-There are some corner cases to test as well.  Given $P=(x,y)$, it's reflection is $P'=(x,-y)$.  Within the field $Z_o$, that reflection is $P'=(x,o-y)$.  Adding a point and its reflection together gets $O$ (or $0$), the point at infinity, which is also the identity element.  Your code should be able to compute $P \oplus P' = O$, for however you represent $O$.  It should also be able to compute $O+P=P$.  You can see that [here in the slides](../../slides/encryption.html#/pointo).
+There are some corner cases to test as well.  Given $P=(x,y)$, it's reflection is $P'=(x,-y)$.  Within the field $Z_p$, that reflection is $P'=(x,p-y)$.  Adding a point and its reflection together gets $O$ (or $0$), the point at infinity, which is also the identity element.  Your code should be able to compute $P \oplus P' = O$, for however you represent $O$.  It should also be able to compute $O+P=P$.  You can see that [here in the slides](../../slides/encryption.html#/pointo).
 
 ### Step 3: Signatures
 
