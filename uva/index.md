@@ -64,6 +64,9 @@ All of the programming homeworks are due by the end of the day (11:59:59 pm).  T
 
 Readings are due by the start of lecture on that day; all other homeworks are due by the end of the day (11:59:59 pm).
 
+- Due Friday, February 17th: HW S3: Read the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://canvas.its.virginia.edu/courses/59096/files?preview=1043863))
+    - You can skip (or quickly browse) the first 3 sub-parts of the ‘History’ section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip the ‘references and further reading’ section at the end; what’s left is 32 pages (of large and widely-spaced text) in the PDF to read
+    - Be sure you do ***NOT*** read the [outdated PDF](https://ethereum.org/669c9e2e2027310b6b3cdce6e1c52962/Ethereum_Whitepaper_-_Buterin_2014.pdf), which is what a lot of searches for "ethereum whitepaper pdf" will return
 - Due Friday, February 3rd: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
 - Due Tuesday, January 24th: HW S1: fill out the Google survey (link on the [Canvas landing page][1]) by the end of the day on Tuesday, Jan 24th
 
