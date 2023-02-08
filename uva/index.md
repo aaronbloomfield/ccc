@@ -57,26 +57,8 @@ Reading assignments are due by the start of the lecture that day, and all other 
 
 #### Larger Programming Homeworks
 
-Readings are due by the start of lecture on that day; all other homeworks are due by the end of the day (11:59:59 pm).
+All of the programming homeworks are due by the end of the day (11:59:59 pm).  To avoid having the due dates having to be listed in too many places, the homeworks and their due dates are not shown here.  The homeworks themselves can be seen on the [Homeworks page](../hws/index.html) ([md](../hws/index.md)) -- but please don't start on one until it's announced in class that it is ready!  You can see the due dates in the [daily announcements](daily-announcements.html#/) and the [Canvas landing page][1].
 
-- Due Tuesday, February 7th: [HW P2: ECDSA](../hws/ecdsa/index.html) ([md](../hws/ecdsa/index.md))
-- Due Tuesday, January 31st: [HW P1: Overview](../hws/intro/index.html) ([md](../hws/intro/index.md))
-
-<!-- 
-
-- Due Tue, 11/22 by midnight: [P11: MetaMask](../hws/metamask/index.html) ([md](../hws/metamask/index.md))
-- [P10: Arbitrage trading](../hws/arbitrage/index.html) ([md](../hws/arbitrage/index.md))
- - Due Tue, ~~11/15~~ (now 11/29) by midnight: [P9: DAO & web3](../hws/daoweb3/index.html) ([md](../hws/daoweb3/index.md))
-- Due Wed, 11/9 by midnight: [P8: DEX](../hws/dex/index.html) ([md](../hws/dex/index.md))
-- Due Tue, 11/1 by midnight: [P7: dApp Auction](../hws/auction/index.html) ([md](../hws/auction/index.md))
-- Due Tue, 10/25, by midnight: [HW P6: dApp Tokens](../hws/tokens/index.html) ([md](../hws/tokens/index.md))
-- Due Tue, 10/18, by midnight: [HW P5: dApp Gradebook](../hws/gradebook/index.html) ([md](../hws/gradebook/index.md))
-- Due Tue, 9/27, by midnight: [HW P4: Bitcoin scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
-- Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
-- Due Tue, 9/27, by midnight: [HW P4: BTC scripting](../hws/btcscript/index.html) ([md](../hws/btcscript/index.md))
-- Due Tue, 9/20, by midnight: [HW P3: BTC parser](../hws/btcparser/index.html) ([md](../hws/btcparser/index.md))
-
--->
 
 #### Smaller Homeworks
 
