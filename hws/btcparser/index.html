@@ -61,15 +61,10 @@
 <p>The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain – specifically before any <a href='https://github.com/bitcoin/bips'>BIPs</a> were proposed and enacted. Thus, the blocks will not contain fields such as the height number. Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).</p>
 <p>You will need to be familiar with the <a href='../../slides/bitcoin.html#/'>Bitcoin slide set</a>, specifically the first four sections: on <a href='../../slides/bitcoin.html#/merkle'>Merkle trees</a>, <a href='../../slides/bitcoin.html#/datatypes'>data types used</a>, <a href='../../slides/bitcoin.html#/concepts'>Bitcoin concepts and terminology</a>, and the <a href='../../slides/bitcoin.html#/blockchain'>blockchain description</a>.</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. </p>
-<ul>
-<li>Sat, 9/17: clarified the output requirements in the Output section (so requirements changes, only clarifications)</li>
-<li>Sat, 9/17: clarified the Python example in the Merkle tree section (no content changes, but a bit better of an explanation)</li>
-<li>Thu, 9/15: added the last bullet point guarantee in the Validation section</li>
-</ul>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='tlanguages' class='tabcontent'><h3 id='languages'>Languages</h3>
 <p>In theory, this can be implemented in any language. In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for. Four languages that can currently be used: C (using <code>gcc</code>), C++ (using <code>g++</code>), Java (using OpenJDK 11), and Python (using Python 3.10.x). If you want to use a different language, let’s have a chat about it, as it will take some time to ensure that the grading system can handle it. You will have to let us know at least two days before the submission deadline so that we can configure it in time.</p>
-<p>This assignment specifically is intended for you to use packages that handle the JSON processing for your programming language. In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries). However, you are welcome to – and probably should – use any JSON libraries.</p>
+<p>This assignment specifically is intended for you to use packages that handle the JSON processing for your programming language. In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries). However, you are welcome to – and should – use the JSON libraries.</p>
 <p><strong>Python:</strong> To output JSON in Python, you create a dictionary (with nested dictionaries and lists, as necessary), and then use the <code>json</code> library (included with Python) to output the JSON; see <a href='https://www.w3schools.com/python/python_json.asp'>here</a> for a tutorial.</p>
 <p><strong>Java:</strong> In Java, a number of tutorials (<a href='https://www.javatpoint.com/java-json-example'>1</a>, <a href='https://www.tutorialspoint.com/json/json_java_example.htm'>2</a>, <a href='https://www.geeksforgeeks.org/working-with-json-data-in-java/'>3</a>, etc.) recommend using the <a href='https://github.com/fangyidong/json-simple'>json-simple</a> package from <a href='https://www.json.org/json-en.html'>json.org</a>; you can download the .jar file from <a href='https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-simple/json-simple-1.1.1.jar'>here</a>. Version 1.1.1 of that file (<code>json-simple-1.1.1.jar</code>) will be put into the directory along with your source code; thus, you should NOT include it in the files that you submit. To use it you will need to update your classpath on both the compilation (<code>javac -cp json-simple-1.1.1.jar:. BTCParse.java</code>) and execution (<code>java -cp json-simple-1.1.1.jar:. BTCParse</code>); these updates will have to be made to the Makefile and parse.sh files, respectively, that you submit. The first of those tutorials (<a href='https://www.javatpoint.com/java-json-example'>this one</a>) has example code that outputs in JSON using this library. Lastly, it’s fine if the compilation line complains about a deprecated API, as long as the compilation result is still successful.</p>
 </div><div id='tprovided-files' class='tabcontent'><h3 id='provided-files'>Provided files</h3>
@@ -79,6 +74,7 @@
 <ul>
 <li><a href='blk00000-f10.blk'>blk00000-f10.blk</a> (2.3 Kb) contains the first 10 blocks</li>
 <li><a href='blk00000-f100.blk'>blk00000-f100.blk</a> (24 Kb) contains the first 100 blocks</li>
+<li>blk00000-f30000.blk (7 Mb) contains the first 30,000 Bitcoin blocks. Due to this file’s size, it is not kept in this repository, but can be found on Collab in the Resources tool</li>
 <li>blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks. Due to this file’s size, it is not kept in this repository, but can be found on Collab in the Resources tool</li>
 </ul></li>
 <li>Files with single blocks
@@ -160,7 +156,7 @@ $</code></pre>
 <li>The Merkle tree hash in the header is incorrect (implement this last – see below)</li>
 </ol>
 <p>If an error is found, the output should only be <code>error 5 block 17</code> with the appropriate error number and block number (remember that blocks start counting at 0, not 1). If no errors are found, then the output should only be “no errors X blocks”, where ‘X’ is an integer. (We are going to use the plural “blocks” even when there is only 1 block).</p>
-<p>If there are multiple errors, you should report the one found in the earlier block and then exit. For example, if there is a modification to the Merkle hash in block 10, then both block 10 will have an error (#6 – bad Merkle hash) as well as block 11 (#3 – bad previous header hash). In this case, the error in block 10 should be reported, and the program should then exit.</p>
+<p>If there are multiple errors, you should report the one found in the earlier block <strong><em>and then exit.</em></strong> If you don’t exit after printing the first error, your output will not match, and the autograder will mark it as incorrect. For example, if there is a modification to the Merkle hash in block 10, then both block 10 will have an error (#6 – bad Merkle hash) as well as block 11 (#3 – bad previous header hash). In this case, the error in block 10 should be reported, and the program should then exit.</p>
 <p>If there are multiple errors in a single block, you can report any one of them and then exit. Because this makes it very difficult to grade, we are going to avoid testing this possibility when grading your assignment.</p>
 <p>Test this well! We are going to provide all sorts of messed-up files to your program as input. The file provided to your program may not even be a valid blockchain file! You are guaranteed that the following will be true:</p>
 <ul>
@@ -186,12 +182,12 @@ assert (len(sys.argv)==3)
 data = bytearray(sys.stdin.buffer.read())
 data[int(sys.argv[1])] = int(sys.argv[2])
 sys.stdout.buffer.write(bytes(data))</code></pre>
-<p>This can also be downloaded via <a href='change_byte.py.html'>change_byte.py</a> (<a href='change_byte.py'>src</a>). Yes, this program could be compacted more, but then it would be even more unreadable. This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output. It takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are decimal numbers. There is no error checking in this program! You would use it as such:</p>
+<p>This can also be downloaded via <a href='change_byte.py.html'>change_byte.py</a> (<a href='change_byte.py'>src</a>). Yes, this program could be compacted more, but then it would be even more unreadable. This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output. It takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are base-10 integers. There is no error checking in this program! You would use it as such:</p>
 <pre><code>$ cat blk00000-f10.blk | ./change_byte.py 2 0 &gt; test.blk
 $ ./parse.sh test.blk
 error 1 block 0
 $</code></pre>
-<p>The first line may be different on your machine (especially if you use Windows), and it may be invoked slightly differently than what is shown below. Here are a few more execution runs to show you both successful execution runs and runs with some errors. You should test it beyond these! We are certainly going to when we grade your assignment…</p>
+<p>The first line may be different on your machine (especially if you use Windows), and it may be invoked slightly differently than what is shown below. Here are a few more execution runs to show you both successful execution runs and runs with some errors. You should test it beyond these! We are certainly going to when we grade your assignment.</p>
 <pre><code>$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-b0.blk 
 no errors 1 blocks
 $ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
@@ -224,13 +220,13 @@ error 6 block 0
 $</code></pre>
 <p>These test are by no means comprehensive! But some of these examples will be used for the visible tests when you submit the file to Gradescope. The hidden tests, which your grade will be based on similar tests different than the ones shown above.</p>
 </div><div id='tpart-2b-merkle-trees' class='tabcontent'><h3 id='part-2b-merkle-trees'>Part 2b: Merkle Trees</h3>
-<p>Validating the Merkle Tree hashes is likely the hardest part of the assignment. Work on this last, as you can still get a lot of partial credit if this part is not implemented. In particular, you may want to ensure that the JSON output, below, is working first before you complete this part.</p>
+<p>Validating the Merkle Tree hashes is likely the hardest part of the assignment. Work on this last, as you can still get partial credit if this part is not implemented. In particular, you may want to ensure that the JSON output, below, is working first before you complete this part.</p>
 <p>The computation of the Merkle tree root hash is <a href='../../slides/bitcoin.html#/merkle'>discussed in the lecture slides</a>. You will need to be familiar with that before proceeding. It is expected that you will use the SHA-256 hashing programs that come with your programming language; use of these is discussed in the last few slides of the <a href='../../slides/encryption.html#/hashing'>hashing section of the Encryption slide set</a>.</p>
 <p>Some important notes to remember:</p>
 <ul>
 <li>The hashes for the children nodes are concatenated, and then the hash of that concatenation is used in the level above</li>
 <li>If there is an odd number of hashes in a given level, then the last one is concatenated to itself, and the hash of that is used in the level above</li>
-<li>The hashes need to be in binary little-Endian form; the binary form is 32 bytes long</li>
+<li>The hashes need to be in binary little-Endian form; the binary form of a SHA-256 hash is 32 bytes long</li>
 <li>Bitcoin uses a double hashing, so each hash is really the sha256 hash of the sha256 hash of the data itself</li>
 <li>This assignment is <em>NOT</em> using Fast Merkle trees</li>
 </ul>
@@ -307,7 +303,7 @@ $</code></pre>
 </div><div id='tpart-3-output' class='tabcontent'><h3 id='part-3-output'>Part 3: Output</h3>
 <p>There are two types of output: the output printed to standard output regrading the parsing result (errors or not) of the run, and the JSON output file. If there are errors, then the status of the JSON file does not matter (complete, missing, partially written, etc.), as it will not be checked.</p>
 <h4 id='standard-output'>Standard Output</h4>
-<p>There should be printed to standard output via <code>print()</code> in Python or <code>System.out.println()</code> in Java. There should always be exactly one line of output regardless of the result of the parsing.</p>
+<p>There should be <strong><em>ONE LINE</em></strong> printed to standard output via <code>print()</code> in Python or <code>System.out.println()</code> in Java. There should always be exactly one line of output regardless of the result of the parsing.</p>
 <p>If no errors are detected, it should output: <code>no errors X blocks</code>, where <code>X</code> is the total number of blocks (which is one off from the height). This should use the plural “blocks” even if there is only one block in the file.</p>
 <p>If an error is found, it should output: <code>error 1 block 3</code>. This counts the blocks in the file, and the first block is block 0. As mentioned above, if there are multiple errors, then the first one found should be reported, and then the program should terminate.</p>
 <h4 id='json-file'>JSON file</h4>
@@ -359,7 +355,7 @@ $</code></pre>
 <ul>
 <li>We don’t need to list the magic number in the JSON file – it’s always the same, and was verified when the blockchain was read in (technically it’s not part of the block, it’s part of the file format)</li>
 <li>Likewise, we don’t need to include the block size, since that’s not as important in JSON</li>
-<li>You can put in additional fields if you would like – but the fields shown above must be there; the only exception is that, in the output above, both <code>timestamp_readable</code> and <code>file_position</code> are NOT required fields</li>
+<li>You can put in additional fields if you would like – but the fields shown above must be there; the only exception is that, in the output shown above, both <code>timestamp_readable</code> and <code>file_position</code> are NOT required fields</li>
 <li>Hexadecimal values should NOT have a leading ‘0x’</li>
 <li>Integer values should not have quotes around them (that’s a JSON feature), but all other values should be enclosed in double quotes (not single quotes – a JSON restriction)</li>
 <li>If you have a list if items in an array, JSON is not happy with a comma after the last one; you can see this after the ‘lock_time’ value – there is no comma after its value 0 (yes, this is stupid, but that’s JSON for you)</li>
@@ -370,7 +366,7 @@ $</code></pre>
 <li>The script data itself should be output in the exact order that it occurs in the file. You can see what that data is for the genesis block <a href='https://en.bitcoin.it/wiki/Genesis_block'>here</a>.</li>
 </ul>
 <p>In particular, this JSON output need to be written to a file, NOT to standard output. The file name will just append “.json” to the input file name. If you are writing this file as you go, and you encounter an error, it’s fine if you have a partially written JSON file – we aren’t going to check it if there are errors.</p>
-<p>You can verify that it is valid JSON by running it through JSON’s lint: <code>jsonlint-php blk00000-first10.blk.json</code>. This program is installed on the Linux VirtualBox image. If you not using VirtualBox, you can install it yourself, or use online sites such as <a href='https://jsonlint.com/'>these</a>. You can also use a one-line Python command to test it:</p>
+<p>You can verify that it is valid JSON by running it through JSON’s lint: <code>jsonlint-php blk00000-first10.blk.json</code>. You can search for how to install that program on your operating system, or use online sites such as <a href='https://jsonlint.com/'>these</a>. You can also use a one-line Python command to test it:</p>
 <pre><code>$ cat blk00000-b0.blk.json | python3 -c "import json,sys; json.load(sys.stdin)"
 $</code></pre>
 <p>If there is no output (specifically, no error output), then it was parsed correctly.</p>
