@@ -40,6 +40,9 @@ Readings
 
 All readings are due by the start of lecture that day.  You should expect there to be in-class quizzes on each reading.
 
+  - Due Friday, February 17th: HW S3: Read the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://canvas.its.virginia.edu/courses/59096/files?preview=1043863))
+      - You can skip (or quickly browse) the first 3 sub-parts of the ‘History’ section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip the ‘references and further reading’ section at the end; what’s left is 32 pages (of large and widely-spaced text) in the PDF to read
+      - Be sure you do ***NOT*** read the [outdated PDF](https://ethereum.org/669c9e2e2027310b6b3cdce6e1c52962/Ethereum_Whitepaper_-_Buterin_2014.pdf), which is what a lot of searches for "ethereum whitepaper pdf" will return
 - Due Friday, February 3rd: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Canvas [here](https://canvas.its.virginia.edu/files/981134/download?download_frd=1))
 
 <!--
@@ -89,7 +92,7 @@ Course calendar
 | 1 | Jan 16 | W,F |  | [Course introduction](introduction.html#/), [Overview](../slides/overview.html#/) | Wed: finished course intro; Fri: overview to 4.11 |
 | 2 | Jan 23 | M,W,F |  | [Encryption](../slides/encryption.html#/) | Mon: overview to 5.17; Wed: finished overview, encryption to 3.15; encryption to 5.9 |
 | 3 | Jan 30 | M,W,F | P1 (Introduction) | [Encryption](../slides/encryption.html#/) | Mon: encryption to 6.22; Wed: encryption to 7.14; Fri: encryption to 8.20 |
-| 4 | Feb 6 | M,W,F | P2 (ECDSA) | [Bitcoin](../slides/bitcoin.html#/) | Mon: finished encryption, bitcoin to 4.5; Wed: bitcoin to 5.21 |
+| 4 | Feb 6 | M,W,F | P2 (ECDSA) | [Bitcoin](../slides/bitcoin.html#/) | Mon: finished encryption, bitcoin to 4.5; Wed: bitcoin to 5.21; Fri: bitcoin to 7.6 |
 | 5 | Feb 13 | M,W,F | P3 (BTC parser) | [Bitcoin](../slides/bitcoin.html#/) | |
 | 6 | Feb 20 | M,W,F | P4 (BTC scripting) | [Ethereum](../slides/ethereum.html#/) | |
 | 7 | Feb 27 | M,W,F | midterm | [Solidity](../slides/solidity.html#/) | |
