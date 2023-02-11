@@ -171,7 +171,7 @@ $</code></pre>
 <ul>
 <li>Obviously that doesn’t apply to the first block in the file</li>
 </ul></li>
-<li>If there is an error in the file, it will be one of the 6 errors listed above. Other errors that may occur are not ones that you have to check for. As an example, an error where the block size (the send half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error.</li>
+<li>If there is an error in the file, it will be one of the 6 errors listed above. Other errors that may occur are not ones that you have to check for. As an example, an error where the block size (the second half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error. Likewise, a file that ends prematurely (in the middle of a transaction, for example) will not be an error we are going to test for.</li>
 </ul>
 <p>Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the “no errors X blocks” or “error 5 block 17” line – we’ll get rid of the other output in the next section.</p>
 </div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
