@@ -1062,7 +1062,6 @@ As the top of the stack has true at the end, the script is verified and the tran
 - OP_CHECKMULTISIG puts a 1 or 0 on the stack; OP_CHECKMULTISIGVERIFY also runs OP_VERIFY
 </textarea></section>
 
-
     <section>
 <h2>OP_CHECKMULTISIG Example</h2>
 <p>If the current key matches the current signature, advance both; otherwise, only advance the key index</p>
@@ -1114,6 +1113,19 @@ As the top of the stack has true at the end, the script is verified and the tran
 
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img-nb-300" -->
+## OP_CHECKMULTISIG example
+![](images/bitcoin/multisig/multisig.dot.1.svg)
+- To enforce some agreement, Alice (A) wants to allow Bob (B), Charlie (C) and Dani (D) to redeem a UTXO if 2 of the 3 agree
+- The pubKey script from A will push onto the stack: `OP_2`, each of the public key hashes of D, C, then B, and then `OP_3`
+  - The top 5 values in the diagram
+  - It will then call `OP_CHECKMULTISIG`
+- The sigScript that B, C, and D jointly provide must then first push onto the stack `OP_0` and two signatures
+  - The bottom 3 values in the diagram
+- The entire script will be longer (have an `OP_CHECKSIG`, for example); this is just showing the use of `OP_CHECKMULTISIG`
+
+
+
 ## Full List of Opcodes
 See the [Script page](https://en.bitcoin.it/wiki/Script) of the Bitcoin developer wiki
 
