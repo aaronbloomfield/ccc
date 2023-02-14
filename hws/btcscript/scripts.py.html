@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
@@ -30,7 +30,7 @@ http://www.gnu.org/software/src-highlite">
 <b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#FF0000">'testnet'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># The address that we will pay our tBTC to -- do not change this!</font></i>
-tbtc_return_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh'</font><font color="#990000">)</font>
+tbtc_return_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB'</font><font color="#990000">)</font> <i><font color="#9A1900"># https://coinfaucet.eu/en/btc-testnet/</font></i>
 
 <i><font color="#9A1900"># The address that we will pay our BCY to -- do not change this!</font></i>
 bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz'</font><font color="#990000">)</font>
@@ -61,10 +61,6 @@ my_invoice_address_str <font color="#990000">=</font> <font color="#FF0000">""</
 <i><font color="#9A1900"># one you botain..</font></i>
 txid_funding_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#FF0000">""</font><font color="#990000">]</font>
 
-<i><font color="#9A1900"># Don't change this -- it is so we can easily access the first such funding</font></i>
-<i><font color="#9A1900"># transaction.</font></i>
-txid_initial <font color="#990000">=</font> txid_funding_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-
 <i><font color="#9A1900"># These conversions are so that you can use them more easily in the functions</font></i>
 <i><font color="#9A1900"># below -- don't change these two lines.</font></i>
 <b><font color="#0000FF">if</font></b> my_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
@@ -92,25 +88,29 @@ txid_initial <font color="#990000">=</font> txid_funding_list<font color="#99000
 <i><font color="#9A1900"># Testnet Setup: splitting coins</font></i>
 
 <i><font color="#9A1900"># The transaction ID that is to be split -- the assumption is that it is the</font></i>
-<i><font color="#9A1900"># transaction hash, above, that funded your account with tBTC.  If you are</font></i>
-<i><font color="#9A1900"># splitting a different faucet transaction, then change this appropriately.</font></i>
-<i><font color="#9A1900"># It must have been paid to the address that corresponds to the private key</font></i>
-<i><font color="#9A1900"># above</font></i>
-split_txid <font color="#990000">=</font> txid_initial
+<i><font color="#9A1900"># transaction hash, above, that funded your account with tBTC.  You may have</font></i>
+<i><font color="#9A1900"># to split multiple UTXOs, so if you are splitting a different faucet</font></i>
+<i><font color="#9A1900"># transaction, then change this appropriately. It must have been paid to the</font></i>
+<i><font color="#9A1900"># address that corresponds to the private key above</font></i>
+txid_split <font color="#990000">=</font> txid_funding_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+
+<i><font color="#9A1900"># After all the splits, you should have around 10 (or more) UTXOs, all for the</font></i>
+<i><font color="#9A1900"># amount specified in this variable. That amount should not be less than</font></i>
+<i><font color="#9A1900"># 0.0001 BTC, and can be greater.  It will make your life easier if each</font></i>
+<i><font color="#9A1900"># amount is a negative power of 10, but that's not required.</font></i>
+split_amount_to_split <font color="#990000">=</font> <font color="#993399">0.01</font>
 
 <i><font color="#9A1900"># How much BTC is in that UTXO; look this up on https://live.blockcypher.com</font></i>
 <i><font color="#9A1900"># to get the correct amount.</font></i>
-split_amount_to_split <font color="#990000">=</font> <font color="#993399">0.001</font>
+split_amount_after_split <font color="#990000">=</font> <font color="#993399">0.001</font>
 
-<i><font color="#9A1900"># How many UTXO indices to split it into.  Note that it will actually split</font></i>
-<i><font color="#9A1900"># into one less, and use the last one as the transaction fee.</font></i>
-split_into_n <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>split_amount_to_split<font color="#990000">/</font><font color="#993399">0.0001</font><font color="#990000">)</font>
+<i><font color="#9A1900"># How many UTXO indices to split it into -- you should not have to change</font></i>
+<i><font color="#9A1900"># this!  Note that it will actually split into one less, and use the last one</font></i>
+<i><font color="#9A1900"># as the transaction fee.</font></i>
+split_into_n <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>split_amount_to_split<font color="#990000">/</font>split_amount_after_split<font color="#990000">)</font>
 
 <i><font color="#9A1900"># The transaction IDs obtained after successfully splitting the tBTC.</font></i>
 txid_split_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#FF0000">""</font><font color="#990000">]</font>
-
-<i><font color="#9A1900"># Don't change this -- it's so some of our legacy grading code still works.</font></i>
-txid_split <font color="#990000">=</font> txid_split_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
@@ -119,7 +119,7 @@ txid_split <font color="#990000">=</font> txid_split_list<font color="#990000">[
 <i><font color="#9A1900"># The transaction ID that is being redeemed for the various parts herein --</font></i>
 <i><font color="#9A1900"># this should be the result of the split transaction, above; thus, the</font></i>
 <i><font color="#9A1900"># default is probably sufficient.</font></i>
-txid_utxo <font color="#990000">=</font> txid_split
+txid_utxo <font color="#990000">=</font> txid_split_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
 
 <i><font color="#9A1900"># The index of the UTXO that is being spent -- note that these indices are</font></i>
 <i><font color="#9A1900"># indexed from 0.  Note that you will have to change this for EACH run, as</font></i>
@@ -132,7 +132,7 @@ utxo_index <font color="#990000">=</font> <font color="#993399">0</font>
 <i><font color="#9A1900"># there is no miner fee, and it will not be mined into a block.  Setting it</font></i>
 <i><font color="#9A1900"># to 90% of the value of the UTXO index is reasonable.  Note that the amount</font></i>
 <i><font color="#9A1900"># in a UTXO index is split_amount_to_split / split_into_n.</font></i>
-send_amount <font color="#990000">=</font> <font color="#993399">0.00009</font>
+send_amount <font color="#990000">=</font> split_amount_after_split <font color="#990000">*</font> <font color="#993399">0.9</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>

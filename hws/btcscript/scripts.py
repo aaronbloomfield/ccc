@@ -19,7 +19,7 @@ from bitcoin.core import x
 SelectParams('testnet')
 
 # The address that we will pay our tBTC to -- do not change this!
-tbtc_return_address = CBitcoinAddress('mwL32bFWqjymzgcQmQ9rdH34VPi8fAfsWh')
+tbtc_return_address = CBitcoinAddress('mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB') # https://coinfaucet.eu/en/btc-testnet/
 
 # The address that we will pay our BCY to -- do not change this!
 bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')
@@ -50,10 +50,6 @@ my_invoice_address_str = ""
 # one you botain..
 txid_funding_list = [""]
 
-# Don't change this -- it is so we can easily access the first such funding
-# transaction.
-txid_initial = txid_funding_list[0]
-
 # These conversions are so that you can use them more easily in the functions
 # below -- don't change these two lines.
 if my_private_key_str != "":
@@ -81,25 +77,29 @@ def create_CHECKSIG_signature(txin, txout, txin_scriptPubKey, private_key):
 # Testnet Setup: splitting coins
 
 # The transaction ID that is to be split -- the assumption is that it is the
-# transaction hash, above, that funded your account with tBTC.  If you are
-# splitting a different faucet transaction, then change this appropriately.
-# It must have been paid to the address that corresponds to the private key
-# above
-split_txid = txid_initial
+# transaction hash, above, that funded your account with tBTC.  You may have
+# to split multiple UTXOs, so if you are splitting a different faucet
+# transaction, then change this appropriately. It must have been paid to the
+# address that corresponds to the private key above
+txid_split = txid_funding_list[0]
+
+# After all the splits, you should have around 10 (or more) UTXOs, all for the
+# amount specified in this variable. That amount should not be less than
+# 0.0001 BTC, and can be greater.  It will make your life easier if each
+# amount is a negative power of 10, but that's not required.
+split_amount_to_split = 0.01
 
 # How much BTC is in that UTXO; look this up on https://live.blockcypher.com
 # to get the correct amount.
-split_amount_to_split = 0.001
+split_amount_after_split = 0.001
 
-# How many UTXO indices to split it into.  Note that it will actually split
-# into one less, and use the last one as the transaction fee.
-split_into_n = int(split_amount_to_split/0.0001)
+# How many UTXO indices to split it into -- you should not have to change
+# this!  Note that it will actually split into one less, and use the last one
+# as the transaction fee.
+split_into_n = int(split_amount_to_split/split_amount_after_split)
 
 # The transaction IDs obtained after successfully splitting the tBTC.
 txid_split_list = [""]
-
-# Don't change this -- it's so some of our legacy grading code still works.
-txid_split = txid_split_list[0]
 
 
 #------------------------------------------------------------
@@ -108,7 +108,7 @@ txid_split = txid_split_list[0]
 # The transaction ID that is being redeemed for the various parts herein --
 # this should be the result of the split transaction, above; thus, the
 # default is probably sufficient.
-txid_utxo = txid_split
+txid_utxo = txid_split_list[0]
 
 # The index of the UTXO that is being spent -- note that these indices are
 # indexed from 0.  Note that you will have to change this for EACH run, as
@@ -121,7 +121,7 @@ utxo_index = 0
 # there is no miner fee, and it will not be mined into a block.  Setting it
 # to 90% of the value of the UTXO index is reasonable.  Note that the amount
 # in a UTXO index is split_amount_to_split / split_into_n.
-send_amount = 0.00009
+send_amount = split_amount_after_split * 0.9
 
 
 #------------------------------------------------------------

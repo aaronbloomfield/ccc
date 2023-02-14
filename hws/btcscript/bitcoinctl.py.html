@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="GENERATOR" content="GNU source-highlight 3.1.8
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
@@ -51,7 +51,7 @@ http://www.gnu.org/software/src-highlite">
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">split_coins</font></b><font color="#990000">(</font>which<font color="#990000">):</font>
 	<b><font color="#0000FF">if</font></b> which <font color="#990000">==</font> <font color="#FF0000">'split'</font><font color="#990000">:</font>
 		my_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>my_private_key_str<font color="#990000">)</font>
-		txid <font color="#990000">=</font> split_txid
+		txid <font color="#990000">=</font> txid_split
 		network <font color="#990000">=</font> <font color="#FF0000">'btc-test3'</font>
 	<b><font color="#0000FF">else</font></b><font color="#990000">:</font> <i><font color="#9A1900"># split == 'splitbcy'</font></i>
 		my_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
@@ -68,7 +68,6 @@ http://www.gnu.org/software/src-highlite">
 	sighash <font color="#990000">=</font> <b><font color="#000000">SignatureHash</font></b><font color="#990000">(</font>txin_scriptPubKey<font color="#990000">,</font> tx<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> SIGHASH_ALL<font color="#990000">)</font>
 	txin<font color="#990000">.</font>scriptSig <font color="#990000">=</font> <b><font color="#000000">CScript</font></b><font color="#990000">([</font>my_private_key<font color="#990000">.</font><b><font color="#000000">sign</font></b><font color="#990000">(</font>sighash<font color="#990000">)</font> <font color="#990000">+</font> <b><font color="#000000">bytes</font></b><font color="#990000">([</font>SIGHASH_ALL<font color="#990000">]),</font> my_public_key<font color="#990000">])</font>
 	<b><font color="#000000">VerifyScript</font></b><font color="#990000">(</font>txin<font color="#990000">.</font>scriptSig<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> tx<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#990000">(</font>SCRIPT_VERIFY_P2SH<font color="#990000">,))</font>
-	<b><font color="#0000FF">print</font></b><font color="#990000">(</font>tx<font color="#990000">)</font>
 	response <font color="#990000">=</font> <b><font color="#000000">broadcast_transaction</font></b><font color="#990000">(</font>tx<font color="#990000">,</font>network<font color="#990000">)</font>
 	<b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> broadcast_transactions<font color="#990000">:</font>
 		<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"Not broadcasting transactions, so no response received"</font><font color="#990000">)</font>

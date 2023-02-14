@@ -40,7 +40,7 @@ def broadcast_transaction(tx, network):
 def split_coins(which):
 	if which == 'split':
 		my_private_key = CBitcoinSecret(my_private_key_str)
-		txid = split_txid
+		txid = txid_split
 		network = 'btc-test3'
 	else: # split == 'splitbcy'
 		my_private_key = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
@@ -57,7 +57,6 @@ def split_coins(which):
 	sighash = SignatureHash(txin_scriptPubKey, tx, 0, SIGHASH_ALL)
 	txin.scriptSig = CScript([my_private_key.sign(sighash) + bytes([SIGHASH_ALL]), my_public_key])
 	VerifyScript(txin.scriptSig, txin_scriptPubKey, tx, 0, (SCRIPT_VERIFY_P2SH,))
-	print(tx)
 	response = broadcast_transaction(tx,network)
 	if not broadcast_transactions:
 		print("Not broadcasting transactions, so no response received")

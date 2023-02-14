@@ -12,16 +12,14 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-- Wed, 9/21: a bunch of updates were committed by 9:30 pm; if you downloaded the files before that, please ensure you make the following changes.  If you download the files after that, then you do not need to make any changes.
-  - Re-download [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)); just replace the old one with the new version
-  - Line 25 of [scripts.py](scripts.py.html) ([src](scripts.py)) should be exactly: `bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')` (it should not be commented out, and it has a different invoice address than before)
 
 
 ### Languages
 
-This assignment uses the [python-bitcoinlib package](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the Python package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  This is all installed on the VirtualBox image.
+This assignment uses the [python-bitcoinlib package](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the Python package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  Note that bitcoinlib, python-bitcoinlib, and bitcoin are all different libraries!  We are specifically using python-bitcoinlib.
+
 
 We provide you with a few files to use:
 
@@ -34,6 +32,8 @@ This can be a tricky assignment, and there are a lot of ways to run into problem
 
 #### Development Tips
 
+- You will often have to wait until a previous transaction has been confirmed before you can run a successive transaction.  If you look at the page for the wallet or the transaction (both described below), you need at least one confirmation (not 6, like with real BTC).  Many of the follow-on transactions will not work properly if the funding UTXO transaction has not been confirmed.
+  - Confirmation can take some time -- 10-20 minutes is not unreasonable.  Start early and plan to work on other things while it's bouncing around the mempool waiting to be confirmed.
 - You can, and should, use a site such as [https://siminchen.github.io/bitcoinIDE/build/editor.html](https://siminchen.github.io/bitcoinIDE/build/editor.html) to test your code.  Note that this site is, by necessity, limited in what it can do.  It will try to execute the scripts, but it doesn't always know if there is enough balance, if the corresponding UTXO script matches, etc.  So use that site to get started, but be sure to test your scripts via the means specified in this assignment.
 
 
@@ -53,10 +53,12 @@ This can be a tricky assignment, and there are a lot of ways to run into problem
 
 We will add to this list as more errors (and their solutions) are reported to us.
 
-- "Error validating transaction: Transaction ... referenced by input 0 has lesser than 3 outputs" means the UTXO index you provided is too high
+- "Error validating transaction: Transaction ... referenced by input 0 has lesser than 3 outputs" means the UTXO index you provided is wrong (probably too high)
+- "Error validating transaction: Transaction ... referenced by input 0 has already been spent" means the UTXO index you provided is wrong (probably too low)
 - "Error validating transaction: Error running script for input 0 referencing ... at 0: Script was NOT verified successfully" is when the scripts don't work together
 - A "409 Conflict {}" error occurs when you attempt to spend a UTXO that's already been spent; this usually happens when you forget to set `utxo_index` to an unspent index
 - "witness script detected in tx without witness data": your `utxo_index` is wrong
+- "unsupported hash type ripemd160": see [here](https://stackoverflow.com/questions/72409563/unsupported-hash-type-ripemd160-with-hashlib-in-python) for how to fix this
 
 #### Mac OS X issues
 
@@ -78,27 +80,28 @@ You will need around 0.001 ($10^{-3}$) tBTC for this assignment.  You can obtain
 
 1. You will need to generate a tBTC key pair.  Run `./bitcoinctl.py genkey`, and note both the public and private keys.  While these keys are not valid on the main Bitcoin test network -- the have a different value for the [version byte](../../slides/bitcoin.html#/btcaddress) in the invoice address -- you will need them throughout this assignment.
     - Save both the tBTC private key and the tBTC address into the scripts.py file into the `private_key_str` and `invoice_address` fields
-2. Using multiple faucets, or multiple requests to the same faucet, you need to obtain around 0.001 ($10^{-3}$) tBTC.  This can be done all at once or as needed throughout the assignment.  A list of faucets is below, but read the through the next step herein before using them.  For each of the faucets below, you will be provided a transaction hash; you may have to search down the web page for the specific transaction hash that pays to your tBTC address.
-   - [Faucet at bitcoinfaucet.uo1.net](https://bitcoinfaucet.uo1.net/send.php)
-   - [Faucet at testnet.help](https://testnet.help/en/btcfaucet/testnet)
-   - [Faucet at onchain.io](https://onchain.io/bitcoin-testnet-faucet)
-   - [Faucet at kuttler.eu](https://kuttler.eu/en/bitcoin/btc/faucet/)
+2. Using multiple faucets, or multiple requests to the same faucet, you need to obtain around 0.001 ($10^{-3}$) tBTC.  This can be done all at once or as needed throughout the assignment.  A list of faucets is below, but read the through the next step herein before using them.  For each of the faucets below, you will be provided a transaction hash -- save that hash!  You may have to search down the web page for the specific transaction hash that pays to your tBTC address.  And see the next step, below, for how to find your current balance.
+   - [Faucet at coinfaucet.eu](https://coinfaucet.eu/en/btc-testnet/): pays quickly and relatively large amounts
+   - [Faucet at testnet-faucet.com](https://testnet-faucet.com/btc-testnet/): pays quickly, but pays a very small amount
+   - [Faucet at onchain.io](https://onchain.io/bitcoin-testnet-faucet): unclear if this is working or not
    - Feel free to find other faucets via an [appropriate web search](https://duckduckgo.com/?q=bitcoin+testnet+faucet), but if they ask you for any information other than your Bitcoin wallet address and a CAPTCHA, then it's a shady site, and you should use a different one
 3. Each faucet will provide you with a transaction hash where it gave you the tBTC.
     - Enter each faucet funding transaction hash in scripts.py in `txid_funding_list`; each one is just a separate string in that list
     - Verify that you can view your account information at https://live.blockcypher.com/btc-testnet/address/&lt;address&gt; where &lt;address&gt; is your tBTC address -- the amount that address holds should be the sum of the amounts that the faucet provided to you.
       - You can also go to [https://live.blockcypher.com](https://live.blockcypher.com) and enter the wallet address in the search box -- just be sure to select "Bitcoin Testnet" in the blue drop-down box
       - It may take up to 20 minutes or so for a transaction that funded your wallet to be mined into the blockchain
-    - You can also view your transaction at [https://live.blockcypher.com/](https://live.blockcypher.com/) -- put the transaction hash in the search box and be sure to select 'Bitcoin Testnet' for the search.  Verify that you can view the transaction at https://live.blockcypher.com/btc-testnet/tx/&lt;txid&gt; where &lt;txid&gt; is your transaction hash
+    - You can also view individual transactions at [https://live.blockcypher.com/](https://live.blockcypher.com/) -- put the transaction hash in the search box and be sure to select 'Bitcoin Testnet' for the search.  Verify that you can view the transaction at https://live.blockcypher.com/btc-testnet/tx/&lt;txid&gt; where &lt;txid&gt; is your transaction hash
       - Note that the testnets often perform many transfers in one transaction -- so the total amount transacted may be more than 0.001 ($10^{-3}$) tBTC, but the rest was paid back to the faucet
-    - You can also get these URLs by running `./bitcoinctl.py urls`.  As you fill in more transaction hashes throughout this assignment, re-running this will show an increasing list of URLs.
+    - You can also get these URLs by running `./bitcoinctl.py urls`.  As you fill in more transaction hashes throughout this assignment, re-running this command will show an increasing list of URLs.
 4. Each faucet transaction paid to the invoice address via only one UTXO, and we would like multiple UTXO indices to use -- this way we can use one per question part, and we have a few extra if something ends up not working correctly.
     - We are going to split the incoming UTXO into multiple smaller UTXOs.  Each of the smaller UTXOs will need to be for 0.0001 ($10^{-4}$) tBTC.  
       - Important: if split into smaller amounts, then the transaction fees will be insufficient to have your transaction mined into the blockchain.
     - Look at the section of scripts.py that deals with splitting coins.  The default values there will need to be changed
-      - The `split_txid` is the particular transaction hash that you are splitting -- you may have split multiple faucet funding UTXOs, each with a different transaction hash from the faucet
+      - The `txid_split` is the particular transaction hash that you are splitting, which should be in the `txid_funding_list` list -- you may have to run this multiple times to split multiple faucet funding UTXOs, each with a different transaction hash from the faucet
       - The `split_amount_to_split` is how much is in the incoming UTXO; look this up on [https://live.blockcypher.com](https://live.blockcypher.com) to get the correct amount
-      - The `split_into_n` attempts to determine how many UTXOs to split it into -- basically how many times 0.0001 ($10^{-4}$) evenly divides `split_amount_to_split`; note that it will actually be split into one less, as the remainder is used as the transaction fee
+      - The `split_amount_after_split` is how much you want in each UTXO after the split -- it should not be less than 0.0001 BTC ($10^{-4}$)
+      - The `split_into_n` attempts to determine how many UTXOs to split it into, and you should not need to change it
+      - **SET YOUR `utxo_index`**: this is in the 'Global settings' below the split section, and you must set your `utxo_index` variable to the particular UTXO index for the transaction where that you are splitting
       - Check the transaction -- via the URL from above -- that gave you the coins, and make sure you have the right UTXO index (which is stored in the `utxo_index` variable in scripts.py).  If you get an error such as "witness script detected in tx without witness data", then it probably means your UTXO index is wrong.
     - Run `./bitcoinctl.py split` to split your coins.  This uses the values in the splitting coins section of scripts.py that were just discussed.
       - If this works properly, it will present back a Python dictionary that will take up many lines.  If it doesn't work, it will give you an error in just a few lines.
@@ -149,7 +152,13 @@ To complete this transaction, you need to complete four things:
 - Set the transaction to be spent via the `txid_utxo` variable; the default is the transaction hash that was split (i.e., the `txid_split`), which is probably the correct value.
 - Set the output index to spend via `utxo_index`; it is currently set to 0.  Recall that output indices start from 0, not 1.  Be sure to pick an unspent index!  If you have to run this multiple times, you may have to change this value to an unspent index.
 
-When you have finished the script, you can run it via `./bitcoinctl.py part1`; it will report an error if you get it wrong.  If it works, you will see a JSON dictionary printed to the screen.  Record the transaction hash of that transaction in `txid_p2pkh`.  The TXID is the 'hash' field in the dictionary that is printed to the screen when run.  You can then run `./bitcoinctl.py urls` to get the URL for the transaction that you just executed.  It may take up to 10 minutes for it to be mined into the blockchain.
+When you have finished the script, you can run it via `./bitcoinctl.py part1`; it will report an error if you get it wrong.  Some common errors at this point are:
+
+- "Error validating transaction: Transaction ... referenced by input 0 has lesser than 3 outputs" means the UTXO index you provided is wrong (probably too high)
+- "Error validating transaction: Transaction ... referenced by input 0 has already been spent" means the UTXO index you provided is wrong (probably too low)
+- "unsupported hash type ripemd160": see [here](https://stackoverflow.com/questions/72409563/unsupported-hash-type-ripemd160-with-hashlib-in-python) for how to fix this
+
+If it works, you will see a JSON dictionary printed to the screen.  Record the transaction hash of that transaction in `txid_p2pkh`.  The TXID is the 'hash' field in the dictionary that is printed to the screen when run.  You can then run `./bitcoinctl.py urls` to get the URL for the transaction that you just executed.  It may take up to 10 minutes for it to be mined into the blockchain.
 
 You should notice your wallet balance has decreased.
 
@@ -162,10 +171,11 @@ You will first need to pick two 4-digit base-10 numbers (meaning between 1,000 a
 
 The puzzle transaction will deal with the solution to the following two linear equations:
 
-$$3x+y=p$$
-$$x+3y=q$$
+$$x+y=p$$
+$$x+2y=q$$
 
 <!-- spring 2022: 2x+y / x+2y -->
+<!-- fall 2022: 3x+y / x+3y -->
 
 You can use an online linear question solver, such as [this one](https://onsolver.com/system-equations.php), to find the solution.  And ***make sure*** that the solutions are integer values!  If not, then tweak one (or both) of your solutions ($p$ and/or $q$) until you have integer solutions.  Once you know those values, put them into `puzzle_txn_p` and `puzzle_txn_q` in scripts.py.  You will also want to $x$ and $y$ solutions to these equations into `puzzle_txn_x` and `puzzle_txn_y`.
 
@@ -209,7 +219,7 @@ IMPORTANT NOTE: For the `OP_CHECKMULTISIG` (or `OP_CHECKMULTISIGVERIFY`), it sho
 
 ### Part 4: Cross-chain
 
-In this part you will create the scripts for a [cross-chain transaction](../../slides/bitcoin.html#/xchain).  Typically this would be for two different cryptocurrencies.  However, since we only have learned Bitcoin Script, we will use that for both parts.  There are many cryptocurrencies that are forks of Bitcoin, and thus have the same scripting language, so the same program could work for them.  A completely different cryptocurrency, with a different scripting language, would have an analogous script.  However, to test this we will be using two *different* Bitcoin testing blockchains.
+In this part you will create the scripts for a [cross-chain transaction](../../slides/bitcoin.html#/xchain).  Typically this would be for two different cryptocurrencies.  However, since we have only learned Bitcoin Script, we will use that for both parts.  There are many cryptocurrencies that are forks of Bitcoin, and thus have the same scripting language, so the same program could work for any of them.  A completely different cryptocurrency, with a different scripting language, would have an analogous script.  However, to test this we will be using two *different* Bitcoin testing blockchains.
 
 Below you will be obtaining a Bitcoin key pair and funds on a separate Bitcoin blockchain.  There will be *three* script producing functions in scripts.py, although you only have to create one.  The first one, `atomicswap_scriptPubKey()`, will create the [TXN 1 and TXN 3 from the slides](../../slides/bitcoin.html#/xchainpt1); this is the one that you have to create.  This script will be used for BOTH of these transactions (with different parameters, of course) on the two different blockchains by the provided code in [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)).  The second function, `atomcswap_scriptSig_redeem()`, will be when Alice or Bob knows the secret value and is redeeming the BTC; we provide this function for you in scripts.py.  This is used in steps 5 and 6 on [cross-chain atomic swap procedure slide](../../slides/bitcoin.html#/atomicsteps).  The third function, `atomcswap_scriptSig_refund()`, will create the time-out redeeming script, which is [TXN 2 and TXN 4 from the slides](../../slides/bitcoin.html#/xchainpt1); we also provide this function for you in scripts.py.  Again, this will be used on both blockchains by the provided code.  There are some requirements for what has to be in these scripts, described below (in "Notes and hints").
 
@@ -217,7 +227,7 @@ In addition to the lecture slides, you may want to refer to the [Atomic swap art
 
 So far we have been using tBTC on the Bitcoin Testnet.  For this part we will also be using the BlockCypher Testnet -- this is also a Bitcoin network for testing, and it operates just like the Bitcoin Testnet we've been using.  Bitcoin on this other testnet will be abbreviated as BCY (for BlockCYpher testnet).  Note that we have been using [blockcypher.com](https://live.blockcypher.com/) to view all of our transactions, since that site can display transactions and invoice addresses on both of these Bitcoin test networks.
 
-In this part, you and Bob will be exchanging coins through a cross-chain transaction.  You will need to be familiar with the [cross-chain transaction section of the Bitcoin slide set](../../slides/bitcoin.html#/xchain).  You are going to take on the role of Alice in the lecture slides.
+In this part, you (Alice) and Bob will be exchanging coins through a cross-chain transaction.  You will need to be familiar with the [cross-chain transaction section of the Bitcoin slide set](../../slides/bitcoin.html#/xchain).  You are going to take on the role of Alice in the lecture slides.
 
 As an overview, this is what is going to happen.
 
@@ -225,6 +235,8 @@ As an overview, this is what is going to happen.
 2. Bob will create a transaction to send BCY to you.  Both you and Bob will need to create invoice addresses and public keys for the BCY testnet, which we guide you through below.  This corresponds to [part 2 of the cross-chain transaction](../../slides/bitcoin.html#/xchainpt2) -- again, you are taking on the role of Alice.  You will only be creating TXN3 from that slide; we are omitting TXN4.
 3. You (Alice) will redeem TXN3 on the BCY network, exposing the hidden secret.
 4. Bob, now knowing the hidden secret, will then redeem TXN1 on the tBTC network.
+
+Note that you are only creating one function, called `atomicswap_scriptPubKey()`.  This is going to be used for both of the steps 1 (where you (Alice) send tBTC to Bob) and 2 (where Bob send BCY to you (Alice), above.
 
 #### BCY Setup
 
@@ -237,13 +249,13 @@ To set this up, we need to create Bitcoin keypairs for the BlockCypher testnet, 
 curl -X POST 'https://api.blockcypher.com/v1/bcy/test/addrs?token=API_TOKEN'
 ```
 4. Save those tokens in scripts.py; yours go into `my_private_key_bcy_str` and `my_invoice_address_bcy_str`.  Note that the `curl` command returns 4 values, but we only need to save two for each of the accounts (you are welcome to save the others, if you would like -- just name the variables appropriately, or put them into comments).  Also note that the format of the private key is different for this network -- this one is hex encoded, whereas the one for the tBTC network was base-58 encoded.  The provided assignment code properly handles this difference.
-5. Run that `curl` command again for Bob's keys, and save them into `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`.  
+5. Run that `curl` command again for Bob's keys, and save them into `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`.  We only need to save the private key and the address, but you are welcome to save the other two parts as well.
 6. Only Bob needs BCY funds.  You can fund his account via the following command, replacing both Bob's address for `BOB_BCY_ADDRESS` and your token for `API_TOKEN`:
    ```
 curl -d '{"address": "BOB_BCY_ADDRESS", "amount": 100000}' "https://api.blockcypher.com/v1/bcy/test/faucet?token=API_TOKEN"
 ```
 7. The above command will return a transaction hash; save that in `txid_bob_bcy_funding`.  If you run `./bitcoinctl.py urls` it will display the full URL that you can use to view that funding transaction.
-8. We will need to split Bob's funds into parts, just like we did in the setup, above.  Make sure that you have Bob's private key and invoice address set in scripts.py (in `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`), as well as the transaction hash that funded the wallet (in `txid_bob_bcy_funding`).  Lastly, look at the URL for that funding transaction (you can get that via `./bitcoinctl.py urls`) and determine the UTXO index -- that needs to be set in `utxo_index`.  The run `./bitcoinctl.py splitbcy` -- notice that the command is `splitbcy`, not `split`!  Record the transaction hash returned from that execution run in `txid_bob_bcy_split`.
+8. We will need to split Bob's funds into parts, just like we did in the setup, above.  Make sure that you have Bob's private key and invoice address set in scripts.py (in `bob_private_key_bcy_str` and `bob_invoice_address_bcy_str`), as well as the transaction hash that funded the wallet (in `txid_bob_bcy_funding`).  Lastly, look at the URL for that funding transaction (you can get that via `./bitcoinctl.py urls`) and determine the UTXO index -- that needs to be set in `utxo_index`.  You will also need to change `split_amount_to_split` and `split_amount_after_split` (the latter can be 0.00001 ($10^{-5}$ for this).  Then run `./bitcoinctl.py splitbcy` -- notice that the command is `splitbcy`, not `split`!  Record the transaction hash returned from that execution run in `txid_bob_bcy_split`.
 
 Whew!  The setup for this part is all done!  Now onto the scripting part....
 
