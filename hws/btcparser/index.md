@@ -432,7 +432,7 @@ $ python3
 >>> 
 ```
 
-To compute next node up in the Merkle tree, we concatenate the *binary* verions together, and then take the (double) hash of that:
+To compute next node up in the Merkle tree, we concatenate the *binary* versions of the hashes together, and then take the (double) hash of that:
 
 ```
 >>> parent_hash_bin=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).digest()

@@ -355,7 +355,7 @@ txn2=&quot;0100000001c997a5e56e104102fa209c6a852dd90660a20b2d9c352423edce25857fc
 &gt;&gt;&gt; txn2_hash_hex
 &#39;169e1e83e930853391bc6f35f605c6754cfead57cf8387639d3b4096c54f18f4&#39;
 &gt;&gt;&gt; </code></pre>
-<p>To compute next node up in the Merkle tree, we concatenate the <em>binary</em> verions together, and then take the (double) hash of that:</p>
+<p>To compute next node up in the Merkle tree, we concatenate the <em>binary</em> versions of the hashes together, and then take the (double) hash of that:</p>
 <pre><code>&gt;&gt;&gt; parent_hash_bin=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).digest()
 &gt;&gt;&gt; parent_hash_hex=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).hexdigest()
 &gt;&gt;&gt; parent_hash_hex
