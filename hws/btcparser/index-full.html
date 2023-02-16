@@ -230,7 +230,7 @@ $</code></pre>
 <li><a href="https://www.blockchain.com/btc/block/49820">Block 49,820</a>, in file <a href="blk00000-b49820.blk">blk00000-b49820.blk</a>, is the first block with 7 transactions</li>
 <li><a href="https://www.blockchain.com/btc/block/53066">Block 53,066</a>, in file <a href="blk00000-b53066.blk">blk00000-b53066.blk</a>, is the first block with 8 transactions</li>
 </ul>
-<h4 id="merkle-tree-example">Merkle tree example</h4>
+<h4 id="merkle-tree-example-1-txn">Merkle tree example (1 TXN)</h4>
 <p>To help you ensure that you are computing the Merkle tree hash properly, here is a worked-out example. The code below is Python, but can be reproduced in any language. The intermediate values shown below will help you ensure each step works in whatever language you are developing this assignment in.</p>
 <p>This is the data from the genesis block:</p>
 <pre><code>$ hexdump -C blk00000-b0.blk
@@ -290,6 +290,84 @@ $</code></pre>
 &#39;4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b&#39; 
 &gt;&gt;&gt;</code></pre>
 <p>Got that? Good.</p>
+<h4 id="merkle-tree-example-2-txns">Merkle tree example (2 TXNs)</h4>
+<p>This example is to show how to join multiple hashes of transactions to form the Merkle tree root hash. It assumes you can compute the hash of a single transaction as in the above example.</p>
+<p>Consider <a href="blk00000-b170.blk">block 170</a>, which is the first block that has two transactions. The <code>hexdump -C</code> of the block is:</p>
+<pre><code>00000000  f9 be b4 d9 ea 01 00 00  01 00 00 00 55 bd 84 0a  |............U...|
+00000010  78 79 8a d0 da 85 3f 68  97 4f 3d 18 3e 2b d1 db  |xy....?h.O=.&gt;+..|
+00000020  6a 84 2c 1f ee cf 22 2a  00 00 00 00 ff 10 4c cb  |j.,...&quot;*......L.|
+00000030  05 42 1a b9 3e 63 f8 c3  ce 5c 2c 2e 9d bb 37 de  |.B..&gt;c...\,...7.|
+00000040  27 64 b3 a3 17 5c 81 66  56 2c ac 7d 51 b9 6a 49  |&#39;d...\.fV,.}Q.jI|
+00000050  ff ff 00 1d 28 3e 9e 70  02 01 00 00 00 01 00 00  |....(&gt;.p........|
+00000060  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 ff ff  |................|
+00000080  ff ff 07 04 ff ff 00 1d  01 02 ff ff ff ff 01 00  |................|
+00000090  f2 05 2a 01 00 00 00 43  41 04 d4 6c 49 68 bd e0  |..*....CA..lIh..|
+000000a0  28 99 d2 aa 09 63 36 7c  7a 6c e3 4e ec 33 2b 32  |(....c6|zl.N.3+2|
+000000b0  e4 2e 5f 34 07 e0 52 d6  4a c6 25 da 6f 07 18 e7  |.._4..R.J.%.o...|
+000000c0  b3 02 14 04 34 bd 72 57  06 95 7c 09 2d b5 38 05  |....4.rW..|.-.8.|
+000000d0  b8 21 a8 5b 23 a7 ac 61  72 5b ac 00 00 00 00 01  |.!.[#..ar[......|
+000000e0  00 00 00 01 c9 97 a5 e5  6e 10 41 02 fa 20 9c 6a  |........n.A.. .j|
+000000f0  85 2d d9 06 60 a2 0b 2d  9c 35 24 23 ed ce 25 85  |.-..`..-.5$#..%.|
+00000100  7f cd 37 04 00 00 00 00  48 47 30 44 02 20 4e 45  |..7.....HG0D. NE|
+00000110  e1 69 32 b8 af 51 49 61  a1 d3 a1 a2 5f df 3f 4f  |.i2..QIa...._.?O|
+00000120  77 32 e9 d6 24 c6 c6 15  48 ab 5f b8 cd 41 02 20  |w2..$...H._..A. |
+00000130  18 15 22 ec 8e ca 07 de  48 60 a4 ac dd 12 90 9d  |..&quot;.....H`......|
+00000140  83 1c c5 6c bb ac 46 22  08 22 21 a8 76 8d 1d 09  |...l..F&quot;.&quot;!.v...|
+00000150  01 ff ff ff ff 02 00 ca  9a 3b 00 00 00 00 43 41  |.........;....CA|
+00000160  04 ae 1a 62 fe 09 c5 f5  1b 13 90 5f 07 f0 6b 99  |...b......._..k.|
+00000170  a2 f7 15 9b 22 25 f3 74  cd 37 8d 71 30 2f a2 84  |....&quot;%.t.7.q0/..|
+00000180  14 e7 aa b3 73 97 f5 54  a7 df 5f 14 2c 21 c1 b7  |....s..T.._.,!..|
+00000190  30 3b 8a 06 26 f1 ba de  d5 c7 2a 70 4f 7e 6c d8  |0;..&amp;.....*pO~l.|
+000001a0  4c ac 00 28 6b ee 00 00  00 00 43 41 04 11 db 93  |L..(k.....CA....|
+000001b0  e1 dc db 8a 01 6b 49 84  0f 8c 53 bc 1e b6 8a 38  |.....kI...S....8|
+000001c0  2e 97 b1 48 2e ca d7 b1  48 a6 90 9a 5c b2 e0 ea  |...H....H...\...|
+000001d0  dd fb 84 cc f9 74 44 64  f8 2e 16 0b fa 9b 8b 64  |.....tDd.......d|
+000001e0  f9 d4 c0 3f 99 9b 86 43  f6 56 b4 12 a3 ac 00 00  |...?...C.V......|
+000001f0  00 00                                             |..|</code></pre>
+<p>In this block:</p>
+<ul>
+<li>The first 4 bytes are the magic number</li>
+<li>The next 4 bytes are the block size: <code>ea 01 00 00</code> in little-Endian is 0x01ea in big-Endian, which is 490 bytes. That makes sense, as the file size is 498 bytes, and the file also includes the magic number and block size.</li>
+<li>The next 80 bytes are the header
+<ul>
+<li>The Merkle tree root hash is 0x7dac2c5666815c17a3b36427de37bb9d2e2c5ccec3f8633eb91a4205cb4c10ff (displayed in reverse (little-Endian) in the hexdump above)</li>
+</ul></li>
+<li>Byte number 0x58 (value <code>02</code>) is the TXN count</li>
+<li>Transaction 1 starts on the next byte (byte number 0x59), and is 134 bytes long; the last byte of transaction is byte number 0xde</li>
+<li>Transaction 2 starts on the next byte (byte number 0xdf), and is 275 bytes long; the last byte is byte 0x1f1</li>
+</ul>
+<p>We can save the hex of the transactions into Python strings, like we did above:</p>
+<pre><code>txn1=&quot;01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0102ffffffff0100f2052a01000000434104d46c4968bde02899d2aa0963367c7a6ce34eec332b32e42e5f3407e052d64ac625da6f0718e7b302140434bd725706957c092db53805b821a85b23a7ac61725bac00000000&quot;
+txn2=&quot;0100000001c997a5e56e104102fa209c6a852dd90660a20b2d9c352423edce25857fcd3704000000004847304402204e45e16932b8af514961a1d3a1a25fdf3f4f7732e9d624c6c61548ab5fb8cd410220181522ec8eca07de4860a4acdd12909d831cc56cbbac4622082221a8768d1d0901ffffffff0200ca9a3b00000000434104ae1a62fe09c5f51b13905f07f06b99a2f7159b2225f374cd378d71302fa28414e7aab37397f554a7df5f142c21c1b7303b8a0626f1baded5c72a704f7e6cd84cac00286bee0000000043410411db93e1dcdb8a016b49840f8c53bc1eb68a382e97b1482ecad7b148a6909a5cb2e0eaddfb84ccf9744464f82e160bfa9b8b64f9d4c03f999b8643f656b412a3ac00000000&quot;</code></pre>
+<p>In Python, we can then compute the hashes of the transactions as we did above:</p>
+<pre><code>$ python3
+&gt;&gt;&gt; # enter txn1=... and txn2=... as above
+&gt;&gt;&gt; from hashlib import sha256
+&gt;&gt;&gt; txn1_data = bytes.fromhex(txn1)
+&gt;&gt;&gt; txn1_hash_bin = sha256(sha256(txn1_data).digest()).digest()
+&gt;&gt;&gt; txn1_hash_hex = sha256(sha256(txn1_data).digest()).hexdigest()
+&gt;&gt;&gt; txn1_hash_hex
+&#39;82501c1178fa0b222c1f3d474ec726b832013f0a532b44bb620cce8624a5feb1&#39;
+&gt;&gt;&gt; txn2_data = bytes.fromhex(txn2)
+&gt;&gt;&gt; txn2_hash_bin = sha256(sha256(txn2_data).digest()).digest()
+&gt;&gt;&gt; txn2_hash_hex = sha256(sha256(txn2_data).digest()).hexdigest()
+&gt;&gt;&gt; txn2_hash_hex
+&#39;169e1e83e930853391bc6f35f605c6754cfead57cf8387639d3b4096c54f18f4&#39;
+&gt;&gt;&gt; </code></pre>
+<p>To compute next node up in the Merkle tree, we concatenate the <em>binary</em> verions together, and then take the (double) hash of that:</p>
+<pre><code>&gt;&gt;&gt; parent_hash_bin=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).digest()
+&gt;&gt;&gt; parent_hash_hex=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).hexdigest()
+&gt;&gt;&gt; parent_hash_hex
+&#39;ff104ccb05421ab93e63f8c3ce5c2c2e9dbb37de2764b3a3175c8166562cac7d&#39;
+&gt;&gt;&gt; </code></pre>
+<p>Lastly, we need to un-reverse that to ensure it matches what we find online. We’ll do this as we did above:</p>
+<pre><code>&gt;&gt;&gt; tmp = bytearray(parent_hash_bin)
+&gt;&gt;&gt; tmp.reverse()
+&gt;&gt;&gt; hash = &#39;&#39;.join(format(x, &#39;02x&#39;) for x in tmp)
+&gt;&gt;&gt; hash
+&#39;7dac2c5666815c17a3b36427de37bb9d2e2c5ccec3f8633eb91a4205cb4c10ff&#39;</code></pre>
+<p>This hex value, 0x7dac2c5666815c17a3b36427de37bb9d2e2c5ccec3f8633eb91a4205cb4c10ff, is the Merkle tree root hash, and matches what you will find online in blockchain explorers, such as <a href="https://www.blockchain.com/explorer/blocks/btc/170">here</a>.</p>
 <h3 id="part-3-output">Part 3: Output</h3>
 <p>There are two types of output: the output printed to standard output regrading the parsing result (errors or not) of the run, and the JSON output file. If there are errors, then the status of the JSON file does not matter (complete, missing, partially written, etc.), as it will not be checked.</p>
 <h4 id="standard-output">Standard Output</h4>
