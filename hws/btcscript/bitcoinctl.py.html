@@ -28,10 +28,20 @@ http://www.gnu.org/software/src-highlite">
 <b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>core<font color="#990000">.</font>script <b><font color="#000080">import</font></b> CScript<font color="#990000">,</font> SignatureHash<font color="#990000">,</font> SIGHASH_ALL
 <b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>core<font color="#990000">.</font>scripteval <b><font color="#000080">import</font></b> VerifyScript<font color="#990000">,</font> SCRIPT_VERIFY_P2SH
 
-
 <b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#FF0000">'testnet'</font><font color="#990000">)</font>
 
 <b><font color="#000080">from</font></b> scripts <b><font color="#000080">import</font></b> <font color="#990000">*</font>
+
+
+utxo <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1</font>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">():</font>
+	<b><font color="#0000FF">global</font></b> utxo
+	<b><font color="#0000FF">if</font></b> utxo <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">1</font><font color="#990000">:</font>
+		<b><font color="#0000FF">assert</font></b> utxo_index <font color="#990000">!=</font> <font color="#990000">-</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#FF0000">"UTXO not set to a valid value"</font>
+		<b><font color="#0000FF">return</font></b> utxo_index
+	<b><font color="#0000FF">else</font></b><font color="#990000">:</font>
+		<b><font color="#0000FF">assert</font></b> utxo <font color="#990000">&gt;=</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"UTXO not set to a valid value"</font> 
+		<b><font color="#0000FF">return</font></b> utxo
 
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">broadcast_transaction</font></b><font color="#990000">(</font>tx<font color="#990000">,</font> network<font color="#990000">):</font>
 	<b><font color="#0000FF">if</font></b> network <font color="#990000">==</font> <font color="#FF0000">'btc-test3'</font><font color="#990000">:</font>
@@ -60,7 +70,7 @@ http://www.gnu.org/software/src-highlite">
 	my_public_key <font color="#990000">=</font> my_private_key<font color="#990000">.</font>pub
 	address <font color="#990000">=</font> P2PKHBitcoinAddress<font color="#990000">.</font><b><font color="#000000">from_pubkey</font></b><font color="#990000">(</font>my_public_key<font color="#990000">)</font>
 	txin_scriptPubKey <font color="#990000">=</font> address<font color="#990000">.</font><b><font color="#000000">to_scriptPubKey</font></b><font color="#990000">()</font>
-	txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
+	txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
 	txout_scriptPubKey <font color="#990000">=</font> address<font color="#990000">.</font><b><font color="#000000">to_scriptPubKey</font></b><font color="#990000">()</font>
 	split_utxo_output <font color="#990000">=</font> split_amount_to_split <font color="#990000">/</font> split_into_n
 	txout <font color="#990000">=</font> <b><font color="#000000">CMutableTxOut</font></b><font color="#990000">(</font>split_utxo_output<font color="#990000">*</font>COIN<font color="#990000">,</font> <b><font color="#000000">CScript</font></b><font color="#990000">(</font>txout_scriptPubKey<font color="#990000">))</font>
@@ -168,21 +178,21 @@ http://www.gnu.org/software/src-highlite">
 	<i><font color="#9A1900"># many are spending a standard P2PKH transaction from the faucet (or split)</font></i>
 	<b><font color="#0000FF">if</font></b> param <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">"part1"</font><font color="#990000">,</font> <font color="#FF0000">"part2a"</font><font color="#990000">,</font> <font color="#FF0000">"part3a"</font><font color="#990000">,</font><font color="#FF0000">"part4a"</font><font color="#990000">]:</font>
 		txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>sender_address<font color="#990000">)</font>
-		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_utxo<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
+		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_utxo<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
 		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> sender_private_key<font color="#990000">)</font>
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part2b"</font><font color="#990000">:</font>
 		txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">puzzle_scriptPubKey</font></b><font color="#990000">()</font>
-		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_puzzle_txn1<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
+		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_puzzle_txn1<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
 		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">puzzle_scriptSig</font></b><font color="#990000">()</font>
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part3b"</font><font color="#990000">:</font>
 		txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">multisig_scriptPubKey</font></b><font color="#990000">()</font>
-		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_multisig_txn1<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
+		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_multisig_txn1<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
 		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">multisig_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">)</font>
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4b"</font><font color="#990000">:</font>
 		bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
 		bob_invoice_addr_bcy <font color="#990000">=</font> P2PKHBitcoinAddress<font color="#990000">.</font><b><font color="#000000">from_pubkey</font></b><font color="#990000">(</font>bob_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">)</font>
 		txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>bob_invoice_addr_bcy<font color="#990000">)</font>
-		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_bob_bcy_split<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
+		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_bob_bcy_split<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
 		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> bob_prikey_bcy<font color="#990000">)</font>
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4c"</font><font color="#990000">:</font> <i><font color="#9A1900"># BCY Bob -&gt; Alice</font></i>
 		<i><font color="#9A1900"># re-create UTXO's pubKey script and sign it</font></i>
@@ -190,14 +200,14 @@ http://www.gnu.org/software/src-highlite">
 		my_invoice_addr_bcy <font color="#990000">=</font> P2PKHBitcoinAddress<font color="#990000">.</font><b><font color="#000000">from_pubkey</font></b><font color="#990000">(</font>my_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">)</font>
 		bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
 		txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>bob_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">,</font> my_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">,</font> secret_hash<font color="#990000">)</font>
-		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_atomicswap_bob_send_bcy<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
+		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_atomicswap_bob_send_bcy<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
 		signature <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font>txout<font color="#990000">,</font>txin_scriptPubKey<font color="#990000">,</font>my_prikey_bcy<font color="#990000">)</font>
 		<i><font color="#9A1900"># create our input (sigScript) script</font></i>
 		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">atomcswap_scriptSig_redeem</font></b><font color="#990000">(</font>signature<font color="#990000">,</font>atomic_swap_secret<font color="#990000">)</font>
 	<b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4d"</font><font color="#990000">:</font> <i><font color="#9A1900"># tBTC Alice -&gt; Bob</font></i>
 		<i><font color="#9A1900"># re-create UTXO's pubKey script and sign it</font></i>
 		txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>sender_public_key<font color="#990000">,</font> bob_private_key<font color="#990000">.</font>pub<font color="#990000">,</font> secret_hash<font color="#990000">)</font>
-		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_atomicswap_alice_send_tbtc<font color="#990000">),</font> utxo_index<font color="#990000">))</font>
+		txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_atomicswap_alice_send_tbtc<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
 		signature <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font>txout<font color="#990000">,</font>txin_scriptPubKey<font color="#990000">,</font>bob_private_key<font color="#990000">)</font>
 		<i><font color="#9A1900"># create our input (sigScript) script</font></i>
 		txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">atomcswap_scriptSig_redeem</font></b><font color="#990000">(</font>signature<font color="#990000">,</font>atomic_swap_secret<font color="#990000">)</font>
@@ -246,10 +256,17 @@ functions <font color="#990000">=</font> <font color="#990000">{</font>
 
 
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">main</font></b><font color="#990000">():</font>
-	<b><font color="#0000FF">if</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">2</font><font color="#990000">:</font>
-		<b><font color="#0000FF">print</font></b> <font color="#990000">(</font><font color="#FF0000">"You must supply at least one command-line parameter to use this program."</font><font color="#990000">)</font>
+	<b><font color="#0000FF">global</font></b> utxo
+	<b><font color="#0000FF">if</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">2</font> <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">3</font><font color="#990000">:</font>
+		<b><font color="#0000FF">print</font></b> <font color="#990000">(</font><font color="#FF0000">"You must supply at least one or two command-line parameters to use this program."</font><font color="#990000">)</font>
 		<b><font color="#0000FF">print</font></b> <font color="#990000">(</font><font color="#FF0000">"See the homework for details."</font><font color="#990000">)</font>
 		<b><font color="#000000">exit</font></b><font color="#990000">()</font>
+	<b><font color="#0000FF">if</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">:</font>
+		<b><font color="#0000FF">try</font></b><font color="#990000">:</font>
+			utxo <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">])</font>
+		<b><font color="#0000FF">except</font></b><font color="#990000">:</font>
+			<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"Error: the second command-line parameter should be an integer UTXO"</font><font color="#990000">)</font>
+			<b><font color="#000000">exit</font></b><font color="#990000">()</font>
 	<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <b><font color="#0000FF">not</font></b> <b><font color="#0000FF">in</font></b> functions<font color="#990000">.</font><b><font color="#000000">keys</font></b><font color="#990000">():</font>
 		<b><font color="#0000FF">print</font></b> <font color="#990000">(</font><font color="#FF0000">"Unknown function:"</font><font color="#990000">,</font>sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font>
 		<b><font color="#000000">exit</font></b><font color="#990000">()</font>

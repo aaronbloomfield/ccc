@@ -110,11 +110,14 @@ txid_split_list = [""]
 # default is probably sufficient.
 txid_utxo = txid_split_list[0]
 
-# The index of the UTXO that is being spent -- note that these indices are
-# indexed from 0.  Note that you will have to change this for EACH run, as
-# once a UTXO index is spent, it can't be spent again.  If there is only one
-# index, then this should be set to 0.
-utxo_index = 0
+# This is likely not needed.  The bitcoinctl.py will take a second
+# command-line parmaeter, which will override this value.  You should use the
+# second command-line parameter rather than this variable. The index of the
+# UTXO that is being spent -- note that these indices are indexed from 0.
+# Note that you will have to change this for EACH run, as once a UTXO index
+# is spent, it can't be spent again.  If there is only one index, then this
+# should be set to 0.
+utxo_index = -1
 
 # How much tBTC to send -- this should be LESS THAN the amount in that
 # particular UTXO index -- if it's not less than the amount in the UTXO, then

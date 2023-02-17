@@ -17,10 +17,20 @@ from bitcoin.wallet import CBitcoinSecret, P2PKHBitcoinAddress, CBitcoinAddress
 from bitcoin.core.script import CScript, SignatureHash, SIGHASH_ALL
 from bitcoin.core.scripteval import VerifyScript, SCRIPT_VERIFY_P2SH
 
-
 SelectParams('testnet')
 
 from scripts import *
+
+
+utxo = -1
+def get_utxo_index():
+	global utxo
+	if utxo == -1:
+		assert utxo_index != -1, "UTXO not set to a valid value"
+		return utxo_index
+	else:
+		assert utxo >= 0, "UTXO not set to a valid value" 
+		return utxo
 
 def broadcast_transaction(tx, network):
 	if network == 'btc-test3':
@@ -49,7 +59,7 @@ def split_coins(which):
 	my_public_key = my_private_key.pub
 	address = P2PKHBitcoinAddress.from_pubkey(my_public_key)
 	txin_scriptPubKey = address.to_scriptPubKey()
-	txin = CMutableTxIn(COutPoint(lx(txid), utxo_index))
+	txin = CMutableTxIn(COutPoint(lx(txid), get_utxo_index()))
 	txout_scriptPubKey = address.to_scriptPubKey()
 	split_utxo_output = split_amount_to_split / split_into_n
 	txout = CMutableTxOut(split_utxo_output*COIN, CScript(txout_scriptPubKey))
@@ -157,21 +167,21 @@ def handle_txn(param):
 	# many are spending a standard P2PKH transaction from the faucet (or split)
 	if param in ["part1", "part2a", "part3a","part4a"]:
 		txin_scriptPubKey = P2PKH_scriptPubKey(sender_address)
-		txin = CMutableTxIn(COutPoint(lx(txid_utxo), utxo_index))
+		txin = CMutableTxIn(COutPoint(lx(txid_utxo), get_utxo_index()))
 		txin_scriptSig = P2PKH_scriptSig(txin, txout, txin_scriptPubKey, sender_private_key)
 	elif param == "part2b":
 		txin_scriptPubKey = puzzle_scriptPubKey()
-		txin = CMutableTxIn(COutPoint(lx(txid_puzzle_txn1), utxo_index))
+		txin = CMutableTxIn(COutPoint(lx(txid_puzzle_txn1), get_utxo_index()))
 		txin_scriptSig = puzzle_scriptSig()
 	elif param == "part3b":
 		txin_scriptPubKey = multisig_scriptPubKey()
-		txin = CMutableTxIn(COutPoint(lx(txid_multisig_txn1), utxo_index))
+		txin = CMutableTxIn(COutPoint(lx(txid_multisig_txn1), get_utxo_index()))
 		txin_scriptSig = multisig_scriptSig(txin, txout, txin_scriptPubKey)
 	elif param == "part4b":
 		bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
 		bob_invoice_addr_bcy = P2PKHBitcoinAddress.from_pubkey(bob_prikey_bcy.pub)
 		txin_scriptPubKey = P2PKH_scriptPubKey(bob_invoice_addr_bcy)
-		txin = CMutableTxIn(COutPoint(lx(txid_bob_bcy_split), utxo_index))
+		txin = CMutableTxIn(COutPoint(lx(txid_bob_bcy_split), get_utxo_index()))
 		txin_scriptSig = P2PKH_scriptSig(txin, txout, txin_scriptPubKey, bob_prikey_bcy)
 	elif param == "part4c": # BCY Bob -> Alice
 		# re-create UTXO's pubKey script and sign it
@@ -179,14 +189,14 @@ def handle_txn(param):
 		my_invoice_addr_bcy = P2PKHBitcoinAddress.from_pubkey(my_prikey_bcy.pub)
 		bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
 		txin_scriptPubKey = atomicswap_scriptPubKey(bob_prikey_bcy.pub, my_prikey_bcy.pub, secret_hash)
-		txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_bob_send_bcy), utxo_index))
+		txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_bob_send_bcy), get_utxo_index()))
 		signature = create_CHECKSIG_signature(txin,txout,txin_scriptPubKey,my_prikey_bcy)
 		# create our input (sigScript) script
 		txin_scriptSig = atomcswap_scriptSig_redeem(signature,atomic_swap_secret)
 	elif param == "part4d": # tBTC Alice -> Bob
 		# re-create UTXO's pubKey script and sign it
 		txin_scriptPubKey = atomicswap_scriptPubKey(sender_public_key, bob_private_key.pub, secret_hash)
-		txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_alice_send_tbtc), utxo_index))
+		txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_alice_send_tbtc), get_utxo_index()))
 		signature = create_CHECKSIG_signature(txin,txout,txin_scriptPubKey,bob_private_key)
 		# create our input (sigScript) script
 		txin_scriptSig = atomcswap_scriptSig_redeem(signature,atomic_swap_secret)
@@ -235,10 +245,17 @@ def sanity_checks():
 
 
 def main():
-	if len(sys.argv) < 2:
-		print ("You must supply at least one command-line parameter to use this program.")
+	global utxo
+	if len(sys.argv) < 2 or len(sys.argv) > 3:
+		print ("You must supply at least one or two command-line parameters to use this program.")
 		print ("See the homework for details.")
 		exit()
+	if len(sys.argv) == 3:
+		try:
+			utxo = int(sys.argv[2])
+		except:
+			print("Error: the second command-line parameter should be an integer UTXO")
+			exit()
 	if sys.argv[1] not in functions.keys():
 		print ("Unknown function:",sys.argv[1])
 		exit()

@@ -121,11 +121,14 @@ txid_split_list <font color="#990000">=</font> <font color="#990000">[</font><fo
 <i><font color="#9A1900"># default is probably sufficient.</font></i>
 txid_utxo <font color="#990000">=</font> txid_split_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
 
-<i><font color="#9A1900"># The index of the UTXO that is being spent -- note that these indices are</font></i>
-<i><font color="#9A1900"># indexed from 0.  Note that you will have to change this for EACH run, as</font></i>
-<i><font color="#9A1900"># once a UTXO index is spent, it can't be spent again.  If there is only one</font></i>
-<i><font color="#9A1900"># index, then this should be set to 0.</font></i>
-utxo_index <font color="#990000">=</font> <font color="#993399">0</font>
+<i><font color="#9A1900"># This is likely not needed.  The bitcoinctl.py will take a second</font></i>
+<i><font color="#9A1900"># command-line parmaeter, which will override this value.  You should use the</font></i>
+<i><font color="#9A1900"># second command-line parameter rather than this variable. The index of the</font></i>
+<i><font color="#9A1900"># UTXO that is being spent -- note that these indices are indexed from 0.</font></i>
+<i><font color="#9A1900"># Note that you will have to change this for EACH run, as once a UTXO index</font></i>
+<i><font color="#9A1900"># is spent, it can't be spent again.  If there is only one index, then this</font></i>
+<i><font color="#9A1900"># should be set to 0.</font></i>
+utxo_index <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1</font>
 
 <i><font color="#9A1900"># How much tBTC to send -- this should be LESS THAN the amount in that</font></i>
 <i><font color="#9A1900"># particular UTXO index -- if it's not less than the amount in the UTXO, then</font></i>
