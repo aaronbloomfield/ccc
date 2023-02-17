@@ -14,7 +14,7 @@ There are four separate Bitcoin scripts that you will need to write.  You will n
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report.  -->
 
-- Fri, Feb 17: Changed how the UTXO is specified; it's now preferable to specify it via the command line parameter rather than the `utxo_index` variable in scripts.py
+- Fri, Feb 17: Changed how the UTXO is specified; it's now preferable to specify it via the command line parameter rather than the `utxo_index` variable in scripts.py.  If you have already started, to convert to this version, set `utxo_index` to -1 in scripts.py, and download the updated [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)) file.
 
 
 
