@@ -1406,6 +1406,7 @@ OP_EQUALVERIFY
 OP_CHECKSIG
 ```
 - `OP_CHECKLOCKTIMEVERIFY`: mark TXN as invalid if top stack item is greater than TXN's time
+  - Does not pop the top stack value, hence `OP_DROP`
   - Really the block's timestamp field
   - Is compared to the transaction's lock_time field
 - `OP_DROP`: pop top element from the stack and discard it
