@@ -5,7 +5,7 @@ Connecting to the Private Ethereum Blockchain
 
 <!--
 
-    What to provide on the Collab landing page:
+    What to provide on the Canvas landing page:
 
     - part 2, step 2: link to genesis.json file
     - part 2, step 3: hash of genesis block (in the format used below)
@@ -21,34 +21,30 @@ Connecting to the Private Ethereum Blockchain
 
 We will shortly be developing applications for the Ethereum blockchain.  We won't be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.).  Instead, we are going to use a private Ethereum blockchain -- a test network -- that has been set up for this class.  This assignment is to connect to it, explore it, and perform a few operations.
 
-This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through `pip` (or `pip3`).  This is already taken care of in the VirtualBox image.  Don't worry if you don't know Python -- we give you the exact code to use.  This document also assumes you can install packages on your machine (also not needed for the VirtualBox image).
+This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through `pip` (or `pip3`).  Don't worry if you don't know Python -- we give you the exact code to use.  This document also assumes you can install applications on your machine.
 
 As you proceed through this assignment, you will be filling in values into the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file, which is the only file you will submit at the end.
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
-
-- Fri, 9/23: The fields in the `other` dictionary in [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) have now changed. The previous three fields (`txn_block_number`, `txn_hash`, `txn_url`) are now named `send_txn_block_number`, `send_txn_hash`, `send_txn_url`.  Three additional fields (`faucet_txn_block_number`, `faucet_txn_hash`, `faucet_txn_url`) were added, which deal with the transaction where you received ether from the faucet.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.   So far there aren't any significant changes to report.
 
 
 ### Part 1: Installation
 
-Geth is the program we will be using to connect to the blockchain.  It is already taken care of in the VirtualBox image, and you can skip to the next step if you are using the VB image.
-
-Geth, which stands for Go Ethereum, is a command-line interface to run an Ethereum node.  This particular implementation is written in the Go programming language.  
+Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.
 
 You will need to [install geth](https://geth.ethereum.org/docs/install-and-build/installing-geth).  The instructions differ depending on your OS.
 
-**WARNING:** DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and over 1 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
+**WARNING:** DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and almost 2 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
 
 ### Part 2: Blockchain
 
-Here we will connect to the private blockchain.
+Here we will connect to our private blockchain.
 
 **Step 1:** Create a directory to hold the blockchain info -- this can be anywhere you want, but we'll call it `/path/to/ethprivate` herein.
 
-**Step 2:** In that data directory, copy the course genesis.json file, which can be found in the Collab Resources section, and is linked to off of the Collab landing page.  You cannot modify this file -- if you do, the genesis block will be different, which will cause the hash to be different, and then your local geth instance will not sync with the course blockchain.
+**Step 2:** In that data directory, copy the course genesis.json file, which can be found in the Canvas Files section, and is linked to off of the Canvas landing page.  You cannot modify this file -- if you do, the genesis block will be different, which will cause the hash to be different, and then your local geth instance will not sync with the course blockchain.
 
 **Step 3:** Initialize geth with the following command, but change the path (twice) in that command before you run it:
 
@@ -56,7 +52,7 @@ Here we will connect to the private blockchain.
 geth --datadir /path/to/ethprivate/ init /path/to/ethprivate/genesis.json
 ```
 
-If you are in the geth data directory, and the genesis.json file is in that directory, you can run the command as follows:
+If you are in the geth data directory that you created above, and the genesis.json file is also in that directory, then you can run the command as follows:
 
 ```
 geth --datadir . init genesis.json
@@ -71,11 +67,11 @@ INFO [07-26|09:11:07.145] Successfully wrote genesis state          database=lig
 There are two things to check to ensure that this worked correctly:
 
 - It should say "Successfully wrote genesis state"
-- The genesis block hash, shown above as `XXXXXX..XXXXXX`, should exactly match what is listed on the Collab landing page; it will have an ellipsis (the "..") in the middle of it
+- The genesis block hash, shown above as `XXXXXX..XXXXXX`, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the "..") in the middle of it
 
-**Step 4:** Copy the `static-nodes.json` file into the newly created `geth/` sub-directory.  The `geth/` sub-directory will have been created by the previous step.  This file lists a static node so you can connect to our blockchain -- one of the departmental servers will be used for this purpose.  That file is also on the Collab landing page.  Make sure it goes into the `geth/` sub-directory!
+**Step 4:** Copy the `static-nodes.json` file into the newly created `geth/` sub-directory.  The `geth/` sub-directory will have been created by the previous step.  This file lists a static node so you can connect to our blockchain -- one of the departmental servers will be used for this purpose.  That file is also on the Canvas landing page.  Make sure it goes into the `geth/` sub-directory!
 
-**Step 5:** Start geth.  Run the following command, changing three things: (1) the userid to your own, (2) the data directory to what you used above, and (3) the networkid value to the `chainId` to the value on the Collab landing page.
+**Step 5:** Start geth.  Run the following command, changing three things: (1) the userid to your own, (2) the data directory to what you used above, and (3) the networkid value to the `chainId` to the value on the Canvas landing page.
 
 ```
 geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncmode full --gcmode "archive"
@@ -85,9 +81,13 @@ It's a long command, and we'll be adding more command-line flags as the semester
 
 There is minimal output when it is running, and we will verify that it has connected properly in a moment.
 
+This is running the *node*, and we are going to run geth (again) in a moment to connect to that node.
+
 ### Part 3: Geth
 
-What is running from the previous part is the Ethereum node, but that is not interactive.  You should leave it running while you perform the next few parts of this assignment.
+What is running from the previous part is the Ethereum node, but that is not interactive.  You must leave it running while you perform the next few parts of this assignment.
+
+#### Attach to the geth node
 
 To enter commands via the keyboard, you have to "attach" to the local Ethereum node.  You do this by entering the following command:
 
@@ -121,34 +121,36 @@ To exit, press ctrl-d or type exit
 > 
 ```
 
-First, let's wait for it to sync.  Since you have saved the static-nodes.json file, it will connect to the course server and start downloading all the blocks in the blockchain.  This may take some time, but hopefully less than 5 minutes.
+#### Interacting with geth
+
+First, let's wait for it to sync.  Since you have saved the static-nodes.json file, it should connect to the course server and start downloading all the blocks in the blockchain.  This may take some time, but hopefully less than 5 minutes.
 
 As it is sync'ing, you can try these commands:
 
-- `admin.peers.length` will tell you how many peers you are connected to -- it should be at least 1.  Because you ran it with the `--maxpeers 1`, it probably won't be greater than 1.  If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
+- `admin.peers.length` will tell you how many peers you are connected to -- it should be 1.  Because you ran it with the `--maxpeers 1`, it won't be greater than 1.  If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
   - **Important:** if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not sync'ing.
-- `admin.peers` will print information on each of those peers.  Once established, it should list exactly one peer -- the course server, whose 'enode' specification is the same as what is in the static-nodes.json file that you downloaded.
+- `admin.peers` will print information on each of those peers.  Once established, it should list exactly one peer -- the course server, whose 'enode' specification is the same as what is in the static-nodes.json file that you downloaded above.
 - `eth.blockNumber` will return the highest block number in the blockchain that is on your computer.  If it is returning zero, then it is not sync'ed (or is not trying to sync).
 - `eth.syncing` will either return 'false' if it is not syncing, or a JSON dictionary if it is.
-  - If `eth.blockNumber` is 0 and `eth.syncing` is false, then it is not sync'ing, perhaps due to a networking connection issue.  This will always be the case right after geth starts and before it has had a chance to connect to peers.
-  - If `eth.syncing` is false and `eth.blockNumber` is non-zero, then, most likely, it has completed syncing (it could also be that geth just started, and it hasn't had a chance to start sync'ing yet).
+  - If `eth.blockNumber` is 0 and `eth.syncing` is false, then it is not sync'ing, perhaps due to a networking connection issue.  This will always be the case right after geth starts and before it has had a chance to connect to the peer(s).
+  - If `eth.syncing` is false and `eth.blockNumber` is non-zero, then -- most likely -- it has completed syncing (it could also be that geth just started, and it hasn't had a chance to start sync'ing yet).
   - If `eth.syncing` returns a JSON dictionary, then it is in the process of sync'ing.
     - The `currentBlock` value, aka `eth.syncing.currentBlock` is the highest block it has sync'ed so far; this is also the value that `eth.blockNumber` returns
     - The `highestBlock` value, aka `eth.syncing.highestBlock`, is what it is working on sync'ing up to
-    - Once `currentBlock` reaches `highestBlock`, then the sync'ing will be complete
+    - Once `currentBlock` reaches `highestBlock`, then the sync'ing will be complete, and `eth.syncing` will return `false`, as it is no longer syncing.
   - You can use this command to print out the syncing status: `console.log ("at " + eth.blockNumber + " of " + eth.syncing.highestBlock + " blocks; " + (eth.syncing.highestBlock-eth.blockNumber) + " blocks left to sync")`
 
 Once it is sync'ed, here are some commands for you to try out:
 
-- `personal.newAccount()` will generate an Ethereum account for you.  If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password.  You probably don't need to have one for this key, since the ether on this blockchain has no monetary value.  It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567.  Let's only create one account for now!
+- `personal.newAccount()` will generate an Ethereum account for you.  If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password.  You probably don't need to have one for this key, since the ether on this blockchain has no monetary value.  It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567.  Let's only create one account for now; you can always create more later if you want.
 - You can get that account number anytime via `eth.coinbase`
-- You can check the balance in your account by `eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")` -- it should be zero at this point
+- You can check the balance in your account by `eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")`, using your account number as the parameter -- it should be zero at this point
   - Or try: `eth.getBalance(eth.coinbase)`
 
 
 ### Part 4: Get ether
 
-You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Collab landing page.  Each time you use this faucet you will obtain 10 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need.  But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
+You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need.  But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
 
 You should request funds once or twice for this assignment.  After you make the requests -- you'll need your full eth.coinbase account address -- you should check that your balance was updated in the geth terminal.  You can use `eth.getBalance(eth.coinbase)`, but that reports it in wei (which has 18 more zeroes).  You can also use `web3.fromWei(eth.getBalance(eth.coinbase), "ether")` to get the value in ether.
 
@@ -161,9 +163,9 @@ To verify that you did this part, we are going to check that you have a non-zero
 
 We need to get the private key of the account you created, as we will need that for our dApp development in future assignments.  The private key is encrypted in a .json file in the `keystore/` sub-directory of your geth data directory.  The file will have a name like: UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567.  Note that the last part of that name ("0123456789abcdef0123456789abcdef01234567") matches the Ethereum address we obtained and that is returned from `eth.coinbase`.
 
-First, ensure that the `web3` and `hexbytes` Python packages are installed -- run `pip install web3 hexbytes` or `pip3 install web3 hexbytes`.  This is already done on the VirtualBox image.
+First, ensure that the `web3` and `hexbytes` Python packages are installed -- run `pip install web3 hexbytes` or `pip3 install web3 hexbytes`.
 
-Run python (or python3, depending on your OS).  Note that we are going back to Python, and will come back to geth later.  In Python, enter the following two lines, changing the values as appropriate to the file name (with full path) and the password for the Ethereum account you created in geth:
+Run python (or python3, depending on your OS).  Note that we are going back to Python for now, and will come back to geth later.  In Python, enter the following two lines, changing the values as appropriate to the file name (with full path) and the password for the Ethereum account you created in geth:
 
 ```
 password="password"
@@ -178,12 +180,10 @@ keyfile = open(filename)
 encrypted_key = keyfile.read()
 private_key = w3.eth.account.decrypt(encrypted_key,password)
 import binascii
-binascii.b2a_hex(private_key)
+binascii.b2a_hex(private_key).decode('ascii')
 ```
 
-You do not need to know what the above commands do, although you are welcome to look into it. We will be learning about these commands in a future assignment.
-
-When you run those commands, it will look like the following:
+You do not need to know what the above commands do, although you are welcome to look into it.  When you run those commands, it will look like the following:
 
 ```
 $ python3
@@ -197,18 +197,16 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> encrypted_key = keyfile.read()
 >>> private_key = w3.eth.account.decrypt(encrypted_key,password)
 >>> import binascii
->>> binascii.b2a_hex(private_key)
-b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+>>> binascii.b2a_hex(private_key).decode('ascii')
+'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
 >>> 
 $
 ```
 
-The decoded private key is the hex line at the end -- you should remove the leading `b'` and trailing `'`.
-
-Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.
+The decoded private key is the hex line at the end.  Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.
 
 
-### Part 6: Send me ether
+### Part 6: Send ether
 
 Next you are going to send me some money via the geth command line.  We are done with Python for this assignment, and have to go back to the geth prompt (via `geth attach /path/to/ethprivate/geth.ipc`) for this.
 
@@ -218,7 +216,7 @@ To send (fake) ETH, you have to first unlock your account:
 personal.unlockAccount("0x0123456789abcdef0123456789abcdef01234567");
 ```
 
-This will prompt you for your password.  You have to replace the address shown with your account address.  You can also use `eth.coinbase` as the account address, as that should be the same account.  By default it unlocks for 5 minutes; you can unlock it until geth exits via: `personal.unlockAccount(eth.coinbase, "password", 0)` (replacing `password` with your account's password).
+This will prompt you for your password.  You have to replace the address shown with your account address.  You can also use `eth.coinbase` as the account address, as that should be the same account: `personal.unlockAccount(eth.coinbase)`.  By default it unlocks for 5 minutes; you can unlock it until geth exits via: `personal.unlockAccount(eth.coinbase, "password", 0)` (replacing `password` with your account's password).
 
 You can then send me 1 (fake) ETH:
 
@@ -226,19 +224,19 @@ You can then send me 1 (fake) ETH:
 eth.sendTransaction({from:eth.coinbase, to:'0xffffffffffffffffffffffffffffffffffffffff', value:web3.toWei(1,"ether"), gas:21000});
 ```
 
-You have to replace the 'to' field with the address found on the Collab landing page.  Note that we replaced your account address with `eth.coinbase`.  This will print out a hex string -- save it!  That's the hash of the transaction, and we'll need it shortly.  It will be something long like: 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd.  This goes into the `send_txn_hash` filed in ethprivate.py.
+You have to replace the 'to' field with the address found on the Canvas landing page.  Note that we replaced your account address with `eth.coinbase`.  This will print out a hex string -- save it!  That's the hash of the transaction, and we'll need it shortly.  It will be something long like: 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef (it's the 256-bit SHA3 hash of the transaction).  This goes into the `send_txn_hash` field in ethprivate.py.
 
-**NOTE:** Be sure you cut-and-paste the destination account properly!  It's easy to mis-type the account, and send the ether to the wrong place where it can never be accessed again.
+**NOTE:** Be sure you cut-and-paste the destination account properly!  It's easy to mis-type the account, and send the ether to the wrong place where it can never be accessed again.  And it's easy to cut-and-paste that command, which sends the money to the account with all f's as the address, which will also lose the ether.
 
 Further steps to do in the geth console:
 
 - Check your balance via `eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")` -- you may notice that the balanace has not changed if you enter that before the transaction was not mined into a block.
     - You can also get your account balance in (fake) ETH via: `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`
 - You can see your pending transaction via `eth.pendingTransactions` (again, only if you enter that before it is mined into a block).
-- Get information on the mined transaction: `eth.getTransactionReceipt("0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd")` -- replace the hash there with the transaction hash you recorded, above.
+- Get information on the mined transaction: `eth.getTransactionReceipt("0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef")` -- replace the hash there with the transaction hash you recorded, above.
   - Note the block number, which you will have to submit along with the transaction hash
 
-We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the intended course account.  You will need to submit both the transaction hash and the block number from when you sent me 1 ether.
+We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the specified course account.  You will need to submit both the transaction hash and the block number from when you sent 1 ether.
 
 
 ### Part 7: Explore geth
@@ -262,7 +260,7 @@ Your geth version number may be more recent.  The modules are listed on the 7th 
 
 ### Part 8: Explorer
 
-We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Collab landing page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the second to last bullet under 'Statistics').
+We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Canvas landing page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the second to last bullet under 'Statistics').
 
 Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL.  You should also see the block number listed there as well. These go into the `send_txn_url` and `send_txn_block_number` fields in ethprivate.py.
 
@@ -278,6 +276,6 @@ You will need to fill in the various values from this assignment into the [ethpr
 
 There are *two* forms of submission for this assignment; you must do both.
 
-Submission 1: You must send 1 (fake) ETH to the course-wide address indicated on the Collab landing page; this was done in part 6, above.
+Submission 1: You will need to send 1 (fake) ether to the course-wide address indicated on the Canvas landing page; this was done in part 6, above.  This implies that you received ether from the faucet so that you can send that required 1 ether.
 
-Submission 2: You should submit your completed `ethprivate.py` file, and ONLY that file, to Gradescope.
+Submission 2: Submit your completed `ethprivate.py` file, and ONLY that file, to Gradescope.
