@@ -1252,7 +1252,7 @@ OP_EQUAL
 ## Solution: Witness
 - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki) from 2015
  - A *witness* is a new field in all transactions
-- A normal transaction (P2SH or P2PKH) contains the (hash of the) unlocking signature
+- A normal transaction (P2SH or P2PKH) contains the (hash of the) unlocking script (for P2SH) or public key (for P2PKH)
   - in the pubKey script
 - This is now removed from the pubKey script, and put into a separate section
   - Which is called the *witness*
