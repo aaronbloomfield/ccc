@@ -9,6 +9,8 @@ In this assignment you will be writing a series of Bitcoin scripts to enact tran
 
 There are four separate Bitcoin scripts that you will need to write.  You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the [Bitcoin Script](../../slides/bitcoin.html#/script) and [Cross-Chain Transactions](../../slides/bitcoin.html#/xchain) sections.  You will also likely need to refer to the [Bitcoin Script page](https://en.bitcoin.it/wiki/Script).
 
+You will be submitting an edited version of [scripts.py](scripts.py.html) ([src](scripts.py)).
+
 
 ### Changelog
 
