@@ -204,12 +204,12 @@ line-height:120%;
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Address checksum
 - Equivalent addresses:
-  - 0x858d8f4cf6e8de4e8eba54d853c7d36015e1f36c
-  - 0x858d8F4cF6e8dE4e8Eba54D853C7D36015e1f36C
+  - `0x858d8f4cf6e8de4e8eba54d853c7d36015e1f36c`
+  - `0x858d8F4cF6e8dE4e8Eba54D853C7D36015e1f36C`
 - Remix, the Solidity compiler, will insist on the checksummed form
 - Ethereum's 15 bit checksum is less than Bitcoin's 32 bits
   - A mis-typed address will be missed in $1/(2^{15}) = 0.3$% of cases
-  - Bitcoin: $1/(2^{32}) = 0.00000002$% of cases
+  - Bitcoin: missed in $1/(2^{32}) = 0.00000002$% of cases
 - Algorithm: if the $i^{th}$ digit is a letter:
   - Print it in uppercase if the $4 \ast i^{th}$ bit of the hash of the lowercase hexadecimal address is 1
   - Otherwise print it in lowercase
@@ -254,14 +254,15 @@ function toChecksumAddress (address) {
 
 
 ## Account Nonce
-- The 'nonce' is an incrementing counter associated with each account
+- The *account nonce* is an incrementing counter associated with each account
   - Starts at 0
   - *Each* transaction uses the nonce and *then* increments it
 - This is NOT stored in the account address
-  - But it is stored in the blockchain
+  - But it is inferred (computed) from the blockchain
   - With proper indexing, finding it is almost $\Theta(1)$
     - (Assuming that a hash table lookup is almost $\Theta(1)$)
 - There is also a (separate) nonce in the block header, like in Bitcoin
+- Note that there is also a separate nonce in the block header to (formerly) allow a hash below the target
 
 
 
@@ -269,9 +270,9 @@ function toChecksumAddress (address) {
 - Some transactions put a smart contract (program) onto the blockchain
   - Those programs need a *contract address* to be called
 - To generate the contract address:
-  - Take the account address of who is executing this transaction
+  - Take the (binary) account address of who is executing this transaction
     - That could be an owned address or a contract address
-  - Append the nonce to that
+  - Append the nonce (in binary) to that
   - Take the SHA3 (aka Keccak-256) hash of that
   - Take the last 20 bytes (160 bits)
   - Render that in hexadecimal, and prefix with '0x'
@@ -284,6 +285,7 @@ function toChecksumAddress (address) {
   - Conditional jumps via OP_IF statements
 - Suddenly it's Turing-complete (most likely)
 - Ethereum adds a bunch more
+  - Conditional jumps, subroutine call and return, etc.
   - But really only JUMP is needed
   - See the full list [here](https://ethereum.org/en/developers/docs/evm/opcodes/)
     - Better link: [here](https://github.com/wolflo/evm-opcodes)
@@ -299,7 +301,8 @@ function toChecksumAddress (address) {
 - A Solidity program is called a "smart contract"
 - Each transaction (and program call) is evaluated on every one of the Ethereum Virtual Machines (EVMs)
   - And there are a [lot of them](https://ethernodes.org/)
-- But how to prevent an infinite loop in a smart contract?
+- But how to prevent an infinite loop in a smart contract
+  - Bitcoin, which doesn't have loops, paid TXN fees based on transaction byte size
 
 
 
@@ -359,8 +362,9 @@ function toChecksumAddress (address) {
 ## Exact gas costs
 - The "standard" transaction fee is a startgas of 21,000
   - This is for a typical transfer of ETH
+    - No computational code computed
   - Nothing is refunded, even if you use less gas!
-  - You can offer less startgas, but miners may not include it in their blocks
+  - You can offer less startgas, but miners probably will not include it in their blocks
 - Consider the current gas costs [here](https://ethgas.watch/)
 
 
@@ -378,7 +382,7 @@ function toChecksumAddress (address) {
 
 ## Why so high for gas?
 - Supply and demand
-- Ethereum has a block rate fixed by the difficulty (12-15 seconds)
+- Ethereum has a fixed block rate (12-15 seconds)
   - Some transactions are quite large due to the large compiled contracts therein
 - But everybody wants to use it, and it can't process the transactons fast enough
 
@@ -463,8 +467,11 @@ function toChecksumAddress (address) {
 - Since London...
     - There is a [base fee](https://ethereum.org/en/developers/docs/gas/#base-fee) -- a minimum amount to pay
     - You can add a [priority fee](https://ethereum.org/en/developers/docs/gas/#priority-fee) to incentivize miners to mine your TXN
-- This is what our course blockchain uses
-- The real Ethereum network is now proof-of-stake
+- This was when Ethereum was proof-of work
+  - The real Ethereum network is now proof-of-stake
+  - But the fees are still the same
+- On our course blockchain, gas cost is set at 1 gwei
+  - Much less than the real Ethereum!
 </textarea></section>
 
 	</section>
