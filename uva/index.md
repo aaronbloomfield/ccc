@@ -94,7 +94,7 @@ Course calendar
 | 3 | Jan 30 | M,W,F | P1 (Introduction) | [Encryption](../slides/encryption.html#/) | Mon: encryption to 6.22; Wed: encryption to 7.14; Fri: encryption to 8.20 |
 | 4 | Feb 6 | M,W,F | P2 (ECDSA) | [Bitcoin](../slides/bitcoin.html#/) | Mon: finished encryption, bitcoin to 4.5; Wed: bitcoin to 5.21; Fri: bitcoin to 7.6 |
 | 5 | Feb 13 | M,W,F | P3 (BTC parser) | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 7.20; Wed: bitcoin to 7.31; Fri: bitcoin to 8.5 |
-| 6 | Feb 20 | M,W,F | P4 (BTC scripting) | [Ethereum](../slides/ethereum.html#/) | Mon: finished bitcoin |
+| 6 | Feb 20 | M,W,F | P4 (BTC scripting) | [Ethereum](../slides/ethereum.html#/) | Mon: finished bitcoin; Wed: ethereum to 3.17 |
 | 7 | Feb 27 | M,W,F | midterm, S4 |  [Solidity](../slides/solidity.html#/) | |
 |   | Mar 6 | (none) | (none) | (spring break)  | |
 | 8 | Mar 13 | M,W,F | S5 | [Solidity](../slides/solidity.html#/), [Mining](../slides/mining.html#/) | |
