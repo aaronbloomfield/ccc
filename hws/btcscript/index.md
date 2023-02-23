@@ -16,6 +16,7 @@ You will be submitting an edited version of [scripts.py](scripts.py.html) ([src]
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report.  -->
 
+- Wed, Feb 22: Clarified about which public key to use in P2PKH's sigscript
 - Fri, Feb 17: Changed how the UTXO is specified; it's now preferable to specify it via the command line parameter rather than the `utxo_index` variable in scripts.py.  If you have already started, to convert to this version, set `utxo_index` to -1 in scripts.py, and download the updated [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)) file.
 
 
@@ -155,6 +156,8 @@ To complete this transaction, you need to complete four things:
 - The `P2PKH_scriptPubKey(address)` function defines the pubKey script (aka output script).  This was discussed in lecture in the [P2PKH transaction](../../slides/bitcoin.html#/p2pkh) slides.  This script creates a new UTXO, payable to the tBTC return address, that is also a P2PKH script.  The parameter is of type `P2PKHBitcoinAddress`, which is what the `P2PKHBitcoinAddress.from_pubkey(public_key)` call (shown above) returns; a variable this type can be put directly into a script.
 - Set the transaction to be spent via the `txid_utxo` variable; the default is the transaction hash that was split (i.e., the `txid_split`), which is probably the correct value.
 - Set the output index to spend via the second command line parameter.  Recall that output indices start from 0, not 1.  Be sure to pick an unspent index!  If you have to run this multiple times, you may have to change this value to an unspent index.
+
+**IMPORTANT NOTE:** For the sigScript, the public key used in the P2PKH script must come from the `private_key` parameter to the `P2PKH_scriptSig()` (it's `private_key.pub`).  If you use your global public key, it will work for this part, but it will fail for successive parts of this assignment.
 
 When you have finished the script, you can run it via `./bitcoinctl.py part1 <utxo>`; it will report an error if you get it wrong.  The `<utxo>` field is the integer UTXO index, which is indexed from 0.  Some common errors at this point are:
 

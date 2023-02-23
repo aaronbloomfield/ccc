@@ -51,6 +51,7 @@
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report.  --></p>
 <ul>
+<li>Wed, Feb 22: Clarified about which public key to use in P2PKH’s sigscript</li>
 <li>Fri, Feb 17: Changed how the UTXO is specified; it’s now preferable to specify it via the command line parameter rather than the <code>utxo_index</code> variable in scripts.py. If you have already started, to convert to this version, set <code>utxo_index</code> to -1 in scripts.py, and download the updated <a href="bitcoinctl.py.html">bitcoinctl.py</a> (<a href="bitcoinctl.py">src</a>) file.</li>
 </ul>
 <h3 id="languages">Languages</h3>
@@ -195,6 +196,7 @@ address = P2PKHBitcoinAddress.from_pubkey(public_key)</code></pre>
 <li>Set the transaction to be spent via the <code>txid_utxo</code> variable; the default is the transaction hash that was split (i.e., the <code>txid_split</code>), which is probably the correct value.</li>
 <li>Set the output index to spend via the second command line parameter. Recall that output indices start from 0, not 1. Be sure to pick an unspent index! If you have to run this multiple times, you may have to change this value to an unspent index.</li>
 </ul>
+<p><strong>IMPORTANT NOTE:</strong> For the sigScript, the public key used in the P2PKH script must come from the <code>private_key</code> parameter to the <code>P2PKH_scriptSig()</code> (it’s <code>private_key.pub</code>). If you use your global public key, it will work for this part, but it will fail for successive parts of this assignment.</p>
 <p>When you have finished the script, you can run it via <code>./bitcoinctl.py part1 &lt;utxo&gt;</code>; it will report an error if you get it wrong. The <code>&lt;utxo&gt;</code> field is the integer UTXO index, which is indexed from 0. Some common errors at this point are:</p>
 <ul>
 <li>“Error validating transaction: Transaction … referenced by input 0 has lesser than 3 outputs” means the UTXO index you provided is wrong (probably too high)</li>
