@@ -34,7 +34,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.
 
-You will need to [install geth](https://geth.ethereum.org/docs/install-and-build/installing-geth).  The instructions differ depending on your OS.
+You will need to install [geth](https://geth.ethereum.org) (aka go-ethereum), which you can download from the [geth downloads page](https://geth.ethereum.org/downloads).  The instructions differ depending on your OS.  You don't need to install the development tools 
 
 **WARNING:** DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and almost 2 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
 
@@ -69,17 +69,20 @@ There are two things to check to ensure that this worked correctly:
 - It should say "Successfully wrote genesis state"
 - The genesis block hash, shown above as `XXXXXX..XXXXXX`, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the "..") in the middle of it
 
-**Step 4:** Copy the `static-nodes.json` file into the newly created `geth/` sub-directory.  The `geth/` sub-directory will have been created by the previous step.  This file lists a static node so you can connect to our blockchain -- one of the departmental servers will be used for this purpose.  That file is also on the Canvas landing page.  Make sure it goes into the `geth/` sub-directory!
+**Step 4:** Copy the `geth-config.toml` file, in Canvas' Files, onto your computer (it likely will have a semester/year suffix to it).  You can copy it anywhere, but we recommend putting it into the geth directory you created above.  You need to change two values in that file:
 
-**Step 5:** Start geth.  Run the following command, changing three things: (1) the userid to your own, (2) the data directory to what you used above, and (3) the networkid value to the `chainId` to the value on the Canvas landing page.
+  - The `UserIdent = "mst3k"` line should be changed to your UVA userid
+  - The `DataDir = "/path/to/ethprivate"` line needs to change to the data directory you created above.
+
+Don't change anything else!  In the next assignment you may need to change the `HTTPCors` value, but not in this assignment.
+
+**Step 5:** Start geth.  Run the following command to start a geth node.  You will use this exact same command for the entire semester, whenever you need to start a new geth node.
 
 ```
-geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --maxpeers 1 --nodiscover --syncmode full --gcmode "archive"
+geth --config geth-config.toml
 ```
 
-It's a long command, and we'll be adding more command-line flags as the semester continues.  We recommend you put that command into a script or batch file so you don't have to re-type it each time.
-
-There is minimal output when it is running, and we will verify that it has connected properly in a moment.
+There is lots of output when it is running, and we will verify that it has connected properly in a moment.
 
 This is running the *node*, and we are going to run geth (again) in a moment to connect to that node.
 

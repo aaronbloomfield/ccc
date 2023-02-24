@@ -71,7 +71,7 @@ There are a few very important hints that will make your life **SO MUCH** easier
 
 **Web Remix:** The web version of Remix also has issues -- in particular, it saves your code on remote servers, and is tied to a cookie in your web browser.  If you lose the computer, reset your cookies, or are using a different machine, then you will not be able to access your files.  This means you will have to cut-and-paste the code to a locally saved file to ensure you can access it elsewhere.
 
-**Geth node:** You will have to start a local geth node to deploy your contracts.  You did this in the [private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  In the Deployment section, below, you will be adding a number of command-line parameters that will allow you to deploy a smart contract through your local geth node to the private course blockchain.  Later assignments will be adding yet even more command-line parameters to this command to launch a geth node.  Save all these flags in a shell script or batch file, as -- by the end of the semester -- the command will be quite long.
+**Geth node:** You will have to start a local geth node to deploy your contracts.  You did this in the [private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  There are extra options that we will be using, but those options are already in the geth-config.toml file that you configured in [the last assignment](../ethprivate/index.html) ([md](../ethprivate/index.md)).
 
 
 ### Part 1: Remix
@@ -197,7 +197,11 @@ At this point we can edit, compile, and test our program on Remix.  We have also
 
 #### Start geth
 
-We need to start geth, as we did in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  However, we need to add a few more command-line parameters:
+We need to start geth, as we did in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  
+
+<!--
+
+However, we need to add a few more command-line parameters:
 
 - `--http`: This enables the HTTP-RPC server.  What this means is that it will open a port (8545) that programs -- in our case, Remix -- can connect to to interact with geth (and, eventually, deploy to the blockchain)
     - RPC stands for Remote Procedure Call.  It's a way for one program to call a procedure running in some other program.  In this case, the client is trying to call the procedure, and the geth node is receiving, and then executing, the procedure call.
@@ -219,7 +223,11 @@ geth --identity "mst3k" --datadir /path/to/ethprivate --networkid 12345678 --max
 
 As mentioned above, you may have to add another parameter or two if you are using the desktop version.  And you should save this in a shell script or batch file.
 
-Moving forward, this will be the standard command to start a geth node; later assignments will add yet more flags.  As before, we recommend that you put that command in a shell script or batch file.  The backslash (`\`) at the end of the first line is to handle word wrap on the page -- those two lines work on Linux and Mac OS X, but you may have to put it all on one line and remove the backslash (`\`) in Windows.  Once that command is run to start the local node, you will see a line that says, "HTTP server started", which is what our additional options did.  Note that these particular options will only allow the Remix that we are using -- either as a stand-alone IDE or through the browser -- *on the same machine* to connect.  So you can't run geth on another host (VirtualBox, Amazon AWS, etc.) and Remix on your host machine, for example.
+Moving forward, this will be the standard command to start a geth node; later assignments will add yet more flags.  As before, we recommend that you put that command in a shell script or batch file.  The backslash (`\`) at the end of the first line is to handle word wrap on the page -- those two lines work on Linux and Mac OS X, but you may have to put it all on one line and remove the backslash (`\`) in Windows.  
+
+-->
+
+Once that command is run to start the local node, you will see a line that says, "HTTP server started", which is what our additional options did.  Note that these particular options will only allow the Remix that we are using -- either as a stand-alone IDE or through the browser -- *on the same machine* to connect.  So you can't run geth on another host (VirtualBox, Amazon AWS, etc.) and Remix on your host machine, for example.
 
 Now that geth is started, we have to attach to it IN A SEPARATE WINDOW via `geth attach /path/to/ethprivate/geth.ipc` (or, in Windows, either `geth attach ipc:\\\\.\\pipe\\geth.ipc` or `geth attach \\.\pipe\geth.ipc`).  Wait for it to finish sync'ing (check `eth.syncing`).  Then `eth.blockNumber` should match the highest block number on our Ethereum blockchain explorer.
 
@@ -233,9 +241,9 @@ Read these instructions through before starting them!
 
 1. Change to the Remix deployment tab (<img src="img/deployAndRun.webp" class='icon'>).
     - Under 'Environment' select "External Http Provider".  The pop-up window will tell you the options to run geth with, and you have already done that, above.  Ensure that the "Web3 Provider Endpoint", in the pop-up box, says `http://127.0.0.1:8545`.
-        - If you are using the Remix IDE, the pop-up window in Remix will tell you what you will ned to use as your endpoint value (meaning what value to put after the `--http.corsdomain` flag).  See a screen shot of that value [here](remix-cors.webp).  You will need to restart the geth node with that flag (and possibly re-attach the geth Javascript terminal).  Save that additional flag in your shell script or batch file that you use to start a geth node.
+        - If you are using the Remix IDE, the pop-up window in Remix will tell you what you will need to use as your endpoint value.  This is presented as a value after the `--http.corsdomain` command-line parameter.  See a screen shot of that value [here](remix-cors.webp).  We are going to put it into our `geth-config.toml` file as the second value in the list for the `HTTPCors` key (keep that first value in that list!). You will need to restart the geth node once you have made that config file edit (and possibly re-attach the geth Javascript terminal).
         - Click OK to close that pop-up window
-        - Note to Mac OS X users: if you are doing this assignment on remix.etherem.org in Safari, then this is the part that Safari seems to have issues with.  If it is not working for you, then please switch to a different browser (Firefox or Chrome both seem to work fine).  You can then cut-and-paste your code from Remix in Safari to remix in Firefox / Chrome.
+        - Note to Mac OS X users: if you are doing this assignment on remix.ethereum.org in Safari, then this is the part that Safari seems to have issues with.  If it is not working for you, then please switch to a different browser (Firefox or Chrome both seem to work fine).  You can then cut-and-paste your code from Remix in Safari to remix in Firefox / Chrome.
     - Underneath the "Environment" drop-down box, it should now say, "Custom (12345678) network", with the chain number of our private blockchain instead of 12345678.
     - You should see your geth account address(es) populated in the "Account" drop-down box, with your `eth.coinbase` one selected
     - If there are any entries listed under "Deployed contracts" (in the left-hand pane), you can delete them -- this way we won't mix up any previous deployments (to the simulated blockchain) with the one we are about to do (to the private course blockchain)
