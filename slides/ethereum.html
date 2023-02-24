@@ -300,7 +300,7 @@ function toChecksumAddress (address) {
 - A Solidity program is called a "smart contract"
 - Each transaction (and program call) is evaluated on every one of the Ethereum Virtual Machines (EVMs)
   - And there are a [lot of them](https://ethernodes.org/)
-- But how to prevent an infinite loop in a smart contract
+- But how to prevent an infinite loop in a smart contract?
   - Bitcoin, which doesn't have loops, paid TXN fees based on transaction byte size
 
 
@@ -309,9 +309,8 @@ function toChecksumAddress (address) {
 - Each TXN has a maximum number of "computational steps" the smart contract is allowed to execute
   - Gas price: how much to pay, in ETH, per computational step
   - Gas limit (aka *start gas*): the maximum amount of gas to pay
-  - Maximum number of allowed steps = gas limit / gas price
-- If your smart contract exceeds the maximum allowed steps, the smart contract is not executed
-  - And you lose all your gas!  [Here](https://ethplorer.io/tx/0x70fc74551a132a301e5b4a6c1c6dbbfe23d4a6479501b60c6468cd2f6ba0cf3b) is such a TXN
+- If your smart contract exceeds the number of gas steps you have paid for, the smart contract is not executed
+  - And you lose all your gas fees!  [Here](https://ethplorer.io/tx/0x70fc74551a132a301e5b4a6c1c6dbbfe23d4a6479501b60c6468cd2f6ba0cf3b) is such a TXN
 - You can see a [graph of historical gas prices](https://ycharts.com/indicators/ethereum_average_gas_price)
 - Current block limit: see [here](https://etherscan.io/blocks) (in the "Gas Limit" column)
 
@@ -319,15 +318,15 @@ function toChecksumAddress (address) {
 
 ## Gas example
 - Assume that you agree to pay 200 gwei per gas unit
-  - Each computational step takes some number of gas units
+  - This is your gas price: $200 * 10^{-9}$ ETH
 - And you agree to pay for $g$ gas units, say $g=21,000$
+  - This is your *startgas*
 - Example to evaluate the transaction:
   - Buy $g$ gas at 200 gwei; total of 200 * 21,000 gwei = 0.0042 ETH
   - As the script executes, it deducts gas from the 21,000 amount
   - At the end of execution, any extra gas is refunded
 - Formally:
-  - Let $p$ be the gas price (200 gwei)
-  - Let $g$ be the maximum gas you are willing to pay (21k)
+  - Let $p$ be the gas price (200 gwei), $g$ be startgas (21k)
   - Let $u$ be the gas actually used: $u \le g$
   - The maximum transaction fee you are willing to pay is $g \ast p$
   - The actual transaction fee is $u \ast p \le g \ast p$
@@ -335,10 +334,11 @@ function toChecksumAddress (address) {
 
 
 ## Gas examples
-- Simple TXN might use 21,000 gas (the typical amount)
+- A simple TXN might use 21,000 gas (the typical amount)
     - [This one](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3), for example
-    - Gas price was ~100 gwei (actually 105.702 gwei)
-    - Total was 2,100,000 gwei = 0.002219732760483 ETH
+    - Gas price was about 100 gwei (actually 105.702 gwei)
+    - Total gas used was 21,000
+    - Total fee was thus 2,100,000 gwei = 0.002219732760483 ETH
     - At $3,045.41 per ETH (at the time)...
       - That was $6.76 for the TXN
 - A complex TXN could use 1 million gas (~$322 at that price)
@@ -351,7 +351,7 @@ function toChecksumAddress (address) {
 ## Exact gas costs
 - Solidity is compiled down into bytecode
 - Each bytecode opcode costs a different amount of gas
-  - 2-10 gas for simple instructions, but up to 1,000 for complex instructions (such as hashes)
+  - 2-10 gas for simple instructions, but up to 1,000 gas for complex instructions (such as hashes)
   - See the (older) table [here](https://github.com/djrtwo/evm-opcode-gas-costs/blob/master/opcode-gas-costs_EIP-150_revision-1e18248_2017-04-12.csv)
   - The exact gas costs are determined from formulas in the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf)
 - The Ethereum Virtual Machine (EVM) will keep computing until it runs out of gas
@@ -362,20 +362,10 @@ function toChecksumAddress (address) {
 - The "standard" transaction fee is a startgas of 21,000
   - This is for a typical transfer of ETH
     - No computational code computed
+    - This "standard" is as of August 2021 (London upgrade)
   - Nothing is refunded, even if you use less gas!
   - You can offer less startgas, but miners probably will not include it in their blocks
 - Consider the current gas costs [here](https://ethgas.watch/)
-
-
-
-## Exact gas costs
-- Transaction cost in USD is:
-  - *eth\_cost\_in\_usd* $\ast$ *gas\_amount* $\ast$ *gas\_price*
-- Assume the "normal" gas costs is 88 gwei per unit of gas
-  - Thus, the amount paid per gas "step": 88 gwei = $88 \ast 10^{-9}$ ETH
-  - A standard transaction uses 21,000 gas: $21,000 \ast 88 \ast 10^{-9} = 1.848 \ast 10^{-3}$ ETH
-  - At a cost of `$`2,500 USD per ETH, the total cost of gas is:
-  - $2,500 \ast 21,000 \ast 88 \ast 10^{-9} =$ `$`4.62 USD
 
 
 
@@ -403,17 +393,18 @@ function toChecksumAddress (address) {
 - In September 2022 Ethereum changed over from proof-of-work (PoW) to proof-of-stake (PoS)
 - Partly to increase scalability, partly to decrease transaction fees
 - It's still a bit early to see how well that worked
+  - TXN fees have not really gone down as much as was hoped
   - Although it will probably be successful
 - Current gas prices seem to be stabilizing around 14 gwei
-  - If Ethereum costs `$`1,250, then a "standard" transaction (21k gas) costs `$`0.37
-  - A large contract deployment (1M gas) costs `$`17.50
+  - If Ethereum costs `$`1,500, then a "standard" transaction (21k gas) costs about `$`0.45
+  - A large contract deployment (1M gas) costs about `$`20
 
 
 
 ## Messages
 - We have two known types of transactions so far:
-  - That transfer ether from one account to another
-  - That deploy a smart contract
+  - Transfer of ether from one account to another
+  - Deployment of a smart contract
 - A message is another type of transaction
   - It's invoking a smart contract's method(s)
 - It also consumes gas!
@@ -432,7 +423,7 @@ function toChecksumAddress (address) {
 - gasPrice & gasLimit: how much gas
 - to: the recipient account address
 - value: how much ETH (in wei)
-- v, r, s: ECDSA fields: $(r,s)$ is the signature and $v$ specifies how the point $(r,s)$ is encoded
+- v, r, s: ECDSA fields: $(r,s)$ is the signature and $v$ specifies how the tuple $(r,s)$ is encoded
 - init or data: empty if just ETH xfer
   - If a smart contract deployment: init is the smart contract hex code
   - If a smart contract function call: data has the code to make the call
@@ -464,7 +455,7 @@ function toChecksumAddress (address) {
 ## London upgrade: Gas fees
 - Before the London upgrade (August 5, 2021), gas fees were computed as described
 - Since London...
-    - There is a [base fee](https://ethereum.org/en/developers/docs/gas/#base-fee) -- a minimum amount to pay
+    - There is a [base fee](https://ethereum.org/en/developers/docs/gas/#base-fee) -- a minimum amount to pay (21k)
     - You can add a [priority fee](https://ethereum.org/en/developers/docs/gas/#priority-fee) to incentivize miners to mine your TXN
 - This was when Ethereum was proof-of work
   - The real Ethereum network is now proof-of-stake
