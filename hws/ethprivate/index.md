@@ -9,7 +9,7 @@ Connecting to the Private Ethereum Blockchain
 
     - part 2, step 2: link to genesis.json file
     - part 2, step 3: hash of genesis block (in the format used below)
-    - part 2, step 4: link to static-nodes.json file
+    - part 2, step 4: link to geth-config-???.toml file
     - part 2, step 5: course chainid / networkid
     - part 4: faucet URL
     - part 6: course account to send eth to
@@ -27,7 +27,9 @@ As you proceed through this assignment, you will be filling in values into the [
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.   So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
+
+- Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters).  If you already started it, see [Piazza post @123](https://piazza.com/class/lcp7o2dt3sb4w8/post/123) for the very quick way to change over to the new version.
 
 
 ### Part 1: Installation

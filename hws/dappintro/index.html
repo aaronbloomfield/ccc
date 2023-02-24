@@ -62,7 +62,10 @@
 <p>Giving credit where credit is due: The particular smart contract being used here was inspired by the one in <a href='https://github.com/dappuniversity/election'>this github repo</a> by Dapp University (disclaimer: they are not an actual accredited university; but they do have great online tutorials).</p>
 <p>In addition to your source code, you will submit an edited version of <a href='dappintro.py.html'>dappintro.py</a> (<a href='dappintro.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. </p>
+<ul>
+<li>Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters). If you already started it, see <a href='https://piazza.com/class/lcp7o2dt3sb4w8/post/123'>Piazza post <span class='citation' data-cites='123'>@123</span></a> for the very quick way to change over to the new version.</li>
+</ul>
 </div><div id='tintroduction' class='tabcontent'><h3 id='introduction'>Introduction</h3>
 <p>To deploy and run a smart contract, you need to be able to the standard development tasks – editing, compilation, testing, and deployment. The third one – testing – is tricky, as you have to be running in an environment that simulates a blockchain and (fake) accounts with (fake) ETH. Once it’s compiled, you have to then be able to load it onto the blockchain, whether that blockchain is simulated (for testing) or real (for deployment).</p>
 <p>For the development tasks, we are going to use <a href='http://remix.ethereum.org'>Remix</a>, which is an IDE designed specifically for Solidity smart contracts on an Ethereum blockchain. You can use it online at <a href='http://remix.ethereum.org'>remix.ethereum.org</a>, or you can download the latest version on your computer via <a href='https://github.com/ethereum/remix-desktop/releases'>remix’s github repo</a>. Each method has it’s pros and cons.</p>
