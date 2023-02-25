@@ -64,6 +64,7 @@
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. --></p>
 <ul>
+<li>Friday, February 24th: If <code>personal.newAccount()</code> doesn’t work, they have to add the <code>--rpc.enabledeprecatedpersonal</code> command line parameter when re-launching the geth node. This was described in the appropriate places in this document.</li>
 <li>Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters). If you already started it, see <a href="https://piazza.com/class/lcp7o2dt3sb4w8/post/123">Piazza post <span class="citation" data-cites="123">@123</span></a> for the very quick way to change over to the new version.</li>
 </ul>
 <h3 id="part-1-installation">Part 1: Installation</h3>
@@ -93,6 +94,7 @@
 <p>Don’t change anything else! In the next assignment you may need to change the <code>HTTPCors</code> value, but not in this assignment.</p>
 <p><strong>Step 5:</strong> Start geth. Run the following command to start a geth node. You will use this exact same command for the entire semester, whenever you need to start a new geth node.</p>
 <pre><code>geth --config geth-config.toml</code></pre>
+<p>You may have to add one more command-line parameter to that command, described at the end of part 3 (Geth).</p>
 <p>There is lots of output when it is running, and we will verify that it has connected properly in a moment.</p>
 <p>This is running the <em>node</em>, and we are going to run geth (again) in a moment to connect to that node.</p>
 <h3 id="part-3-geth">Part 3: Geth</h3>
@@ -141,7 +143,11 @@ To exit, press ctrl-d or type exit
 </ul>
 <p>Once it is sync’ed, here are some commands for you to try out:</p>
 <ul>
-<li><code>personal.newAccount()</code> will generate an Ethereum account for you. If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password. You probably don’t need to have one for this key, since the ether on this blockchain has no monetary value. It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567. Let’s only create one account for now; you can always create more later if you want.</li>
+<li><code>personal.newAccount()</code> will generate an Ethereum account for you.
+<ul>
+<li>If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password. You probably don’t need to have one for this key, since the ether on this blockchain has no monetary value. It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567. Let’s only create one account for now; you can always create more later if you want.</li>
+<li>If this command does not work (often an error such as “ReferenceError: personal is not defined”), then you have to re-launch the geth node with the <code>--rpc.enabledeprecatedpersonal</code> flag; your full geth command would be: <code>geth --config geth-config.toml --rpc.enabledeprecatedpersonal</code> (changing the config file name as appropriate). You will have to re-run the geth-attach command as well.</li>
+</ul></li>
 <li>You can get that account number anytime via <code>eth.coinbase</code></li>
 <li>You can check the balance in your account by <code>eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")</code>, using your account number as the parameter – it should be zero at this point
 <ul>

@@ -29,6 +29,7 @@ As you proceed through this assignment, you will be filling in values into the [
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
 
+- Friday, February 24th: If `personal.newAccount()` doesn't work, they have to add the `--rpc.enabledeprecatedpersonal` command line parameter when re-launching the geth node.  This was described in the appropriate places in this document.
 - Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters).  If you already started it, see [Piazza post @123](https://piazza.com/class/lcp7o2dt3sb4w8/post/123) for the very quick way to change over to the new version.
 
 
@@ -83,6 +84,8 @@ Don't change anything else!  In the next assignment you may need to change the `
 ```
 geth --config geth-config.toml
 ```
+
+You may have to add one more command-line parameter to that command, described at the end of part 3 (Geth).
 
 There is lots of output when it is running, and we will verify that it has connected properly in a moment.
 
@@ -147,7 +150,9 @@ As it is sync'ing, you can try these commands:
 
 Once it is sync'ed, here are some commands for you to try out:
 
-- `personal.newAccount()` will generate an Ethereum account for you.  If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password.  You probably don't need to have one for this key, since the ether on this blockchain has no monetary value.  It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567.  Let's only create one account for now; you can always create more later if you want.
+- `personal.newAccount()` will generate an Ethereum account for you.  
+  - If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password.  You probably don't need to have one for this key, since the ether on this blockchain has no monetary value.  It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567.  Let's only create one account for now; you can always create more later if you want.
+  - If this command does not work (often an error such as "ReferenceError: personal is not defined"), then you have to re-launch the geth node with the `--rpc.enabledeprecatedpersonal` flag; your full geth command would be: `geth --config geth-config.toml --rpc.enabledeprecatedpersonal` (changing the config file name as appropriate).  You will have to re-run the geth-attach command as well.
 - You can get that account number anytime via `eth.coinbase`
 - You can check the balance in your account by `eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")`, using your account number as the parameter -- it should be zero at this point
   - Or try: `eth.getBalance(eth.coinbase)`
