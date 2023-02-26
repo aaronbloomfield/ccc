@@ -64,6 +64,7 @@
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. --></p>
 <ul>
+<li>Sunday, February 26th: Clarified that one should use <code>eth.accounts[0]</code> in lieu of <code>eth.coinbase</code> if the latter doesn’t work.</li>
 <li>Friday, February 24th: If <code>personal.newAccount()</code> doesn’t work, they have to add the <code>--rpc.enabledeprecatedpersonal</code> command line parameter when re-launching the geth node. This was described in the appropriate places in this document.</li>
 <li>Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters). If you already started it, see <a href="https://piazza.com/class/lcp7o2dt3sb4w8/post/123">Piazza post <span class="citation" data-cites="123">@123</span></a> for the very quick way to change over to the new version.</li>
 </ul>
@@ -148,10 +149,13 @@ To exit, press ctrl-d or type exit
 <li>If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password. You probably don’t need to have one for this key, since the ether on this blockchain has no monetary value. It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567. Let’s only create one account for now; you can always create more later if you want.</li>
 <li>If this command does not work (often an error such as “ReferenceError: personal is not defined”), then you have to re-launch the geth node with the <code>--rpc.enabledeprecatedpersonal</code> flag; your full geth command would be: <code>geth --config geth-config.toml --rpc.enabledeprecatedpersonal</code> (changing the config file name as appropriate). You will have to re-run the geth-attach command as well.</li>
 </ul></li>
-<li>You can get that account number anytime via <code>eth.coinbase</code></li>
+<li>You can get that account number anytime via <code>eth.coinbase</code>
+<ul>
+<li>Some are reporting that <code>eth.coinbase</code> is not working. If that is the case, enter <code>eth.accounts</code> – if it is not empty (meaning the list has at least 1 account number), you can use <code>eth.accounts[0]</code> in lieu of your <code>eth.coinbase</code>. You will have to do this when you turn in your assignments as well – use the <code>eth.accounts[0]</code> value for <code>eth.coinbase</code> when completing the <a href="ethprivate.py.html">ethprivate.py</a> (<a href="ethprivate.py">src</a>) file.</li>
+</ul></li>
 <li>You can check the balance in your account by <code>eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")</code>, using your account number as the parameter – it should be zero at this point
 <ul>
-<li>Or try: <code>eth.getBalance(eth.coinbase)</code></li>
+<li>Or try: <code>eth.getBalance(eth.coinbase)</code> or <code>eth.getBalance(eth.accounts[0])</code></li>
 </ul></li>
 </ul>
 <h3 id="part-4-get-ether">Part 4: Get ether</h3>
