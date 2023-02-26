@@ -131,13 +131,13 @@ To exit, press ctrl-d or type exit
 
 #### Interacting with geth
 
-First, let's wait for it to sync.  Since you have saved the static-nodes.json file, it should connect to the course server and start downloading all the blocks in the blockchain.  This may take some time, but hopefully less than 5 minutes.
+First, let's wait for it to sync.  Since you have saved the geth-config.toml file, it should connect to the course server and start downloading all the blocks in the blockchain.  This may take some time, but hopefully less than 5 minutes.
 
 As it is sync'ing, you can try these commands:
 
 - `admin.peers.length` will tell you how many peers you are connected to -- it should be 1.  Because you ran it with the `--maxpeers 1`, it won't be greater than 1.  If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
   - **Important:** if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not sync'ing.
-- `admin.peers` will print information on each of those peers.  Once established, it should list exactly one peer -- the course server, whose 'enode' specification is the same as what is in the static-nodes.json file that you downloaded above.
+- `admin.peers` will print information on each of those peers.  Once established, it should list exactly one peer -- the course server, whose 'enode' specification is the same as what is in the geth-config.toml file that you downloaded above.
 - `eth.blockNumber` will return the highest block number in the blockchain that is on your computer.  If it is returning zero, then it is not sync'ed (or is not trying to sync).
 - `eth.syncing` will either return 'false' if it is not syncing, or a JSON dictionary if it is.
   - If `eth.blockNumber` is 0 and `eth.syncing` is false, then it is not sync'ing, perhaps due to a networking connection issue.  This will always be the case right after geth starts and before it has had a chance to connect to the peer(s).

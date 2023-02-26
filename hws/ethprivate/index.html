@@ -117,14 +117,14 @@ at block: 0 (Fri Sep 16 2022 12:52:06 GMT+0000 (UTC))
 To exit, press ctrl-d or type exit
 &gt; </code></pre>
 <h4 id='interacting-with-geth'>Interacting with geth</h4>
-<p>First, let’s wait for it to sync. Since you have saved the static-nodes.json file, it should connect to the course server and start downloading all the blocks in the blockchain. This may take some time, but hopefully less than 5 minutes.</p>
+<p>First, let’s wait for it to sync. Since you have saved the geth-config.toml file, it should connect to the course server and start downloading all the blocks in the blockchain. This may take some time, but hopefully less than 5 minutes.</p>
 <p>As it is sync’ing, you can try these commands:</p>
 <ul>
 <li><code>admin.peers.length</code> will tell you how many peers you are connected to – it should be 1. Because you ran it with the <code>--maxpeers 1</code>, it won’t be greater than 1. If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
 <ul>
 <li><strong>Important:</strong> if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not sync’ing.</li>
 </ul></li>
-<li><code>admin.peers</code> will print information on each of those peers. Once established, it should list exactly one peer – the course server, whose ‘enode’ specification is the same as what is in the static-nodes.json file that you downloaded above.</li>
+<li><code>admin.peers</code> will print information on each of those peers. Once established, it should list exactly one peer – the course server, whose ‘enode’ specification is the same as what is in the geth-config.toml file that you downloaded above.</li>
 <li><code>eth.blockNumber</code> will return the highest block number in the blockchain that is on your computer. If it is returning zero, then it is not sync’ed (or is not trying to sync).</li>
 <li><code>eth.syncing</code> will either return ‘false’ if it is not syncing, or a JSON dictionary if it is.
 <ul>
