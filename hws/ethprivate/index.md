@@ -39,7 +39,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.
 
-You will need to install [geth](https://geth.ethereum.org) (aka go-ethereum), which you can download from the [geth downloads page](https://geth.ethereum.org/downloads).  The instructions differ depending on your OS.  You don't need to install the development tools 
+You will need to install [geth](https://geth.ethereum.org) (aka go-ethereum), which you can download from the [geth downloads page](https://geth.ethereum.org/downloads).  The instructions differ depending on your OS -- some OS'es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package.  If prompted (only on some OS'es), you don't need to install the development tools.
 
 **WARNING:** DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and almost 2 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
 
