@@ -158,7 +158,7 @@ Note that many of these functions are just the getter functions from `public` va
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 import "./IERC165.sol";
 import "./IEtherPriceOracle.sol";
@@ -333,7 +333,7 @@ To help you test your code, below is a method that will test the first case from
 // This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 import "./DEX.sol";
 import "./TokenCC.sol";

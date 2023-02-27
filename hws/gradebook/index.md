@@ -44,7 +44,7 @@ Formally, your contract will need to be named `Gradebook`, and saved in a file n
 
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 // See the actual IGradebook.sol file, linked to above, for much more detailed comments
 

@@ -29,6 +29,7 @@ As you proceed through this assignment, you will be filling in values into the [
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
 
+- Sunday, February 26th: Added how to fix `eth.coinbase` not being known (run, just once: `miner.setEtherbase(eth.accounts[0])`)
 - Sunday, February 26th: Clarified that one should use `eth.accounts[0]` in lieu of `eth.coinbase` if the latter doesn't work.
 - Friday, February 24th: If `personal.newAccount()` doesn't work, they have to add the `--rpc.enabledeprecatedpersonal` command line parameter when re-launching the geth node.  This was described in the appropriate places in this document.
 - Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters).  If you already started it, see [Piazza post @123](https://piazza.com/class/lcp7o2dt3sb4w8/post/123) for the very quick way to change over to the new version.
@@ -153,9 +154,10 @@ Once it is sync'ed, here are some commands for you to try out:
 
 - `personal.newAccount()` will generate an Ethereum account for you.  
   - If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password.  You probably don't need to have one for this key, since the ether on this blockchain has no monetary value.  It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567.  Let's only create one account for now; you can always create more later if you want.
-  - If this command does not work (often an error such as "ReferenceError: personal is not defined"), then you have to re-launch the geth node with the `--rpc.enabledeprecatedpersonal` flag; your full geth command would be: `geth --config geth-config.toml --rpc.enabledeprecatedpersonal` (changing the config file name as appropriate).  You will have to re-run the geth-attach command as well.
+  - If this command does not work (often an error such as "ReferenceError: personal is not defined"), then you have to re-launch the geth node with the `--rpc.enabledeprecatedpersonal` flag; your full geth command would be: `geth --config geth-config.toml --rpc.enabledeprecatedpersonal` (changing the config file name as appropriate).  This happens on version 1.11.* of geth, which has removed the personal API; versions 1.10.* and lower do not need this flag.  You will have to re-run the geth-attach command as well.
 - You can get that account number anytime via `eth.coinbase`
-  - Some are reporting that `eth.coinbase` is not working.  If that is the case, enter `eth.accounts` -- if it is not empty (meaning the list has at least 1 account number), you can use `eth.accounts[0]` in lieu of your `eth.coinbase`.  You will have to do this when you turn in your assignments as well -- use the `eth.accounts[0]` value for `eth.coinbase` when completing the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file.
+  - Versions 1.11.* of geth will report that `eth.coinbase` is not working.  If that is the case, enter `eth.accounts` -- if it is not empty (meaning the list has at least 1 account number), you can use `eth.accounts[0]` in lieu of your `eth.coinbase`.  You will have to do this when you turn in your assignments as well -- use the `eth.accounts[0]` value for `eth.coinbase` when completing the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file.
+  - You can fix this by running `miner.setEtherbase(eth.accounts[0])`; this will register your `eth.accounts[0]` as your `eth.coinbase`.  Apparently this only has to be done once.
 - You can check the balance in your account by `eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")`, using your account number as the parameter -- it should be zero at this point
   - Or try: `eth.getBalance(eth.coinbase)` or `eth.getBalance(eth.accounts[0])`
 

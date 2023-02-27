@@ -3,7 +3,7 @@
 // This file is part of the http://github.com/aaronbloomfield/ccc repoistory,
 // and is released under the GPL 3.0 license.
 
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 interface IDebts {
 

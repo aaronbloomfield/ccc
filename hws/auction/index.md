@@ -85,7 +85,7 @@ The interface is as follows.  There are much more detailed comments in the [IAuc
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 import "./IERC165.sol";
 
@@ -238,7 +238,7 @@ Lastly, bid on at least *three* auctions that are not your own.  Depending on wh
 
 ```
 // SPDX-License-Identifier: Unlicensed
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 contract BlockTimestamp {
     function getTimestamp() public view returns (uint) {
         return block.timestamp;

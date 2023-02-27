@@ -148,7 +148,7 @@ require (success, "payment didn't work");</code></pre>
 <p>Note that many of these functions are just the getter functions from <code>public</code> variables; which ones are described in the full source file and also below. Also note that <span class='math inline'><em>x</em></span> is the amount of ether liquidity (with 18 decimals) and <span class='math inline'><em>y</em></span> is the amount of token liquidity (with 8-12 decimals).</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 import "./IERC165.sol";
 import "./IEtherPriceOracle.sol";
@@ -339,7 +339,7 @@ interface IDEX is IERC165, IERC20Receiver {
 // This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.17;
 
 import "./DEX.sol";
 import "./TokenCC.sol";
