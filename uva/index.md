@@ -95,10 +95,10 @@ Course calendar
 | 4 | Feb 6 | M,W,F | P2 (ECDSA) | [Bitcoin](../slides/bitcoin.html#/) | Mon: finished encryption, bitcoin to 4.5; Wed: bitcoin to 5.21; Fri: bitcoin to 7.6 |
 | 5 | Feb 13 | M,W,F | P3 (BTC parser) | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 7.20; Wed: bitcoin to 7.31; Fri: bitcoin to 8.5 |
 | 6 | Feb 20 | M,W,F | P4 (BTC scripting) | [Ethereum](../slides/ethereum.html#/) | Mon: finished bitcoin; Wed: ethereum to 3.17; Fri: ethereum to 3.30 |
-| 7 | Feb 27 | M,W,F | midterm, S4 |  [Solidity](../slides/solidity.html#/) | Mon: finished ethereum, solidity to 3.10 |
+| 7 | Feb 27 | M,W,F | midterm, S4 |  [Solidity](../slides/solidity.html#/) | Mon: finished ethereum, solidity to 3.10; Wed: midterm; Fri: solidity to 4.4 |
 |   | Mar 6 | (none) | (none) | (spring break)  | |
-| 8 | Mar 13 | M,W,F | S5 | [Solidity](../slides/solidity.html#/), [Mining](../slides/mining.html#/) | |
-| 9 | Mar 20 | M,W,F | P5 (Gradebook) | [Mining](../slides/mining.html#/), [Tokens](../slides/tokens.html#/) | |
+| 8 | Mar 13 | M,W,F | S5 | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) | |
+| 9 | Mar 20 | M,W,F | P5 (Gradebook) | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) | |
 | 10 | Mar 27 | M,W,F | P6 (Tokens) | [Scalability](../slides/scalability.html#/) | |
 | 11 | Apr 3 | M,W,F | P7 (Auction) | [Blockchain applications](../slides/applications.html#/), [Stablecoins](../slides/stablecoins.html#/) | |
 | 12 | Apr 10 | M,W,F | P8 (DEX) | [Consensus](../slides/consensus.html#/) | |
