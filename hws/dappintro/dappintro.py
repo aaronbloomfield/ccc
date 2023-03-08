@@ -54,6 +54,10 @@ other = {
 	# more often in the future.
 	'using_desktop_remix': None,
 
+	# What was the purpose of your poll?  You should just copy-and-paste the
+	# (string) value of the `purpose` variable from your Poll.sol here.
+	'poll_purpose': None,
+
 }
 
 

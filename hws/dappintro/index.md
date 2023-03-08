@@ -31,6 +31,7 @@ In addition to your source code, you will submit an edited version of [dappintro
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
 
+- Wednesday, March 8th: added `poll_purpose` variable in the `other` dictionary in [dappintro.py](dappintro.py.html) ([src](dappintro.py)) that should just be the (string) value of your `purpose` variable in Poll.sol.
 - Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters).  If you already started it, see [Piazza post @123](https://piazza.com/class/lcp7o2dt3sb4w8/post/123) for the very quick way to change over to the new version.
 
 
