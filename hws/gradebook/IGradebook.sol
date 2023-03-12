@@ -47,8 +47,8 @@ interface IGradebook {
     // The following five functions are ones you must implement
 
     // Designates the passed address as a teaching assistant; re-designating
-    // an address a TA does not do anything special (no revert).  Only the
-    // instructor OR other TAs can designated TAs.
+    // an address a TA does not do anything special (no revert).  ONLY the
+    // instructor can designated TAs.
     function designateTA(address ta) external;
 
     // Adds an assignment of the given name with the given maximum score.  It
@@ -70,7 +70,8 @@ interface IGradebook {
     // on one assignment and a 20/20 on another assignment would yield 25/30
     // points, or 83.33.  This returns 100 times that, or 8333.  Note that
     // the value is truncated, not rounded; so if the average were 16.67%, it
-    // would return 1666.
+    // would return 1666.  A student with no grades entered should have an
+    // average of 0.
     function getAverage(string memory student) external view returns (uint);
 
     // This function is how we are going to test your program -- we are going

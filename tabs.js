@@ -19,4 +19,8 @@ function openTab(evt, tabName) {
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+function insertCopyLink(text) {
+  document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+}
 </script>
