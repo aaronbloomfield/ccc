@@ -276,7 +276,7 @@ Read these instructions through before starting them!
 		- You will see "transact to Poll.vote pending ..." in the console -- it's waiting for the transaction to make it onto the blockchain
         - It should be auto-mined very quickly (a few seconds)
 		- In the console, click the down-arrow to the right of the 'debug' button that appeared -- it lists the transaction hash.  You can view that on the explorer as well
-        - You will need to submit the transaction hash where you voted
+        - *You will need to submit the transaction hash where you voted*
     - You can call 'voted' again with your coinbase account; it should return true this time
     - The distinction between the method types here is important.  `view` and `pure` methods do not require writing to the blockchain, so they will report back the answer immediately -- and without having the call mined into a block.  Other transactions require the method call to be sent as a transaction to the blockchain and then mined into a block before reporting the success (or failure) of the method call.
 6. View in the explorer
@@ -309,7 +309,7 @@ How this all works is beyond the scope of this assignment, but will be something
 
 ### Part 5: Vote!
 
-I have loaded a Poll smart contract onto our private Ethereum blockchain, and you all must vote!  The only information we will tell you is that the contract address for this is on the Canvas landing page, and that it fulfills the [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) interface.  You have to figure out what the options are, and then vote for one.  This one poll cannot be viewed through the poll web page viewer.  You will need to submit the transaction hash where you voted.
+I have loaded a Poll smart contract onto our private Ethereum blockchain, and you all must vote!  The only information we will tell you is that the contract address for this is on the Canvas landing page, and that it fulfills the [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) interface.  You have to figure out what the options are, and then vote for one.  This one poll cannot be viewed through the poll web page viewer.  *You will need to submit the transaction hash where you voted.*
 
 In Remix, you can call a different contract *with the same codebase*.  In particular, it has to have the same ABI.  For this, you can (and should) use the IPoll.sol file.  Specifically, you should NOT use Poll.sol, as you do not know if additional functions (such as `unnecessaryFunction()`) are in the deployed contract; only that it implements the functions in IPoll.sol.  On the Canvas landing page is the address of a deployed Poll contract -- copy that address.  
 

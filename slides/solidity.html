@@ -611,7 +611,7 @@ pragma solidity ^0.8.17;
 ## Import
 - Default import statement:
 ```
-import "filename.sol";
+import "./filename.sol";
 ```
   - Note that this will pollute the namespace
 - We can also use:
@@ -636,11 +636,13 @@ import {symbol1 as alias, symbol2} from "filename.sol";
   - Can also be `abstract`
 - `interface`
   - Just like interfaces in Java, or pure abstract classes in C++
-  - By convention, they always start with a capital I (India)
+  - By convention, their names always start with a capital I (India)
 - `library`
   - Can contain ONLY functions that do not access state
     - Meaning no contract field access
     - Specifically, they can only contain `pure` functions (we'll see `pure` shortly)
+  - Unless you have a reason otherwise, have everything inside have `internal` visibility
+    - We'll see visibilities shortly...
 
 
 
@@ -667,11 +669,12 @@ contract Student is Person, Learner {
 - `virtual`: if a *thing* (function, field, etc.) in a contract can be overridden
   - All function prototypes in interfaces are assumed to be `virtual`
 - `override`: when a sub-class is replacing an inherited function
-  - If the function is multiply inherited, you have to specify which (or all) that it overrides:
+  - If the function is multiply inherited, you may have to specify which (or all) that it overrides:
       ```
 function foo() public override(IERC165,ERC721) {
 ```
     - This will be needed in the Tokens assignment
+  - The requirement to specify `override` varies by compiler and version
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id='abscon'><textarea>
@@ -721,6 +724,7 @@ library Address {
 - `internal`: like `protected` in other OO languages: it can be called by that class or it's sub-classes
 - `external`: like `public`, but can ONLY be called by code *outside* the contract; code in the contract can not call an `external` function
   - Functions in interfaces must be declared `external`
+  - The implementing contract can then "raise" the visibility to `public`
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id="getters"><textarea>
@@ -772,13 +776,12 @@ function twodmap(uint id, string s) public view
 ## Declarations for fields
 - Format:
   ```
-<type> <visibility?> <override?> <name> [= <value>];
+<type> <visibility> <override?> <name> [= <value>];
 ```
 - Examples:
 ```
 uint public duration = 86400;
 uint public override k;
-uint l;
 address public override initiator;
 mapping (address => uint) internal override values;
 ```
@@ -790,18 +793,20 @@ mapping (address => uint) internal override values;
 ## Declarations for functions
 - Format:
 ```
-function <name> ([<parameter_list>]) <visibility?> 
+function <name> ([<parameter_list>]) <visibility> 
                 <qualifiers> [returns (<list>)] {
 ```
 - Examples:
+
 ```
-function addChoice (string memory _name) public {
-//
+function addChoice (string memory _name) public 
+              { /* ... */ }
+
 function unnecessaryFunction() public view 
-                returns (string memory) {
-//
+              returns (string memory) { /* ... */ }
+
 function overridePureFunction() external pure 
-                override returns (uint,bool) {
+              override returns (uint,bool) { /* ... */ }
 ```
 
 
@@ -815,7 +820,7 @@ function overridePureFunction() external pure
   - Better to use the two-parameter version:
   - `require(a>0,"a must be greater than zero");`
     - Now, if/when it reverts, it will tell you why
-  - Use this liberally!!!
+  - Use this all the time!!!
 
 
 
@@ -842,6 +847,8 @@ constructor(uint foo) {
     // ...
 }
 ```
+- Only one constructor is allowed per class!
+  - They may eventually allow multiple, differentiated by the parameter list
 
 
 
@@ -867,6 +874,7 @@ constructor(uint foo) {
 - A modifier changes how a function works
 - You put in conditions (or whatever) and then indicate where the function body goes
 - That indication is with the underscore
+- Example:
   ```
     modifier onlyOwner() {
         require(msg.sender == owner, "Not owner");
@@ -877,7 +885,7 @@ constructor(uint foo) {
 
 
 ## Modifiers
-- This code adapted from [here](https://solidity-by-example.org/function-modifier/)
+- This code adapted from [solidity-by-example.org](https://solidity-by-example.org/function-modifier/):
 
 <pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
 >contract Modifiers {
@@ -929,7 +937,7 @@ emit votedEvent(_id);
 - Try-catch:
 
 ```
-try something {
+try <something> {
   // what to do if it succeeds
 } catch {
   // what to do if it fails
@@ -1009,9 +1017,9 @@ From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.
 
 
 
-## Solidity cheat sheet
+## Solidity reference
 - See the one at https://docs.soliditylang.org/en/latest/cheatsheet.html
-- In PDF form in the repo as [doc/solidity_cheatsheet.pdf](../doc/solidity_cheatsheet.pdf)
+- In PDF form in the repo as [docs/solidity_reference.pdf](../docs/solidity_reference.pdf)
 
 
 
@@ -1255,14 +1263,16 @@ contract Poll is IPoll {
   - [Poll ABI](../hws/dappintro/Poll.abi)
 - Compiled bytecode
   - [Normal](../hws/dappintro/Poll-normal.bin.txt) (5,656 bytes)
+    - Contract @ 0xEEF3f022e5C8B576788c6E5C86f222Ac7fD06238
   - [Optimized](../hws/dappintro/Poll-optimized.bin.txt) (3,010 bytes)
+    - Contract @ 0x17972BFa967391dAc56891F9fF14D6F186FfEe12
   - See these on the blockchain explorer as well
 - [EVM opcodes](../hws/dappintro/Poll.asm) for Poll.sol
 
 
 
 ## Security holes
-- Did you notice the (intentional) security holes in the Choices contract?
+- Did you notice the (intentional) security holes in the Poll contract?
   - There were at least two, one inherent to Solidity and one I put in there
 </textarea></section>
 
