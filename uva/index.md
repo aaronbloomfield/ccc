@@ -97,7 +97,7 @@ Course calendar
 | 6 | Feb 20 | M,W,F | P4 (BTC scripting) | [Ethereum](../slides/ethereum.html#/) | Mon: finished bitcoin; Wed: ethereum to 3.17; Fri: ethereum to 3.30 |
 | 7 | Feb 27 | M,W,F | midterm, S4 |  [Solidity](../slides/solidity.html#/) | Mon: finished ethereum, solidity to 3.10; Wed: midterm; Fri: solidity to 4.4 |
 |   | Mar 6 | (none) | (none) | (spring break)  | |
-| 8 | Mar 13 | M,W,F | S5 | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) | |
+| 8 | Mar 13 | M,W,F | S5 | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) | Mon: solidity to 4.27 |
 | 9 | Mar 20 | M,W,F | P5 (Gradebook) | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) | |
 | 10 | Mar 27 | M,W,F | P6 (Tokens) | [Scalability](../slides/scalability.html#/) | |
 | 11 | Apr 3 | M,W,F | P7 (Auction) | [Blockchain applications](../slides/applications.html#/), [Stablecoins](../slides/stablecoins.html#/) | |

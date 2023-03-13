@@ -616,16 +616,16 @@ import "./filename.sol";
   - Note that this will pollute the namespace
 - We can also use:
 ```
-import * as symbolName from "filename.sol";
+import * as symbolName from "./filename.sol";
 ```
   - All names from the file can be accessed via `symbolName.thing`
   - An equivalent version of this is:
 ```
-import "filename.sol" as symbolName;
+import "./filename.sol" as symbolName;
 ```
 - Naming collision?  Then rename it upon import:
 ```
-import {symbol1 as alias, symbol2} from "filename.sol";
+import {symbol1 as alias, symbol2} from "./filename.sol";
 ```
 
 
@@ -783,7 +783,7 @@ function twodmap(uint id, string s) public view
 uint public duration = 86400;
 uint public override k;
 address public override initiator;
-mapping (address => uint) internal override values;
+mapping (address => uint) internal values;
 ```
 - Local variables are similar
   - But without the visibility and `override` qualifiers

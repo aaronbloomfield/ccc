@@ -36,6 +36,10 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -192,7 +196,7 @@
 <td>M,W,F</td>
 <td>S5</td>
 <td><a href="../slides/solidity.html#/">Solidity</a>, <a href="../slides/tokens.html#/">Tokens</a></td>
-<td></td>
+<td>Mon: solidity to 4.27</td>
 </tr>
 <tr class="even">
 <td>9</td>
