@@ -12,7 +12,6 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../markdown.css" />
   <script>
@@ -36,10 +35,11 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 id="cryptocurrency-homeworks">Cryptocurrency: Homeworks</h1>
@@ -61,9 +61,9 @@
 <li><a href="metamask/index.html">P11: MetaMask</a> (<a href="metamask/index.md">md</a>)</li>
 </ul>
 <h3 id="smaller-homeworks">Smaller homeworks</h3>
-<p>These are smaller homeworks that take less time. They are often readings or self-guided tutorials.</p>
+<p>These are smaller homeworks that take less time. They are typically readings or self-guided tutorials.</p>
 <ul>
-<li>S1: Google course introductory survey: the link for the survey is on the Collab landing page</li>
+<li>S1: Google course introductory survey: the link for the survey is on the Canvas landing page</li>
 <li>S2: Read the <a href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
 <li>S3: read (some of) the <a href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>): you can skip (or quickly browse) the first 3 sub-parts of the ‘History’ section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip the ‘references and further reading’ section at the end; what’s left is 24 pages in the PDF to read</li>
 <li><a href="ethprivate/index.html">S4: Private Ethereum Blockchain</a> (<a href="ethprivate/index.md">md</a>)</li>

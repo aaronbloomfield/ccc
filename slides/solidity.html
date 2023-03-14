@@ -1300,7 +1300,7 @@ contract Poll is IPoll {
 
 
 ## Design considerations
-- The blockchain will hold the history of who owes who
+- The blockchain will hold the history of who owes money (ether), and how much
 - Nobody wants to remember people by their Ethereum address
   - So we will use an *alias*, which is a string ("alice", "bob", etc.) that corresponds to an address
   - It has an optional *name* field as well
@@ -1324,6 +1324,7 @@ contract Poll is IPoll {
 
 ## Interface
 - Given the code in Debts.sol, let's extract out an interface
+  - What we developed: [Debts-no-interface.sol](code/Debts-no-interface.sol.html)
 - The [IDebts.sol](code/IDebts.sol.html) interface will have:
   - The Entry struct
   - The events
@@ -1352,21 +1353,23 @@ contract Poll is IPoll {
 ## Interacting via geth
 - You should all start up your geth node via:
   ```
-geth --identity "mst3k" --datadir /path/to/ethprivate \
-     --networkid 12345678 --maxpeers 1
+geth --config geth-config.toml \
+     --rpc.enabledeprecatedpersonal
 ```
-  - Change `/path/to/ethprivate`, your userid, and the numerical network ID, of course
-  - You are welcome to use all the geth flags from the last assignment
 - Once done, you should start a geth terminal in a *new* window/tab:
 ```
 geth attach /path/to/ethprivate/geth.ipc
+```
+Or, in Windows, something like:
+```
+geth attach \\.\pipe\geth.ipc
 ```
 
 
 
 ## Your eth.coinbase
-- If your eth.coinbase is *different* than what you submitted in either of the last two assignments
-  - Or you think it might be different, but aren't sure
+- If your eth.coinbase is *different* than what you submitted in either of the last two assignments...
+  - Or you think it might be different, but aren't sure...
 - Email me, right now, with your updated eth.coinbase
   - This way I can give you credit for participating
   - That email has to arrive before class ends today!
@@ -1374,8 +1377,8 @@ geth attach /path/to/ethprivate/geth.ipc
 
 
 ## Relevant information
-- On the Collab landing page, at the bottom, are a few pieces of information we will need:
-  - The smart contract address
+- On the Canvas landing page, at the bottom, are a few pieces of information we will need:
+  - The Debts smart contract address
   - The ABI for the IDebts.sol interface -- you will need to copy that shortly
   - A link to this part of the slide set so you can copy-and-paste some of the code
     </textarea></section>
@@ -1411,7 +1414,7 @@ var contract = interface.at(addr);
 
 
 ## Geth read transactions
-- We can call read-only transactions (views) via the `.call()` method
+- We can call read-only transactions (`view` or `pure` functions) via the `.call()` method
 - To read a variable:
   ```
 contract.num_entries.call()
@@ -1436,8 +1439,12 @@ contract.thisMethodDoesNotExist.call()
   ```
 personal.unlockAccount(eth.coinbase,"password",0)
 ```
-- You do not have to start and stop the miner, as I will do that for you
-- And the blockchain explorer is now updating every 1 minute
+- Use *your* password, though!
+- Does it not know `eth.coinbase`?  If not, then enter:
+  ```
+miner.setEtherbase(eth.accounts[0]))
+```
+- Recall that the blockchain explorer updates every 1 minute
 
 
 
@@ -1458,15 +1465,16 @@ contract.addAlias.sendTransaction("mst3k",
   - Possibly fake, but make it realistic
 - Notice, in the value printed after that call, the transaction hash
   - Search for the address in the Blockchain Explorer
-  - It may take a minute for the explorer to refresh...
-- In the transaction, notice the decoded function call
+  - It will take up to a minute for the explorer to refresh
+- In the explorer transaction page, notice the decoded function call
+  - It states the function called, and the parameters passed in
 
 
 
 ## View the list of debts
 - We have a web page that allows you to view all the entered aliases and who owes what
 - The URL is on the Collab landing page
-  - You can also view it from the page for the contract account
+  - You can also view it from the explorer page for the contract account
 
 
 
@@ -1588,6 +1596,8 @@ contract Test {
 
 ## Still stuck?
 - Try adding in more `require()` statements
+  - And then put in some more
+    - And yet even more
 - Note that a subtraction on a uint that causes a negative number will revert the call
 
 </textarea></section>
