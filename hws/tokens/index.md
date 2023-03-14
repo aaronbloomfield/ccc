@@ -24,7 +24,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 - Fri, 10/21: The `minted_at_least_50_coins` key in the `sanity_checks` dictionary was renamed to `minted_at_least_100_coins`
 - Wed, 10/19: added a `nft_id_kept` key in the `other` dictionary in [tokens.py](tokens.py.html) ([src](tokens.py)) for the NFT that you created on your NFT manager and kept for yourself.
-- Tue, 10/18: `count()` in [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)) was changed to a `view`, and the contract address for the course-wide NFT manager was changed (the Collab landing page is now correct).  Clarified that `requestFunds()` is likely to be `pure` in your contract (last bullet point in the ERC-20 section).  Clarified how Remix reports return values on transactions and how to determine NFT IDs (last two bullet points in the "implementation notes" part of the ERC-721 section).
+- Tue, 10/18: `count()` in [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)) was changed to a `view`, and the contract address for the course-wide NFT manager was changed (the Canvas landing page is now correct).  Clarified that `requestFunds()` is likely to be `pure` in your contract (last bullet point in the ERC-20 section).  Clarified how Remix reports return values on transactions and how to determine NFT IDs (last two bullet points in the "implementation notes" part of the ERC-721 section).
 
 
 ### Part 1: ERC-20 Fungible Token
@@ -35,7 +35,7 @@ In this part, you will create a fungible token manager that follows the (enhance
 
 You can pick any name that you want.  The only restrictions are that you can not use the name of the course cryptocurrency or of an [existing cryptocurrency](https://coinmarketcap.com/).  Feel free to be funny and creative here, but please be appropriate in your selection.  Also keep in mind that, in this course, it is possible for somebody to figure out who deployed what cryptocurrency by analyzing the blockchain.  
 
-You will need to create both a name and an abbreviation.  The name can have spaces in it; no non-printable ASCII characters (this means no emojis).  Your abbreviation cannot already exist.  To see if an abbreviation exists, see if there is a file with that abbreviation in the `cclogos/` directory in Collab's resources -- if so, then some other student has claimed that abbreviation.  To claim an abbreviation, put a file named `xyz.png` (where `xyz` is your cryptocurrency abbreviation) there.  You can put a placeholder file there while you work on the logo (below).  Please make the file name be all lower case.
+You will need to create both a name and an abbreviation.  The name can have spaces in it; no non-printable ASCII characters (this means no emojis).  Your abbreviation cannot already exist.  To see if an abbreviation exists, see if there is a file with that abbreviation in the `cclogos/` directory in Canvas' Files -- if so, then some other student has claimed that abbreviation.  To claim an abbreviation, put a file named `xyz.png` (where `xyz` is your cryptocurrency abbreviation) there.  You can put a placeholder file there while you work on the logo (below).  Please make the file name be all lower case.
 
 Following in the precedent for currently existing cryptocurrencies, abbreviations are at most four characters, typically three, and possibly two.  You can have letters and numbers, but not symbols; the first character of the abbreviation must be a letter.  The abbreviation when representing the cryptocurrency is always rendered in upper case (i.e., "XYZ"), but the logo file name is all lower case with a ".png" extension (i.e., "xyz.png").
 
@@ -112,7 +112,7 @@ Save the contract address it was deployed to, as you will need to submit those a
 
 #### Part 1, task 6: Send me some money!
 
-You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Collab landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1,000,000,000 (which is $10 \ast 10^8$) total units.  Save the transaction hash of where you sent me your cryptocurrency, as you will need to submit that value.
+You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Canvas landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1,000,000,000 (which is $10 \ast 10^8$) total units.  Save the transaction hash of where you sent me your cryptocurrency, as you will need to submit that value.
 
 
 ### Part 2: ERC-721 Non-Fungible Token
@@ -121,7 +121,7 @@ In this part, you will create a manager for non-fungible tokens (NFT) that follo
 
 #### Part 2, task 1: NFT images
 
-You will be creating three images for NFTs for this assignment.  The images should be uploaded to the `ipfs/` directory in the Collab workspace in the Resources tool.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Collab, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Collab workspace, only those in this course can view those files -- but that means anybody in the course can view it.
+You will be creating three images for NFTs for this assignment.  The images should be uploaded to the `ipfs/` directory in the Canvas workspace in the Files tool.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this is a setting in Canvas, but was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  As it is in the Canvas workspace, only those in this course can view those files -- but that means anybody in the course can view it.
 
 All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You will need three such images.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG (.jpg), PNG (.png), and WEBP (.webp) images, please.
 
@@ -206,7 +206,7 @@ The following are the functional requirements for the development of this contra
     - Your contract also extends `Context` through ERC721, but there are no `external` or `public` methods in `Context`, so there is no interface there to support.
 - Implementation of `tokenURI()`, which is inherited from `ERC721`
 	- It should revert if an invalid token ID is provided
-	- It should return the *full* URL of the file; the first part of that URL is the base URI from the Collab landing page, and the last part of that URL is what was passed into `mintWithURI()`
+	- It should return the *full* URL of the file; the first part of that URL is the base URI from the Canvas landing page, and the last part of that URL is what was passed into `mintWithURI()`
 	- This URL base should be hard-coded into the contract itself
 	- You can override the `_baseURI()` function from `ERC721`, and use that in a similar fashion to what is shown in the `tokenURI()` function in `ERC721`
 - Implementation of the `count()` function, which is just how many NFTs have been created by this contract
@@ -223,11 +223,11 @@ Save the contract address for the deployment, as you will need to submit it at t
 
 #### Part 2, task 6: Create two NFTs, and send me one
 
-You should create two NFTs with *your* deployed contract -- they should be the two of the images that you created, above.  You need to send me one of them -- the address to transfer it to in on the Collab landing page.  You will need to note the tokenID of the two NFTs -- the one you sent me and the one you kept for yourself -- as you will need to submit those as well.  You are welcome to create more, if you would like, as long as the images for each are unique.  But we only need two for grading.
+You should create two NFTs with *your* deployed contract -- they should be the two of the images that you created, above.  You need to send me one of them -- the address to transfer it to in on the Canvas landing page.  You will need to note the tokenID of the two NFTs -- the one you sent me and the one you kept for yourself -- as you will need to submit those as well.  You are welcome to create more, if you would like, as long as the images for each are unique.  But we only need two for grading.
 
 #### Part 2, task 7: Create one NFT on the course manager
 
-Create one NFT for yourself on the course-wide NFT manager, whose address is on the Collab landing page.  This should be the third of the three images you created.  Save the token ID received, and the transaction hash from that transaction, as you will need to submit those values.  The course-wide NFT manager also follows the INFTManager interface.
+Create one NFT for yourself on the course-wide NFT manager, whose address is on the Canvas landing page.  This should be the third of the three images you created.  Save the token ID received, and the transaction hash from that transaction, as you will need to submit those values.  The course-wide NFT manager also follows the INFTManager interface.
 
 
 
@@ -248,9 +248,9 @@ There are *five* forms of submission for this assignment; you must do all five.
 
 Submission 1: You must deploy the two smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract addresses of these deployments are in the `tokens.py` file that you submit.
 
-Submission 2: You will need to upload your cryptocurrency logo (properly named!) to the `cclogos/` directory on Collab, and your three NFT images (also properly named!) to the `ipfs/` directory on Collab.
+Submission 2: You will need to upload your cryptocurrency logo (properly named!) to the `cclogos/` directory on Canvas, and your three NFT images (also properly named!) to the `ipfs/` directory on Canvas.
 
-Submission 3: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Collab landing page.  The transaction hashes of these go into the `tokens.py` file.
+Submission 3: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Canvas landing page.  The transaction hashes of these go into the `tokens.py` file.
 
 Submission 4: You need to create an NFT on the course-wide NFT manager.
 

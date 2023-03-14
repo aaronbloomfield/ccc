@@ -20,8 +20,8 @@ There are a number of links and other parts of this course that are **NOT** incl
 
 <!-- no longer available in canvas:
 
-- ~~[Email list archive](https://collab.its.virginia.edu/portal/directtool/23262987-1288-4c6d-912f-c1b031973f44/), which is a Collab tool~~
-- ~~[Anonymous feedback](https://collab.its.virginia.edu/portal/directtool/b166e2b1-f967-4df0-8e7e-1b25f58a30e2/), which is a Collab tool~~
+- ~~[Email list archive](...): not a canvas tool~~
+- ~~[Anonymous feedback](...): not a canvas tool~~
 
 -->    
 
@@ -45,17 +45,12 @@ All readings are due by the start of lecture that day.  You should expect there 
       - Be sure you do ***NOT*** read the [outdated PDF](https://ethereum.org/669c9e2e2027310b6b3cdce6e1c52962/Ethereum_Whitepaper_-_Buterin_2014.pdf), which is what a lot of searches for "ethereum whitepaper pdf" will return
 - Due Friday, February 3rd: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Canvas [here](https://canvas.its.virginia.edu/files/981134/download?download_frd=1))
 
-<!--
 
-- Due Wed, 9/28: HW S3: read (some of) the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/ethereum-whitepaper.pdf))
-    - You can skip (or quickly browse) the first 3 sub-parts of the 'History' section ('Bitcoin', 'Mining', and 'Merkle Trees'); also skip the 'references and further reading' section at the end; what's left is 24 pages in the PDF to read
-
--->
 
 Homeworks
 ---------
 
-Reading assignments are due by the start of the lecture that day, and all other homeworks are due by the end of the day of the due date given -- this means by 11:59:59 pm.  The late policies are discussed in the [homework policies page](hw-policies.html) ([md](hw-policies.md)).  Submission is through the Gradescope Collab tool -- all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.  The larger ("P") homeworks are due on Tuesdays by the end of the day; the smaller homeworks will have varying due days.
+Reading assignments are due by the start of the lecture that day, and all other homeworks are due by the end of the day of the due date given -- this means by 11:59:59 pm.  The late policies are discussed in the [homework policies page](hw-policies.html) ([md](hw-policies.md)).  Submission is through the Gradescope Canvas tool -- all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.  The larger ("P") homeworks are due on Tuesdays by the end of the day; the smaller homeworks will have varying due days.
 
 
 #### Larger Programming Homeworks
@@ -67,21 +62,14 @@ All of the programming homeworks are due by the end of the day (11:59:59 pm).  T
 
 Readings are due by the start of lecture on that day; all other homeworks are due by the end of the day (11:59:59 pm).
 
+- Due Tue, 3/14, by midnight: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
+- Due Thu, 3/2, by midnight: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html) ([md](../hws/ethprivate/index.md)); see the [Canvas landing page][1] for the necessary information
 - Due Friday, February 17th: HW S3: Read the [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://canvas.its.virginia.edu/courses/59096/files?preview=1043863))
     - You can skip (or quickly browse) the first 3 sub-parts of the ‘History’ section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip the ‘references and further reading’ section at the end; what’s left is 32 pages (of large and widely-spaced text) in the PDF to read
     - Be sure you do ***NOT*** read the [outdated PDF](https://ethereum.org/669c9e2e2027310b6b3cdce6e1c52962/Ethereum_Whitepaper_-_Buterin_2014.pdf), which is what a lot of searches for "ethereum whitepaper pdf" will return
-- Due Friday, February 3rd: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
+- Due Friday, February 3rd: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Canvas [here](https://canvas.its.virginia.edu/courses/59096/files?preview=981134))
 - Due Tuesday, January 24th: HW S1: fill out the Google survey (link on the [Canvas landing page][1]) by the end of the day on Tuesday, Jan 24th
 
-<!--
-
-- Due Fri, 10/7: [HW S5: dApp Introduction](../hws/dappintro/index.html) ([md](../hws/dappintro/index.md))
-- Due Fri, 9/30, by midnight: [HW S4: Connecting to the Private Ethereum Blockchain](../hws/ethprivate/index.html) ([md](../hws/ethprivate/index.md)); see the [Canvas landing page][1] for the necessary information
-- Due Wed, 9/28: HW S3: Read (some of the) [Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/ethereum-whitepaper.pdf)); see above (in the Reading section) for what you can skip
-- Due Wed, 9/7: HW S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/) ([PDF](https://bitcoinwhitepaper.co/bitcoin.pdf)) (also in Collab [here](https://collab.its.virginia.edu/access/content/group/e9ad2fbb-faca-414b-9df1-6f9019e765e9/bitcoin-whitepaper.pdf))
-- Due Tue, 8/30: HW S1: complete the course introduction Google survey (link in Collab)
-
--->
 
 
 Course calendar

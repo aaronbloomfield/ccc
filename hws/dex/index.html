@@ -36,6 +36,10 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
   
 </head>
@@ -90,9 +94,9 @@
     // also supportsInterface() from IERC165.sol
 }</code></pre>
 <p>The <code>price()</code> function will return the current price in cents. Thus, if the price is $99.23 per (fake) ETH, it would return <code>9923</code>.</p>
-<p>There are two deployed contracts that implemented this interface, the contract addresses of which are on the Collab landing page. The first is a constant implementation, which always returns $100.00 (formally: <code>10000</code>) as the price. The implementation for this is in <a href='EtherPriceOracleConstant.sol.html'>EtherPriceOracleConstant.sol</a> (<a href='EtherPriceOracleConstant.sol'>src</a>). You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.</p>
+<p>There are two deployed contracts that implemented this interface, the contract addresses of which are on the Canvas landing page. The first is a constant implementation, which always returns $100.00 (formally: <code>10000</code>) as the price. The implementation for this is in <a href='EtherPriceOracleConstant.sol.html'>EtherPriceOracleConstant.sol</a> (<a href='EtherPriceOracleConstant.sol'>src</a>). You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.</p>
 <p>The second one is a variable version, whose price ranges greatly, but generally averages (over time) around $100 in price. As there is no true randomness on a fully deterministic blockchain, the value is based on the highest block number and/or the latest block hash. So while this will change at each block, it will not change until a new block is created. The implementation for the variable version is not being provided, but it implements the IEtherPriceOracle interface above.</p>
-<p>You should use the first (constant) one while you are debugging your code. You will need to use the second (variable) one when you make your final deployment. The current variable price of our (fake) ETH is shown on the DEX web page, which is described below. The addresses for these two contracts (constant and variable) are on the Collab landing page.</p>
+<p>You should use the first (constant) one while you are debugging your code. You will need to use the second (variable) one when you make your final deployment. The current variable price of our (fake) ETH is shown on the DEX web page, which is described below. The addresses for these two contracts (constant and variable) are on the Canvas landing page.</p>
 </div><div id='ttokencc' class='tabcontent'><h3 id='tokencc'>TokenCC</h3>
 <p>You will be using your TokenCC contract from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. However, you will need to make two changes to your contract. These are to your TokenCC.sol file, <em>NOT</em> to the interface.</p>
 <p>When tokens are transferred to any contract address, our TokenCC code will attempt to call an <code>onERC20Received()</code> function on that contract, ignoring the error if the contract does not implement the <code>IERC20Receiver</code> interface. Calling this method will also not be attempted on an owned account.</p>
@@ -212,7 +216,7 @@ interface IDEX is IERC165, IERC20Receiver {
 <p>Here are all the files you will need:</p>
 <ul>
 <li><a href='IDEX.sol.html'>IDEX.sol</a> (<a href='IDEX.sol'>src</a>): the interface, above, that your contract will need to implement; that file has many more comments in the file to describe what each function does</li>
-<li><a href='IEtherPriceOracle.sol.html'>IEtherPriceOracle.sol</a> (<a href='IEtherPriceOracle.sol'>src</a>): the interface that the two pricing smart contracts implement; the contract addresses for these are on the Collab landing page</li>
+<li><a href='IEtherPriceOracle.sol.html'>IEtherPriceOracle.sol</a> (<a href='IEtherPriceOracle.sol'>src</a>): the interface that the two pricing smart contracts implement; the contract addresses for these are on the Canvas landing page</li>
 <li><a href='EtherPriceOracleConstant.sol.html'>EtherPriceOracleConstant.sol</a> (<a href='EtherPriceOracleConstant.sol'>src</a>) is the contract implementation of IEtherPriceOracle.sol that always returns 100 in cents (formally: <code>10000</code>); note that the source code for the variable version is not being made available</li>
 <li>Files from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment:
 <ul>
@@ -456,7 +460,7 @@ contract DEXtest {
 </ul></li>
 <li>For your <em>final</em> deployment – meaning what you are going to submit when you turn the assignment in – do not call either <code>addLiquidity()</code> or <code>removeLiquidity()</code> yet</li>
 </ul>
-<p>Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Collab landing page. To register your DEX, fill out the contract address form at the bottom of that page. You will see your DEX values populate one of the table rows – make sure they are correct. Note that the current ETH price is listed at the top of the page.</p>
+<p>Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is on the Canvas landing page. To register your DEX, fill out the contract address form at the bottom of that page. You will see your DEX values populate one of the table rows – make sure they are correct. Note that the current ETH price is listed at the top of the page.</p>
 <h4 id='exchanges'>Exchanges</h4>
 <p>Now that your exchange is registered, you can view all the exchanges. You should see your exchange in there, along with your cryptocurrency’s logo. The stats of each exchange are listed in that table.</p>
 <p>You need to make 4 total exchanges with DEXes other than you own (meaning four or more different exchanges, but with four <em>different</em> DEXes). You are welcome to exchange for more if you want to own more. As you accumulate more TC from other students, you can see them on the blockchain explorer page for your account. As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether. Or you can get more ether from the faucet and use that to exchange for the others.</p>
@@ -465,7 +469,7 @@ contract DEXtest {
 <p>You will need to fill in the various values from this assignment into the <a href='dex.py.html'>dex.py</a> (<a href='dex.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>four</em> forms of submission for this assignment; you must do all four.</p>
 <p>Submission 1: Deploy the DEX smart contract to the private Ethereum blockchain. Your TokenCC will need to have been deployed as well. These were likely done in the deployment section, above. You have to call <code>createPool()</code> with exactly 100 (fake) ether, some number of TC (no less than 10.0 TC), and the address of the variable EtherPriceOracle.</p>
-<p>Submission 2: Send 10.0 TC to the address listed on the Collab landing page. This means that if your TokenCC has 10 decimal places, then the value you need to send is 100,000,000,000. You can check how much of your TC is owned by any account by looking at that account page in the blockchain explorer.</p>
+<p>Submission 2: Send 10.0 TC to the address listed on the Canvas landing page. This means that if your TokenCC has 10 decimal places, then the value you need to send is 100,000,000,000. You can check how much of your TC is owned by any account by looking at that account page in the blockchain explorer.</p>
 <p>Submission 3: You should submit your <code>DEX.sol</code>, your (updated) <code>TokenCC.sol</code> files, and your completed <code>dex.py</code> file, and ONLY those three files, to Gradescope. All your Solidity code should be in the first two files, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).</p>
 <p>Submission 4: Register your DEX smart contract with the course-wide exchange. This, also, was likely done in the deployment section, above.</p>
 </div><script>document.getElementById('defaultOpen').click();</script></body>

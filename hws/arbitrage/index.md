@@ -241,7 +241,7 @@ The `fees` value that you are reporting is just the USD value of the Ethereum tr
 
 When testing your code, don't worry about getting the $x$, $y$, and $k$ values exactly correct for a test.  If you want to test a particular situation.  To see if your program makes the right decision, for example, you can hard-code those values in the arbitrage_trading.py program and print out the results to see if it computed the correct values to trade.  Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values.  Instead, make a few transactions to the various DEXes from *another* account to get the $x$, $y$, and $k$ values to differ between the different DEXes.  The provided [Arbitrage.sol](Arbitrage.sol.html) ([src](Arbitrage.sol)) contract performs a few initial trades, but you may need to do more for your testing.  The `arbitrage_trading.py` program is then called to see if any profitable trades can be made.
 
-When testing this code, you can open up the appropriate WebSocket port when you run geth -- just add `--ws --ws.origins localhost,127.0.0.1` to the (now long) list of command line parameters when you start your geth node.  Your connection_uri will then be `ws://localhost:8546`.  You are also welcome to connect to the course server (the URI of which is on the Collab landing page) or via your geth.ipc file.
+When testing this code, you can open up the appropriate WebSocket port when you run geth -- just add `--ws --ws.origins localhost,127.0.0.1` to the (now long) list of command line parameters when you start your geth node.  Your connection_uri will then be `ws://localhost:8546`.  You are also welcome to connect to the course server (the URI of which is on the Canvas landing page) or via your geth.ipc file.
 
 #### Testing setup
 
@@ -258,7 +258,7 @@ To help you in your testing, we have deployed six DEXes that all trade the same 
 
 Just to clarify: all six of these DEXes exchange the same DDC coin, but at different exchange rates.  The individual dice images are used for the images of the DEXes; the multi-die image to the right is the image of the coin.  The DEXes all follow the [IDEX.sol](../dex/IDEX.sol.html) ([src](../dex/IDEX.sol)) interface, and the DDC coin follows the [ITokenCC.sol](../tokens/ITokenCC.sol.html) ([src](../tokens/ITokenCC.sol)) interface.
 
-The addresses of all these DEXes, as well as DDC, are on the Collab landing page.
+The addresses of all these DEXes, as well as DDC, are on the Canvas landing page.
 
 #### Obtaining DDC
 
@@ -278,11 +278,11 @@ These values can be changed by the course instructor, although that may take som
 
 Keep in mind that the difficult part of this assignment is making the calculations.  During testing you can have your code make those calculations, print out the result (and lots of intermediate values), but not make the actual trade on the blockchain.  When you finally submit your solution, it should print out exactly one line, as described above, and make the trade.
 
-Lastly, these DEXes have the ability to be "turned off" so that any attempt at a transaction will revert with an appropriate error message (either "trading not currently enabled" or "this DEX has been destructed").  In the former case, it will be turned on again soon.  In the latter case, the DEXes were likely replaced -- check the Collab landing page for new DEX (and DDC) addresses.
+Lastly, these DEXes have the ability to be "turned off" so that any attempt at a transaction will revert with an appropriate error message (either "trading not currently enabled" or "this DEX has been destructed").  In the former case, it will be turned on again soon.  In the latter case, the DEXes were likely replaced -- check the Canvas landing page for new DEX (and DDC) addresses.
 
 #### Usage
 
-The different DEX addresses are on the Collab landing page, and also provided in the arbitrage_config.py file.  The intent is for you to comment out different DEXes in that file so that you can test it with different pairs.  The provided [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Collab landing page does.
+The different DEX addresses are on the Canvas landing page, and also provided in the arbitrage_config.py file.  The intent is for you to comment out different DEXes in that file so that you can test it with different pairs.  The provided [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Canvas landing page does.
 
 Let's assume a standard price ratio of 1:10 (ETH:DDC).  This means that the arbitrage_config.py file will have lines such as:
 
@@ -291,7 +291,7 @@ Let's assume a standard price ratio of 1:10 (ETH:DDC).  This means that the arbi
 'price_tc': 10.0, 
 ```
 
-This is as is provided in the arbitrage_config.py file on the Collab landing page.  Furthermore, the provided file has the `dex_addrs` list formatted as follows:
+This is as is provided in the arbitrage_config.py file on the Canvas landing page.  Furthermore, the provided file has the `dex_addrs` list formatted as follows:
 
 ```
 'dex_addrs': [

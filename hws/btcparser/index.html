@@ -36,6 +36,10 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
   
 </head>
@@ -77,8 +81,8 @@
 <ul>
 <li><a href='blk00000-f10.blk'>blk00000-f10.blk</a> (2.3 Kb) contains the first 10 blocks</li>
 <li><a href='blk00000-f100.blk'>blk00000-f100.blk</a> (24 Kb) contains the first 100 blocks</li>
-<li>blk00000-f30000.blk (7 Mb) contains the first 30,000 Bitcoin blocks. Due to this file’s size, it is not kept in this repository, but can be found on Collab in the Resources tool</li>
-<li>blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks. Due to this file’s size, it is not kept in this repository, but can be found on Collab in the Resources tool</li>
+<li>blk00000-f30000.blk (7 Mb) contains the first 30,000 Bitcoin blocks. Due to this file’s size, it is not kept in this repository, but can be found on Canvas in the Files tool</li>
+<li>blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks. Due to this file’s size, it is not kept in this repository, but can be found on Canvas in the Files tool</li>
 </ul></li>
 <li>Files with single blocks
 <ul>

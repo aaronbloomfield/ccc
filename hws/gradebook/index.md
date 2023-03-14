@@ -185,7 +185,7 @@ The steps to access the gradebook via Remix are:
 
 The steps to access the gradebook via a geth terminal are (adapted from [here](../../solidity.html#/geth)):
 
-- Enter `var addr = "0xffffffffffffffffffffffffffffffffffffffff";`, but with the *real* contract address on the Collab landing page
+- Enter `var addr = "0xffffffffffffffffffffffffffffffffffffffff";`, but with the *real* contract address on the Canvas landing page
 - Enter `var abi = [...];`, but with the *real* ABI of IGradebook from the Canvas landing page.  Do not put this in quotes, and do not put this in extra square brackets!
 - Enter `var interface = eth.contract(abi);`
 - Enter `var contract = interface.at(addr);`

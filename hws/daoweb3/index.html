@@ -36,6 +36,10 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
   
 </head>
@@ -59,7 +63,7 @@
 <ul>
 <li>That you completed the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment as we will be using your NFTmanager contract for our ERC-721 tokens (if yours is not working, you can use the default ERC721.sol contract provided in that assignment)</li>
 <li>Familiarity with the <a href='../../slides/applications.html#/daos'>Decentralized Autonomous Organizations (DAO)</a> section of the lecture slides</li>
-<li>That you have a working account on the CS departmental servers. If you are unsure, you can view the CS computing page, which has a link to the password reset page (a link to there is on the Collab landing page)</li>
+<li>That you have a working account on the CS departmental servers. If you are unsure, you can view the CS computing page, which has a link to the password reset page (a link to there is on the Canvas landing page)</li>
 </ul>
 <p>In addition to your source code, you will submit an edited version of <a href='daoweb3.py.html'>daoweb3.py</a> (<a href='daoweb3.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
@@ -174,7 +178,7 @@ interface IDAO is IERC165 {
 <ul>
 <li><p>Log into your CS server account. You can try using ssh from the command line: <code>ssh mst3k@portal.cs.virginia.edu</code> (works in Linux, Mac OS X, and Windows Subsystem for Linux). You can also download <a href='https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=65a00a3cdb11db404f32fb671d9619bb'>SecureCRT</a>, which is a GUI ssh client.</p>
 <ul>
-<li>Don’t know your password, or you never received it? Follow the reset password link on the CS computing page (a link to which is on the Collab landing page)</li>
+<li>Don’t know your password, or you never received it? Follow the reset password link on the CS computing page (a link to which is on the Canvas landing page)</li>
 </ul></li>
 <li><p>You will likely want to edit the file on your home computer and copy it over to the CS servers to test it.</p>
 <ul>
@@ -200,7 +204,7 @@ wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map</code></p
 <li>auction.php: for the Auctioneer contract in <a href='../auction/index.html'>dApp Auction assignment</a> (<a href='../auction/index.md'>md</a>)</li>
 <li>dex.php: for the DEXes in <a href='../dex/index.html'>DEX assignment</a> (<a href='../dex/index.md'>md</a>)</li>
 </ul>
-<p>The links to all of these are on the Collab landing page.</p>
+<p>The links to all of these are on the Canvas landing page.</p>
 <p>You are welcome to look at the blockchain explorer code as well, but that won’t be as useful for this assignment. When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on. Loading up the developer console make make it easier to view the code, and – later on – see any Javascript errors. Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.</p>
 </div><div id='tjavascript' class='tabcontent'><h3 id='javascript'>Javascript</h3>
 <p>Most function calls execute quickly. But some, such as those querying a blockchain, can take some time to return a value. In Javascript, these are called <code>async</code> functions. While <code>async</code> functions might execute quickly, Javascript assumes they will take some time. You have two options here – you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return. If you choose the first option, it will hang until that <code>async</code> call completes. If you choose the second option, it will move on, and later (in another thread) execute that code block when the <code>async</code> call does finally complete.</p>
@@ -232,8 +236,8 @@ const setChoiceInfo = async(i) =&gt; {
 <p>Four variables are defined:</p>
 <ul>
 <li>The <code>contractAddress</code> line is the hard-coded address of the Poll smart contract. You should also hard-code the address, although this will mean editing the HTML file if you re-deploy it to a different smart contract address</li>
-<li>The <code>web3</code> variable is the connection to the geth node itself. The value for <code>URL</code> is provided on the Collab landing page. Note that the value for <code>URL</code> must be in quotes.</li>
-<li>The <code>abi</code> variable is the ABI for the contract itself. This should be replaced by the entire ABI, not just <code>[...]</code>. You can obtain this via Remix – in the Compilation tab, after you compile, there is a copy link next to the text “ABI” at the bottom of that pane. Note that you will have to remove all white space in what you copy from Remix. You can also copy the ABI for this assignment from the Collab landing page.</li>
+<li>The <code>web3</code> variable is the connection to the geth node itself. The value for <code>URL</code> is provided on the Canvas landing page. Note that the value for <code>URL</code> must be in quotes.</li>
+<li>The <code>abi</code> variable is the ABI for the contract itself. This should be replaced by the entire ABI, not just <code>[...]</code>. You can obtain this via Remix – in the Compilation tab, after you compile, there is a copy link next to the text “ABI” at the bottom of that pane. Note that you will have to remove all white space in what you copy from Remix. You can also copy the ABI for this assignment from the Canvas landing page.</li>
 <li>The <code>contract</code> variable is the connection to the specific smart contract that we are accessing.</li>
 </ul>
 <p>You will notice that many of the fields and methods here are the same as in geth. Indeed, what we call <code>web3.eth.blockNumber</code> here is just <code>eth.blockNumber</code> in geth. They are also the same steps we’ve used before to call a function from geth – we saw this in the <a href='../../slides/solidity.html#/debtor'>Debtors example</a>, and those commands are listed in the <a href='../../docs/geth_reference.html'>Geth reference document</a> (<a href='../../docs/geth_reference.md'>md</a>).</p>
@@ -358,16 +362,16 @@ eth.getLogs(filter.options)</code></pre>
 <p><img src='dao-screenshot.webp' style='border:1px solid black'></p>
 <p>You don’t have to implement the copy link in the Creator column. Note that <strong><em>ALL</em></strong> of your HTML, CSS, and Javascript code must in the dao.html file. The <em>only</em> thing that can be separate is the web3.js file, which is included in the HTML template above.</p>
 <p>Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due, and one which will stay open for one week after the assignment (just get the right date; we don’t care what time on that day). The third one is up to you.</p>
-<p>As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO – just change the address in your dao.html file. But be sure to change it back to your own DAO! Note that it needs to work on your DAO by the time you submit it! The address for the course-wide DAO is on the Collab landing page.</p>
+<p>As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO – just change the address in your dao.html file. But be sure to change it back to your own DAO! Note that it needs to work on your DAO by the time you submit it! The address for the course-wide DAO is on the Canvas landing page.</p>
 </div><div id='tcourse-dao' class='tabcontent'><h3 id='course-dao'>Course DAO</h3>
-<p>You need to join the course-wide DAO and vote on one of the proposals. The address for the course-wide DAO is on the Collab landing page. This DAO also follows the <a href='IDAO.sol.html'>IDAO.sol</a> (<a href='IDAO.sol'>src</a>) interface.</p>
+<p>You need to join the course-wide DAO and vote on one of the proposals. The address for the course-wide DAO is on the Canvas landing page. This DAO also follows the <a href='IDAO.sol.html'>IDAO.sol</a> (<a href='IDAO.sol'>src</a>) interface.</p>
 <p>To join, you can just call <code>requestMembership()</code>. Although <code>requestMembership()</code> is supposed to revert in your code, in the course-wide DAO it will just add you as a member. You then need to vote on one of the proposals. It doesn’t matter which proposal you vote on, or how you vote. Save the transaction hash from when you voted, as you will have to submit that.</p>
 </div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
 <p>You will need to fill in the various values from this assignment into the <a href='daoweb3.py.html'>daoweb3.py</a> (<a href='daoweb3.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>five</em> forms of submission for this assignment; you must do all five.</p>
 <p>Submission 1: You must deploy your DAO smart contract to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it.</p>
 <p>Submission 2: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where <code>mst3k</code> is your userid. This means it needs to be in your <code>~/public_html</code> directory on the departmental servers. You should have web.js (or web3.min.js) in that website directory as well. Needless to say, it should properly connect to your deployed DAO smart contract.</p>
-<p>Submission 3: You need to add some data to your DAO contract, as specified above. In particular, that means at least three proposals (one of which has expired, one of which stays open for one week). Also make the specified Ethernet account address – indicated on the Collab landing page – is a member of your DAO so that that address can perform tasks on your DAO to grade it.</p>
+<p>Submission 3: You need to add some data to your DAO contract, as specified above. In particular, that means at least three proposals (one of which has expired, one of which stays open for one week). Also make the specified Ethernet account address – indicated on the Canvas landing page – is a member of your DAO so that that address can perform tasks on your DAO to grade it.</p>
 <p>Submission 4: You need to join the course-wide DAO and vote on one of the proposals.</p>
 <p>Submission 5: You should submit your <code>DAO.sol</code> file, your <code>dao.html</code> file, and your completed <code>daoweb3.py</code> file, and ONLY those three files, to Gradescope. All other imported files will be provided by Gradescope (including NFTManager.sol, if needed). <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).</p>
 </div><script>document.getElementById('defaultOpen').click();</script></body>

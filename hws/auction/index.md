@@ -27,7 +27,7 @@ In addition to your source code, you will submit an edited version of [auction.p
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
 
 - Added Mon, 10/31: Clarified that you have to submit `NFTManager.sol` as well, but the submission on Gradescope will catch it if you do not do so
-- Added Sun, 10/30: The course-wide auctioneer address changed, and the Collab landing page has the new version
+- Added Sun, 10/30: The course-wide auctioneer address changed, and the Canvas landing page has the new version
 - Added Tue, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via `require()`.  Also clarified about the behavior of `block.timestamp` (in the "Notes and Hints" section) and that auction IDs have to start from 0 for the auctions.php page to work.
 
 ### Task 1: Auction contract
@@ -168,7 +168,7 @@ Some people are having problems in Remix with determining the return value of a 
 
 Test all this thoroughly in Remix!  You will need to deploy your Auctioneer contract in Remix's Javascript environment to test everything working together.  Recall that you have to select the right contract to deploy in the "Contract" list, else Remix may not know which one to deploy.  Be sure to develop via incremental development, else you will not be able to figure out where your bug is.
 
-One it works, deploy it to our private Ethereum blockchain.  You should test it there as well.  You will need to submit the contract address of the deployed Auctioneer.  If you deploy it multiple times, just submit the most recent contract address.  Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Collab landing page; a link to this will also be shown on the explorer page for your Auctioneer contract.  This auctions web page will make it far easier to see what is going on with your auctions.  Note that the explorer will only display this link if it knows that the contract implements IAuctioneer, and it only knows that if your `supportsInterface()` method is written and correct.
+One it works, deploy it to our private Ethereum blockchain.  You should test it there as well.  You will need to submit the contract address of the deployed Auctioneer.  If you deploy it multiple times, just submit the most recent contract address.  Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Canvas landing page; a link to this will also be shown on the explorer page for your Auctioneer contract.  This auctions web page will make it far easier to see what is going on with your auctions.  Note that the explorer will only display this link if it knows that the contract implements IAuctioneer, and it only knows that if your `supportsInterface()` method is written and correct.
 
 
 #### `startAuction()` method
@@ -208,14 +208,14 @@ The second auction should end *two weeks* after the assignment is due.  Just get
 
 #### View your auctions
 
-There is a web page to view your auctions, and the URL for it is on the Collab landing page.  You can also get a link to it from the explorer page for your deployed smart contract.  This can be used to view any auction smart contract that implements the IAuctioneer interface.  This means you can view the class auctions as well (which are done in the next section).
+There is a web page to view your auctions, and the URL for it is on the Canvas landing page.  You can also get a link to it from the explorer page for your deployed smart contract.  This can be used to view any auction smart contract that implements the IAuctioneer interface.  This means you can view the class auctions as well (which are done in the next section).
 
 
 ### Task 4: Class Auctions
 
 You are going to participate in a class-wide auction manager.
 
-We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Collab landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
+We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Canvas landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
 
 You should use the third of your (three) NFTs.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the auction ID from the auction you created as well as the NFT token ID.  ***YOUR RESERVE*** should be no higher than 5 ETH.
 

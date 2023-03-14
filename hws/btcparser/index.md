@@ -40,8 +40,8 @@ We have a number of files of the blockchain itself.  Blockchain block counting i
 - Files with multiple blocks
     - [blk00000-f10.blk](blk00000-f10.blk) (2.3 Kb) contains the first 10 blocks
     - [blk00000-f100.blk](blk00000-f100.blk) (24 Kb) contains the first 100 blocks
-    - blk00000-f30000.blk (7 Mb) contains the first 30,000 Bitcoin blocks.  Due to this file's size, it is not kept in this repository, but can be found on Collab in the Resources tool
-    - blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks.  Due to this file's size, it is not kept in this repository, but can be found on Collab in the Resources tool
+    - blk00000-f30000.blk (7 Mb) contains the first 30,000 Bitcoin blocks.  Due to this file's size, it is not kept in this repository, but can be found on Canvas in the Files tool
+    - blk00000.blk (125 Mb) contains the first 119,341 Bitcoin blocks.  Due to this file's size, it is not kept in this repository, but can be found on Canvas in the Files tool
 - Files with single blocks
     - [blk00000-b0.blk](blk00000-b0.blk) is block 0, the genesis block
     - [blk00000-b29664.blk](blk00000-b29664.blk) is block 29,664, the first block with a compactSize unsigned integer that takes up more than one byte -- this may help you ensure you are reading those values in properly; see below for details on where that value is in the block

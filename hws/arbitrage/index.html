@@ -36,6 +36,10 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
   
 </head>
@@ -217,7 +221,7 @@
 <p>The <code>fees</code> value that you are reporting is just the USD value of the Ethereum transaction fees PLUS the DEX fees (amount withheld times its price).</p>
 </div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
 <p>When testing your code, don’t worry about getting the <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span> values exactly correct for a test. If you want to test a particular situation. To see if your program makes the right decision, for example, you can hard-code those values in the arbitrage_trading.py program and print out the results to see if it computed the correct values to trade. Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values. Instead, make a few transactions to the various DEXes from <em>another</em> account to get the <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span> values to differ between the different DEXes. The provided <a href='Arbitrage.sol.html'>Arbitrage.sol</a> (<a href='Arbitrage.sol'>src</a>) contract performs a few initial trades, but you may need to do more for your testing. The <code>arbitrage_trading.py</code> program is then called to see if any profitable trades can be made.</p>
-<p>When testing this code, you can open up the appropriate WebSocket port when you run geth – just add <code>--ws --ws.origins localhost,127.0.0.1</code> to the (now long) list of command line parameters when you start your geth node. Your connection_uri will then be <code>ws://localhost:8546</code>. You are also welcome to connect to the course server (the URI of which is on the Collab landing page) or via your geth.ipc file.</p>
+<p>When testing this code, you can open up the appropriate WebSocket port when you run geth – just add <code>--ws --ws.origins localhost,127.0.0.1</code> to the (now long) list of command line parameters when you start your geth node. Your connection_uri will then be <code>ws://localhost:8546</code>. You are also welcome to connect to the course server (the URI of which is on the Canvas landing page) or via your geth.ipc file.</p>
 <h4 id='testing-setup'>Testing setup</h4>
 <p><a href='img/ddc.webp' target='_blank'><img src='img/ddc.webp' style='width:300px;float:right'></img></a></p>
 <p>To help you in your testing, we have deployed six DEXes that all trade the same coin, but at different rates. The coin is Dragon Dice Coin (DDC), whose image is shown to the right. The six different DEXes all trade at a <em>fixed</em> exchange rate – which means that multiple trades will <em>not</em> change their <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, or <span class='math inline'><em>k</em></span> values. This is not realistic in a real-world situation, of course, but it is useful for testing. The six different DEXes have the icons of different sided dice, which correspond to their exchange rates:</p>
@@ -230,7 +234,7 @@
 <li><a href='img/d20c.webp' target='_blank'><img src='img/d20c.webp' style='width:50px;vertical-align:middle'></img></a> D20 exchanges at a rate of 1:20 (ETH:DDC)</li>
 </ul>
 <p>Just to clarify: all six of these DEXes exchange the same DDC coin, but at different exchange rates. The individual dice images are used for the images of the DEXes; the multi-die image to the right is the image of the coin. The DEXes all follow the <a href='../dex/IDEX.sol.html'>IDEX.sol</a> (<a href='../dex/IDEX.sol'>src</a>) interface, and the DDC coin follows the <a href='../tokens/ITokenCC.sol.html'>ITokenCC.sol</a> (<a href='../tokens/ITokenCC.sol'>src</a>) interface.</p>
-<p>The addresses of all these DEXes, as well as DDC, are on the Collab landing page.</p>
+<p>The addresses of all these DEXes, as well as DDC, are on the Canvas landing page.</p>
 <h4 id='obtaining-ddc'>Obtaining DDC</h4>
 <p>The <a href='../tokens/ITokenCC.sol.html'>ITokenCC.sol</a> (<a href='../tokens/ITokenCC.sol'>src</a>) interface has a <code>requestFunds()</code> function, which you just had revert in the <a href='../tokens/index.html'>dApp Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. For DDC, that function will pay you 100 DDC on each call. This will allow you to obtain DDC for use in your exchange testing.</p>
 <p>Of course, you can also exchange ether for DDC with any of the DEXes to obtain DDC.</p>
@@ -243,13 +247,13 @@
 </ul>
 <p>These values can be changed by the course instructor, although that may take some time (i.e., it’s not instantaneous). However, you should use smaller amounts in your testing – don’t start by trading in a huge amount of ether, or all of your DDC, as this will cause you to hit your limits very quickly.</p>
 <p>Keep in mind that the difficult part of this assignment is making the calculations. During testing you can have your code make those calculations, print out the result (and lots of intermediate values), but not make the actual trade on the blockchain. When you finally submit your solution, it should print out exactly one line, as described above, and make the trade.</p>
-<p>Lastly, these DEXes have the ability to be “turned off” so that any attempt at a transaction will revert with an appropriate error message (either “trading not currently enabled” or “this DEX has been destructed”). In the former case, it will be turned on again soon. In the latter case, the DEXes were likely replaced – check the Collab landing page for new DEX (and DDC) addresses.</p>
+<p>Lastly, these DEXes have the ability to be “turned off” so that any attempt at a transaction will revert with an appropriate error message (either “trading not currently enabled” or “this DEX has been destructed”). In the former case, it will be turned on again soon. In the latter case, the DEXes were likely replaced – check the Canvas landing page for new DEX (and DDC) addresses.</p>
 <h4 id='usage'>Usage</h4>
-<p>The different DEX addresses are on the Collab landing page, and also provided in the arbitrage_config.py file. The intent is for you to comment out different DEXes in that file so that you can test it with different pairs. The provided <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Collab landing page does.</p>
+<p>The different DEX addresses are on the Canvas landing page, and also provided in the arbitrage_config.py file. The intent is for you to comment out different DEXes in that file so that you can test it with different pairs. The provided <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Canvas landing page does.</p>
 <p>Let’s assume a standard price ratio of 1:10 (ETH:DDC). This means that the arbitrage_config.py file will have lines such as:</p>
 <pre><code>'price_eth': 100.00,
 'price_tc': 10.0, </code></pre>
-<p>This is as is provided in the arbitrage_config.py file on the Collab landing page. Furthermore, the provided file has the <code>dex_addrs</code> list formatted as follows:</p>
+<p>This is as is provided in the arbitrage_config.py file on the Canvas landing page. Furthermore, the provided file has the <code>dex_addrs</code> list formatted as follows:</p>
 <pre><code>'dex_addrs': [
               '0x123456789abcdef0123456789abcdef123456789', # d4 dex
               '0x123456789abcdef0123456789abcdef123456789', # d6 dex

@@ -11,7 +11,7 @@ Beyond general experience with programming Solidity (which you have at this poin
 
 - That you completed the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment as we will be using your NFTmanager contract for our ERC-721 tokens (if yours is not working, you can use the default ERC721.sol contract provided in that assignment)
 - Familiarity with the [Decentralized Autonomous Organizations (DAO)](../../slides/applications.html#/daos) section of the lecture slides
-- That you have a working account on the CS departmental servers.  If you are unsure, you can view the CS computing page, which has a link to the password reset page (a link to there is on the Collab landing page)
+- That you have a working account on the CS departmental servers.  If you are unsure, you can view the CS computing page, which has a link to the password reset page (a link to there is on the Canvas landing page)
 
 In addition to your source code, you will submit an edited version of [daoweb3.py](daoweb3.py.html) ([src](daoweb3.py)).
 
@@ -161,7 +161,7 @@ This is not a class on user interfaces, so we are not expecting an amazing looki
 #### Setup
 
 - Log into your CS server account.  You can try using ssh from the command line: `ssh mst3k@portal.cs.virginia.edu` (works in Linux, Mac OS X, and Windows Subsystem for Linux).  You can also download [SecureCRT](https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=65a00a3cdb11db404f32fb671d9619bb), which is a GUI ssh client.
-    - Don't know your password, or you never received it?  Follow the reset password link on the CS computing page (a link to which  is on the Collab landing page)
+    - Don't know your password, or you never received it?  Follow the reset password link on the CS computing page (a link to which  is on the Canvas landing page)
 - You will likely want to edit the file on your home computer and copy it over to the CS servers to test it.
     - Create, on your local computer, a file called `dao.html` that just has `hello world` as the contents (we don't need HTML tags for now)
     - There are two ways you can transfer it:
@@ -185,7 +185,7 @@ You are *encouraged* to look at the examples of web3 usage provided so far in cl
 - auction.php: for the Auctioneer contract in [dApp Auction assignment](../auction/index.html) ([md](../auction/index.md))
 - dex.php: for the DEXes in [DEX assignment](../dex/index.html) ([md](../dex/index.md))
 
-The links to all of these are on the Collab landing page.
+The links to all of these are on the Canvas landing page.
 
 You are welcome to look at the blockchain explorer code as well, but that won't be as useful for this assignment.  When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on.  Loading up the developer console make make it easier to view the code, and -- later on -- see any Javascript errors.  Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.
 
@@ -225,8 +225,8 @@ const setChoiceInfo = async(i) => {
 Four variables are defined:
 
 - The `contractAddress` line is the hard-coded address of the Poll smart contract.  You should also hard-code the address, although this will mean editing the HTML file if you re-deploy it to a different smart contract address
-- The `web3` variable is the connection to the geth node itself.  The value for `URL` is provided on the Collab landing page.  Note that the value for `URL` must be in quotes.
-- The `abi` variable is the ABI for the contract itself.  This should be replaced by the entire ABI, not just `[...]`.  You can obtain this via Remix -- in the Compilation tab, after you compile, there is a copy link next to the text "ABI" at the bottom of that pane.  Note that you will have to remove all white space in what you copy from Remix.  You can also copy the ABI for this assignment from the Collab landing page.
+- The `web3` variable is the connection to the geth node itself.  The value for `URL` is provided on the Canvas landing page.  Note that the value for `URL` must be in quotes.
+- The `abi` variable is the ABI for the contract itself.  This should be replaced by the entire ABI, not just `[...]`.  You can obtain this via Remix -- in the Compilation tab, after you compile, there is a copy link next to the text "ABI" at the bottom of that pane.  Note that you will have to remove all white space in what you copy from Remix.  You can also copy the ABI for this assignment from the Canvas landing page.
 - The `contract` variable is the connection to the specific smart contract that we are accessing.
 
 You will notice that many of the fields and methods here are the same as in geth.  Indeed, what we call `web3.eth.blockNumber` here is just `eth.blockNumber` in geth.  They are also the same steps we've used before to call a function from geth -- we saw this in the [Debtors example](../../slides/solidity.html#/debtor), and those commands are listed in the [Geth reference document](../../docs/geth_reference.html) ([md](../../docs/geth_reference.md)).
@@ -403,12 +403,12 @@ You don't have to implement the copy link in the Creator column.  Note that ***A
 
 Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due, and one which will stay open for one week after the assignment (just get the right date; we don't care what time on that day).  The third one is up to you.
 
-As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO -- just change the address in your dao.html file.  But be sure to change it back to your own DAO!  Note that it needs to work on your DAO by the time you submit it!  The address for the course-wide DAO is on the Collab landing page.
+As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO -- just change the address in your dao.html file.  But be sure to change it back to your own DAO!  Note that it needs to work on your DAO by the time you submit it!  The address for the course-wide DAO is on the Canvas landing page.
 
 
 ### Course DAO
 
-You need to join the course-wide DAO and vote on one of the proposals.  The address for the course-wide DAO is on the Collab landing page.  This DAO also follows the [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)) interface.
+You need to join the course-wide DAO and vote on one of the proposals.  The address for the course-wide DAO is on the Canvas landing page.  This DAO also follows the [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)) interface.
 
 To join, you can just call `requestMembership()`.  Although `requestMembership()` is supposed to revert in your code, in the course-wide DAO it will just add you as a member.  You then need to vote on one of the proposals.  It doesn't matter which proposal you vote on, or how you vote.  Save the transaction hash from when you voted, as you will have to submit that.
 
@@ -424,7 +424,7 @@ Submission 1: You must deploy your DAO smart contract to our private Ethereum bl
 
 Submission 2: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory as well.  Needless to say, it should properly connect to your deployed DAO smart contract.
 
-Submission 3: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Collab landing page -- is a member of your DAO so that that address can perform tasks on your DAO to grade it.
+Submission 3: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Canvas landing page -- is a member of your DAO so that that address can perform tasks on your DAO to grade it.
 
 Submission 4: You need to join the course-wide DAO and vote on one of the proposals.
 

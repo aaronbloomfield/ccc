@@ -49,8 +49,8 @@ Here are the MetaMask setup steps:
       - In the Settings column on the far left, click on Advanced
       - About half-way down there is a toggle setting to "show test networks" -- make sure that is togged on
     - In the settings column on the far left, click on the Networks option, then click on the "localhost:8545" network
-      - Change the chain ID to the (base-10) value for our blockchain; that value can be found on the Collab landing page
-      - Change the explorer URL to the URL of the course explorer (on the Collab landing page)
+      - Change the chain ID to the (base-10) value for our blockchain; that value can be found on the Canvas landing page
+      - Change the explorer URL to the URL of the course explorer (on the Canvas landing page)
       - Then click save
     - Back in the network selection box, you should now be able to select "localhost:8545" as your network -- this is going to connect to the geth node that we will be starting in a moment
 4. Obtain your decrypted private key for the account that you want to use.  This was done in Part 4 of the [Private Ethereum Blockchain](../ethprivate/index.html#part-4-extract-private-key) ([md](../ethprivate/index)) assignment, and you also used that in the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) assignment.  It will be a hex value of the form `0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef`
@@ -84,7 +84,7 @@ The catch: in order to be able to call a smart contract that is a *transaction*,
 
 ### Web3.js
 
-The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is on the Collab landing page -- you can just save that as a new HTML file, which you will want to name `metamask.html`.  Note: you have to view that page with an address else most of the relevant Javascript code will not be shown.  The link to that page with an address is also on the Collab landing page.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and paired functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
+The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is on the Canvas landing page -- you can just save that as a new HTML file, which you will want to name `metamask.html`.  Note: you have to view that page with an address else most of the relevant Javascript code will not be shown.  The link to that page with an address is also on the Canvas landing page.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and paired functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
 
 The [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) goes over the basics of HTML web pages and Javascript functions.
 
@@ -127,7 +127,7 @@ The expectation is that any user will first click on that button to connect to M
 
 We could interact with MetaMask directly, but using web3.js, which we are familiar with, is going to make life much easier -- it will do all the encoding of parameters into calls, etc.
 
-Previously, we defined the `web3` variable as such (The value for `URL` is on the Collab landing page):
+Previously, we defined the `web3` variable as such (The value for `URL` is on the Canvas landing page):
 
 ```
 let web3 = new Web3('URL');
@@ -140,7 +140,7 @@ let web3 = new Web3('URL');
 let web3mm = new Web3(window.ethereum);
 ```
 
-You will notice that we are creating *TWO* connections to the blockchain.  The first connection is through the normal URL as was done in the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment and as is done in the auctions.php page that you are basing your code off of; that URL is on the Collab landing page.  This first connection is *read-only*.  The second connection is through MetaMask, which injects the `window.ethereum` object, and Web3.js can just connect via that.  We will be able to send transactions through the second connection.
+You will notice that we are creating *TWO* connections to the blockchain.  The first connection is through the normal URL as was done in the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment and as is done in the auctions.php page that you are basing your code off of; that URL is on the Canvas landing page.  This first connection is *read-only*.  The second connection is through MetaMask, which injects the `window.ethereum` object, and Web3.js can just connect via that.  We will be able to send transactions through the second connection.
 
 The reason we are doing two connections is because the first one supports subscriptions, which is what allows the table to be updated upon an event emission -- you did that in the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment, and the auctions.php does that as well.  However, that first connection does not allow sending transactions to the blockchain.  The second connection, which is through MetaMask, does not support subscriptions (so no automatic updating of the tables), but does allow sending transactions to the blockchain.
 
@@ -250,9 +250,9 @@ This will show a pop-up alert box that states something such as "NFT ID: 12345".
 
 Finally!  We can get to the whole reason for this party.
 
-Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) interface.  The intent is that you start with the existing web page to view the auctions -- the link is on the Collab landing page -- and put your modifications at the bottom of that page.  Our web page looked like the image to the right; this is the bottom of our web page, and the auction table itself was above what is shown.  Yours need not look the same, but it does need to be usable.
+Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) interface.  The intent is that you start with the existing web page to view the auctions -- the link is on the Canvas landing page -- and put your modifications at the bottom of that page.  Our web page looked like the image to the right; this is the bottom of our web page, and the auction table itself was above what is shown.  Yours need not look the same, but it does need to be usable.
 
-As you are starting with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment (see above for starting on that), the read-only parts of this assignment are already done for you.  You will have to change the contract IDs, of course -- you should hard-code that into your HTML / Javascript code (just replace the address that is there -- it may be there multiple times).  Note: you have to view the original auctions page with an address else most of the relevant Javascript code will not be shown.  The link to that page with an address is on the Collab landing page.  We discussed how to create a HTML form interface, and the Javascript code to make it work, above.  You will have to hard-code the Auctioneer smart contract address.
+As you are starting with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment (see above for starting on that), the read-only parts of this assignment are already done for you.  You will have to change the contract IDs, of course -- you should hard-code that into your HTML / Javascript code (just replace the address that is there -- it may be there multiple times).  Note: you have to view the original auctions page with an address else most of the relevant Javascript code will not be shown.  The link to that page with an address is on the Canvas landing page.  We discussed how to create a HTML form interface, and the Javascript code to make it work, above.  You will have to hard-code the Auctioneer smart contract address.
 
 For this assignment, you need to create a web interface with three of the Auctioneer functions -- `startAuction()`, `closeAuction()`, and `placeBid()`.  Your interface also needs to interact with two functions of the NFT manager: `mintWithURI()` (the one-parameter version, shown above) from [NFTManager.sol](../tokens/NFTManager.sol.html) and `approve()` from [IERC721.sol](../auctions/IERC721.sol.html).  This means you will have to interact with ***TWO*** contracts on the blockchain.  Thus, you will need to create a contract interface to your NFTManager contract as well (similar to how `auctionContractmm` was created) -- be sure to use `web3mm`!  You can hard-code the address for the NFTmanager, and you can obtain that by calling `nftmanager()` on your Auctioneer contract; the former is likely simpler.  Note that many of the smart contract function parameters are already known, and need not be entered in the form -- the NFT is minted for the MetaMask account, and the transfer assumes it is coming from the same MetaMask account and going to the Auctioneer.  So only the NFT ID is what needs to be entered when approving a NFT, for example.
 
@@ -262,7 +262,7 @@ The forms for these five functions should be on that same page -- in particular,
 
 Any calls the three Auctioneer functions (`createAuction()`, `closeAuction()`, and `placeBid()`) will have that change reflected in the table of auctions, which will automatically update when an event is emitted.  The call to `approve()` should just display "success" (or similar) via a pop-up box (call `alert("success");` in Javascript).  When `mintWithURI()` is called, it performs the transaction and then performs a web3.js call to get the NFT ID via `showReturnIntegerValue()`, which is then displayed via an alert box.
 
-When this assignment is complete, anybody should be able to create NFTs, initiate auctions, bid on existing auctions, and close auctions when they are done.  As for the NFT images, we will still provide just a file name, and the URL prefix will be the same Collab link as in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment; that prefix is on the Collab landing page from the Tokens assignment.
+When this assignment is complete, anybody should be able to create NFTs, initiate auctions, bid on existing auctions, and close auctions when they are done.  As for the NFT images, we will still provide just a file name, and the URL prefix will be the same Canvas link as in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment; that prefix is on the Canvas landing page from the Tokens assignment.
 
 <br clear='all'>
 
@@ -271,8 +271,8 @@ When this assignment is complete, anybody should be able to create NFTs, initiat
 To get the metamask.html web page set up:
 
 - Get the contract address of your deployed Auctioneer.sol contract
-- Go to the auctions.php web site (the address is on the Collab landing page), and enter that smart contract address to view those auctions
-    - You have to view that page with an address else most of the relevant Javascript code will not be shown. The link to that page with an address is on the Collab landing page.
+- Go to the auctions.php web site (the address is on the Canvas landing page), and enter that smart contract address to view those auctions
+    - You have to view that page with an address else most of the relevant Javascript code will not be shown. The link to that page with an address is on the Canvas landing page.
 - Ensure that the resulting page does not display any errors (view the console in the developer tools)
 - View the source of the web page
 - Save that into metamask.html
@@ -346,7 +346,7 @@ For this assignment:
 - `from`: That's obtained from the MetaMask extension, and the `ethereum.selectedAddress` will do that for you.
 - `value`: How much ether, expressed in wei, you are sending in with this function call.  Note that this must also be in hex!
 - `data`: This is the hex code to call the function on the smart contract.  How to encode that is described in the [function call encoding tutorial](../docs/function_call_encoding.html) ([md](../docs/function_call_encoding.md)).
-- `chainId`: Apparently filled in by MetaMask, but the value for our course chain is on the Collab landing page.
+- `chainId`: Apparently filled in by MetaMask, but the value for our course chain is on the Canvas landing page.
 
 Once those parameters are set correctly, the last four lines in the above code will call that function.
 
@@ -354,7 +354,7 @@ Once those parameters are set correctly, the last four lines in the above code w
 
 ### Common Errors
 
-- "Invalid sender" error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly.  Click on the MetaMask fox icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the "localhost:8545" network.  Make sure the chain ID is set correctly; it's on the Collab landing page, if you forget what it is.  It should be set using it's base-10 value.
+- "Invalid sender" error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly.  Click on the MetaMask fox icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the "localhost:8545" network.  Make sure the chain ID is set correctly; it's on the Canvas landing page, if you forget what it is.  It should be set using it's base-10 value.
 - MetaMask RPC error / Header not found.  If you get the following error: ` "[ethjs-query] while formatting outputs from RPC '{"value":{"code":-32603,"data":{"code":-32000,"message":"header not found"}}}'"`, try switching your network to Mainnet and then back to localhost:8545, as some have reported that this fixes the issue.
 - If MetaMask suddenly stops appearing to send your transactions, they may have gotten "stuck".  Each successive Ethereum transaction must have the next highest nonce.  If there is a gap, then it will queue the transaction until the gap is resolved.  If you send to many transactions at once, they could arrive out of order.  To resolve this, since everything here is free, spam some transactions (not calls) to the blockchain.  Calling `collectFees()` a bunch of times from an Auctioneer contract will do the trick.
 
