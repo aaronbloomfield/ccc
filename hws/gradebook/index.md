@@ -22,7 +22,7 @@ Admittedly, keeping a gradebook of private grades on a public blockchain is not 
 
 The gradebook will need to have the following functionalities:
 
-- ONLY the instructor designate others as teaching assistants
+- ONLY the instructor can designate others as teaching assistants
 - Assignments can be created; each assignment has a maximum score; that maximum score must be positive (not zero)
 - Grades for students can be entered and updated for a given assignment (only unsigned integers)
 - Only instructors and teaching assistants can create assignments and enter/update grades
@@ -40,7 +40,9 @@ In addition to your source code, you will submit an edited version of [gradebook
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Wed, 3/15: clarified that only the instructor can designate TAs; other TAs can *not* designate TAs
 
 
 
@@ -128,7 +130,7 @@ The ABI for `IGradebook.sol` is as follows, can can be copied by clicking on: <s
 - Your contract opening line MUST be: `contract Gradebook is IGradebook {`
 - Your particular compiler version *may* require your methods to all have the `override` qualifier, since they are overriding what is specified in the `IGradebook` interface.  It's good practice to put that qualifier in there even if the compiler does not explicitly require it.
 - If a student does not have an entry for a given assignment, then their grade for that assignment is 0; remember that mappings return 0 if a key is not found
-- Note that BOTH the instructor and TAs can designate other TAs
+- Note that ONLY the instructor can designate other TAs
 - The `supportsInterface()` function should be exactly as is specified above
 - The `requestTAAccess()` will grant *anybody* who calls it TA access; it's not realistic in a contract deployed on a public blockchain, but we need it to test your code (the details are in the IGradebook.sol comments for that function)
 
