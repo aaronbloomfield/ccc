@@ -1360,7 +1360,11 @@ geth --config geth-config.toml \
 ```
 geth attach /path/to/ethprivate/geth.ipc
 ```
-Or, in Windows, something like:
+Or:
+```
+geth attach ./geth.ipc
+```
+In Windows, it's something like:
 ```
 geth attach \\.\pipe\geth.ipc
 ```
@@ -1379,8 +1383,9 @@ geth attach \\.\pipe\geth.ipc
 ## Relevant information
 - On the Canvas landing page, at the bottom, are a few pieces of information we will need:
   - The Debts smart contract address
-  - The ABI for the IDebts.sol interface -- you will need to copy that shortly
+  - A [link to the ABI for the IDebts.sol interface](code/IDebts.sol.abi.txt) -- you will need to copy that shortly
   - A link to this part of the slide set so you can copy-and-paste some of the code
+  - And other useful links
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id='geth'><textarea>
