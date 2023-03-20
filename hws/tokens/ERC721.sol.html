@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (token/ERC721/ERC721.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.8.2) (token/ERC721/ERC721.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
@@ -158,11 +158,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-transferFrom}.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256 tokenId
-    <font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
         <i><font color="#9A1900">//solhint-disable-next-line max-line-length</font></i>
         <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">_isApprovedOrOwner</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> tokenId<font color="#990000">),</font> <font color="#FF0000">"ERC721: caller is not token owner or approved"</font><font color="#990000">);</font>
 
@@ -172,23 +168,14 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-safeTransferFrom}.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256 tokenId
-    <font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> <font color="#FF0000">""</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-safeTransferFrom}.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
-        bytes memory data
-    <font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">_isApprovedOrOwner</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> tokenId<font color="#990000">),</font> <font color="#FF0000">"ERC721: caller is not token owner or approved"</font><font color="#990000">);</font>
         <b><font color="#000000">_safeTransfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> data<font color="#990000">);</font>
     <font color="#FF0000">}</font>
@@ -211,12 +198,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_safeTransfer</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
-        bytes memory data
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_safeTransfer</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">_transfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#000000">_checkOnERC721Received</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> data<font color="#990000">),</font> <font color="#FF0000">"ERC721: transfer to non ERC721Receiver implementer"</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
@@ -270,11 +252,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {xref-ERC721-_safeMint-address-uint256-}[`_safeMint`], with an additional `data` parameter which is</font></i>
 <i><font color="#9A1900">     * forwarded in {IERC721Receiver-onERC721Received} to contract recipients.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_safeMint</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
-        bytes memory data
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_safeMint</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">_mint</font></b><font color="#990000">(</font>to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>
             <b><font color="#000000">_checkOnERC721Received</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> data<font color="#990000">),</font>
@@ -298,7 +276,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
         <b><font color="#000000">require</font></b><font color="#990000">(</font>to <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC721: mint to the zero address"</font><font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(!</font><b><font color="#000000">_exists</font></b><font color="#990000">(</font>tokenId<font color="#990000">),</font> <font color="#FF0000">"ERC721: token already minted"</font><font color="#990000">);</font>
 
-        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
+        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Check that tokenId was not minted by `_beforeTokenTransfer` hook</font></i>
         <b><font color="#000000">require</font></b><font color="#990000">(!</font><b><font color="#000000">_exists</font></b><font color="#990000">(</font>tokenId<font color="#990000">),</font> <font color="#FF0000">"ERC721: token already minted"</font><font color="#990000">);</font>
@@ -315,7 +293,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 
         <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
 
-        <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
+        <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -332,7 +310,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
     <font color="#008080">function</font> <b><font color="#000000">_burn</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <font color="#008080">address</font> owner <font color="#990000">=</font> ERC721<font color="#990000">.</font><b><font color="#000000">ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
 
-        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> tokenId<font color="#990000">);</font>
+        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> tokenId<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Update ownership in case tokenId was transferred by `_beforeTokenTransfer` hook</font></i>
         owner <font color="#990000">=</font> ERC721<font color="#990000">.</font><b><font color="#000000">ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
@@ -349,7 +327,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 
         <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> tokenId<font color="#990000">);</font>
 
-        <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> tokenId<font color="#990000">);</font>
+        <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> tokenId<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -363,15 +341,11 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_transfer</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256 tokenId
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>ERC721<font color="#990000">.</font><b><font color="#000000">ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">)</font> <font color="#990000">==</font> from<font color="#990000">,</font> <font color="#FF0000">"ERC721: transfer from incorrect owner"</font><font color="#990000">);</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>to <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> <font color="#FF0000">"ERC721: transfer to the zero address"</font><font color="#990000">);</font>
 
-        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
+        <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Check that tokenId was not transferred by `_beforeTokenTransfer` hook</font></i>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>ERC721<font color="#990000">.</font><b><font color="#000000">ownerOf</font></b><font color="#990000">(</font>tokenId<font color="#990000">)</font> <font color="#990000">==</font> from<font color="#990000">,</font> <font color="#FF0000">"ERC721: transfer from incorrect owner"</font><font color="#990000">);</font>
@@ -392,7 +366,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 
         <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
 
-        <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
+        <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -410,11 +384,7 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits an {ApprovalForAll} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_setApprovalForAll</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> owner<font color="#990000">,</font>
-        <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font>
-        <font color="#009900">bool</font> approved
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_setApprovalForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> approved<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">require</font></b><font color="#990000">(</font>owner <font color="#990000">!=</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#FF0000">"ERC721: approve to caller"</font><font color="#990000">);</font>
         _operatorApprovals<font color="#990000">[</font>owner<font color="#990000">][</font><b><font color="#0000FF">operator</font></b><font color="#990000">]</font> <font color="#990000">=</font> approved<font color="#990000">;</font>
         <font color="#008080">emit</font> <b><font color="#000000">ApprovalForAll</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> approved<font color="#990000">);</font>
@@ -462,72 +432,48 @@ contract ERC721 <font color="#008080">is</font> Context<font color="#990000">,</
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called before any (single) token transfer. This includes minting and burning.</font></i>
-<i><font color="#9A1900">     * See {_beforeConsecutiveTokenTransfer}.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called before any token transfer. This includes minting and burning. If {ERC721Consecutive} is</font></i>
+<i><font color="#9A1900">     * used, the hook may be called as part of a consecutive (batch) mint, as indicated by `batchSize` greater than 1.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Calling conditions:</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * - When `from` and `to` are both non-zero, ``from``'s `tokenId` will be</font></i>
-<i><font color="#9A1900">     * transferred to `to`.</font></i>
-<i><font color="#9A1900">     * - When `from` is zero, `tokenId` will be minted for `to`.</font></i>
-<i><font color="#9A1900">     * - When `to` is zero, ``from``'s `tokenId` will be burned.</font></i>
+<i><font color="#9A1900">     * - When `from` and `to` are both non-zero, ``from``'s tokens will be transferred to `to`.</font></i>
+<i><font color="#9A1900">     * - When `from` is zero, the tokens will be minted for `to`.</font></i>
+<i><font color="#9A1900">     * - When `to` is zero, ``from``'s tokens will be burned.</font></i>
 <i><font color="#9A1900">     * - `from` and `to` are never both zero.</font></i>
+<i><font color="#9A1900">     * - `batchSize` is non-zero.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256 tokenId
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
+    <font color="#008080">function</font> <b><font color="#000000">_beforeTokenTransfer</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> firstTokenId<font color="#990000">,</font> <font color="#008080">uint256</font> batchSize<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called after any (single) transfer of tokens. This includes minting and burning.</font></i>
-<i><font color="#9A1900">     * See {_afterConsecutiveTokenTransfer}.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called after any token transfer. This includes minting and burning. If {ERC721Consecutive} is</font></i>
+<i><font color="#9A1900">     * used, the hook may be called as part of a consecutive (batch) mint, as indicated by `batchSize` greater than 1.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Calling conditions:</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * - when `from` and `to` are both non-zero.</font></i>
+<i><font color="#9A1900">     * - When `from` and `to` are both non-zero, ``from``'s tokens were transferred to `to`.</font></i>
+<i><font color="#9A1900">     * - When `from` is zero, the tokens were minted for `to`.</font></i>
+<i><font color="#9A1900">     * - When `to` is zero, ``from``'s tokens were burned.</font></i>
 <i><font color="#9A1900">     * - `from` and `to` are never both zero.</font></i>
+<i><font color="#9A1900">     * - `batchSize` is non-zero.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256 tokenId
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
+    <font color="#008080">function</font> <b><font color="#000000">_afterTokenTransfer</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> firstTokenId<font color="#990000">,</font> <font color="#008080">uint256</font> batchSize<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called before "consecutive token transfers" as defined in ERC2309 and implemented in</font></i>
-<i><font color="#9A1900">     * {ERC721Consecutive}.</font></i>
-<i><font color="#9A1900">     * Calling conditions are similar to {_beforeTokenTransfer}.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Unsafe write access to the balances, used by extensions that "mint" tokens using an {ownerOf} override.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * WARNING: Anyone calling this MUST ensure that the balances remain consistent with the ownership. The invariant</font></i>
+<i><font color="#9A1900">     * being that for any address `a` the value returned by `balanceOf(a)` must be equal to the number of tokens such</font></i>
+<i><font color="#9A1900">     * that `ownerOf(tokenId)` is `a`.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_beforeConsecutiveTokenTransfer</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256<font color="#990000">,</font> <i><font color="#9A1900">/*first*/</font></i>
-        uint96 size
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>from <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
-            _balances<font color="#990000">[</font>from<font color="#990000">]</font> <font color="#990000">-=</font> size<font color="#990000">;</font>
-        <font color="#FF0000">}</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to <font color="#990000">!=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
-            _balances<font color="#990000">[</font>to<font color="#990000">]</font> <font color="#990000">+=</font> size<font color="#990000">;</font>
-        <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// solhint-disable-next-line func-name-mixedcase</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">__unsafe_increaseBalance</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> internal <font color="#FF0000">{</font>
+        _balances<font color="#990000">[</font>account<font color="#990000">]</font> <font color="#990000">+=</font> amount<font color="#990000">;</font>
     <font color="#FF0000">}</font>
-
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Hook that is called after "consecutive token transfers" as defined in ERC2309 and implemented in</font></i>
-<i><font color="#9A1900">     * {ERC721Consecutive}.</font></i>
-<i><font color="#9A1900">     * Calling conditions are similar to {_afterTokenTransfer}.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_afterConsecutiveTokenTransfer</font></b><font color="#990000">(</font>
-        address<font color="#990000">,</font> <i><font color="#9A1900">/*from*/</font></i>
-        address<font color="#990000">,</font> <i><font color="#9A1900">/*to*/</font></i>
-        uint256<font color="#990000">,</font> <i><font color="#9A1900">/*first*/</font></i>
-        uint96 <i><font color="#9A1900">/*size*/</font></i>
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{}</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>

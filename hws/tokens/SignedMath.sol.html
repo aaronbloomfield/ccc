@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>SignedMath.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.8.0) (utils/math/SignedMath.sol)</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Standard signed math utilities missing in the Solidity language.</font></i>
+<i><font color="#9A1900"> */</font></i>
+<font color="#008080">library</font> SignedMath <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the largest of two signed numbers.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> a <font color="#990000">&gt;</font> b <font color="#990000">?</font> a <font color="#990000">:</font> b<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the smallest of two signed numbers.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">min</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> a <font color="#990000">&lt;</font> b <font color="#990000">?</font> a <font color="#990000">:</font> b<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the average of two signed numbers without overflow.</font></i>
+<i><font color="#9A1900">     * The result is rounded towards zero.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">average</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// Formula from the book "Hacker's Delight"</font></i>
+        <font color="#008080">int256</font> x <font color="#990000">=</font> <font color="#990000">(</font>a <font color="#990000">&amp;</font> b<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">((</font>a <font color="#990000">^</font> b<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> x <font color="#990000">+</font> <font color="#990000">(</font><b><font color="#000000">int256</font></b><font color="#990000">(</font><b><font color="#000000">uint256</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">255</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>a <font color="#990000">^</font> b<font color="#990000">));</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the absolute unsigned value of a signed value.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><font color="#008080">int256</font> n<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// must be unchecked in order to support `n = type(int256).min`</font></i>
+            <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint256</font></b><font color="#990000">(</font>n <font color="#990000">&gt;=</font> <font color="#993399">0</font> <font color="#990000">?</font> n <font color="#990000">:</font> <font color="#990000">-</font>n<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

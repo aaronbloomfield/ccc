@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (utils/Address.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.8.0) (utils/Address.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">1</font><font color="#990000">;</font>
 
@@ -33,6 +33,10 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *  - a contract in construction</font></i>
 <i><font color="#9A1900">     *  - an address where a contract will be created</font></i>
 <i><font color="#9A1900">     *  - an address where a contract lived, but was destroyed</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Furthermore, `isContract` will also return true if the target contract within</font></i>
+<i><font color="#9A1900">     * the same transaction is already scheduled for destruction by `SELFDESTRUCT`,</font></i>
+<i><font color="#9A1900">     * which only has an effect at the end of a transaction.</font></i>
 <i><font color="#9A1900">     * ====</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * [IMPORTANT]</font></i>
@@ -122,11 +126,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * _Available since v3.1._</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> target<font color="#990000">,</font>
-        bytes <font color="#008080">memory</font> data<font color="#990000">,</font>
-        uint256 value
-    <font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">,</font> value<font color="#990000">,</font> <font color="#FF0000">"Address: low-level call with value failed"</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 

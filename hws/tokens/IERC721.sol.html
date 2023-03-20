@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (token/ERC721/IERC721.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.8.0) (token/ERC721/IERC721.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
@@ -62,12 +62,7 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
-        bytes calldata data
-    <font color="#990000">)</font> external<font color="#990000">;</font>
+    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">,</font> bytes <font color="#008080">calldata</font> data<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients</font></i>
@@ -83,11 +78,7 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256 tokenId
-    <font color="#990000">)</font> external<font color="#990000">;</font>
+    <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Transfers `tokenId` token from `from` to `to`.</font></i>
@@ -105,11 +96,7 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font>
-        <font color="#008080">address</font> from<font color="#990000">,</font>
-        <font color="#008080">address</font> to<font color="#990000">,</font>
-        uint256 tokenId
-    <font color="#990000">)</font> external<font color="#990000">;</font>
+    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Gives permission to `to` to transfer `tokenId` token to another account.</font></i>
@@ -136,7 +123,7 @@ interface IERC721 <font color="#008080">is</font> IERC165 <font color="#FF0000">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits an {ApprovalForAll} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">setApprovalForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> _approved<font color="#990000">)</font> external<font color="#990000">;</font>
+    <font color="#008080">function</font> <b><font color="#000000">setApprovalForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> approved<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the account approved for `tokenId` token.</font></i>

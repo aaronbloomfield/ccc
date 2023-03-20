@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (utils/math/Math.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.8.0) (utils/math/Math.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
@@ -63,11 +63,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Original credit to Remco Bloemen under MIT license (</font></i><u><font color="#0000FF">https://xn--2-umb.com/21/muldiv</font></u><i><font color="#9A1900">)</font></i>
 <i><font color="#9A1900">     * with further edits by Uniswap Labs also under MIT license.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font>
-        <font color="#008080">uint256</font> x<font color="#990000">,</font>
-        <font color="#008080">uint256</font> y<font color="#990000">,</font>
-        uint256 denominator
-    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font><font color="#008080">uint256</font> x<font color="#990000">,</font> <font color="#008080">uint256</font> y<font color="#990000">,</font> <font color="#008080">uint256</font> denominator<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
         unchecked <font color="#FF0000">{</font>
             <i><font color="#9A1900">// 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use</font></i>
             <i><font color="#9A1900">// use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256</font></i>
@@ -82,11 +78,14 @@ http://www.gnu.org/software/src-highlite">
 
             <i><font color="#9A1900">// Handle non-overflow cases, 256 by 256 division.</font></i>
             <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>prod1 <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <i><font color="#9A1900">// Solidity will revert if denominator == 0, unlike the div opcode on its own.</font></i>
+                <i><font color="#9A1900">// The surrounding unchecked block does not change this fact.</font></i>
+                <i><font color="#9A1900">// See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.</font></i>
                 <b><font color="#0000FF">return</font></b> prod0 <font color="#990000">/</font> denominator<font color="#990000">;</font>
             <font color="#FF0000">}</font>
 
             <i><font color="#9A1900">// Make sure the result is less than 2^256. Also prevents denominator == 0.</font></i>
-            <b><font color="#000000">require</font></b><font color="#990000">(</font>denominator <font color="#990000">&gt;</font> prod1<font color="#990000">);</font>
+            <b><font color="#000000">require</font></b><font color="#990000">(</font>denominator <font color="#990000">&gt;</font> prod1<font color="#990000">,</font> <font color="#FF0000">"Math: mulDiv overflow"</font><font color="#990000">);</font>
 
             <i><font color="#9A1900">///////////////////////////////////////////////</font></i>
             <i><font color="#9A1900">// 512 by 256 division.</font></i>
@@ -148,12 +147,7 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@notice</font><i><font color="#9A1900"> Calculates x * y / denominator with full precision, following the selected rounding direction.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font>
-        <font color="#008080">uint256</font> x<font color="#990000">,</font>
-        <font color="#008080">uint256</font> y<font color="#990000">,</font>
-        <font color="#008080">uint256</font> denominator<font color="#990000">,</font>
-        Rounding rounding
-    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font><font color="#008080">uint256</font> x<font color="#990000">,</font> <font color="#008080">uint256</font> y<font color="#990000">,</font> <font color="#008080">uint256</font> denominator<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <font color="#008080">uint256</font> result <font color="#990000">=</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> denominator<font color="#990000">);</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> <b><font color="#000000">mulmod</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> denominator<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
             result <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -269,31 +263,31 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">log10</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <font color="#008080">uint256</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
         unchecked <font color="#FF0000">{</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">64</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">64</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">64</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                value <font color="#990000">/=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">64</font><font color="#990000">;</font>
                 result <font color="#990000">+=</font> <font color="#993399">64</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">32</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">32</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">32</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                value <font color="#990000">/=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">32</font><font color="#990000">;</font>
                 result <font color="#990000">+=</font> <font color="#993399">32</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">16</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">16</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">16</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                value <font color="#990000">/=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">16</font><font color="#990000">;</font>
                 result <font color="#990000">+=</font> <font color="#993399">16</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">8</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">8</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                value <font color="#990000">/=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">8</font><font color="#990000">;</font>
                 result <font color="#990000">+=</font> <font color="#993399">8</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">4</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">4</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">4</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                value <font color="#990000">/=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">4</font><font color="#990000">;</font>
                 result <font color="#990000">+=</font> <font color="#993399">4</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">2</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">2</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">2</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                value <font color="#990000">/=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">2</font><font color="#990000">;</font>
                 result <font color="#990000">+=</font> <font color="#993399">2</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font><font color="#990000">**</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;=</font> <font color="#993399">10</font> <font color="#990000">**</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#FF0000">{</font>
                 result <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
@@ -307,7 +301,7 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">log10</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         unchecked <font color="#FF0000">{</font>
             <font color="#008080">uint256</font> result <font color="#990000">=</font> <b><font color="#000000">log10</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
-            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> <font color="#993399">10</font><font color="#990000">**</font>result <font color="#990000">&lt;</font> value <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> <font color="#993399">10</font> <font color="#990000">**</font> result <font color="#990000">&lt;</font> value <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
@@ -344,7 +338,7 @@ http://www.gnu.org/software/src-highlite">
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 10, following the selected rounding direction, of a positive value.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 256, following the selected rounding direction, of a positive value.</font></i>
 <i><font color="#9A1900">     * Returns 0 if given 0.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">log256</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>

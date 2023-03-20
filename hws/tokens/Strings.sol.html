@@ -10,11 +10,12 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.7.0) (utils/Strings.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.8.0) (utils/Strings.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
 
 import <font color="#FF0000">"./Math.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./SignedMath.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> String operations.</font></i>
@@ -49,6 +50,13 @@ import <font color="#FF0000">"./Math.sol"</font><font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts a `int256` to its ASCII `string` decimal representation.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toString</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">string</font></b><font color="#990000">(</font>abi<font color="#990000">.</font><b><font color="#000000">encodePacked</font></b><font color="#990000">(</font>value <font color="#990000">&lt;</font> <font color="#993399">0</font> <font color="#990000">?</font> <font color="#FF0000">"-"</font> <font color="#990000">:</font> <font color="#FF0000">""</font><font color="#990000">,</font> <b><font color="#000000">toString</font></b><font color="#990000">(</font>SignedMath<font color="#990000">.</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>value<font color="#990000">))));</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts a `uint256` to its ASCII `string` hexadecimal representation.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
@@ -77,6 +85,13 @@ import <font color="#FF0000">"./Math.sol"</font><font color="#990000">;</font>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font><font color="#008080">address</font> addr<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">toHexString</font></b><font color="#990000">(</font><b><font color="#000000">uint256</font></b><font color="#990000">(</font><b><font color="#000000">uint160</font></b><font color="#990000">(</font>addr<font color="#990000">)),</font> _ADDRESS_LENGTH<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns true if the two strings are equal.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">equal</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> a<font color="#990000">,</font> string <font color="#008080">memory</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>a<font color="#990000">))</font> <font color="#990000">==</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>b<font color="#990000">));</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>
