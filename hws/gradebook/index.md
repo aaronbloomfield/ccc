@@ -210,6 +210,6 @@ You will need to fill in the various values from this assignment into the [grade
 
 There are *two* forms of submission for this assignment; you must do both.
 
-Submission 1:  You must deploy your smart contract to our private Ethereum blockchain -- this was probably done above.  It's fine if you deploy it a few times because you were testing it, messed something up, or whatever.  But the final deployment should not have any other calls to the deployed contract.
+Submission 1:  You must deploy your smart contract to our private Ethereum blockchain -- this was probably done above.  It's fine if you deploy it a few times because you were testing it, messed something up, or whatever.  But the final deployment should not have any other transactions to the deployed contract.
 
 Submission 2: You should submit your `Gradebook.sol` file, as well as your `gradebook.py` file, and ONLY those two files, to Gradescope.  All your Solidity code should be in that first file, and you should specifically import the IGradebook interface.  That interface file will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
