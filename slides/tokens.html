@@ -77,15 +77,14 @@ line-height:120%;
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## What is a Token
 - A *token* is an entry on a blockchain that represents *something* other than a "monetary" transaction
-  - Form of the entry:
-    - In Ethereum, this would be a smart contract
-    - Other blockchains (Tezos, Ravencoin) have native support for tokens
   - The *something* that it represents could be:
     - Ownership of a single item (physical or digital)
     - Membership in some organization
     - Amount of votes one has
     - Shares of an equity, such as another cryptocurrency 
-
+  - Form of the entry:
+    - In Ethereum, this would be a smart contract
+    - Other blockchains (Tezos, Ravencoin) have native support for tokens
 
 
 
@@ -138,8 +137,8 @@ contract EZTokens {
   - ERC-165: `supportsInterface()`
   - ERC-20: fungible tokens
   - ERC-721: non-fungible tokens
-  - ERC-777: improved fungible tokens
-  - ERC-1155: improved non-fungible tokens
+  - ERC-777: improved fungible tokens (briefly)
+  - ERC-1155: improved non-fungible tokens (briefly)
 
 
 
@@ -577,13 +576,13 @@ contract TokenCC is ITokenCC, ERC20 {
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Token Cryptocurrencies
 - See a list at https://erc-tokens.com/
-  - 1,907 such token cryptocurrencies (as of October 2022)
+  - 1,907 such token cryptocurrencies (as of March 2023)
 - Consider [Atomic Wallet](https://atomicwallet.io/)
-  - A wallet that can store (as of October 2022):
-    - 52 blockchain cryptocurrencies
-    - [344 ERC-20 token cryptocurrencies](https://atomicwallet.io/prices)
-      - 57 BEP20 tokens: runs on Binance, not Ethereum
-      - 7 TRC20 tokens: runs on TRON, not Ethereum
+  - A wallet that can store [1,396 cryptocurrencies](https://atomicwallet.io/prices) (as of March 2023):
+    - 46 blockchain cryptocurrencies
+    - 1,108 ERC-20 token cryptocurrencies
+      - 257 BEP20 tokens: runs on Binance, not Ethereum
+      - 10 TRC20 tokens: runs on TRON, not Ethereum
   - You can see an (older) list on the next slide
 
 
@@ -594,17 +593,17 @@ contract TokenCC is ITokenCC, ERC20 {
 
 <!-- .slide: class="cclogo-slide" -->
 ## [![shib logo](../slides/images/logos/shib-coin-symbol.svg)](https://coinmarketcap.com/currencies/shiba-inu/) Consider SHIB
-- As of October 9, 2022:
-  - SHIB's value is `$`0.00001105 (90,497 per USD)
-  - ETH's value is `$`1,332
-  - [ETH gas](https://etherscan.io/gastracker) is 29 gwei, which means `$`0.81 per transaction
-- To buy SHIB, you have to spend `$`0.81 for transaction fees
-  - Or over 73,000 SHIB
+- As of March 20, 2023:
+  - SHIB's value is `$`0.00001075 (93k per USD)
+  - ETH's value is `$`1,782
+  - [ETH gas](https://etherscan.io/gastracker) is 14 gwei, which means `$`0.52 per transaction
+- To buy SHIB, you have to spend `$`0.52 for transaction fees
+  - Or over 48,000 SHIB
 - All token cryptocurrency exchanges with the ERC-20 contract have to pay the Ethereum fees!
 - Exchanges such as Coinbase do it differently
-- SHIB is #14 on [coinmarketcap.com](https://coinmarketcap.com/)
+- SHIB is #13 on [coinmarketcap.com](https://coinmarketcap.com/)
   - Because the ERC-20 token minted 549,063,278,876,302 shares (yes, $5.5 \ast 10^{14}$ or about 550 trillion) coins
-  - Total market cap: `$`6.1 *billion* dollars
+  - Total market cap: `$`6.3 *billion* dollars
    </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id="dai"><textarea>
@@ -710,7 +709,7 @@ Addr Balance: 5149.944966727369
   4. Alice's transaction from (2) goes through, allowing Bob to transfer $m$ more tokens
 - Thus, Bob controlled $n+m$ of Alice's tokens, which was never her intent
 - Solutions:
-  - Alice makes 2 transactions: first change Bob's approval to zero then to $m$
+  - Alice makes 2 transactions: first change Bob's approval to zero then to $m$ (requires two transactions & fees)
   - Change the ERC-20 standard such that the new approval only happens if the current approval is not yet spent
 
 
