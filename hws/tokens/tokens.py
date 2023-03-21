@@ -94,7 +94,9 @@ sanity_checks = {
 	
 	# Is your cryptocurrency logo image correct?  It should be 512x512, a .png
 	# file, generally circular in appearance, and with a transparent
-	# background (these requirements match the template that was provided).
+	# background outside the coin, and a non-white background in the circle
+	# of the coin (these requirements match the template that was provided,
+	# other than the non-white background).
 	'cc_logo_image_is_correct': False,
 
 	# Is your cc logo named properly?  It should be 'abcd.png', where 'abcd'

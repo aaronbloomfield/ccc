@@ -20,11 +20,7 @@ In addition to your source code, you will submit an edited version of [tokens.py
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
-
-- Fri, 10/21: The `minted_at_least_50_coins` key in the `sanity_checks` dictionary was renamed to `minted_at_least_100_coins`
-- Wed, 10/19: added a `nft_id_kept` key in the `other` dictionary in [tokens.py](tokens.py.html) ([src](tokens.py)) for the NFT that you created on your NFT manager and kept for yourself.
-- Tue, 10/18: `count()` in [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)) was changed to a `view`, and the contract address for the course-wide NFT manager was changed (the Canvas landing page is now correct).  Clarified that `requestFunds()` is likely to be `pure` in your contract (last bullet point in the ERC-20 section).  Clarified how Remix reports return values on transactions and how to determine NFT IDs (last two bullet points in the "implementation notes" part of the ERC-721 section).
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Part 1: ERC-20 Fungible Token
@@ -35,7 +31,7 @@ In this part, you will create a fungible token manager that follows the (enhance
 
 You can pick any name that you want.  The only restrictions are that you can not use the name of the course cryptocurrency or of an [existing cryptocurrency](https://coinmarketcap.com/).  Feel free to be funny and creative here, but please be appropriate in your selection.  Also keep in mind that, in this course, it is possible for somebody to figure out who deployed what cryptocurrency by analyzing the blockchain.  
 
-You will need to create both a name and an abbreviation.  The name can have spaces in it; no non-printable ASCII characters (this means no emojis).  Your abbreviation cannot already exist.  To see if an abbreviation exists, see if there is a file with that abbreviation in the `cclogos/` directory in Canvas' Files -- if so, then some other student has claimed that abbreviation.  To claim an abbreviation, put a file named `xyz.png` (where `xyz` is your cryptocurrency abbreviation) there.  You can put a placeholder file there while you work on the logo (below).  Please make the file name be all lower case.
+You will need to create both a name and an abbreviation.  The name can have spaces in it; only printable ASCII characters (this means no emojis).  Your abbreviation cannot already be taken by another student.  To see if an abbreviation has been taken, see if there is a file with that abbreviation in the `cclogos/` directory in Canvas' Files -- if so, then some other student has claimed that abbreviation.  To claim an abbreviation, put a file named `xyz.png` (where `xyz` is your cryptocurrency abbreviation) there.  You can put a placeholder file there while you work on the logo (below).  Please make the file name be all lower case.
 
 Following in the precedent for currently existing cryptocurrencies, abbreviations are at most four characters, typically three, and possibly two.  You can have letters and numbers, but not symbols; the first character of the abbreviation must be a letter.  The abbreviation when representing the cryptocurrency is always rendered in upper case (i.e., "XYZ"), but the logo file name is all lower case with a ".png" extension (i.e., "xyz.png").
 
@@ -46,7 +42,16 @@ In this course, we will generally be using the abbreviation "TC" when referring 
 
 You will need to create a logo for your cryptocurrency.  The logo that you submit should be 512x512 pixels in size.  Use a fun color!  Create a neat logo!  But please make sure the logo is appropriate.  You can look at the types of logos on a site such as [coinmarketcap.com](https://coinmarketcap.com) for ideas, as well as [cryptologos.cc](https://cryptologos.cc/) and [this github site](https://github.com/coinwink/cryptocurrency-logos).
 
-The logo itself should be a circular logo with a transparent background outside the circle, just like what is on coinmarketcap.com.  Your logo can also be almost-circular, like some we have -- or will have -- seen: [STORJ](../../slides/images/logos/storj-coin-symbol.svg), [ERG](../../slides/images/logos/erg-coin-symbol.svg), and [MIM](../../slides/images/logos/mim-coin-symbol.svg).  Note that your logo must be readable if the size were reduced to a 32x32 pixel version.  The submission must be a .png file, and it will have to be named `xyz.png`, where "xyz" is your coin abbreviation.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  You can use this [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background outside the circle.
+The logo itself needs to have the following requirements:
+
+- A circular logo with a transparent background outside the circle, just like what is on coinmarketcap.com.  Your logo can also be almost-circular, like some we have -- or will have -- seen: [STORJ](../../slides/images/logos/storj-coin-symbol.svg), [ERG](../../slides/images/logos/erg-coin-symbol.svg), and [MIM](../../slides/images/logos/mim-coin-symbol.svg).
+- Readable if the size were reduced to a 32x32 pixel version.
+- The background outside the circle of the coin needs to be transparent.
+- The background of the coin circle itself needs to be something more interesting than white.
+- The file must be a .png file, and it will have to be named `xyz.png`, where "xyz" is your coin abbreviation.
+
+
+We provide a [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background outside the circle.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  
 
 
 #### Part 1, task 3: Review the starter code
@@ -62,7 +67,7 @@ The included code is:
 - [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol)
 - [ITokenCC.sol](ITokenCC.sol.html) ([src](ITokenCC.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20)
 
-The *only* changes made to the OpenZeppelin code above is the import paths (but not the files themselves).
+The *only* changes made to the OpenZeppelin code above is the paths in the `import` statements.
 
 You should look over and familiarize yourself with all this code.  The inheritance hierarchy of this code is shown below.
 
@@ -114,6 +119,8 @@ Save the contract address it was deployed to, as you will need to submit those a
 
 You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Canvas landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1,000,000,000 (which is $10 \ast 10^8$) total units.  Save the transaction hash of where you sent me your cryptocurrency, as you will need to submit that value.
 
+If you look at the blockchain explorer for the account you have to send the cryptocurrency to, it will tell you how much has been sent (formally, how much that account holds).  Note that if you deploy multiple contracts that use the same token cryptocurrency abbreviation, it will only consider the most recently deployed one -- which means if you redeploy the contract, you will have to re-send the cryptocurrency.
+
 
 ### Part 2: ERC-721 Non-Fungible Token
 
@@ -131,13 +138,13 @@ The images must be no larger than 2000 pixels in either dimension!  Which means 
 
 We don't really care what images you upload, as long as:
 
-1. They are images that are in the public domain, such as from Wikipedia, Reddit, or similar.  You can do a [Google Images search](https://images.google.com), and in the results, select Tools -> Usage Rights -> Creative Commons licenses.  Meme images are fine.  You are welcome to modify those images.
+1. They image file names are strictly less than 32 characters (including the extension, but not including the rest of the URL).
 2. The image sizes are as specified above (no larger than 2000x2000).
 3. They are appropriate images.  Nothing vulgar, nothing involving nudity, nothing that could be labeled NSFW (not safe for work), or otherwise deemed as offensive.  Basically, nothing that would get me in trouble with an administration that does not have a sense of humor about these things.  Like with the poll in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment, there are many great ways to express your opinions that others may find controversial -- but an image for a NFT on our private Ethereum blockchain is not really one of them.
 
 Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF THE IMAGE.**  The assumption is that you don't actually own the original image, since it's in the public domain.  Or if you do own the image, then possession of the NFT does not mean you are willing to give up ownership of the original image itself.
 
-Pick some fun or funny image.  You are welcome to pick one from Wikipedia or Reddit or similar.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.
+Pick some fun or funny image.  You are welcome to pick one from Wikipedia or Reddit or similar.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.  Likewise, others will be able to determine who uploaded that image, since your userid will be at the start of the image file name.
 
 You will need to upload three such images.
 
@@ -150,6 +157,7 @@ In addition to some of the files used above (IERC165.sol. ERC165.sol, and Contex
 - [Address.sol](Address.sol.html) ([src](Address.sol)) is a library (not a contract!) that provides some useful functions when dealing with Ethereum addresses; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol)
 - [Strings.sol](Strings.sol.html) ([src](Strings.sol)) is a library (not a contract!) that provides some useful String manipulation functions; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol)
 - [Math.sol](Math.sol.html) ([src](Math.sol)) is a library needed for Strings.sol; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/Math.sol)
+- [SignedMath.sol](SignedMath.sol.html) ([src](SignedMath.sol)) is a library needed for Strings.sol; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/math/SignedMath.sol)
 - [Context.sol](Context.sol.html) ([src](Context.sol)) is a better way to get the context rather than `msg.sender` and `msg.data`; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol)
 - [IERC165.sol](IERC165.sol.html) ([src](IERC165.sol)), as [discussed in lecture](../../slides/tokens.html#/erc165); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/IERC165.sol)
 - [ERC165.sol](ERC165.sol.html) ([src](ERC165.sol)): a bare-bones implementation of the `IERC165` interface; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/ERC165.sol)
@@ -159,7 +167,7 @@ In addition to some of the files used above (IERC165.sol. ERC165.sol, and Contex
 - [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)): we won't use the functionality in this interface, but it is needed for the ERC721.sol file to compile.; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol)
 - [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)): this adds two `mintWithURI()` functions on top of the IERC721Metadata interface, which allow creation of NFTs, and setting it's image URI (aka URL) in one function call.  This also adds a `count()` method, which is how many NFTs have been minted by this manager.  Note that the `mintWithURI()` function will return a token ID, which is just a `uint` that is used to identify (and find) that particular NFT in your token manager.
 
-The *only* changes made to the OpenZeppelin code above is the import paths (but not the files themselves).
+The *only* changes made to the OpenZeppelin code above is the paths in the `import` statements.
 
 Why so many files?  Three of the interfaces (IERC165, IERC721, and IERC721Metadata) are Ethereum standards, and the practice is to include them as-is without modifications.  Four of the files are utilities (libraries or abstract contracts): Address, Context, Math, and Strings.  The INFTManager adds a few functions that we need, and the ERC721.sol is the implementation itself.  ERC165.sol is needed for ERC721 to compile.  We realize that's a lot of files to use, but that's why there are so many of them.
 
@@ -185,7 +193,7 @@ There are some very strict submission requirements for this submission so that w
 2. Your contract MUST be in a file called `NFTManager.sol` -- note the capitalization!
 3. Your contract line MUST be: `contract NFTManager is INFTManager, ERC721 {`; this will inherit all the other necessary interfaces and contracts.
 4. The pragma line should be: `pragma solidity ^0.8.17;`
-5. You are NOT to submit any of the *files* for the interfaces above (ERC721, IERC721, INFTManager, IERC165.sol, etc.), nor copy-and-paste that code in your file.  You should `import` them in `NFTManager.sol` as such: `import "./INFTManager.sol";`; they will be put into the appropriate directory on Gradescope when it attempts to compile your program
+5. You are NOT to submit any of the *files* for the interfaces above (ERC721, IERC721, INFTManager, IERC165.sol, etc.), nor the ERC721 file either.  And don't copy-and-paste that code in your file.  You should `import` them in `NFTManager.sol` as such: `import "./INFTManager.sol";`; they will be put into the appropriate directory on Gradescope when it attempts to compile your program
 
 Some implementation notes:
 
@@ -193,6 +201,8 @@ Some implementation notes:
 - If you want to concatenate strings, such as when returning a value from `tokenURI()`, which must include the base URI, you can use `string.concat(s1,s2)` where `s1` and `s2` are strings.  Note that you can concatenate more than two strings via this function call via additional parameters.
 - In Remix, when calling a `view` or `pure` function on a contract, which is a blue button, the return value is displayed right below the button itself.  For a transaction (orange button), you have to look at the JSON data returned to get the return value -- expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the "decoded output" field.  Sometimes Remix doesn't like to display the value.  Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh, and that has to be deployed to the course blockchain for the explorer to see it).
 - How you decide on a NFT ID is up to you.  The most straight-forward way is to have consecutive integers, and a mapping from that NFT ID to a string.  The course NFT manager encodes the string of the filename as a (very long) `uint`.  Either one is acceptable.
+- With the previous part, you had to call the `ERC20()` constructor with two parameters -- the coin name and symbol.  Similarly, you have to do so here as well -- the `ERC721()` constructor takes in two parameters.  They are the name of the NFT manager and the symbol of the NFT manager.  (I'm not sure why it has to have a symbol, so you can put in any reasonable value here).
+- Be sure to use the ERC721 functions!  That is how you mint a new NFT, for example.
 
 The following are the functional requirements for the development of this contract:
 
@@ -224,6 +234,8 @@ Save the contract address for the deployment, as you will need to submit it at t
 #### Part 2, task 6: Create two NFTs, and send me one
 
 You should create two NFTs with *your* deployed contract -- they should be the two of the images that you created, above.  You need to send me one of them -- the address to transfer it to in on the Canvas landing page.  You will need to note the tokenID of the two NFTs -- the one you sent me and the one you kept for yourself -- as you will need to submit those as well.  You are welcome to create more, if you would like, as long as the images for each are unique.  But we only need two for grading.
+
+If you look at the blockchain explorer for the account you have to send the NFT to, it will tell you that the NFT is owned by that account.  Note that if you deploy multiple contracts that use the same token NFTManager abbreviation, it will only consider the most recently deployed one -- which means if you redeploy the contract, you will have to re-send the NFT.
 
 #### Part 2, task 7: Create one NFT on the course manager
 
