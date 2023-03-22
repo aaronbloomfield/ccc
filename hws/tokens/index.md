@@ -3,6 +3,17 @@ Ethereum Tokens
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
+<!-- to provide on the Canvas landing page:
+
+	- the blockchain explorer url
+	- the URLs to upload the NFT images and the TCC logo to
+		- explain that it should then appear in the blockchain explorer
+		- mention that it puts `mst3k_` at the start of each NFT image if they don't have it there
+	- the account to send the 10.0 TCC and the NFT to
+	- the account of the course-wide NFT manager
+
+-->
+
 
 ### Overview
 
@@ -50,9 +61,9 @@ The logo itself needs to have the following requirements:
 - The background of the coin circle itself needs to be something more interesting than white.
 - The file must be a .png file, and it will have to be named `xyz.png`, where "xyz" is your coin abbreviation.
 
-
 We provide a [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background outside the circle.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  
 
+You will upload your logo to the URL given on the Canvas landing page.
 
 #### Part 1, task 3: Review the starter code
 
@@ -146,7 +157,7 @@ Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF TH
 
 Pick some fun or funny image.  You are welcome to pick one from Wikipedia or Reddit or similar.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.  Likewise, others will be able to determine who uploaded that image, since your userid will be at the start of the image file name.
 
-You will need to upload three such images.
+You will upload three such images to the URL given on the Canvas landing page.
 
 #### Part 2, task 2: Review the starter code
 
@@ -260,7 +271,7 @@ There are *five* forms of submission for this assignment; you must do all five.
 
 Submission 1: You must deploy the two smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract addresses of these deployments are in the `tokens.py` file that you submit.
 
-Submission 2: You will need to upload your cryptocurrency logo (properly named!) to the `cclogos/` directory on Canvas, and your three NFT images (also properly named!) to the `ipfs/` directory on Canvas.
+Submission 2: You will need to upload your cryptocurrency logo (properly named!) to URLs provided on the Canvas landing page.  Note that the logo for your cryptocurrency and the NFT images are uploaded to different URLs!
 
 Submission 3: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Canvas landing page.  The transaction hashes of these go into the `tokens.py` file.
 

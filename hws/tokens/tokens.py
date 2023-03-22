@@ -58,12 +58,6 @@ other = {
 	# deployed TokenCC contract, above.
 	'cc_sent_txn_hash': None,
 
-	# The transaction hash where you sent me an NFT from YOUR NFTManager
-	# (the nft_manager contract, above).  It must have been done by
-	# eth_coinbase, above.  And it must have used your deployed NFTManager
-	# contract, above.
-	'nft_sent_txn_hash': None,
-
 	# The NFT ID that you created from YOUR NFTManager (the nft_manager
 	# contract, above) and kept (meaning you did not send to the course
 	# instructor).  It must have been done by eth_coinbase, above.
@@ -74,13 +68,19 @@ other = {
 	# eth_coinbase, above.
 	'nft_id_sent': None,
 
-	# The transaction hash from when you created an NFT on the course-wide NFT
-	# manager.  It must have been done by eth_coinbase, above.
-	'course_nft_txn_hash': None,
+	# The transaction hash where you sent me an NFT from YOUR NFTManager
+	# (the nft_manager contract, above).  It must have been done by
+	# eth_coinbase, above.  And it must have used your deployed NFTManager
+	# contract, above.
+	'nft_sent_txn_hash': None,
 
 	# The NFT ID from when you created an NFT on the course-wide NFT manager.
 	# It must have been done by eth_coinbase, above.
 	'course_nft_id': None,
+
+	# The transaction hash from when you created an NFT on the course-wide NFT
+	# manager.  It must have been done by eth_coinbase, above.
+	'course_nft_txn_hash': None,
 
 }
 
