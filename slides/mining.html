@@ -81,10 +81,10 @@ line-height:120%;
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Disclaimer
 - All the numbers shown here were accurate and current as of the time this slide set was updated
-  - September 13, 2022  <!-- change each semester -->
-    - Specifically, before Ethereum went to PoS (and all their hash power went elsewhere)
+  - March 24, 2022   <!-- change each semester -->
   - But they are likely all different now
-- However, they are (generally) consistent throughout the slide set
+- However, the RVN & BTC difficulty is from much earlier blocks
+- Otherwise, they are (generally) consistent throughout the slide set
   - And the exact numbers don't matter as much to explain the concepts
 
 
@@ -151,106 +151,6 @@ line-height:120%;
   - Selection bias ([source](https://bitcoin.stackexchange.com/questions/36860/bitcoin-and-other-crypto-coins-nonce-loop))
   - How ASICs work ([source](https://blog.bitmex.com/the-mystery-of-the-bitcoin-nonce-pattern/))
 
-
-
-
-
-## Is that BTC number correct?
-- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 232 million Th/s <!-- change each semester -->
-  - Or $232 * 10^{18}$ h/s $= 2.32 * 10^{20}$ h/s $= 232$ Eh/s
-- A 10 minute BTC block takes 600 seconds
-  - Or about $140$ Zh $= 1.4 * 10^{23}$ h
-- We computed needing 151 Zh (zetta hashes)
-  - That's close enough for government work!
-- The differences were caused by:
-  - A decreasing block time caused by more miners; the difficulty will adjust in a week or so
-  - The numbers being used coming from different sites and slightly different points in time
-
-
-
-## Computing network hash rate
-- We can compute this the other way
-- Consider a Bitcoin that requires 77 leading zero bits (from earlier)
-  - So we have a 1 in $2^{77}$ or 1 in $151*10^{21}$ chance to get a hash
-  - Rephrased: we would expect to get valid nonce after $151*10^{21}$ hashes (or 151 Zh)
-- Bitcoin is designed to have 10 minutes per block (600s)
-- Dividing one by the other yields 251 Eh/s
-  - Again, close enough for an estimate, as it's actually 232 Zh <!-- change each semester -->
-- This can be done with any coin when you know the difficulty and block rate
-
-
-
-## When will you get a RVN block?
-- Assume that your graphics card's GPU can compute about 50 Mh/s for kawpow (RVN) ([source](https://2cryptocalc.com/gpu/24h/3090/1))
-  - That's a *very* fast graphics card (Nvidia 3090)
-- We expect to get a block after $281 * 10^{12}$ hashes (or 281 Th)
-- A 50 Mh/s graphics card will compute 281 Th in about 63 days
-- Reward is 2,500 RVN times 7&cent; per RVN = $175
-  - Or `$`2.78 per day, on average
-  - Minus electrical costs of about 85&cent; per day yields about a `$`1.93 / day profit
-
-
-
-## When will you get a BTC block with a GPU?
-- Assume that your graphics card's GPU can compute about 9,700 Mh/s for SHA-256 (BTC) ([source](https://gist.github.com/Chick3nman/e4fcee00cb6d82874dace72106d73fef))
-  - Again, that's a *very* fast graphics card (Nvidia 3090)
-- We expect to get a block after $151 \ast 10^{21}$ hashes (or 151 Zh) <!-- change each semester -->
-- A 9,700 Mh/s graphics card will compute 151 Zh in about 180,173,730 days (493,288 years!)
-- Reward is 6.25 BTC times `$`22,000 per BTC
-  - Which is `$`137,500 per mined block
-  - Or `$`0.28 per *year*, on average
-  - Minus electrical costs of about `$`1 per day...
-
-
-
-## When will you get a BTC block with an ASIC?
-- Consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t), as one example, that can compute $75$ Th/s $= 75 * 10^{12}$ h/s
-- We expect to get a block after $151 * 10^{21}$ hashes (or 151 Zh) <!-- change each semester -->
-- A 75 Th/s ASIC will compute 151 Zh in about 23,302 days (63 years)
-- Reward is 6.25 BTC times `$`22,000 per BTC
-  - Which is `$`137,500 per mined block
-  - Or about `$`2,182 (0.10 BTC) per *year*
-  - Minus electrical costs...
-
-
-
-## Is an ASIC miner worth it?
-- Again, consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
-- It generates about `$`2,182 per year, and uses 3,420 W of electricity <!-- change each semester -->
-  - That's 82 kWh / day
-  - At 11.04&cent; per kWh, that's about $9 per day
-  - Or about $270 per month
-  - Or about $3,300 per year, on average
-- So the profit is a loss of `$`1,100 per year
-  - Unless you use somebody else's electricity...
-- At a cost of about $4.5k, it will pay itself off in about 2 years
-  - But ONLY IF you don't pay for the electricity
-
-
-
-## Is an ASIC miner worth it?
-- It will generate a money UNLESS...
-  - You have to actually pay for the electricity
-  - The overall hash rate goes up significantly
-    - That miner is then producing a lower percentage of the overall hash rate
-    - And everybody and their siblings are getting into mining these days...
-  - The price of BTC goes down
-  - The miner doesn't actually produce the stated hash rate
-  - The miner breaks -- how will you get it fixed?
-- If the price of BTC goes up a lot...
-  - ...and the hash rate doesn't increase as rapidly
-  - Then it might make a profit with electrical costs
-
-
-
-## Is CPU mining worth it for Bitcoin?
-- Assume that your CPU can compute about 65 K hashes per second ([source](https://stackoverflow.com/questions/4764026/how-many-sha256-hashes-can-a-modern-computer-compute))
-  - That's 65 *K* hashes or about 65,000 hashes
-- We expect to get a block after $120 * 10^{21}$ hashes (or 151 Zh) <!-- change each semester -->
-- A 65 K CPU will compute 151 Zh in about 26 *trillion* days
-  - That's 74 *billion* years
-- You still have to factor in electrical costs!
-- And even if this is off by a factor of 1,000, it's still way to slow
 
 
 
@@ -381,7 +281,7 @@ line-height:120%;
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## How much is mining killing the Earth?
-- Again, consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
+- Consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
   - It uses 3,420 W and produces 75 Th/s
   - That's 21.9 Gh/W, which is pretty efficient (relatively speaking)
   - 3,420 W for 24 hours/day yields 82.08 kWh
@@ -552,7 +452,7 @@ line-height:120%;
 - Nvidia makes graphics card GPUs
   - And everybody was buying their cards to mine cryptocurrency
     - Which priced out their primary market: gamers
-- Nvidia's solution: create LHR cards
+- Nvidia's previous solution: create LHR cards
   - Make the card recognize mining of Ethash, and "lock" the GPU for 20 seconds
   - But this only affects Ethash, not any other mining algorithm!
 - Mining programs figured out how to *dual-mine*
@@ -602,7 +502,7 @@ line-height:120%;
   - Amount of currency held
   - Length of currency held
 - Implementations vary by cryptocurrency
-  - There is a way that those with less "stake" will be able to be the validators less often
+  - Those with less "stake" will be validators less often
 - Coins that use this: Tezos, Cosmos, Peercoin, Tendermint, the ETH2 upgrade
   - ETH2 requires a minimum of 32 ETH to participate in PoS
 
@@ -757,7 +657,9 @@ line-height:120%;
 
 
 <!-- .slide: class="cclogo-slide" -->
-## [![neox logo](../slides/images/logos/neox-coin-symbol.svg)](https://coinmarketcap.com/currencies/neoxa/) Neoxa: Proof-of-Game
+## [![neox logo](../slides/images/logos/neox-coin-symbol.svg)](https://coinmarketcap.com/currencies/neoxa/) Neoxa: "Proof-of-Game"
+- This is *not* a block certification method!
+  - They just wanted to use the "proof-of-X" moniker
 - [Neoxa's whitepaper](https://www.neoxa.net/whitepaper)
 - Intent is to reward video game players for actions taken in the game itself
   - See the table on [whitepaper page 3](https://www.neoxa.net/whitepaper)
@@ -902,9 +804,7 @@ Note that UTXOs are not only in the bottom level
 
 ## DAG size
 - You can see DAG sizes at https://minerstat.com/dag-size-calculator
-- Ethereum's is over 5 Gb (as of Sep 2022) <!-- change each semester -->
-  - This means that graphics cards with less than 4 Gb cannot mine (sign, certify, whatever) ETH
-- Consider Ravencoin, whose DAG is currently at 3.5 Gb (as of Sep 2022)
+- Consider Ravencoin, whose DAG is currently at 3.8 Gb (as of Mar 2023)
   - Based on the expected DAG growth...
     - 4 Gb GPUS will no longer be able to mine it around July 2023
     - 6 Gb GPUS will no longer be able to mine it around Mar 2027
@@ -953,7 +853,7 @@ Note that UTXOs are not only in the bottom level
 <img src="images/mining/orphan/orphan.dot.2.svg" style="width:120px;padding-left:76px;padding-right:76px">
 
 - Given a starting block number (here, 1000)
-- A miner mines a given transaction into a block
+- A miner mines a given transaction $x$ into block 1001
 
 
 
@@ -1011,10 +911,10 @@ Note that UTXOs are not only in the bottom level
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Uncle / Orphan / Ommer blocks
-- Bitcoin calls these *orphan nodes*
-- Ethereum used to call them *uncle nodes*
+- Bitcoin calls these *orphan blocks* or *orphan nodes*
+- Ethereum used to call them *uncle blocks* or *uncle nodes*
   - But that is gender-specific
-  - Now they are called *ommer blocks*
+  - Now they are called *ommer blocks* or *ommer nodes*
     - Ommer is a gender-neutral version of aunt or uncle
       - But not a native English word
     - Like "sibling" instead of brother or sister
@@ -1030,12 +930,14 @@ Note that UTXOs are not only in the bottom level
 ## How to handle?
 - Bitcoin's orphan blocks: once it is no longer part of the longest chain, is completely discarded
   - Reason: with 10 minute block time, this is much less likely to occur
-- Ethereum's ommer blocks: not fully discarded
+  - Thus, no reward for the miner of the orphan block!
+- Ethereum's ommer blocks, when PoS: not fully discarded
   - Miners still get a reward, albeit much smaller
   - The EVM keeps them around in memory
   - They are not the canonical "truth" of the blockchain, though
   - Reason: with a 15 second block time, this is much more likely to occur
   - They cannot happen on our proof-of-authority blockchain
+- Many others are based on Ethereum's strategy
 
 
 
@@ -1242,7 +1144,7 @@ Note that UTXOs are not only in the bottom level
 - But a mining pool might for other cryptocurrencies
 - Consider the [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Ravencoin [pool from 2miners](https://2miners.com/rvn-mining-pool)
   - See what percentage they have now by dividing the pool hash rate by the network hash rate
-  - On June 27th, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
+  - On June 27th, 2021, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
     - Due to a purchase of hashpower from (likely) Nicehash
 - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo had one in January 2021
 - [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold had one in May 2018 and January 2020
