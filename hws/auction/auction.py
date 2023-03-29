@@ -91,12 +91,15 @@ sanity_checks = {
 	# Did you call closeAuction() on auction #1?
 	'auction_1_called_closeAuction': False,
 
-	# Will your second auction ('your_auction_id_2', above) stay open for TWO
-	# WEEKS after the assignment due date/time?
+	# Will your second auction ('your_auction_id_2', above) stay open for ONE
+	# WEEK after the assignment due date/time?
 	'auction_2_expiration': False,
 
 	# Are there multiple bids, from at least 2 accounts, on action #2?
 	'auction_2_has_multiple_bids': False,
+
+	# Is there a reserve of 1 ether (or so) on auction #2?
+	'auction_2_has_1_ether_reserve': False,
 
 	# Will the course auction that you submitted ('course_auction_id', above)
 	# stay open for ONE WEEK after the assignment due date/time?

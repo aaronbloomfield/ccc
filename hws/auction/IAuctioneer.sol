@@ -59,7 +59,7 @@ interface IAuctioneer is IERC165 {
 
     // How much fees, in wei, have been collected so far but not yet paid to
     // the deployer -- the auction collects 1% fees of *successful* auctions
-    function unpaidFees() external view returns (uint);
+    function uncollectedFees() external view returns (uint);
 
     // Gets the auction struct for the passed auction id.  If one lists out
     // the individual fields of the Auction struct, then one can just have

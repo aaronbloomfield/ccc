@@ -3,6 +3,13 @@ Decentralized NFT Auction
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
+<!-- to put on the canvas landing page:
+
+- the page to view the auctions
+- course auctioneer address and link to contract page and link to auctions.php page
+- when one week after the due date is
+
+-->
 
 ### Overview
 
@@ -24,11 +31,8 @@ In addition to your source code, you will submit an edited version of [auction.p
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-- Added Mon, 10/31: Clarified that you have to submit `NFTManager.sol` as well, but the submission on Gradescope will catch it if you do not do so
-- Added Sun, 10/30: The course-wide auctioneer address changed, and the Canvas landing page has the new version
-- Added Tue, 10/25: Clarified that only the owner of a NFT can start an auction for it, and this should be checked via `require()`.  Also clarified about the behavior of `block.timestamp` (in the "Notes and Hints" section) and that auction IDs have to start from 0 for the auctions.php page to work.
 
 ### Task 1: Auction contract
 
@@ -37,10 +41,12 @@ You are going to create and deploy a decentralized auction smart contract.  The 
 This section is meant as a high-level overview of the process; the detailed specifications are in the next two sections.
 
 - Each Auctioneer contract has a single ERC-721 compliant NFT Manager that manages all of its NFTs; that NFT Manager is created in the constructor.  Any user can get the NFT manager via a call to `nftmanager()`.
+    - That NFT manager has to implement the `INFTManager` interface -- so it's the exact code from the previous assignment.
     - The user has to create the NFT on that contract using the standard methods from the NFTmanager contract that we saw in the Tokens assignment
     - Once the NFT is minted, the Auctioneer has to be approved, via the `approve()` function on the NFT manager, to take control of the NFT
     - So the expected function calls for this part are:
-        - On the `Auctioneer` contract: call `nftmanager()` to get the address of the NFT Manager
+        - On the `Auctioneer` contract: call `nftmanager()` to get the address of the NFT Manager: `address nfts = nftmanager();`
+            - Once you have that, you can call methods on it: `INFTManager(nfts).mintWithURI(...);`
         - On that `NFTmanager` contract: call `mintWithURI()` to create the NFT
         - On that `NFTmanager` contract: call `approve()` to allow the Auctioneer to take control of that NFT
         - (Note that the above two lines are the only ones needed to be called on the NFT Manager contract for an auction; all successive calls are on the Auctioneer contract)
@@ -61,7 +67,7 @@ This section is meant as a high-level overview of the process; the detailed spec
     - Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created
 - The auction contract will keep a fee of 1% of the value of a *winning* bid
     - Any auction that does not succeed -- no bids or does not meet the reserve price -- does not collect a fee
-    - Anybody can view the fees via the `unpaidFees()` and `totalFees()` functions; the deployer of the auction smart contract, and ONLY that address, can and collect those fees via a call to `collectFees()`
+    - Anybody can view the fees via the `uncollectedFees()` and `totalFees()` functions; the deployer of the auction smart contract, and ONLY that address, can and collect those fees via a call to `collectFees()`
     - Integer division here is fine to determine the 1% fee; we don't care about rounding issues
 - There are three events that must be emitted at the appropriate times; for each, the parameter is the auction ID:
     - `auctionStartEvent()`: when `startAuction()` is successfully called
@@ -116,7 +122,7 @@ interface IAuctioneer is IERC165 {
 
     function totalFees() external view returns (uint);
 
-    function unpaidFees() external view returns (uint);
+    function uncollectedFees() external view returns (uint);
 
     function auctions(uint id) external view 
             returns (uint, uint, string memory, uint, address, address, uint, uint, bool);
@@ -170,6 +176,14 @@ Test all this thoroughly in Remix!  You will need to deploy your Auctioneer cont
 
 One it works, deploy it to our private Ethereum blockchain.  You should test it there as well.  You will need to submit the contract address of the deployed Auctioneer.  If you deploy it multiple times, just submit the most recent contract address.  Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Canvas landing page; a link to this will also be shown on the explorer page for your Auctioneer contract.  This auctions web page will make it far easier to see what is going on with your auctions.  Note that the explorer will only display this link if it knows that the contract implements IAuctioneer, and it only knows that if your `supportsInterface()` method is written and correct.
 
+#### `totalFees()` versus `uncollectedFees()`
+
+Fees accumulate during the life of the auction contract -- 1% of *successful* auctions is saved as fees.  The deployer of the contract can then obtain all the fees collected so far by calling `collectFees()`.  All amounts return values in wei.
+
+`totalFees()` is the total amount of fees that have been collected over the life of the auction contract.  `uncollectedFees()` is the amount that can currently be paid out.
+
+As an example, imagine there are two successful auctions that accumulate a total of 2 ether in fees.  Both `totalFees()` and `uncollectedFees()` will return 2 ether (really $2*10^18$ wei).  The deployer then calls `collectFees()`, and the 2 ether is paid to the deployer (minus gas fees, of course).  Now `totalFees()` still reports 2 ether, since that is how much has been accumulated over the life of the contract.  But `uncollectedFees()` will return 0, since there are no more fees that can be paid to the deployer.  If more auctions accumulate 1 ether in additional fees, then `totalFees()` will return 3 ether (really $3*10^18$ wei) and `uncollectedFees()` will return 1 ether (really $1*10^18$ wei).
+
 
 #### `startAuction()` method
 
@@ -190,11 +204,13 @@ You should create two auctions in your Auctioneer contract (you'll create a thir
 
 Note that you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/debtor)).
 
+If you screw up one of these auctions, you can always just create more.  We don't care how many auctions you have created on your contract, as long as the two that are required below fulfill those requirements.
+
 #### Auction 1
 
 The first one should be an auction that has fully ended by due date/time of the assignment.  Basically, we want it to be a closed auction.  There should be a few bids on this auction.  You can create multiple accounts for this -- just call `personal.newAccount()` a few more times -- each account is in the `eth.accounts` list, and you will have to unlock each one with `personal.unlockAccount()`.  To get ether into those other accounts you can:
 
-- Transfer ETH to that account (see the [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment for how to transfer ETH) 
+- Transfer ETH to that account (see the [Connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment for how to transfer ETH)
 - Request funds from the Ether faucet into that account
 
 You can also get classmates to bid on your auction, although that is not required.  This auction will use the first of your (three) NFTs.  You will be submitting the auction ID for this auction as well as the NFT token ID.
@@ -203,7 +219,9 @@ You *SHOULD* call `closeAuction()` on this auction.
 
 #### Auction 2
 
-The second auction should end *two weeks* after the assignment is due.  Just get it on the day two weeks later -- we don't really care about the time, as long as the date is 14 days after the assignment due date.  Basically, we want to see an active auction.  This, also, should have a few bids on it.  This auction use the second of your (three) NFTs.  You will be submitting the auction ID for this auction as well as the NFT token ID.
+The second auction should end *one week* after the assignment is due.  Just get it on the day one week later -- we don't really care about the time, as long as the date is 7 days after the assignment due date.  Basically, we want to see an active auction.  This, also, should have a few bids on it.  This auction use the second of your (three) NFTs.  You will be submitting the auction ID for this auction as well as the NFT token ID.
+
+This auction should have a reserve of 1 ether.  Keep in mind that you have to enter this in wei in the Remix function call box, which means a reserve value of 1 ether is entered as 1000000000000000000 (wei).
 
 
 #### View your auctions
@@ -231,6 +249,15 @@ Lastly, bid on at least *three* auctions that are not your own.  Depending on wh
 - Remix does not seem to show return values for transactions to the blockchain (but will do it when deployed to the Javascript environment).  You can check the explorer page for your transaction to check the return value.
 - To get the current time in a contract, use `block.timestamp` -- it returns a UNIX timestamp.  Likely you should keep track of all your times this way.  You can search online for UNIX timestamp converters, if you need them.  Note that the `now` keyword, which was used in lieu of `block.timestamp`, is deprecated, and you should use `block.timestamp` instead.
 - In order for the auctions.php web page to work, you have to start numbering your auction IDs from 0.
+
+#### Paying the null address
+
+An easy way to implement the reserve is to set the `highestBid` field to the reserve, and the `winner` to the null address (meaning: `address(0)`).  That's fine, but be sure to put in a check if the winning bidder is the null address.  If, on a higher bid, you pay the previously highest bidder, and that is the null address, you will forever lose that ether.  While we don't really care about losing ether on our blockchain, this will deplete the balance of the Auctioneer contract, which means it will not be able to pay out the winners of the successful auctions.  This will cause your contract to not work properly.
+
+#### Return values from transactions
+
+In Remix, any call -- meaning a `view` or `pure` function, which shows up in Remix as a blue button -- will display the return value underneath that button when called.  But Remix has a harder time determining the return value of *transactions* (orange buttons), which also include `payable` functions.  Sometimes Remix can determine the return value, and it is in the JSON data shown in the console window (the window below where you edit the code).  Other times, Remix cannot determine the return value of transactions.  But the explorer can -- so if you are expecting a return value, and Remix does not display it, view the transaction in the explorer, and that will have the return value.  This is the case when trying to find the NFT ID of a newly minted NFT.
+
 
 #### `block.timestamp` behavior
 
