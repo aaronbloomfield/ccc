@@ -87,7 +87,7 @@ Course calendar
 |   | Mar 6 | (none) | (none) | (spring break)  | |
 | 8 | Mar 13 | M,W,F | S5 | [Solidity](../slides/solidity.html#/) | Mon: solidity to 4.27; Wed: all of solidity except debtor's example (recording); Fri: completed the solidity debtor's example (recording) |
 | 9 | Mar 20 | M,W,F | P5 (Gradebook) | [Tokens](../slides/tokens.html#/) | Mon: tokens to 4.8; Wed: tokens to 5.18; Fri: finished tokens |
-| 10 | Mar 27 | M,W,F | P6 (Tokens) | [Mining](../slides/mining.html#/), [Scalability](../slides/scalability.html#/) | Mon: mining to 5.9; Wed: mining to 5.23 |
+| 10 | Mar 27 | M,W,F | P6 (Tokens) | [Mining](../slides/mining.html#/), [Scalability](../slides/scalability.html#/) | Mon: mining to 5.9; Wed: mining to 5.23; Fri: mining to 7.14 |
 | 11 | Apr 3 | M,W,F | P7 (Auction) | [Blockchain applications](../slides/applications.html#/), [Stablecoins](../slides/stablecoins.html#/) | |
 | 12 | Apr 10 | M,W,F | P8 (DEX) | [Consensus](../slides/consensus.html#/) | |
 | 13 | Apr 17 | M,W,F | P9 (DAO&web3) | [zkSNARKs](../slides/zksnarks.html#/) | |
