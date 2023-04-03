@@ -3,10 +3,19 @@ Decentralized Exchange (DEX)
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
+<!-- 
+
+to put on the canvas landing page:
+
+- dex.php URL
+- the account to send the 10.0 TC to
+- the addresses of the constant and variable etherpricers
+
+-->
 
 ### Overview
 
-In this assignment you are going to create a Decentralized Cryptocurrency Exchange (hereafter: DEX) for your token cryptocurrency (hereafter: TC) that you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
+In this assignment you are going to create a Decentralized Cryptocurrency Exchange (hereafter: DEX) for your token cryptocurrency (hereafter: TCC) that you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
 [Constant Product Automated Market Maker (CPAMM)](../../slides/applications.html#/cpamm) method for determining the exchange rates.
 
 Completion this homework will require completion of the following assignments:
@@ -23,10 +32,7 @@ In addition to your source code, you will submit an edited version of [dex.py](d
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.
-
-- Wed, 11/10: bug fix to [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)); see the pinned Piazza post for how to integrate this quickly into your code
-- Sun, 11/6: edited [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) to make a few more functions `view` functions.  This shouldn't affect anybody much, since Remix will have warned you to make the function a `view`.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### ETH price
@@ -54,9 +60,26 @@ interface IEtherPriceOracle is IERC165 {
 
 The `price()` function will return the current price in cents.  Thus, if the price is $99.23 per (fake) ETH, it would return `9923`.
 
-There are two deployed contracts that implemented this interface, the contract addresses of which are on the Canvas landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPriceOracleConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPriceOracleConstant.sol)).  You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.
+There are two deployed contracts that implemented this interface, the contract addresses of which are on the Canvas landing page.  The first is a constant implementation, which always returns $100.00 (formally: `10000`) as the price.  The implementation for this is in [EtherPriceOracleConstant.sol](EtherPriceOracleConstant.sol.html) ([src](EtherPriceOracleConstant.sol)), and shown below.  You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.
 
-The second one is a variable version, whose price ranges greatly, but generally averages (over time) around $100 in price.  As there is no true randomness on a fully deterministic blockchain, the value is based on the highest block number and/or the latest block hash.  So while this will change at each block, it will not change until a new block is created.  The implementation for the variable version is not being provided, but it implements the IEtherPriceOracle interface above.
+```
+// SPDX-License-Identifier: GPL-3.0-or-later
+pragma solidity ^0.8.17;
+import "./IEtherPriceOracle.sol";
+
+contract EtherPriceOracleConstant is IEtherPriceOracle {
+    string public constant name = "A constant EtherPrice oracle that always returns $100.00";
+    string public constant symbol = "$";
+    uint public constant decimals = 2;
+    uint public constant price = 10000; // in cents
+
+    function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {
+        return interfaceId == type(IEtherPriceOracle).interfaceId || interfaceId == type(IERC165).interfaceId;
+    }
+}
+```
+
+The second deployed contract is a variable version, whose price ranges greatly, but generally averages (over time) around $100 in price.  As there is no true randomness on a fully deterministic blockchain, the value is based on the highest block number and/or the latest block hash.  So while this will change at each block, it will not change until a new block is created.  The implementation for the variable version is not being provided, but it implements the `IEtherPriceOracle` interface, above.
 
 You should use the first (constant) one while you are debugging your code.  You will need to use the second (variable) one when you make your final deployment.  The current variable price of our (fake) ETH is shown on the DEX web page, which is described below.  The addresses for these two contracts (constant and variable) are on the Canvas landing page.
 
@@ -65,7 +88,7 @@ You should use the first (constant) one while you are debugging your code.  You 
 
 You will be using your TokenCC contract from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  However, you will need to make two changes to your contract.  These are to your TokenCC.sol file, *NOT* to the interface.
 
-When tokens are transferred to any contract address, our TokenCC code will attempt to call an `onERC20Received()` function on that contract, ignoring the error if the contract does not implement the `IERC20Receiver` interface.  Calling this method will also not be attempted on an owned account.
+When tokens are transferred to any contract address, we are going to have our TokenCC code attempt to call an `onERC20Received()` function on that contract, ignoring the error if the contract does not implement the `IERC20Receiver` interface.  Calling this method will also not be attempted on an owned account.
 
 The first change is that you will have to import the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) file.  This file defines the `IERC20Receiver` interface which defines only one function: `onERC20Received()`.  Our TokenCC contracts are going to call this function any time tokens are transferred to another contract.  There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.  Note that your TokenCC contract does NOT implement this interface; it just needs to know about it so it can call a function (`onERC20Received()`) on *another* contract that implements this interface.
 
@@ -75,16 +98,17 @@ The second change is that we have to include the following function, adapted fro
 function _afterTokenTransfer(address from, address to, uint256 amount) internal override {
     if ( to.code.length > 0  && from != address(0) && to != address(0) ) {
         // token recipient is a contract, notify them
-        try IERC20Receiver(to).onERC20Received(from, amount) returns (bool success) {
+        try IERC20Receiver(to).onERC20Received(from, amount, address(this)) returns (bool success) {
             require(success,"ERC-20 receipt rejected by destination of transfer");
         } catch {
             // the notification failed (maybe they don't implement the `IERC20Receiver` interface?)
+            // we choose to ignore this case
         }
     }
 }
 ```
 
-This function overrides the `_afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size; owned accounts always have zero length code.  It also checks that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation).  If it passed those checks, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` as well).
+This function overrides the `_afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size; owned accounts always have zero length code.  It also checks that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation).  If it passed those checks, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` clause as well).
 
 The net effect of these two changes is that any time your TokenCC is transferred to a contract, it will attempt to notify that contract that it just received some ERC-20 tokens.
 
@@ -92,7 +116,7 @@ Lastly, we recommend minting a large amount of coins (a million or so, which is 
 
 The next section describes a way to "turn off" the functionality of the `onERC20Received()` function.
 
-Lastly, you will need to send me 10.0 of your TC.  But do this from the final deployment -- we remind you about that below.
+Lastly, you will need to send me 10.0 of your TCC.  But do this from the final deployment -- we remind you about that below.
 
 ### Background
 
@@ -108,6 +132,14 @@ As far as this assignment is concerned, there will only be *one* DEX for each to
 
 To get the ether balance of a given account, you just use the `balance` property.  You may have to cast it as a `address` first, as such: `address(a).balance`.  This reports the ether balance in wei.  To get the ERC-20 balance, you call the `balanceOf()` function on the TokenCC contract, which reports it with as many decimals as the ERC-20 contract uses (call `decimals()` to find out how many).
 
+#### Initiating an exchange
+
+To initiate an exchange, you just transfer the appropriate cryptocurrency to the DEX.
+
+To exchange ether for TCC, you transfer some amount of ether to the DEX.  This will call the `receive()` function, which will handle the payout of the TCC back to the caller (aka `msg.sender`).
+
+To exchange TCC for ether, you transfer the TCC to the DEX via your TokenCC contract; based on the modifications done above, this will call the `onERC20Received()` function, which will handle the payout of the ether back to the caller (aka `msg.sender`).
+
 #### `receive()`
 
 A contract can receive either in one of two ways.  The first is to have a `payable` function is called along with some ether transfer.  This was done in the `placeBid()` function in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.
@@ -120,7 +152,7 @@ receive() payable external { // might need 'override' also
 }
 ```
 
-Note that there is no `function` keyword!  Other than the different syntax, and the special case when it is called, it operates like any other function.  It can take any action, including reverting (which will abort the transfer).  In our case, this is how we are going to exchange ether for TC.  To initiate an exchange of ether for TC, we transfer ether in, which will call `receive()`, and the TC will be transferred back to the caller.  As our `receive()` function is overriding what is in an interface (described below), we also put the `override` keyword there.
+Note that there is no `function` keyword!  Other than the different syntax, and the special case when it is called, it operates like any other function.  It can take any action, including reverting (which will abort the transfer).  In our case, this is how we are going to exchange ether for TCC.  To initiate an exchange of ether for TCC, we transfer ether in, which will call `receive()`, and the TCC will be transferred back to the caller.  As our `receive()` function is overriding what is in an interface (described below), we also put the `override` keyword there.
 
 In Remix, you can invoke the `receive()` function by sending some ether without a function call.  To do this, put the amount in the "Value" box of the Deployment pane, set the right unit (ether, gwei, or wei), and then click on the "Transact" button at the very bottom of the contract (below the "Low level interactions" header).  This is just like transferring ether in geth.  Note that the Javascript environment seems to hang on some platforms when doing this, but if you are connected to the course blockchain, then it seems to work fine.
 
@@ -144,14 +176,15 @@ A bunch of notes on this:
 
 #### `onERC20Received()`
 
-The `onERC20Received()` function will be called any time TC is transferred to a contract.  We are going to use this to initiate an exchange of TC for ether -- one just has to transfer the TC to the DEX, and then the DEX will compute the amount of ether to send back.
+The `onERC20Received()` function will be called any time TCC is transferred to a contract.  We are going to use this to initiate an exchange of TCC for ether -- one just has to transfer the TCC to the DEX, and then the DEX will compute the amount of ether to send back.
 
 However, there are some times where we may NOT want `onERC20Received()` to do anything.  In particular, `addLiquidity()` (and possibly `removeLiquidity()`) will initiate a ERC-20 transfer (via calling `transferFrom()`), but we probably *don't* want `onERC20Received()` to be called at that point (it's not an exchange).  So we are going to want to have a way to "turn off" the functionality of `onERC20Received()`.  The easiest way to do this is to have an `internal` contract variable, such as `adjustingLiquidity`, that is normally set to `false`.  In `addLiquidity()` and `removeLiquidity()`, you set it to `true` when you are about to initiate the transfer, and then set it to `false` when done.
 
+***IMPORTANT NOTE:*** Your `onERC20Received()` MUST check that the address passed in as the third parameter is the same address as the contract it is part of; `require(erc20==address(this),"witty error message");` will do this.  Otherwise, somebody could call that function with a *different* ERC-20 contract and drain all the TCC from your contract.
 
 ### Interface
 
-Formally, you must implement a `DEX` contract that implements the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) interface.  Your contract opening line MUST be: `contract DEX is IDEX`.  Note that the `IDEX` interface extends the `IERC165` interface, so you will have to implement the `supportsInterface()` function as well.  The functions in this interface are shown below, and much more detail is provided in the comments in the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) file.
+Formally, you must implement a `DEX` contract that implements the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) interface.  Your contract opening line MUST be: `contract DEX is IDEX`.  Note that the `IDEX` interface extends the [IERC165](IERC165.sol.html) ([src](IERC165.sol)) interface, so you will have to implement the `supportsInterface()` function as well.  It also implements the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) interface, which means implementing the `onERC20Received()` function.  The functions in this interface are shown below, and much more detail is provided in the comments in the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) file.
 
 Note that many of these functions are just the getter functions from `public` variables; which ones are described in the full source file and also below.  Also note that $x$ is the amount of ether liquidity (with 18 decimals) and $y$ is the amount of token liquidity (with 8-12 decimals).
 
@@ -212,13 +245,16 @@ interface IDEX is IERC165, IERC20Receiver {
     // From IERC165.sol; this contract supports three interfaces
     // function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
+    // Functions for a future assignment; they should just revert for now
+    function reset() external;
+
 }
 ```
 
-This may seem like a lot, as there are 25 functions (including `supportsInterface()` and the constructor) to implement, but it turns out it's not quite as much as it seems:
+This may seem like a lot, as there are 26 functions (including `supportsInterface()`, `onERC20Received()`, and the constructor) to implement, but it turns out it's not quite as much as it seems:
 
 - Twelve of them are just `public` variables: `k`, `x`, `y`, `decimals`, `feeNumerator`, `feeDenominator`, `feesToken`, `feesEther`, `etherLiquidityForAddress`, `tokenLiquidityForAddress`, `etherPricer`, and `erc20Address`
-- Eight of them are one-line (or very short) functions: `symbol()`, `getEtherPrice()`, `getTokenPrice()`, `getPoolLiquidityInUSDCents()`, `setEtherPricer()`, `getDEXinfo()`, `supportsInterface()`, and the constructor
+- Eight of them are one-line (or very short) functions: `symbol()`, `getEtherPrice()`, `getTokenPrice()`, `getPoolLiquidityInUSDCents()`, `setEtherPricer()`, `getDEXinfo()`, `supportsInterface()`, `reset()`, and the constructor
 - That leaves only 5 significant functions to implement: `createPool()`, `addLiquidity()`, `removeLiquidity()`, `receive()`, and `onERC20Received()`
 
 Here are all the files you will need:
@@ -238,86 +274,88 @@ When you want to test your program, this is the expected flow to get it started,
 
 - Deploy your DEX contract and (if necessary) your TokenCC contract.
 - Approve your DEX contract for some amount of your TokenCC supply via `approve()` on your TokenCC contract.
-- Call `createPool()` on your DEX.  Choose how much TokenCC supply to use (you don't have to use it all, but must use at least 10.0 TC), and put in the appropriate EtherPriceOracle contract address.  You will have to transfer in some ether with this call.
+- Call `createPool()` on your DEX.  Choose how much TokenCC supply to use (you don't have to use it all, but must use at least 10.0 TCC), and put in the appropriate EtherPriceOracle contract address.  You will have to transfer in some ether with this call.
 
 As far this this assignment is concerned, the exchange rate between our (fake) ETH and your token cryptocurrency is initially set based on the ratio of what you send in via `createPool()`.  The overall value of the DEX is based on the current (fake) ETH price.  So if you have 100 (fake) ETH, and the price of the (fake) ETH is $99.23, then the ETH liquidity is $9,923; the value of the DEX is twice that, or $19,846.
 
 ### Fees
 
-Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out (either ether or token) -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TC; the other 0.2 TC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEther` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
+Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out (either ether or token) -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TCC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TCC; the other 0.2 TCC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEther` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
 
 ***NOTE:*** the ONLY functions that remove fees are `receive()` and `onERC20Received()`, and they only remove the fee from the amount paid *out*.  The other functions (specifically `addLiquidity()` and `removeLiquidity()`) do not deduct fees.
 
 Managing fee payout to the liquidity providers is quite complicated -- one has to take into account how much liquidity each provider has in the DEX, and over what time frame.  There could be thousands of liquidity providers in the pool, each of which had different times that the DEX held their liquidity, and each of which gets a cut -- proportional to their liquidity -- of each transaction's fee.  Furthermore, fees are added to the liquidity pool, but only when they can be balanced with the other currency so that they can be added in appropriate proportions.
 
-For this assignment, we are not going to handle distributing fees back to the liquidity providers -- we are just going to accumulate them into the `feesEther` and `feesToken` variables.  This means that this inability to retrieve the fees will result in lost ETH and TC.  That's fine for this assignment, even if it would not be fine in a real world situation.
+For this assignment, we are not going to handle distributing fees back to the liquidity providers -- we are just going to accumulate them into the `feesEther` and `feesToken` variables.  It adds a lot of complexity to compute who is owned what part of the fees based on the amount of liquidity they have in the DEX and for how long they have had it.  This means that this inability to retrieve the fees will result in lost ETH and TCC.  That's fine for this assignment, even if it would not be realistic in a real world situation.
 
 ### Example
 
-To help you debug your program, here is a worked-out example of how the values in the DEX change as various transactions occur.  This is assuming a constant (fake) ETH price of $100.  In the example below, we will call the token cryptocurrency "TC" for "Token Cryptocurrency".  For reasons we will see below, we are only putting in 10 (fake) ETH in this example, whereas you will have put in 100 when you deploy it at the end of the assignment.
+To help you debug your program, here is a worked-out example of how the values in the DEX change as various transactions occur.  This is assuming a constant (fake) ETH price of $100.  For reasons we will see below, we are only putting in 10 (fake) ETH in this example, whereas you will have put in 100 when you deploy it at the end of the assignment.
 
-- We are starting off with a few assumptions; if these vary from yours, then change as necessary
+- We have a few conventions that we are following for this assignment:
     - $x$ will always represent the amount of ETH in the pool.  As ETH is represented in wei, this will be the ETH amount with 18 decimal places
-    - $y$ will always represent the amount of TC in the pool.  We assume that there are 10 decimal places for TC.
-    - The assumption is that you have more TC that you own beyond what you have just deposited
+    - $y$ will always represent the amount of TCC in the pool.
+- We are starting off with a few assumptions; if these vary from yours, then change as necessary
+    - The assumption is that you have more TCC that you own beyond what you have just deposited
+    - You had to choose a number of decimals between 8 and 12 for your TCC; we assume it is 10 for this example
     - For the examples herein, we are ignoring fees -- you can set the `feeNumerator` to 0 to get this when testing your contract
 - Step 1: The DEX is deployed
     - As no pool has been created, $k$, $x$, and $y$ should all be 0
-- Step 2: `createPool()` is called: initially, we will deposit 10 (fake) ETH and 100 TC
-    - $k$ should be $10 \ast 100 = 1,000$, since we deposited 10 ETH and 100 TC.  But the value reported by the DEX will be with 10 more decimal places for TC and 18 more decimal places for the ETH.  So $k$ will report as $1,000 \ast 10^{10} \ast 10^{18} = 10^{31} = 10,000,000,000,000,000,000,000,000,000,000$
-    - The 10 ETH are worth $100 each (we are assuming the constant price for this example), so the ETH is worth $1,000.  Since the TC is assumed to have the same value, the overall DEX liquidity is $2,000.  As we put in 100 TC into the pool, then each TC is worth $10.
+- Step 2: `createPool()` is called: initially, we will deposit 10 (fake) ETH and 100 TCC
+    - $k$ should be $10 \ast 100 = 1,000$, since we deposited 10 ETH and 100 TCC.  But the value reported by the DEX will be with 10 more decimal places for TCC and 18 more decimal places for the ETH.  So $k$ will report as $1,000 \ast 10^{10} \ast 10^{18} = 10^{31} = 10,000,000,000,000,000,000,000,000,000,000$
+    - The 10 ETH are worth $100 each (we are assuming the constant price for this example), so the ETH is worth $1,000.  Since the TCC is assumed to have the same value, the overall DEX liquidity is $2,000.  As we put in 100 TCC into the pool, then each TCC is worth $10.
     - At this point:
         - $k=10^{31}$
         - $x$, the amount of ETH, is 10 or $x=10*10^{18}=10^{19}$
-        - $y$, the amount of TC, is 100 or $y=100*10^{10}=10^{12}$
-        - The exchange ratio is 1 ETH for 10 TC, since the DEX has 10 ETH and 100 TC, or 1 ETH per 10 TC
+        - $y$, the amount of TCC, is 100 or $y=100*10^{10}=10^{12}$
+        - The exchange ratio is 1 ETH for 10 TCC, since the DEX has 10 ETH and 100 TCC, or 1 ETH per 10 TCC
     - The value of the DEX is determined by how much ETH and the current price, which we are assuming is $100, since we are using the constant ether price in this example
         - As there is 10 ETH in the DEX, the value of the ETH is $10 \ast 100$ = $1,000
-        - The TC is assumed to be worth an equal amount
+        - The TCC is assumed to be worth an equal amount
         - Thus, the DEX liquidity is $2,000
         - In effect, the value of the DEX is twice the value of the ether therein
-- Step 3: Transaction 1: we exchange 2.5 ETH for some amount of TC
+- Step 3: Transaction 1: we exchange 2.5 ETH for some amount of TCC
     - The pool will then have 12.5 ETH (or $x=12.5 \ast 10^{18}$ wei)
-    - Determine $y$ by dividing $k$ by $x$: $y = k/x = 10^{31} / 12.5 \ast 10^{18} = 8 \ast 10^{11}$ or (after removing the decimals) 80 TC
-    - As the pool had 100 TC before this transaction, we get $100-80=20$ TC (formally: $20 \ast 10^{10}$)
+    - Determine $y$ by dividing $k$ by $x$: $y = k/x = 10^{31} / 12.5 \ast 10^{18} = 8 \ast 10^{11}$ or (after removing the decimals) 80 TCC
+    - As the pool had 100 TCC before this transaction, we get $100-80=20$ TCC (formally: $20 \ast 10^{10}$)
     - At this point:
         - $k=10^{31}$
         - $x$, the amount of ETH, is 12.5 or $x=12.5 \ast 10^{18}=1.25 \ast 10^{19}$
-        - $y$, the amount of TC, is 80 or $y=80 \ast 10^{10}=8 \ast 10^{11}$
-        - The exchange rate is 1 ETH for 6.4 TC (we just divide 80 by 12.5)
-    - 20 TC are paid out, minus fees, which we are ignoring here
+        - $y$, the amount of TCC, is 80 or $y=80 \ast 10^{10}=8 \ast 10^{11}$
+        - The exchange rate is 1 ETH for 6.4 TCC (we just divide 80 by 12.5)
+    - 20 TCC are paid out, minus fees, which we are ignoring here
     - But if fees were withheld, then....
         - Let's assume fees were 0.5% (`feeNumerator` is 5, `feeDenominator` is 1000)
-        - 0.5% of 20 is 0.1 TC
-        - The account exchanging gets 19.9 TC for the trade
-        - `feesToken` is incremented by 0.1 TC
-        - $x$, $y$, and $k$ do NOT change due to the fee withholding (as the fee was deducted *after* the 20 TC were extracted from the DEX)
+        - 0.5% of 20 is 0.1 TCC
+        - The account exchanging gets 19.9 TCC for the trade
+        - `feesToken` is incremented by 0.1 TCC
+        - $x$, $y$, and $k$ do NOT change due to the fee withholding (as the fee was deducted *after* the 20 TCC were extracted from the DEX)
     - As there is 12.5 ETH in the DEX, the value of the DEX is $2,500
-        - Assuming a price of $100 per ETH, and that the TC is worth the same amount
-- Step 4: Transaction 2: we exchange 120 TC for some ETH
-    - The pool will then have 200 TC (or $y=200 \ast 10^{10} = 2 \ast 10^{12}$)
+        - Assuming a price of $100 per ETH, and that the TCC is worth the same amount
+- Step 4: Transaction 2: we exchange 120 TCC for some ETH
+    - The pool will then have 200 TCC (or $y=200 \ast 10^{10} = 2 \ast 10^{12}$)
     - Determine $x$ by dividing $k$ by $y$: $x = k/y = 10^{31} / 2 \ast 10^{12} = 5 \ast 10^{18}$ or 5 ETH
     - As the pool had 12.5 ETH, we get $12.5-5=7.5$ ETH as the payout for the exchange
     - At this point:
         - $k=10^{31}$
         - $x$, the amount of ETH, is 5 or $x=5 \ast 10^{18}$
-        - $y$, the amount of TC, is 200 or $y=200 \ast 10^{10}=2 \ast 10^{12}$
-        - The exchange rate is 1 ETH for 40 TC (we just divide 200 by 5)
+        - $y$, the amount of TCC, is 200 or $y=200 \ast 10^{10}=2 \ast 10^{12}$
+        - The exchange rate is 1 ETH for 40 TCC (we just divide 200 by 5)
     - As there is 5 ETH in the DEX, the value of the DEX is $1,000
         - This had a huge effect on the DEX liquidity, but that is because we have (relatively) very small amounts of liquidity in the DEX
 - Step 5: We add liquidity to the pool
-    - The DEX has 5 ETH and 200 TC; the exchange rate is 1 ETH for 40 TC (from above)
-    - We have to add in equal amounts; as far as this DEX is concerned, 1 ETH is equal to 40 TC; thus, we have to put in 40 times as many TC as we put in ETH
-    - We opt to put in 1 ETH and 40 TC
-    - The new amounts in the DEX will be 6 ETH and 240 ETH; this keeps the same exchange ratio of 1 ETH = 40 TC (we just divide 240 by 6)
+    - The DEX has 5 ETH and 200 TCC; the exchange rate is 1 ETH for 40 TCC (from above)
+    - We have to add in equal amounts; as far as this DEX is concerned, 1 ETH is equal to 40 TCC; thus, we have to put in 40 times as many TCC as we put in ETH
+    - We opt to put in 1 ETH and 40 TCC
+    - The new amounts in the DEX will be 6 ETH and 240 ETH; this keeps the same exchange ratio of 1 ETH = 40 TCC (we just divide 240 by 6)
     - $x$, the amount of ETH, increases by 1 (really $1 \ast 10^{18}$ wei) to become $x=5 \ast 10^{18} + 1 \ast 10^{18} = 6 \ast 10^{18} = 6 \ast 10^{18}$
-    - $y$, the amount of TC, increases by 40 (really $40 \ast 10^{10}$) to become: $y=200 \ast 10^{10} + 40 \ast 10^{10} = 240 \ast 10^{10} = 2.4 \ast 10^{12}$
+    - $y$, the amount of TCC, increases by 40 (really $40 \ast 10^{10}$) to become: $y=200 \ast 10^{10} + 40 \ast 10^{10} = 240 \ast 10^{10} = 2.4 \ast 10^{12}$
     - We recompute $k$ via $k = x \ast y = 6 \ast 10^{18} \ast 2.4 \ast 10^{12} = 1.44 \ast 10^{31}$
     - At this point:
         - $k=1.44 \ast 10^{31}$
         - $x$, the amount of ETH, is 6 or $x=6*10^{18}=6 \ast 10^{18}$
-        - $y$, the amount of TC, is 240 or $y=240*10^{10}=2.4 \ast 10^{12}$
-        - The exchange rate is 1 ETH for 40 TC (we just divide 240 by 6)
+        - $y$, the amount of TCC, is 240 or $y=240*10^{10}=2.4 \ast 10^{12}$
+        - The exchange rate is 1 ETH for 40 TCC (we just divide 240 by 6)
     - The value of the DEX is $1,200
 
 
@@ -360,9 +398,9 @@ contract DEXtest {
         require(dex.x() == 0, "x value not 0 after DEX creation()");
         require(dex.y() == 0, "y value not 0 after DEX creation()");
 
-        // Step 2: createPool() is called with 10 (fake) ETH and 100 TC
+        // Step 2: createPool() is called with 10 (fake) ETH and 100 TCC
         bool success = tc.approve(address(dex),100*10**tc.decimals());
-        require (success,"Failed to approve TC before createPool()");
+        require (success,"Failed to approve TCC before createPool()");
         try dex.createPool{value: 10 ether}(100*10**tc.decimals(), 0, 1000, address(tc), address(pricer)) {
             // do nothing
         } catch Error(string memory reason) {
@@ -378,11 +416,11 @@ contract DEXtest {
 
         // Step 3 tests
 
-        // Step 4: transaction 2, where 120 TC is provided to the DEX for exchange
+        // Step 4: transaction 2, where 120 TCC is provided to the DEX for exchange
   
         // Step 4 tests
 
-        // Step 5: addLiquidity() is called with 1 (fake) ETH and 40 TC
+        // Step 5: addLiquidity() is called with 1 (fake) ETH and 40 TCC
 
         // Step 5 tests
 
@@ -441,9 +479,10 @@ Step 2: Deploy your DEX smart contract to the private Ethereum blockchain.  So t
 - It must be initialized with the *variable* EtherPriceOracle contract for the price of our (fake) ether.  While you are welcome to use the constant one for testing, you MUST use the variable one for the final deployment.
     - Keep in mind that you can always update it via the `setEtherPricer()` function if you initialize it with the wrong one
 - You need to call `createPool()`
-	- You must fund it with 100 (fake) ether.  *Do not put a different amount in!*
-	- You can put as many or as little of your token in as you like (but no less than 10.0 TC).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in no more than half of what you own, and you can certainly put in less.
-        - Or you can just mint a million of your TC, and put in 1,000 each time you run another test
+	- You must fund it with 100 (fake) ether.  ***Do not put a different amount in!***
+	   - Save the TXN from this call, as that will need to be submitted
+    - You can put as many or as little of your token in as you like (but no less than 10.0 TCC).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in no more than half of what you own, and you can certainly put in less.
+        - Or you can just mint a million of your TCC, and put in 1,000 each time you run another test
         - This implies initializing the TokenCC and allowing the DEX to transfer it via `approve()`
 - For your *final* deployment -- meaning what you are going to submit when you turn the assignment in -- do not call either `addLiquidity()` or `removeLiquidity()` yet
 
@@ -454,21 +493,23 @@ Step 3: You need to register your DEX with the course-wide exchange board websit
 
 Now that your exchange is registered, you can view all the exchanges.  You should see your exchange in there, along with your cryptocurrency's logo.  The stats of each exchange are listed in that table.
 
-You need to make 4 total exchanges with DEXes other than you own (meaning four or more different exchanges, but with four *different* DEXes).  You are welcome to exchange for more if you want to own more.  As you accumulate more TC from other students, you can see them on the blockchain explorer page for your account.  As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether.  Or you can get more ether from the faucet and use that to exchange for the others.
+You need to make 4 total exchanges with DEXes other than you own (meaning four or more different exchanges, but with four *different* DEXes).  You are welcome to exchange for more if you want to own more.  As you accumulate more TCC from other students, you can see them on the blockchain explorer page for your account.  As you likely have more of your own Token cryptocurrency, you can now exchange that with your DEX to get some ether.  Or you can get more ether from the faucet and use that to exchange for the others.
 
 Depending on when you submit your assignment, there may not be other DEXes to interact with.  That's fine – you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the exchanges. We are going to check whether you exchange for the other token cryptocurrencies by looking if your eth.coinbase account, the address of which you will submit below, initiated exchanges on any one of your classmate's submitted DEX addresses by a few days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 
 
 ### Submission
 
-You will need to fill in the various values from this assignment into the [dex.py](dex.py.html) ([src](dex.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
+You will need to fill in the various values from this assignment into the [dex.py](dex.py.html) ([src](dex.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
-There are *four* forms of submission for this assignment; you must do all four.
+There are *five* forms of submission for this assignment; you must do all five.
 
-Submission 1: Deploy the DEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well.  These were likely done in the deployment section, above.  You have to call `createPool()` with exactly 100 (fake) ether, some number of TC (no less than 10.0 TC), and the address of the variable EtherPriceOracle.
+Submission 1: Deploy the DEX smart contract to the private Ethereum blockchain.  Your TokenCC will need to have been deployed as well.  These were likely done in the deployment section, above.  You have to call `createPool()` with exactly 100 (fake) ether, some number of TCC (no less than 10.0 TCC), and the address of the variable EtherPriceOracle.
 
-Submission 2: Send 10.0 TC to the address listed on the Canvas landing page.  This means that if your TokenCC has 10 decimal places, then the value you need to send is 100,000,000,000.  You can check how much of your TC is owned by any account by looking at that account page in the blockchain explorer.  
+Submission 2: Send 10.0 TCC to the address listed on the Canvas landing page.  This means that if your TokenCC has 10 decimal places, then the value you need to send is 100,000,000,000.  You can check how much of your TCC is owned by any account by looking at that account page in the blockchain explorer.  
 
 Submission 3: You should submit your `DEX.sol`, your (updated) `TokenCC.sol` files, and your completed `dex.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the various interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in dex.py, etc.).
 
 Submission 4: Register your DEX smart contract with the course-wide exchange.  This, also, was likely done in the deployment section, above.
+
+Submission 5: Make at least 4 exchanges with other DEXes.

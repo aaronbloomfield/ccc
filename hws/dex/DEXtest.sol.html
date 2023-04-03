@@ -19,10 +19,11 @@ http://www.gnu.org/software/src-highlite">
 import <font color="#FF0000">"./DEX.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">"./IERC20Receiver.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// See the homework description for how to use this program</font></i>
 
-<font color="#008080">contract</font> DEXtest <font color="#FF0000">{</font>
+contract DEXtest <font color="#008080">is</font> IERC20Receiver <font color="#FF0000">{</font>
 
     TokenCC <font color="#008080">public</font> tc<font color="#990000">;</font>
     DEX <font color="#008080">public</font> dex<font color="#990000">;</font>
@@ -30,6 +31,11 @@ import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color=
     <b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
         tc <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">TokenCC</font></b><font color="#990000">();</font>
         dex <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">DEX</font></b><font color="#990000">();</font>
+    <font color="#FF0000">}</font>
+
+    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">uint</font> amount<font color="#990000">,</font> <font color="#008080">address</font> erc20<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// implement as needed; you have to put code in here if you transfer</font></i>
+        <i><font color="#9A1900">// TCC to this contract</font></i>
     <font color="#FF0000">}</font>
 
     <font color="#008080">function</font> <b><font color="#000000">test</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#FF0000">{</font>

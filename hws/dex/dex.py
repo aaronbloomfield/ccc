@@ -43,7 +43,9 @@ contracts = {
 # assignment.
 other = {
 	
-	# nothing is required in this dictionary for this assignment
+	# This is the transaction hash from when you called createPool() on the
+	# deployed DEX, above, with exactly 100 ether and at least 10.0 TC
+	'createpool_call_txn': None,
 
 }
 
@@ -60,6 +62,10 @@ sanity_checks = {
 	# `_afterTokenTransfer()` function.
 	'modified_tokencc': False,
 
+	# Does the `symbol()` function in your DEX contract return the symbol for
+	# your token cryptocurrency?
+	'dex_symbol_returns_tcc_symbol': False,
+
 	# Did you register your DEX with the course dex.php web page? This implies
 	# that you deployed both TokenDEX and TokenCC to the private Ethereum
 	# blockchain.
@@ -70,7 +76,7 @@ sanity_checks = {
 
 	# When you called createPool(), did you send in at least 10.0 of your TC?
 	# You can use more, if you would like.
-	'called_createpoool_with_10_tc': False,
+	'called_createpoool_with_10_or_more_tc': False,
 
 	# Is your DEX initialized with the *variable* EtherPricer contract?
 	'initialized_dex_with_variable_etherpriceoracle': False,
@@ -83,7 +89,7 @@ sanity_checks = {
 
 	# Did you, or will you, make 4 exchanges on somebody else's DEX?  These
 	# bids are due 24 hours after the assignment due date
-	'made_4_exchanges_on_another_dex': False,
+	'made_4_exchanges_on_other_dexes': False,
 
 }
 

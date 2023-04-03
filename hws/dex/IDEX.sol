@@ -133,11 +133,16 @@ interface IDEX is IERC165, IERC20Receiver {
     function addLiquidity() external payable;
 
     // Remove liquidity -- both ether and token -- from the pool.  The ETH is
-    // paid to the caller, and the token cryptocurrency is transferred back as
-    // well.  If the parameter amount is more than the amount the address has
-    // stored in the pool, this should revert.  See the homework description
-    // for how fees are managed and paid out, but note that this function
-    // does NOT remove any fees.
+    // paid to the caller, and the token cryptocurrency is transferred back
+    // as well.  If the parameter amount is more than the amount the address
+    // has stored in the pool, this should revert.  See the homework
+    // description for how fees are managed and paid out, but note that this
+    // function does NOT remove any fees.  For this assignment, they cannot
+    // take out more ether than they put in, and the amount of TCC that comes
+    // with that cannot be more than they put in.  If the exchange rates are
+    // much different, this could cause issues, but we are not going to deal
+    // with those issues in this assignment, so you can ignore factoring in
+    // different exchange rates.
     function removeLiquidity(uint amountEther) external;
 
     //------------------------------------------------------------
@@ -192,6 +197,14 @@ interface IDEX is IERC165, IERC20Receiver {
     // 11: fees collected in the token CC (uint)
     function getDEXinfo() external view returns (address, string memory, string memory, 
                             address, uint, uint, uint, uint, uint, uint, uint, uint);
+
+    //------------------------------------------------------------
+    // Functions for a future assignment
+
+    // This should just revert.  It is going to be used in the Arbitrage
+    // assignment, so we are putting it into the interface now.
+    function reset() external;
+
 
     //------------------------------------------------------------
     // Inherited functions

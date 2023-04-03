@@ -54,7 +54,9 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># assignment.</font></i>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
-	<i><font color="#9A1900"># nothing is required in this dictionary for this assignment</font></i>
+	<i><font color="#9A1900"># This is the transaction hash from when you called createPool() on the</font></i>
+	<i><font color="#9A1900"># deployed DEX, above, with exactly 100 ether and at least 10.0 TC</font></i>
+	<font color="#FF0000">'createpool_call_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -71,6 +73,10 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># `_afterTokenTransfer()` function.</font></i>
 	<font color="#FF0000">'modified_tokencc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Does the `symbol()` function in your DEX contract return the symbol for</font></i>
+	<i><font color="#9A1900"># your token cryptocurrency?</font></i>
+	<font color="#FF0000">'dex_symbol_returns_tcc_symbol'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you register your DEX with the course dex.php web page? This implies</font></i>
 	<i><font color="#9A1900"># that you deployed both TokenDEX and TokenCC to the private Ethereum</font></i>
 	<i><font color="#9A1900"># blockchain.</font></i>
@@ -81,7 +87,7 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># When you called createPool(), did you send in at least 10.0 of your TC?</font></i>
 	<i><font color="#9A1900"># You can use more, if you would like.</font></i>
-	<font color="#FF0000">'called_createpoool_with_10_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#FF0000">'called_createpoool_with_10_or_more_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Is your DEX initialized with the *variable* EtherPricer contract?</font></i>
 	<font color="#FF0000">'initialized_dex_with_variable_etherpriceoracle'</font><font color="#990000">:</font> False<font color="#990000">,</font>
@@ -94,7 +100,7 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># Did you, or will you, make 4 exchanges on somebody else's DEX?  These</font></i>
 	<i><font color="#9A1900"># bids are due 24 hours after the assignment due date</font></i>
-	<font color="#FF0000">'made_4_exchanges_on_another_dex'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#FF0000">'made_4_exchanges_on_other_dexes'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 

@@ -144,11 +144,16 @@ interface IDEX <font color="#008080">is</font> IERC165<font color="#990000">,</f
     <font color="#008080">function</font> <b><font color="#000000">addLiquidity</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable<font color="#990000">;</font>
 
     <i><font color="#9A1900">// Remove liquidity -- both ether and token -- from the pool.  The ETH is</font></i>
-    <i><font color="#9A1900">// paid to the caller, and the token cryptocurrency is transferred back as</font></i>
-    <i><font color="#9A1900">// well.  If the parameter amount is more than the amount the address has</font></i>
-    <i><font color="#9A1900">// stored in the pool, this should revert.  See the homework description</font></i>
-    <i><font color="#9A1900">// for how fees are managed and paid out, but note that this function</font></i>
-    <i><font color="#9A1900">// does NOT remove any fees.</font></i>
+    <i><font color="#9A1900">// paid to the caller, and the token cryptocurrency is transferred back</font></i>
+    <i><font color="#9A1900">// as well.  If the parameter amount is more than the amount the address</font></i>
+    <i><font color="#9A1900">// has stored in the pool, this should revert.  See the homework</font></i>
+    <i><font color="#9A1900">// description for how fees are managed and paid out, but note that this</font></i>
+    <i><font color="#9A1900">// function does NOT remove any fees.  For this assignment, they cannot</font></i>
+    <i><font color="#9A1900">// take out more ether than they put in, and the amount of TCC that comes</font></i>
+    <i><font color="#9A1900">// with that cannot be more than they put in.  If the exchange rates are</font></i>
+    <i><font color="#9A1900">// much different, this could cause issues, but we are not going to deal</font></i>
+    <i><font color="#9A1900">// with those issues in this assignment, so you can ignore factoring in</font></i>
+    <i><font color="#9A1900">// different exchange rates.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">removeLiquidity</font></b><font color="#990000">(</font><font color="#008080">uint</font> amountEther<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
@@ -203,6 +208,14 @@ interface IDEX <font color="#008080">is</font> IERC165<font color="#990000">,</f
     <i><font color="#9A1900">// 11: fees collected in the token CC (uint)</font></i>
     <font color="#008080">function</font> <b><font color="#000000">getDEXinfo</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> 
                             address<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">);</font>
+
+    <i><font color="#9A1900">//------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Functions for a future assignment</font></i>
+
+    <i><font color="#9A1900">// This should just revert.  It is going to be used in the Arbitrage</font></i>
+    <i><font color="#9A1900">// assignment, so we are putting it into the interface now.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">reset</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
+
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Inherited functions</font></i>

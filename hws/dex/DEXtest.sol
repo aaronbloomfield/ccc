@@ -8,10 +8,11 @@ pragma solidity ^0.8.17;
 import "./DEX.sol";
 import "./TokenCC.sol";
 import "./EtherPriceOracleConstant.sol";
+import "./IERC20Receiver.sol";
 
 // See the homework description for how to use this program
 
-contract DEXtest {
+contract DEXtest is IERC20Receiver {
 
     TokenCC public tc;
     DEX public dex;
@@ -19,6 +20,11 @@ contract DEXtest {
     constructor() {
         tc = new TokenCC();
         dex = new DEX();
+    }
+
+    function onERC20Received(address from, uint amount, address erc20) external returns (bool) {
+        // implement as needed; you have to put code in here if you transfer
+        // TCC to this contract
     }
 
 	function test() public payable {

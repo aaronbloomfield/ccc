@@ -35,7 +35,12 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">    function _afterTokenTransfer(address from, address to, uint256 amount) internal override {</font></i>
 <i><font color="#9A1900">        if ( to.code.length &gt; 0  &amp;&amp; from != address(0) &amp;&amp; to != address(0) ) {</font></i>
 <i><font color="#9A1900">            // token recipient is a contract, notify them</font></i>
-<i><font color="#9A1900">            IERC20Receiver(to).onERC20Received(from, amount, address(this));</font></i>
+<i><font color="#9A1900">            try IERC20Receiver(to).onERC20Received(from, amount, address(this)) returns (bool success) {</font></i>
+<i><font color="#9A1900">                require(success,"ERC-20 receipt rejected by destination of transfer");</font></i>
+<i><font color="#9A1900">            } catch {</font></i>
+<i><font color="#9A1900">                // the notification failed (maybe they don't implement the `IERC20Receiver` interface?)</font></i>
+<i><font color="#9A1900">                // we choose to ignore this case</font></i>
+<i><font color="#9A1900">            }</font></i>
 <i><font color="#9A1900">        }</font></i>
 <i><font color="#9A1900">    }</font></i>
 
