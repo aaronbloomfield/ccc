@@ -52,7 +52,7 @@ other = {
 	'your_nft_token_id_1': None,
 
 	# This is the auction ID for the auction in your auctioneer contract that
-	# stays open for two weeks after the assignment due date.
+	# stays open for one week after the assignment due date.
 	'your_auction_id_2': None,
 
 	# This is the NFT token ID, in your deployed NFT manager, for the above
