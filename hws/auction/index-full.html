@@ -109,7 +109,7 @@
 <li>Once we are past the auction end time, the auction can be closed via a call to <code>closeAuction()</code>
 <ul>
 <li>If there are no bids, then NFT ownership is transferred to the initiator</li>
-<li>Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via <code>safeTransferFrom()</code> (<em>not</em> <code>transferFrom()</code>)</li>
+<li>Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via <code>transferFrom()</code></li>
 <li>Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created</li>
 </ul></li>
 <li>The auction contract will keep a fee of 1% of the value of a <em>winning</em> bid
@@ -245,7 +245,7 @@ Some people are having problems in Remix with determining the return value of a 
 <h3 id="notes-and-hints">Notes and Hints</h3>
 <ul>
 <li>We are going to grade this by creating a very short auction – a minute or so. In your <code>startAuction()</code>, only one of the time parameters must be non-zero.</li>
-<li>When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use <code>safeTransferFrom()</code> instead of <code>transferFrom()</code> (see <a href="https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i">here</a> for details)</li>
+<li>When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use <code>transferFrom()</code>. <!-- instead of `transferFrom()` (see [here](https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i) for details) --></li>
 <li>Make sure that <em>anybody</em> can mint an NFT via your NFT Manager</li>
 <li>Remix does not seem to show return values for transactions to the blockchain (but will do it when deployed to the Javascript environment). You can check the explorer page for your transaction to check the return value.</li>
 <li>To get the current time in a contract, use <code>block.timestamp</code> – it returns a UNIX timestamp. Likely you should keep track of all your times this way. You can search online for UNIX timestamp converters, if you need them. Note that the <code>now</code> keyword, which was used in lieu of <code>block.timestamp</code>, is deprecated, and you should use <code>block.timestamp</code> instead.</li>

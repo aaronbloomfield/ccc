@@ -63,7 +63,7 @@ This section is meant as a high-level overview of the process; the detailed spec
     - If one is currently the winning bidder, they can still place a *higher* bid -- their old ether is returned, just like if it were somebody else placing the bid
 - Once we are past the auction end time, the auction can be closed via a call to `closeAuction()`
     - If there are no bids, then NFT ownership is transferred to the initiator
-    - Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via `safeTransferFrom()` (*not* `transferFrom()`)
+    - Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via `transferFrom()`
     - Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created
 - The auction contract will keep a fee of 1% of the value of a *winning* bid
     - Any auction that does not succeed -- no bids or does not meet the reserve price -- does not collect a fee
@@ -244,7 +244,7 @@ Lastly, bid on at least *three* auctions that are not your own.  Depending on wh
 ### Notes and Hints
 
 - We are going to grade this by creating a very short auction -- a minute or so.  In your `startAuction()`, only one of the time parameters must be non-zero.
-- When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use `safeTransferFrom()` instead of `transferFrom()` (see [here](https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i) for details)
+- When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use `transferFrom()`. <!-- instead of `transferFrom()` (see [here](https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i) for details) -->
 - Make sure that *anybody* can mint an NFT via your NFT Manager
 - Remix does not seem to show return values for transactions to the blockchain (but will do it when deployed to the Javascript environment).  You can check the explorer page for your transaction to check the return value.
 - To get the current time in a contract, use `block.timestamp` -- it returns a UNIX timestamp.  Likely you should keep track of all your times this way.  You can search online for UNIX timestamp converters, if you need them.  Note that the `now` keyword, which was used in lieu of `block.timestamp`, is deprecated, and you should use `block.timestamp` instead.
