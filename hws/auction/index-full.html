@@ -109,7 +109,7 @@
 <li>Once we are past the auction end time, the auction can be closed via a call to <code>closeAuction()</code>
 <ul>
 <li>If there are no bids, then NFT ownership is transferred to the initiator</li>
-<li>Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via <code>transferFrom()</code></li>
+<li>Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator</li>
 <li>Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created</li>
 </ul></li>
 <li>The auction contract will keep a fee of 1% of the value of a <em>winning</em> bid

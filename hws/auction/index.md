@@ -63,7 +63,7 @@ This section is meant as a high-level overview of the process; the detailed spec
     - If one is currently the winning bidder, they can still place a *higher* bid -- their old ether is returned, just like if it were somebody else placing the bid
 - Once we are past the auction end time, the auction can be closed via a call to `closeAuction()`
     - If there are no bids, then NFT ownership is transferred to the initiator
-    - Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator via `transferFrom()`
+    - Otherwise the NFT is transferred to the winning bidder, and the ether (minus a percentage fee) is transferred to the initiator
     - Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created
 - The auction contract will keep a fee of 1% of the value of a *winning* bid
     - Any auction that does not succeed -- no bids or does not meet the reserve price -- does not collect a fee
