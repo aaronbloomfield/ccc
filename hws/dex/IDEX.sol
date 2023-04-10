@@ -158,7 +158,7 @@ interface IDEX is IERC165, IERC20Receiver {
     // and the appropriate amount of ETH is paid back to the caller.
     // This function is defined in the IERC20Receiver.sol file
     //
-    // function onERC20Received(address from, uint amount) external returns (bool);
+    // function onERC20Received(address from, uint amount, address erc20) external returns (bool);
 
     //------------------------------------------------------------
     // Functions for debugging and grading
