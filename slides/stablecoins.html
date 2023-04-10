@@ -106,7 +106,8 @@ line-height:120%;
 - A coin whose value is meant to not be *non*-volatile
 - Usually *pegged* in value to a fiat currency
   - Most use the US Dollar
-  - Thus, `$`1 is called the coin's *peg*
+- Thus, `$`1 is called the coin's *peg*
+- If it's value lowers (significantly) below the peg, it's called *depegged* or *depegging*
 
 
 
@@ -216,6 +217,7 @@ line-height:120%;
      - The entity could be a bank, company, non-profit, consortium, etc.
      - That entity is typically *not* a smart contract
        - Although they may operate through a smart contract
+       - Meaning a centralized agency calls the shots, but uses a ERC-20 contract for the token cryptocurrency
   2. When coins are purchased, the fiat money used for the purchase goes somewhere it can be retrieved
      - Investments, equities, bank account, safe, under a mattress, etc.
 
@@ -225,8 +227,8 @@ line-height:120%;
 ## [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD coin (USDC)
 
 - Managed by a consortium named Centre, which is founded by Coinbase (and others)
-- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 5th largest market capitalization (`$`42 billion as of 11/6/22) 
-  - After Bitcoin (`$`409 billion) and Ethereum (`$`200 billion) and two others
+- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 5th largest market capitalization (`$`33 billion as of 4/9/23) 
+  - After Bitcoin (`$`548 billion) and Ethereum (`$`224 billion) and two others
 
 
 
@@ -247,7 +249,7 @@ line-height:120%;
 
 - Similar to USDC in how it works
 - Run by Tether Ltd
-- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 3rd largest market capitalization (`$`69 billion as of 11/6/22) 
+- As per [coinmarketcap.com](https://coinmarketcap.com/), it has the 3rd largest market capitalization (`$`80 billion as of 4/9/23) 
 - Scandal-ridden (next slide)
   - Many accusations that their reserves are much less than the 1:1 ratio they claim
 - Not backed by the US government in any way!
@@ -427,8 +429,9 @@ line-height:120%;
     - Usually expressed as a percentage
     - 0% means no variation
   - For [![sai logo](../slides/images/logos/sai-coin-symbol.svg)](https://coinmarketcap.com/currencies/single-collateral-dai/) SAI, it's 1.33%
-  - For [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) DAI, it's 0.88%
-  - For [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH, it's 140.1%
+  - For [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) DAI, it's 0.83%
+  - For [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH, it's 131.6%
+  - These values as of 4/9/23
 - We can also see it as a graph...
   - I included SAI data until the end of 2019; DAI was introduced Nov 19, 2019; SAI's price has fluctuated quite a lot since then
 
@@ -459,7 +462,7 @@ line-height:120%;
 - Uncollateralized or Under-collateralized stablecoins: FRAX, FEI, IRON, OHM, Gyroscope
   - There can be little or no collateral backing the stablecoin
     - Zero collateral backing usually doesn't interest many investors, so most are under-collateralized
-  - Of those, [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) FEI has the highest market capitalization (#91 as of 11-6-22)  
+  - Of those, [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) FEI has the highest market capitalization (#91 as of 4/9/23)  
 - Seigniorage shares: Basis, Maker (as a backstop), Tomb, Frax
   - Similar to the previous category, but uses a different mechanism to maintain the peg
 
@@ -582,12 +585,12 @@ Examples:
 <!-- .slide: class="cclogo-slide" -->
 ## Seigniorage Stablecoins
 - These coins have often had trouble holding their peg
-- Consider the [top seigniorage coins by market cap](https://www.coingecko.com/en/categories/seigniorage) (as of 11-6-22):
-  - [![frax logo](../slides/images/logos/frax-coin-symbol.svg)](https://coinmarketcap.com/currencies/frax/) [FRAX](https://coinmarketcap.com/currencies/frax/) (#47 overall, #1 top seigniorage) has been fairly stable
+- Consider the [top seigniorage coins by market cap](https://www.coingecko.com/en/categories/seigniorage) (as of 4/9/23):
+  - [![frax logo](../slides/images/logos/frax-coin-symbol.svg)](https://coinmarketcap.com/currencies/frax/) [FRAX](https://coinmarketcap.com/currencies/frax/) (#51 overall, #1 top seigniorage) has been fairly stable
   - Number 2 is Frax Share, the DAO for FRAX, at #95
   - Number 3 is Terra Classic USD, at #120
     - We'll talk about this shortly; it's a "stablecoin" worth 3.5&cent;
-  - [![tomb logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/tomb/) [TOMB](https://coinmarketcap.com/currencies/tomb/) (#918 overall) has not been stable at all
+  - [![tomb logo](../slides/images/logos/tomb-coin-symbol.svg)](https://coinmarketcap.com/currencies/tomb/) [TOMB](https://coinmarketcap.com/currencies/tomb/) (#4,628 overall) has not been stable at all
     - A "stablecoin" worth 3.1&cent;
   - The next highest is #955 overall, so clearly it's not used much
   - The one after that is #2,781...
@@ -875,15 +878,16 @@ contract Oracle {
 
 
 <!-- .slide: class="cclogo-slide" -->
-## Coefficient of Variations
-- [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) Dai (DAI): 0.88%
-- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ether (ETH): 140.08%
-- [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei (FEI): 3.70%
-- [![lunc logo](../slides/images/logos/lunac-coin-symbol.svg)](https://coinmarketcap.com/currencies/terra-luna/) Luna Classic (LUNC): 179.94%
+## Coef of Variations (as of 4/9/23)
+- [![dai logo](../slides/images/logos/dai-coin-symbol.svg)](https://coinmarketcap.com/currencies/multi-collateral-dai/) Dai (DAI): 0.83%
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ether (ETH): 131.6%
+- [![fei logo](../slides/images/logos/fei-coin-symbol.svg)](https://coinmarketcap.com/currencies/fei-usd/) Fei (FEI): 3.41%
+- [![lunc logo](../slides/images/logos/lunac-coin-symbol.svg)](https://coinmarketcap.com/currencies/terra-luna/) Luna Classic (LUNC): 193.7%
 - [![sai logo](../slides/images/logos/sai-coin-symbol.svg)](https://coinmarketcap.com/currencies/single-collateral-dai/) Sai (SAI): 1.33%
-- [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD Coin (USDC): 0.48%
-- [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/) Tether (USDT): 1.62%
+- [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg)](https://coinmarketcap.com/currencies/usd-coin/) USD Coin (USDC): 0.47%
+- [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg)](https://coinmarketcap.com/currencies/tether/) Tether (USDT): 1.58%
 - [![xpd logo](../slides/images/logos/xpd-coin-symbol.svg)](https://coinmarketcap.com/currencies/petrodollar/) PetroDollar (XPD): 57.92%
+  - XPD's as of Nov 2022, as the price history no longer available
 
 
 

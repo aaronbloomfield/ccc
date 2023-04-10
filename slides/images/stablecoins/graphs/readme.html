@@ -12,7 +12,6 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../../../markdown.css" />
   <script>
@@ -36,24 +35,25 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <p>To update the “SAI/DAI price versus ETH price” graph:</p>
 <ul>
-<li>Download the latest data (log in to coingecko.com, then on each page use the ‘export as’ link at the bottom; as of Nov 2022, it always downloads the max range regardless of what the web page shows)
+<li>Download the latest data (go to coingecko.com, then on each page use the ‘export as’ link at the bottom; as of Nov 2022, it always downloads the max range regardless of what the web page shows)
 <ul>
 <li>DAI prices, in <code>dai-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/dai/historical_data">https://www.coingecko.com/en/coins/dai/historical_data</a></li>
 <li>ETH prices, in <code>eth-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/ethereum/historical_data">https://www.coingecko.com/en/coins/ethereum/historical_data</a></li>
 <li>As SAI is no longer used, that CSV does not have to be updated</li>
 </ul></li>
-<li>In <code>dai-eth.plot</code>, set the end date (the second value in the <code>xrange</code> variable) to the latest date in the data set</li>
+<li>In <code>dai-eth.plot</code>, set the end date (the second value in the <code>xrange</code> variable on line 15) to the latest date in the data set</li>
 <li>If necessary, adjust the maximum ETH price (in the <code>y2range</code> variable)</li>
 <li>Run <code>make</code></li>
-<li>Recompute and update the Coefficient of Variance value in the slides: <code>stdev()/average()</code></li>
+<li>Recompute and update the Coefficient of Variance value in the slides: <code>100*stdev()/average()</code></li>
 </ul>
 <p>To update the CV values:</p>
 <ul>
@@ -62,7 +62,7 @@
 <ul>
 <li>USDC prices, in <code>usdc-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/usd-coin/historical_data">https://www.coingecko.com/en/coins/usd-coin/historical_data</a></li>
 <li>USDT prices, in <code>usdt-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/tether/historical_data">https://www.coingecko.com/en/coins/tether/historical_data</a></li>
-<li>XPD prices, in <code>xpd-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/petrodollar/historical_data">https://www.coingecko.com/en/coins/petrodollar/historical_data</a></li>
+<li>XPD prices, in <code>xpd-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/petrodollar/historical_data">https://www.coingecko.com/en/coins/petrodollar/historical_data</a> (no longer available, apparently)</li>
 <li>FEI prices, in <code>fei-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/fei-usd/historical_data">https://www.coingecko.com/en/coins/fei-usd/historical_data</a></li>
 <li>LUNC / LUNAC prices, in <code>lunc-usd-max.csv</code>, from <a href="https://www.coingecko.com/en/coins/terra-luna-classic/historical_data">https://www.coingecko.com/en/coins/terra-luna-classic/historical_data</a></li>
 </ul></li>

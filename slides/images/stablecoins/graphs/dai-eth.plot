@@ -12,7 +12,7 @@ set ylabel "SAI & DAI price"
 set y2label "ETH price"
 set yrange [0:2]
 set y2range [0:5600]
-set xrange ["2017-12-27 00:00:00 UTC":"2022-11-06 00:00:00 UTC"]
+set xrange ["2017-12-27 00:00:00 UTC":"2023-04-09 00:00:00 UTC"]
 set ytics 0.5 nomirror
 set y2tics 1000 nomirror
 set term png
