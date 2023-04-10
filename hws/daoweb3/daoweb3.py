@@ -43,6 +43,10 @@ other = {
 	# proposals.  It doesn't matter which one you voted for or how you voted.
 	'dao_vote_txn': None,
 
+	# What is the 8 hex digit suffix for your dao_XXXXXXXX.html file?  Just
+	# the 8 hex digits, please.
+	'dao.html_suffix': None,
+
 }
 
 
@@ -53,6 +57,14 @@ other = {
 # need to be changed to True (instead of False).
 sanity_checks = {
 	
+	# Did you compute the suffix for your dao_XXXXXXXX.html file, as per the
+	# instructions?
+	'computed_dao.html_suffix': False,
+
+	# Have you ensured that the `dao.html` file (without the suffix) does NOT
+	# exist?
+	'dao.html_does_not_exist': False,
+
 	# Did you add the three required proposals to your DAO?  One should have
 	# expired, one expires week after the due date, and one is your choice.
 	'added_three_required_dao_proposals': False,

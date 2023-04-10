@@ -149,12 +149,37 @@ string memory uri = substring(Strings.toHexString(addr),2,34);
 ```
 
 
+### Your URL
+
+Everybody is going to have a different URL.  To lessen the temptation, you have to put a (mostly) secret suffix as part of your URL.
+
+We realize this part is going to be rather annoying, but we all have to do it.
+
+To determine your URL:
+
+- Get the checksummed version of your eth.coinbase that you are submitting along with this assignment.  If you don't know the checksummed version, look at the account page in the explorer, as that displays the checksummed version.
+- Enter that address (with the leading '0x' but without a trailing newline) into [this online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html)
+- Take the first 8 hex digits of that value.
+- The file name will be `dao_XXXXXXXX.html`, where the X's are the 8 hex digits
+- Your full URL will be `https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html`
+
+As an example, consider one of the course accounts, `0xd0958cecfa9ee438c6c6b6e7a2295866065c4c59`
+
+- The checksummed version, from the [explorer account page](https://andromeda.cs.virginia.edu/explorer/index.php?account=0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59), is `0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59`
+- The [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html) yields a hash of fe2a2995484d111efe59764bb8b892cb3114579d45932026719c0e123a962c48
+- The first 8 hex digits are fe2a2995
+- The file name would be `dao_fe2a2995.html`
+- The full URL would be [https://www.cs.virginia.edu/~asb/dao_fe2a2995.html](https://www.cs.virginia.edu/~asb/dao_fe2a2995.html) (URL does not work for this one).
+
+When submitting the file, the auto-grader will check the suffix as well.
+
+
 
 ### Web3 Introduction
 
 You are going to write a web interface that shows the status of your DAO and the proposals therein.  This web page will only read from the blockchain.
 
-There are a few strict requirements for this section: *all* of your code -- both HTML and Javascript -- must be in a *single* file called `dao.html`.  That file must be in your `~/public_html/` directory on your CS server account.  This means that the URL for your page will be `https://www.cs.virginia.edu/~mst3k/dao.html`, where `mst3k` is your userid.
+There are a few strict requirements for this section: *all* of your code -- both HTML and Javascript -- must be in a *single* file called `dao_XXXXXXXX.html`.  That file must be in your `~/public_html/` directory on your CS server account.  This means that the URL for your page will be `https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html`, where `mst3k` is your userid.
 
 This is not a class on user interfaces, so we are not expecting an amazing looking website -- we are going to grade it on the functionality, not the appearance.  That being said, it needs to be readable and navigable.
 
@@ -163,17 +188,17 @@ This is not a class on user interfaces, so we are not expecting an amazing looki
 - Log into your CS server account.  You can try using ssh from the command line: `ssh mst3k@portal.cs.virginia.edu` (works in Linux, Mac OS X, and Windows Subsystem for Linux).  You can also download [SecureCRT](https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=65a00a3cdb11db404f32fb671d9619bb), which is a GUI ssh client.
     - Don't know your password, or you never received it?  Follow the reset password link on the CS computing page (a link to which  is on the Canvas landing page)
 - You will likely want to edit the file on your home computer and copy it over to the CS servers to test it.
-    - Create, on your local computer, a file called `dao.html` that just has `hello world` as the contents (we don't need HTML tags for now)
+    - Create, on your local computer, a file called `dao_XXXXXXXX.html` that just has `hello world` as the contents (we don't need HTML tags for now)
     - There are two ways you can transfer it:
-    	- Via `scp` on the command line: `scp dao.html mst3k@portal.cs.virginia.edu:~/public_html/` (works for Linux, Mac OS X, and WSL)
+    	- Via `scp` on the command line: `scp dao_XXXXXXXX.html mst3k@portal.cs.virginia.edu:~/public_html/` (works for Linux, Mac OS X, and WSL)
     	- Install [SecureFX](https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=d1450ab4db51db404f32fb671d9619c5), which is a GUI scp client
-- View the web page at `https://www.cs.virginia.edu/~mst3k/dao.html`, changing `mst3k` for your userid
+- View the web page at `https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html`, changing `mst3k` for your userid
 - Copy a few files over: while all of *your* code must be in a single file, you are going to include the `web3.js` library.  To put that into the correct place on portal, execute the following commands **ON portal.cs**:
   ```
 mkdir -p ~/public_html/
 cd ~/public_html/
-wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js
-wget https://github.com/ChainSafe/web3.js/raw/1.x/dist/web3.min.js.map
+wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js
+wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js.map
 ```
 
 #### Background
@@ -187,7 +212,7 @@ You are *encouraged* to look at the examples of web3 usage provided so far in cl
 
 The links to all of these are on the Canvas landing page.
 
-You are welcome to look at the blockchain explorer code as well, but that won't be as useful for this assignment.  When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on.  Loading up the developer console make make it easier to view the code, and -- later on -- see any Javascript errors.  Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.
+You are welcome to look at the blockchain explorer code as well, but that won't be as useful for this assignment -- there is no web3 done by the explorer web page.  When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on.  Loading up the developer console make make it easier to view the code, and -- later on -- see any Javascript errors.  Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.
 
 ### Javascript
 
@@ -395,15 +420,15 @@ The result, though, is (more or less) the same.
 
 ### Web page
 
-Your task is to create a `dao.html` web page to display all the relevant information about the DAO's proposals and balance.  It should update every time an event is received; it can update the entire table rather than a specific row.  A screen shot of the information we are looking for is below.  Note that you should display this information, but the exact formatting is up to you.  And if you want to display more, that's fine too.  A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.
+Your task is to create a `dao_XXXXXXXX.html` web page to display all the relevant information about the DAO's proposals and balance.  It should update every time an event is received; it can update the entire table rather than a specific row.  A screen shot of the information we are looking for is below.  Note that you should display this information, but the exact formatting is up to you.  And if you want to display more, that's fine too.  A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.
 
 <img src="dao-screenshot.webp" style="border:1px solid black">
 
-You don't have to implement the copy link in the Creator column.  Note that ***ALL*** of your HTML, CSS, and Javascript code must in the dao.html file.  The *only* thing that can be separate is the web3.js file, which is included in the HTML template above.
+You don't have to implement the copy link in the Creator column.  Note that ***ALL*** of your HTML, CSS, and Javascript code must in the dao_XXXXXXXX.html file.  The *only* thing that can be separate is the web3.js file, which is included in the HTML template above.
 
 Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due, and one which will stay open for one week after the assignment (just get the right date; we don't care what time on that day).  The third one is up to you.
 
-As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO -- just change the address in your dao.html file.  But be sure to change it back to your own DAO!  Note that it needs to work on your DAO by the time you submit it!  The address for the course-wide DAO is on the Canvas landing page.
+As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO -- just change the address in your dao_XXXXXXXX.html file.  But be sure to change it back to your own DAO!  Note that it needs to work on your DAO by the time you submit it!  The address for the course-wide DAO is on the Canvas landing page.
 
 
 ### Course DAO
@@ -422,10 +447,10 @@ There are *five* forms of submission for this assignment; you must do all five.
 
 Submission 1: You must deploy your DAO smart contract to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  
 
-Submission 2: You need to have your dao.html properly working at https://www.cs.virginia.edu/~mst3k/dao.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory as well.  Needless to say, it should properly connect to your deployed DAO smart contract.
+Submission 2: You need to have your dao_XXXXXXXX.html properly working at https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory as well.  Needless to say, it should properly connect to your deployed DAO smart contract.
 
 Submission 3: You need to add some data to your DAO contract, as specified above.  In particular, that means at least three proposals (one of which has expired, one of which stays open for one week).  Also make the specified Ethernet account address -- indicated on the Canvas landing page -- is a member of your DAO so that that address can perform tasks on your DAO to grade it.
 
 Submission 4: You need to join the course-wide DAO and vote on one of the proposals.
 
-Submission 5: You should submit your `DAO.sol` file, your `dao.html` file, and your completed `daoweb3.py` file, and ONLY those three files, to Gradescope.  All other imported files will be provided by Gradescope (including NFTManager.sol, if needed).   **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).
+Submission 5: You should submit your `DAO.sol` file, your `dao_XXXXXXXX.html` file, and your completed `daoweb3.py` file, and ONLY those three files, to Gradescope.  All other imported files will be provided by Gradescope (including NFTManager.sol, if needed).   **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in daoweb3.py, etc.).

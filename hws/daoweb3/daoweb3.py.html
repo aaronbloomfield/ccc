@@ -54,6 +54,10 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># proposals.  It doesn't matter which one you voted for or how you voted.</font></i>
 	<font color="#FF0000">'dao_vote_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># What is the 8 hex digit suffix for your dao_XXXXXXXX.html file?  Just</font></i>
+	<i><font color="#9A1900"># the 8 hex digits, please.</font></i>
+	<font color="#FF0000">'dao.html_suffix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
 <font color="#990000">}</font>
 
 
@@ -64,6 +68,14 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># need to be changed to True (instead of False).</font></i>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
+	<i><font color="#9A1900"># Did you compute the suffix for your dao_XXXXXXXX.html file, as per the</font></i>
+	<i><font color="#9A1900"># instructions?</font></i>
+	<font color="#FF0000">'computed_dao.html_suffix'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Have you ensured that the `dao.html` file (without the suffix) does NOT</font></i>
+	<i><font color="#9A1900"># exist?</font></i>
+	<font color="#FF0000">'dao.html_does_not_exist'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you add the three required proposals to your DAO?  One should have</font></i>
 	<i><font color="#9A1900"># expired, one expires week after the due date, and one is your choice.</font></i>
 	<font color="#FF0000">'added_three_required_dao_proposals'</font><font color="#990000">:</font> False<font color="#990000">,</font>
