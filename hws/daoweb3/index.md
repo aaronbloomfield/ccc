@@ -157,7 +157,7 @@ We realize this part is going to be rather annoying, but we all have to do it.
 
 To determine your URL:
 
-- Get the checksummed version of your eth.coinbase that you are submitting along with this assignment.  If you don't know the checksummed version, look at the account page in the explorer, as that displays the checksummed version.
+- Get the checksummed version (use [https://ethsum.netlify.app/](https://ethsum.netlify.app/) if needed) of your eth.coinbase that you are submitting along with this assignment.  If you don't know the checksummed version, look at the account page in the explorer, as that displays the checksummed version.
 - Enter that address (with the leading '0x' but without a trailing newline) into [this online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html)
 - Take the first 8 hex digits of that value.
 - The file name will be `dao_XXXXXXXX.html`, where the X's are the 8 hex digits
@@ -172,6 +172,33 @@ As an example, consider one of the course accounts, `0xd0958cecfa9ee438c6c6b6e7a
 - The full URL would be [https://www.cs.virginia.edu/~asb/dao_fe2a2995.html](https://www.cs.virginia.edu/~asb/dao_fe2a2995.html) (URL does not work for this one).
 
 When submitting the file, the auto-grader will check the suffix as well.
+
+The following code, contained in [get-url-ext.py](get-url-ext.py.html) ([src](get-url-ext.py)) will compute this value as well.  You have to pip install both `web3` and `pysha3` for this code to work.
+
+```
+# to run this, first: `pip install web3 pysha3`
+import sys, web3, sha3
+
+# sanity checks
+assert len(sys.argv) == 2, "Must supply one parameter, the eth.coinbase account"
+assert int(web3.__version__.split('.')[0]) >= 6, "You must install web3 version 6.0.0 or greater to run this code"
+
+# compute and print out the suffix
+checksummed = web3.Web3.to_checksum_address(sys.argv[1])
+hash = sha3.keccak_256(bytes(checksummed,'ASCII'))
+suffix = hash.hexdigest()[:8]
+print("dao_"+suffix+".html")
+```
+
+You do not need to understand how that code works for this homework -- you'll be seeing all that code, and more, in the next homework.
+
+Usage:
+
+```
+$ python3 get-url-ext.py 0xd0958cecfa9ee438c6c6b6e7a2295866065c4c59
+dao_fe2a2995.html
+$
+```
 
 
 

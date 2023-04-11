@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>get-url-ext.py</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900"># to run this, first: `pip install web3 pysha3`</font></i>
+<b><font color="#000080">import</font></b> sys<font color="#990000">,</font> web3<font color="#990000">,</font> sha3
+
+<i><font color="#9A1900"># sanity checks</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#FF0000">"Must supply one parameter, the eth.coinbase account"</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font>web3<font color="#990000">.</font>__version__<font color="#990000">.</font><b><font color="#000000">split</font></b><font color="#990000">(</font><font color="#FF0000">'.'</font><font color="#990000">)[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">&gt;=</font> <font color="#993399">6</font><font color="#990000">,</font> <font color="#FF0000">"You must install web3 version 6.0.0 or greater to run this code"</font>
+
+<i><font color="#9A1900"># compute and print out the suffix</font></i>
+checksummed <font color="#990000">=</font> web3<font color="#990000">.</font>Web3<font color="#990000">.</font><b><font color="#000000">to_checksum_address</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font>
+hash <font color="#990000">=</font> sha3<font color="#990000">.</font><b><font color="#000000">keccak_256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>checksummed<font color="#990000">,</font><font color="#FF0000">'ASCII'</font><font color="#990000">))</font>
+suffix <font color="#990000">=</font> hash<font color="#990000">.</font><b><font color="#000000">hexdigest</font></b><font color="#990000">()[:</font><font color="#993399">8</font><font color="#990000">]</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"dao_"</font><font color="#990000">+</font>suffix<font color="#990000">+</font><font color="#FF0000">".html"</font><font color="#990000">)</font>
+</tt></pre>
+</body>
+</html>

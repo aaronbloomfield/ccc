@@ -176,7 +176,7 @@ interface IDAO is IERC165 {
 <p>We realize this part is going to be rather annoying, but we all have to do it.</p>
 <p>To determine your URL:</p>
 <ul>
-<li>Get the checksummed version of your eth.coinbase that you are submitting along with this assignment. If you don’t know the checksummed version, look at the account page in the explorer, as that displays the checksummed version.</li>
+<li>Get the checksummed version (use <a href='https://ethsum.netlify.app/'>https://ethsum.netlify.app/</a> if needed) of your eth.coinbase that you are submitting along with this assignment. If you don’t know the checksummed version, look at the account page in the explorer, as that displays the checksummed version.</li>
 <li>Enter that address (with the leading ‘0x’ but without a trailing newline) into <a href='https://emn178.github.io/online-tools/keccak_256.html'>this online Keccak generator</a></li>
 <li>Take the first 8 hex digits of that value.</li>
 <li>The file name will be <code>dao_XXXXXXXX.html</code>, where the X’s are the 8 hex digits</li>
@@ -191,6 +191,24 @@ interface IDAO is IERC165 {
 <li>The full URL would be <a href='https://www.cs.virginia.edu/~asb/dao_fe2a2995.html'>https://www.cs.virginia.edu/~asb/dao_fe2a2995.html</a> (URL does not work for this one).</li>
 </ul>
 <p>When submitting the file, the auto-grader will check the suffix as well.</p>
+<p>The following code, contained in <a href='get-url-ext.py.html'>get-url-ext.py</a> (<a href='get-url-ext.py'>src</a>) will compute this value as well. You have to pip install both <code>web3</code> and <code>pysha3</code> for this code to work.</p>
+<pre><code># to run this, first: `pip install web3 pysha3`
+import sys, web3, sha3
+
+# sanity checks
+assert len(sys.argv) == 2, "Must supply one parameter, the eth.coinbase account"
+assert int(web3.__version__.split('.')[0]) &gt;= 6, "You must install web3 version 6.0.0 or greater to run this code"
+
+# compute and print out the suffix
+checksummed = web3.Web3.to_checksum_address(sys.argv[1])
+hash = sha3.keccak_256(bytes(checksummed,'ASCII'))
+suffix = hash.hexdigest()[:8]
+print("dao_"+suffix+".html")</code></pre>
+<p>You do not need to understand how that code works for this homework – you’ll be seeing all that code, and more, in the next homework.</p>
+<p>Usage:</p>
+<pre><code>$ python3 get-url-ext.py 0xd0958cecfa9ee438c6c6b6e7a2295866065c4c59
+dao_fe2a2995.html
+$</code></pre>
 </div><div id='tweb3-introduction' class='tabcontent'><h3 id='web3-introduction'>Web3 Introduction</h3>
 <p>You are going to write a web interface that shows the status of your DAO and the proposals therein. This web page will only read from the blockchain.</p>
 <p>There are a few strict requirements for this section: <em>all</em> of your code – both HTML and Javascript – must be in a <em>single</em> file called <code>dao_XXXXXXXX.html</code>. That file must be in your <code>~/public_html/</code> directory on your CS server account. This means that the URL for your page will be <code>https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html</code>, where <code>mst3k</code> is your userid.</p>
