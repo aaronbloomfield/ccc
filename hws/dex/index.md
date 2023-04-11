@@ -32,8 +32,9 @@ In addition to your source code, you will submit an edited version of [dex.py](d
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
 
+- Tuesday, 4/11: Clarified the necessary `require()` line at the bottom of the `onERC20Received()` sub-section
 
 ### ETH price
 
@@ -180,7 +181,7 @@ The `onERC20Received()` function will be called any time TCC is transferred to a
 
 However, there are some times where we may NOT want `onERC20Received()` to do anything.  In particular, `addLiquidity()` (and possibly `removeLiquidity()`) will initiate a ERC-20 transfer (via calling `transferFrom()`), but we probably *don't* want `onERC20Received()` to be called at that point (it's not an exchange).  So we are going to want to have a way to "turn off" the functionality of `onERC20Received()`.  The easiest way to do this is to have an `internal` contract variable, such as `adjustingLiquidity`, that is normally set to `false`.  In `addLiquidity()` and `removeLiquidity()`, you set it to `true` when you are about to initiate the transfer, and then set it to `false` when done.
 
-***IMPORTANT NOTE:*** Your `onERC20Received()` MUST check that the address passed in as the third parameter is the same address as the contract it is part of; `require(erc20==address(this),"witty error message");` will do this.  Otherwise, somebody could call that function with a *different* ERC-20 contract and drain all the TCC from your contract.
+***IMPORTANT NOTE:*** Your `onERC20Received()` MUST check that the address passed in as the third parameter is the same address as the contract it is part of; `require(erc20==erc20Address,"witty error message");` will do this.  Otherwise, somebody could call that function with a *different* ERC-20 contract and drain all the TCC from your contract.
 
 ### Interface
 
