@@ -172,9 +172,10 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">// This is how one requests to join the DAO.  Presumably they called</font></i>
     <i><font color="#9A1900">// howToJoin(), and fulfilled any requirement(s) therein.  In a real</font></i>
     <i><font color="#9A1900">// application, this would put them into a list for the owner(s) to</font></i>
-    <i><font color="#9A1900">// approve or deny.  For us, this will just call revert(), as joining is</font></i>
-    <i><font color="#9A1900">// done through the other functions listed above.  This should also</font></i>
-    <i><font color="#9A1900">// revert if the caller is already a member.</font></i>
+    <i><font color="#9A1900">// approve or deny.  For our uses, this will automatically allow the</font></i>
+    <i><font color="#9A1900">// caller (`msg.sender`) to be a member of the DAO.  This functionality</font></i>
+    <i><font color="#9A1900">// is for grading purposes.  This function should revert if the caller is</font></i>
+    <i><font color="#9A1900">// already a member.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">requestMembership</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// also supportsInterface() from IERC165; it should support two</font></i>

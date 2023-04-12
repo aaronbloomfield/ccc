@@ -106,7 +106,7 @@ The files you will need are:
 - [IERC721Metadata.sol](../tokens/IERC721Metadata.sol.html) ([src](../tokens/IERC721Metadata.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 - [IERC721.sol](../tokens/IERC721.sol.html) ([src](../tokens/IERC721.sol)): this unchanged from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment
 
-You will need the [IDAO.abi](IDAO.abi) file, which contains the ABI for the IDAO interface -- you'll need this when writing your Javascript code to interact with the interface.
+You will need the [IDAO.abi](IDAO.abi.txt) file, which contains the ABI for the IDAO interface -- you'll need this when writing your Javascript code to interact with the interface.
 
 You will also need your NFTManager.sol file from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, and any other .sol files that are needed to allow that to compile (such as ERC721.sol, Strings.sol. Address.sol, etc.).
 
@@ -114,7 +114,18 @@ The requirements on this section are intentionally vague -- the intent is to let
 
 Don't overthink this!  The intent is just for you to get a working DAO.  It doesn't have to be perfect.  In fact, this is the easier part of this homework, since we've all written a bunch of Solidity programs by now.  The longest methods here are 8 lines.
 
-#### Notes
+#### DAO Notes
+
+- A proposal passes if it receives more yes votes than no votes.  Many voting systems have a quorum -- a minimum number of total voters needed to vote; we are not implementing this.  Nor are we implementing abstention votes.  Thus, for our purposes, 1 yes vote and 0 no votes will cause a proposal to pass, even if there are a million members.
+- Ether does not necessarily have to be transferred in along with the `newProposal()` call.  However, that function must ensure that the DAO has enough ether for the proposal.  One can imagine a number of calls to fund the DAO (a noraml ether transfer, which kicks off `receive()`), followed by a `newProposal()` that does not have any ether transferred in along with it.  Alternatively, one can send in ether with a `newProposal()` call as well.
+- The curator (aka deployer) is considered a member, and should probably be issued an NFT for membership.  That account can vote like any other member.
+- `requestMembership()`: in a real application, this would put them into a list for the owner(s) to approve or deny.  For our uses, this will automatically allow the caller (`msg.sender`) to be a member of the DAO.  This functionality is for grading purposes.  This function should revert if the caller is already a member.
+- Like the Auctioneer, and unlike the DEX, the DAO will create it's own NFTManager in the constructor.  Thus, each DAO will have it's own NFTManager.
+- With our NFTManager that we are using to handle membership, anybody can get the address of the NFTManager via a call to `tokens()`, mint themselves an NFT, and then become a member of the DAO.  We could secure this by only allowing the deployer to mint NFTs, and since the DAO contract is the deployer, nobody else could use this technique to gain membership.  But since we are allowing anybody to join via `requestMembership()`, that is not necessary here.  But you are welcome to implement that if you would like.
+
+
+
+#### Solidity Notes
 
 
 - You can create a `constant` variable if the value is not going to change.  This is done via `uint constant public override minProposalDebatePeriod = 600;`.  This saves gas versus not having it be a constant
@@ -453,7 +464,7 @@ Your task is to create a `dao_XXXXXXXX.html` web page to display all the relevan
 
 You don't have to implement the copy link in the Creator column.  Note that ***ALL*** of your HTML, CSS, and Javascript code must in the dao_XXXXXXXX.html file.  The *only* thing that can be separate is the web3.js file, which is included in the HTML template above.
 
-Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due, and one which will stay open for one week after the assignment (just get the right date; we don't care what time on that day).  The third one is up to you.
+Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due AND ALSO called `closeProposal()` on it, and one which will stay open for one week after the assignment (just get the right date; we don't care what time on that day).  The third one is up to you.
 
 As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO -- just change the address in your dao_XXXXXXXX.html file.  But be sure to change it back to your own DAO!  Note that it needs to work on your DAO by the time you submit it!  The address for the course-wide DAO is on the Canvas landing page.
 
@@ -462,7 +473,7 @@ As long as your web page starts the proposal IDs from 0, and increments them for
 
 You need to join the course-wide DAO and vote on one of the proposals.  The address for the course-wide DAO is on the Canvas landing page.  This DAO also follows the [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)) interface.
 
-To join, you can just call `requestMembership()`.  Although `requestMembership()` is supposed to revert in your code, in the course-wide DAO it will just add you as a member.  You then need to vote on one of the proposals.  It doesn't matter which proposal you vote on, or how you vote.  Save the transaction hash from when you voted, as you will have to submit that.
+To join, you can just call `requestMembership()`, which will add you as a member.  You then need to vote on one of the proposals.  It doesn't matter which proposal you vote on, or how you vote.  Save the transaction hash from when you voted, as you will have to submit that.
 
 
 ### Submission

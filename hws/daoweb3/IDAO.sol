@@ -161,9 +161,10 @@ interface IDAO is IERC165 {
     // This is how one requests to join the DAO.  Presumably they called
     // howToJoin(), and fulfilled any requirement(s) therein.  In a real
     // application, this would put them into a list for the owner(s) to
-    // approve or deny.  For us, this will just call revert(), as joining is
-    // done through the other functions listed above.  This should also
-    // revert if the caller is already a member.
+    // approve or deny.  For our uses, this will automatically allow the
+    // caller (`msg.sender`) to be a member of the DAO.  This functionality
+    // is for grading purposes.  This function should revert if the caller is
+    // already a member.
     function requestMembership() external;
 
     // also supportsInterface() from IERC165; it should support two
