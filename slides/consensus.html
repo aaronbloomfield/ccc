@@ -289,7 +289,7 @@ line-height:120%;
 
 ## Traitor tolerance
 - The algorithm must be able to withstand some number of traitors
-- How many traitors can exist while allowing correct communication among the loyal nodes?
+  - Formally: how many traitors can exist while allowing correct communication among the loyal nodes?
 - Consider one general communicating his/her intentions to the other generals
   - We will call the "sending" general here the commander
   - We will call the "receiving" generals here lieutenants
@@ -312,7 +312,7 @@ line-height:120%;
   - But $n$ can be any positive integer
 - Some number $m$ of participants are traitors
   - Maybe the general too!
-- This is solving a *communication* problem, which will be used to solve the overall Byzantine Generals Problem
+- This is solving a *communication* problem, which is used to solve the overall Byzantine Generals Problem
 
 
 
@@ -476,6 +476,15 @@ line-height:120%;
 This implies:
 
 > It is also impossible to solve the 3 generals, 1 traitor case of the *Byzantine* Generals Problem
+
+
+
+## Important note
+- The 3 generals, 1 traitor problem does not work
+  - As the case where the commander is the traitor causes it to fail
+- But the case DOES work if the traitor is the other lieutenant
+  - We just can't ensure that ahead of time
+- But we are going to use this result later
 
 
 
@@ -753,6 +762,13 @@ This implies:
   - These are the blue-circled values
 - But majority vote (of the loyal generals) will still be attack
 - So the overall $OM(2)$ algorithm still works in this case
+
+
+
+## Why does this work?
+- Recall that the 3 generals, 1 traitor case will be successful if the traitor is *not* the commander
+  - The 3 generals, 1 traitor case is analogous to the 6 generals, 2 traitors
+  - Which is how they are communicating the (loyal) commander's order in this last case
 
 
 
