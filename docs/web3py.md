@@ -3,9 +3,12 @@ Web3.py Introduction
 
 [Go up to the main CCC docs page](index.html) ([md](index.md))
 
-### Web3.py
+This document is an introduction to using web3 in Python.
 
-This section is an introduction to using web3 in Python.
+#### Version
+
+The functions herein are for web3.py version 6.0.0 and above.  Specifically, all the function names changed from version 5.31.0 and 6.0.0.  Run `pip freeze` to see what version of web3 you have installed.  If it's not 6.0.0 or above, this tutorial is not going to work out well for you.
+
 
 #### Starting Python
 
@@ -53,7 +56,7 @@ w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
 To see if you are connected, you can try:
 
-- `w3.isConnected()`, which should return `True`
+- `w3.is_connected()`, which should return `True`
 - `w3.eth.get_block('latest')`, which should return the latest block
 
 #### Calling a `view` or `pure` function on a smart contract
@@ -85,7 +88,7 @@ Notice that we have to put parenthesis after both the method name of `k` and aft
 
 #### Transactions
 
-In geth, we would unlock our account with our password, and then call `sendTransaction()`.  To do this in Python is a bit more complicated.
+In geth, we would unlock our account with our password, and then call `send_transaction()`.  To do this in Python is a bit more complicated.
 
 First, we need the private key in decrypted form.  This was done in the [Private Ethereum Blockchain assignment](ethprivate/index.html) ([md](ethprivate/index.md)) in part 4 -- if you don't have that decrypted private key saved, or if you changed accounts, then re-do that section.  Your private key will be of the form `b'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'`.  Save it via:
 
@@ -101,22 +104,22 @@ We also need to define our account address that we have the private key for:
 my_address='0x0123456789abcdef0123456789abcdef01234567';
 ```
 
-This address has to be in correct check-summed form -- you can run it through [ethsum.netlify.app](https://ethsum.netlify.app/) to get the check-summed version.  You can also use the Web3.py library to checksum and address: `Web3.toChecksumAddress(addr)`.
+This address has to be in correct check-summed form -- you can run it through [ethsum.netlify.app](https://ethsum.netlify.app/) to get the check-summed version.  You can also use the Web3.py library to checksum and address: `Web3.to_checksum_address(addr)`.
 
 Once we have the private key, we have to take three steps: create the transaction, sign it, and then transmit it to the blockchain.
 
 Let's first create the transaction:
 
 ```
-transaction = contract.functions.getTokenCCAbbreviation().buildTransaction({
+transaction = contract.functions.getTokenCCAbbreviation().build_transaction({
     'gas': 70000,
-    'gasPrice': w3.toWei('10', 'gwei'),
+    'gasPrice': w3.to_wei('10', 'gwei'),
     'from': my_address,
     'nonce': w3.eth.get_transaction_count(my_address)
     })
 ```
 
-Parameters, if there were any, would go in the parenthesis after the method name, not in the `buildTransaction()` parentheses.
+Parameters, if there were any, would go in the parenthesis after the method name, not in the `build_transaction()` parentheses.
 
 Other fields could be added as well -- if we wanted to send some wei in with the transaction, such as to a `payable` function, then we would add a `value` key with the (integer) wei amount as the value.
 
@@ -126,29 +129,29 @@ If all we wanted to do was to just pay ETH, and not call a function, we would ju
 transaction = {
     'nonce': w3.eth.get_transaction_count(my_address),
     'to': '0x0123456789abcdef0123456789abcdef01234567',
-    'value': w3.toWei(1, 'ether'),
+    'value': w3.to_wei(1, 'ether'),
     'gas': 21000,
-    'gasPrice': web3.toWei('10', 'gwei')
+    'gasPrice': web3.to_wei('10', 'gwei')
 }
 ```
 
 We then sign that transaction:
 
 ```
-signed_txn = w3.eth.account.signTransaction(transaction, private_key=private_key)
+signed_txn = w3.eth.account.sign_transaction(transaction, private_key=private_key)
 ```
 
 Lastly, we send it to the network
 
 ```
-ret = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+ret = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
 ```
 
 That's it!  The transaction was sent to the blockchain.
 
 #### Transaction details
 
-The return value of `sendRawTransaction()` was saved into the `ret` variable.  We can then get that transaction information:
+The return value of `send_raw_transaction()` was saved into the `ret` variable.  We can then get that transaction information:
 
 ```
 w3.eth.wait_for_transaction_receipt(ret)
@@ -167,7 +170,7 @@ This is the same information that you can find in the blockchain explorer.
 
 #### Gas estimation
 
-Web3 can estimate how much gas your transaction will use.  Once you have created your transaction object, you can just call: `gas = w3.eth.estimateGas(transaction)`.  Note that this is an *estimate*, not a fully accurate count.  In particular, if there is an if/else path, then it can't always know which path it will take.  Although an estimate, it is sufficient for our purposes.  Lastly, note that this is the amount of gas, and once you supply it with a amount of wei per gas, you can convert that into a actual price in ether.
+Web3 can estimate how much gas your transaction will use.  Once you have created your transaction object, you can just call: `gas = w3.eth.estimate_gas(transaction)`.  Note that this is an *estimate*, not a fully accurate count.  In particular, if there is an if/else path, then it can't always know which path it will take.  Although an estimate, it is sufficient for our purposes.  Lastly, note that this is the amount of gas, and once you supply it with a amount of wei per gas, you can convert that into a actual price in ether.
 
 
 #### Return values and reverts
