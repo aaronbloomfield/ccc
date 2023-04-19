@@ -74,11 +74,11 @@ sanity_checks = {
 	'made_instructor_dao_member': False,
 
 	# Is the URL of your dao.html exactly:
-	# https://www.cs.virginia.edu/~mst3k/dao.html, where 'mst3k' is your
-	# userid?
+	# https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html, where 'mst3k' is
+	# your userid?
 	'dao_url_is_correct': False,
 
-	# Does your dao.html web page specifically load up the information
+	# Does your dao_XXXXXXXX.html web page specifically load up the information
 	# on *your* DAO, and the latest version (that has the three proposals
 	# mentioned above?)
 	'dao_contract_addr_is_correct': False,
