@@ -12,6 +12,7 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
   <script>
@@ -40,6 +41,9 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="arbitrage-trading">Arbitrage Trading</h1>
@@ -173,6 +177,7 @@ You can assume the number of DEXes involved, $d$, is relatively small, so you ca
     &#39;tokencc_addr&#39;: &#39;0x123456789abcdef0123456789abcdef123456789&#39;,
     &#39;max_eth_to_trade&#39;: 10.0,
     &#39;max_tc_to_trade&#39;: 100.0,
+    &#39;gas_price&#39;: 1, # in gwei
 }</code></pre>
 <p>The <code>output()</code> function, below, will also be in the <a href="arbitrage_config.py.html">arbitrage_config.py</a> (<a href="arbitrage_config.py">src</a>) file, as well as a few more useful items.</p>
 <p>You may assume that the arbitrage_config.py will always be present and properly structured, and that all values will be valid. The parts of the <code>config</code> dictionary are:</p>

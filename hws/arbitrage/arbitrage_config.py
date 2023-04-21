@@ -14,6 +14,7 @@ config = {
     'tokencc_addr': '0x123456789abcdef0123456789abcdef123456789',
     'max_eth_to_trade': 10.0,
     'max_tc_to_trade': 100.0,
+    'gas_price': 1, # in gwei
 }
 
 # This will print the output into the format required by the homework.  It
