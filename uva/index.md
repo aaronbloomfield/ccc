@@ -90,7 +90,7 @@ Course calendar
 | 10 | Mar 27 | M,W,F | P6 (Tokens) | [Mining](../slides/mining.html#/), [Scalability](../slides/scalability.html#/) | Mon: mining to 5.9; Wed: mining to 5.23; Fri: mining to 7.17 |
 | 11 | Apr 3 | M,W,F | P7 (Auction) | [Blockchain applications](../slides/applications.html#/), [Stablecoins](../slides/stablecoins.html#/) | Mon: blockchain apps to 3.30; Wed: blockchain apps to 3.51; mining to 7.17; Fri: finished mining, blockchain apps to 4.15 |
 | 12 | Apr 10 | M,W,F | P8 (DEX) | [Consensus](../slides/consensus.html#/) | Mon: finished blockchain apps, stablecoins to 6.2; Wed: stablecoins to 7.13; Fri: finished stablecoins |
-| 13 | Apr 17 | M,W,F | P9 (DAO&web3) | [zkSNARKs](../slides/zksnarks.html#/) | Mon: consensus to 7.15 |
+| 13 | Apr 17 | M,W,F | P9 (DAO&web3) | [zkSNARKs](../slides/zksnarks.html#/) | Mon: consensus to 7.15; Wed: consensus to 8.19; Fri: finished consensus, scalability to 5.5 |
 | 14 | Apr 24 | M,W,F | P10 (Arbitrage) | [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/)  | |
 | 15 | May 1 | M | P11 (Metamask) | [Course conclusion](../slides/conclusion.html#/) | |
 
