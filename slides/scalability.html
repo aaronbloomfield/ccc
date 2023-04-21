@@ -78,12 +78,13 @@ line-height:120%;
 <section data-markdown data-separator="^\n\n\n"><textarea>
 ## BTC transactions per second
 [![](images/timely/btc-tps.webp)](https://www.blockchain.com/charts/transactions-per-second)
-<!-- to generate this graph: set to 7 day average, 3 year history, the right-click and "open image in new tab" -->
+<!-- to generate this graph: set to 7 day average, 3 year history, the right-click and "open image in new tab"; save and convert to .webp with -q 75 -->
 
 
 
 ## ETH & BTC fees, all time
 [![](images/timely/btc-eth-fees-alltime.webp)](https://bitinfocharts.com/comparison/transactionfees-btc-eth.html#alltime)
+<!-- to generate this graph: click on the image in the slide, screenshot it (and the next one), and edit in gimp; convert to .webp with -q 75 -->
 
 
 
@@ -214,15 +215,15 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 
 <!-- .slide: class="cclogo-slide" -->
 ## Current blockchain stats
-- [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) Bitcoin averages:
+- [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) Bitcoin averages (as of 4/23/20):
     - $<$10 minute block time
-    - $\approx$3 Mb block size when busy, but [about 1.2 Mb lately](https://www.blockchain.com/charts/avg-block-size)
-    - [1,600 - 1,800 TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block) (60 sec/min * 10 min * 3 TPS)
-    - [About 245,000 TXNs per day](https://www.blockchain.com/charts/n-transactions) ($\approx$2.8 TPS)
-- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum (post PoS): 
-    - [13 seconds block time](https://etherscan.io/chart/blocktime)
-    - About 90 Kb block size
-        - That's [600 Mb per day](https://messari.io/charts/ethereum/blk-size-byte) added to the blockchain per day!
+    - $\approx$3 Mb block size when busy, but [about 1.7 Mb lately](https://www.blockchain.com/charts/avg-block-size)
+    - [1.8k - 2.5k TXNs / block](https://www.blockchain.com/charts/n-transactions-per-block) (60 sec/min * 10 min * 3 TPS)
+    - [About 300k TXNs per day](https://www.blockchain.com/charts/n-transactions) ($\approx$3.5 TPS)
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum (post PoS) (as of 4/23/20):
+    - [12 seconds block time](https://etherscan.io/chart/blocktime)
+    - About 113 Kb block size
+        - That's [800 Mb per day](https://messari.io/charts/ethereum/blk-size-byte) added to the blockchain per day!
     - [1.1M TXNs per day](https://etherscan.io/chart/tx/) ($\approx$12.7 TPS)
         - Which is about 165 TXNs per block
     - About 13 transactions per second
@@ -230,10 +231,10 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 
 
 ## Current blockchain stats
-- [Bitcoin's blockchain size](https://ycharts.com/indicators/bitcoin_blockchain_size) is $\approx$436 GB (as of 11/9/22)
+- [Bitcoin's blockchain size](https://ycharts.com/indicators/bitcoin_blockchain_size) is $\approx$475 GB (as of 4/20/23)
     - And increasing at about 150 Mb per day
 - Ethereum's full blockchain is about 1.7 Tb
-    - And increasing at about 600 Mb per day!
+    - And increasing at about 400 Mb per day!
 - This won't be sustainable with increased adoption
 
 
@@ -574,9 +575,9 @@ Roll-out is in three phases:
     - WBTC is thus an ERC-20 token cryptocurrency
 - Once on Ethereum, transactions are *faster*, if not *cheaper* than through Bitcoin
     - But not as fast as on the Lightning Network
-- As of August 2021 ([stats](https://www.bitcoin.com/get-started/what-is-lightning-network/)):
-    - LN had 2,300 BTC locked up
-    - WBTC had 250,000 BTC locked up
+- As of 4/20/23:
+    - [LN stats](https://1ml.com/statistics): had 5,390 BTC locked up
+    - [![wbtc logo](../slides/images/logos/wbtc-coin-symbol.svg)](https://coinmarketcap.com/currencies/wrapped-bitcoin/) WBTC had 154k BTC locked up
 
 
 
