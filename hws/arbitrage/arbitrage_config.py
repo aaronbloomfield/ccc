@@ -15,6 +15,7 @@ config = {
     'max_eth_to_trade': 10.0,
     'max_tc_to_trade': 100.0,
     'gas_price': 1, # in gwei
+    'dex_fees': 0.005, # that's 1/2 of a percernt
 }
 
 # This will print the output into the format required by the homework.  It

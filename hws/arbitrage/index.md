@@ -18,7 +18,9 @@ In addition to your source code, you will submit an edited version of [arbitrage
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Sat, 4/22: Updates to arbitrage_config.py: added the `dex_fees` and `gas_price` fields; also updated the when-to-make-a-trade formula in the market theory section
 
 
 ### DEX
@@ -88,7 +90,7 @@ Your program will need to compute it's *holdings*, which is the dollar amount of
 
 You will first need to obtain the various information (prices, $x$/$y$/$k$ values at each DEX, etc.).  Then you will need to make a *profitable trade*.  A profitable trade is defined here as a trade where the overall value of *holdings*, in USD, increases.  You must account for gas fees when determining this!  The formula to determine if you will make a profit is whether:
 
-> $ethAmountAfter \ast ethPrice + tcAmountAfter \ast tcPrice > ethAmountBefore \ast ethPrice + tcAmountBefore \ast tcPrice - gasFees$
+> $ethAmountAfter \ast ethPrice + tcAmountAfter \ast tcPrice - gasFees > ethAmountBefore \ast ethPrice + tcAmountBefore \ast tcPrice$
 
 Note: there are other reasonable ways to determine "profit".  In particular, if one believes that the price of the currency will grow, then the total amount of that currency (not the total USD value) would be another metric.  For our purposes, we will just use the USD value of the holdings.
 

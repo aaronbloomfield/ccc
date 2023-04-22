@@ -12,7 +12,6 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
   <script>
@@ -41,9 +40,6 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 id="arbitrage-trading">Arbitrage Trading</h1>
@@ -58,7 +54,10 @@
 </ul>
 <p>In addition to your source code, you will submit an edited version of <a href="arbitrage.py.html">arbitrage.py</a> (<a href="arbitrage.py">src</a>).</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. --></p>
+<ul>
+<li>Sat, 4/22: Updates to arbitrage_config.py: added the <code>dex_fees</code> and <code>gas_price</code> fields; also updated the when-to-make-a-trade formula in the market theory section</li>
+</ul>
 <h3 id="dex">DEX</h3>
 <p>This section is only if you want to use your own DEXes. If you plan on using the ones on the course blockchain, you can skip this section.</p>
 <p>You will need to deploy five (or so) instances of your DEX. The intent is to have a difference in exchange rates between these, and your program below will take advantage of these differences. Before you deploy them, however, read this section through.</p>
@@ -103,7 +102,7 @@
 <p>Your program will need to compute it’s <em>holdings</em>, which is the dollar amount of all the ETH and TC that it has. You can assume some fixed price for ETH (say, $100) and for TC (say, $10) for initial testing – but that means that your DEXes should have about 10 times as much TC as ETH.</p>
 <p>You will first need to obtain the various information (prices, <span class="math inline"><em>x</em></span>/<span class="math inline"><em>y</em></span>/<span class="math inline"><em>k</em></span> values at each DEX, etc.). Then you will need to make a <em>profitable trade</em>. A profitable trade is defined here as a trade where the overall value of <em>holdings</em>, in USD, increases. You must account for gas fees when determining this! The formula to determine if you will make a profit is whether:</p>
 <blockquote>
-<p><span class="math inline"><em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> &gt; <em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> − <em>g</em><em>a</em><em>s</em><em>F</em><em>e</em><em>e</em><em>s</em></span></p>
+<p><span class="math inline"><em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>A</em><em>f</em><em>t</em><em>e</em><em>r</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> − <em>g</em><em>a</em><em>s</em><em>F</em><em>e</em><em>e</em><em>s</em> &gt; <em>e</em><em>t</em><em>h</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>e</em><em>t</em><em>h</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em> + <em>t</em><em>c</em><em>A</em><em>m</em><em>o</em><em>u</em><em>n</em><em>t</em><em>B</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em> * <em>t</em><em>c</em><em>P</em><em>r</em><em>i</em><em>c</em><em>e</em></span></p>
 </blockquote>
 <p>Note: there are other reasonable ways to determine “profit”. In particular, if one believes that the price of the currency will grow, then the total amount of that currency (not the total USD value) would be another metric. For our purposes, we will just use the USD value of the holdings.</p>
 <p>We are going to call this a <em>single trade</em>. This is when you make one transaction at a single DEX to increase your holdings.</p>
