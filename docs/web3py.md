@@ -115,7 +115,8 @@ transaction = contract.functions.getTokenCCAbbreviation().build_transaction({
     'gas': 70000,
     'gasPrice': w3.to_wei('10', 'gwei'),
     'from': my_address,
-    'nonce': w3.eth.get_transaction_count(my_address)
+    'nonce': w3.eth.get_transaction_count(my_address),
+    'chainId': 12345678,
     })
 ```
 
@@ -131,7 +132,8 @@ transaction = {
     'to': '0x0123456789abcdef0123456789abcdef01234567',
     'value': w3.to_wei(1, 'ether'),
     'gas': 21000,
-    'gasPrice': web3.to_wei('10', 'gwei')
+    'gasPrice': web3.to_wei('10', 'gwei'),
+    'chainId': 12345678,
 }
 ```
 

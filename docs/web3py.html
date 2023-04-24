@@ -12,6 +12,7 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../markdown.css" />
   <script>
@@ -40,6 +41,9 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="web3.py-introduction">Web3.py Introduction</h1>
@@ -96,7 +100,8 @@ abi=&#39;[...]&#39;</code></pre>
     &#39;gas&#39;: 70000,
     &#39;gasPrice&#39;: w3.to_wei(&#39;10&#39;, &#39;gwei&#39;),
     &#39;from&#39;: my_address,
-    &#39;nonce&#39;: w3.eth.get_transaction_count(my_address)
+    &#39;nonce&#39;: w3.eth.get_transaction_count(my_address),
+    &#39;chainId&#39;: 12345678,
     })</code></pre>
 <p>Parameters, if there were any, would go in the parenthesis after the method name, not in the <code>build_transaction()</code> parentheses.</p>
 <p>Other fields could be added as well – if we wanted to send some wei in with the transaction, such as to a <code>payable</code> function, then we would add a <code>value</code> key with the (integer) wei amount as the value.</p>
@@ -106,7 +111,8 @@ abi=&#39;[...]&#39;</code></pre>
     &#39;to&#39;: &#39;0x0123456789abcdef0123456789abcdef01234567&#39;,
     &#39;value&#39;: w3.to_wei(1, &#39;ether&#39;),
     &#39;gas&#39;: 21000,
-    &#39;gasPrice&#39;: web3.to_wei(&#39;10&#39;, &#39;gwei&#39;)
+    &#39;gasPrice&#39;: web3.to_wei(&#39;10&#39;, &#39;gwei&#39;),
+    &#39;chainId&#39;: 12345678,
 }</code></pre>
 <p>We then sign that transaction:</p>
 <pre><code>signed_txn = w3.eth.account.sign_transaction(transaction, private_key=private_key)</code></pre>
