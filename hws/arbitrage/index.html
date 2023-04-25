@@ -109,6 +109,22 @@
 <p>In addition to your TokenCC.sol and DEX.sol files (and any supporting files so they can compile), you will need the <a href='../dex/IEtherPriceOracle.sol.html'>IEtherPriceOracle.sol</a> (<a href='../dex/IEtherPriceOracle.sol'>src</a>) and <a href='../dex/EtherPriceOracleConstant.sol.html'>EtherPriceOracleConstant.sol</a> (<a href='../dex/EtherPriceOracleConstant.sol'>src</a>) files.</p>
 </div><div id='tweb3.py' class='tabcontent'><h3 id='web3.py'>Web3.py</h3>
 <p>You will need to read the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>). While you do not need to have all of that memorized, you do need to understand it all! The intent is that you will use that page as a reference while you write this assignment.</p>
+<h4 id='connecting'>Connecting</h4>
+<p>The following code will handle the connection based on the values in the <code>arbitrage_config.py</code> file, which is introduced later. You may want to come back to this part once the <code>arbitrage_config.py</code> file has been introduced.</p>
+<pre><code>from web3 import Web3
+from web3.middleware import geth_poa_middleware
+import arbitrage_config
+if arbitrage_config.config['connection_is_ipc']:
+    w3 = Web3(Web3.IPCProvider(arbitrage_config.config['connection_uri']))
+else:
+    w3 = Web3(Web3.WebsocketProvider(arbitrage_config.config['connection_uri']))
+w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+print(w3.is_connected())</code></pre>
+<p>The code above will connect either through a local geth.ipc endpoint or a server’s <code>wss://</code> connection based on the values in the <code>arbitrage_config.py</code> file:</p>
+<ul>
+<li>If the <code>connection_is_ipc</code> value is <code>True</code>, then the <code>connection_uri</code> value will have the form <code>/path/to/geth.ipc</code></li>
+<li>If the <code>connection_is_ipc</code> value is <code>False</code>, then the <code>connection_uri</code> value will have the form <code>wss://server.univeristy.edu/path/to/geth</code></li>
+</ul>
 </div><div id='tmarket-theory' class='tabcontent'><h3 id='market-theory'>Market Theory</h3>
 <h4 id='when-to-make-an-trade'>When to make an trade</h4>
 <p>Your program will need to compute it’s <em>holdings</em>, which is the dollar amount of all the ETH and TC that it has. You can assume some fixed price for ETH (say, $100) and for TC (say, $10) for initial testing – but that means that your DEXes should have about 10 times as much TC as ETH.</p>

@@ -81,6 +81,26 @@ In addition to your TokenCC.sol and DEX.sol files (and any supporting files so t
 
 You will need to read the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)).  While you do not need to have all of that memorized, you do need to understand it all!  The intent is that you will use that page as a reference while you write this assignment.
 
+#### Connecting
+
+The following code will handle the connection based on the values in the `arbitrage_config.py` file, which is introduced later.  You may want to come back to this part once the `arbitrage_config.py` file has been introduced.
+
+```
+from web3 import Web3
+from web3.middleware import geth_poa_middleware
+import arbitrage_config
+if arbitrage_config.config['connection_is_ipc']:
+    w3 = Web3(Web3.IPCProvider(arbitrage_config.config['connection_uri']))
+else:
+    w3 = Web3(Web3.WebsocketProvider(arbitrage_config.config['connection_uri']))
+w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+print(w3.is_connected())
+```
+
+The code above will connect either through a local geth.ipc endpoint or a server's `wss://` connection based on the values in the `arbitrage_config.py` file:
+
+- If the `connection_is_ipc` value is `True`, then the `connection_uri` value will have the form `/path/to/geth.ipc`
+- If the `connection_is_ipc` value is `False`, then the `connection_uri` value will have the form `wss://server.univeristy.edu/path/to/geth`
 
 ### Market Theory
 
