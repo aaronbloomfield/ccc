@@ -12,6 +12,7 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel='stylesheet' href='../../markdown.css'></link>
   <script>
@@ -40,6 +41,7 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
+  
 </head>
 <body>
 <h1 id='arbitrage-trading'>Arbitrage Trading</h1>
@@ -213,19 +215,19 @@
 <pre><code>Exchanged -123.0000 ETH for 2.3400 TC; fees: 1.23 USD; prices: ETH 12.30 USD, TC: 1.23 USD; holdings: 34.30 USD</code></pre>
 
 <p>To ensure you output in the correct format, we provide a function that will print the appropriate lines. This function is also provided in the <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) file.</p>
-<pre><code>def output(ethAmt, tcAmt, fees, holdings):
+<pre><code>def output(ethAmt, tcAmt, fees, holdings_after):
     if ethAmt == 0 and tcAmt == 0:
         print("No profitable arbitrage trades available")
         return
     assert ethAmt * tcAmt &lt; 0, "Exactly one of ethAmt and tcAmt should be negative, the other positive"
     if ethAmt &lt; 0:
         print("Exchanged %.4f ETH for %.4f TC; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
-              (ethAmt, tcAmt, fees, config['price_eth'], config['price_tc'], holdings))
+              (ethAmt, tcAmt, fees, config['price_eth'], config['price_tc'], holdings_after))
     else:
         print("Exchanged %.4f TC for %.4f ETH; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
-              (tcAmt, ethAmt, fees, config['price_eth'], config['price_tc'], holdings))</code></pre>
+              (tcAmt, ethAmt, fees, config['price_eth'], config['price_tc'], holdings_after))</code></pre>
 <p><strong><em>YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER OUTPUT</em></strong> other than the result of calling the <code>output()</code> function, above.</p>
-<p>If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case. When a transaction is made, then one of <code>ethAmt</code> or <code>tcAmt</code> should be negative – that’s the one that is being sold. The other should be positive, and is how much of the other you received for that exchange. These values should be the amount of coin being bought or sold, and without all the decimals (so 1.5 TC rather than 15000000000 TC). The prices for ETH and TC are pulled from <code>config</code> dict, so they do not have to be passed into this function. The <code>fees</code> and <code>holdings</code> parameters should be in USD.</p>
+<p>If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case. When a transaction is made, then one of <code>ethAmt</code> or <code>tcAmt</code> should be negative – that’s the one that is being sold. The other should be positive, and is how much of the other you received for that exchange. These values should be the amount of coin being bought or sold, and without all the decimals (so 1.5 TC rather than 15000000000 TC). The prices for ETH and TC are pulled from <code>config</code> dict, so they do not have to be passed into this function. The <code>fees</code> and <code>holdings_after</code> parameters should be in USD.</p>
 <p>The <code>fees</code> value that you are reporting is just the USD value of the Ethereum transaction fees PLUS the DEX fees (amount withheld times its price).</p>
 </div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
 <p>When testing your code, don’t worry about getting the <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span> values exactly correct for a test if you want to test a particular situation – you can just have them close enough to test that situation. To see if your program makes the right decision, for example, you can hard-code those values in the arbitrage_trading.py program and print out the results to see if it computed the correct values to trade. Trying to get all the DEXes deployed and configured exactly will be very frustrating if you are trying for exact values. Instead, make a few transactions to the various DEXes from <em>another</em> account to get the <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span> values to differ between the different DEXes. The provided <a href='Arbitrage.sol.html'>Arbitrage.sol</a> (<a href='Arbitrage.sol'>src</a>) contract performs a few initial trades, but you may need to do more for your testing. The <code>arbitrage_trading.py</code> program is then called to see if any profitable trades can be made.</p>
@@ -296,6 +298,37 @@
 <p>You will need to fill in the various values from this assignment into the <a href='arbitrage.py.html'>arbitrage.py</a> (<a href='arbitrage.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Python source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There is only one submission for this assignment.</p>
 <p>Submission 1: Submit your <code>arbitrage_trading.py</code> source code file, along with your completed <code>arbitrage.py</code> file, to Gradescope. You should not submit the arbitrage_config.py file. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in arbitrage.py, etc.).</p>
+<h4 id='execution-runs'>Execution runs</h4>
+<p>The submission will make three execution runs, all on the same account. The account will start with 10 ether and 0 TCC. For all the execution runs, the following value are set:</p>
+<ul>
+<li>gas price: 10 gwei</li>
+<li>ether price: $100</li>
+<li>TCC price: $10</li>
+<li>max ether to trade: 5</li>
+<li>max TCC to trade: 50</li>
+</ul>
+<p>Each run assumes the state from the previous run. The trades are:</p>
+<ul>
+<li>Before first run: 10 ether, 0 TCC, holdings of 1000.00 USD</li>
+<li>First run: with all the DEXes enabled in the config file, it should send 5 ether (the max allowed) to the d20 DEX
+<ul>
+<li>That will result in a receipt of 94.7619 TC</li>
+<li>Output line: <code>Exchanged -5.0000 ETH for 94.7619 TC; fees: 0.18 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 1809.09 USD</code></li>
+<li>Balances after: 4.99877838 ether (5 ether minus gas fees), TC balance of 94.7619047620, holdings of $1,447.50</li>
+</ul></li>
+<li>Second run: with only the d10 DEX enabled in the config file, it should not find a profitable trade
+<ul>
+<li>Output line: <code>No profitable arbitrage trades available</code></li>
+<li>Balances after: same as above, since no trades were made</li>
+</ul></li>
+<li>Third run: with only the lower 3 DEXes enabled (d4, d6, and d8), it should send 50 TC (the max allowed) to the d4 DEX
+<ul>
+<li>That will result in a gain of 11.0544 ether</li>
+<li>Output line: <code>Exchanged -50.0000 TC for 11.0544 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2405.55 USD</code></li>
+<li>Balances after: 16.053186 ether, TC balance of 44.7619047620, holdings of $2,405.60</li>
+</ul></li>
+</ul>
+<p>As there is a required delay between DEX operations, the auto-grader also has to wait that long twice (between runs 1 and 2 and between runs 2 and 3).</p>
 </div><script>document.getElementById('defaultOpen').click();</script></body>
 </html>
 

@@ -230,22 +230,22 @@ If two trades are made, then print out two lines of that form.  Keep in mind tha
 To ensure you output in the correct format, we provide a function that will print the appropriate lines.  This function is also provided in the [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) file.
 
 ```
-def output(ethAmt, tcAmt, fees, holdings):
+def output(ethAmt, tcAmt, fees, holdings_after):
     if ethAmt == 0 and tcAmt == 0:
         print("No profitable arbitrage trades available")
         return
     assert ethAmt * tcAmt < 0, "Exactly one of ethAmt and tcAmt should be negative, the other positive"
     if ethAmt < 0:
         print("Exchanged %.4f ETH for %.4f TC; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
-              (ethAmt, tcAmt, fees, config['price_eth'], config['price_tc'], holdings))
+              (ethAmt, tcAmt, fees, config['price_eth'], config['price_tc'], holdings_after))
     else:
         print("Exchanged %.4f TC for %.4f ETH; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
-              (tcAmt, ethAmt, fees, config['price_eth'], config['price_tc'], holdings))
+              (tcAmt, ethAmt, fees, config['price_eth'], config['price_tc'], holdings_after))
 ```
 
 ***YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER OUTPUT*** other than the result of calling the `output()` function, above.
 
-If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case.  When a transaction is made, then one of `ethAmt` or `tcAmt` should be negative -- that's the one that is being sold.  The other should be positive, and is how much of the other you received for that exchange.  These values should be the amount of coin being bought or sold, and without all the decimals (so 1.5 TC rather than 15000000000 TC).  The prices for ETH and TC are pulled from `config` dict, so they do not have to be passed into this function.  The `fees` and `holdings` parameters should be in USD.
+If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case.  When a transaction is made, then one of `ethAmt` or `tcAmt` should be negative -- that's the one that is being sold.  The other should be positive, and is how much of the other you received for that exchange.  These values should be the amount of coin being bought or sold, and without all the decimals (so 1.5 TC rather than 15000000000 TC).  The prices for ETH and TC are pulled from `config` dict, so they do not have to be passed into this function.  The `fees` and `holdings_after` parameters should be in USD.
 
 The `fees` value that you are reporting is just the USD value of the Ethereum transaction fees PLUS the DEX fees (amount withheld times its price).
 
@@ -354,3 +354,30 @@ You will need to fill in the various values from this assignment into the [arbit
 There is only one submission for this assignment.
 
 Submission 1: Submit your `arbitrage_trading.py` source code file, along with your completed `arbitrage.py` file, to Gradescope.  You should not submit the arbitrage_config.py file.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in arbitrage.py, etc.).
+
+#### Execution runs
+
+The submission will make three execution runs, all on the same account.  The account will start with 10 ether and 0 TCC.  For all the execution runs, the following value are set:
+
+- gas price: 10 gwei
+- ether price: $100
+- TCC price: $10
+- max ether to trade: 5
+- max TCC to trade: 50
+
+Each run assumes the state from the previous run.  The trades are:
+
+- Before first run: 10 ether, 0 TCC, holdings of 1000.00 USD
+- First run: with all the DEXes enabled in the config file, it should send 5 ether (the max allowed) to the d20 DEX
+    - That will result in a receipt of 94.7619 TC
+    - Output line: `Exchanged -5.0000 ETH for 94.7619 TC; fees: 0.18 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 1809.09 USD`
+    - Balances after: 4.99877838 ether (5 ether minus gas fees), TC balance of 94.7619047620, holdings of $1,447.50
+- Second run: with only the d10 DEX enabled in the config file, it should not find a profitable trade
+    - Output line: `No profitable arbitrage trades available`
+    - Balances after: same as above, since no trades were made
+- Third run: with only the lower 3 DEXes enabled (d4, d6, and d8), it should send 50 TC (the max allowed) to the d4 DEX
+    - That will result in a gain of 11.0544 ether
+    - Output line: `Exchanged -50.0000 TC for 11.0544 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2405.55 USD`
+    - Balances after: 16.053186 ether, TC balance of 44.7619047620, holdings of $2,405.60
+
+As there is a required delay between DEX operations, the auto-grader also has to wait that long twice (between runs 1 and 2 and between runs 2 and 3).
