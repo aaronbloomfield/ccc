@@ -390,14 +390,14 @@ Each run assumes the state from the previous run.  The trades are:
 - Before first run: 10 ether, 0 TCC, holdings of 1000.00 USD
 - First run: with all the DEXes enabled in the config file, it should send 5 ether (the max allowed) to the d20 DEX
     - That will result in a receipt of 94.7619 TC
-    - Output line: `Exchanged -5.0000 ETH for 94.7619 TC; fees: 0.18 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 1809.09 USD`
-    - Balances after: 4.99877838 ether (5 ether minus gas fees), TC balance of 94.7619047620, holdings of $1,447.50
+    - Output line: `Exchanged -5.0000 ETH for 94.7619 TC; fees: 0.18 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 1447.45 USD`
+    - Balances after: 4.99826916 ether (5 ether minus gas fees), TC balance of 94.7619047620, holdings of $1,447.45
 - Second run: with only the d10 DEX enabled in the config file, it should not find a profitable trade
     - Output line: `No profitable arbitrage trades available`
     - Balances after: same as above, since no trades were made
 - Third run: with only the lower 3 DEXes enabled (d4, d6, and d8), it should send 50 TC (the max allowed) to the d4 DEX
     - That will result in a gain of 11.0544 ether
-    - Output line: `Exchanged -50.0000 TC for 11.0544 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2405.55 USD`
-    - Balances after: 16.053186 ether, TC balance of 44.7619047620, holdings of $2,405.60
+    - Output line: `Exchanged -50.0000 TC for 11.0544 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2052.89 USD`
+    - Balances after: 16.052676835555555 ether, TC balance of 44.7619047620, holdings of $2,052.89
 
 As there is a required delay between DEX operations, the auto-grader also has to wait that long twice (between runs 1 and 2 and between runs 2 and 3).
