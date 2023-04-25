@@ -341,8 +341,9 @@ This is as is provided in the arbitrage_config.py file on the Canvas landing pag
 
 You can easily comment out different DEXes for your testing.  The following three examples assume the prices listed above ($10 for DDC and $100 for ETH).
 
-- If only the lower three DEXes that are available (d4, d6, and d8), then it will be more profitable to exchange DDC for ETH at the lowest numbered DEX available.  Exchanging 4 DDC ($40) for 1 ETH ($100) at the d4 DEX will generate a profit of $60 minus fees.  This is better than exchanging at the d6 DEX (profit of $40 minus fees) and the d8 DEX (profit of $20 minus fees).
-- If only the upper three DEXes available, then the most profitable exchange will be the highest numbered DEX.  Exchanging 1 ETH ($100) for 20 DDC ($200) will generate a profit of $100 minus fees.  This is better than exchanging at the d12 DEX (profit of $20 minus fees).
+- If only the lower three DEXes that are available (d4, d6, and d8), then it will be more profitable to exchange DDC for ETH at the lowest numbered DEX available.  Exchanging 4 DDC ($40) for *about* 1 ETH ($100) at the d4 DEX will generate a profit of *about* $60 minus fees.  This is better than exchanging at the d6 DEX (profit of *about* $40 minus fees) and the d8 DEX (profit of *about* $20 minus fees).
+    - The "*about*" moniker is because the profit is slightly less than the amount due to [CPAMM](https://aaronbloomfield.github.io/ccc/slides/applications.html#/cpamm).
+- If only the upper three DEXes available, then the most profitable exchange will be the highest numbered DEX.  Exchanging 1 ETH ($100) for *about* 20 DDC ($200) will generate a profit of *about* $100 minus fees.  This is better than exchanging at the d12 DEX (profit of *about* $20 minus fees).
 - The d10 DEX is never profitable if the price ratio is also 1:10.  It exchanges at the same rate as the current prices, but once fees (both DEX and gas) are subtracted, money will be lost.
 .
 
