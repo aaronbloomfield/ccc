@@ -55,6 +55,22 @@ other = {
 # need to be changed to True (instead of False).
 sanity_checks = {
 	
+	# Did you compute the suffix for your metamask_XXXXXXXX.html file, as per the
+	# instructions?
+	'computed_metamask.html_suffix': False,
+
+	# Have you ensured that the `metamask.html` file (without the suffix) does NOT
+	# exist?
+	'metamask.html_does_not_exist': False,
+
+	# Did you run `touch ~/public_html/index.html (or similar) on the
+	# departmental server, or otherwise prevent directory viewing?
+	'ran_touch_index.html': False,
+
+	# Does your web page display the table of auctions (copied over from
+	# auctions.php) IN ADDITION TO the web forms that you created?
+	'displays_auctions_table': False,
+
 	# Is the URL of your metamask.html exactly:
 	# https://www.cs.virginia.edu/~mst3k/metamask.html
 	# where 'mst3k' is your userid?

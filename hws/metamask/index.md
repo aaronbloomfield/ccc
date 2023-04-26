@@ -17,17 +17,13 @@ Writing this homework will require completion of the following assignments:
 - [dApp Auction](../auction/index.html) ([md](../auction/index.md))
 
 
-We are going to use your Auctioneer contract, from the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  You will also need your NFTmanager contract, from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, as well.  If you did not get either of those two contracts (Auctioneer or NFTManager) working, then contact the course staff, and we can deploy them for you to use.  Otherwise you can either re-deploy your Auctioneer contract to the blockchain, or use the one you deployed for the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  Save the contract address, as it will be needed when you submit your assignment.
+We are going to use your Auctioneer contract, from the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  You will also need your NFTmanager contract, from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, as well.  If you did not get either of those two contracts (Auctioneer or NFTManager) working, then contact the course staff, and we can deploy them for you to use.  Otherwise you can either re-deploy your Auctioneer contract to the blockchain, or use the one you deployed for the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  Save the contract address of your Auctioneer, as it will be needed when you submit your assignment.
 
 In addition to your source code, you will submit an edited version of [metamask.py](metamask.py.html) ([src](metamask.py)).
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  
-
-- Fri, 12/2: The `time_ms` variable in the `showReturnIntegerValue()` function should just be the number `1000`
-- Thu, 12/1: Clarified that the filename should be metamask.html, not auctions.html (this was a typo in [metamask.py](metamask.py.html) ([src](metamask.py))).
-
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### MetaMask Setup 
@@ -66,6 +62,8 @@ Here are the MetaMask setup steps:
 
 At this point, the MetaMask extension should be connected to your account on the private Ethereum blockchain -- you can tell if this is the case because it will report your balance in the MetaMask window.  Note that if you restart Chrome, you may have to re-enter your MetaMask password.  Also, it will say "Not connected" to the left of the account name -- that's fine for now, since we have not yet created a web page for it to connect to; that "Not connected" is that it is not connected to the current web page, it is not indicating a the presence (or lack thereof) of a connection to the blockchain.
 
+If you are having problems with this setup, you can also have Metamask create a new account for you, and the fund it with the course faucet.
+
 <br clear="all">
 
 <!---
@@ -82,9 +80,22 @@ The catch: in order to be able to call a smart contract that is a *transaction*,
 
 -->
 
+### Your URL
+
+This part is similar to what was in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment -- you are going to add a `_XXXXXXXX` suffix on your metamask.html file name. so your filename will be of the form `metamask_XXXXXXXX.html`.  **HOWEVER,** you also have to run `touch ~/public_html/index.html` (or similar) on the departmental server -- see the "Preventing directory viewing" section. below.
+
+You can determine your URL suffix as you did in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  Thus, your file name on the departmental server is going to be of the form `metamask_XXXXXXXX.html`.
+
+#### Preventing directory viewing
+
+If you go to your home page on the departmental viewer, you can see all the files in the directory listing that shows up.  To prevent this, we are going to create a default (and empty) index.html file.  On the departmetnal server, you can just run `touch ~/public_html/index.html`.
+
+**NOTE:** If you already have a web page present, or otherwise have prevented (intentional or not) directory viewing, then no further steps are needed.
+
+
 ### Web3.js
 
-The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is on the Canvas landing page -- you can just save that as a new HTML file, which you will want to name `metamask.html`.  Note: you have to view that page with an address else most of the relevant Javascript code will not be shown.  The link to that page with an address is also on the Canvas landing page.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and paired functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
+The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is on the Canvas landing page -- you can just save that as a new HTML file, which you will want to name `metamask.html`.  Note: you have to view that page with an Auctioneer contract address else most of the relevant Javascript code will not be shown.  The link to that page with an address is also on the Canvas landing page.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and the paired Javascript functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
 
 The [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) goes over the basics of HTML web pages and Javascript functions.
 
@@ -144,9 +155,9 @@ You will notice that we are creating *TWO* connections to the blockchain.  The f
 
 The reason we are doing two connections is because the first one supports subscriptions, which is what allows the table to be updated upon an event emission -- you did that in the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment, and the auctions.php does that as well.  However, that first connection does not allow sending transactions to the blockchain.  The second connection, which is through MetaMask, does not support subscriptions (so no automatic updating of the tables), but does allow sending transactions to the blockchain.
 
-As both are wrapped in the Web3 constructor, they operate the same way.
+As both are wrapped in the Web3 constructor, you interact with them in the same way.
 
-As a general rule, any one Javascript function should use only one of those connections, as they may be slightly out of sync with each other (the MetaMask one has about a 5 second delay, for example).  If you are sending transactions to the blockchain, you have to use the `web3mm` connection.  Otherwise, use the `web3` connection.  As you will only be writing five functions that send transactions to the blockchain, only those will use `web3mm`.
+As a general rule, any one Javascript function should use only one of those connections, as they may be slightly out of sync with each other (the MetaMask one has about a 5 second delay, for example).  If you are sending transactions to the blockchain, you have to use the `web3mm` connection.  Otherwise, use the `web3` connection.  As you will only be writing five functions that send transactions to the blockchain, only those five will use `web3mm`.
 
 Likewise, we need an auction contract interface that connects through the `web3mm` connection.  Currently there is this line of code in the HTML file:
 
@@ -164,7 +175,7 @@ If a function is using the `web3mm` connection, then it should use the `auctionC
 
 You will have to do something similar with your connection the NFTManager.
 
-### HTML and Javascript
+### HTML and JS
 
 Below is an example HTML form and associated Javascript function.  This will call the `mintWithURI()` function on your NFTManager smart contract.
 
@@ -239,7 +250,7 @@ function showReturnIntegerValue(w3,txnhash,desc) {
 The `showReturnIntegerValue()` function will display an alert box (and print it to the Javascript console, as long NFT IDs are hard to copy from an alert box) the return value from the transaction.  This assumes that it did not revert (your call to `startAuction()` should be a try-catch block), and that the smart contract function return value is an integer.  So this function is intended for both minting an NFT (which returns the `uint` of the NFT ID) and starting an auction (which returns the ID of the auction).  The first parameter is the web3 connection (use the MetaMask one), the second parameter is the transaction hash to get the return value of, and the third parameter is a descriptive message.  For example:
 
 ```
-      showReturnIntegerValue(web3mm,txninfo['transactionHash'],"NFT ID");
+showReturnIntegerValue(web3mm,txninfo['transactionHash'],"NFT ID");
 ```
 
 This will show a pop-up alert box that states something such as "NFT ID: 12345".
@@ -250,19 +261,21 @@ This will show a pop-up alert box that states something such as "NFT ID: 12345".
 
 Finally!  We can get to the whole reason for this party.
 
-Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) interface.  The intent is that you start with the existing web page to view the auctions -- the link is on the Canvas landing page -- and put your modifications at the bottom of that page.  Our web page looked like the image to the right; this is the bottom of our web page, and the auction table itself was above what is shown.  Yours need not look the same, but it does need to be usable.
+Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the [IAuctioneer.sol](IAuctioneer.sol.html) ([src](IAuctioneer.sol)) interface.  The intent is that you start with the existing web page to view the auctions -- the link is on the Canvas landing page -- and put your modifications at the bottom of that page.  Our web page looked like the image to the right; this is the bottom of our web page, and the auction table itself was above what is shown.  Yours need not look the same, but it does need to be usable.  Specifically, we are *not* grading on appearance, just usability.
+
+Your web page still has to display the table of auctions *in addition to* the forms to interact with the IAuctioneer.  The auctions table display is intended to be copied from the auctions.php page.
 
 As you are starting with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment (see above for starting on that), the read-only parts of this assignment are already done for you.  You will have to change the contract IDs, of course -- you should hard-code that into your HTML / Javascript code (just replace the address that is there -- it may be there multiple times).  Note: you have to view the original auctions page with an address else most of the relevant Javascript code will not be shown.  The link to that page with an address is on the Canvas landing page.  We discussed how to create a HTML form interface, and the Javascript code to make it work, above.  You will have to hard-code the Auctioneer smart contract address.
 
-For this assignment, you need to create a web interface with three of the Auctioneer functions -- `startAuction()`, `closeAuction()`, and `placeBid()`.  Your interface also needs to interact with two functions of the NFT manager: `mintWithURI()` (the one-parameter version, shown above) from [NFTManager.sol](../tokens/NFTManager.sol.html) and `approve()` from [IERC721.sol](../auctions/IERC721.sol.html).  This means you will have to interact with ***TWO*** contracts on the blockchain.  Thus, you will need to create a contract interface to your NFTManager contract as well (similar to how `auctionContractmm` was created) -- be sure to use `web3mm`!  You can hard-code the address for the NFTmanager, and you can obtain that by calling `nftmanager()` on your Auctioneer contract; the former is likely simpler.  Note that many of the smart contract function parameters are already known, and need not be entered in the form -- the NFT is minted for the MetaMask account, and the transfer assumes it is coming from the same MetaMask account and going to the Auctioneer.  So only the NFT ID is what needs to be entered when approving a NFT, for example.
+For this assignment, you need to create a web interface with three of the Auctioneer functions -- `startAuction()`, `closeAuction()`, and `placeBid()`.  Your interface also needs to interact with two functions of the NFT manager: `mintWithURI()` (the one-parameter version, shown above) from [NFTManager.sol](../tokens/NFTManager.sol.html) and `approve()` that was inherited into NFTManager.sol from [IERC721.sol](../auctions/IERC721.sol.html).  This means you will have to interact with ***TWO*** contracts on the blockchain.  Thus, you will need to create a contract interface to your NFTManager contract as well (similar to how `auctionContractmm` was created) -- be sure to use `web3mm`!  You can hard-code the address for the NFTmanager, and you can obtain that by calling `nftmanager()` on your Auctioneer contract; the former is likely simpler.  Note that many of the smart contract function parameters are already known, and need not be entered in the form -- the NFT is minted for the MetaMask account, and the transfer assumes it is coming from the same MetaMask account and going to the Auctioneer.  So only the NFT ID is what needs to be entered when approving a NFT, for example.
 
 For the `placeBid()` function, you will have to take in the amount that they want to bid.  This should be a floating-point value of the ether to place the bid for, and your Javascript will have to convert that to wei.  You may run into rounding issues in Javascript, and those are fine (due to floating-point precision issues, $1.1*10^{18} = 1100000000000000100$).
 
 The forms for these five functions should be on that same page -- in particular, you will only be submitting one page, called `metamask.html` to Gradescope.  You can put those forms on the bottom, along with the MetaMask connect button described above.  As with the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment, since this is not a course in user interfaces, it will not be graded on it's beauty.  But it still has to be usable.
 
-Any calls the three Auctioneer functions (`createAuction()`, `closeAuction()`, and `placeBid()`) will have that change reflected in the table of auctions, which will automatically update when an event is emitted.  The call to `approve()` should just display "success" (or similar) via a pop-up box (call `alert("success");` in Javascript).  When `mintWithURI()` is called, it performs the transaction and then performs a web3.js call to get the NFT ID via `showReturnIntegerValue()`, which is then displayed via an alert box.
+Any calls the three Auctioneer functions (`createAuction()`, `closeAuction()`, and `placeBid()`) will have that change reflected in the table of auctions, which will automatically update when an event is emitted.  The call to `approve()` should just display "success" (or similar) via a pop-up box (call `alert("success");` in Javascript).  When `mintWithURI()` is called, it performs the transaction and then performs a web3.js call to get the NFT ID via `showReturnIntegerValue()`, described above, which is then displayed via an alert box.
 
-When this assignment is complete, anybody should be able to create NFTs, initiate auctions, bid on existing auctions, and close auctions when they are done.  As for the NFT images, we will still provide just a file name, and the URL prefix will be the same Canvas link as in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment; that prefix is on the Canvas landing page from the Tokens assignment.
+When this assignment is complete, anybody should be able to create NFTs, initiate auctions, bid on existing auctions, and close auctions when they are done.  As for the NFT images, we will still provide just a file name, and the URL prefix will be the same URL link as in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment; that prefix is on the Canvas landing page from the Tokens assignment.
 
 <br clear='all'>
 
@@ -278,7 +291,7 @@ To get the metamask.html web page set up:
 - Save that into metamask.html
 - Deploy metamask.html to your account on the departmental server in your `~/public_html/` directory
 - View that page -- ensure it shows the same result, and also has no errors
-- To make your code more readable, you can use the "reduced" ABIs -- these have just the functions that are used in this assignment, as well as the functions that the existing auctions.php page uses: [IAuctioneer.abi](IAuctioneer.abi) for `auctioneerAbi` and [INFTManager.abi](INFTManager.abi) for `nftManagerAbi`.  You can also use the full ABIs: [IAuctioneer-full.abi](IAuctioneer-full.abi) and [INFTManager-full.abi](INFTManager-full.abi)
+- To make your code more readable, you can use the "reduced" ABIs -- these have just the functions that are used in this assignment, as well as the functions that the existing auctions.php page uses: [IAuctioneer.abi](IAuctioneer.abi.txt) for `auctioneerAbi` and [INFTManager.abi](INFTManager.abi.txt) for `nftManagerAbi`.  You can also use the full ABIs: [IAuctioneer-full.abi](IAuctioneer-full.abi.txt) and [INFTManager-full.abi](INFTManager-full.abi.txt)
 - Add the code provided above:
     - The declaration of the `web3mm` variable and the `auctionContractmm` variable
     - The code to ensure MetaMask is installed

@@ -66,6 +66,22 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># need to be changed to True (instead of False).</font></i>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
+	<i><font color="#9A1900"># Did you compute the suffix for your metamask_XXXXXXXX.html file, as per the</font></i>
+	<i><font color="#9A1900"># instructions?</font></i>
+	<font color="#FF0000">'computed_metamask.html_suffix'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Have you ensured that the `metamask.html` file (without the suffix) does NOT</font></i>
+	<i><font color="#9A1900"># exist?</font></i>
+	<font color="#FF0000">'metamask.html_does_not_exist'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Did you run `touch ~/public_html/index.html (or similar) on the</font></i>
+	<i><font color="#9A1900"># departmental server, or otherwise prevent directory viewing?</font></i>
+	<font color="#FF0000">'ran_touch_index.html'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Does your web page display the table of auctions (copied over from</font></i>
+	<i><font color="#9A1900"># auctions.php) IN ADDITION TO the web forms that you created?</font></i>
+	<font color="#FF0000">'displays_auctions_table'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Is the URL of your metamask.html exactly:</font></i>
 	<i><font color="#9A1900"># https://www.cs.virginia.edu/~mst3k/metamask.html</font></i>
 	<i><font color="#9A1900"># where 'mst3k' is your userid?</font></i>

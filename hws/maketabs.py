@@ -75,7 +75,7 @@ replacements = [ ("Ec","EC"),("Io","I/O"),("Tbtc","tBTC"),("P2Pkh","P2PKH"),("To
 				 ("Web3.Py","Web3.py"),("Nft","NFT"),("Nfts","NFTs"),("Dao","DAO"),("Eth","ETH"),
 				 ("Fake","(fake)"),("Erc","ERC"),("Html","HTML"),("Iauctioneer","IAuctioneer"),
 				 ("Igradebook","IGradebook"),("Tc","TC"),("Tokencc","TokenCC"),("Css","CSS"),
-				 ("&","&amp;"),("Dex","DEX"),("Metamask","MetaMask"),("Url","URL")]
+				 ("&","&amp;"),("Dex","DEX"),("Metamask","MetaMask"),("Url","URL"),("Js","JS")]
 
 parser = MyHTMLParser()
 parser.feed(data)
