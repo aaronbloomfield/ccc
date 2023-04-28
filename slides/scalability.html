@@ -343,7 +343,7 @@ The "parts" of a modern cryptocurrency can be thought of as different "layers", 
 <!-- .slide: class="right-float-img" -->
 ![](images/scalability/shards/shards.dot.2.svg)
 ## Cryptocurrency sharding
-- Miners validate blocks on a given shard
+- Miners / validators create blocks on a given shard
 - The hash of a shard's block makes it's way to the main chain
 - The main chain's blocks are just hashes of the blocks on the shards
 
@@ -884,8 +884,8 @@ extern uint64_t entrypoint(const uint8_t *input) {
 - The two shown blocks are *not* the same
 - Who gets paid depends on whose transaction is *earlier* in the block's lists of TXNs
 - Is this a race condition?
-    - Yes, for the miner
-    - No, for the validator
+    - Yes, for the miner / validator
+    - No, for the node
 
 
 
@@ -908,9 +908,9 @@ extern uint64_t entrypoint(const uint8_t *input) {
 
 - Transactions are evaluated strictly in the order they are found in the blockchain
     - That's deterministic
-- Miners replay *each* transaction
+- Miners / validators replay *each* transaction
   - But they get a (potential) reward for doing so
-- Nodes / validators also have to replay *each* transaction
+- Nodes also have to replay *each* transaction
   - But they get no reward!
 
 
@@ -991,17 +991,17 @@ extern uint64_t entrypoint(const uint8_t *input) {
 
 ## Evaluating Transactions
 - There are three different entities who evaluate transactions:
-    - Miners as they are mining transactions into blocks
-    - Validators as they are trying to achieve consensus on a just-mined block
+    - Miners / validators as they are mining transactions into blocks
+    - Nodes as they are trying to achieve consensus on a just-mined block
     - Nodes that are playing catch-up of the blockchain
 
 
 
 ## Evaluating Transactions
-- Miners now include concurrency information in the blocks
+- Miners / validators now include concurrency information in the blocks
     - The first $p$ transactions can be run concurrently, the last $n-p$ must be run sequentially
     - Motivation: if they don't, their block, in the case of a fork, is less attractive to others
-- Validators much check that the TXNs marked as being able to be run concurrently really can be
+- Nodes much check that the TXNs marked as being able to be run concurrently really can be
     - This is part of the block validation tests
 - Nodes playing catch-up don't have to check it
 
