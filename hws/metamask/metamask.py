@@ -71,14 +71,14 @@ sanity_checks = {
 	# auctions.php) IN ADDITION TO the web forms that you created?
 	'displays_auctions_table': False,
 
-	# Is the URL of your metamask.html exactly:
-	# https://www.cs.virginia.edu/~mst3k/metamask.html
+	# Is the URL of your metamask_xxxxxxxx.html exactly:
+	# https://www.cs.virginia.edu/~mst3k/metamask_xxxxxxxx.html
 	# where 'mst3k' is your userid?
 	'auctions_url_is_correct': False,
 
-	# Did you add three auctions to your metamask.html page?  There is no
-	# requirement for the start/end dates/times for these.  They should be
-	# for your three NFTs that you created in the Tokens assignment.
+	# Did you add three auctions to your metamask_xxxxxxxx.html page?  There
+	# is no requirement for the start/end dates/times for these.  They should
+	# be for your three NFTs that you created in the Tokens assignment.
 	'added_three_auctions': False,
 
 	# Can somebody ELSE mint an NFT and start / bid on / close an auction?  If

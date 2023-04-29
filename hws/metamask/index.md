@@ -82,9 +82,9 @@ The catch: in order to be able to call a smart contract that is a *transaction*,
 
 ### Your URL
 
-This part is similar to what was in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment -- you are going to add a `_XXXXXXXX` suffix on your metamask.html file name. so your filename will be of the form `metamask_XXXXXXXX.html`.  **HOWEVER,** you also have to run `touch ~/public_html/index.html` (or similar) on the departmental server -- see the "Preventing directory viewing" section. below.
+This part is similar to what was in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment -- you are going to add a `_xxxxxxxx` suffix on your metamask.html file name. so your filename will be of the form `metamask_xxxxxxxx.html`.  **HOWEVER,** you also have to run `touch ~/public_html/index.html` (or similar) on the departmental server -- see the "Preventing directory viewing" section. below.
 
-You can determine your URL suffix as you did in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  Thus, your file name on the departmental server is going to be of the form `metamask_XXXXXXXX.html`.
+You can determine your URL suffix as you did in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  Thus, your file name on the departmental server is going to be of the form `metamask_xxxxxxxx.html`.
 
 #### Preventing directory viewing
 
@@ -95,7 +95,7 @@ If you go to your home page on the departmental viewer, you can see all the file
 
 ### Web3.js
 
-The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is on the Canvas landing page -- you can just save that as a new HTML file, which you will want to name `metamask.html`.  Note: you have to view that page with an Auctioneer contract address else most of the relevant Javascript code will not be shown.  The link to that page with an address is also on the Canvas landing page.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and the paired Javascript functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
+The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is on the Canvas landing page -- you can just save that as a new HTML file, which you will want to name `metamask_xxxxxxxx.html`.  Note: you have to view that page with an Auctioneer contract address else most of the relevant Javascript code will not be shown.  The link to that page with an address is also on the Canvas landing page.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and the paired Javascript functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
 
 The [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) goes over the basics of HTML web pages and Javascript functions.
 
@@ -271,7 +271,7 @@ For this assignment, you need to create a web interface with three of the Auctio
 
 For the `placeBid()` function, you will have to take in the amount that they want to bid.  This should be a floating-point value of the ether to place the bid for, and your Javascript will have to convert that to wei.  You may run into rounding issues in Javascript, and those are fine (due to floating-point precision issues, $1.1*10^{18} = 1100000000000000100$).
 
-The forms for these five functions should be on that same page -- in particular, you will only be submitting one page, called `metamask.html` to Gradescope.  You can put those forms on the bottom, along with the MetaMask connect button described above.  As with the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment, since this is not a course in user interfaces, it will not be graded on it's beauty.  But it still has to be usable.
+The forms for these five functions should be on that same page -- in particular, you will only be submitting one page, called `metamask_xxxxxxxx.html` to Gradescope.  You can put those forms on the bottom, along with the MetaMask connect button described above.  As with the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment, since this is not a course in user interfaces, it will not be graded on it's beauty.  But it still has to be usable.
 
 Any calls the three Auctioneer functions (`createAuction()`, `closeAuction()`, and `placeBid()`) will have that change reflected in the table of auctions, which will automatically update when an event is emitted.  The call to `approve()` should just display "success" (or similar) via a pop-up box (call `alert("success");` in Javascript).  When `mintWithURI()` is called, it performs the transaction and then performs a web3.js call to get the NFT ID via `showReturnIntegerValue()`, described above, which is then displayed via an alert box.
 
@@ -281,15 +281,15 @@ When this assignment is complete, anybody should be able to create NFTs, initiat
 
 ### Web page setup
 
-To get the metamask.html web page set up:
+To get the metamask_xxxxxxxx.html web page set up:
 
 - Get the contract address of your deployed Auctioneer.sol contract
 - Go to the auctions.php web site (the address is on the Canvas landing page), and enter that smart contract address to view those auctions
     - You have to view that page with an address else most of the relevant Javascript code will not be shown. The link to that page with an address is on the Canvas landing page.
 - Ensure that the resulting page does not display any errors (view the console in the developer tools)
 - View the source of the web page
-- Save that into metamask.html
-- Deploy metamask.html to your account on the departmental server in your `~/public_html/` directory
+- Save that into metamask_xxxxxxxx.html
+- Deploy metamask_xxxxxxxx.html to your account on the departmental server in your `~/public_html/` directory
 - View that page -- ensure it shows the same result, and also has no errors
 - To make your code more readable, you can use the "reduced" ABIs -- these have just the functions that are used in this assignment, as well as the functions that the existing auctions.php page uses: [IAuctioneer.abi](IAuctioneer.abi.txt) for `auctioneerAbi` and [INFTManager.abi](INFTManager.abi.txt) for `nftManagerAbi`.  You can also use the full ABIs: [IAuctioneer-full.abi](IAuctioneer-full.abi.txt) and [INFTManager-full.abi](INFTManager-full.abi.txt)
 - Add the code provided above:
@@ -383,10 +383,10 @@ You will need to fill in the various values from this assignment into the [metam
 
 There are *four* forms of submission for this assignment; you must do all four.
 
-Submission 1: You should submit your `metamask.html` file, along with your completed `metamask.py` file, to Gradescope.  In particular, you are NOT submitting any Solidity code for this assignment.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in metamask.py, etc.).
+Submission 1: You should submit your `metamask_xxxxxxxx.html` file, along with your completed `metamask.py` file, to Gradescope.  In particular, you are NOT submitting any Solidity code for this assignment.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in metamask.py, etc.).
 
-Submission 2: You must deploy your Auctioneer smart contract to our private Ethereum blockchain, or you can also use the one you deployed from the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  It's fine if you deploy it a few times to test it.  The smart contract address for this needs to be the same as the one in your submitted `metamask.html` file.
+Submission 2: You must deploy your Auctioneer smart contract to our private Ethereum blockchain, or you can also use the one you deployed from the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  It's fine if you deploy it a few times to test it.  The smart contract address for this needs to be the same as the one in your submitted `metamask_xxxxxxxx.html` file.
 
-Submission 3: You need to have your metamask.html properly working at https://www.cs.virginia.edu/~mst3k/metamask.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory, which you probably have from the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  Needless to say, it should properly connect to your deployed Auctioneer smart contract.
+Submission 3: You need to have your metamask_xxxxxxxx.html properly working at https://www.cs.virginia.edu/~mst3k/metamask_xxxxxxxx.html, where `mst3k` is your userid.  This means it needs to be in your `~/public_html` directory on the departmental servers.  You should have web.js (or web3.min.js) in that website directory, which you probably have from the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  Needless to say, it should properly connect to your deployed Auctioneer smart contract.
 
 Submission 4: You need to mint a few NFTs and start a few auctions.  You should start three auctions using the NFT images that you created for the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  The start and end dates, number of bids, and reserve does not matter for these auctions.
