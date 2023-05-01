@@ -92,7 +92,7 @@ Course calendar
 | 12 | Apr 10 | M,W,F | P8 (DEX) | [Consensus](../slides/consensus.html#/) | Mon: finished blockchain apps, stablecoins to 6.2; Wed: stablecoins to 7.13; Fri: finished stablecoins |
 | 13 | Apr 17 | M,W,F | P9 (DAO&web3) | [zkSNARKs](../slides/zksnarks.html#/) | Mon: consensus to 7.15; Wed: consensus to 8.19; Fri: finished consensus, scalability to 5.5 |
 | 14 | Apr 24 | M,W,F | P10 (Arbitrage) | [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/)  | Mon: scalability to 7.12; Wed: finished scalability; Fri: dark side to 6.14 |
-| 15 | May 1 | M | P11 (Metamask) | [Course conclusion](../slides/conclusion.html#/) | |
+| 15 | May 1 | M | P11 (Metamask) | [Course conclusion](../slides/conclusion.html#/) | started and finished the course conclusion |
 
 
 ## Legal Issues
