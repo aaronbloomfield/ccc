@@ -43,7 +43,11 @@ contracts = {
 # assignment.
 other = {
 	
-	# nothing is required in this dictionary for this assignment
+	# What is the 8 hex digit suffix for your metamask_XXXXXXXX.html file?
+	# Just the 8 hex digits, please.  This is computed the exact same way as
+	# in the DAO&web3 assignment.  If you are using the same eth.coinbase,
+	# you can use the same value here.
+	'metamask.html_suffix': None,
 
 }
 
