@@ -15,24 +15,124 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../markdown.css" />
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
+  </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
 <h1 id="cryptocurrency-course-grades">Cryptocurrency: Course grades</h1>
-<p><a href="index.html">Go up to the CCC UVA page</a> (<a
-href="index.md">md</a>)</p>
-<p>As per the <a href="syllabus.html">syllabus</a> (<a
-href="syllabus.md">md</a>), the grades were computed by:</p>
+<p><a href="index.html">Go up to the CCC UVA page</a> (<a href="index.md">md</a>)</p>
+<p>As per the <a href="syllabus.html">syllabus</a> (<a href="syllabus.md">md</a>), the grades were computed by:</p>
 <ul>
 <li>Programming and written assignments (50%)</li>
 <li>Midterm (15%)</li>
 <li>Final exam (20%)</li>
 <li>Class participation, pop quizzes (15%)</li>
 </ul>
-<h2 id="the-process-of-grade-determination">The Process of Grade
-Determination</h2>
+<h2 id="grade-computation">Grade computation</h2>
+<ul>
+<li>The Programming and written assignments average included all of the P homeworks as well as the non-quiz S homeworks (S1, S4, and S5). The P homeworks were weighted at twice the amount of the S homeworks.</li>
+<li>Class participation, pop quizzes
+<ul>
+<li>The quiz average was from the two quizzes (S2 &amp; S3), as well as participation in the Debts example (full credit if you participated)</li>
+<li>The attendance grade was weighted equally as each other, and an excused day was considered the same as being present</li>
+<li>The overall participation grade was two parts attendance and 1 part quiz grade</li>
+</ul></li>
+<li>The course average was based on the formula above</li>
+<li>The course curve was 3 points – so add 3 points to your overall course average, and then match that on the standard decade curve (shown below).
+<ul>
+<li>You can round up if necessary</li>
+</ul></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Cut-off</th>
+<th>Letter grade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>F</td>
+</tr>
+<tr class="even">
+<td>60</td>
+<td>D-</td>
+</tr>
+<tr class="odd">
+<td>63</td>
+<td>D</td>
+</tr>
+<tr class="even">
+<td>67</td>
+<td>D+</td>
+</tr>
+<tr class="odd">
+<td>70</td>
+<td>C-</td>
+</tr>
+<tr class="even">
+<td>73</td>
+<td>C</td>
+</tr>
+<tr class="odd">
+<td>77</td>
+<td>C+</td>
+</tr>
+<tr class="even">
+<td>80</td>
+<td>B-</td>
+</tr>
+<tr class="odd">
+<td>83</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td>87</td>
+<td>B+</td>
+</tr>
+<tr class="odd">
+<td>90</td>
+<td>A-</td>
+</tr>
+<tr class="even">
+<td>93</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>96</td>
+<td>A+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-older-process-of-grade-determination">The Older Process of Grade Determination</h2>
 <p><img src="images/magic-8-ball.png" /></p>
 <!-- Essays are graded via the [staircase grading method](http://www.cch.ca/newsletters/LawStudent/April2012/Article3.htm) -->
 </body>
