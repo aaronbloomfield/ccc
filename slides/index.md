@@ -6,7 +6,7 @@ Cryptocurrency: Slides
 
 You may want to see the [daily announcements slide set](../uva/daily-announcements.html#/) for the current semester.
 
-Slide sets, in the intended order to be presented in lecture, are below (if a link does not work, that's because that slide set is intentionally not in this repository yet):
+Slide sets, in the intended order to be presented in lecture, are below:
 
 - [Course Introduction](../uva/introduction.html#/) (UVA-specific)
 - [Cryptocurrency overview](overview.html#/)
