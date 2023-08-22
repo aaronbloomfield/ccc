@@ -36,6 +36,10 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -58,7 +62,7 @@
 <p>To put it as part of a list or paragraph:</p>
 <pre><code>## - [![ppc logo](../slides/images/logos/ppc-coin-symbol.svg)](https://coinmarketcap.com/currencies/peercoin/) Peercoin</code></pre>
 <h3 id="viewing-the-coin-logos">Viewing the coin logos</h3>
-<p>See <a href="images/logos/readme.html">here</a> or <a href="../uva/introduction.html#/allcoins">here</a>.</p>
+<p>See <a href="images/logos/readme.html">here</a> or <a href="introduction.html#/allcoins">here</a>.</p>
 <h3 id="all-the-coin-logos">All the coin logos</h3>
 <p>They are sorted alphabetically by the coin abbreviation.</p>
 <pre><code>[![algo logo](../slides/images/logos/algo-coin-symbol.svg)](https://coinmarketcap.com/currencies/algorand/)

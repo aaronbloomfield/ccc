@@ -41,7 +41,7 @@ To put it as part of a list or paragraph:
 
 ### Viewing the coin logos
 
-See [here](images/logos/readme.html) or [here](../uva/introduction.html#/allcoins).
+See [here](images/logos/readme.html) or [here](introduction.html#/allcoins).
 
 
 ### All the coin logos

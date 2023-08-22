@@ -8,7 +8,7 @@ You may want to see the [daily announcements slide set](../uva/daily-announcemen
 
 Slide sets, in the intended order to be presented in lecture, are below:
 
-- [Course Introduction](../uva/introduction.html#/) (UVA-specific)
+- [Course Introduction](introduction.html#/) (UVA-specific)
 - [Cryptocurrency overview](overview.html#/)
 - [Encryption](encryption.html#/)
 - [Bitcoin](bitcoin.html#/)
