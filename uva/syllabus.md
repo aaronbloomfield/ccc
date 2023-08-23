@@ -3,6 +3,8 @@ CS 4501: Syllabus for Cryptocurrency (CCC), fall 2023
 
 [Go up to the CCC UVA page](index.html) ([md](index.md))
 
+This course is a general introduction to cryptocurrencies and blockchain applications.  Students will understand the theoretical concepts that underlay cryptocurrencies, and implement both their own cryptocurrencies as well as develop applications that run on existing cryptocurrencies.  Students will see the ethics, legality, and policy aspects pertaining to the subject.
+
 ## Quick version
 
 I realize that nobody reads these through.  So the TL;DR version:
