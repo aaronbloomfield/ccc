@@ -137,7 +137,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 <!-- .slide: class="no-white-img-background max-image-height-300 noboxshadow" -->
 ![AaronDollar (TM)](images/overview/aaron-dollar.png)
 - Would you pay me 1 dollar for it?  What about `$`10?  `$`100?
-<li class="fragment" data-fragment-index="1">If I told you it would buy you an A+ in this course...<ul><li>Would you pay me 1 dollar for it?  What about <code>$</code>10?  <code>$</code>100?</li></ul></li>
+<li class="fragment" data-fragment-index="1">If I told you it would buy you an A+ in this course...<ul><li>Would you pay me <code>$</code>100 then?</li></ul></li>
 
 
 
@@ -161,7 +161,6 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
     - Official currencies: USD and BTC
     - Thus, little control over monetary policy...
     - In 2021 they mined `$`269 in BTC for `$`4,672 ([source](https://slashdot.org/story/21/12/11/188219/foreign-policy-magazine-bitcoin-failed-in-el-salvador-is-the-answer-more-bitcoin))
-<!-- change each semester -->
 
 
 
@@ -175,8 +174,8 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 
 
 ## Cryptocurrencies
-- There are 8,806 existing cryptocurrencies (that have value) <!-- change each semester -->
-  - As per [investing.com](https://www.investing.com/crypto/currencies) (as of Jan 17, 2023)
+- There are 8,906 existing cryptocurrencies (that have value) <!-- change each semester -->
+  - As per [investing.com](https://www.investing.com/crypto/currencies) (as of Aug 27, 2023)
 - One estimate is that 100 new ones are created *each day*
   - Most don't make investing.com's list
 - Some are [Ponzi schemes](https://en.wikipedia.org/wiki/Ponzi_scheme), some are [pyramid schemes](https://en.wikipedia.org/wiki/Ponzi_scheme), and some are worthwhile
@@ -205,7 +204,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 <!-- .slide: class="right-float-img-nb-300" -->
 ## A note about numbers...
 [![](../slides/images/overview/bitcoin-coin.webp)](https://commons.wikimedia.org/wiki/File:One_bitcoin_sitting_atop_bundles_of_US_$100_notes.png)
-- The data in this slide set was all updated for the current semester (on Jan 17, 2023) <!-- change each semester -->
+- The data in this slide set was all updated for the current semester (as of Aug 27, 2023) <!-- change each semester -->
 - Bitcoin is highly volatile (the value changes so fast) that it is likely to be quite different in a day or two
   - Indeed, the value of a Bitcoin changed *during* the updating of the numbers!
     - So you will see (slightly) different values for the price, for example
@@ -291,9 +290,9 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 - The first block was the "genesis block"
 - Each successive block includes the SHA-256 hash of the previous block
   - Thus, you can't make a change to a previous block without changing all successive blocks
-- The current blockchain (as of August 23, 2022) is  772,463 blocks (aka 'height'; [source](https://bitinfocharts.com/))
-  - About 438 Gb in size ([source](https://www.blockchain.com/charts/blocks-size))
-<!-- change each semester -->
+- The current blockchain (as of Aug 27, 2023) is  805,090 blocks (aka 'height'; [source](https://bitinfocharts.com/))
+  - About 494 Gb in size ([source](https://www.blockchain.com/charts/blocks-size))
+<!-- change each semester (be sure to divide that number by 1024) -->
 
 
 
@@ -363,19 +362,23 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 
 ## Difficulty
 - First target ($ft$): 00000000ffff00000000000000 00000000000000000000000000000000000000
-- The current target ($ct$) is 00000000000000000008417e00000000 00000000000000000000000000000000
-  - As of Jan 17, 2023 and can be found [here](http://learnmeabitcoin.com/glossary/target)
+<!-- formula: ft=26959535291011309493156476344723991336010898738574164086137773096960 -->
+- The current target ($ct$) is  0000000000000000000561020000000 000000000000000000000000000000000
+<!-- formula: ct=515199788182065911307653755120147792390991404454641664 -->
+  - As of Aug 27, 2023 and can be found [here](http://learnmeabitcoin.com/glossary/target)
+    - That site is almost 5,000 blocks behind...
   <!-- change each semester -->
-  - The new target is harder than the old: specifically $ft/ct$ = 34,093,570,325,204 times harder (that's 34.1 *trillion*)
+  - The new target is harder than the old: specifically $ft/ct$ = 52,328,312,063,444 times harder (that's 52.3 *trillion*)
+    - Actually it's about 55.6 trillion now<!-- set this value to diff, such as via the formula: diff=55.62*10^12 -->
 - This number is the bitcoin *difficulty*, and the latest value can be found [here](https://www.coinwarz.com/mining/bitcoin/difficulty-chart)
 
 
 
 ## Current hash difficulty
 - For the first target, a random nonce had a 1 in 4.3 billion chance of success
-- The current target is 34.1 trillion times harder
-  - A random nonce now has a 1 in $1.46 \times 10^{23}$ chance of success
-    <!-- change each semester --><!-- that value is n = 1/(d*s^32) -->
+- The current target is 55.6 trillion times harder
+  - A random nonce now has a 1 in $2.39 \times 10^{23}$ chance of success
+    <!-- change each semester; formula: chance=diff*2^32 -->
 
 
 
@@ -385,18 +388,18 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 - A typical CPU can do maybe 10 Mhash/sec (million hashes per second)
   - A very fast CPU today could do about 25 Mhash/sec
   - A [$1,500 video card](https://www.amazon.com/gp/product/B07GHXQTGZ/) today could do about 800 Mhash/sec (estimate based on [this](https://en.bitcoin.it/wiki/Non-specialized_hardware_comparison#Nvidia) and [this](https://gpu.userbenchmark.com/Compare/Nvidia-RTX-2080-vs-Nvidia-GeForce-GTX-590-SLI-Disabled/4026vsm8041))
-- Consider a 1 in $1.46 \times 10^{23}$ chance of success
-- To generate $1.2 \times 10^{23}$ hashes at 800 million (8 Mhash) per second on a fast graphics card, this will take 6.8 *million years*
-  <!-- change each semester -->
+- Consider a 1 in $2.39 \times 10^{23}$ chance of success
+- To generate $2.39 \times 10^{23}$ hashes at 800 million (8 Mhash) per second on a fast graphics card, this will take 9.5 *million years*
+  <!-- change each semester; formula: gpuyears=chance/(365.25*24*60*60*800*10^6) -->
 
 
 
 <!-- .slide: class="right-float-img-nb-300" -->
 ## Electricity usage
 ![](https://upload.wikimedia.org/wikipedia/commons/6/6b/Electricity_pylons2.jpg)
-- A graphics card uses about 200 W (watts) (estimated from [here](https://en.bitcoin.it/wiki/Non-specialized_hardware_comparison#Nvidia))
+- A graphics card uses about 400 W (watts) (estimated from [here](https://en.bitcoin.it/wiki/Non-specialized_hardware_comparison#Nvidia))
 - Electricity in Charlottesville costs 11.04 cents per kW/h (as per [here](https://www.electricitylocal.com/states/virginia/charlottesville/))
-- This would cost about a billion dollars <!-- change each semester; if n is as above, and 800 Mh is the GPU rate, then price = n/60/60*200/1000*.1104/800000000 -->
+- This would cost about 3.7 billion dollars <!-- change each semester; formula: elecost=gpuyears*400/1000*24*365.25*0.1104 -->
 
 
 
@@ -448,12 +451,12 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 
 
 ## Reward per block
-- The current reward (as of Jan 17, 2023) is 6.25 BTC
+- The current reward (as of Aug 27, 2023) is 6.25 BTC
   <!-- change each semester -->
   - Plus transaction fees of around 0.1 BTC or so
-  - The estimated date when it drops to 3.125 BTC is May 2024 ([source](https://www.bitcoinblockhalf.com/))
-- At a price of about $21k per block ([source](https://www.coindesk.com/price/bitcoin)), 6.35 BTC is  about $133k for a properly signed block   <!-- change each semester -->
-  - But if it costs over a billion dollars in electricity, perhaps it's not all that worth it
+  - The estimated date when it drops to 3.125 BTC is April 2024 ([source](https://www.bitcoinblockhalf.com/))
+- At a price of about $26k per block ([source](https://www.coindesk.com/price/bitcoin)), 6.35 BTC is  about $166k for a properly signed block   <!-- change each semester --><!-- formula: reward=166*1000 -->
+  - But if it costs almost 4 billion dollars in electricity, perhaps it's not all that worth it
   - Unless you use somebody else's electricity...
 
 
@@ -478,6 +481,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 ## Hashes per second
 From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the entire Bitcoin network; E = exa = $10^{18}$
 <!-- change each semester -->
+<!-- formula: hashrate=390.9*10^18 -->
 ![hashes per second](images/timely/btc-hashes-per-sec.webp)
 
 
@@ -487,59 +491,70 @@ From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the 
 ![](https://m.media-amazon.com/images/I/61WsmRwaOaL._AC_SL1000_.jpg)
 - A whole industry has sprung up: you can find the hardware online (such as [here](https://www.bitcoinmining.com/bitcoin-mining-hardware/))
 - These devices are much faster and use much less electricity
-- Consider the [DragonX AntMiner S9](https://www.amazon.com//dp/B07CGFLJNQ/), which used to cost `$`300 (and over `$`1k before that)
-  - Amazon doesn't sell it anymore
-  - It can compute 14 Thash/sec (tera), or $14*10^{12}$ hash/sec
+- Consider the [DragonX AntMiner S19](https://www.amazon.com//dp/B08ZNMGKZ1/), which costs `$`1,200 (as of Aug 27, 2023)
+  - It can compute 90 Thash/sec (tera), or $90 \ast 10^{12}=9 \ast 10^{13}$ hash/sec
   - I don't believe their numbers that they posted at that link, though
 
 
 
 ## Mining profitability
 - A reasonable profit margin estimate:
-  - For a investment of $x$ dollars in mining equipment, you might make one-twentieth of that per month
+  - For a investment of $x$ dollars in mining equipment, you might make one-tenth of that per month
     - If you are lucky!
   - So you will start to make a profit in about two years, assuming that the difficulty doesn't go up that much
+- But this does *NOT* include electrical costs!
 - Keep in mind that if this were *really* profitable, then everybody would jump in on it, and the difficulty would just jump up, causing it to become suddenly less profitable
 
 
 
-## [DragonX AntMinder S9](https://www.amazon.com/dp/B07WV6TPN7) analysis
+## [DragonX AntMiner S19](https://www.amazon.com/dp/B08ZNMGKZ1) analysis
 <!-- change each semester -->
 - We know that:
-  - The current hash rate is 267 EH/s
-  - Blocks take about 10 minutes to process (actually about 9m 25s right now ([source](https://bitinfocharts.com/)))
-  - The [DragonX AntMinder S9](https://www.amazon.com/dp/B07WV6TPN7) claims to hash 14 TH/s
-- 267 exa / 14 tera = $267 \cdot 10^{18} / 14 \cdot 10^{12} = 19 \cdot 10^{6}$ or 19 million
-- Thus, you would expect to get one 19-millionth of a block's reward in a pooled setup
-- At $133k per block, that's about 1 *cent* per block
+  - The current hash rate is about 391 EH/s
+  - Blocks take about 10 minutes to process (actually about 12m 6s right now ([source](https://bitinfocharts.com/)))
+  - The [DragonX AntMiner S9](https://www.amazon.com/dp/B08ZNMGKZ1) claims to hash 90 TH/s <!-- formula: minerrate=90*10^12 -->
+- 391 exa / 90 tera = $391 \cdot 10^{18} / 90 \cdot 10^{12} = 4.34 \cdot 10^{6}$ or 4 million <!-- formula: blockreward=hashrate/minerrate -->
+- Thus, you would expect to get one 4-millionth of a block's reward in a pooled setup <!-- formula: profitperblock=reward/blockreward -->
+- At `$`166 per block, that's about 3.8 *cents* per block
 - (And we aren't counting electricity here)
 
 
 
-## [DragonX AntMinder S9](https://www.amazon.com/dp/B07WV6TPN7) analysis
+## [DragonX AntMiner S19](https://www.amazon.com/dp/B08ZNMGKZ1) analysis
 <!-- change each semester -->
-- At $133k per block, that's about 1 *cent* per block
-  - Which is $1.05 per day
-    - This assumes 10 minute blocks; it's a bit more with 9m21s blocks
-  - You will make back your initial investment of $300 (plus tax) 286 days
-    - That's 9.4 months
+- At `$`166 per block, that's about 3.8 cents per block
+  - Which is $5.50 per day <!-- formula: profitperday=profitperblock*24*6 -->
+    - This assumes 10 minute blocks; it's a less with 12m6s blocks
+  - You will make back your initial investment of `$`1,200 (plus tax) 220 days
+    - That's 7.3 months
 - This assumes that the numbers don't change!
   - And that you aren't paying for electricity
-  - And we know the reward per block will go down in May of 2024...
-- There is also [one available](https://www.amazon.com/dp/B07YVMS7CY/) that mines 3 times as fast but costs 5 times as much!
+  - And we know the reward per block will go down in April of 2024...
+- There is also [one available](https://www.amazon.com/dp/B0CCK4RDJF/) that mines twice times as fast but costs 3.5 times as much, but uses less power
 
 
 
-## [DragonX AntMinder S9](https://www.amazon.com/dp/B07WV6TPN7) analysis
+## [DragonX AntMiner S19](https://www.amazon.com/dp/B08ZNMGKZ1) analysis
 <!-- change each semester -->
-- You will make $1.05 in BTC per day
+- You will make $5.50 in BTC per day
 - But... electricity is not free
-- Stated power usage: 1,373 W or 1.373 kW
-  - Over 24 hours that's $24 * 1.373 = 32.952$ kWh
-  - At Charlottesville's rate of 11.04&cent; per kWh, that's $3.64 per day
-- So your total profit is: `$`3.64 - `$`1.05 or
-  - *Negative* `$`2.59 cents per day!
+- Stated power usage: 3,250 W or 3.25 kW
+  - Over 24 hours that's $24 * 3.25 = 78$ kWh
+  - At Charlottesville's rate of 11.04&cent; per kWh, that's `$`8.61 per day
+    - About `$`260 per month
+- So your total daily profit is: `$`5.50 - `$`8.61 or
+  - *Negative* `$`3.11 cents per day!
 
+
+
+
+## When is Bitcoin mining profitable?
+- When you don't pay for electricity
+  - Apartment rental where utilities are included in the rent, for example
+- Using computers that are not your own
+  - Malware, running it on another cluster, etc.
+- When done on a large scale
+  - One can make deals with power companies, locate where power is cheaper, etc.
 
 
 

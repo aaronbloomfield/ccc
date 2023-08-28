@@ -36,6 +36,10 @@
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
   </script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -46,20 +50,20 @@
 <p>These are the graphs that have to be changed each time the lecture is presented. The newest images should not have any date suffix; a date suffix is only added when a newer image is being added.</p>
 <p>From the <a href="../../../uva/introduction.html#/">course introduction slide set</a>:</p>
 <ul>
-<li>Cryptocurrency market capitalization, all-time (<code>cc-market-cap.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="cc-market-cap-2022-01-18.svg">2022-01-18</a>, <a href="cc-market-cap-2022-08-23.svg">2022-08-23</a>, <a href="cc-market-cap.svg">2023-01-23</a></li>
-<li>Cryptocurrency market capitalization without BTC, all-time (<code>cc-market-cap-no-btc.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="cc-market-cap-no-btc-2022-01-18.svg">2022-01-18</a>, <a href="cc-market-cap-no-btc-2022-08-23.svg">2022-08-23</a>, <a href="cc-market-cap-no-btc.svg">2023-01-23</a></li>
-<li>Bitcoin dominance, all-time (<code>btc-dominance.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="btc-dominance-2022-01-18.svg">2022-01-18</a>, <a href="btc-dominance-2022-08-23.svg">2022-08-23</a>, <a href="btc-dominance.svg">2023-01-23</a></li>
+<li>Cryptocurrency market capitalization, all-time (<code>cc-market-cap.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="cc-market-cap-2022-01-18.svg">2022-01-18</a>, <a href="cc-market-cap-2022-08-23.svg">2022-08-23</a>, <a href="cc-market-cap-2023-01-17.svg">2023-01-17</a>, <a href="cc-market-cap.svg">2023-08-27</a></li>
+<li>Cryptocurrency market capitalization without BTC, all-time (<code>cc-market-cap-no-btc.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="cc-market-cap-no-btc-2022-01-18.svg">2022-01-18</a>, <a href="cc-market-cap-no-btc-2022-08-23.svg">2022-08-23</a>, <a href="cc-market-cap-no-btc-2023-01-17.svg">2023-01-17</a>, <a href="cc-market-cap-no-btc.svg">2023-08-27</a></li>
+<li>Bitcoin dominance, all-time (<code>btc-dominance.svg</code>), from <a href="https://coinmarketcap.com/charts/">https://coinmarketcap.com/charts/</a>: from <a href="btc-dominance-2022-01-18.svg">2022-01-18</a>, <a href="btc-dominance-2022-08-23.svg">2022-08-23</a>, <a href="btc-dominance-2023-01-17.svg">2023-01-17</a>, <a href="btc-dominance.svg">2023-08-27</a></li>
 </ul>
 <p>From the <a href="../../overview.html#/">overview slide set</a>. These should be exported as svg if possible; if not, then 1200x600 rasterized and converted to webp (running <code>make</code> will covert .png files to .webp).</p>
 <ul>
-<li>Bitcoin price, all-time / raw values (<code>btc-price.webp</code>), from <a href="https://www.blockchain.com/charts/market-price">blockchain.com</a>: from <a href="btc-price-2022-01-17.png">2022-01-17</a>, <a href="btc-price-2022-08-23.webp">2022-08-23</a>, <a href="btc-price.webp">2023-01-23</a></li>
-<li>Bitcoin difficulty, all-time / raw values (<code>btc-difficulty-all-time.webp</code>), from <a href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>: from <a href="btc-difficulty-all-time-2022-01-17.png">2022-01-17</a>, <a href="btc-difficulty-all-time-2022-08-23.webp">2022-08-23</a>, <a href="btc-difficulty-all-time.webp">2023-01-23</a></li>
-<li>Bitcoin difficulty, last 3 years / raw values (<code>btc-difficulty-last-3-years.webp</code>), from <a href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>: from <a href="btc-difficulty-last-3-years-2022-01-17.png">2022-01-17</a>, <a href="btc-difficulty-last-3-years-2022-08-23.webp">2022-08-23</a>, <a href="btc-difficulty-last-3-years.webp">2023-01-23</a></li>
-<li>Bitcoin hashes per second, all-time / 7-day average (<code>btc-hashes-per-sec.webp</code>), from <a href="https://www.blockchain.com/charts/hash-rate">blockchain.com</a>: from <a href="btc-hashes-per-sec-2022-01-17.png">2022-01-17</a>, <a href="btc-hashes-per-sec-2022-08-23.webp">2022-08-23</a>, <a href="btc-hashes-per-sec.webp">2023-01-23</a></li>
+<li>Bitcoin price, all-time / raw values (<code>btc-price.webp</code>), from <a href="https://www.blockchain.com/charts/market-price">blockchain.com</a>: from <a href="btc-price-2022-01-17.png">2022-01-17</a>, <a href="btc-price-2022-08-23.webp">2022-08-23</a>, <a href="btc-price-2023-01-17.webp">2023-01-17</a>, <a href="btc-price.webp">2023-08-27</a></li>
+<li>Bitcoin difficulty, all-time / raw values (<code>btc-difficulty-all-time.webp</code>), from <a href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>: from <a href="btc-difficulty-all-time-2022-01-17.png">2022-01-17</a>, <a href="btc-difficulty-all-time-2022-08-23.webp">2022-08-23</a>, <a href="btc-difficulty-all-time-2023-01-17.webp">2023-01-17</a>, <a href="btc-difficulty-all-time.webp">2023-08-27</a></li>
+<li>Bitcoin difficulty, last 3 years / raw values (<code>btc-difficulty-last-3-years.webp</code>), from <a href="https://www.blockchain.com/en/charts/difficulty">blockchain.com</a>: from <a href="btc-difficulty-last-3-years-2022-01-17.png">2022-01-17</a>, <a href="btc-difficulty-last-3-years-2022-08-23.webp">2022-08-23</a>, <a href="btc-difficulty-last-3-years-2023-01-17.webp">2023-01-17</a>, <a href="btc-difficulty-last-3-years.webp">2023-08-27</a></li>
+<li>Bitcoin hashes per second, all-time / 7-day average (<code>btc-hashes-per-sec.webp</code>), from <a href="https://www.blockchain.com/charts/hash-rate">blockchain.com</a>: from <a href="btc-hashes-per-sec-2022-01-17.png">2022-01-17</a>, <a href="btc-hashes-per-sec-2022-08-23.webp">2022-08-23</a>, <a href="btc-hashes-per-sec-2023-01-17.webp">2023-01-17</a>, <a href="btc-hashes-per-sec.webp">2023-08-27</a></li>
 </ul>
 <p>From the <a href="../../bitcoin.html#/">Bitcoin slide set</a></p>
 <ul>
-<li><a href="https://bitnodes.io/">Bitcoin nodes</a> from <a href="btc-nodes.webp">2022-09-06</a>, <a href="btc-nodes-2022-02-06.png">2022-02-06</a>
+<li><a href="https://bitnodes.io/">Bitcoin nodes</a> from <a href="btc-nodes-2022-02-06.png">2022-02-06</a>, <a href="btc-nodes-2022-09-06.webp">2022-09-06</a>, <a href="btc-nodes.webp">2023-08-27</a>
 <ul>
 <li>cwebp parameters: <code>-q 75</code></li>
 </ul></li>
