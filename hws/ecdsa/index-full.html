@@ -54,10 +54,7 @@
 <p>In this homework, it is critical to carefully test each stage of the assignment. Each part requires that the previous part works properly – and, if it does not, then it will be exceedingly difficult to debug your program. If you get stuck, the best way to figure out where the bug is is to print out the values at each step, and verify them by hand or via online calculators (linked to below). A full work-up of a sample calculation is provided later in this document.</p>
 <p>You will need to be familiar with the <a href="../../slides/encryption.html#/">Encryption slide set</a>, specifically the three sections that deal with the content in this assignment: <a href="../../slides/encryption.html#/elliptic">elliptic curves</a>, <a href="../../slides/encryption.html#/fields">finite fields</a>, and <a href="../../slides/encryption.html#/ecdsa">ECDSA</a>. What this assignment is asking for will make no sense if you are not familiar with that material.</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. --></p>
-<ul>
-<li>Sat, Feb 4: added the “Corner cases and EC multiplication” part of the “Testing” section.</li>
-</ul>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 <h3 id="languages">Languages</h3>
 <p>You can write this assignment in Java or Python. If you want to use a different language, please speak to me first. The intent is for you to write all this code yourself – you can NOT use any libraries that do field arithmetic, elliptic curve arithmetic, etc. This includes any hashing functions (such as hashlib in Python); note that you never have to take a hash in this assignment. We expect you to only need the most common standard libraries as a result.</p>
 <p>We realize that the default random number generators in most (all?) programming languages are not cryptographically secure random number generators, but that’s fine for this assignment.</p>
@@ -80,7 +77,7 @@ java ECDSA $@</code></pre>
 <ul>
 <li>Elliptic curve addition of a point to itself: <span class="math inline"><em>Q</em> = <em>P</em> ⊕ <em>P</em></span>. For this operation you will need to determine the slope of the secp256k1 curve <span class="math inline"><em>y</em><sup>2</sup> = <em>x</em><sup>3</sup> + 7</span>; that derivative is <span class="math inline"><em>d</em><em>y</em>/<em>d</em><em>x</em> = 3<em>x</em><sup>2</sup>/2<em>y</em></span>; this is discussed on <a href="../../slides/encryption.html#/secp256k1derivative">this slide</a> of the <a href="../../slides/encryption.html#/">encryption slide set</a>.</li>
 <li>Elliptic curve addition of two different points: <span class="math inline"><em>P</em> = <em>Q</em> ⊕ <em>R</em></span></li>
-<li>Elliptic curve multiplication of a point by a scalar value: <span class="math inline"><em>P</em> = <em>k</em> ⊗ <em>Q</em></span>. Really this is performing elliptic curve addition of that point <span class="math inline"><em>k</em></span> times, but we can’t do that many additions (that’s a linear time operation relative to <span class="math inline"><em>k</em></span>) – instead, this needs to be a logarithmic operation, as discussed in lecture (specifically, <a href="../../slides/encryption.html#/computingkg">here</a>).</li>
+<li>Elliptic curve multiplication of a point by a scalar value: <span class="math inline"><em>P</em> = <em>k</em> ⊗ <em>Q</em></span>. Really this is performing elliptic curve addition of that point <span class="math inline"><em>k</em></span> times, but we can’t do that many additions (that’s a linear time operation relative to <span class="math inline"><em>k</em></span>) – instead, <strong>this needs to be a logarithmic operation,</strong> as discussed in lecture (specifically, <a href="../../slides/encryption.html#/computingkg">here</a>).</li>
 </ul>
 <p>Some references from the lecture slides:</p>
 <ul>
@@ -191,11 +188,17 @@ $</code></pre></li>
 <ul>
 <li>As <span class="math inline">(38,21) ⊕ (42,36) = (12,12)</span> we get:</li>
 </ul></li>
-<li><span class="math inline">1000 ⊗ (12,31) = (12,12) ⊕ (12,31) ⊕ (20,3)</span></li>
+<li><span class="math inline">1000 ⊗ (12,31) = (12,12) ⊕ (12,31) ⊕ (20,3)</span>
+<ul>
+<li>The points <span class="math inline">(12,12)</span> and <span class="math inline">(12,31)</span> have the same <span class="math inline"><em>x</em></span>-value, so their sum is the point at infinity, <span class="math inline"><em>O</em></span>:</li>
+</ul></li>
+<li><span class="math inline">1000 ⊗ (12,31) = <em>O</em> ⊕ (20,3)</span>
+<ul>
+<li>As per the identity, seen <a href="../../slides/encryption.html#/pointo">here in the slides</a>, <span class="math inline"><em>O</em> ⊕ <em>P</em> = <em>P</em></span>, so we get:</li>
+</ul></li>
+<li><span class="math inline">1000 ⊗ (12,31) = (20,3)</span></li>
 </ul>
-<p>And here we run into a problem. Trying to compute <span class="math inline">(12,12) ⊕ (12,31)</span> is going to yield the point at infinity, as we are <a href="../../slides/encryption.html#/3/22">adding two points that form a vertical line</a>. We could first compute <span class="math inline">(12,12) ⊕ (20,3) = (21,25)</span>, and then finally compute <span class="math inline">(21,25) ⊕ (12,31) = (20.3)</span> (the final answer). But there are a lot of corner cases for where the two points are in the list that have the same <span class="math inline"><em>x</em></span>-value.</p>
-<p>We are not looking for the most optimal solution, just a working one.</p>
-<p>For this assignment, when adding the points together, if you come across two points that have the same <span class="math inline"><em>x</em></span>-value, just shuffle the list of points and then add them up again.</p>
+<p>This mataches what the <a href="https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&amp;b=7&amp;p=43&amp;n=1000&amp;px=13&amp;py=31">EC multiplication website states as the answer</a>.</p>
 <h3 id="submission">Submission</h3>
 <p>You have to submit three files:</p>
 <ul>

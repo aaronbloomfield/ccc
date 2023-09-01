@@ -16,9 +16,7 @@ You will need to be familiar with the [Encryption slide set](../../slides/encryp
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
-
-- Sat, Feb 4: added the "Corner cases and EC multiplication" part of the "Testing" section.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 ### Languages
 
@@ -64,7 +62,7 @@ There are three elliptic curve point operations that will be needed:
 
 - Elliptic curve addition of a point to itself: $Q = P \oplus P$.  For this operation you will need to determine the slope of the secp256k1 curve $y^2=x^3+7$; that derivative is $dy/dx = 3x^2/2y$; this is discussed on [this slide](../../slides/encryption.html#/secp256k1derivative) of the [encryption slide set](../../slides/encryption.html#/).
 - Elliptic curve addition of two different points: $P=Q \oplus R$
-- Elliptic curve multiplication of a point by a scalar value: $P = k \otimes Q$.  Really this is performing elliptic curve addition of that point $k$ times, but we can't do that many additions (that's a linear time operation relative to $k$) -- instead, this needs to be a logarithmic operation, as discussed in lecture (specifically, [here](../../slides/encryption.html#/computingkg)).
+- Elliptic curve multiplication of a point by a scalar value: $P = k \otimes Q$.  Really this is performing elliptic curve addition of that point $k$ times, but we can't do that many additions (that's a linear time operation relative to $k$) -- instead, **this needs to be a logarithmic operation,** as discussed in lecture (specifically, [here](../../slides/encryption.html#/computingkg)).
 
  Some references from the lecture slides:
 
@@ -203,13 +201,12 @@ Next we add up the necessary values.  Recall that elliptic curve addition is com
 - $1000 \otimes (12,31) = (38,21) \oplus (42,36) \oplus (12,31) \oplus (20,3)$
   - As $(38,21) \oplus (42,36) = (12,12)$ we get:
 - $1000 \otimes (12,31) = (12,12) \oplus (12,31) \oplus (20,3)$
+  - The points $(12,12)$ and $(12,31)$ have the same $x$-value, so their sum is the point at infinity, $O$:
+- $1000 \otimes (12,31) = O \oplus (20,3)$
+  - As per the identity, seen [here in the slides](../../slides/encryption.html#/pointo), $O \oplus P=P$, so we get:
+- $1000 \otimes (12,31) = (20,3)$
 
-And here we run into a problem.  Trying to compute $(12,12) \oplus (12,31)$ is going to yield the point at infinity, as we are [adding two points that form a vertical line](../../slides/encryption.html#/3/22).  We could first compute $(12,12) \oplus (20,3) = (21,25)$, and then finally compute $(21,25) \oplus (12,31) = (20.3)$ (the final answer).  But there are a lot of corner cases for where the two points are in the list that have the same $x$-value.
-
-We are not looking for the most optimal solution, just a working one.
-
-For this assignment, when adding the points together, if you come across two points that have the same $x$-value, just shuffle the list of points and then add them up again.
-
+This mataches what the [EC multiplication website states as the answer](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=1000&px=13&py=31).
 
 ### Submission
 
