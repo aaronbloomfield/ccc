@@ -18,9 +18,7 @@ You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.h
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
-
-- Thu, Feb 16: Added a 2 transaction Merkle tree construction example
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Languages
@@ -96,14 +94,14 @@ You will also have to submit a `Makefile` that will be used to compile your prog
 
 ### Part 1: Parsing
 
-Your program will take in exactly one command-line parameter: the file to read in.  You can assume that there will always be one command line parameter provided, and that that file will exist.  Sample files are provided above -- both large and small.
+Your program will take in exactly one command-line parameter: the file to read in.  You can assume that there will always be one command line parameter provided, that that file will exist, and that it will be non-zero in size.  Sample files are provided above -- both large and small.
 
 
 #### Block group file format
 
 The blocks to be verified are grouped together in a file -- this file is from the Bitcoin system, and if you were to launch a Bitcoin node and have it sync the blockchain, you would have those files on your machine as well.  The largest file we provide contains block 0 (the genesis block) through block 119,340.
 
-To see the contents of a binary file, run it through `hexdump -C` on a Linux / UNIX system.  Make sure you use the `-C` parameter!  This will print a LOT of text, so we will pipe it through `head`, as shown below.  Each block is preceded by 8 bytes of data.  The first 4 bytes are the magic number, and the second four bytes are the block size.  Both are in little-Endian format in the file.  The output of the genesis block, when run through `hexdump -C`, are:
+To see the contents of a binary file, run it through `hexdump -C` on a Linux / UNIX system.  Make sure you use the `-C` parameter!  This will print a LOT of text, so we will pipe it through `head`, as shown below.  Each block is preceded by 8 bytes of data.  The first 4 bytes are the magic number, and the second four bytes are the block size.  Both are in little-Endian format in the file.  The output of the genesis block, when run through `hexdump -C`, is:
 
 ```
 $ hexdump -C blk00000-f10.blk | head -13
@@ -145,7 +143,7 @@ You will likely want to print out the data read in (and the associated fields). 
 
 Some useful hints:
 
-- There really are only five different types in the bitcoin blockchain: 4-byte unsigned integers, 8-byte unsigned integers, compactSize unsigned integers, 32-byte hashes, and variable-length scripts.  That's it.  All of the blockchain is one of these five types -- so you can reuse your code from reading in one type to read in another value of that type.
+- There really are only five different types in the bitcoin blockchain: 4-byte unsigned integers, 8-byte unsigned integers, compactSize unsigned integers, 32-byte hashes, and variable-length scripts.  That's it.  All of the data on the blockchain is one of these five types -- so you can reuse your code from reading in one type to read in another value of that type.
 - While there are only 5 types, we will be outputting them in different ways -- but each programming language can easily print a number in hex or decimal.
 - Make sure you have a method that reads in compactSize unsigned integers properly, as this will cause your program to crash otherwise.  In particular, remember that if the variable is more than one byte, then all the bytes *other* than the first are in little-Endian format.  HOWEVER, some routines that read in the values will swap them for you, and some will not.  This is explicitly why we provide [block 29,664](blk00000-b29664.blk) for you -- that is the first block that has such a compactSize unsigned int value that is more than one byte (the `txn_in_count` for the second transaction is 320); you can see more information about that transaction [here](https://blockchair.com/bitcoin/block/29664).
 
@@ -178,7 +176,7 @@ Test this well!  We are going to provide all sorts of messed-up files to your pr
   - Note that the actual Bitcoin block chain files downloaded by the BTC client do not assure they are in order!
 - There will be no 'orphan' blocks -- each block will be the successor to the block immediately before it
   - Obviously that doesn't apply to the first block in the file
-- If there is an error in the file, it will be one of the 6 errors listed above.  Other errors that may occur are not ones that you have to check for.  As an example, an error where the block size (the second half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error.  Likewise, a file that ends prematurely (in the middle of a transaction, for example) will not be an error we are going to test for.
+- If there is an error in the file, it will be one of the 6 errors listed above.  Other errors that may occur are not ones that you have to check for, and will not be provided as input to testing.  As an example, an error where the block size (the second half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error.  Likewise, a file that ends prematurely (in the middle of a transaction, for example) will not be an error we are going to test for.
 
 Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the "no errors X blocks" or "error 5 block 17" line -- we'll get rid of the other output in the next section.
 
@@ -195,7 +193,7 @@ data[int(sys.argv[1])] = int(sys.argv[2])
 sys.stdout.buffer.write(bytes(data))
 ```
 
-This can also be downloaded via [change_byte.py](change_byte.py.html) ([src](change_byte.py)).  Yes, this program could be compacted more, but then it would be even more unreadable.  This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output.  It takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are base-10 integers.  There is no error checking in this program!  You would use it as such:
+This can also be downloaded via [change_byte.py](change_byte.py.html) ([src](change_byte.py)).  Yes, this program could be compacted more, but then it would be even more unreadable.  This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output.  It thus takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are base-10 integers.  There is no error checking in this program!  You would use it as such (this changes byte 2 (the third byte in the file, since we index from 0) to value 0 (hex 0x00)):
 
 ```
 $ cat blk00000-f10.blk | ./change_byte.py 2 0 > test.blk
@@ -498,7 +496,7 @@ Your output for the genesis block (file blk00000-b0.blk), which is saved to a fi
                     "txn_in_count": 1,
                     "txn_inputs": [
                         {
-                            "utxo_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+                            "txn_hash": "0000000000000000000000000000000000000000000000000000000000000000",
                             "index": 4294967295,
                             "input_script_size": 77,
                             "input_script_bytes": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",

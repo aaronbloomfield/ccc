@@ -55,10 +55,7 @@
 <p>The Bitcoin block format that is being parsed for this assignment is the initial format of the blockchain – specifically before any <a href="https://github.com/bitcoin/bips">BIPs</a> were proposed and enacted. Thus, the blocks will not contain fields such as the height number. Furthermore, the blocks use regular Merkle Trees and not Fast Merkle Trees (which were proposed later).</p>
 <p>You will need to be familiar with the <a href="../../slides/bitcoin.html#/">Bitcoin slide set</a>, specifically the first four sections: on <a href="../../slides/bitcoin.html#/merkle">Merkle trees</a>, <a href="../../slides/bitcoin.html#/datatypes">data types used</a>, <a href="../../slides/bitcoin.html#/concepts">Bitcoin concepts and terminology</a>, and the <a href="../../slides/bitcoin.html#/blockchain">blockchain description</a>.</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. --></p>
-<ul>
-<li>Thu, Feb 16: Added a 2 transaction Merkle tree construction example</li>
-</ul>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 <h3 id="languages">Languages</h3>
 <p>In theory, this can be implemented in any language. In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for. Four languages that can currently be used: C (using <code>gcc</code>), C++ (using <code>g++</code>), Java (using OpenJDK 11), and Python (using Python 3.10.x). If you want to use a different language, let’s have a chat about it, as it will take some time to ensure that the grading system can handle it. You will have to let us know at least two days before the submission deadline so that we can configure it in time.</p>
 <p>This assignment specifically is intended for you to use packages that handle the JSON processing for your programming language. In particular, you may NOT use any cryptocurrency specific libraries (such as the Bitcoin libraries). However, you are welcome to – and should – use the JSON libraries.</p>
@@ -106,10 +103,10 @@ java -cp json-simple-1.1.1.jar:. BTCParse $@</code></pre>
 <h4 id="makefile">Makefile</h4>
 <p>You will also have to submit a <code>Makefile</code> that will be used to compile your program, if needed. For languages that do not need compilation (such as Python), just put in a single <code>echo</code> statement so that <code>make</code> still runs properly. This is the same as in the <a href="../intro/index.html">previous assignments</a> (<a href="../intro/index.md">md</a>).</p>
 <h3 id="part-1-parsing">Part 1: Parsing</h3>
-<p>Your program will take in exactly one command-line parameter: the file to read in. You can assume that there will always be one command line parameter provided, and that that file will exist. Sample files are provided above – both large and small.</p>
+<p>Your program will take in exactly one command-line parameter: the file to read in. You can assume that there will always be one command line parameter provided, that that file will exist, and that it will be non-zero in size. Sample files are provided above – both large and small.</p>
 <h4 id="block-group-file-format">Block group file format</h4>
 <p>The blocks to be verified are grouped together in a file – this file is from the Bitcoin system, and if you were to launch a Bitcoin node and have it sync the blockchain, you would have those files on your machine as well. The largest file we provide contains block 0 (the genesis block) through block 119,340.</p>
-<p>To see the contents of a binary file, run it through <code>hexdump -C</code> on a Linux / UNIX system. Make sure you use the <code>-C</code> parameter! This will print a LOT of text, so we will pipe it through <code>head</code>, as shown below. Each block is preceded by 8 bytes of data. The first 4 bytes are the magic number, and the second four bytes are the block size. Both are in little-Endian format in the file. The output of the genesis block, when run through <code>hexdump -C</code>, are:</p>
+<p>To see the contents of a binary file, run it through <code>hexdump -C</code> on a Linux / UNIX system. Make sure you use the <code>-C</code> parameter! This will print a LOT of text, so we will pipe it through <code>head</code>, as shown below. Each block is preceded by 8 bytes of data. The first 4 bytes are the magic number, and the second four bytes are the block size. Both are in little-Endian format in the file. The output of the genesis block, when run through <code>hexdump -C</code>, is:</p>
 <pre><code>$ hexdump -C blk00000-f10.blk | head -13
 00000000  f9 be b4 d9 1d 01 00 00  01 00 00 00 00 00 00 00  |................|
 00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
@@ -137,7 +134,7 @@ $</code></pre>
 <p>You will likely want to print out the data read in (and the associated fields). This will be changed to a different output format in part 3, below. As you are printing out the values, you can see what they should be <a href="https://www.blockchain.com/btc/block/0">here</a> for block 0; the output is also shown below. That site prints the values in big-Endian, which is how we will be printing them in this assignment. However, we are going to print out the nBits field in hex; that site prints it out in decimal.</p>
 <p>Some useful hints:</p>
 <ul>
-<li>There really are only five different types in the bitcoin blockchain: 4-byte unsigned integers, 8-byte unsigned integers, compactSize unsigned integers, 32-byte hashes, and variable-length scripts. That’s it. All of the blockchain is one of these five types – so you can reuse your code from reading in one type to read in another value of that type.</li>
+<li>There really are only five different types in the bitcoin blockchain: 4-byte unsigned integers, 8-byte unsigned integers, compactSize unsigned integers, 32-byte hashes, and variable-length scripts. That’s it. All of the data on the blockchain is one of these five types – so you can reuse your code from reading in one type to read in another value of that type.</li>
 <li>While there are only 5 types, we will be outputting them in different ways – but each programming language can easily print a number in hex or decimal.</li>
 <li>Make sure you have a method that reads in compactSize unsigned integers properly, as this will cause your program to crash otherwise. In particular, remember that if the variable is more than one byte, then all the bytes <em>other</em> than the first are in little-Endian format. HOWEVER, some routines that read in the values will swap them for you, and some will not. This is explicitly why we provide <a href="blk00000-b29664.blk">block 29,664</a> for you – that is the first block that has such a compactSize unsigned int value that is more than one byte (the <code>txn_in_count</code> for the second transaction is 320); you can see more information about that transaction <a href="https://blockchair.com/bitcoin/block/29664">here</a>.</li>
 </ul>
@@ -168,7 +165,7 @@ $</code></pre>
 <ul>
 <li>Obviously that doesn’t apply to the first block in the file</li>
 </ul></li>
-<li>If there is an error in the file, it will be one of the 6 errors listed above. Other errors that may occur are not ones that you have to check for. As an example, an error where the block size (the second half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error. Likewise, a file that ends prematurely (in the middle of a transaction, for example) will not be an error we are going to test for.</li>
+<li>If there is an error in the file, it will be one of the 6 errors listed above. Other errors that may occur are not ones that you have to check for, and will not be provided as input to testing. As an example, an error where the block size (the second half of the preamble) is larger than the file size is not one of the errors listed above, so we will not provide a file with that type of error. Likewise, a file that ends prematurely (in the middle of a transaction, for example) will not be an error we are going to test for.</li>
 </ul>
 <p>Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the “no errors X blocks” or “error 5 block 17” line – we’ll get rid of the other output in the next section.</p>
 <h3 id="testing">Testing</h3>
@@ -179,7 +176,7 @@ assert (len(sys.argv)==3)
 data = bytearray(sys.stdin.buffer.read())
 data[int(sys.argv[1])] = int(sys.argv[2])
 sys.stdout.buffer.write(bytes(data))</code></pre>
-<p>This can also be downloaded via <a href="change_byte.py.html">change_byte.py</a> (<a href="change_byte.py">src</a>). Yes, this program could be compacted more, but then it would be even more unreadable. This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output. It takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are base-10 integers. There is no error checking in this program! You would use it as such:</p>
+<p>This can also be downloaded via <a href="change_byte.py.html">change_byte.py</a> (<a href="change_byte.py">src</a>). Yes, this program could be compacted more, but then it would be even more unreadable. This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output. It thus takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are base-10 integers. There is no error checking in this program! You would use it as such (this changes byte 2 (the third byte in the file, since we index from 0) to value 0 (hex 0x00)):</p>
 <pre><code>$ cat blk00000-f10.blk | ./change_byte.py 2 0 &gt; test.blk
 $ ./parse.sh test.blk
 error 1 block 0
@@ -404,7 +401,7 @@ txn2=&quot;0100000001c997a5e56e104102fa209c6a852dd90660a20b2d9c352423edce25857fc
                     &quot;txn_in_count&quot;: 1,
                     &quot;txn_inputs&quot;: [
                         {
-                            &quot;utxo_hash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
+                            &quot;txn_hash&quot;: &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
                             &quot;index&quot;: 4294967295,
                             &quot;input_script_size&quot;: 77,
                             &quot;input_script_bytes&quot;: &quot;04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73&quot;,
