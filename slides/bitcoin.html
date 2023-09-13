@@ -383,9 +383,9 @@ Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
 ## Voting
 - A mining device is not (necessarily) a node
   - A node needs to hold the entire blockchain
-  - A miner needs lots of CPU power and only the current UTXOs
+  - A miner needs lots of processing power and only the current UTXOs
     - aka the DAG
-- A miner batches transactions into blocks, find the right nonce, and then presents the block to the peer-to-peer network
+- A miner batches transactions into blocks, find the right nonce, and then presents the block to a node on the peer-to-peer network
 - The nodes vote on whether to accept the block
 - But what if some nodes are untrustworthy?
   - This is the issue of consensus
@@ -405,7 +405,7 @@ Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
 
 
 ## Node stats from [bitnodes.io](https://bitnodes.io/)
-- As of Aug 27, 2023, there are 7,764 nodes in the Bitcoin network<!-- change each semester -->
+- As of Sep 12, 2023, there are 16,391 nodes in the Bitcoin network<!-- change each semester -->
 
 ![](images/timely/btc-nodes.webp)
 
@@ -742,7 +742,7 @@ Size: varies; how many: txn_out_count
 
 | Bytes | Name | Type | Notes |
 |-|-|-|-|
-| 8 | value | int64_t | How many satoshi's to spend |
+| 8 | value | int64_t | How many satoshis to spend |
 | varies | out_script_bytes | csuint | Output script size |
 | varies | out_script | char[] | The output script (aka pubkey script) |
 
@@ -801,7 +801,7 @@ Size: varies; how many: txn_out_count
 - To spend a UTXO:
   - Take the input script (aka sig script) from the TXN that is trying to spend the UTXO
   - Take the output script (aka pubkey script) that created the UTXO
-  - Concatenate these together (input script before output script), and execute
+  - Concatenate these together (sigscript before pubkey script), and execute
   - If the result of these is true, then the coins can be spent (transferred)
     - Formally, if the top value on the stack is true after execution
 
