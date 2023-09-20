@@ -1282,12 +1282,12 @@ OP_EQUAL
 
 
 ## Witness structure
-- Current TX hash is:
+- Current TX hash (aka *txid*) is:
   ```
 sha256(sha256(<version><txins><txouts><locktime>))
 ```
   - (assume that tx_in_cout & tx_out_out are in txins / txouts)
-- Transaction *witness hash* is:
+- Transaction *witness hash* (aka *wtxid*) is:
   ```
 sha256(sha256(<version><marker><flag><txins><txouts>
                 <witness><locktime>))
