@@ -15,7 +15,6 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"># can be found at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That</font></i>
 <i><font color="#9A1900"># page describes how to fill in this program.</font></i>
 
-
 <b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>wallet <b><font color="#000080">import</font></b> CBitcoinAddress<font color="#990000">,</font> CBitcoinSecret
 <b><font color="#000080">from</font></b> bitcoin <b><font color="#000080">import</font></b> SelectParams
 <b><font color="#000080">from</font></b> bitcoin<font color="#990000">.</font>core <b><font color="#000080">import</font></b> CMutableTransaction
@@ -30,7 +29,7 @@ http://www.gnu.org/software/src-highlite">
 <b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#FF0000">'testnet'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># The address that we will pay our tBTC to -- do not change this!</font></i>
-tbtc_return_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB'</font><font color="#990000">)</font> <i><font color="#9A1900"># https://coinfaucet.eu/en/btc-testnet/</font></i>
+tbtc_return_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mohjSavDdQYHRYXcS3uS6ttaHP8amyvX78'</font><font color="#990000">)</font> <i><font color="#9A1900"># https://testnet-faucet.com/btc-testnet/</font></i>
 
 <i><font color="#9A1900"># The address that we will pay our BCY to -- do not change this!</font></i>
 bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz'</font><font color="#990000">)</font>
@@ -162,6 +161,7 @@ send_amount <font color="#990000">=</font> split_amount_after_split <font color=
 <i><font color="#9A1900"># - private_key: the private key of the redeemer of the UTXO; type:</font></i>
 <i><font color="#9A1900">#   CBitcoinSecret</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">P2PKH_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> private_key<font color="#990000">):</font>
+    signature <font color="#990000">=</font> None <i><font color="#9A1900"># see the comments above for how to use create_CHECKSIG_signature()</font></i>
     <b><font color="#0000FF">return</font></b> <font color="#990000">[</font> 
              <i><font color="#9A1900"># fill this in</font></i>
            <font color="#990000">]</font>

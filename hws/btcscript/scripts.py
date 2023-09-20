@@ -4,7 +4,6 @@
 # can be found at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That
 # page describes how to fill in this program.
 
-
 from bitcoin.wallet import CBitcoinAddress, CBitcoinSecret
 from bitcoin import SelectParams
 from bitcoin.core import CMutableTransaction
@@ -19,7 +18,7 @@ from bitcoin.core import x
 SelectParams('testnet')
 
 # The address that we will pay our tBTC to -- do not change this!
-tbtc_return_address = CBitcoinAddress('mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB') # https://coinfaucet.eu/en/btc-testnet/
+tbtc_return_address = CBitcoinAddress('mohjSavDdQYHRYXcS3uS6ttaHP8amyvX78') # https://testnet-faucet.com/btc-testnet/
 
 # The address that we will pay our BCY to -- do not change this!
 bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')
@@ -151,6 +150,7 @@ def P2PKH_scriptPubKey(address):
 # - private_key: the private key of the redeemer of the UTXO; type:
 #   CBitcoinSecret
 def P2PKH_scriptSig(txin, txout, txin_scriptPubKey, private_key):
+    signature = None # see the comments above for how to use create_CHECKSIG_signature()
     return [ 
              # fill this in
            ]
