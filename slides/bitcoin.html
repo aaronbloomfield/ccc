@@ -1353,7 +1353,7 @@ sha256(sha256(<version><marker><flag><txins><txouts>
   - OP_CHECKMULTISIG [uses 20](https://en.bitcoin.it/wiki/OP_CHECKMULTISIG)
 - The witness changes allow 4 million weight units (WU) per block
   - Pre-segwit bytes weigh 4 WU (max of 1 Mb block size)
-  - Sigwit witness data bytes weigh 1 WU each (max of 4 Mb)
+  - Segwit witness data bytes weigh 1 WU each (max of 4 Mb)
     - But there is typically data other than witness data in the block...
 - Theoretical limit of 4 Mb block size (if all witness TXNs)
   - Typically between 1,500 and 2,000 TXNs per block
