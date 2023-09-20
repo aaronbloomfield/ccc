@@ -27,12 +27,7 @@ As you proceed through this assignment, you will be filling in values into the [
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
-
-- Sunday, February 26th: Added how to fix `eth.coinbase` not being known (run, just once: `miner.setEtherbase(eth.accounts[0])`)
-- Sunday, February 26th: Clarified that one should use `eth.accounts[0]` in lieu of `eth.coinbase` if the latter doesn't work.
-- Friday, February 24th: If `personal.newAccount()` doesn't work, they have to add the `--rpc.enabledeprecatedpersonal` command line parameter when re-launching the geth node.  This was described in the appropriate places in this document.
-- Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters).  If you already started it, see [Piazza post @123](https://piazza.com/class/lcp7o2dt3sb4w8/post/123) for the very quick way to change over to the new version.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Part 1: Installation
@@ -135,19 +130,19 @@ To exit, press ctrl-d or type exit
 
 First, let's wait for it to sync.  Since you have saved the geth-config.toml file, it should connect to the course server and start downloading all the blocks in the blockchain.  This may take some time, but hopefully less than 5 minutes.
 
-As it is sync'ing, you can try these commands:
+As it is syncing, you can try these commands:
 
-- `admin.peers.length` will tell you how many peers you are connected to -- it should be 1.  Because you ran it with the `--maxpeers 1`, it won't be greater than 1.  If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
-  - **Important:** if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not sync'ing.
+- `admin.peers.length` will tell you how many peers you are connected to -- it should be 1.  One of the options in the geth-config.toml file prevents it from connecting to additional peers, as additional peers are not needed in the course setup.  If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
+  - **Important:** if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not syncing.
 - `admin.peers` will print information on each of those peers.  Once established, it should list exactly one peer -- the course server, whose 'enode' specification is the same as what is in the geth-config.toml file that you downloaded above.
 - `eth.blockNumber` will return the highest block number in the blockchain that is on your computer.  If it is returning zero, then it is not sync'ed (or is not trying to sync).
 - `eth.syncing` will either return 'false' if it is not syncing, or a JSON dictionary if it is.
-  - If `eth.blockNumber` is 0 and `eth.syncing` is false, then it is not sync'ing, perhaps due to a networking connection issue.  This will always be the case right after geth starts and before it has had a chance to connect to the peer(s).
-  - If `eth.syncing` is false and `eth.blockNumber` is non-zero, then -- most likely -- it has completed syncing (it could also be that geth just started, and it hasn't had a chance to start sync'ing yet).
-  - If `eth.syncing` returns a JSON dictionary, then it is in the process of sync'ing.
+  - If `eth.blockNumber` is 0 and `eth.syncing` is false, then it is not syncing, perhaps due to a networking connection issue.  This will always be the case right after geth starts and before it has had a chance to connect to the peer(s).
+  - If `eth.syncing` is false and `eth.blockNumber` is non-zero, then -- most likely -- it has completed syncing (it could also be that geth just started, and it hasn't had a chance to start syncing yet).
+  - If `eth.syncing` returns a JSON dictionary, then it is in the process of syncing.
     - The `currentBlock` value, aka `eth.syncing.currentBlock` is the highest block it has sync'ed so far; this is also the value that `eth.blockNumber` returns
-    - The `highestBlock` value, aka `eth.syncing.highestBlock`, is what it is working on sync'ing up to
-    - Once `currentBlock` reaches `highestBlock`, then the sync'ing will be complete, and `eth.syncing` will return `false`, as it is no longer syncing.
+    - The `highestBlock` value, aka `eth.syncing.highestBlock`, is what it is working on syncing up to
+    - Once `currentBlock` reaches `highestBlock`, then the syncing will be complete, and `eth.syncing` will return `false`, as it is no longer syncing.
   - You can use this command to print out the syncing status: `console.log ("at " + eth.blockNumber + " of " + eth.syncing.highestBlock + " blocks; " + (eth.syncing.highestBlock-eth.blockNumber) + " blocks left to sync")`
 
 Once it is sync'ed, here are some commands for you to try out:

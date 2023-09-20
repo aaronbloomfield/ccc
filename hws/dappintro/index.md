@@ -18,7 +18,7 @@ dApp Introduction
 This homework will take you through the process of compiling, deploying, and running a decentralized application (dApp) on our private Ethereum blockchain.  This assignment does not focus on the programming aspects of Solidity -- that's in a future assignment, as well as the lectures.
 
 
-You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  You should have a few (fake) ETH from the faucet.  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  If you have not successfully completed that assignment then you will not be able to complete this assignment.
+You will have to have completed the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  You should have a few (fake) ETH from the faucet.  For some of the tasks below you will need to launch your geth node, connecting to the course server, and start up a geth Javascript terminal; how to do all that is all described in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  If you have not successfully completed that assignment then you will not be able to complete this assignment.
 
 Warning to Mac OS X users: there is one part in this assignment that Safari seems to have issues with.  This part is indicated when you get to it, and you may have to switch to a different browser (Firefox or Chrome) to complete that part.
 
@@ -29,10 +29,7 @@ In addition to your source code, you will submit an edited version of [dappintro
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
-
-- Wednesday, March 8th: added `poll_purpose` variable in the `other` dictionary in [dappintro.py](dappintro.py.html) ([src](dappintro.py)) that should just be the (string) value of your `purpose` variable in Poll.sol.
-- Thursday, February 23rd: Changed how one specifies geth configuration (now via geth-config.toml rather than command-line parameters).  If you already started it, see [Piazza post @123](https://piazza.com/class/lcp7o2dt3sb4w8/post/123) for the very quick way to change over to the new version.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Introduction
@@ -50,7 +47,7 @@ Remix allows you to develop, compile, and test your code on a fake blockchain it
 
 There are many different tool chains that one can use to compile and deploy smart contracts -- Truffle and Ganache, command-line compilation with solc and deployment with geth, etc.  We had to pick one, and Remix seemed the most straight-forward and realistic choice.  We will see how to interact with the blockchain through the geth Javascript console in an in-class activity in the [Solidity lecture slide set](../../slides/solidity.html#/).
 
-The same process described herein can be used to deploy on the real Ethereum blockchain.  The only difference is that you would run geth to connect to the real Ethereum blockchain, rather than our private course blockchain.  And of course you would need real Ethereum to pay for the gas fees.  Everything else is exactly the same.
+The same process described herein can be used to deploy on the real Ethereum blockchain.  The only difference is that you would run geth to connect to the real Ethereum blockchain, rather than our private course blockchain.  And of course you would need real ether to pay for the gas fees.  Everything else is exactly the same.
 
 
 ### Code
@@ -70,9 +67,9 @@ There are a few very important hints that will make your life **SO MUCH** easier
 
 **Directories:** Keep all your Solidity code, for all your assignments in this course, in the same directory.  Much of the code will be re-used between assignments.  There will never be two different files that have the same name but different content.  Some of the later assignments will have a dozen or so files that are included (imported).  And many assignments will use the same set of imported files.  And many assignments will import the same (large) set of files.  Having everything in the same directory will make it much easier to manage.
 
-**Desktop Remix, again:** Desktop Remix likes to scan your directory structure so that it knows where the .sol files are.  But this can take a looooooong time if the file explorer pane is opened up to your root directory.  Instead, do a File ->  Open Directory, and open up the directory created just above.  This will make Remix *much* faster in all aspects.  You will see how to do this in the next few steps, but we wanted to include this hint here as well.
+**Desktop Remix:** Desktop Remix likes to scan your directory structure so that it knows where the .sol files are.  But this can take a looooooong time if the file explorer pane is opened up to your root directory.  Instead, do a File ->  Open Directory, and open up the directory created just above.  This will make Remix *much* faster in all aspects.  You will see how to do this in the next few steps, but we wanted to include this hint here as well.
 
-**Desktop Remix:** Sometimes the desktop version of Remix has issues.  If issues happen, try to solve it, but be willing to switch to the web browser version if this occurs.  So far we have found solutions to all the issues that have come up, and a few tips for how to work well with Remix will be discussed in lecture.
+**Desktop Remix, again:** Sometimes the desktop version of Remix has issues.  If issues happen, try to solve it, but be willing to switch to the web browser version if this occurs.  So far we have found solutions to all the issues that have come up, and a few tips for how to work well with Remix will be discussed in lecture.
 
 **Web Remix:** The web version of Remix also has issues -- in particular, it saves your code on remote servers, and is tied to a cookie in your web browser.  If you lose the computer, reset your cookies, or are using a different machine, then you will not be able to access your files.  This means you will have to cut-and-paste the code to a locally saved file to ensure you can access it elsewhere.
 
@@ -232,9 +229,9 @@ Moving forward, this will be the standard command to start a geth node; later as
 
 -->
 
-Once that command is run to start the local node, you will see a line that says, "HTTP server started", which is what our additional options did.  Note that these particular options will only allow the Remix that we are using -- either as a stand-alone IDE or through the browser -- *on the same machine* to connect.  So you can't run geth on another host (VirtualBox, Amazon AWS, etc.) and Remix on your host machine, for example.
+Once that command is run to start the local node, you will see a line that says, "HTTP server started", which is what the various options in the geth-config.toml file did.  Note that these particular options will only allow the Remix that we are using -- either as a stand-alone IDE or through the browser -- *on the same machine* to connect.  So you can't run geth on another host (VirtualBox, Amazon AWS, etc.) and Remix on your host machine, for example.
 
-Now that geth is started, we have to attach to it IN A SEPARATE WINDOW via `geth attach /path/to/ethprivate/geth.ipc` (or, in Windows, either `geth attach ipc:\\\\.\\pipe\\geth.ipc` or `geth attach \\.\pipe\geth.ipc`).  Wait for it to finish sync'ing (check `eth.syncing`).  Then `eth.blockNumber` should match the highest block number on our Ethereum blockchain explorer.
+Now that geth is started, we have to attach to it IN A SEPARATE WINDOW via `geth attach /path/to/ethprivate/geth.ipc` (or, in Windows, either `geth attach ipc:\\\\.\\pipe\\geth.ipc` or `geth attach \\.\pipe\geth.ipc`).  Wait for it to finish syncing (check `eth.syncing`).  Then `eth.blockNumber` should match the highest block number on our Ethereum blockchain explorer.
 
 Just to check: at this point, you should have TWO geth processes running in separate windows.  The first is the full node with the five or six additional flags as above. The second is a geth terminal via `geth attach`.
 
@@ -280,7 +277,7 @@ Read these instructions through before starting them!
     - You can call 'voted' again with your coinbase account; it should return true this time
     - The distinction between the method types here is important.  `view` and `pure` methods do not require writing to the blockchain, so they will report back the answer immediately -- and without having the call mined into a block.  Other transactions require the method call to be sent as a transaction to the blockchain and then mined into a block before reporting the success (or failure) of the method call.
 6. View in the explorer
-    - We are going to see some additional functionality in the blockchain explorer.  The explorer updates every minutes, which means you may have to wait up to a minute before you see your transaction reflected in the explorer.
+    - We are going to see some additional functionality in the blockchain explorer.  The explorer updates every minute, which means you may have to wait up to a minute before you see your transaction reflected in the explorer.
     - Search for the particular contract -- enter the contract address for your deployed Poll contract in the search box in the upper-right of any page
     - In the page for the contract, notice that the explorer is able to identify that this contract implements the IPoll interface (the `interfacesImplemented` entry).  We'll discuss the IERC165 interface later in the course.  It does this by checking the result of calling `supportsInterface()`, which we provided the code for in Poll.sol
     - Look at the transaction list at the bottom of the contract page.  The lowest one is the deployment of the contract itself (it will have a value in the contract address field).  The other entry is when you voted on it.
@@ -304,7 +301,7 @@ We wanted to show you that you can create a web page to interact with a smart co
 
 On the course blockchain explorer, you can find other contract addresses -- look at the transactions page, and see which ones have a value listed in the 'contract address' column.  You can also view just the contract accounts as well.  You can click on a contract address to see which interfaces it implements -- if it implements the IPoll interface (which it does via the `supportsInterface()` function), then you can copy that address and use it in the poll viewer web page.  This allows you to see what choices your classmates selected.  You are welcome to vote on their polls, but that is not necessary (see the next section for how to do this).  Note that you won't know who deployed that particular smart contract.  Also note that this web page will only work with the version of the Poll code used in this assignment.  Specifically, it will only work with a smart contract that has the same ABI that IPoll.sol generates; you can see that ABI in the Javascript source code of the poll viewer web page.
 
-How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  Feel free to look over the Javascript code in that web page -- the only other requirement is that a local geth node has to be running with a few specific additional flags to enable this web page to connect to it (we have not seen those flags yet).  One can also have a web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that in a future assignment as well; that requires a browser plugin, such as [MetaMask](https://metamask.io/), that allows for posting of transactions to a web page using a specific Ethereum account.
+How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  Feel free to look over the Javascript code in that web page -- the only other requirement is that a local geth node has to be running on the server with some additional configuration paramters in geth-config.toml to allow the web page to connect to it (we have not seen those flags yet).  One can also have a web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that in a future assignment as well; that requires a browser plugin, such as [MetaMask](https://metamask.io/), that allows for posting of transactions to a web page using a specific Ethereum account.
 
 
 ### Part 5: Vote!
