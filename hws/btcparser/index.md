@@ -43,7 +43,7 @@ We have a number of files of the blockchain itself.  Blockchain block counting i
 - Files with single blocks
     - [blk00000-b0.blk](blk00000-b0.blk) is block 0, the genesis block
     - [blk00000-b29664.blk](blk00000-b29664.blk) is block 29,664, the first block with a compactSize unsigned integer that takes up more than one byte -- this may help you ensure you are reading those values in properly; see below for details on where that value is in the block
-    - A number of individual block files to help you ensure that the Merkle tree hashes are computed properly; see below for their purpose.  Those block files are blocks [170](blk00000-b170.blk), [546](blk00000-b546.blk), [586](blk00000-b586.blk), [26,816](blk00000-b26816.blk), [2812](blk00000-b2812.blk), [49,820](blk00000-b49820.blk), and [53,066](blk00000-b53066.blk)
+    - A number of individual block files to help you ensure that the Merkle tree hashes are computed properly; see below for their purpose.  Those block files are blocks [170](blk00000-b170.blk), [546](blk00000-b546.blk), [586](blk00000-b586.blk), [26,816](blk00000-b26816.blk), [2,812](blk00000-b2812.blk), [49,820](blk00000-b49820.blk), and [53,066](blk00000-b53066.blk)
 - Helper programs
     - [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) will help you ensure that your JSON output is correct -- see the comments in the file for a description of how to use it
     - [change_byte.py](change_byte.py.html) ([src](change_byte.py)) will help with checking for blockchain errors -- see below for how to use it
