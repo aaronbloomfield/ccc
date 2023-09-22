@@ -21,6 +21,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 This assignment uses the [python-bitcoinlib package](https://pypi.org/project/python-bitcoinlib/) (documentation is [here](https://python-bitcoinlib.readthedocs.io/en/latest/), if you are interested, but you probably won't need it).  Thus, this assignment must be completed in Python.  You can install the Python package via `pip install python-bitcoinlib` (you may need to use `pip3` on your system).  Note that bitcoinlib, python-bitcoinlib, and bitcoin are all different libraries!  We are specifically using python-bitcoinlib.
 
+You also will have to install the `requests` library: `pip install requests`, as one of the provided files, below, uses that library.
 
 We provide you with a few files to use:
 
