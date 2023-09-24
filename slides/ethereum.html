@@ -145,8 +145,8 @@ line-height:120%;
 - Think of the Ethereum blockchain as an append-only database...
   - ...of current accounts, programs, and tokens (NFTs)
 - We can easily (if slowly) search the blockchain for anything
-  - With proper indexing (hash tables!), we can do that in near constant time
-- Blockchains store *all* iterations of a thing (accounts, etc.)
+  - With proper indexing (hash tables!), we can do that in almost constant time
+- Blockchains store *all* iterations of a thing (account balances, etc.)
   - Our index only needs to store the most recent version
   - And doesn't need to store spent txn outputs
 
@@ -178,7 +178,8 @@ line-height:120%;
 
 
 ## Account addresses
-- Keypairs use 256-bit ECDSA (with secp256k1); hashing algorithm is SHA3 (aka Keccak-256)
+- Keypairs use 256-bit ECDSA (with secp256k1)
+  - Hashing algorithm is SHA3 (aka Keccak-256)
 - Given a 256-bit ECDSA (secp256k1) public/private key pair...
   - Take the SHA3 (aka Keccak-256) hash of the public key
   - Take the last 20 bytes (160 bits) / 40 digits
@@ -207,7 +208,7 @@ line-height:120%;
   - `0x858d8f4cf6e8de4e8eba54d853c7d36015e1f36c`
   - `0x858d8F4cF6e8dE4e8Eba54D853C7D36015e1f36C`
 - Remix, the Solidity compiler, will insist on the checksummed form
-- Ethereum's 15 bit checksum is less than Bitcoin's 32 bits
+- Ethereum's 15 bit (on average) checksum is less than Bitcoin's 32 bits
   - A mis-typed address will be missed in $1/(2^{15}) = 0.3$% of cases
   - Bitcoin: missed in $1/(2^{32}) = 0.00000002$% of cases
 - Algorithm: if the $i^{th}$ digit is a letter:
@@ -248,7 +249,7 @@ function toChecksumAddress (address) {
     - Try it with 0x858d8f4cf6e8de4e8eba54d853c7d36015e1f36c
   - Solidity will warn you and suggest the checksummed address
     - Just copy-and-paste that into your code
-  - Web3.py has a function for this
+  - Web3.py has a function for this: `toChecksumAddress()`
     - We'll see this later
 
 
@@ -285,7 +286,7 @@ function toChecksumAddress (address) {
 - Suddenly it's Turing-complete (most likely)
 - Ethereum adds a bunch more
   - Conditional jumps, subroutine call and return, etc.
-  - But really only JUMP is needed
+    - But really only JUMP is needed for Turing-completeness
   - See the full list [here](https://ethereum.org/en/developers/docs/evm/opcodes/)
     - Better link: [here](https://github.com/wolflo/evm-opcodes)
 
@@ -336,15 +337,16 @@ function toChecksumAddress (address) {
 ## Gas examples
 - A simple TXN might use 21,000 gas (the typical amount)
     - [This one](https://ethplorer.io/tx/0xf42fde83749cd2aa91d4d436a959a8b9e151bf7d87b716aa5b51bde43c557ea3), for example
-    - Gas price was about 100 gwei (actually 105.702 gwei)
+      - Gas price was about 100 gwei (actually 105.702 gwei) for that txn
     - Total gas used was 21,000
-    - Total fee was thus 2,100,000 gwei = 0.002219732760483 ETH
+    - Total fee was thus 21,000 gas steps $\ast$ 105.702 gwei/step = 0.002219732760483 ETH
     - At $3,045.41 per ETH (at the time)...
       - That was $6.76 for the TXN
 - A complex TXN could use 1 million gas (~$322 at that price)
 - See the [average ETH TXN fees](https://messari.io/asset/ethereum/chart/txn-fee-avg)
   - That includes more complex TXNs!
 - Also see the [average gas costs](https://ethgas.watch/)
+  - And [how much to pay for txn speed](https://etherscan.io/gastracker)
 
 
 
@@ -408,7 +410,7 @@ function toChecksumAddress (address) {
 - A message is another type of transaction
   - It's invoking a smart contract's method(s)
 - It also consumes gas!
-  - That gas is consumed by the original call
+  - That gas is consumed by the original call, regardless of any other sub-calls or recursive calls
 - You call contract A with 1,000 startgas
   - That call uses 600 gas
   - Contract A calls contract B, which uses 300 gas
