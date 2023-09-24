@@ -184,11 +184,10 @@ filename="/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123
 Next, cut-and-paste the following code into your Python terminal.:
 
 ```
-from web3.auto import w3
+import web3, binascii
 keyfile = open(filename)
 encrypted_key = keyfile.read()
-private_key = w3.eth.account.decrypt(encrypted_key,password)
-import binascii
+private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
 binascii.b2a_hex(private_key).decode('ascii')
 ```
 
@@ -201,18 +200,17 @@ Python 3.8.10 (default, Nov 26 2021, 20:14:08)
 Type "help", "copyright", "credits" or "license" for more information.
 >>> password='password'
 >>> filename='/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567'
->>> from web3.auto import w3
+>>> import web3, binascii
 >>> keyfile = open(filename)
 >>> encrypted_key = keyfile.read()
->>> private_key = w3.eth.account.decrypt(encrypted_key,password)
->>> import binascii
+>>> private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
 >>> binascii.b2a_hex(private_key).decode('ascii')
 '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
 >>> 
 $
 ```
 
-The decoded private key is the hex line at the end.  Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.
+The decoded private key is the hex line at the end.  Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.  You are welcome to put it in the ethprivate.py file -- just create a new field.  Again, since the ether on this blockchain is workt nothing, we can bypass what would otherwise be a security problem by listing our private key in plain text.
 
 
 ### Part 6: Send ether

@@ -8,10 +8,18 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel='stylesheet' href='../../markdown.css'></link>
@@ -168,11 +176,10 @@ To exit, press ctrl-d or type exit
 <pre><code>password="password"
 filename="/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567"</code></pre>
 <p>Next, cut-and-paste the following code into your Python terminal.:</p>
-<pre><code>from web3.auto import w3
+<pre><code>import web3, binascii
 keyfile = open(filename)
 encrypted_key = keyfile.read()
-private_key = w3.eth.account.decrypt(encrypted_key,password)
-import binascii
+private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
 binascii.b2a_hex(private_key).decode('ascii')</code></pre>
 <p>You do not need to know what the above commands do, although you are welcome to look into it. When you run those commands, it will look like the following:</p>
 <pre><code>$ python3
@@ -181,16 +188,15 @@ Python 3.8.10 (default, Nov 26 2021, 20:14:08)
 Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; password='password'
 &gt;&gt;&gt; filename='/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567'
-&gt;&gt;&gt; from web3.auto import w3
+&gt;&gt;&gt; import web3, binascii
 &gt;&gt;&gt; keyfile = open(filename)
 &gt;&gt;&gt; encrypted_key = keyfile.read()
-&gt;&gt;&gt; private_key = w3.eth.account.decrypt(encrypted_key,password)
-&gt;&gt;&gt; import binascii
+&gt;&gt;&gt; private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
 &gt;&gt;&gt; binascii.b2a_hex(private_key).decode('ascii')
 '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
 &gt;&gt;&gt; 
 $</code></pre>
-<p>The decoded private key is the hex line at the end. Save this decoded private key somewhere, as you will need it in future assignments. Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.</p>
+<p>The decoded private key is the hex line at the end. Save this decoded private key somewhere, as you will need it in future assignments. Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0. You are welcome to put it in the ethprivate.py file – just create a new field. Again, since the ether on this blockchain is workt nothing, we can bypass what would otherwise be a security problem by listing our private key in plain text.</p>
 </div><div id='tpart-6-send-ether' class='tabcontent'><h3 id='part-6-send-ether'>Part 6: Send ether</h3>
 <p>Next you are going to send me some money via the geth command line. We are done with Python for this assignment, and have to go back to the geth prompt (via <code>geth attach /path/to/ethprivate/geth.ipc</code>) for this.</p>
 <p>To send (fake) ETH, you have to first unlock your account:</p>
