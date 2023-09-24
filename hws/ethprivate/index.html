@@ -152,7 +152,7 @@ To exit, press ctrl-d or type exit
 <li><code>personal.newAccount()</code> will generate an Ethereum account for you.
 <ul>
 <li>If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password. You probably don’t need to have one for this key, since the ether on this blockchain has no monetary value. It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567. Let’s only create one account for now; you can always create more later if you want.</li>
-<li>If this command does not work (often an error such as “ReferenceError: personal is not defined”), then you have to re-launch the geth node with the <code>--rpc.enabledeprecatedpersonal</code> flag; your full geth command would be: <code>geth --config geth-config.toml --rpc.enabledeprecatedpersonal</code> (changing the config file name as appropriate). This happens on version 1.11.* of geth, which has removed the personal API; versions 1.10.* and lower do not need this flag. You will have to re-run the geth-attach command as well.</li>
+<li>If this command does not work (often an error such as “ReferenceError: personal is not defined”), then you have to re-launch the geth node with the <code>--rpc.enabledeprecatedpersonal</code> flag <em>when starting the node</em> (not when attaching); your full geth command to start the node would be: <code>geth --config geth-config.toml --rpc.enabledeprecatedpersonal</code> (changing the config file name as appropriate). This happens on version 1.11.* of geth, which has removed the personal API; versions 1.10.* and lower do not need this flag. You will have to re-run the geth-attach command as well.</li>
 </ul></li>
 <li>You can get that account number anytime via <code>eth.coinbase</code>
 <ul>
