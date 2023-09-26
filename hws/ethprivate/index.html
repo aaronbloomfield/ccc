@@ -8,18 +8,10 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
+    ul.task-list{list-style: none;}
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel='stylesheet' href='../../markdown.css'></link>
@@ -76,7 +68,7 @@
 </div><div id='tpart-1-installation' class='tabcontent'><h3 id='part-1-installation'>Part 1: Installation</h3>
 <p>Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.</p>
 <p>You will need to install <a href='https://geth.ethereum.org'>geth</a> (aka go-ethereum), which you can download from the <a href='https://geth.ethereum.org/downloads'>geth downloads page</a>. The instructions differ depending on your OS – some OS’es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package. If prompted (only on some OS’es), you don’t need to install the development tools.</p>
-<p><strong>WARNING:</strong> DO NOT JUST RUN <code>geth</code>! Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a “light” node and almost 2 Tb for a “full” node. It also takes a full week (at least) to synchronize all that data.</p>
+<p><strong>WARNING:</strong> After installation, DO NOT JUST RUN <code>geth</code>! Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a “light” node and almost 2 Tb for a “full” node. It also takes a full week (at least) to synchronize all that data.</p>
 </div><div id='tpart-2-blockchain' class='tabcontent'><h3 id='part-2-blockchain'>Part 2: Blockchain</h3>
 <p>Here we will connect to our private blockchain.</p>
 <p><strong>Step 1:</strong> Create a directory to hold the blockchain info – this can be anywhere you want, but we’ll call it <code>/path/to/ethprivate</code> herein.</p>
@@ -133,21 +125,21 @@ To exit, press ctrl-d or type exit
 <li><strong>Important:</strong> if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not syncing.</li>
 </ul></li>
 <li><code>admin.peers</code> will print information on each of those peers. Once established, it should list exactly one peer – the course server, whose ‘enode’ specification is the same as what is in the geth-config.toml file that you downloaded above.</li>
-<li><code>eth.blockNumber</code> will return the highest block number in the blockchain that is on your computer. If it is returning zero, then it is not sync’ed (or is not trying to sync).</li>
+<li><code>eth.blockNumber</code> will return the highest block number in the blockchain that is on your computer. If it is returning zero, then it is not synced (or is not trying to sync).</li>
 <li><code>eth.syncing</code> will either return ‘false’ if it is not syncing, or a JSON dictionary if it is.
 <ul>
 <li>If <code>eth.blockNumber</code> is 0 and <code>eth.syncing</code> is false, then it is not syncing, perhaps due to a networking connection issue. This will always be the case right after geth starts and before it has had a chance to connect to the peer(s).</li>
 <li>If <code>eth.syncing</code> is false and <code>eth.blockNumber</code> is non-zero, then – most likely – it has completed syncing (it could also be that geth just started, and it hasn’t had a chance to start syncing yet).</li>
 <li>If <code>eth.syncing</code> returns a JSON dictionary, then it is in the process of syncing.
 <ul>
-<li>The <code>currentBlock</code> value, aka <code>eth.syncing.currentBlock</code> is the highest block it has sync’ed so far; this is also the value that <code>eth.blockNumber</code> returns</li>
+<li>The <code>currentBlock</code> value, aka <code>eth.syncing.currentBlock</code> is the highest block it has synced so far; this is also the value that <code>eth.blockNumber</code> returns</li>
 <li>The <code>highestBlock</code> value, aka <code>eth.syncing.highestBlock</code>, is what it is working on syncing up to</li>
 <li>Once <code>currentBlock</code> reaches <code>highestBlock</code>, then the syncing will be complete, and <code>eth.syncing</code> will return <code>false</code>, as it is no longer syncing.</li>
 </ul></li>
 <li>You can use this command to print out the syncing status: <code>console.log ("at " + eth.blockNumber + " of " + eth.syncing.highestBlock + " blocks; " + (eth.syncing.highestBlock-eth.blockNumber) + " blocks left to sync")</code></li>
 </ul></li>
 </ul>
-<p>Once it is sync’ed, here are some commands for you to try out:</p>
+<p>Once it is synced, here are some commands for you to try out:</p>
 <ul>
 <li><code>personal.newAccount()</code> will generate an Ethereum account for you.
 <ul>
@@ -165,7 +157,7 @@ To exit, press ctrl-d or type exit
 </ul></li>
 </ul>
 </div><div id='tpart-4-get-ether' class='tabcontent'><h3 id='part-4-get-ether'>Part 4: Get ether</h3>
-<p>You cannot mine on this blockchain – it has been set up to automatically mine any transaction to the blockchain for you. In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page. Each time you use this faucet you will obtain 100 (fake) ETH. <strong>USE THIS RESPONSIBLY!!!</strong> The intent of the faucet is for you to obtain as much funds as you need. But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work. This will make me cranky. If you request funds a few dozen times throughout the semester, that’s totally fine. Even a hundred requests this semester would be fine. But if you are making the requests thousands of times, that’s going to be a problem.</p>
+<p>You cannot mine on this blockchain – it has been set up to automatically mine any transaction to the blockchain for you. In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page. Each time you use this faucet you will obtain 100 (fake) ETH. <strong>USE THIS RESPONSIBLY!!!</strong> The intent of the faucet is for you to obtain as much funds as you need for this course. But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work. This will make me cranky. If you request funds a few dozen times throughout the semester, that’s totally fine. Even a hundred requests this semester would be fine. But if you are making the requests thousands of times, that’s going to be a problem.</p>
 <p>You should request funds once or twice for this assignment. After you make the requests – you’ll need your full eth.coinbase account address – you should check that your balance was updated in the geth terminal. You can use <code>eth.getBalance(eth.coinbase)</code>, but that reports it in wei (which has 18 more zeroes). You can also use <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code> to get the value in ether.</p>
 <p>You will determine the transaction hash and the block number for this transaction later in this assignment (in part 8).</p>
 <p>To verify that you did this part, we are going to check that you have a non-zero balance in your eth.coinbase account.</p>
@@ -231,6 +223,7 @@ at block: 0 (Fri Sep 16 2022 12:52:06 GMT+0000 (UTC))
 To exit, press ctrl-d or type exit
 &gt; </code></pre>
 <p>Your geth version number may be more recent. The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3). In the console, type the start of the module, a period, and hit the Tab key – it will show you all the possible completions. If you type in the name and it’s a function, it will tell you that. And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well. Lastly, it’s a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript. (You won’t need to know much JavaScript for this course). If you do know Javascript, note that this is a much older version of Javascript, before any of the <code>async</code> functionality was added (if you don’t know Javascript, you can ignore this sentence).</p>
+<p>There isn’t much you can break here – worst case you lose your (fake) ether, and then you can just request more for the faucet. This course blockchain is for you to use and learn from, so feel free to play around if you would like.</p>
 </div><div id='tpart-8-explorer' class='tabcontent'><h3 id='part-8-explorer'>Part 8: Explorer</h3>
 <p>We have a web-based blockchain explorer for our private Ethereum blockchain. The link to that is on the Canvas landing page. Browse that site, and play around with the search functionality. Directions for how to use it are on the main page. Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there – the time of the last update is listed on the main page (the second to last bullet under ‘Statistics’).</p>
 <p>Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL. You should also see the block number listed there as well. These go into the <code>send_txn_url</code> and <code>send_txn_block_number</code> fields in ethprivate.py.</p>

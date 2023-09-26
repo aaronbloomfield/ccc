@@ -36,7 +36,7 @@ Geth is the program we will be using to connect to the blockchain. Geth, which s
 
 You will need to install [geth](https://geth.ethereum.org) (aka go-ethereum), which you can download from the [geth downloads page](https://geth.ethereum.org/downloads).  The instructions differ depending on your OS -- some OS'es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package.  If prompted (only on some OS'es), you don't need to install the development tools.
 
-**WARNING:** DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and almost 2 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
+**WARNING:** After installation, DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and almost 2 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
 
 ### Part 2: Blockchain
 
@@ -135,17 +135,17 @@ As it is syncing, you can try these commands:
 - `admin.peers.length` will tell you how many peers you are connected to -- it should be 1.  One of the options in the geth-config.toml file prevents it from connecting to additional peers, as additional peers are not needed in the course setup.  If you enter this right after you start up geth, it may return 0, as it is still connecting to the peer(s).
   - **Important:** if this ever evaluates to 0, then you are not connected to the course blockchain, and your node is not syncing.
 - `admin.peers` will print information on each of those peers.  Once established, it should list exactly one peer -- the course server, whose 'enode' specification is the same as what is in the geth-config.toml file that you downloaded above.
-- `eth.blockNumber` will return the highest block number in the blockchain that is on your computer.  If it is returning zero, then it is not sync'ed (or is not trying to sync).
+- `eth.blockNumber` will return the highest block number in the blockchain that is on your computer.  If it is returning zero, then it is not synced (or is not trying to sync).
 - `eth.syncing` will either return 'false' if it is not syncing, or a JSON dictionary if it is.
   - If `eth.blockNumber` is 0 and `eth.syncing` is false, then it is not syncing, perhaps due to a networking connection issue.  This will always be the case right after geth starts and before it has had a chance to connect to the peer(s).
   - If `eth.syncing` is false and `eth.blockNumber` is non-zero, then -- most likely -- it has completed syncing (it could also be that geth just started, and it hasn't had a chance to start syncing yet).
   - If `eth.syncing` returns a JSON dictionary, then it is in the process of syncing.
-    - The `currentBlock` value, aka `eth.syncing.currentBlock` is the highest block it has sync'ed so far; this is also the value that `eth.blockNumber` returns
+    - The `currentBlock` value, aka `eth.syncing.currentBlock` is the highest block it has synced so far; this is also the value that `eth.blockNumber` returns
     - The `highestBlock` value, aka `eth.syncing.highestBlock`, is what it is working on syncing up to
     - Once `currentBlock` reaches `highestBlock`, then the syncing will be complete, and `eth.syncing` will return `false`, as it is no longer syncing.
   - You can use this command to print out the syncing status: `console.log ("at " + eth.blockNumber + " of " + eth.syncing.highestBlock + " blocks; " + (eth.syncing.highestBlock-eth.blockNumber) + " blocks left to sync")`
 
-Once it is sync'ed, here are some commands for you to try out:
+Once it is synced, here are some commands for you to try out:
 
 - `personal.newAccount()` will generate an Ethereum account for you.  
   - If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password.  You probably don't need to have one for this key, since the ether on this blockchain has no monetary value.  It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567.  Let's only create one account for now; you can always create more later if you want.
@@ -159,7 +159,7 @@ Once it is sync'ed, here are some commands for you to try out:
 
 ### Part 4: Get ether
 
-You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need.  But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
+You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need for this course.  But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
 
 You should request funds once or twice for this assignment.  After you make the requests -- you'll need your full eth.coinbase account address -- you should check that your balance was updated in the geth terminal.  You can use `eth.getBalance(eth.coinbase)`, but that reports it in wei (which has 18 more zeroes).  You can also use `web3.fromWei(eth.getBalance(eth.coinbase), "ether")` to get the value in ether.
 
@@ -263,6 +263,8 @@ To exit, press ctrl-d or type exit
 ```
 
 Your geth version number may be more recent.  The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3).  In the console, type the start of the module, a period, and hit the Tab key -- it will show you all the possible completions.  If you type in the name and it's a function, it will tell you that.  And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well.  Lastly, it's a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript.  (You won't need to know much JavaScript for this course).  If you do know Javascript, note that this is a much older version of Javascript, before any of the `async` functionality was added (if you don't know Javascript, you can ignore this sentence).
+
+There isn't much you can break here -- worst case you lose your (fake) ether, and then you can just request more for the faucet.  This course blockchain is for you to use and learn from, so feel free to play around if you would like.
 
 
 ### Part 8: Explorer
