@@ -86,7 +86,7 @@
 <li>It should say “Successfully wrote genesis state”</li>
 <li>The genesis block hash, shown above as <code>XXXXXX..XXXXXX</code>, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the “..”) in the middle of it</li>
 </ul>
-<p><strong>Step 4:</strong> Copy the <code>geth-config.toml</code> file, in Canvas’ Files, onto your computer (it likely will have a semester/year suffix to it). You can copy it anywhere, but we recommend putting it into the geth directory you created above. You need to change two values in that file:</p>
+<p><strong>Step 4:</strong> Copy the <code>geth-config-???.toml</code> file, in Canvas’ Files, onto your computer (it will have a semester/year suffix to it); save it as <code>geth-config.toml</code>. You can copy it anywhere, but we recommend putting it into the geth directory you created above. You need to change two values in that file:</p>
 <ul>
 <li>The <code>UserIdent = "mst3k"</code> line should be changed to your UVA userid</li>
 <li>The <code>DataDir = "/path/to/ethprivate"</code> line needs to change to the data directory you created above.</li>
@@ -170,10 +170,11 @@ To exit, press ctrl-d or type exit
 <pre><code>password=&quot;password&quot;
 filename=&quot;/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567&quot;</code></pre>
 <p>Next, cut-and-paste the following code into your Python terminal.:</p>
-<pre><code>import web3, binascii
+<pre><code>from web3.auto import w3
 keyfile = open(filename)
 encrypted_key = keyfile.read()
-private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
+private_key = w3.eth.account.decrypt(encrypted_key,password)
+import binascii
 binascii.b2a_hex(private_key).decode(&#39;ascii&#39;)</code></pre>
 <p>You do not need to know what the above commands do, although you are welcome to look into it. When you run those commands, it will look like the following:</p>
 <pre><code>$ python3
@@ -182,10 +183,11 @@ Python 3.8.10 (default, Nov 26 2021, 20:14:08)
 Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
 &gt;&gt;&gt; password=&#39;password&#39;
 &gt;&gt;&gt; filename=&#39;/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567&#39;
-&gt;&gt;&gt; import web3, binascii
+&gt;&gt;&gt; from web3.auto import w3
 &gt;&gt;&gt; keyfile = open(filename)
 &gt;&gt;&gt; encrypted_key = keyfile.read()
-&gt;&gt;&gt; private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
+&gt;&gt;&gt; private_key = w3.eth.account.decrypt(encrypted_key,password)
+&gt;&gt;&gt; import binascii
 &gt;&gt;&gt; binascii.b2a_hex(private_key).decode(&#39;ascii&#39;)
 &#39;0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&#39;
 &gt;&gt;&gt; 

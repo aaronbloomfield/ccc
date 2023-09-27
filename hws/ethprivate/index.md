@@ -69,7 +69,7 @@ There are two things to check to ensure that this worked correctly:
 - It should say "Successfully wrote genesis state"
 - The genesis block hash, shown above as `XXXXXX..XXXXXX`, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the "..") in the middle of it
 
-**Step 4:** Copy the `geth-config.toml` file, in Canvas' Files, onto your computer (it likely will have a semester/year suffix to it).  You can copy it anywhere, but we recommend putting it into the geth directory you created above.  You need to change two values in that file:
+**Step 4:** Copy the `geth-config-???.toml` file, in Canvas' Files, onto your computer (it will have a semester/year suffix to it); save it as `geth-config.toml`.  You can copy it anywhere, but we recommend putting it into the geth directory you created above.  You need to change two values in that file:
 
   - The `UserIdent = "mst3k"` line should be changed to your UVA userid
   - The `DataDir = "/path/to/ethprivate"` line needs to change to the data directory you created above.
@@ -184,10 +184,11 @@ filename="/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123
 Next, cut-and-paste the following code into your Python terminal.:
 
 ```
-import web3, binascii
+from web3.auto import w3
 keyfile = open(filename)
 encrypted_key = keyfile.read()
-private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
+private_key = w3.eth.account.decrypt(encrypted_key,password)
+import binascii
 binascii.b2a_hex(private_key).decode('ascii')
 ```
 
@@ -200,10 +201,11 @@ Python 3.8.10 (default, Nov 26 2021, 20:14:08)
 Type "help", "copyright", "credits" or "license" for more information.
 >>> password='password'
 >>> filename='/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567'
->>> import web3, binascii
+>>> from web3.auto import w3
 >>> keyfile = open(filename)
 >>> encrypted_key = keyfile.read()
->>> private_key = web3.auto.w3.eth.account.decrypt(encrypted_key,password)
+>>> private_key = w3.eth.account.decrypt(encrypted_key,password)
+>>> import binascii
 >>> binascii.b2a_hex(private_key).decode('ascii')
 '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
 >>> 
