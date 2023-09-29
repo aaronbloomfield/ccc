@@ -3,7 +3,7 @@
 // This example is just to show the compiled bytecode and opcodes in the
 // solidity slide set.
 
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.21;
 contract MyContract {
     uint public i = 1 + 2 * 3 - 4;
 }

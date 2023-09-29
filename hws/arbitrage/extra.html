@@ -12,6 +12,7 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
   <script>
@@ -40,6 +41,9 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="arbitrage-trading-formula-derivations">Arbitrage Trading Formula Derivations</h1>
@@ -69,8 +73,8 @@
 <ul>
 <li><span class="math inline"><em>ω</em><sub><em>t</em></sub> = <em>q</em><sub><em>t</em></sub> − <em>δ</em><sub><em>t</em></sub></span></li>
 </ul></li>
-<li>The value of the DEX’s <span class="math inline"><em>x</em><sub><em>d</em></sub></span> after the transaction we’ll represent by <span class="math inline"><em>x</em>′<sub><em>d</em></sub> = <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub> + <em>δ</em><sub><em>t</em></sub>)</span></li>
-<li>The amount of ETH received: <span class="math inline"><em>r</em><sub><em>e</em></sub> = <em>f</em> * (<em>x</em><sub><em>d</em></sub> − <em>x</em>′<sub><em>d</em></sub>)</span>
+<li>The value of the DEX’s <span class="math inline"><em>x</em><sub><em>d</em></sub></span> after the transaction we’ll represent by <span class="math inline"><em>x</em>′<sub><em>d</em></sub> = <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub>+<em>δ</em><sub><em>t</em></sub>)</span></li>
+<li>The amount of ETH received: <span class="math inline"><em>r</em><sub><em>e</em></sub> = <em>f</em> * (<em>x</em><sub><em>d</em></sub>−<em>x</em>′<sub><em>d</em></sub>)</span>
 <ul>
 <li>This amount is added to <span class="math inline"><em>q</em><sub><em>e</em></sub></span></li>
 <li>As TC was traded to the DEX, <span class="math inline"><em>r</em><sub><em>e</em></sub></span> will be positive, indicating a receipt of ETH, as expected</li>
@@ -78,26 +82,26 @@
 <li>The amount of ETH after (<span class="math inline"><em>ω</em><sub><em>e</em></sub></span>) is thus:
 <ul>
 <li><span class="math inline"><em>ω</em><sub><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> + <em>r</em><sub><em>e</em></sub></span></li>
-<li><span class="math inline"><em>ω</em><sub><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> + <em>f</em> * (<em>x</em><sub><em>d</em></sub> − <em>x</em>′<sub><em>d</em></sub>)</span></li>
-<li><span class="math inline"><em>ω</em><sub><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> + <em>f</em> * <em>x</em><sub><em>d</em></sub> − <em>f</em> * <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub> + <em>δ</em><sub><em>t</em></sub>)</span></li>
+<li><span class="math inline"><em>ω</em><sub><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> + <em>f</em> * (<em>x</em><sub><em>d</em></sub>−<em>x</em>′<sub><em>d</em></sub>)</span></li>
+<li><span class="math inline"><em>ω</em><sub><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> + <em>f</em> * <em>x</em><sub><em>d</em></sub> − <em>f</em> * <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub>+<em>δ</em><sub><em>t</em></sub>)</span></li>
 </ul></li>
 <li>However, we have to deduct the gas fees of <span class="math inline"><em>g</em></span>, so the amount of ETH after is then:
 <ul>
-<li><span class="math inline"><em>ω</em><sub><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> + <em>f</em> * <em>x</em><sub><em>d</em></sub> − <em>f</em> * <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub> + <em>δ</em><sub><em>t</em></sub>) − <em>g</em></span></li>
+<li><span class="math inline"><em>ω</em><sub><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> + <em>f</em> * <em>x</em><sub><em>d</em></sub> − <em>f</em> * <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub>+<em>δ</em><sub><em>t</em></sub>) − <em>g</em></span></li>
 </ul></li>
 <li>We can then figure out our holdings after the transaction:
 <ul>
 <li><span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = <em>ω</em><sub><em>e</em></sub> * <em>p</em><sub><em>e</em></sub> + <em>ω</em><sub><em>t</em></sub> * <em>p</em><sub><em>t</em></sub></span></li>
-<li><span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>e</em></sub> + <em>f</em> * <em>x</em><sub><em>d</em></sub> − <em>f</em> * <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub> + <em>δ</em><sub><em>t</em></sub>) − <em>g</em>) * <em>p</em><sub><em>e</em></sub> + (<em>q</em><sub><em>t</em></sub> − <em>δ</em><sub><em>t</em></sub>) * <em>p</em><sub><em>t</em></sub></span></li>
+<li><span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>e</em></sub>+<em>f</em>*<em>x</em><sub><em>d</em></sub>−<em>f</em>*<em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub>+<em>δ</em><sub><em>t</em></sub>)−<em>g</em>) * <em>p</em><sub><em>e</em></sub> + (<em>q</em><sub><em>t</em></sub>−<em>δ</em><sub><em>t</em></sub>) * <em>p</em><sub><em>t</em></sub></span></li>
 <li>We’ll separate out the gas fees to make it simpler a bit later on:</li>
-<li><span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>e</em></sub> + <em>f</em> * <em>x</em><sub><em>d</em></sub> − <em>f</em> * <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub> + <em>δ</em><sub><em>t</em></sub>)) * <em>p</em><sub><em>e</em></sub> + (<em>q</em><sub><em>t</em></sub> − <em>δ</em><sub><em>t</em></sub>) * <em>p</em><sub><em>t</em></sub> − <em>g</em> * <em>p</em><sub><em>e</em></sub></span></li>
+<li><span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>e</em></sub>+<em>f</em>*<em>x</em><sub><em>d</em></sub>−<em>f</em>*<em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub>+<em>δ</em><sub><em>t</em></sub>)) * <em>p</em><sub><em>e</em></sub> + (<em>q</em><sub><em>t</em></sub>−<em>δ</em><sub><em>t</em></sub>) * <em>p</em><sub><em>t</em></sub> − <em>g</em> * <em>p</em><sub><em>e</em></sub></span></li>
 </ul></li>
 <li>We want to maximize this formula. The only variable that we can change is how much TC we are trading in (<span class="math inline"><em>δ</em><sub><em>t</em></sub></span>)
 <ul>
 <li>To do this, we are going to have to take the derivative of that function</li>
-<li>Before we do, let’s put it into a reduced form: <span class="math inline"><em>y</em> = <em>a</em> + <em>b</em>/(<em>c</em> + <em>x</em>) + <em>d</em> * <em>x</em> = <em>a</em> + <em>b</em> * (<em>x</em> + <em>c</em>)<sup> − 1</sup> + <em>d</em> * <em>x</em></span>
+<li>Before we do, let’s put it into a reduced form: <span class="math inline"><em>y</em> = <em>a</em> + <em>b</em>/(<em>c</em>+<em>x</em>) + <em>d</em> * <em>x</em> = <em>a</em> + <em>b</em> * (<em>x</em>+<em>c</em>)<sup>−1</sup> + <em>d</em> * <em>x</em></span>
 <ul>
-<li>If we massage the above formula into the <span class="math inline"><em>y</em> = <em>a</em> + <em>b</em>/(<em>c</em> + <em>x</em>) + <em>d</em> * <em>x</em></span> form, we can derive what <span class="math inline"><em>x</em></span>, <span class="math inline"><em>a</em></span>, <span class="math inline"><em>b</em></span>, <span class="math inline"><em>c</em></span>, and <span class="math inline"><em>d</em></span> equal:
+<li>If we massage the above formula into the <span class="math inline"><em>y</em> = <em>a</em> + <em>b</em>/(<em>c</em>+<em>x</em>) + <em>d</em> * <em>x</em></span> form, we can derive what <span class="math inline"><em>x</em></span>, <span class="math inline"><em>a</em></span>, <span class="math inline"><em>b</em></span>, <span class="math inline"><em>c</em></span>, and <span class="math inline"><em>d</em></span> equal:
 <ul>
 <li><span class="math inline"><em>x</em></span>, the variable we are solving for, to <span class="math inline"><em>x</em> = <em>δ</em><sub><em>t</em></sub></span></li>
 <li><span class="math inline"><em>a</em> = <em>q</em><sub><em>e</em></sub> * <em>p</em><sub><em>e</em></sub> − <em>g</em> * <em>p</em><sub><em>e</em></sub> + <em>q</em><sub><em>t</em></sub> * <em>p</em><sub><em>t</em></sub> + <em>p</em><sub><em>e</em></sub> * <em>f</em> * <em>x</em><sub><em>d</em></sub></span></li>
@@ -108,17 +112,17 @@
 </ul></li>
 <li>We take the derivative of that:
 <ul>
-<li><span class="math inline"><em>y</em>′ =  − <em>b</em> * (<em>x</em> + <em>c</em>)<sup> − 2</sup> + <em>d</em></span></li>
+<li><span class="math inline"><em>y</em>′ =  − <em>b</em> * (<em>x</em>+<em>c</em>)<sup>−2</sup> + <em>d</em></span></li>
 </ul></li>
 <li>To find the maxima, we set <span class="math inline"><em>y</em>′ = 0</span> and solve for <span class="math inline"><em>x</em></span>:
 <ul>
-<li><span class="math inline"><em>y</em>′ = 0 =  − <em>b</em> * (<em>x</em> + <em>c</em>)<sup> − 2</sup> + <em>d</em></span></li>
-<li><span class="math inline">0 =  − <em>b</em> * (<em>x</em> + <em>c</em>)<sup> − 2</sup> + <em>d</em></span></li>
-<li><span class="math inline"> − <em>d</em> =  − <em>b</em> * (<em>x</em> + <em>c</em>)<sup> − 2</sup></span></li>
-<li><span class="math inline"><em>d</em> = <em>b</em> * (<em>x</em> + <em>c</em>)<sup> − 2</sup></span></li>
-<li><span class="math inline"><em>d</em> = <em>b</em>/(<em>x</em> + <em>c</em>)<sup>2</sup></span></li>
-<li><span class="math inline"><em>d</em> * (<em>x</em> + <em>c</em>)<sup>2</sup> = <em>b</em></span></li>
-<li><span class="math inline">(<em>x</em> + <em>c</em>)<sup>2</sup> = <em>b</em>/<em>d</em></span></li>
+<li><span class="math inline"><em>y</em>′ = 0 =  − <em>b</em> * (<em>x</em>+<em>c</em>)<sup>−2</sup> + <em>d</em></span></li>
+<li><span class="math inline">0 =  − <em>b</em> * (<em>x</em>+<em>c</em>)<sup>−2</sup> + <em>d</em></span></li>
+<li><span class="math inline"> − <em>d</em> =  − <em>b</em> * (<em>x</em>+<em>c</em>)<sup>−2</sup></span></li>
+<li><span class="math inline"><em>d</em> = <em>b</em> * (<em>x</em>+<em>c</em>)<sup>−2</sup></span></li>
+<li><span class="math inline"><em>d</em> = <em>b</em>/(<em>x</em>+<em>c</em>)<sup>2</sup></span></li>
+<li><span class="math inline"><em>d</em> * (<em>x</em>+<em>c</em>)<sup>2</sup> = <em>b</em></span></li>
+<li><span class="math inline">(<em>x</em>+<em>c</em>)<sup>2</sup> = <em>b</em>/<em>d</em></span></li>
 <li><span class="math inline"><em>x</em> + <em>c</em>=</span> √ <span class="math inline">(<em>b</em>/<em>d</em>)</span></li>
 <li><span class="math inline"><em>x</em> =  − <em>c</em>±</span> √ <span class="math inline">(<em>b</em>/<em>d</em>)</span></li>
 </ul></li>
@@ -131,19 +135,19 @@
 </ul></li>
 <li>So we can rewrite that formula as:
 <ul>
-<li><span class="math inline"><em>δ</em><sub><em>t</em></sub> =  − <em>y</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em> * <em>k</em><sub><em>d</em></sub> * <em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span>
+<li><span class="math inline"><em>δ</em><sub><em>t</em></sub> =  − <em>y</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span>
 <ul>
 <li>That formula does not render well in HTML, but the entire parenthetical is what we are taking the square root of</li>
 </ul></li>
 <li>So once we know the DEX values (<span class="math inline"><em>x</em><sub><em>d</em></sub></span>, <span class="math inline"><em>y</em><sub><em>d</em></sub></span>, <span class="math inline"><em>k</em><sub><em>d</em></sub></span>, and the fees <span class="math inline"><em>f</em></span>) and the current prices (<span class="math inline"><em>p</em><sub><em>e</em></sub></span> and <span class="math inline"><em>p</em><sub><em>t</em></sub></span>), we can compute the points for the maxima and minima</li>
 <li>Note that these are not guaranteed to make a profit! But if they do make a profit, one of them will make the <em>most</em> and/or <em>least</em> profit.</li>
-<li>If we are trading in ETH, the formula is similar: <span class="math inline"><em>δ</em><sub><em>e</em></sub> =  − <em>x</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em> * <em>k</em><sub><em>d</em></sub> * <em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span></li>
+<li>If we are trading in ETH, the formula is similar: <span class="math inline"><em>δ</em><sub><em>e</em></sub> =  − <em>x</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span></li>
 <li>Because the variables in the parenthetical can never be negative, the square root will always return real values</li>
 </ul></li>
 <li>We can simplify these equations somewhat. Although there is a ± (plus-minus), subtracting that value would make the overall <span class="math inline"><em>δ</em><sub><em>t</em></sub></span> or <span class="math inline"><em>δ</em><sub><em>e</em></sub></span> value negative, which doesn’t make sense in this case – what we derived is how much we are trading in to the DEX, not how much we are getting out of the DEX. So we will just replace the ± with a regular plus symbol.
 <ul>
-<li>If we are trading in TC: <span class="math inline"><em>δ</em><sub><em>t</em></sub> =  − <em>y</em><sub><em>d</em></sub>+</span> √ <span class="math inline">(<em>f</em> * <em>k</em><sub><em>d</em></sub> * <em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span></li>
-<li>If we are trading in ETH: <span class="math inline"><em>δ</em><sub><em>e</em></sub> =  − <em>x</em><sub><em>d</em></sub>+</span> √ <span class="math inline">(<em>f</em> * <em>k</em><sub><em>d</em></sub> * <em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span></li>
+<li>If we are trading in TC: <span class="math inline"><em>δ</em><sub><em>t</em></sub> =  − <em>y</em><sub><em>d</em></sub>+</span> √ <span class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span></li>
+<li>If we are trading in ETH: <span class="math inline"><em>δ</em><sub><em>e</em></sub> =  − <em>x</em><sub><em>d</em></sub>+</span> √ <span class="math inline">(<em>f</em>*<em>k</em><sub><em>d</em></sub>*<em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span></li>
 <li>As above, those formulas do not render well in HTML, but the entire parenthetical is what we are taking the square root of</li>
 </ul></li>
 </ul></li>
