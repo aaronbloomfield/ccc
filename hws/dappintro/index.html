@@ -53,6 +53,7 @@
 <button class='tablinks' onclick="openTab(event,'thints')">Hints</button>
 <button class='tablinks' onclick="openTab(event,'tpart-1-remix')">Remix</button>
 <button class='tablinks' onclick="openTab(event,'tpart-2-testing')">Testing</button>
+<button class='tablinks' onclick="openTab(event,'tevm-version')">EVM Version</button>
 <button class='tablinks' onclick="openTab(event,'tpart-3-deployment')">Deployment</button>
 <button class='tablinks' onclick="openTab(event,'tpart-4-web-interface')">Web Interface</button>
 <button class='tablinks' onclick="openTab(event,'tpart-5-vote')">Vote</button>
@@ -88,6 +89,7 @@
 <p><strong>Directories:</strong> Keep all your Solidity code, for all your assignments in this course, in the same directory. Much of the code will be re-used between assignments. There will never be two different files that have the same name but different content. Some of the later assignments will have a dozen or so files that are included (imported). And many assignments will use the same set of imported files. And many assignments will import the same (large) set of files. Having everything in the same directory will make it much easier to manage.</p>
 <p><strong>Desktop Remix:</strong> Desktop Remix likes to scan your directory structure so that it knows where the .sol files are. But this can take a looooooong time if the file explorer pane is opened up to your root directory. Instead, do a File -&gt; Open Directory, and open up the directory created just above. This will make Remix <em>much</em> faster in all aspects. You will see how to do this in the next few steps, but we wanted to include this hint here as well.</p>
 <p><strong>Desktop Remix, again:</strong> Sometimes the desktop version of Remix has issues. If issues happen, try to solve it, but be willing to switch to the web browser version if this occurs. So far we have found solutions to all the issues that have come up, and a few tips for how to work well with Remix will be discussed in lecture.</p>
+<p><strong>Desktop Remix, yet again:</strong> As the Remix installation is not signed, the relevant operating systems (notably Windows and Mac OS X) will not want to run it after it is installed. In Mac, you can change this in the Privacy & Security settings. Windows should allow you to run it after clicking through a number of dialogs. If this all makes you uncomfortable, you are always welcome to use the online version.</p>
 <p><strong>Web Remix:</strong> The web version of Remix also has issues – in particular, it saves your code on remote servers, and is tied to a cookie in your web browser. If you lose the computer, reset your cookies, or are using a different machine, then you will not be able to access your files. This means you will have to cut-and-paste the code to a locally saved file to ensure you can access it elsewhere.</p>
 <p><strong>Geth node:</strong> You will have to start a local geth node to deploy your contracts. You did this in the <a href='../ethprivate/index.html'>private Ethereum Blockchain</a> (<a href='../ethprivate/index.md'>md</a>) assignment. There are extra options that we will be using, but those options are already in the geth-config.toml file that you configured in <a href='../ethprivate/index.html'>the last assignment</a> (<a href='../ethprivate/index.md'>md</a>).</p>
 </div><div id='tpart-1-remix' class='tabcontent'><h3 id='part-1-remix'>Part 1: Remix</h3>
@@ -99,11 +101,13 @@
 <li>If you are using the desktop version, you can browse the local file system (select ‘localhost’ in the Workspaces drop-down box) to find the directory where you are going to keep IPoll.sol and Poll.sol</li>
 <li><strong>HINT:</strong> In the desktop version, do a File -&gt; Open Directory. Choose your directory for the assignments for this class. This will save a lot of time, as Remix will not have to look for Solidity files on your entire hard drive, just that directory.</li>
 </ul></li>
-<li>To compile it, click on the compilation icon (<img src='img/solidityLogo.webp' class='icon'>) in the far-left pane. You may notice a green check mark on the compilation icon – it might automatically compile it as you type (this does not seem to be consistent across all platforms). Click on the compilation icon, and click “Compile Poll.sol” (NOT IPoll.sol). It should compile without errors.
+<li>Ensure you have made the changes mentioned above – you need to select a different purpose for the poll (and upate the <code>purpose</code> string appropriately), and also modify the <code>addChoice()</code> calls in the constructor (you can add or remove them as needed). You should not make any other changes to the Poll.sol code.</li>
+<li>To compile it, click on the compilation icon (<img src='img/solidityLogo.webp' class='icon'>) in the far-left pane. You may notice a green check mark on the compilation icon – it might automatically compile it as you type (this does not seem to be consistent across all platforms).
 <ul>
-<li>Remix does allow for compiler optimizations, but we are not going to explore them in this assignment. For now, don’t select any optimizations (meaning leave it as the default options).</li>
+<li>Remix does allow for compiler optimizations, but we are not going to explore them in this assignment. For now, don’t select any optimizations (meaning leave it as the default options); doing so makes it harder to trace the contract when debugging it.</li>
+<li>Click “Compile Poll.sol” (NOT IPoll.sol). It should compile without errors.</li>
 </ul></li>
-<li>Click on the “deploy & run” icon (<img src='img/deployAndRun.webp' class='icon'>) in the far-left pane. For the Environment, we will stay with “Remix VM (London)”, which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us. You can see the accounts in the ‘Account’ drop-down list.</li>
+<li>Click on the “deploy & run” icon (<img src='img/deployAndRun.webp' class='icon'>) in the far-left pane. For the Environment, we will use “Remix VM (Shanghai)”, which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us. You can see the accounts in the ‘Account’ drop-down list.</li>
 <li>Click the orange “Deploy” button. It’s now running on the Ethereum blockchain that it simulates in Javascript, deployed from the selected (and also simulated) account shown in the “Account” drop-down list.</li>
 <li>Test out the deployment
 <ul>
@@ -149,25 +153,27 @@
 <p>You should ensure you are familiar with the <a href='../../slides/solidity.html#/debugging'>Testing and Debugging section of the Solidity slide set</a>.</p>
 <p>This task will show you how to develop unit tests for your Solidity application. To set this up:</p>
 <ol type='1'>
-<li><p>Click on the plugin manager icon (<img src='img/pluginManager.webp' class='icon'>) in the bottom of the far-left column of icons in the Remix window. In the search box enter ‘test’. The Solidity Unit Testing plugin will appear; click the green activate button.</p></li>
-<li><p>Remix will now display a unit testing icon (<img src='img/unitTesting.webp' class='icon'>) in the left-most pane; click on that.</p></li>
-<li><p>The plugin will automatically create a sample unit test class for you – to do this, click on “Generate”. You will see a Poll_test.sol file created.</p>
+<li>Click on the plugin manager icon (<img src='img/pluginManager.webp' class='icon'>) in the bottom of the far-left column of icons in the Remix window. In the search box enter ‘test’. The Solidity Unit Testing plugin will appear; click the green activate button.</li>
+<li>Remix will now display a unit testing icon (<img src='img/unitTesting.webp' class='icon'>) in the left-most pane; click on that.</li>
+<li>The plugin will automatically create a sample unit test class for you – to do this, click on “Generate”. You will see a Poll_test.sol file created.
 <ul>
 <li>Remix has a bizarre directory choice for where to put this file – on Linux systems, it goes in <code>~/tests/</code>. You will need to find where it is on your OS via a file search.</li>
 </ul></li>
-<li><p>Click on the blue “Run” button – this will run the unit tests. Some will pass and some will fail, which is expected at this point. Note that, for unit tests, you do not have to re-compile it each time – the Run button will do that, if necessary, for you.</p></li>
-<li><p>Let’s make the existing tests pass. In the <code>checkFailure()</code> function, change <code>Assert.notEqual()</code> to <code>Assert.equal()</code>, and re-run the tests. They should all pass now.</p></li>
-<li><p>Add the following method to the Poll_test class</p>
+<li>Click on the blue “Run” button – this will run the unit tests. Some will pass and some will fail, which is expected at this point. Note that, for unit tests, you do not have to re-compile it each time – the Run button will do that, if necessary, for you.</li>
+<li>Let’s make the existing tests pass. In the <code>checkFailure()</code> function, change <code>Assert.notEqual()</code> to <code>Assert.equal()</code>, and re-run the tests. They should all pass now.</li>
+<li>Add the following method to the Poll_test class:</li>
+</ol>
 <pre><code>function checkChioceCreation() public {
-   Poll p = new Poll();
-   p.addChoice("test1");
-   Assert.equal(uint(p.num_choices()),uint(7),"Choice not added");
+      Poll p = new Poll();
+      p.addChoice("test1");
+      Assert.equal(uint(p.num_choices()),uint(7),"Choice not added");
 }</code></pre>
 <ul>
 <li>That method checks that there are 7 choices, as 6 were created by the constructor, and one more was added in this method; you will have to adjust this value if you changed the number of choices in your constructor</li>
 <li>If you re-run the unit tests, this test should also pass</li>
-</ul></li>
-<li><p>Look at the comments just above the <code>checkSenderAndValue()</code> function. These comments specify the particular account that is passed in, and how much ether (actually wei) that is passed in as well. You can see a full definition of these types of comments <a href='https://remix-ide.readthedocs.io/en/latest/unittesting.html#customization'>here</a>.</p></li>
+</ul>
+<ol start='7' type='1'>
+<li>Look at the comments just above the <code>checkSenderAndValue()</code> function. These comments specify the particular account that is passed in, and how much ether (actually wei) that is passed in as well. You can see a full definition of these types of comments <a href='https://remix-ide.readthedocs.io/en/latest/unittesting.html#customization'>here</a>.</li>
 </ol>
 <p>You do not need to submit the Poll_test.sol file. The purpose of this section was to show you how to start writing unit tests. You will need this when you start developing Solidity applications in the next assignment.</p>
 <p>The Poll_test.sol file that was auto-generated from the default Poll.sol file is as follows. You do not need to read through this code; it’s only here as a reference.</p>
@@ -219,6 +225,14 @@ contract testSuite {
         Assert.equal(msg.value, 100, "Invalid value");
     }
 }</code></pre>
+</div><div id='tevm-version' class='tabcontent'><h3 id='evm-version'>EVM Version</h3>
+<p>There are many versions of the Ethereum Virtual Machine (EVM) – the part of the Ethereum node that runs the opcodes when executing a smart contract. As new updates to Ethereum come out, they release updated EVM versions. All EVM versions are named after cities (London, Paris, Shanghai, etc.), and there are over a dozen EVM versions so far.</p>
+<p><strong><em>We are specifically using the London version of the EVM for the course blockchain.</em></strong> The default is Shanghai, which is newer. The Shanghai version is a super-set of the London version – which means any London EVM program will work just fine in Shanghai. However, a program targeted for the Shanghai EVM will not work on a London EVM. You will have to make a few changes in Remix to ensure that you are targeting the London version rather than the Shanghai version.</p>
+<p><img src='evm-options.webp' style='float:right;width:200px;margin-left:10px;border-radius:5px'></p>
+<p>To target the London EVM, on the compilation pane, click on the “Advanced Configurations” drop-down, then on the “EVM version” drop-down, then select “london” (“shanghai” or “default” will likely be selected). You have to re-compile it after you make this change. You can see this in the image to the right, which shows only the relevant part of the Compilation pane.</p>
+<p>This doesn’t matter when targeting the Javascript blockchain emulator – which is why you left it as “Remix VM (Shanghai)” above. As the Shanghai is a super-set of London (mostly), you can compile it under either, and it will run just fine on the “Remix VM (Shanghai)” environment that you used, above.</p>
+<p>The difference matters on the course blockchain – that is only set to London, and a program compiled for the Shanghai EVM will <strong><em>NOT</em></strong> work. Fortunately, Remix will let you know if you try to deploy a Shanghai EVM targeted smart contract on a London blockchain (like our course blockchain) – Remix will complain that the <code>PUSH0</code> opcode will fail (that opcode is new to Shanghai, but not in London).</p>
+<p>Why not use the latest version? Because the latest version (Shanghai) requires a lot of additional configuration, as it uses something called the Beacon Chain, which is a second blockchain. The London version does not use this, so the configuration on our end is much easier. If we were to use Shanghai, we would have to set up another program, similar to geth, to sync another blockchain that geth would then interact with. The functionality for running smart contracts is the exact same – there is no difference in the code it can compile.</p>
 </div><div id='tpart-3-deployment' class='tabcontent'><h3 id='part-3-deployment'>Part 3: Deployment</h3>
 <p>At this point we can edit, compile, and test our program on Remix. We have also made changes to the <code>addChoice()</code> calls in the Poll.sol constructor, as well as to the <code>purpose</code> string. Now we are going to use Remix to deploy to our private Ethereum blockchain.</p>
 <h4 id='start-geth'>Start geth</h4>
@@ -246,7 +260,7 @@ contract testSuite {
 <li>Unlock your account in geth
 <ul>
 <li>In the geth terminal, run the <code>personal.unlockAccount()</code> command. You can run it as <code>personal.unlockAccount(eth.coinbase,"password",0)</code> – filling in your own password – to unlock it until the end of the session. It should report back <code>true</code>.</li>
-<li>Note your balance – enter <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code></li>
+<li>Note your balance – enter <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code>. You can also see your balance in Remix – in the Deployment pane, when selecting the account, it will state the balance next to the account number.</li>
 </ul></li>
 <li>Hit Deploy!
 <ul>

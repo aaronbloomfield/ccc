@@ -71,6 +71,8 @@ There are a few very important hints that will make your life **SO MUCH** easier
 
 **Desktop Remix, again:** Sometimes the desktop version of Remix has issues.  If issues happen, try to solve it, but be willing to switch to the web browser version if this occurs.  So far we have found solutions to all the issues that have come up, and a few tips for how to work well with Remix will be discussed in lecture.
 
+**Desktop Remix, yet again:** As the Remix installation is not signed, the relevant operating systems (notably Windows and Mac OS X) will not want to run it after it is installed.  In Mac, you can change this in the Privacy & Security settings.  Windows should allow you to run it after clicking through a number of dialogs.  If this all makes you uncomfortable, you are always welcome to use the online version.
+
 **Web Remix:** The web version of Remix also has issues -- in particular, it saves your code on remote servers, and is tied to a cookie in your web browser.  If you lose the computer, reset your cookies, or are using a different machine, then you will not be able to access your files.  This means you will have to cut-and-paste the code to a locally saved file to ensure you can access it elsewhere.
 
 **Geth node:** You will have to start a local geth node to deploy your contracts.  You did this in the [private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  There are extra options that we will be using, but those options are already in the geth-config.toml file that you configured in [the last assignment](../ethprivate/index.html) ([md](../ethprivate/index.md)).
@@ -84,11 +86,13 @@ Remix is an IDE for developing Ethereum smart contracts in Solidity.  Remix prov
 2. Click on the file explorer icon (<img src="img/fileManager.webp" class='icon'>), click on the contracts folder (if it exists; if not, pick a directory where you want to store the files), and select 'New File' -- name it 'Poll.sol'.  Copy and paste the [Poll.sol](Poll.sol.html) ([src](Poll.sol)) program there.  Do the same with [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)).  You should now have two Solidity files -- Poll.sol and IPoll.sol.
     - If you are using the desktop version, you can browse the local file system (select 'localhost' in the Workspaces drop-down box) to find the directory where you are going to keep IPoll.sol and Poll.sol
     - **HINT:** In the desktop version, do a File -> Open Directory.  Choose your directory for the assignments for this class.  This will save a lot of time, as Remix will not have to look for Solidity files on your entire hard drive, just that directory.
-3. To compile it, click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>) in the far-left pane.  You may notice a green check mark on the compilation icon -- it might automatically compile it as you type (this does not seem to be consistent across all platforms).  Click on the compilation icon, and click "Compile Poll.sol" (NOT IPoll.sol).  It should compile without errors.
-    - Remix does allow for compiler optimizations, but we are not going to explore them in this assignment.  For now, don't select any optimizations (meaning leave it as the default options).
-4. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>) in the far-left pane.  For the Environment, we will stay with "Remix VM (London)", which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us.  You can see the accounts in the 'Account' drop-down list.
-5. Click the orange "Deploy" button.  It's now running on the Ethereum blockchain that it simulates in Javascript, deployed from the selected (and also simulated) account shown in the "Account" drop-down list.
-6. Test out the deployment
+3. Ensure you have made the changes mentioned above -- you need to select a different purpose for the poll (and upate the `purpose` string appropriately), and also modify the `addChoice()` calls in the constructor (you can add or remove them as needed).  You should not make any other changes to the Poll.sol code.
+4. To compile it, click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>) in the far-left pane.  You may notice a green check mark on the compilation icon -- it might automatically compile it as you type (this does not seem to be consistent across all platforms).  
+    - Remix does allow for compiler optimizations, but we are not going to explore them in this assignment.  For now, don't select any optimizations (meaning leave it as the default options); doing so makes it harder to trace the contract when debugging it.
+    - Click "Compile Poll.sol" (NOT IPoll.sol).  It should compile without errors.
+5. Click on the "deploy & run" icon (<img src="img/deployAndRun.webp" class='icon'>) in the far-left pane.  For the Environment, we will use "Remix VM (Shanghai)", which means that Remix will simulate, in Javascript, a fake Ethereum blockchain and 10 fake accounts for us.  You can see the accounts in the 'Account' drop-down list.
+6. Click the orange "Deploy" button.  It's now running on the Ethereum blockchain that it simulates in Javascript, deployed from the selected (and also simulated) account shown in the "Account" drop-down list.
+7. Test out the deployment
     - Look under "Deployed Contracts", below the "Deploy" button -- click on the arrow to the left of "Poll at ...".  It will show you various buttons to test out your smart contract.
         - Blue buttons are `view` or `pure` functions -- they do not require writing a transaction to the blockchain
         - Orange buttons are functions that require sending a transaction to the blockchain
@@ -102,14 +106,14 @@ Remix is an IDE for developing Ethereum smart contracts in Solidity.  Remix prov
 	- Pull up the data on that choice (enter the same choice number next to "choices", and click that blue "choices" button).  You will notice that the number of votes is now 1.
 	- Try to vote again, for any choice.  Notice that it doesn't work -- the console states that "The transaction has been reverted to the initial state".  This particular smart contract prevents double-voting.  It does this by keeping track of who has voted (in the `voted` mapping on line 32), and then ensuring that the current voter has not already voted (the first line of the `vote()` method via a `require()` call).  If a `require()` call fails, then the state of everything is reverted back to what it was before the transaction occurs (although you still lose your gas fees).
 	- Switch accounts (choose a different one in the drop-down list under "Account"), and try to vote -- this time it will work, since that (new) account number has not already voted.
-7. Explore compilation again
+8. Explore compilation again
     - Click on the compilation icon (<img src="img/solidityLogo.webp" class='icon'>).  At the bottom of the left pane click on "Compilation Details".  This is showing all the results of the compilation.
         - Expand the 'bytecode' button.  There is a lot here, and we can ignore most of it.  Scroll down to the very bottom of what just appeared -- the two fields we care about are the "object" field and the "opcodes" field.
             - The bytecode -> opcodes field are the Ethereum bytecode that the smart contract was compiled down to.  This is similar in concept to the Bitcoin Script, although it has the ability to perform looks (via `JUMP` commands and similar), and is a lot more complex.
             - The bytecode -> object field is the raw hex of the compiled program itself -- the bytecodes were compiled to their hexadecimal equivalents.  This very long string (over 5,000 bytes) is what is actually loaded onto the blockchain.  When we deploy our code to the blockchain, below, you will be able to see that bytecode in the transaction via the blockchain explorer.
     - Back in the left-hand pane, under the "Compilation Details" button is a link to copy the ABI -- click on the copy icon.  In any editor, paste that into a blank file.  This is the Application Binary Interface -- it specifies how to interact with the smart contract.  Think of it like a C++ header file -- it gives the interface, but not the implementation.  One cannot interact with a smart contract without having the ABI.  As you scroll through the ABI, you will notice that all the fields and method are listed there, along with all the various types.
         - **THIS IS IMPORTANT!**  In future assignments, when you are going to write your own smart contracts, you will need to access the ABI for some of your contracts.
-8. Explore Remix on your own.  You are going to be spending a lot of time developing smart contracts in Remix. Spending a bit of time learning how it works, and becoming comfortable with the interface, will save you a lot of time in the future.
+9. Explore Remix on your own.  You are going to be spending a lot of time developing smart contracts in Remix. Spending a bit of time learning how it works, and becoming comfortable with the interface, will save you a lot of time in the future.
 
 
 ### Part 2: Testing
@@ -123,19 +127,19 @@ This task will show you how to develop unit tests for your Solidity application.
 1. Click on the plugin manager icon (<img src="img/pluginManager.webp" class='icon'>) in the bottom of the far-left column of icons in the Remix window.  In the search box enter 'test'.  The Solidity Unit Testing plugin will appear; click the green activate button.
 2. Remix will now display a unit testing icon (<img src="img/unitTesting.webp" class='icon'>) in the left-most pane; click on that.
 3. The plugin will automatically create a sample unit test class for you -- to do this, click on "Generate".  You will see a Poll_test.sol file created.
-    - Remix has a bizarre directory choice for where to put this file -- on Linux systems, it goes in `~/tests/`.  You will need to find where it is on your OS via a file search.
+   - Remix has a bizarre directory choice for where to put this file -- on Linux systems, it goes in `~/tests/`.  You will need to find where it is on your OS via a file search.
 4. Click on the blue "Run" button -- this will run the unit tests.  Some will pass and some will fail, which is expected at this point.  Note that, for unit tests, you do not have to re-compile it each time -- the Run button will do that, if necessary, for you.
 5. Let's make the existing tests pass.  In the `checkFailure()` function, change `Assert.notEqual()` to `Assert.equal()`, and re-run the tests.  They should all pass now.
-6. Add the following method to the Poll_test class
-   ```
+6. Add the following method to the Poll_test class:
+```
 function checkChioceCreation() public {
       Poll p = new Poll();
       p.addChoice("test1");
       Assert.equal(uint(p.num_choices()),uint(7),"Choice not added");
 }
 ```
-    - That method checks that there are 7 choices, as 6 were created by the constructor, and one more was added in this method; you will have to adjust this value if you changed the number of choices in your constructor
-    - If you re-run the unit tests, this test should also pass
+   - That method checks that there are 7 choices, as 6 were created by the constructor, and one more was added in this method; you will have to adjust this value if you changed the number of choices in your constructor
+   - If you re-run the unit tests, this test should also pass
 7. Look at the comments just above the `checkSenderAndValue()` function.  These comments specify the particular account that is passed in, and how much ether (actually wei) that is passed in as well.  You can see a full definition of these types of comments [here](https://remix-ide.readthedocs.io/en/latest/unittesting.html#customization).
 
 You do not need to submit the Poll_test.sol file.  The purpose of this section was to show you how to start writing unit tests.  You will need this when you start developing Solidity applications in the next assignment.
@@ -192,6 +196,24 @@ contract testSuite {
     }
 }
 ```
+
+
+### EVM Version
+
+There are many versions of the Ethereum Virtual Machine (EVM) -- the part of the Ethereum node that runs the opcodes when executing a smart contract.  As new updates to Ethereum come out, they release updated EVM versions.  All EVM versions are named after cities (London, Paris, Shanghai, etc.), and there are over a dozen EVM versions so far.
+
+***We are specifically using the London version of the EVM for the course blockchain.***  The default is Shanghai, which is newer.  The Shanghai version is a super-set of the London version -- which means any London EVM program will work just fine in Shanghai.  However, a program targeted for the Shanghai EVM will not work on a London EVM.  You will have to make a few changes in Remix to ensure that you are targeting the London version rather than the Shanghai version.
+
+<img src="evm-options.webp" style="float:right;width:200px;margin-left:10px;border-radius:5px">
+
+To target the London EVM, on the compilation pane, click on the "Advanced Configurations" drop-down, then on the "EVM version" drop-down, then select "london" ("shanghai" or "default" will likely be selected).  You have to re-compile it after you make this change.  You can see this in the image to the right, which shows only the relevant part of the Compilation pane.
+
+This doesn't matter when targeting the Javascript blockchain emulator -- which is why you left it as "Remix VM (Shanghai)" above.  As the Shanghai is a super-set of London (mostly), you can compile it under either, and it will run just fine on the "Remix VM (Shanghai)" environment that you used, above.
+
+The difference matters on the course blockchain -- that is only set to London, and a program compiled for the Shanghai EVM will ***NOT*** work.  Fortunately, Remix will let you know if you try to deploy a Shanghai EVM targeted smart contract on a London blockchain (like our course blockchain) -- Remix will complain that the `PUSH0` opcode will fail (that opcode is new to Shanghai, but not in London).
+
+Why not use the latest version?  Because the latest version (Shanghai) requires a lot of additional configuration, as it uses something called the Beacon Chain, which is a second blockchain.  The London version does not use this, so the configuration on our end is much easier.  If we were to use Shanghai, we would have to set up another program, similar to geth, to sync another blockchain that geth would then interact with.  The functionality for running smart contracts is the exact same -- there is no difference in the code it can compile.
+
 
 ### Part 3: Deployment
 
@@ -251,7 +273,7 @@ Read these instructions through before starting them!
     - If there are any entries listed under "Deployed contracts" (in the left-hand pane), you can delete them -- this way we won't mix up any previous deployments (to the simulated blockchain) with the one we are about to do (to the private course blockchain)
 2. Unlock your account in geth
     - In the geth terminal, run the `personal.unlockAccount()` command.  You can run it as `personal.unlockAccount(eth.coinbase,"password",0)` -- filling in your own password -- to unlock it until the end of the session.  It should report back `true`.
-    - Note your balance -- enter `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`
+    - Note your balance -- enter `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`.  You can also see your balance in Remix -- in the Deployment pane, when selecting the account, it will state the balance next to the account number.
 3. Hit Deploy!
     - This what this party is all about!  Click the orange Deploy button.
     - The Remix console (under the editing box) should say, "creation of Poll pending... view on etherscan"
