@@ -91,7 +91,7 @@ Course calendar
 | 3  | Sep 4  | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) | Mon: encryption to 6.24; Wed: encryption to 8.4; Fri: finished encryption |
 | 4  | Sep 11 | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 5.6; Wed: bitcoin to 6.10; Fri: bitcoin to 7.17 |
 | 5  | Sep 18 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 7.30; Wed: bitcoin to 7.44; Fri: finished bitcoin |
-| 6  | Sep 25 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/) | Mon: ethereum to 3.18; Wed: ethereum to 3.30 |
+| 6  | Sep 25 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/) | Mon: ethereum to 3.18; Wed: ethereum to 3.30; Fri: finished ethereum, solidity to 3.9 |
 | 7  | Oct 2  | W,F   | S4 (ETH Private)    | [Solidity](../slides/solidity.html#/) |  |
 | 8  | Oct 9  | M,W,F | midterm, S5 (dApp intro) | [Tokens](../slides/tokens.html#/) |  |
 | 9  | Oct 16 | M,W,F | P5 (Gradebook)      | [Mining](../slides/mining.html#/)  | |
