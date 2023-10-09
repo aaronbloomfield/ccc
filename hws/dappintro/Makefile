@@ -10,4 +10,4 @@ doc:
 	/bin/mv -f Poll.abi Poll.abi.txt
 	solc --bin Poll.sol | tail -1 > Poll-normal.bin.txt
 	solc --bin --optimize Poll.sol | tail -1 > Poll-optimized.bin.txt
-	solc --asm Poll.sol > Poll.asm
+	solc --asm Poll.sol > Poll.asm.txt
