@@ -63,7 +63,7 @@ contract Debts <font color="#008080">is</font> IDebts <font color="#FF0000">{</f
     <font color="#FF0000">}</font>
 
 
-    <font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">override</font></b> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
         <i><font color="#9A1900">// ensure that the alias name does not already exist</font></i>
         <b><font color="#000000">require</font></b><font color="#990000">(!</font>aliasHasEntry<font color="#990000">[</font>_alias<font color="#990000">],</font> <font color="#FF0000">"string entry name already exists"</font><font color="#990000">);</font>
         <i><font color="#9A1900">// ensure that the sender doesn't already have an alias</font></i>
@@ -85,7 +85,7 @@ contract Debts <font color="#008080">is</font> IDebts <font color="#FF0000">{</f
     <font color="#FF0000">}</font>
 
 
-    <font color="#008080">function</font> <b><font color="#000000">payToAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#009900">int</font> amount<font color="#990000">)</font> <b><font color="#0000FF">override</font></b> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">payToAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#009900">int</font> amount<font color="#990000">)</font> <b><font color="#0000FF">virtual</font></b> <b><font color="#0000FF">override</font></b> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
         <i><font color="#9A1900">// limit amounts from -100 to +100</font></i>
         <b><font color="#000000">require</font></b> <font color="#990000">(</font>amount <font color="#990000">&gt;=</font> <font color="#990000">-</font><font color="#993399">100</font> <font color="#990000">&amp;&amp;</font> amount <font color="#990000">&lt;=</font> <font color="#993399">100</font><font color="#990000">,</font> <font color="#FF0000">"amounts must be between -100 and 100"</font><font color="#990000">);</font>
         <i><font color="#9A1900">// amount cannot be zero</font></i>

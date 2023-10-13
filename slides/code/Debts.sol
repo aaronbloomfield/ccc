@@ -52,7 +52,7 @@ contract Debts is IDebts {
 	}
 
 
-	function addAlias (string memory _alias, string memory _name) override public {
+	function addAlias (string memory _alias, string memory _name) virtual override public {
 		// ensure that the alias name does not already exist
 		require(!aliasHasEntry[_alias], "string entry name already exists");
 		// ensure that the sender doesn't already have an alias
@@ -74,7 +74,7 @@ contract Debts is IDebts {
 	}
 
 
-	function payToAlias (string memory _alias, int amount) override public {
+	function payToAlias (string memory _alias, int amount) virtual override public {
 		// limit amounts from -100 to +100
 		require (amount >= -100 && amount <= 100, "amounts must be between -100 and 100");
 		// amount cannot be zero
