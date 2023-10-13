@@ -40,10 +40,7 @@ In addition to your source code, you will submit an edited version of [gradebook
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
-
-- Wed, 3/15: clarified that only the instructor can designate TAs; other TAs can *not* designate TAs
-
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report.
 
 
 ### Part 1: IGradebook interface
@@ -101,7 +98,7 @@ interface IGradebook {
 
 #### The `supportsInterface()` function
 
-We will see the use of `supportsInterface()` in a future lecture and in a future assignment.  For now, you should use this exact implementation:
+We will see the use of `supportsInterface()` in a future lecture and in a future assignment.  For now, you should use this *exact* implementation:
 
 ```
 function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
@@ -125,6 +122,7 @@ The ABI for `IGradebook.sol` is as follows, can can be copied by clicking on: <s
 - Students are all identified by a single string; we'll use UVA userids (you can make fake, but believable, UVA userids for your testing)
 - All entered grades are unsigned integers
 - One cannot have a grade higher than the max score; this should be checked via a `require()`
+- The max score must be a positive integer (not zero)
 - While averages can be non-integers, we will return the (truncated) integer value that is 100 times the average.  So if somebody's average was 86.265%, the returned average would be 8626.
 - The instructor is assumed to be the account that deploys the smart contract; thus, the only task the constructor needs to do is set the `instructor` field to `msg.sender`
 - Your contract opening line MUST be: `contract Gradebook is IGradebook {`
@@ -142,7 +140,7 @@ The two events, listed at the top of the interface, should be emitted at the app
 
 Note that Remix may complain if an Ethernet address is not [checksummed](../../slides/ethereum.html#/checksum).  Remix will provide, in the error, the checksummed address -- you can use that value (cut-and-paste it into your code) instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
 
-Note that compilation warnings will appear to Gradescope as a compilation error.
+Also note that compilation warnings will appear to Gradescope as a compilation error.  Thus, you will have to remove them by the time you submit your assignment.
 
 
 ### Part 2: Testing and Deployment
@@ -164,6 +162,8 @@ You will invariably run into issues testing and debugging your code.  We have a 
   addGrade("mst3k",0,5);
   addGrade("mst3k",1,10);
   ```
+- Another option is to put those calls in a separate function called `setup()` (or similar).  This way, with one click, all of your contract setup will occur, and you don't have to pollute the constructor.
+
 
 #### Deployment
 

@@ -74,10 +74,7 @@
 <p>You will also need to be familiar with the <a href='../../slides/ethereum.html#/'>Ethereum slide set</a> and the <a href='../../slides/solidity.html#/'>Solidity slide set</a>.</p>
 <p>In addition to your source code, you will submit an edited version of <a href='gradebook.py.html'>gradebook.py</a> (<a href='gradebook.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. </p>
-<ul>
-<li>Wed, 3/15: clarified that only the instructor can designate TAs; other TAs can <em>not</em> designate TAs</li>
-</ul>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='tpart-1-igradebook-interface' class='tabcontent'><h3 id='part-1-igradebook-interface'>Part 1: IGradebook interface</h3>
 <h4 id='igradebook-interface'>IGradebook Interface</h4>
 <p>Formally, your contract will need to be named <code>Gradebook</code>, and saved in a file named <code>Gradebook.sol</code>. It will need to implement the <a href='IGradebook.sol.html'>IGradebook.sol</a> (<a href='IGradebook.sol'>src</a>) interface, which is as follows. <strong>NOTE:</strong> the interface file itself has many more details and specifications in the comments; most of the comments were stripped from what is shown below.</p>
@@ -126,7 +123,7 @@ interface IGradebook {
 
 }</code></pre>
 <h4 id='the-supportsinterface-function'>The <code>supportsInterface()</code> function</h4>
-<p>We will see the use of <code>supportsInterface()</code> in a future lecture and in a future assignment. For now, you should use this exact implementation:</p>
+<p>We will see the use of <code>supportsInterface()</code> in a future lecture and in a future assignment. For now, you should use this <em>exact</em> implementation:</p>
 <pre><code>function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return interfaceId == type(IGradebook).interfaceId || interfaceId == 0x01ffc9a7;
 }</code></pre>
@@ -140,6 +137,7 @@ The ABI for <code>IGradebook.sol</code> is as follows, can can be copied by clic
 <li>Students are all identified by a single string; we’ll use UVA userids (you can make fake, but believable, UVA userids for your testing)</li>
 <li>All entered grades are unsigned integers</li>
 <li>One cannot have a grade higher than the max score; this should be checked via a <code>require()</code></li>
+<li>The max score must be a positive integer (not zero)</li>
 <li>While averages can be non-integers, we will return the (truncated) integer value that is 100 times the average. So if somebody’s average was 86.265%, the returned average would be 8626.</li>
 <li>The instructor is assumed to be the account that deploys the smart contract; thus, the only task the constructor needs to do is set the <code>instructor</code> field to <code>msg.sender</code></li>
 <li>Your contract opening line MUST be: <code>contract Gradebook is IGradebook {</code></li>
@@ -153,7 +151,7 @@ The ABI for <code>IGradebook.sol</code> is as follows, can can be copied by clic
 <p>The two events, listed at the top of the interface, should be emitted at the appropriate time. The <code>addAssignment()</code> function should emit the <code>assignmentCreationEvent()</code> event upon successful completion, and the <code>addGrade()</code> function should emit the <code>gradeEntryEvent()</code> event upon successful completion. It’s a good idea to emit the events <em>after</em> any <code>require()</code> calls! It is often the case (but not required) that the event emission is done at the very end of the function.</p>
 <h4 id='address-checksums'>Address checksums</h4>
 <p>Note that Remix may complain if an Ethernet address is not <a href='../../slides/ethereum.html#/checksum'>checksummed</a>. Remix will provide, in the error, the checksummed address – you can use that value (cut-and-paste it into your code) instead to silence this warning. You can also use <a href='https://ethsum.netlify.app/'>ethsum.netlify.app</a> to checksum an Ethernet address.</p>
-<p>Note that compilation warnings will appear to Gradescope as a compilation error.</p>
+<p>Also note that compilation warnings will appear to Gradescope as a compilation error. Thus, you will have to remove them by the time you submit your assignment.</p>
 </div><div id='tpart-2-testing-and-deployment' class='tabcontent'><h3 id='part-2-testing-and-deployment'>Part 2: Testing and Deployment</h3>
 <h4 id='testing'>Testing</h4>
 <p>You will invariably run into issues testing and debugging your code. We have a few tips and tricks.</p>
@@ -168,6 +166,7 @@ addAssignment("HW1",10);
 addAssignment("HW2",10);
 addGrade("mst3k",0,5);
 addGrade("mst3k",1,10);</code></pre></li>
+<li><p>Another option is to put those calls in a separate function called <code>setup()</code> (or similar). This way, with one click, all of your contract setup will occur, and you don’t have to pollute the constructor.</p></li>
 </ul>
 <h4 id='deployment'>Deployment</h4>
 <p>Once done, you will need to deploy your CoruseGradebook smart contract to our private Ethereum blockchain. Save the contract address, as you will need to submit that, below. It’s okay if you deploy it multiple times (for testing, debugging, errors, etc.). Just submit the address of the last one you deployed.</p>
