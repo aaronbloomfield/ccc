@@ -579,6 +579,7 @@ contract TokenCC is ITokenCC, ERC20 {
 ## Token Cryptocurrencies
 - See a list at https://erc-tokens.com/
   - 1,907 such token cryptocurrencies (as of October 2023)
+- [Token cryptocurrencies on etherscan.io](https://etherscan.io/tokens)
 - Consider [Atomic Wallet](https://atomicwallet.io/)
   - A wallet that can store [1,438 cryptocurrencies](https://atomicwallet.io/prices) (as of October 2023):
     - 90 blockchain cryptocurrencies
@@ -1143,7 +1144,11 @@ contract NFTplusplus is IERC1155, IERC165, IERC721 {
 
 
 ## Account Interface
-- All NFTs that want an account number need to implement the `IERC6551Account` interface
+- Problem: how do you get the NFT account to sign anything? 
+  - Any type of transaction requires an ECDSA signature
+  - If the private key is in the contract, anybody can see it
+- Solution: each TBA's (Token Bound Account's) owner is allowed to sign for the NFT
+- To implement this, all NFTs that want an account number need to implement the `IERC6551Account` interface
 
 
 
@@ -1213,7 +1218,8 @@ interface IERC6551Account {
 
 ## Doing "things" via an NFT account
 - To perform an operation from an NFT account...
-  - the account holder has to perform said action
+  - The account holder has to perform said action, but it has to be "though" the NFT
+    - Formally through the Token Bound Account
 - A new interface is provided to allow these actions to be performed
 - The NFT must declare this in `supportsInterface()`
 
@@ -1255,11 +1261,21 @@ interface IERC6551Executable {
 
 
 
-- Other involved EIPs:
+## Use cases
+- Gaming: one item can hold other items
+  - This would likely be on a game blockchain, not on Ethereum mainnet
+- Communities, such as DAOs, or reputation systems
+  - Their membership NFT could accumulate other "things" as they continue to be a member (awards, promotions, etc.)
+- Transferring a set of NFTs at once
+
+
+
+## Closing thoughts
+- There are other involved EIPs:
   - ERC-165: We've seen that one
   - [ERC-1167](https://eips.ethereum.org/EIPS/eip-1167): proxy delegation to another contract
   - [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271): allow smart contracts to verify a signature on behalf of that contract
-
+- [ERC-6551 page on etherscan.io](https://etherscan.io/token/0x8b69b7e42e1c5998dad7c560aca5a1df7e804bf8)
     </textarea></section>
 
   </section>
