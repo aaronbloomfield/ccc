@@ -81,8 +81,8 @@ line-height:120%;
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Disclaimer
 - All the numbers shown here were accurate and current as of the time this slide set was updated
-  - March 24, 2022   <!-- change each semester -->
-  - But they are likely all different now
+  - October 22, 2023   <!-- change each semester -->
+  - But they may have changed since then
 - However, the RVN & BTC difficulty is from much earlier blocks
 - Otherwise, they are (generally) consistent throughout the slide set
   - And the exact numbers don't matter as much to explain the concepts
@@ -118,10 +118,10 @@ line-height:120%;
 
 ## How to make it more difficult
 - Force the hash of the mined block to have a certain number of leading zeros
-- In [Ravencoin block 2,150,108](https://rvnblockexplorer.com/block/2150108):  000000000000e1c48b 11f28eaf2cc6e60d345aa4b3cfe12747c0821ff14f6279
-    - 12 leading hex zeros, 48 leading bits
-- In [Bitcoin block 753,940](https://bitcoinblockexplorers.com/block/753940):  000000000000000000 055edf99acd7c1ec25b4020994e865eccd0f00cbcc5662 <!-- change each semester -->
-    - 19 leading hex zeros, 77 leading bits
+- In [Ravencoin block 3,028,834](https://rvnblockexplorer.com/block/3028834):  000000000000 6cf2478458882ba59267fc2567ab9ac485f058ac0a660f06116e
+    - 12 leading hex zeros, 49 leading bits
+- In [Bitcoin block 813,369](https://bitcoinblockexplorers.com/block/813369):  00000000000000000000 d8b8b6b8290b53b9abe897389b2e249d633d9e61386b <!-- change each semester -->
+    - 20 leading hex zeros, 80 leading bits
 
 
 
@@ -133,8 +133,9 @@ line-height:120%;
 - Expectation is that $\frac{1}{2}^n$ have $n$ leading 0 bits
 - Thus...
 <ul>
-  <li class='fragment'> RVN example: $\frac{1}{2^{48}}$, which is 1 in 281 trillion ($2.81 \ast 10^{12}$), would have 48 leading 0 bits </li>
-  <li class='fragment'> BTC example: $\frac{1}{2^{77}}$, which is 1 in 151 sextillion ($151 \ast 10^{21}$), would have 77 leading 0 bits </li>
+  <li class='fragment'> RVN example: $\frac{1}{2^{49}}$, which is 1 in 563 trillion ($5.63 \ast 10^{12}$), would have 49 leading 0 bits </li>
+  <li class='fragment'> BTC example: $\frac{1}{2^{80}}$, which is 1 in 1.2 septillion ($1.2 \ast 10^{24}$), would have 80 leading 0 bits </li>
+  <!-- change each semester -->
 </ul>
 
 
@@ -169,7 +170,7 @@ line-height:120%;
 
 ## Mining: nbits & target
 - An nbits field of 0x1b00a908 thus gets us a *target* of 0x000000000000a908000000000000000 000000000000000000000000000000000
-  - This is from [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364)
+  - This is from [RVN block 1,982,364](https://rvnblockexplorer.com/block/1982364) (from October 2021)
   - The hash value had to be less than that
 - That target requires 12 leading zero hex digits (48 leading binary zero bits)
     - Chance to find: $\approx 1/2^{48}$
@@ -281,14 +282,14 @@ line-height:120%;
 
   <section data-markdown data-separator="^\n\n\n"><textarea>
 ## How much is mining killing the Earth?
-- Consider the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t)
-  - It uses 3,420 W and produces 75 Th/s
-  - That's 21.9 Gh/W, which is pretty efficient (relatively speaking)
-  - 3,420 W for 24 hours/day yields 82.08 kWh
-  - At Charlottesville's electric rates (11.04&cent; per kWh) that's $9.06 per day
-- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 200 million Th/s (200 Eh/s)
-  - If it were only Avalon 1166 miners, then we need 2,666,666 such miners, at 75 Th/s, to get 200 million Th/s
-  - That's 9.2 GW ($10^{12}$W), or 219 GWh per day, or about 80,000 GWh (80 TWh) per year
+- Consider the [Avalon A1466 miner](https://www.canaan.io/product/avalon-made-a1466-150t)
+  - It uses 3,230 W and produces 150 Th/s
+  - That's 46.4 Gh/W, which is relatively efficient
+  - 3,230 W for 24 hours/day yields 77.5 kWh
+  - At Charlottesville's electric rates (11.04&cent; per kWh) that's $8.56 per day
+- [This site](https://www.blockchain.com/charts/hash-rate) estimates that the current world-wide BTC hash rate is 439 million Th/s
+  - If it were only Avalon A1466 miners, then we need 2.93 million such miners, at 150 Th/s, to get 439 million Th/s
+  - That's 9.5 GW ($10^{12}$W), or 227 GWh per day, or about 83,000 GWh (83 TWh) per year <!-- change each semester -->
 
 
 
@@ -297,8 +298,8 @@ line-height:120%;
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/AlfedPalmersmokestacks.jpg" style="padding:0">
 
-- The lower-bound estimate from the last slide is that BTC mining uses 9.2 GW ($10^{12}$W), or 219 GWh per day, or 80 TWh per year
-  - A [2019 estimate](https://www.sciencedirect.com/science/article/pii/S2542435119302557) was at 46 TWh per year, but the [hash rate](https://www.blockchain.com/charts/hash-rate?timespan=all) has tripled since then
+- The lower-bound estimate from the last slide is that BTC mining uses 9.5 GW ($10^{12}$W), or 227 GWh per day, or 83 TWh per year  <!-- change each semester -->
+  - A [2019 estimate](https://www.sciencedirect.com/science/article/pii/S2542435119302557) was at 46 TWh per year, but the [hash rate](https://www.blockchain.com/charts/hash-rate?timespan=all) has increased significantly since then
 - That is more than 171 of the world's 218 countries ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
 - That is the equivalent to 2% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
 
@@ -306,23 +307,31 @@ line-height:120%;
 
 ## Death to the Environment!
 - These computations:
-  - Assume that all the BTC mining is as efficient as the Avalon 1166 miner
+  - Assume that all the BTC mining is as efficient as the Avalon A1466 miner
     - To little efficiency and money is lost, not gained
   - Do not factor in the other mined coins
 - So perhaps the actual amount is twice our initial estimate?
   - That is the equivalent to 4% of the total US electrical usage per year ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
-  - That's 160 TWh per year
+  - That's 166 TWh per year
   - But that's a total guess, though!
 
 
 
+## Can mining not kill the environment?
+- Yes!
+- Use renewable resources, or pay carbon offsets
+- But many entities mine Bitcoin for the profit, and these things often lessen the profit
+- So few do this
+
+
+
 ## Worldwide power consumption
-- In 2019, the world used 23,398 TWh of electricity ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
-  - The US used 3,990 TWh (17.1% of total)
-  - Only China was higher at 8,313 TWh (35.5% of total)
-- We guessed that cryptocurrency mining uses 160 TWh per year
-- That is 0.7% of the worldwide total energy usage
-  - 0.35% for Bitcoin only
+- In 2021, the world used 25,343 TWh of electricity ([source](https://en.wikipedia.org/wiki/List_of_countries_by_electricity_consumption))
+  - The US used 3,979 TWh (15.7% of total)
+  - Only China was higher at 7,806 TWh (30.8% of total)
+- We guessed that cryptocurrency mining uses 166 TWh per year
+- That is 0.63% of the worldwide total energy usage
+  - 0.32% for Bitcoin only <!-- change each semester -->
 
 
 
@@ -802,11 +811,11 @@ Note that UTXOs are not only in the bottom level
 
 
 
-## DAG size
+## DAG size <!-- change each semester -->
 - You can see DAG sizes at https://minerstat.com/dag-size-calculator
-- Consider Ravencoin, whose DAG is currently at 3.8 Gb (as of Mar 2023)
+- Consider Ravencoin, whose DAG is currently at 4.15 Gb (as of Oct 2023)
   - Based on the expected DAG growth...
-    - 4 Gb GPUS will no longer be able to mine it around July 2023
+    - 5 Gb GPUS will no longer be able to mine it around May 2024
     - 6 Gb GPUS will no longer be able to mine it around Mar 2027
   - [source](https://minerstat.com/dag-size-calculator)
   </textarea></section>
