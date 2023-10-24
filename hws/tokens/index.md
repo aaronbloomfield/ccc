@@ -51,12 +51,12 @@ In this course, we will generally be using the abbreviation "TC" when referring 
 
 #### Part 1, task 2: Create a logo
 
-You will need to create a logo for your cryptocurrency.  The logo that you submit should be 512x512 pixels in size.  Use a fun color!  Create a neat logo!  But please make sure the logo is appropriate.  You can look at the types of logos on a site such as [coinmarketcap.com](https://coinmarketcap.com) for ideas, as well as [cryptologos.cc](https://cryptologos.cc/) and [this github site](https://github.com/coinwink/cryptocurrency-logos).
+You will need to create a logo for your cryptocurrency.  The logo that you submit should be 512x512 pixels in size.  Use a fun color!  Create a neat logo!  But please make sure the logo is appropriate.  You can look at the types of logos on a site such as [coinmarketcap.com](https://coinmarketcap.com) for ideas, as well as [cryptologos.cc](https://cryptologos.cc/) and [this github site](https://github.com/coinwink/cryptocurrency-logos).  You are welcome to use any generative AI tool for this image creation, as long as it fulfills the requirements below.
 
 The logo itself needs to have the following requirements:
 
 - A circular logo with a transparent background outside the circle, just like what is on coinmarketcap.com.  Your logo can also be almost-circular, like some we have -- or will have -- seen: [STORJ](../../slides/images/logos/storj-coin-symbol.svg), [ERG](../../slides/images/logos/erg-coin-symbol.svg), and [MIM](../../slides/images/logos/mim-coin-symbol.svg).
-- Readable if the size were reduced to a 32x32 pixel version.
+- It should be recognizable if the size were reduced to a 32x32 pixel version.
 - The background outside the circle of the coin needs to be transparent.
 - The background of the coin circle itself needs to be something more interesting than white.
 - The file must be a .png file, and it will have to be named `xyz.png`, where "xyz" is your coin abbreviation.
@@ -153,7 +153,9 @@ We don't really care what images you upload, as long as:
 2. The image sizes are as specified above (no larger than 2000x2000).
 3. They are appropriate images.  Nothing vulgar, nothing involving nudity, nothing that could be labeled NSFW (not safe for work), or otherwise deemed as offensive.  Basically, nothing that would get me in trouble with an administration that does not have a sense of humor about these things.  Like with the poll in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment, there are many great ways to express your opinions that others may find controversial -- but an image for a NFT on our private Ethereum blockchain is not really one of them.
 
-Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF THE IMAGE.**  The assumption is that you don't actually own the original image, since it's in the public domain.  Or if you do own the image, then possession of the NFT does not mean you are willing to give up ownership of the original image itself.
+You are welcome to use any generative AI tool for these images, as long as it fulfills the requirements described herein.
+
+Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF THE IMAGE.**  The assumption is that you may not actually own the original image.  Or if you do own the image, then possession of the NFT does not mean you are willing to give up ownership of the original image itself.
 
 Pick some fun or funny image.  You are welcome to pick one from Wikipedia or Reddit or similar.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.  Likewise, others will be able to determine who uploaded that image, since your userid will be at the start of the image file name.
 
