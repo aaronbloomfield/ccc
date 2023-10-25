@@ -95,7 +95,7 @@ Course calendar
 | 7  | Oct 2  | W,F   | S4 (ETH Private)    | [Solidity](../slides/solidity.html#/) | Mon: fall break; Wed: solidity to 3.28; Fri: solidity to 4.21 |
 | 8  | Oct 9  | M,W,F | midterm, S5 (dApp intro) | [Tokens](../slides/tokens.html#/) | Mon: solidity to 5.5 (skipping a few slides); Wed: midterm; Fri: Debts demo and solidity to 6.19 |
 | 9  | Oct 16 | M,W,F | P5 (Gradebook)      | [Mining](../slides/mining.html#/) | Mon: finished solidity, tokens to 3.8; Wed: tokens to 5.8; Fri: tokens to 9.1 |
-| 10 | Oct 23 | M,W,F | P6 (Tokens)         | [Blockchain applications](../slides/applications.html#/) |  |
+| 10 | Oct 23 | M,W,F | P6 (Tokens)         | [Blockchain applications](../slides/applications.html#/) | Mon: finished tokens, mining to 5.7 |
 | 11 | Oct 30 | M,W,F | P7 (Auction)        | [Scalability](../slides/scalability.html#/) |  |
 | 12 | Nov 6  | M,W,F | P8 (DEX)            | [Stablecoins](../slides/stablecoins.html#/) |  |
 | 13 | Nov 13 | M,W,F | P9 (DAO&web3)       | [Consensus](../slides/consensus.html#/) |  |
