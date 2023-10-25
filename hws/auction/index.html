@@ -8,18 +8,10 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
+    ul.task-list{list-style: none;}
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel='stylesheet' href='../../markdown.css'></link>
@@ -278,7 +270,7 @@ contract BlockTimestamp {
 <p>There are <em>three</em> forms of submission for this assignment; you must do all three.</p>
 <p>Submission 1: You must deploy you <code>Auctioneer</code> smart contract (which will deploy its own <code>NFTmanager</code> contract) to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it. But the final deployment for the <code>Auctioneer</code> should only have the auctions specified in task 3, above. Save the contract addresses of that deployment, as it will go in the auction.py file that you submit below.</p>
 <p>Submission 2: You have to create a number of auctions: two in your auction manager, and one in the course-wide auction manager. These have specific close dates, and there should be multiple bids on the first two. This is detailed in tasks 3 and 4, above.</p>
-<p>Submission 3: You should submit your <code>Auctioneer.sol</code> file and your completed <code>auction.py</code> file to Gradescope. You will also likely need to submit your <code>NFTManager.sol</code> file from the last assignment. All your Solidity code should be in that first file, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).</p>
+<p>Submission 3: You should submit your <code>Auctioneer.sol</code> file and your completed <code>auction.py</code> file to Gradescope. You will also need to submit your <code>NFTManager.sol</code> file from the last assignment. All your Solidity code for this assignment should be in that first file, and you should specifically import the various interfaces. Those interface files will be placed in the same directory on Gradescope when you submit. <strong>NOTE:</strong> Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).</p>
 </div><script>document.getElementById('defaultOpen').click();</script></body>
 </html>
 
