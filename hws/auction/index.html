@@ -8,10 +8,18 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel='stylesheet' href='../../markdown.css'></link>
@@ -115,7 +123,7 @@
 <li>The auction contract will keep a fee of 1% of the value of a <em>winning</em> bid
 <ul>
 <li>Any auction that does not succeed – no bids or does not meet the reserve price – does not collect a fee</li>
-<li>Anybody can view the fees via the <code>uncollectedFees()</code> and <code>totalFees()</code> functions; the deployer of the auction smart contract, and ONLY that address, can and collect those fees via a call to <code>collectFees()</code></li>
+<li>Anybody can view the fees via the <code>uncollectedFees()</code> and <code>totalFees()</code> functions; anybody can call <code>collectFees()</code>, but it only pays the deployer</li>
 <li>Integer division here is fine to determine the 1% fee; we don’t care about rounding issues</li>
 </ul></li>
 <li>There are three events that must be emitted at the appropriate times; for each, the parameter is the auction ID:
@@ -207,7 +215,7 @@ require(success, "Failed to transfer ETH");</code></pre>
 <h4 id='totalfees-versus-uncollectedfees'><code>totalFees()</code> versus <code>uncollectedFees()</code></h4>
 <p>Fees accumulate during the life of the auction contract – 1% of <em>successful</em> auctions is saved as fees. The deployer of the contract can then obtain all the fees collected so far by calling <code>collectFees()</code>. All amounts return values in wei.</p>
 <p><code>totalFees()</code> is the total amount of fees that have been collected over the life of the auction contract. <code>uncollectedFees()</code> is the amount that can currently be paid out.</p>
-<p>As an example, imagine there are two successful auctions that accumulate a total of 2 ether in fees. Both <code>totalFees()</code> and <code>uncollectedFees()</code> will return 2 ether (really <span class='math inline'>2 * 10<sup>18</sup></span> wei). The deployer then calls <code>collectFees()</code>, and the 2 ether is paid to the deployer (minus gas fees, of course). Now <code>totalFees()</code> still reports 2 ether, since that is how much has been accumulated over the life of the contract. But <code>uncollectedFees()</code> will return 0, since there are no more fees that can be paid to the deployer. If more auctions accumulate 1 ether in additional fees, then <code>totalFees()</code> will return 3 ether (really <span class='math inline'>3 * 10<sup>18</sup></span> wei) and <code>uncollectedFees()</code> will return 1 ether (really <span class='math inline'>1 * 10<sup>18</sup></span> wei).</p>
+<p>As an example, imagine there are two successful auctions that accumulate a total of 2 ether in fees. Both <code>totalFees()</code> and <code>uncollectedFees()</code> will return 2 ether (really <span class='math inline'>2 * 10<sup>18</sup></span> wei). <code>collectFees()</code> is called, and the 2 ether is paid to the deployer (minus gas fees, of course). Now <code>totalFees()</code> still reports 2 ether, since that is how much has been accumulated over the life of the contract. But <code>uncollectedFees()</code> will return 0, since there are no more fees that can be paid to the deployer. If more auctions accumulate 1 ether in additional fees, then <code>totalFees()</code> will return 3 ether (really <span class='math inline'>3 * 10<sup>18</sup></span> wei) and <code>uncollectedFees()</code> will return 1 ether (really <span class='math inline'>1 * 10<sup>18</sup></span> wei).</p>
 <h4 id='startauction-method'><code>startAuction()</code> method</h4>
 <p>The <code>startAuction()</code> method requires a bit more explanation. The process is as follows:</p>
 <ul>

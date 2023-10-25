@@ -85,10 +85,9 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
 
     <i><font color="#9A1900">// The following are functions you must create</font></i>
 
-    <i><font color="#9A1900">// The deployer of the contract, and ONLY that address, can collect the</font></i>
-    <i><font color="#9A1900">// fees that this auction contract has accumulated; a call to this by any</font></i>
-    <i><font color="#9A1900">// other address should revert.  This causes the fees to be paid to the</font></i>
-    <i><font color="#9A1900">// deployer.</font></i>
+    <i><font color="#9A1900">// Anybody can call this function, but it only pays, to the deployer, the</font></i>
+    <i><font color="#9A1900">// fees that this auction contract has accumulated (either since inception</font></i>
+    <i><font color="#9A1900">// or since the last time collectFees() was called).</font></i>
     <font color="#008080">function</font> <b><font color="#000000">collectFees</font></b><font color="#990000">()</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// Start an auction.  The first three parameters are the number of</font></i>

@@ -81,6 +81,10 @@ sanity_checks = {
 	# blockchain?
 	'deployed_both_contracts': False,
 
+	# Can the deployer also bid on the auctions?  Any account should be able 
+	# to bid on them, including the deployer.
+	'deployer_can_bid': False,
+
 	# Will your first auction ('your_auction_id_1', above) have expired by the
 	# assignment due date/time?
 	'auction_1_expiration': False,

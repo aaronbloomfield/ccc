@@ -67,7 +67,7 @@ This section is meant as a high-level overview of the process; the detailed spec
     - Once closed, an auction cannot be re-opened, although a new auction with the same NFT later can be created
 - The auction contract will keep a fee of 1% of the value of a *winning* bid
     - Any auction that does not succeed -- no bids or does not meet the reserve price -- does not collect a fee
-    - Anybody can view the fees via the `uncollectedFees()` and `totalFees()` functions; the deployer of the auction smart contract, and ONLY that address, can and collect those fees via a call to `collectFees()`
+    - Anybody can view the fees via the `uncollectedFees()` and `totalFees()` functions; anybody can call `collectFees()`, but it only pays the deployer
     - Integer division here is fine to determine the 1% fee; we don't care about rounding issues
 - There are three events that must be emitted at the appropriate times; for each, the parameter is the auction ID:
     - `auctionStartEvent()`: when `startAuction()` is successfully called
@@ -182,7 +182,7 @@ Fees accumulate during the life of the auction contract -- 1% of *successful* au
 
 `totalFees()` is the total amount of fees that have been collected over the life of the auction contract.  `uncollectedFees()` is the amount that can currently be paid out.
 
-As an example, imagine there are two successful auctions that accumulate a total of 2 ether in fees.  Both `totalFees()` and `uncollectedFees()` will return 2 ether (really $2*10^18$ wei).  The deployer then calls `collectFees()`, and the 2 ether is paid to the deployer (minus gas fees, of course).  Now `totalFees()` still reports 2 ether, since that is how much has been accumulated over the life of the contract.  But `uncollectedFees()` will return 0, since there are no more fees that can be paid to the deployer.  If more auctions accumulate 1 ether in additional fees, then `totalFees()` will return 3 ether (really $3*10^18$ wei) and `uncollectedFees()` will return 1 ether (really $1*10^18$ wei).
+As an example, imagine there are two successful auctions that accumulate a total of 2 ether in fees.  Both `totalFees()` and `uncollectedFees()` will return 2 ether (really $2*10^18$ wei).  `collectFees()` is called, and the 2 ether is paid to the deployer (minus gas fees, of course).  Now `totalFees()` still reports 2 ether, since that is how much has been accumulated over the life of the contract.  But `uncollectedFees()` will return 0, since there are no more fees that can be paid to the deployer.  If more auctions accumulate 1 ether in additional fees, then `totalFees()` will return 3 ether (really $3*10^18$ wei) and `uncollectedFees()` will return 1 ether (really $1*10^18$ wei).
 
 
 #### `startAuction()` method

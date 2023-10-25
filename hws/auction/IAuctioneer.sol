@@ -74,10 +74,9 @@ interface IAuctioneer is IERC165 {
 
     // The following are functions you must create
 
-    // The deployer of the contract, and ONLY that address, can collect the
-    // fees that this auction contract has accumulated; a call to this by any
-    // other address should revert.  This causes the fees to be paid to the
-    // deployer.
+    // Anybody can call this function, but it only pays, to the deployer, the
+    // fees that this auction contract has accumulated (either since inception
+    // or since the last time collectFees() was called).
     function collectFees() external;
 
     // Start an auction.  The first three parameters are the number of
