@@ -173,7 +173,7 @@ interface IDEX is IERC165, IERC20Receiver {
 
     // Get the address of the ERC-20 token manager being used for the token
     // cryptocurrency; this can just be a public variable.
-    function erc20Address() external view returns (address);
+    function ERC20Address() external view returns (address);
 
     //------------------------------------------------------------
     // Functions for efficiency
