@@ -26,11 +26,11 @@ contract EtherPriceOracleConstant <font color="#008080">is</font> IEtherPriceOra
 
     uint <b><font color="#0000FF">public</font></b> <font color="#008080">constant</font> decimals <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
 
-    uint <b><font color="#0000FF">public</font></b> <font color="#008080">constant</font> price <font color="#990000">=</font> <font color="#993399">10000</font><font color="#990000">;</font> <i><font color="#9A1900">// in cents</font></i>
-
     <font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external pure <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IEtherPriceOracle<font color="#990000">).</font>interfaceId <font color="#990000">||</font> interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC165<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
     <font color="#FF0000">}</font>
+
+    uint <b><font color="#0000FF">public</font></b> <font color="#008080">constant</font> price <font color="#990000">=</font> <font color="#993399">10000</font><font color="#990000">;</font> <i><font color="#9A1900">// in cents</font></i>
 
 <font color="#FF0000">}</font></tt></pre>
 </body>

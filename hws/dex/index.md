@@ -44,13 +44,13 @@ To simulate changing market conditions, we have deployed two smart contracts to 
 interface IEtherPriceOracle is IERC165 {
 
     // The name (really a description) of the implementing contract
-    function name() external view returns (string memory);
+    function name() external pure returns (string memory);
 
     // The currency symbol this is being reported in, such as '$'
-    function symbol() external view returns (string memory);
+    function symbol() external pure returns (string memory);
 
     // How many decimals this is being reported in; for cents, it's 2
-    function decimals() external view returns (uint);
+    function decimals() external pure returns (uint);
 
     // The current price, in cents, of the (fake) ether
     function price() external view returns (uint);

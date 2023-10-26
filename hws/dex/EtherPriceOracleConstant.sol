@@ -15,10 +15,10 @@ contract EtherPriceOracleConstant is IEtherPriceOracle {
 
     uint public constant decimals = 2;
 
-    uint public constant price = 10000; // in cents
-
     function supportsInterface(bytes4 interfaceId) external pure override returns (bool) {
         return interfaceId == type(IEtherPriceOracle).interfaceId || interfaceId == type(IERC165).interfaceId;
     }
+
+    uint public constant price = 10000; // in cents
 
 }
