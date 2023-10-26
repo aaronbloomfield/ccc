@@ -62,8 +62,8 @@ line-height:120%;
 [Environmental issues](#/environment)  
 [Proof-of-$X$](#/proofofx)  
 [DAGs](#/dags)  
-[Forks & Orphan Nodes](#/forks)  
 [Attacks](#/attacks)  
+[Forks & Orphan Nodes](#/forks)  
 	</textarea></section>
 
 <!-- ============================================================ -->
@@ -826,231 +826,6 @@ Note that UTXOs are not only in the bottom level
   
   <section>
 
-    <section id="forks" data-markdown class="center"><textarea>
-# Forks & Orphan Nodes
-
-<img src="images/logos/btg-coin-symbol.svg" class="cclogosubtitle">
-<img src="images/logos/etc-coin-symbol.svg" class="cclogosubtitle">
-<img src="images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
-<img src="images/logos/nmc-coin-symbol.svg" class="cclogosubtitle">
-<img src="images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
-    </textarea></section>
-
-  <section data-markdown data-separator="^\n\n\n"><textarea>
-## Cryptocurrency "Forks"
-- There are four different meanings of "fork" with regard to cryptocurrencies
-  1. Uncle / orphan / ommer blocks
-  2. Soft fork 
-  3. Hard fork
-  4. Source code fork
-    </textarea></section>
-
-
-<section data-markdown data-transition="none" data-transition-speed="fast" data-separator="^\n\n\n"><textarea>
-<!-- .slide: class="right-float-img" -->
-## Type 1: Uncle / Orphan / Ommer
-
-<img src="images/mining/orphan/orphan.dot.1.svg" style="width:100px;padding-left:86px;padding-right:86px">
-
-- Given a starting block number (here, 1000)
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Uncle / Orphan / Ommer blocks
-
-<img src="images/mining/orphan/orphan.dot.2.svg" style="width:120px;padding-left:76px;padding-right:76px">
-
-- Given a starting block number (here, 1000)
-- A miner mines a given transaction $x$ into block 1001
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Uncle / Orphan / Ommer blocks
-
-<img src="images/mining/orphan/orphan.dot.3.svg" style="width:250px">
-
-- Given a starting block number (here, 1000)
-- A miner mines a given transaction into a block
-- But another miner mines a different block without that TXN
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Uncle / Orphan / Ommer blocks
-
-<img src="images/mining/orphan/orphan.dot.4.svg" style="width:250px">
-
-- Given a starting block number (here, 1000)
-- A miner mines a given transaction into a block
-- But another miner mines a different block without that TXN
-- That other block gets a confirmation
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Uncle / Orphan / Ommer blocks
-
-<img src="images/mining/orphan/orphan.dot.5.svg" style="width:250px">
-
-- Given a starting block number (here, 1000)
-- A miner mines a given transaction into a block
-- But another miner mines a different block without that TXN
-- That other block gets a confirmation
-- And then one more
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Uncle / Orphan / Ommer blocks
-
-<img src="images/mining/orphan/orphan.dot.6.svg" style="width:250px">
-
-- Given a starting block number (here, 1000)
-- A miner mines a given transaction into a block
-- But another miner mines a different block without that TXN
-- That other block gets a confirmation
-- And then one more
-- Eventually the block with the TXN is discarded
-  - As it is not part of the longest chain anymore
-    </textarea></section>
-
-
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Uncle / Orphan / Ommer blocks
-- Bitcoin calls these *orphan blocks* or *orphan nodes*
-- Ethereum used to call them *uncle blocks* or *uncle nodes*
-  - But that is gender-specific
-  - Now they are called *ommer blocks* or *ommer nodes*
-    - Ommer is a gender-neutral version of aunt or uncle
-      - But not a native English word
-    - Like "sibling" instead of brother or sister
-- What happens to that TXN?
-  - Other miners will likely pick it up
-  - Wallet software (or equivalent) will re-send it if it "disappears"
-    - Or at least notify you that it was not mined
-- This is an issue if we all could mine the blockchain in this class
-  - There is no effective way to ensure it is not discarded
-
-
-
-## How to handle?
-- Bitcoin's orphan blocks: once it is no longer part of the longest chain, is completely discarded
-  - Reason: with 10 minute block time, this is much less likely to occur
-  - Thus, no reward for the miner of the orphan block!
-- Ethereum's ommer blocks, when PoS: not fully discarded
-  - Miners still get a reward, albeit much smaller
-  - The EVM keeps them around in memory
-  - They are not the canonical "truth" of the blockchain, though
-  - Reason: with a 15 second block time, this is much more likely to occur
-  - They cannot happen on our proof-of-authority blockchain
-- Many others are based on Ethereum's strategy
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Type 2: Soft forks
-
-<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
-
-- Non-token crypto-currencies usually have a group of developers
-  - Occasional changes are made to the protocol / mining algorithm / etc.
-  - Bitcoin via [BIPs](https://github.com/bitcoin/bips/), Ethereum via [EIPs](https://github.com/ethereum/EIPs/), etc.
-- Sometimes called a *consensus fork*
-- Generally, all the uses of the cryptocurrency (eventually) adopt the change
-- These forks are backward-compatible
-  - At least until everybody switches over
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Soft forks
-
-<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
-
-- How to get all the miners to adopt it?
-  - Release the updated source code
-  - The agreed-upon change will state that at some point, all further blocks *must* have that change
-  - That point could be when:
-    - Some number (say, 75%) of the miners have adopted this change
-    - After some date/time
-    - ETH 2: when the Total Terminal Difficulty reaches (or exceeds) exactly $5.875*10^{22}$
-- Example: Bitcoin's [Segregated Witness](bitcoin.html#/segwit) from 2015
-  - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
-
-
-
-<!-- .slide: class="right-float-img-nb-400" -->
-## Type 3: Hard forks
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gabel_--_2021_--_7220.jpg/800px-Gabel_--_2021_--_7220.jpg)
-- A change is proposed that some users do *NOT* want to adopt
-  - Or that is not backwards-compatible, so some users choose one way and some the other way
-
-
-
-<!-- .slide: class="cclogo-slide" -->
-## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum & <br> [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic
-- A well-known Ethereum organization had a programming bug that allowed millions to be drained from the account
-  - This endangered the perception and trust of the Ethereum as a whole
-  - We'll see this error in detail in [Blockchain Applications](applications.html#/)
-- The fix: roll back the blockchain to before the hack to fix it
-- This [split the users](applications.html#/etcsplit); some didn't want the fix
-- [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic is the blockchain *without* the fix
-- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum is the blockchain *with* the fix
-
-
-
-<!-- .slide: class="cclogo-slide" -->
-## [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold
-
-- Hard fork of Bitcoin on October 24, 2017 (at block height 491,407)
-- Reasons: change to an ASIC-resistant hash
-- It's had a lot of growing pains:
-  - Was hastily put together
-  - Had a developer pre-mine, which always looks shady
-  - Hit by 51% attack in May 2018; 388k BTG (about $18 million) was stolen; promptly de-listed from Bittrex
-  - Hit by a 51% attack again in January 2020
-  - In July 2020 an "emergency update" was released to counter yet another attack
-
-
-
-
-<!-- .slide: class="cclogo-slide" -->
-## Type 4: Source code fork
-- You can make a new cryptocurrency by:
-  - Take a tested open source code base
-  - Make a the modifications you want
-- The [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) [Ravencoin (RVN) source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin); created in 2018
-- Changes:
-  - 1000x as many coins
-  - 1 minute block time instead of 10 minutes
-  - Native support for assets
-    - Could be NFTs, but can represent any digital or physical item
-  - Different PoW hashes to be ASIC resistant
-
-
-
-<!-- .slide: class="cclogo-slide" -->
-## [![nmc logo](../slides/images/logos/nmc-coin-symbol.svg)](https://coinmarketcap.com/currencies/namecoin/) Namecoin (2011)
-- Namecoin (NMC) was created in 2011, also as a fork of Bitcoin
-- Purpose: censorship-free domain DNS registration for the .bit top-level domain
-  - Anybody can transact with Namecoin to reserve a domain in .bit
-  - Fee: 0.01 NMC
-  - Reservation lasts 36,000 blocks (about 200 days) unless updated or renewed
-- .bit domains are not widely supported
-  - Not sanction by [ICANN](https://en.wikipedia.org/wiki/ICANN), not supported by [OpenNIC](https://en.wikipedia.org/wiki/OpenNIC)
-- Namecoin not very popular these days
-  - In 2015: 120k domains registered, but only 28 in use
-  </textarea></section>
-
-</section>
-  
-<!-- ============================================================ -->
-  
-  <section>
-
     <section id="attacks" data-markdown class="center"><textarea>
 # Attacks
 
@@ -1190,6 +965,231 @@ Note that UTXOs are not only in the bottom level
 </section>
 
 
+<!-- ============================================================ -->
+  
+  <section>
+
+    <section id="forks" data-markdown class="center"><textarea>
+# Forks & Orphan Nodes
+
+<img src="images/logos/btg-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/etc-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/eth-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/nmc-coin-symbol.svg" class="cclogosubtitle">
+<img src="images/logos/rvn-coin-symbol.svg" class="cclogosubtitle">
+    </textarea></section>
+
+  <section data-markdown data-separator="^\n\n\n"><textarea>
+## Cryptocurrency "Forks"
+- There are four different meanings of "fork" with regard to cryptocurrencies
+  1. Uncle / orphan / ommer blocks
+  2. Soft fork 
+  3. Hard fork
+  4. Source code fork
+    </textarea></section>
+
+
+<section data-markdown data-transition="none" data-transition-speed="fast" data-separator="^\n\n\n"><textarea>
+<!-- .slide: class="right-float-img" -->
+## Type 1: Uncle / Orphan / Ommer
+
+<img src="images/mining/orphan/orphan.dot.1.svg" style="width:100px;padding-left:86px;padding-right:86px">
+
+- Given a starting block number (here, 1000)
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer blocks
+
+<img src="images/mining/orphan/orphan.dot.2.svg" style="width:120px;padding-left:76px;padding-right:76px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction $x$ into block 1001
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer blocks
+
+<img src="images/mining/orphan/orphan.dot.3.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer blocks
+
+<img src="images/mining/orphan/orphan.dot.4.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer blocks
+
+<img src="images/mining/orphan/orphan.dot.5.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+- And then one more
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Uncle / Orphan / Ommer blocks
+
+<img src="images/mining/orphan/orphan.dot.6.svg" style="width:250px">
+
+- Given a starting block number (here, 1000)
+- A miner mines a given transaction into a block
+- But another miner mines a different block without that TXN
+- That other block gets a confirmation
+- And then one more
+- Eventually the block with the TXN is discarded
+  - As it is not part of the longest chain anymore
+    </textarea></section>
+
+
+
+    <section data-markdown data-separator="^\n\n\n"><textarea>
+## Uncle / Orphan / Ommer blocks
+- Bitcoin calls these *orphan blocks* or *orphan nodes*
+- Ethereum used to call them *uncle blocks* or *uncle nodes*
+  - But that is gender-specific
+  - Now they are called *ommer blocks* or *ommer nodes*
+    - Ommer is a gender-neutral version of aunt or uncle
+      - But not a native English word
+    - Like "sibling" instead of brother or sister
+- What happens to that TXN?
+  - Other miners will likely pick it up
+  - Wallet software (or equivalent) will re-send it if it "disappears"
+    - Or at least notify you that it was not mined
+- This is an issue if we all could mine the blockchain in this class
+  - There is no effective way to ensure it is not discarded
+
+
+
+## How to handle?
+- Bitcoin's orphan blocks: once it is no longer part of the longest chain, is completely discarded
+  - Reason: with 10 minute block time, this is much less likely to occur
+  - Thus, no reward for the miner of the orphan block!
+- Ethereum's ommer blocks, when PoW: not fully discarded
+  - Miners still get a reward, albeit much smaller
+  - The EVM keeps them around in memory
+  - They are not the canonical "truth" of the blockchain, though
+  - Reason: with a 15 second block time, this is much more likely to occur
+  - They cannot happen on our proof-of-authority blockchain
+- Many others are based on Ethereum's strategy
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Type 2: Soft forks
+
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+
+- Non-token crypto-currencies usually have a group of developers
+  - Occasional changes are made to the protocol / mining algorithm / etc.
+  - Bitcoin via [BIPs](https://github.com/bitcoin/bips/), Ethereum via [EIPs](https://github.com/ethereum/EIPs/), etc.
+- Sometimes called a *consensus fork*
+- Generally, all the uses of the cryptocurrency (eventually) adopt the change
+- These forks are backward-compatible
+  - At least until everybody switches over
+
+
+
+<!-- .slide: class="right-float-img" -->
+## Soft forks
+
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+
+- How to get all the miners to adopt it?
+  - Release the updated source code
+  - The agreed-upon change will state that at some point, all further blocks *must* have that change
+  - That point could be when:
+    - Some number (say, 75%) of the miners have adopted this change
+    - After some date/time
+    - ETH 2: when the Total Terminal Difficulty reaches (or exceeds) exactly $5.875*10^{22}$
+- Example: Bitcoin's [Segregated Witness](bitcoin.html#/segwit) from 2015
+  - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
+
+
+
+<!-- .slide: class="right-float-img-nb-400" -->
+## Type 3: Hard forks
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gabel_--_2021_--_7220.jpg/800px-Gabel_--_2021_--_7220.jpg)
+- A change is proposed that some users do *NOT* want to adopt
+  - Or that is not backwards-compatible, so some users choose one way and some the other way
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum & <br> [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic
+- A well-known Ethereum organization had a programming bug that allowed millions to be drained from the account
+  - This endangered the perception and trust of the Ethereum as a whole
+  - We'll see this error in detail in [Blockchain Applications](applications.html#/)
+- The fix: roll back the blockchain to before the hack to fix it
+- This [split the users](applications.html#/etcsplit); some didn't want the fix
+- [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic is the blockchain *without* the fix
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum is the blockchain *with* the fix
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold
+
+- Hard fork of Bitcoin on October 24, 2017 (at block height 491,407)
+- Reasons: change to an ASIC-resistant hash
+- It's had a lot of growing pains:
+  - Was hastily put together
+  - Had a developer pre-mine, which always looks shady
+  - Hit by 51% attack in May 2018; 388k BTG (about $18 million) was stolen; promptly de-listed from Bittrex
+  - Hit by a 51% attack again in January 2020
+  - In July 2020 an "emergency update" was released to counter yet another attack
+
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## Type 4: Source code fork
+- You can make a new cryptocurrency by:
+  - Take a tested open source code base
+  - Make a the modifications you want
+- The [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) [Ravencoin (RVN) source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin); created in 2018
+- Changes:
+  - 1000x as many coins
+  - 1 minute block time instead of 10 minutes
+  - Native support for assets
+    - Could be NFTs, but can represent any digital or physical item
+  - Different PoW hashes to be ASIC resistant
+
+
+
+<!-- .slide: class="cclogo-slide" -->
+## [![nmc logo](../slides/images/logos/nmc-coin-symbol.svg)](https://coinmarketcap.com/currencies/namecoin/) Namecoin (2011)
+- Namecoin (NMC) was created in 2011, also as a fork of Bitcoin
+- Purpose: censorship-free domain DNS registration for the .bit top-level domain
+  - Anybody can transact with Namecoin to reserve a domain in .bit
+  - Fee: 0.01 NMC
+  - Reservation lasts 36,000 blocks (about 200 days) unless updated or renewed
+- .bit domains are not widely supported
+  - Not sanction by [ICANN](https://en.wikipedia.org/wiki/ICANN), not supported by [OpenNIC](https://en.wikipedia.org/wiki/OpenNIC)
+- Namecoin not very popular these days
+  - In 2015: 120k domains registered, but only 28 in use
+  </textarea></section>
+
+</section>
+  
 <!-- ============================================================ -->
 	
       </div>
