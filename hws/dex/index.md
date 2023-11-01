@@ -32,9 +32,8 @@ In addition to your source code, you will submit an edited version of [dex.py](d
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!--  So far there aren't any significant changes to report. -->
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-- Tuesday, 4/11: Clarified the necessary `require()` line at the bottom of the `onERC20Received()` sub-section
 
 ### ETH price
 
@@ -174,10 +173,19 @@ A bunch of notes on this:
 - The `payable` keyword is casting it to a payable address, as you can't transfer ether to a non-payable address
 - This will work for both owned addresses and contract addresses (as long as the contract address has a `receive()` function)
 
+If this causes a reversion -- for example, the receiving contract reverts in `receive()` -- then look in the Testing section, below, for how to decode the reversion reason.
+
+
+#### Receiving ether
+
+In any function, the `msg.value` contains how much ether was sent in with the function call.  It's in wei, so 1 ether would have a `msg.value` value of $10^{18}$.  Non-`payable` functions will always have `msg.value` equal to zero.  You can't check the balance of `msg.sender`, as they do not have that amount of ether during the function call (they sent it in with the call).
+
 
 #### `onERC20Received()`
 
 The `onERC20Received()` function will be called any time TCC is transferred to a contract.  We are going to use this to initiate an exchange of TCC for ether -- one just has to transfer the TCC to the DEX, and then the DEX will compute the amount of ether to send back.
+
+This function takes in three parameters -- the address that sent in the TC (`from`), the amount sent in (`amount`), and the ERC-20 contract for that TC (`erc20`).  For the amount, keep in mind that it is with all the decimals -- so if you send in 10 TC, and you have 10 decimals, then the value of `amount` will be $10 \ast 10^{10}$.  The point of the `erc20` parameter is to make sure that one is not trying to send in another TC, with a different ERC-20 contract, to get ether out of the DEX.  Thus, we have to check (via a `require()`) that the `erc20` address is the same as the ERC-20 contract that the DEX uses.
 
 However, there are some times where we may NOT want `onERC20Received()` to do anything.  In particular, `addLiquidity()` (and possibly `removeLiquidity()`) will initiate a ERC-20 transfer (via calling `transferFrom()`), but we probably *don't* want `onERC20Received()` to be called at that point (it's not an exchange).  So we are going to want to have a way to "turn off" the functionality of `onERC20Received()`.  The easiest way to do this is to have an `internal` contract variable, such as `adjustingLiquidity`, that is normally set to `false`.  In `addLiquidity()` and `removeLiquidity()`, you set it to `true` when you are about to initiate the transfer, and then set it to `false` when done.
 
@@ -361,6 +369,41 @@ To help you debug your program, here is a worked-out example of how the values i
 
 
 ### Testing
+
+#### Handling reversions on payment
+
+When paying out to another address, your Solidity code is going to look like the following:
+
+```
+(bool success, ) = payable(a).call{value: v}("");
+require(success, "Failed to transfer ETH");
+```
+
+If that call fails (by returning false), then it will stop on that require.  However, if that call fails by reverting -- such as when the receiving contract reverts in `receive()` -- then we have to do a bit more work to get (and display) the reversion reason.
+
+The following function will decode the reversion reason:
+
+```
+// From https://ethereum.stackexchange.com/questions/83528/how-can-i-get-the-revert-reason-of-a-call-in-solidity-so-that-i-can-use-it-in-th
+function getRevertMsg(bytes memory _returnData) internal pure returns (string memory) {
+    // If the _res length is less than 68, then the transaction failed silently (without a revert message)
+    if (_returnData.length < 68)
+        return 'Transaction reverted silently';
+
+    assembly {
+        // Slice the sighash.
+        _returnData := add(_returnData, 0x04)
+    }
+    return abi.decode(_returnData, (string)); // All that remains is the revert string
+}
+```
+
+However, in order to use that function, we have to get the encoded reversion reason.  We will use the following code to pay from a contract -- it captures the (encoded) reversion reason in the second part of the tuple (`result`).
+
+```
+(bool success, bytes memory result) = payable(address(dex)).call{value:amtEther * 1 ether}("");
+require (success, string.concat("Payment to DEX didn't work: ", getRevertMsg(result)));
+```
 
 #### DEXtest testing contract
 

@@ -70,10 +70,7 @@
 <p>You will also need to be familiar with the <a href='../../slides/ethereum.html#/'>Ethereum slide set</a>, the <a href='../../slides/solidity.html#/'>Solidity slide set</a>, the <a href='../../slides/tokens.html#/'>Tokens slide set</a>, and the <a href='../../slides/applications.html'>Blockchain Applications</a> slide set. The last one is most relevant, as it discusses how a DEX works.</p>
 <p>In addition to your source code, you will submit an edited version of <a href='dex.py.html'>dex.py</a> (<a href='dex.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. </p>
-<ul>
-<li>Tuesday, 4/11: Clarified the necessary <code>require()</code> line at the bottom of the <code>onERC20Received()</code> sub-section</li>
-</ul>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='teth-price' class='tabcontent'><h3 id='eth-price'>ETH price</h3>
 <p>To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH. Both of these contracts fulfill the <a href='IEtherPriceOracle.sol.html'>IEtherPriceOracle.sol</a> (<a href='IEtherPriceOracle.sol'>src</a>) interface:</p>
 <pre><code>interface IEtherPriceOracle is IERC165 {
@@ -162,8 +159,12 @@ require (success, "payment didn't work");</code></pre>
 <li>The <code>payable</code> keyword is casting it to a payable address, as you can’t transfer ether to a non-payable address</li>
 <li>This will work for both owned addresses and contract addresses (as long as the contract address has a <code>receive()</code> function)</li>
 </ul>
+<p>If this causes a reversion – for example, the receiving contract reverts in <code>receive()</code> – then look in the Testing section, below, for how to decode the reversion reason.</p>
+<h4 id='receiving-ether'>Receiving ether</h4>
+<p>In any function, the <code>msg.value</code> contains how much ether was sent in with the function call. It’s in wei, so 1 ether would have a <code>msg.value</code> value of <span class='math inline'>10<sup>18</sup></span>. Non-<code>payable</code> functions will always have <code>msg.value</code> equal to zero. You can’t check the balance of <code>msg.sender</code>, as they do not have that amount of ether during the function call (they sent it in with the call).</p>
 <h4 id='onerc20received'><code>onERC20Received()</code></h4>
 <p>The <code>onERC20Received()</code> function will be called any time TCC is transferred to a contract. We are going to use this to initiate an exchange of TCC for ether – one just has to transfer the TCC to the DEX, and then the DEX will compute the amount of ether to send back.</p>
+<p>This function takes in three parameters – the address that sent in the TC (<code>from</code>), the amount sent in (<code>amount</code>), and the ERC-20 contract for that TC (<code>erc20</code>). For the amount, keep in mind that it is with all the decimals – so if you send in 10 TC, and you have 10 decimals, then the value of <code>amount</code> will be <span class='math inline'>10 * 10<sup>10</sup></span>. The point of the <code>erc20</code> parameter is to make sure that one is not trying to send in another TC, with a different ERC-20 contract, to get ether out of the DEX. Thus, we have to check (via a <code>require()</code>) that the <code>erc20</code> address is the same as the ERC-20 contract that the DEX uses.</p>
 <p>However, there are some times where we may NOT want <code>onERC20Received()</code> to do anything. In particular, <code>addLiquidity()</code> (and possibly <code>removeLiquidity()</code>) will initiate a ERC-20 transfer (via calling <code>transferFrom()</code>), but we probably <em>don’t</em> want <code>onERC20Received()</code> to be called at that point (it’s not an exchange). So we are going to want to have a way to “turn off” the functionality of <code>onERC20Received()</code>. The easiest way to do this is to have an <code>internal</code> contract variable, such as <code>adjustingLiquidity</code>, that is normally set to <code>false</code>. In <code>addLiquidity()</code> and <code>removeLiquidity()</code>, you set it to <code>true</code> when you are about to initiate the transfer, and then set it to <code>false</code> when done.</p>
 <p><strong><em>IMPORTANT NOTE:</em></strong> Your <code>onERC20Received()</code> MUST check that the address passed in as the third parameter is the same address as the contract it is part of; <code>require(erc20==erc20Address,"witty error message");</code> will do this. Otherwise, somebody could call that function with a <em>different</em> ERC-20 contract and drain all the TCC from your contract.</p>
 </div><div id='tinterface' class='tabcontent'><h3 id='interface'>Interface</h3>
@@ -362,6 +363,27 @@ interface IDEX is IERC165, IERC20Receiver {
 </ul></li>
 </ul>
 </div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
+<h4 id='handling-reversions-on-payment'>Handling reversions on payment</h4>
+<p>When paying out to another address, your Solidity code is going to look like the following:</p>
+<pre><code>(bool success, ) = payable(a).call{value: v}("");
+require(success, "Failed to transfer ETH");</code></pre>
+<p>If that call fails (by returning false), then it will stop on that require. However, if that call fails by reverting – such as when the receiving contract reverts in <code>receive()</code> – then we have to do a bit more work to get (and display) the reversion reason.</p>
+<p>The following function will decode the reversion reason:</p>
+<pre><code>// From https://ethereum.stackexchange.com/questions/83528/how-can-i-get-the-revert-reason-of-a-call-in-solidity-so-that-i-can-use-it-in-th
+function getRevertMsg(bytes memory _returnData) internal pure returns (string memory) {
+    // If the _res length is less than 68, then the transaction failed silently (without a revert message)
+    if (_returnData.length &lt; 68)
+        return 'Transaction reverted silently';
+
+    assembly {
+        // Slice the sighash.
+        _returnData := add(_returnData, 0x04)
+    }
+    return abi.decode(_returnData, (string)); // All that remains is the revert string
+}</code></pre>
+<p>However, in order to use that function, we have to get the encoded reversion reason. We will use the following code to pay from a contract – it captures the (encoded) reversion reason in the second part of the tuple (<code>result</code>).</p>
+<pre><code>(bool success, bytes memory result) = payable(address(dex)).call{value:amtEther * 1 ether}("");
+require (success, string.concat("Payment to DEX didn't work: ", getRevertMsg(result)));</code></pre>
 <h4 id='dextest-testing-contract'>DEXtest testing contract</h4>
 <p>To help you test your code, below is a method that will test the first case from the example above – the <code>createPool()</code> step. This is intended to be done on the Javascript development environment in Remix and NOT on the course blockchain. This file is saved as <a href='DEXtest.sol.html'>DEXtest.sol</a> (<a href='DEXtest.sol'>src</a>).</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
