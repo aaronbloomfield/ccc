@@ -65,6 +65,11 @@ sanity_checks = {
 	# exist?
 	'dao.html_does_not_exist': False,
 
+	# Did you run the `touch ~/public_html/index.html` command on portal?  
+	# One way to check is if you view https://www.cs.virginia.edu/~mst3k 
+	# (for your userid), then you should NOT see your dao_xxxxxxxx.html file.
+	'touched_index.html': False,
+
 	# Did you add the three required proposals to your DAO?  One should have
 	# expired, one expires week after the due date, and one is your choice.
 	'added_three_required_dao_proposals': False,

@@ -15,6 +15,7 @@ Beyond general experience with programming Solidity (which you have at this poin
 
 In addition to your source code, you will submit an edited version of [daoweb3.py](daoweb3.py.html) ([src](daoweb3.py)).
 
+**NOTE:** The Javascript code you develop herein does not work for all browsers.  We know it works on Firefox and Chrome, and that it does not work fully on Safari.  Note that you will need Chrome for the Metamask homework.
 
 ### Changelog
 
@@ -176,11 +177,11 @@ To determine your URL:
 
 As an example, consider one of the course accounts, `0xd0958cecfa9ee438c6c6b6e7a2295866065c4c59`
 
-- The checksummed version, from the [explorer account page](https://andromeda.cs.virginia.edu/explorer/index.php?account=0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59), is `0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59`
+- The checksummed version, without the leading '0x', from the [explorer account page](https://andromeda.cs.virginia.edu/explorer/index.php?account=0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59), is `0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59`
 - The [online Keccak generator](https://emn178.github.io/online-tools/keccak_256.html) yields a hash of fe2a2995484d111efe59764bb8b892cb3114579d45932026719c0e123a962c48
 - The first 8 hex digits are fe2a2995
 - The file name would be `dao_fe2a2995.html`
-- The full URL would be [https://www.cs.virginia.edu/~asb/dao_fe2a2995.html](https://www.cs.virginia.edu/~asb/dao_fe2a2995.html) (URL does not work for this one).
+- The full URL would be [https://www.cs.virginia.edu/~asb/dao_fe2a2995.html](https://www.cs.virginia.edu/~asb/dao_fe2a2995.html) (this URL does not actually exist).
 
 When submitting the file, the auto-grader will check the suffix as well.
 
@@ -235,9 +236,17 @@ This is not a class on user interfaces, so we are not expecting an amazing looki
   ```
 mkdir -p ~/public_html/
 cd ~/public_html/
+chmod 711 .
 wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js
 wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js.map
 ```
+
+#### Preventing directory viewing
+
+If you go to your home page on the departmental viewer, you can see all the files in the directory listing that shows up.  To prevent this, we are going to create a default (and empty) index.html file.  On the departmetnal server, you can just run `touch ~/public_html/index.html`.
+
+**NOTE:** If you already have a web page present, or otherwise have prevented (intentional or not) directory viewing, then no further steps are needed.
+
 
 #### Background
 
@@ -253,6 +262,9 @@ The links to all of these are on the Canvas landing page.
 You are welcome to look at the blockchain explorer code as well, but that won't be as useful for this assignment -- there is no web3 done by the explorer web page.  When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on.  Loading up the developer console make make it easier to view the code, and -- later on -- see any Javascript errors.  Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.
 
 ### Javascript
+
+
+#### `async` and `await`
 
 Most function calls execute quickly.  But some, such as those querying a blockchain, can take some time to return a value.  In Javascript, these are called `async` functions.  While `async` functions might execute quickly, Javascript assumes they will take some time.  You have two options here -- you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return.  If you choose the first option, it will hang until that `async` call completes.  If you choose the second option, it will move on, and later (in another thread) execute that code block when the `async` call does finally complete.
 

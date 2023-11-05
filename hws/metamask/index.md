@@ -90,6 +90,8 @@ You can determine your URL suffix as you did in the [DAO & web3 assignment](../d
 
 #### Preventing directory viewing
 
+(If you did this in the DAO&web3 assignment, no need to repeat it here).
+
 If you go to your home page on the departmental viewer, you can see all the files in the directory listing that shows up.  To prevent this, we are going to create a default (and empty) index.html file.  On the departmetnal server, you can just run `touch ~/public_html/index.html`.
 
 **NOTE:** If you already have a web page present, or otherwise have prevented (intentional or not) directory viewing, then no further steps are needed.

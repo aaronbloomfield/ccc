@@ -57,6 +57,7 @@
 <li>That you have a working account on the CS departmental servers. If you are unsure, you can view the CS computing page, which has a link to the password reset page (a link to there is on the Canvas landing page)</li>
 </ul>
 <p>In addition to your source code, you will submit an edited version of <a href="daoweb3.py.html">daoweb3.py</a> (<a href="daoweb3.py">src</a>).</p>
+<p><strong>NOTE:</strong> The Javascript code you develop herein does not work for all browsers. We know it works on Firefox and Chrome, and that it does not work fully on Safari. Note that you will need Chrome for the Metamask homework.</p>
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 <h3 id="create-the-dao">Create the DAO</h3>
@@ -183,11 +184,11 @@ interface IDAO is IERC165 {
 </ul>
 <p>As an example, consider one of the course accounts, <code>0xd0958cecfa9ee438c6c6b6e7a2295866065c4c59</code></p>
 <ul>
-<li>The checksummed version, from the <a href="https://andromeda.cs.virginia.edu/explorer/index.php?account=0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59">explorer account page</a>, is <code>0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59</code></li>
+<li>The checksummed version, without the leading ‘0x’, from the <a href="https://andromeda.cs.virginia.edu/explorer/index.php?account=0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59">explorer account page</a>, is <code>0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59</code></li>
 <li>The <a href="https://emn178.github.io/online-tools/keccak_256.html">online Keccak generator</a> yields a hash of fe2a2995484d111efe59764bb8b892cb3114579d45932026719c0e123a962c48</li>
 <li>The first 8 hex digits are fe2a2995</li>
 <li>The file name would be <code>dao_fe2a2995.html</code></li>
-<li>The full URL would be <a href="https://www.cs.virginia.edu/~asb/dao_fe2a2995.html">https://www.cs.virginia.edu/~asb/dao_fe2a2995.html</a> (URL does not work for this one).</li>
+<li>The full URL would be <a href="https://www.cs.virginia.edu/~asb/dao_fe2a2995.html">https://www.cs.virginia.edu/~asb/dao_fe2a2995.html</a> (this URL does not actually exist).</li>
 </ul>
 <p>When submitting the file, the auto-grader will check the suffix as well.</p>
 <p>The following code, contained in <a href="get-url-ext.py.html">get-url-ext.py</a> (<a href="get-url-ext.py">src</a>) will compute this value as well. You have to pip install both <code>web3</code> and <code>pysha3</code> for this code to work.</p>
@@ -231,9 +232,13 @@ $</code></pre>
 <li><p>Copy a few files over: while all of <em>your</em> code must be in a single file, you are going to include the <code>web3.js</code> library. To put that into the correct place on portal, execute the following commands <strong>ON portal.cs</strong>:</p>
 <pre><code>mkdir -p ~/public_html/
 cd ~/public_html/
+chmod 711 .
 wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js
 wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js.map</code></pre></li>
 </ul>
+<h4 id="preventing-directory-viewing">Preventing directory viewing</h4>
+<p>If you go to your home page on the departmental viewer, you can see all the files in the directory listing that shows up. To prevent this, we are going to create a default (and empty) index.html file. On the departmetnal server, you can just run <code>touch ~/public_html/index.html</code>.</p>
+<p><strong>NOTE:</strong> If you already have a web page present, or otherwise have prevented (intentional or not) directory viewing, then no further steps are needed.</p>
 <h4 id="background">Background</h4>
 <p>You are <em>encouraged</em> to look at the examples of web3 usage provided so far in class, and to copy/adapt the code therein. Note that you can copy from the materials provided by the course, NOT your classmates! The ones we have seen are:</p>
 <ul>
@@ -245,6 +250,7 @@ wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js.map</co
 <p>The links to all of these are on the Canvas landing page.</p>
 <p>You are welcome to look at the blockchain explorer code as well, but that won’t be as useful for this assignment – there is no web3 done by the explorer web page. When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on. Loading up the developer console make make it easier to view the code, and – later on – see any Javascript errors. Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.</p>
 <h3 id="javascript">Javascript</h3>
+<h4 id="async-and-await"><code>async</code> and <code>await</code></h4>
 <p>Most function calls execute quickly. But some, such as those querying a blockchain, can take some time to return a value. In Javascript, these are called <code>async</code> functions. While <code>async</code> functions might execute quickly, Javascript assumes they will take some time. You have two options here – you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return. If you choose the first option, it will hang until that <code>async</code> call completes. If you choose the second option, it will move on, and later (in another thread) execute that code block when the <code>async</code> call does finally complete.</p>
 <p>Consider the following Javascript code; this is from poll.php, which was used to display the Poll of your smart contract from the <a href="../dappintro/index.html">dApp Introduction</a> (<a href="../dappintro/index.md">md</a>) assignment.</p>
 <pre><code>var contractAddress = &#39;0x01234567890abcdef01234567890abcdef012345&#39;;

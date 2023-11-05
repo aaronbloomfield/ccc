@@ -76,6 +76,11 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># exist?</font></i>
 	<font color="#FF0000">'dao.html_does_not_exist'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Did you run the `touch ~/public_html/index.html` command on portal?  </font></i>
+	<i><font color="#9A1900"># One way to check is if you view https://www.cs.virginia.edu/~mst3k </font></i>
+	<i><font color="#9A1900"># (for your userid), then you should NOT see your dao_xxxxxxxx.html file.</font></i>
+	<font color="#FF0000">'touched_index.html'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you add the three required proposals to your DAO?  One should have</font></i>
 	<i><font color="#9A1900"># expired, one expires week after the due date, and one is your choice.</font></i>
 	<font color="#FF0000">'added_three_required_dao_proposals'</font><font color="#990000">:</font> False<font color="#990000">,</font>
