@@ -143,7 +143,7 @@ interface IDEX is IERC165, IERC20Receiver {
     // much different, this could cause issues, but we are not going to deal
     // with those issues in this assignment, so you can ignore factoring in
     // different exchange rates.
-    function removeLiquidity(uint amountEther) external;
+    function removeLiquidity(uint amountWei) external;
 
     //------------------------------------------------------------
     // Exchanging currencies

@@ -208,7 +208,7 @@ interface IDEX is IERC165, IERC20Receiver {
 
     // Managing pool liquidity
     function addLiquidity() external payable;
-    function removeLiquidity(uint amountEther) external;
+    function removeLiquidity(uint amountWei) external;
 
     // Exchanging currencies (the second one is from the IERC20Receiver interface)
     receive() external payable;
