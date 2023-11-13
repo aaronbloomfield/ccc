@@ -21,7 +21,7 @@ The variable subscripts here all follow these rules:
 - A subscript of $e$ means it represents a value related to the ETH (price, quantity, etc.)
 - A subscript of $d$ means it represents a value of the DEX ($x$, $y$, $k$, etc.)
 
-Your current holdings in USD are: $h_{now} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$
+Your current holdings in USD are: $h_{before} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$
 
 You have two options as to how to interact with a DEX: you could trade in either ETH or TC.  We'll define those amounts as $\delta_{e}$ and $\delta_{t}$, depending on which we are trading in.
 

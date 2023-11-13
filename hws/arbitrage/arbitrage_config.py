@@ -9,14 +9,13 @@ config = {
     'account_address': '0x123456789ABcdEf0123456789aBCDeF123456789',
     'account_private_key': hexbytes.HexBytes('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'),
     'connection_uri': '/path/to/geth.ipc',
-    'connection_is_ipc': True, # set to false if it's a ws:// connection
+    'connection_is_ipc': True, # set to false if it's a ws:// or wss:// connection
     # once set, these should only be changed as necessary as you are testing your code
     'price_eth': 100.00,
     'price_tc': 10.0,
     'max_eth_to_trade': 10.0,
     'max_tc_to_trade': 100.0,
     'gas_price': 10, # in gwei
-    'dex_fees': 0.005, # that's 1/2 of a percernt
     # once set, you should not have to change these
     'dex_addrs': [
                   '0x123456789abcdef0123456789abcdef123456789', 
@@ -24,7 +23,7 @@ config = {
                   '0x123456789abcdef0123456789abcdef123456789', 
                   '0x123456789abcdef0123456789abcdef123456789',
                   '0x123456789abcdef0123456789abcdef123456789',
-                  '0x123456789abcdef0123456789abcdef123456789'
+                  '0x123456789abcdef0123456789abcdef123456789',
                   ],
     'tokencc_addr': '0x123456789abcdef0123456789abcdef123456789',
     'chainId': 12345678,
