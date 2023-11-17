@@ -306,7 +306,7 @@ Which one you use must be read from the `arbitrage_config.py` file so that we ca
 
 [![](img/ddc.webp){style='width:300px;float:right'}](img/ddc.webp){target='_blank'}
 
-To help you in your testing, we have deployed six DEXes that all trade the same coin, but at different rates.  The coin is Dragon Dice Coin (DDC), whose image is shown to the right.  The six different DEXes all trade at a *fixed* exchange rate -- which means that multiple trades will *not* change their $x$, $y$, or $k$ values.  This is not realistic in a real-world situation, of course, but it is useful for testing.  The six different DEXes have the icons of different sided dice, which correspond to their exchange rates:
+To help you in your testing, we have deployed six DEXes that all trade the same coin, but at different rates.  The coin is Dragon Dice Coin (DDC), whose image is shown to the right.  The six different DEXes all trade at a *fixed* exchange rate (but still uses CPAMM!) -- which means that multiple trades will *not* change their $x$, $y$, or $k$ values.  This is not realistic in a real-world situation, of course, but it is useful for testing.  The six different DEXes have the icons of different sided dice, which correspond to their exchange rates:
 
 - [![](img/d4c.webp){style='width:50px;vertical-align:middle'}](img/d4c.webp){target='_blank'} D4 exchanges at a rate of 1:4 (ETH:DDC)
 - [![](img/d6c.webp){style='width:50px;vertical-align:middle'}](img/d6c.webp){target='_blank'} D6 exchanges at a rate of 1:6 (ETH:DDC)
@@ -407,8 +407,7 @@ You will need to fill in the various values from this assignment into the [arbit
 
 There is only one submission for this assignment.
 
-Submission 1: Submit your `arbitrage_trading.py` source code file, along with your completed `arbitrage.py` file, to Gradescope.  You should not submit the arbitrage_config.py file.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in arbitrage.py, etc.).
-
+Submission 1: Submit your `arbitrage_trading.py` source code file, along with your completed `arbitrage.py` file, to Gradescope.  You should not submit the arbitrage_config.py file.
 #### Execution runs
 
 The submission will make three execution runs, all on the same account.  The account will start with 10 ether and 0 TCC.  For all the execution runs, the following value are set:
@@ -433,3 +432,5 @@ Each run assumes the state from the previous run.  The trades are:
     - That will result in a gain of 11.0544 ether
     - Output line: `Exchanged -50.0000 TC for 11.0544 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2052.89 USD`
     - Balances after: 16.052676835555555 ether, TC balance of 44.7619047620, holdings of $2,052.89
+
+These should happen fairly quickly, as the Gradescope auto-grader can bypass the 60-second DEX waiting period.
