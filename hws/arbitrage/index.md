@@ -20,6 +20,9 @@ In addition to your source code, you will submit an edited version of [arbitrage
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
 
+- Sunday, November 26th: `estimate_gas()` is reporting a revert when one would not occur, so we are hard-coding the gas values:
+    - When trading ETH for TC, use 107,000 as your gas estimate
+    - When trading TC for ETH, use 117,000 as your gas estimate
 - Monday, November 27th: Added the "Specific Examples" sub-section at the bottom of the "Testing" tab
 
 <!--
