@@ -18,7 +18,9 @@ In addition to your source code, you will submit an edited version of [arbitrage
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Monday, November 27th: Added the "Specific Examples" sub-section at the bottom of the "Testing" tab
 
 <!--
 
@@ -374,6 +376,21 @@ You can easily comment out different DEXes for your testing.  The following thre
 - If only the upper three DEXes available (d10, d12, and d20), then the most profitable exchange will be the highest numbered DEX.  Exchanging 1 ETH ($100) for *about* 20 DDC ($200) will generate a profit of *about* $100 minus fees.  This is better than exchanging at the d12 DEX (profit of *about* $20 minus fees).
 - The d10 DEX is never profitable if the price ratio is also 1:10.  It exchanges at the same rate as the current prices, but once fees (both DEX and gas) are subtracted, money will be lost.
 .
+
+#### Specific Examples
+
+We assume that the prices in `arbitrage_config.py` are set to the standard 100 for ether and 10 for TC.  There are four specific examples below; these are the visible Gradescope submission tests.  These examples were from an account that started with 11 ether, but was not allowed to trade for than 10 ether (as per the `arbitrage_config.py` file).
+
+- Example 1: starting with 11 ETH, 0 TC and all the DEXes yields about 1.0 ETH and exactly 180.909 TCC
+    - Formally: `Exchanged -10.0000 ETH for 180.9091 TC; fees: 0.11 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 1908.87 USD`
+- Example 2: starting with 11 ETH, 100 TC and the upper three DEXes yields about 1.0 ETH and exactly 280.909 TCC
+    - Formally: `Exchanged -10.0000 ETH for 180.9091 TC; fees: 0.11 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2908.82 USD`
+    - The 280.909 comes from the initial balance of 100 TC plus the DEX trade gain of 180.909 TC
+- Example 3: starting with 11 ETH, 100 TC and the lower three DEXes yields about 30.90 ETH and no TCC
+    - Formally: `Exchanged -100.0000 TC for 19.8988 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 3089.75 USD`
+    - The 30.90 ether comes from the initial balance of 11 plus the DEX trade gain of about 19.90 ether
+- Example 4: staring with 11 ETH, 100 TC and only the d10 DEX yields no trade
+    - Formally: `No profitable arbitrage trades available`
 
 
 ### Real-world profit?

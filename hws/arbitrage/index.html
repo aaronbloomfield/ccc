@@ -66,7 +66,10 @@
 </ul>
 <p>In addition to your source code, you will submit an edited version of <a href='arbitrage.py.html'>arbitrage.py</a> (<a href='arbitrage.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. </p>
+<ul>
+<li>Monday, November 27th: Added the “Specific Examples” sub-section at the bottom of the “Testing” tab</li>
+</ul>
 
 </div><div id='tweb3.py' class='tabcontent'><h3 id='web3.py'>Web3.py</h3>
 <p>You will need to read the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>). While you do not need to have all of that memorized, you do need to understand it all! The intent is that you will use that page as a reference while you write this assignment.</p>
@@ -285,6 +288,28 @@ print(w3.is_connected())</code></pre>
 </ul></li>
 <li>If only the upper three DEXes available (d10, d12, and d20), then the most profitable exchange will be the highest numbered DEX. Exchanging 1 ETH ($100) for <em>about</em> 20 DDC ($200) will generate a profit of <em>about</em> $100 minus fees. This is better than exchanging at the d12 DEX (profit of <em>about</em> $20 minus fees).</li>
 <li>The d10 DEX is never profitable if the price ratio is also 1:10. It exchanges at the same rate as the current prices, but once fees (both DEX and gas) are subtracted, money will be lost. .</li>
+</ul>
+<h4 id='specific-examples'>Specific Examples</h4>
+<p>We assume that the prices in <code>arbitrage_config.py</code> are set to the standard 100 for ether and 10 for TC. There are four specific examples below; these are the visible Gradescope submission tests. These examples were from an account that started with 11 ether, but was not allowed to trade for than 10 ether (as per the <code>arbitrage_config.py</code> file).</p>
+<ul>
+<li>Example 1: starting with 11 ETH, 0 TC and all the DEXes yields about 1.0 ETH and exactly 180.909 TCC
+<ul>
+<li>Formally: <code>Exchanged -10.0000 ETH for 180.9091 TC; fees: 0.11 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 1908.87 USD</code></li>
+</ul></li>
+<li>Example 2: starting with 11 ETH, 100 TC and the upper three DEXes yields about 1.0 ETH and exactly 280.909 TCC
+<ul>
+<li>Formally: <code>Exchanged -10.0000 ETH for 180.9091 TC; fees: 0.11 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2908.82 USD</code></li>
+<li>The 280.909 comes from the initial balance of 100 TC plus the DEX trade gain of 180.909 TC</li>
+</ul></li>
+<li>Example 3: starting with 11 ETH, 100 TC and the lower three DEXes yields about 30.90 ETH and no TCC
+<ul>
+<li>Formally: <code>Exchanged -100.0000 TC for 19.8988 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 3089.75 USD</code></li>
+<li>The 30.90 ether comes from the initial balance of 11 plus the DEX trade gain of about 19.90 ether</li>
+</ul></li>
+<li>Example 4: staring with 11 ETH, 100 TC and only the d10 DEX yields no trade
+<ul>
+<li>Formally: <code>No profitable arbitrage trades available</code></li>
+</ul></li>
 </ul>
 </div><div id='treal-world-profit' class='tabcontent'><h3 id='real-world-profit'>Real-world profit?</h3>
 <p>Could you use this program in the real world with real ETH?</p>
