@@ -100,7 +100,7 @@ Course calendar
 | 12 | Nov 6  | M,W,F | P8 (DEX)            | [Stablecoins](../slides/stablecoins.html#/) | Mon: finished applications, scalability to 5.6; Wed: scalability to 9.4; Fri: finished scalability, stablecoins to 6.1 |
 | 13 | Nov 13 | M,W,F | P9 (DAO&web3)       | [Consensus](../slides/consensus.html#/) | Mon: stablecoins to 8.6; Wed: finished stablecoins, consensus to 3.5; Fri: consensus to 6.21 |
 | 14 | Nov 20 | M     | none (Thanksgiving) | [zkSNARKs](../slides/zksnarks.html#/) | Mon: consensus to 8.19; Wed: Thanksgiving break; Fri: Thanksgiving break |
-| 15 | Nov 27 | M,W,F | P10 (Arbitrage)     | [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/)  |  |
+| 15 | Nov 27 | M,W,F | P10 (Arbitrage)     | [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/)  | Mon: finished consensus, ethics/legal/policy to 6.3 |
 | 16 | Dec 4  | M     | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) |  |
 
 
