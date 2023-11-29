@@ -23,9 +23,8 @@ In addition to your source code, you will submit an edited version of [metamask.
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report.
 
-- Mon, 5/1: Added the `metamask.html_suffix` field in the `other` dictionary in [metamask.py](metamask.py.html) ([src](metamask.py)); it's computed the same way as in the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment (in the "Your URL" section)
 
 
 ### MetaMask Setup 
