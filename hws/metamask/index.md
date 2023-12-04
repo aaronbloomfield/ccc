@@ -38,25 +38,32 @@ Here are the MetaMask setup steps:
 1. If you haven't already, install [Google Chrome](https://www.google.com/chrome)
 2. Install the [MetaMask](https://metamask.io/) extension; you will see a pop-up like the image to the right
    - Note that on some systems it is presented as a web page rather than a pop-up, but the content of the web page is the same as the pop-up shown to the right
-   - When MetaMask first installs, it will ask you if you already have a secret recovery phrase or to create a wallet -- you want to create a wallet
+   - When MetaMask first installs, it will ask you if you already have a secret recovery phrase or to create a wallet -- you want to create a new wallet
    - It will ask you to enter a password -- remember it, as you will need it each time you start up MetaMask
 3. Click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will see something similar to the image to the right.
    - Click the network drop-down box -- in the image to the right it says "localhost:8545", but in your version it will likely say "Ethereum Mainnet".
       - In that drop-down list, select "add network"; this will bring up a web page
       - In the Settings column on the far left, click on Advanced
       - About half-way down there is a toggle setting to "show test networks" -- make sure that is togged on
-    - In the settings column on the far left, click on the Networks option, then click on the "localhost:8545" network
-      - Change the chain ID to the (base-10) value for our blockchain; that value can be found on the Canvas landing page
-      - Change the explorer URL to the URL of the course explorer (on the Canvas landing page)
+    - In the settings column on the far left, click on the Networks option
+      - The next step can appear differently on different versions of Metamask
+        - Option 1: If the "localhost:8545" network is available as an option to click on, then click on that
+        - Option 2: Otherwise, click "add a network" then "add a network manually"
+      - In both cases:
+          - Change the chain ID to the (base-10) value for our blockchain; that value can be found on the Canvas landing page
+          - Change the explorer URL to the URL of the course explorer (on the Canvas landing page); it's just the standard explorer URL
+          - The "RPC URL" is going to be `http://localhost:8545/`
+          - Name it anything you want; we'll assume the name is "localhost:8545" in these instructions
       - Then click save
     - Back in the network selection box, you should now be able to select "localhost:8545" as your network -- this is going to connect to the geth node that we will be starting in a moment
 4. Obtain your decrypted private key for the account that you want to use.  This was done in Part 4 of the [Private Ethereum Blockchain](../ethprivate/index.html#part-4-extract-private-key) ([md](../ethprivate/index)) assignment, and you also used that in the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) assignment.  It will be a hex value of the form `0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef`
-5. Start your geth node.  Among any other flags that you are using, you need to supply the `--http` flag when you start geth
-   - This causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect
-   - Does it not connect?  Make sure you are running your geth node with the `--http` flag.
-6. Configure your account in MetaMask.  To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will again see something similar to the image to the right.  Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
+5. Make sure that account has funds -- either from before, or use the faucet to provide it funds now
+6. Start your geth node.
+   - The geth-config.toml file provided at the beginning of the semester causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect
+7. Configure your account in MetaMask.  To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will again see something similar to the image to the right, although the look does vary by platform.  Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
     - Click on the circular icon in the upper-right of the MetaMask window -- in the image to the right it looks like: <img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, but will likely look different in yours
     - Click on "import account" (NOT create account!)
+        - Some versions you click on the account list, then click, "add account or hardware wallet", the "import account"
     - Paste in your decrypted private key and click on 'import'
     - You should now see your balance in the account pop-up window
     - You will likely want to rename the account -- MetaMask just calls them "account 1", "account 2", etc., and makes it hard to delete "account 1".  To rename your account, in the MetaMask window in the image to the right, click on the vertical ellipsis (&vellip;) to the right of the account name, then click on "account details", then click on the pencil/edit icon to the right of the account name.
