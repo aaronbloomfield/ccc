@@ -63,6 +63,7 @@
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. --></p>
 <ul>
+<li>Mon, Dec 3: Added the <code>sleepms()</code> function, needed by <code>showReturnIntegerValue()</code></li>
 <li>Sun, Dec 2: Updated the <code>showReturnIntegerValue()</code> Javascript function</li>
 <li>Sun, Dec 2: Updated the Metamask setup instructions for a new look-and-feel that is on some platforms</li>
 </ul>
@@ -230,7 +231,11 @@ let web3mm = new Web3(window.ethereum);</code></pre>
 <h4 id="getting-the-return-value-of-a-transaction">Getting the return value of a transaction</h4>
 <p>It is surprisingly hard to get the return value of a transaction. Getting one from a call is easy – but for a transaction you have to have the EVM re-run the transaction and then save the return value. You also have to tell it what state to run the EVM in (meaning what block number to assume is the top block). To save you the hassle of figuring out the syntax for all of this, below is a Javascript function you can use.</p>
 <p>When you call a transaction, your code will be something like what was above: <code>const txninfo = await nftContractmm.methods.mintWithURI(str).send(...)</code>. The <code>txninfo</code> has <em>some</em> information about the transaction, but not a lot, since it may have not been mined yet (sometimes it returns before it was mined, sometimes after). You can access the transaction hash via <code>txninfo['transactionHash']</code>.</p>
-<pre><code>function showReturnIntegerValue(w3,txnhash,desc) {
+<pre><code>async function sleepms(time_ms) {
+  await new Promise(resolve =&gt; setTimeout(resolve, time_ms));
+}
+
+function showReturnIntegerValue(w3,txnhash,desc) {
   w3.eth.getTransaction(txnhash).then(txn =&gt; {
     if ( txn[&#39;blockNumber&#39;] == null ) {
       sleepms(1000);

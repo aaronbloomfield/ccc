@@ -25,6 +25,7 @@ In addition to your source code, you will submit an edited version of [metamask.
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. -->
 
+- Mon, Dec 3: Added the `sleepms()` function, needed by `showReturnIntegerValue()`
 - Sun, Dec 2: Updated the `showReturnIntegerValue()` Javascript function
 - Sun, Dec 2: Updated the Metamask setup instructions for a new look-and-feel that is on some platforms
 
@@ -245,6 +246,10 @@ It is surprisingly hard to get the return value of a transaction.  Getting one f
 When you call a transaction, your code will be something like what was above: `const txninfo = await nftContractmm.methods.mintWithURI(str).send(...)`.  The `txninfo` has *some* information about the transaction, but not a lot, since it may have not been mined yet (sometimes it returns before it was mined, sometimes after).  You can access the transaction hash via `txninfo['transactionHash']`.
 
 ```
+async function sleepms(time_ms) {
+  await new Promise(resolve => setTimeout(resolve, time_ms));
+}
+
 function showReturnIntegerValue(w3,txnhash,desc) {
   w3.eth.getTransaction(txnhash).then(txn => {
     if ( txn['blockNumber'] == null ) {
