@@ -61,7 +61,11 @@
 <p>We are going to use your Auctioneer contract, from the <a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>) assignment. You will also need your NFTmanager contract, from the <a href="../tokens/index.html">Ethereum Tokens</a> (<a href="../tokens/index.md">md</a>) assignment, as well. If you did not get either of those two contracts (Auctioneer or NFTManager) working, then contact the course staff, and we can deploy them for you to use. Otherwise you can either re-deploy your Auctioneer contract to the blockchain, or use the one you deployed for the <a href="../auction/index.html">dApp Auction</a> (<a href="../auction/index.md">md</a>) assignment. Save the contract address of your Auctioneer, as it will be needed when you submit your assignment.</p>
 <p>In addition to your source code, you will submit an edited version of <a href="metamask.py.html">metamask.py</a> (<a href="metamask.py">src</a>).</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. --></p>
+<ul>
+<li>Sun, Dec 2: Updated the <code>showReturnIntegerValue()</code> Javascript function</li>
+<li>Sun, Dec 2: Updated the Metamask setup instructions for a new look-and-feel that is on some platforms</li>
+</ul>
 <h3 id="metamask-setup">MetaMask Setup</h3>
 <p><img src="metamask-pop-up.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>This assignment uses the <a href="https://metamask.io/">MetaMask</a> extension to Google Chrome. Unfortunately, it does not run in any other browser; meaning you can’t use Firefox, Safari, Edge, or Internet Explorer. You have to use Chrome for this assignment.</p>
@@ -71,7 +75,7 @@
 <li>Install the <a href="https://metamask.io/">MetaMask</a> extension; you will see a pop-up like the image to the right
 <ul>
 <li>Note that on some systems it is presented as a web page rather than a pop-up, but the content of the web page is the same as the pop-up shown to the right</li>
-<li>When MetaMask first installs, it will ask you if you already have a secret recovery phrase or to create a wallet – you want to create a wallet</li>
+<li>When MetaMask first installs, it will ask you if you already have a secret recovery phrase or to create a wallet – you want to create a new wallet</li>
 <li>It will ask you to enter a password – remember it, as you will need it each time you start up MetaMask</li>
 </ul></li>
 <li>Click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box. You will see something similar to the image to the right.
@@ -82,24 +86,37 @@
 <li>In the Settings column on the far left, click on Advanced</li>
 <li>About half-way down there is a toggle setting to “show test networks” – make sure that is togged on</li>
 </ul></li>
-<li>In the settings column on the far left, click on the Networks option, then click on the “localhost:8545” network
+<li>In the settings column on the far left, click on the Networks option
+<ul>
+<li>The next step can appear differently on different versions of Metamask
+<ul>
+<li>Option 1: If the “localhost:8545” network is available as an option to click on, then click on that</li>
+<li>Option 2: Otherwise, click “add a network” then “add a network manually”</li>
+</ul></li>
+<li>In both cases:
 <ul>
 <li>Change the chain ID to the (base-10) value for our blockchain; that value can be found on the Canvas landing page</li>
-<li>Change the explorer URL to the URL of the course explorer (on the Canvas landing page)</li>
+<li>Change the explorer URL to the URL of the course explorer (on the Canvas landing page); it’s just the standard explorer URL</li>
+<li>The “RPC URL” is going to be <code>http://localhost:8545/</code></li>
+<li>Name it anything you want; we’ll assume the name is “localhost:8545” in these instructions</li>
+</ul></li>
 <li>Then click save</li>
 </ul></li>
 <li>Back in the network selection box, you should now be able to select “localhost:8545” as your network – this is going to connect to the geth node that we will be starting in a moment</li>
 </ul></li>
 <li>Obtain your decrypted private key for the account that you want to use. This was done in Part 4 of the <a href="../ethprivate/index.html#part-4-extract-private-key">Private Ethereum Blockchain</a> (<a href="../ethprivate/index">md</a>) assignment, and you also used that in the <a href="../arbitrage/index.html">Arbitrage trading</a> (<a href="../arbitrage/index.md">md</a>) assignment. It will be a hex value of the form <code>0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef</code></li>
-<li>Start your geth node. Among any other flags that you are using, you need to supply the <code>--http</code> flag when you start geth
+<li>Make sure that account has funds – either from before, or use the faucet to provide it funds now</li>
+<li>Start your geth node.
 <ul>
-<li>This causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect</li>
-<li>Does it not connect? Make sure you are running your geth node with the <code>--http</code> flag.</li>
+<li>The geth-config.toml file provided at the beginning of the semester causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect</li>
 </ul></li>
-<li>Configure your account in MetaMask. To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box. You will again see something similar to the image to the right. Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
+<li>Configure your account in MetaMask. To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box. You will again see something similar to the image to the right, although the look does vary by platform. Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
 <ul>
 <li>Click on the circular icon in the upper-right of the MetaMask window – in the image to the right it looks like: <img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, but will likely look different in yours</li>
-<li>Click on “import account” (NOT create account!)</li>
+<li>Click on “import account” (NOT create account!)
+<ul>
+<li>Some versions you click on the account list, then click, “add account or hardware wallet”, the “import account”</li>
+</ul></li>
 <li>Paste in your decrypted private key and click on ‘import’</li>
 <li>You should now see your balance in the account pop-up window</li>
 <li>You will likely want to rename the account – MetaMask just calls them “account 1”, “account 2”, etc., and makes it hard to delete “account 1”. To rename your account, in the MetaMask window in the image to the right, click on the vertical ellipsis (⋮) to the right of the account name, then click on “account details”, then click on the pencil/edit icon to the right of the account name.</li>
@@ -216,7 +233,7 @@ let web3mm = new Web3(window.ethereum);</code></pre>
 <pre><code>function showReturnIntegerValue(w3,txnhash,desc) {
   w3.eth.getTransaction(txnhash).then(txn =&gt; {
     if ( txn[&#39;blockNumber&#39;] == null ) {
-      await new Promise(resolve =&gt; setTimeout(resolve, 1000));
+      sleepms(1000);
       showReturnIntegerValue(w3,txnhash,desc);
     } else
       w3.eth.call({to:txn[&#39;to&#39;],from:txn[&#39;from&#39;],data:txn[&#39;input&#39;],gas:txn[&#39;gas&#39;]},txn[&#39;blockNumber&#39;]-1).then(retval =&gt; {

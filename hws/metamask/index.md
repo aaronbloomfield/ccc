@@ -23,7 +23,10 @@ In addition to your source code, you will submit an edited version of [metamask.
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. -->
+
+- Sun, Dec 2: Updated the `showReturnIntegerValue()` Javascript function
+- Sun, Dec 2: Updated the Metamask setup instructions for a new look-and-feel that is on some platforms
 
 
 
@@ -245,7 +248,7 @@ When you call a transaction, your code will be something like what was above: `c
 function showReturnIntegerValue(w3,txnhash,desc) {
   w3.eth.getTransaction(txnhash).then(txn => {
     if ( txn['blockNumber'] == null ) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      sleepms(1000);
       showReturnIntegerValue(w3,txnhash,desc);
     } else
       w3.eth.call({to:txn['to'],from:txn['from'],data:txn['input'],gas:txn['gas']},txn['blockNumber']-1).then(retval => {
