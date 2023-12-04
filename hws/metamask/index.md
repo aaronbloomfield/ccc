@@ -64,6 +64,7 @@ Here are the MetaMask setup steps:
 5. Make sure that account has funds -- either from before, or use the faucet to provide it funds now
 6. Start your geth node.
    - The geth-config.toml file provided at the beginning of the semester causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect
+   - ***NOTHING BELOW WILL WORK IF YOU ARE NOT RUNNING YOUR GETH NODE!***  The configuration that was done above -- specifically, using http://localhost:8545, connects to a port on your computer, which is used to access the blockchain.  That port is opened by the running of your geth node (the options for it were included in the geth-config.toml file that you used all those assignments ago).
 7. Configure your account in MetaMask.  To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will again see something similar to the image to the right, although the look does vary by platform.  Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
     - Click on the circular icon in the upper-right of the MetaMask window -- in the image to the right it looks like: <img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, but will likely look different in yours
     - Click on "import account" (NOT create account!)
