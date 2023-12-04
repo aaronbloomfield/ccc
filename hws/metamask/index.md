@@ -44,7 +44,10 @@ Here are the MetaMask setup steps:
    - Note that on some systems it is presented as a web page rather than a pop-up, but the content of the web page is the same as the pop-up shown to the right
    - When MetaMask first installs, it will ask you if you already have a secret recovery phrase or to create a wallet -- you want to create a new wallet
    - It will ask you to enter a password -- remember it, as you will need it each time you start up MetaMask
-3. Click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will see something similar to the image to the right.
+3. Start your geth node.
+   - The geth-config.toml file provided at the beginning of the semester causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect
+   - ***NOTHING BELOW WILL WORK IF YOU ARE NOT RUNNING YOUR GETH NODE!***  The configuration that was done above -- specifically, using http://localhost:8545, connects to a port on your computer, which is used to access the blockchain.  That port is opened by the running of your geth node (the options for it were included in the geth-config.toml file that you used all those assignments ago).
+4. Click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will see something similar to the image to the right.
    - Click the network drop-down box -- in the image to the right it says "localhost:8545", but in your version it will likely say "Ethereum Mainnet".
       - In that drop-down list, select "add network"; this will bring up a web page
       - In the Settings column on the far left, click on Advanced
@@ -60,11 +63,8 @@ Here are the MetaMask setup steps:
           - Name it anything you want; we'll assume the name is "localhost:8545" in these instructions
       - Then click save
     - Back in the network selection box, you should now be able to select "localhost:8545" as your network -- this is going to connect to the geth node that we will be starting in a moment
-4. Obtain your decrypted private key for the account that you want to use.  This was done in Part 4 of the [Private Ethereum Blockchain](../ethprivate/index.html#part-4-extract-private-key) ([md](../ethprivate/index)) assignment, and you also used that in the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) assignment.  It will be a hex value of the form `0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef`
-5. Make sure that account has funds -- either from before, or use the faucet to provide it funds now
-6. Start your geth node.
-   - The geth-config.toml file provided at the beginning of the semester causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect
-   - ***NOTHING BELOW WILL WORK IF YOU ARE NOT RUNNING YOUR GETH NODE!***  The configuration that was done above -- specifically, using http://localhost:8545, connects to a port on your computer, which is used to access the blockchain.  That port is opened by the running of your geth node (the options for it were included in the geth-config.toml file that you used all those assignments ago).
+5. Obtain your decrypted private key for the account that you want to use.  This was done in Part 4 of the [Private Ethereum Blockchain](../ethprivate/index.html#part-4-extract-private-key) ([md](../ethprivate/index)) assignment, and you also used that in the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) assignment.  It will be a hex value of the form `0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef`
+6. Make sure that account has funds -- either from before, or use the faucet to provide it funds now
 7. Configure your account in MetaMask.  To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will again see something similar to the image to the right, although the look does vary by platform.  Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
     - Click on the circular icon in the upper-right of the MetaMask window -- in the image to the right it looks like: <img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, but will likely look different in yours
     - Click on "import account" (NOT create account!)
