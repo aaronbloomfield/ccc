@@ -203,7 +203,7 @@ line-height:120%;
 ## Brief (Very) Simple Example
 - Given an agreed-upon base $b$ and modulus $m$, I want to prove to you that I know two numbers, $x$ and $y$, that add to 7, but without telling you those numbers
 - Rather than showing the numbers, we will perform a *homomorphic hiding*, wherein all numbers are powers of a base
-  - So I am showing two numbers, $x$ and $y$, such that $b^x+b^y=b^7$
+  - So I am showing two numbers, $x$ and $y$, such that $b^x \ast b^y=b^7$
   - All operations are mod $m$
   - Thus, we want to show two numbers that result in $A=b^7$
 - Anybody can figure out $b^?\mod m$, but going back is hard (discrete logs)
@@ -212,7 +212,7 @@ line-height:120%;
 
 
 ## Brief (Very) Simple Example
-- I am showing two numbers, $x$ and $y$, such that $b^x+b^y=b^7$
+- I am showing two numbers, $x$ and $y$, such that $b^x \ast b^y=b^7$
   - Let $A=b^7$
 - I compute $X=b^3$ and $Y=b^4$, and present them
 - Anybody can verify that $X \ast Y=A$
@@ -224,7 +224,7 @@ line-height:120%;
 
 <!-- .slide: class="cclogo-slide" -->
 ## ZK uses
-- [![zec logo](../slides/images/logos/zec-coin-symbol.svg)](https://coinmarketcap.com/currencies/zcash/) ZEC:  Xcash, the first viable zk cryptocurrency
+- [![zec logo](../slides/images/logos/zec-coin-symbol.svg)](https://coinmarketcap.com/currencies/zcash/) ZEC:  Zcash, the first viable zk cryptocurrency
 - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) FIRO: originally called Zcoin, it hosed the first widespread democratic election (Thai party primary)
 - Newer systems, such as Aelo, are attempting to allow Turing-complete languages to be programmed on a ZK blockchain
   - It provides smart-contract capabilities
