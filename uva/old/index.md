@@ -5,6 +5,12 @@ CCC: Old Material
 
 This page contains the relevant pages from the uva/ directory in this repository from previous semester.  While the content of those pages should all be viewable, the links therein are likely to not work properly.
 
+### Fall 2023
+
+- [Main UVa page](index-fall-2023.html) ([md](index-fall-2023.md))
+- [Course syllabus](syllabus-fall-2023.html) ([md](syllabus-fall-2023.md))
+- [Daily announcements](daily-announcements-fall-2023.html)
+
 ### Spring 2023
 
 - [Main UVa page](index-spring-2023.html) ([md](index-spring-2023.md))
