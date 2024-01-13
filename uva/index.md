@@ -1,4 +1,4 @@
-Cryptocurrency: UVA specific material, fall 2023
+Cryptocurrency: UVA specific material, spring 2024
 ==================================================
 
 [Go up to the main CCC readme](../readme.html) ([md](../readme.md))
@@ -14,16 +14,9 @@ There are a number of links and other parts of this course that are **NOT** incl
 
 - Any concerns you have should be handled via a support request; the link is on the [Canvas landing page][1]
 - Assignment submission is through the Gradescope tool in Canvas
-- The [Piazza forum for this course](https://piazza.com/class/llkzesh3p545k6); Canvas can log you in directly -- the Canvas tool link is [here](https://canvas.its.virginia.edu/courses/72253/external_tools/21)
-- The link for the VirtualBox image will be available on the [Canvas landing page][1].  For how to install it, see  [here](https://uva-cs.github.io/pdr/tutorials/01-intro-unix/virtual-box.html).
-- Apparently anonymous feedback is not currently available in Canvas
+- The [Piazza forum for this course](https://piazza.com/class/lrc7nittnzo636); Canvas can log you in directly -- the Canvas tool link is [here](https://canvas.its.virginia.edu/courses/93490/external_tools/21)
+- [Anonymous feedback](https://canvas.its.virginia.edu/courses/93490/external_tools/5876) through Canvas
 
-<!-- no longer available in canvas:
-
-- ~~[Email list archive](...): not a canvas tool~~
-- ~~[Anonymous feedback](...): not a canvas tool~~
-
--->    
 
 The parts of this course that are in this repo are:
 
@@ -31,7 +24,7 @@ The parts of this course that are in this repo are:
 - [Daily announcements](daily-announcements.html#/)
 - [Homework policies page](hw-policies.html) ([md](hw-policies.md))
 - [Final course grade determination](grades.html) ([md](grades.md))
-
+- [Handling of disability accommodations](sdac.html) ([md](sdac.md))
 
 Readings
 --------
@@ -86,22 +79,22 @@ Course calendar
 
 | Week # | Week of Monday | Lecture days | HWs due | Expected Topics | Actual Progress |
 |----|----|----|----|----|----|
-| 1  | Aug 21 | W,F   |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) | Wed: finished intro; Fri: overview to 5.2 |
-| 2  | Aug 28 | M,W,F |  | [Encryption](../slides/encryption.html#/) | Mon: finished overview; Wed: encryption to 4.7; Fri: encryption to 6.6 |
-| 3  | Sep 4  | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) | Mon: encryption to 6.24; Wed: encryption to 8.4; Fri: finished encryption |
-| 4  | Sep 11 | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 5.6; Wed: bitcoin to 6.10; Fri: bitcoin to 7.17 |
-| 5  | Sep 18 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 7.30; Wed: bitcoin to 7.44; Fri: finished bitcoin |
-| 6  | Sep 25 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/) | Mon: ethereum to 3.18; Wed: ethereum to 3.30; Fri: finished ethereum, solidity to 3.9 |
-| 7  | Oct 2  | W,F   | S4 (ETH Private)    | [Solidity](../slides/solidity.html#/) | Mon: fall break; Wed: solidity to 3.28; Fri: solidity to 4.21 |
-| 8  | Oct 9  | M,W,F | midterm, S5 (dApp intro) | [Tokens](../slides/tokens.html#/) | Mon: solidity to 5.5 (skipping a few slides); Wed: midterm; Fri: Debts demo and solidity to 6.19 |
-| 9  | Oct 16 | M,W,F | P5 (Gradebook)      | [Mining](../slides/mining.html#/) | Mon: finished solidity, tokens to 3.8; Wed: tokens to 5.8; Fri: tokens to 9.1 |
-| 10 | Oct 23 | M,W,F | P6 (Tokens)         | [Blockchain applications](../slides/applications.html#/) | Mon: finished tokens, mining to 5.7; Wed: mining to 5.26; Fri: mining to 8.10 |
-| 11 | Oct 30 | M,W,F | P7 (Auction)        | [Scalability](../slides/scalability.html#/) | Mon: finished mining, applications to 3.25; Wed: applications to 3.50; Fri: applications to 4.16 |
-| 12 | Nov 6  | M,W,F | P8 (DEX)            | [Stablecoins](../slides/stablecoins.html#/) | Mon: finished applications, scalability to 5.6; Wed: scalability to 9.4; Fri: finished scalability, stablecoins to 6.1 |
-| 13 | Nov 13 | M,W,F | P9 (DAO&web3)       | [Consensus](../slides/consensus.html#/) | Mon: stablecoins to 8.6; Wed: finished stablecoins, consensus to 3.5; Fri: consensus to 6.21 |
-| 14 | Nov 20 | M     | none (Thanksgiving) | [zkSNARKs](../slides/zksnarks.html#/) | Mon: consensus to 8.19; Wed: Thanksgiving break; Fri: Thanksgiving break |
-| 15 | Nov 27 | M,W,F | P10 (Arbitrage)     | [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/)  | Mon: finished consensus, ethics/legal/policy to 6.3; Wed: finished ethics/legal/policy, dark side to 5.7 |
-| 16 | Dec 4  | M     | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) |  |
+| 1  | Jan 15 | W,F   |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) |  |
+| 2  | Jan 22 | M,W,F |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) | |
+| 3  | Jan 29 | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) | |
+| 4  | Feb 5  | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) | |
+| 5  | Feb 12 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) | |
+| 6  | Feb 19 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/), [Solidity](../slides/solidity.html#/) | |
+| 7  | Feb 26 | M,W,F | midterm             | [Solidity](../slides/solidity.html#/). midterm on Wed | |
+|    | Mar 4  |       | Spring break        | Spring break | |
+| 8  | Mar 11 | M,W,F | S4 (ETH Private), S5 (dApp intro) | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) | |
+| 9  | Mar 18 | M,W,F | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) | |
+| 10 | Mar 25 | M,W,F | P6 (Tokens)         | [Mining](../slides/mining.html#/), [Blockchain applications](../slides/applications.html#/) | |
+| 11 | Apr 1  | M,W,F | P7 (Auction)        | [Blockchain applications](../slides/applications.html#/), [Scalability](../slides/scalability.html#/) | |
+| 12 | Apr 8  | M,W,F | P8 (DEX)            | [Scalability](../slides/scalability.html#/), [Stablecoins](../slides/stablecoins.html#/) | |
+| 13 | Apr 15 | M,W,F | P9 (DAO&web3)       | [Stablecoins](../slides/stablecoins.html#/), [Consensus](../slides/consensus.html#/) | |
+| 14 | Apr 22 | M,W,F | P10 (Arbitrage)     | [Consensus](../slides/consensus.html#/), [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/) | |
+| 15 | Apr 29 | M     | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) | |
 
 
 ## Legal Issues
@@ -109,4 +102,4 @@ Course calendar
 This course has received approval from the necessary parts of UVA: [ITS](https://virginia.service-now.com/its/), [InfoSec](https://security.virginia.edu/), and the [Office of the University Counsel](https://universitycounsel.virginia.edu/).  Specifically, the cryptocurrencies created in this course will be exchangeable with each other, but not with any cryptocurrency outside the course; thus they have no monetary value.  Because they have no monetary value, and because the activities in this course are necessary to achieve the academic goals of the course, these various activities of this course, including mining, have been judged to be legal.
 
 
-[1]: https://canvas.its.virginia.edu/courses/72253
+[1]: https://canvas.its.virginia.edu/courses/93490
