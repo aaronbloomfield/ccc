@@ -4,7 +4,7 @@
 # https://www.w3schools.com/howto/howto_js_tabs.asp
 
 from html.parser import HTMLParser
-import os
+import os, subprocess
 
 #print("index.md:\t",os.path.getctime('index.md'))
 #print("index.html:\t",os.path.getctime('index.html'))
@@ -70,13 +70,9 @@ class MyHTMLParser(HTMLParser):
 			else:
 				body += data
 
-
-replacements = [ ("Ec","EC"),("Io","I/O"),("Tbtc","tBTC"),("P2Pkh","P2PKH"),("Tokendex","TokenDEX"),
-				 ("Web3.Py","Web3.py"),("Nft","NFT"),("Nfts","NFTs"),("Dao","DAO"),("Eth","ETH"),
-				 ("Fake","(fake)"),("Erc","ERC"),("Html","HTML"),("Iauctioneer","IAuctioneer"),
-				 ("Igradebook","IGradebook"),("Tc","TC"),("Tokencc","TokenCC"),("Css","CSS"),
-				 ("&","&amp;"),("Dex","DEX"),("Metamask","MetaMask"),("Url","URL"),("Js","JS"),
-				 ("Evm","EVM")]
+# read in replacements from maketabs.csv file
+with open("../maketabs.csv") as f:
+	replacements = [ x.strip().split(",") for x in f.read().strip().split("\n") ]
 
 parser = MyHTMLParser()
 parser.feed(data)
@@ -101,6 +97,17 @@ with open("index.html","w") as fout:
 	print("</div>",file=fout)
 	print(body,file=fout)
 
+# figure out if we are running on Mac (BSD) or Linux
+ostype = subprocess.check_output(["uname"]).decode('ascii').strip()
+sedparam = ""
+cleancmd = None
+if ostype == "Darwin":
+	sedparam = ".bak-maketabs"
+	cleancmd = "/bin/rm -f *.bak-maketabs"
+
 # add in the 'tabbed version' link back into the source
-os.system("sed -i s_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>)</p>'_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>) | <a href=\"index.html\">view tabbed version</a></p>'_g index-full.html")
+
+os.system("sed -i " + sedparam + " s_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>)</p>'_'<p><a href=\"../index.html\">Go up to the CCC HW page</a> (<a href=\"../index.md\">md</a>) | <a href=\"index.html\">view tabbed version</a></p>'_g index-full.html")
 os.system("touch index.html index-full.html")
+if cleancmd is not None:
+	os.system(cleancmd)
