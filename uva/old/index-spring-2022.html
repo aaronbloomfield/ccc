@@ -8,214 +8,136 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
+  </script>
 </head>
 <body>
-<h1
-id="cryptocurrency-uva-specific-material-spring-2022">Cryptocurrency:
-UVa specific material, spring 2022</h1>
-<p><a href="../readme.html">Go up to the main CCC readme</a> (<a
-href="../readme.md">md</a>)</p>
-<p>Much of the rest of this git repo is meant to be generic to anybody
-who has a class such as this one. But this page contains details
-specific to the specific version of the course at the University of
-Virginia.</p>
+<h1 id="cryptocurrency-uva-specific-material-spring-2022">Cryptocurrency: UVa specific material, spring 2022</h1>
+<p><a href="../readme.html">Go up to the main CCC readme</a> (<a href="../readme.md">md</a>)</p>
+<p>Much of the rest of this git repo is meant to be generic to anybody who has a class such as this one. But this page contains details specific to the specific version of the course at the University of Virginia.</p>
 <hr />
 <h2 id="links">Links</h2>
-<p>There are a number of links and other parts of this course that are
-<strong>NOT</strong> included in this repository. They are:</p>
+<p>There are a number of links and other parts of this course that are <strong>NOT</strong> included in this repository. They are:</p>
 <ul>
-<li>Any concerns you have should be handled via a <a
-href="https://libra.cs.virginia.edu/~pedagogy/">support request</a>
-(Netbadge login required)</li>
+<li>Any concerns you have should be handled via a <a href="https://libra.cs.virginia.edu/~pedagogy/">support request</a> (Netbadge login required)</li>
 <li>Assignment submission is through the Gradescope tool in Collab</li>
-<li>Email list archive, which is a Collab tool (<a
-href="https://collab.its.virginia.edu/portal/directtool/5e445205-bf15-439b-9a1e-5d78bdb43039/">here</a>
-is the direct link; Collab login is required)</li>
-<li>The Piazza forum for this course; Collab can log you in directly –
-the Collab tool link is <a
-href="https://collab.its.virginia.edu/portal/directtool/d0c4ceed-47d2-48cf-ad64-96f89fa86759/">here</a>
-(again, Collab login required)</li>
-<li><a
-href="https://collab.its.virginia.edu/portal/directtool/f05eb14a-f7e4-4c7f-9b36-f4e3290902a3/">Anonymous
-feedback</a>, which is through Collab</li>
-<li>The link for the VirtualBox image will be available on the Collab
-landing page. For how to install it, see <a
-href="https://uva-cs.github.io/pdr/tutorials/01-intro-unix/virtual-box.html">here</a>.</li>
+<li>Email list archive, which is a Collab tool (<a href="https://collab.its.virginia.edu/portal/directtool/5e445205-bf15-439b-9a1e-5d78bdb43039/">here</a> is the direct link; Collab login is required)</li>
+<li>The Piazza forum for this course; Collab can log you in directly – the Collab tool link is <a href="https://collab.its.virginia.edu/portal/directtool/d0c4ceed-47d2-48cf-ad64-96f89fa86759/">here</a> (again, Collab login required)</li>
+<li><a href="https://collab.its.virginia.edu/portal/directtool/f05eb14a-f7e4-4c7f-9b36-f4e3290902a3/">Anonymous feedback</a>, which is through Collab</li>
+<li>The link for the VirtualBox image will be available on the Collab landing page. For how to install it, see <a href="https://uva-cs.github.io/pdr/tutorials/01-intro-unix/virtual-box.html">here</a>.</li>
 </ul>
 <p>The parts of this course that are in this repo are:</p>
 <ul>
-<li><a href="syllabus.html">Course syllabus</a> (<a
-href="syllabus.md">md</a>)</li>
+<li><a href="syllabus.html">Course syllabus</a> (<a href="syllabus.md">md</a>)</li>
 <li><a href="daily-announcements.html#/">Daily announcements</a></li>
-<li><a href="hw-policies.html">Homework policies page</a> (<a
-href="hw-policies.md">md</a>)</li>
-<li><a href="grades.html">Final course grade determination</a> (<a
-href="grades.md">md</a>)</li>
+<li><a href="hw-policies.html">Homework policies page</a> (<a href="hw-policies.md">md</a>)</li>
+<li><a href="grades.html">Final course grade determination</a> (<a href="grades.md">md</a>)</li>
 </ul>
 <h2 id="readings">Readings</h2>
-<p>All scholarly articles (such as from the ACM digital library) can be
-obtained from free from any UVa wireless network. Some of them you will
-<em>NOT</em> be able to get it for free from your home Internet provider
-such as Comcast (unless you live in a UVa dorm, of course) without using
-a UVa VPN. All readings are due by the start of lecture that day. You
-should expect there to be in-class quizzes on each reading.</p>
+<p>All scholarly articles (such as from the ACM digital library) can be obtained from free from any UVa wireless network. Some of them you will <em>NOT</em> be able to get it for free from your home Internet provider such as Comcast (unless you live in a UVa dorm, of course) without using a UVa VPN. All readings are due by the start of lecture that day. You should expect there to be in-class quizzes on each reading.</p>
 <ul>
-<li>Due Mon, 2/21: HW S3: read (some of) the <a
-href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a
-href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>)
+<li>Due Mon, 2/21: HW S3: read (some of) the <a href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>)
 <ul>
-<li>You can skip (or quickly browse) the first 3 sub-parts of the
-‘History’ section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip
-the ‘references and further reading’ section at the end; what’s left is
-24 pages in the PDF to read</li>
+<li>You can skip (or quickly browse) the first 3 sub-parts of the ‘History’ section (‘Bitcoin’, ‘Mining’, and ‘Merkle Trees’); also skip the ‘references and further reading’ section at the end; what’s left is 24 pages in the PDF to read</li>
 </ul></li>
-<li>Due Mon, 2/7: HW S2: Read the <a
-href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
+<li>Due Mon, 2/7: HW S2: Read the <a href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
 </ul>
 <h2 id="homeworks">Homeworks</h2>
-<p>Unless otherwise noted, all submissions are due by the end of the day
-of the due date given – this means by 11:59:59 pm. The late policies are
-discussed in the <a href="hw-policies.html">homework policies page</a>
-(<a href="hw-policies.md">md</a>). Submission is through the Gradescope
-Collab tool – all submissions should open up 2 days (i.e., 48 hours)
-prior to the due date/time.</p>
+<p>Unless otherwise noted, all submissions are due by the end of the day of the due date given – this means by 11:59:59 pm. The late policies are discussed in the <a href="hw-policies.html">homework policies page</a> (<a href="hw-policies.md">md</a>). Submission is through the Gradescope Collab tool – all submissions should open up 2 days (i.e., 48 hours) prior to the due date/time.</p>
 <h4 id="larger-programming-homeworks">Larger Programming Homeworks</h4>
 <ul>
-<li>Due Tue, 5/3 by midnight: <a href="../hws/metamask/index.html">P11:
-MetaMask</a> (<a href="../hws/metamask/index.md">md</a>)</li>
-<li>Due Tue, 4/26 by midnight: <a
-href="../hws/arbitrage/index.html">P10: Arbitrage trading</a> (<a
-href="../hws/arbitrage/index.md">md</a>)</li>
-<li>Due Tue, 4/19 by midnight: <a href="../hws/daoweb3/index.html">P9:
-DAO &amp; web3</a> (<a href="../hws/daoweb3/index.md">md</a>)</li>
-<li>Due Tue, 4/12 by midnight: <a href="../hws/dex/index.html">P8:
-DEX</a> (<a href="../hws/dex/index.md">md</a>)</li>
-<li>Due Tue, 4/5 by midnight: <a href="../hws/auction/index.html">P7:
-dApp Auction</a> (<a href="../hws/auction/index.md">md</a>)</li>
-<li>Due Tue, 3/29, by midnight: <a href="../hws/tokens/index.html">HW
-P6: dApp Tokens</a> (<a href="../hws/tokens/index.md">md</a>)</li>
-<li>Due Tue, 3/22, by midnight: <a href="../hws/gradebook/index.html">HW
-P5: dApp Gradebook</a> (<a href="../hws/gradebook/index.md">md</a>)</li>
-<li>Due Tue, 2/22, by midnight: <a href="../hws/btcscript/index.html">HW
-P4: Bitcoin scripting</a> (<a
-href="../hws/btcscript/index.md">md</a>)</li>
-<li>Due Tue, 2/15, by midnight: <a href="../hws/btcparser/index.html">HW
-P3: BTC parser</a> (<a href="../hws/btcparser/index.md">md</a>)</li>
-<li>Due Tue, 2/8, by midnight: <a href="../hws/ecdsa/index.html">HW P2:
-ECDSA</a> (<a href="../hws/ecdsa/index.md">md</a>)</li>
-<li>Due Tue, 2/1, by midnight: <a href="../hws/intro/index.html">HW P1:
-Overview</a> (<a href="../hws/intro/index.md">md</a>)</li>
+<li>Due Tue, 5/3 by midnight: <a href="../hws/metamask/index.html">P11: MetaMask</a> (<a href="../hws/metamask/index.md">md</a>)</li>
+<li>Due Tue, 4/26 by midnight: <a href="../hws/arbitrage/index.html">P10: Arbitrage trading</a> (<a href="../hws/arbitrage/index.md">md</a>)</li>
+<li>Due Tue, 4/19 by midnight: <a href="../hws/daoweb3/index.html">P9: DAO &amp; web3</a> (<a href="../hws/daoweb3/index.md">md</a>)</li>
+<li>Due Tue, 4/12 by midnight: <a href="../hws/dex/index.html">P8: DEX</a> (<a href="../hws/dex/index.md">md</a>)</li>
+<li>Due Tue, 4/5 by midnight: <a href="../hws/auction/index.html">P7: dApp Auction</a> (<a href="../hws/auction/index.md">md</a>)</li>
+<li>Due Tue, 3/29, by midnight: <a href="../hws/tokens/index.html">HW P6: dApp Tokens</a> (<a href="../hws/tokens/index.md">md</a>)</li>
+<li>Due Tue, 3/22, by midnight: <a href="../hws/gradebook/index.html">HW P5: dApp Gradebook</a> (<a href="../hws/gradebook/index.md">md</a>)</li>
+<li>Due Tue, 2/22, by midnight: <a href="../hws/btcscript/index.html">HW P4: Bitcoin scripting</a> (<a href="../hws/btcscript/index.md">md</a>)</li>
+<li>Due Tue, 2/15, by midnight: <a href="../hws/btcparser/index.html">HW P3: BTC parser</a> (<a href="../hws/btcparser/index.md">md</a>)</li>
+<li>Due Tue, 2/8, by midnight: <a href="../hws/ecdsa/index.html">HW P2: ECDSA</a> (<a href="../hws/ecdsa/index.md">md</a>)</li>
+<li>Due Tue, 2/1, by midnight: <a href="../hws/intro/index.html">HW P1: Overview</a> (<a href="../hws/intro/index.md">md</a>)</li>
 </ul>
 <h4 id="smaller-homeworks">Smaller Homeworks</h4>
 <ul>
-<li>Due Tue, 3/15: <a href="../hws/dappintro/index.html">HW S5: dApp
-Introduction</a> (<a href="../hws/dappintro/index.md">md</a>)</li>
-<li>Due Fri, 2/25: <a href="../hws/ethprivate/index.html">HW S4:
-Connecting to the Private Ethereum Blockchain</a> (<a
-href="../hws/ethprivate/index.md">md</a>)</li>
-<li>Due Mon, 2/21: HW S3: Read (some of the) <a
-href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a
-href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>);
-see above (in the Reading section) for what you can skip</li>
-<li>Due Mon, 2/7: HW S2: Read the <a
-href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
-<li>Due Wed, 1/26: HW S1: complete the course introduction Google survey
-(link in Collab)</li>
+<li>Due Tue, 3/15: <a href="../hws/dappintro/index.html">HW S5: dApp Introduction</a> (<a href="../hws/dappintro/index.md">md</a>)</li>
+<li>Due Fri, 2/25: <a href="../hws/ethprivate/index.html">HW S4: Connecting to the Private Ethereum Blockchain</a> (<a href="../hws/ethprivate/index.md">md</a>)</li>
+<li>Due Mon, 2/21: HW S3: Read (some of the) <a href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>); see above (in the Reading section) for what you can skip</li>
+<li>Due Mon, 2/7: HW S2: Read the <a href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
+<li>Due Wed, 1/26: HW S1: complete the course introduction Google survey (link in Collab)</li>
 </ul>
 <h2 id="lecture-progress">Lecture progress</h2>
-<p>The list of lecture topics can be found on the <a
-href="../slides/index.html">slides page</a> (<a
-href="../slides/index.md">md</a>). As the future schedule of lectures in
-the course is not yet known, this only has a listing of the past
-lectures. Recordings for the lectures can be found in the Collab lecture
-capture tool.</p>
+<p>The list of lecture topics can be found on the <a href="../slides/index.html">slides page</a> (<a href="../slides/index.md">md</a>). As the future schedule of lectures in the course is not yet known, this only has a listing of the past lectures. Recordings for the lectures can be found in the Collab lecture capture tool.</p>
 <ol type="1">
-<li>Wed, Jan 19: <a href="introduction.html#/">course introduction</a>
-(completed), <a href="../slides/overview.html#/">overview</a> (to
-4.10)</li>
-<li>Mon, Jan 24: finished <a
-href="../slides/overview.html#/">overview</a>; <a
-href="../slides/encryption.html#/">encryption</a> to slide 3.7</li>
-<li>Wed, Jan 26: <a href="../slides/encryption.html#/">encryption</a> to
-slide 5.3</li>
-<li>Mon, Jan 31: <a href="../slides/encryption.html#/">encryption</a> to
-slide 7.25</li>
-<li>Wed, Feb 2: <a href="../slides/encryption.html#/">encryption</a> to
-slide 9.21</li>
-<li>Mon, Feb 7: finished <a
-href="../slides/encryption.html#/">encryption</a>; started on <a
-href="../slides/bitcoin.html#/">Bitcoin</a> to slide 5.10</li>
-<li>Wed, Feb 9: <a href="../slides/bitcoin.html#/">Bitcoin</a> to slide
-7.6</li>
-<li>Mon, Feb 14: <a href="../slides/bitcoin.html#/">Bitcoin</a> to slide
-7.36</li>
-<li>Wed, Feb 16: finished <a
-href="../slides/bitcoin.html#/">Bitcoin</a></li>
-<li>Mon, Feb 21: <a href="../slides/mining.html#/">mining</a> to slide
-4.6</li>
-<li>Wed, Feb 23: finished <a href="../slides/mining.html#/">mining</a>
-to slide 4.6</li>
-<li>Mon, Feb 28: <a href="../slides/ethereum.html#/">Ethereum</a> to
-slide 3.27</li>
+<li>Wed, Jan 19: <a href="introduction.html#/">course introduction</a> (completed), <a href="../slides/overview.html#/">overview</a> (to 4.10)</li>
+<li>Mon, Jan 24: finished <a href="../slides/overview.html#/">overview</a>; <a href="../slides/encryption.html#/">encryption</a> to slide 3.7</li>
+<li>Wed, Jan 26: <a href="../slides/encryption.html#/">encryption</a> to slide 5.3</li>
+<li>Mon, Jan 31: <a href="../slides/encryption.html#/">encryption</a> to slide 7.25</li>
+<li>Wed, Feb 2: <a href="../slides/encryption.html#/">encryption</a> to slide 9.21</li>
+<li>Mon, Feb 7: finished <a href="../slides/encryption.html#/">encryption</a>; started on <a href="../slides/bitcoin.html#/">Bitcoin</a> to slide 5.10</li>
+<li>Wed, Feb 9: <a href="../slides/bitcoin.html#/">Bitcoin</a> to slide 7.6</li>
+<li>Mon, Feb 14: <a href="../slides/bitcoin.html#/">Bitcoin</a> to slide 7.36</li>
+<li>Wed, Feb 16: finished <a href="../slides/bitcoin.html#/">Bitcoin</a></li>
+<li>Mon, Feb 21: <a href="../slides/mining.html#/">mining</a> to slide 4.6</li>
+<li>Wed, Feb 23: finished <a href="../slides/mining.html#/">mining</a> to slide 4.6</li>
+<li>Mon, Feb 28: <a href="../slides/ethereum.html#/">Ethereum</a> to slide 3.27</li>
 <li>Wed, Mar 2: midterm</li>
-<li>Mon, Mar 14: <a href="../slides/solidity.html#/">Solidity</a> to
-slide 5.3</li>
-<li>Wed, Mar 16: finished <a
-href="../slides/solidity.html#/">Solidity</a></li>
-<li>Mon, Mar 21: <a href="../slides/tokens.html#/">Tokens</a> to
-5.3</li>
-<li>Wed, Mar 23: <a href="../slides/tokens.html#/">Tokens</a> to
-6.7</li>
-<li>Mon, Mar 28: finished <a href="../slides/tokens.html#/">Tokens</a>;
-<a href="../slides/consensus.html#/">Consensus</a> to 6.19</li>
-<li>Wed, Mar 30: <a href="../slides/consensus.html#/">Consensus</a> to
-8.14</li>
-<li>Mon, Apr 4: finished <a
-href="../slides/consensus.html#/">Consensus</a>; <a
-href="../slides/applications.html#/">Blockchain applications</a> to
-slide 3.28</li>
-<li>Wed, Apr 6: finished <a
-href="../slides/applications.html#/">Blockchain applications</a></li>
-<li>Mon, Apr 11: <a href="../slides/zksnarks.html#/">zkSNARKs</a> to
-slide 5.29</li>
-<li>Wed, Apr 13: finished <a
-href="../slides/zksnarks.html#/">zkSNARKs</a></li>
-<li>Mon, Apr 18: <a href="../slides/scalability.html#/">Scalability</a>
-to slide 6.7</li>
-<li>Wed, Apr 20: finished <a
-href="../slides/scalability.html#/">Scalability</a></li>
-<li>Mon, Apr 25: started and finished <a
-href="../slides/ethics-legal-policy.html#/">Ethics, Legality, and
-Policy</a>; <a href="../slides/darkside.html#/">The Dark Side of
-Cryptocurrency</a> to slide 4.9</li>
-<li>Wed, Apr 27: finished <a
-href="../slides/ethereum.html#/">Ethereum</a>; <a
-href="../slides/darkside.html#/">The Dark Side of Cryptocurrency</a> to
-slide 5.31</li>
-<li>Mon, Apr 30: <a href="../slides/conclusion.html#/">Course
-conclusion</a></li>
+<li>Mon, Mar 14: <a href="../slides/solidity.html#/">Solidity</a> to slide 5.3</li>
+<li>Wed, Mar 16: finished <a href="../slides/solidity.html#/">Solidity</a></li>
+<li>Mon, Mar 21: <a href="../slides/tokens.html#/">Tokens</a> to 5.3</li>
+<li>Wed, Mar 23: <a href="../slides/tokens.html#/">Tokens</a> to 6.7</li>
+<li>Mon, Mar 28: finished <a href="../slides/tokens.html#/">Tokens</a>; <a href="../slides/consensus.html#/">Consensus</a> to 6.19</li>
+<li>Wed, Mar 30: <a href="../slides/consensus.html#/">Consensus</a> to 8.14</li>
+<li>Mon, Apr 4: finished <a href="../slides/consensus.html#/">Consensus</a>; <a href="../slides/applications.html#/">Blockchain applications</a> to slide 3.28</li>
+<li>Wed, Apr 6: finished <a href="../slides/applications.html#/">Blockchain applications</a></li>
+<li>Mon, Apr 11: <a href="../slides/zksnarks.html#/">zkSNARKs</a> to slide 5.29</li>
+<li>Wed, Apr 13: finished <a href="../slides/zksnarks.html#/">zkSNARKs</a></li>
+<li>Mon, Apr 18: <a href="../slides/scalability.html#/">Scalability</a> to slide 6.7</li>
+<li>Wed, Apr 20: finished <a href="../slides/scalability.html#/">Scalability</a></li>
+<li>Mon, Apr 25: started and finished <a href="../slides/ethics-legal-policy.html#/">Ethics, Legality, and Policy</a>; <a href="../slides/darkside.html#/">The Dark Side of Cryptocurrency</a> to slide 4.9</li>
+<li>Wed, Apr 27: finished <a href="../slides/ethereum.html#/">Ethereum</a>; <a href="../slides/darkside.html#/">The Dark Side of Cryptocurrency</a> to slide 5.31</li>
+<li>Mon, Apr 30: <a href="../slides/conclusion.html#/">Course conclusion</a></li>
 </ol>
 <h2 id="legal-issues">Legal Issues</h2>
-<p>This course has received approval from the necessary parts of UVA: <a
-href="https://virginia.service-now.com/its/">ITS</a>, <a
-href="https://security.virginia.edu/">InfoSec</a>, and the <a
-href="https://universitycounsel.virginia.edu/">Office of the University
-Counsel</a>. Specifically, the cryptocurrencies created in this course
-will be exchangeable with each other, but not with any cryptocurrency
-outside the course; thus they have no monetary value. Because they have
-no monetary value, and because the activities in this course are
-necessary to achieve the academic goals of the course, these various
-activities of this course, including mining, have been judged to be
-legal.</p>
+<p>This course has received approval from the necessary parts of UVA: <a href="https://virginia.service-now.com/its/">ITS</a>, <a href="https://security.virginia.edu/">InfoSec</a>, and the <a href="https://universitycounsel.virginia.edu/">Office of the University Counsel</a>. Specifically, the cryptocurrencies created in this course will be exchangeable with each other, but not with any cryptocurrency outside the course; thus they have no monetary value. Because they have no monetary value, and because the activities in this course are necessary to achieve the academic goals of the course, these various activities of this course, including mining, have been judged to be legal.</p>
 </body>
 </html>

@@ -8,27 +8,53 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../markdown.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
+  </script>
 </head>
 <body>
 <h1 id="geth-command-summary">Geth Command Summary</h1>
-<p><a href="index.html">Go up to the main CCC docs page</a> (<a
-href="index.md">md</a>)</p>
+<p><a href="index.html">Go up to the main CCC docs page</a> (<a href="index.md">md</a>)</p>
 <h5 id="geth-from-the-command-line">Geth from the command line</h5>
 <table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 75%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Action</th>
@@ -38,16 +64,11 @@ href="index.md">md</a>)</p>
 <tbody>
 <tr class="odd">
 <td>Run geth</td>
-<td><code>geth --datadir ./data/ --networkid 12345678 --maxpeers
-1</code></td>
+<td><code>geth --datadir ./data/ --networkid 12345678 --maxpeers 1</code></td>
 </tr>
 <tr class="even">
 <td>Run geth with http server flags</td>
-<td><code>geth --datadir ./data/ --networkid 12345678 --maxpeers 1
---http
---http.corsdomain="package://6fd22d6fe5549ad4c4d8fd3ca0b7816b.mod"
---http.api web3,eth,debug,personal,net --vmdebug
---allow-insecure-unlock</code></td>
+<td><code>geth --datadir ./data/ --networkid 12345678 --maxpeers 1 --http --http.corsdomain="package://6fd22d6fe5549ad4c4d8fd3ca0b7816b.mod" --http.api web3,eth,debug,personal,net --vmdebug --allow-insecure-unlock</code></td>
 </tr>
 <tr class="odd">
 <td>Attach to node (opens prompt)</td>
@@ -61,10 +82,6 @@ href="index.md">md</a>)</p>
 </table>
 <h5 id="commands-in-geth">Commands in geth</h5>
 <table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 75%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Action</th>
@@ -78,8 +95,7 @@ href="index.md">md</a>)</p>
 </tr>
 <tr class="even">
 <td>Get account balance (eth)</td>
-<td><code>web3.fromWei(eth.getBalance(eth.coinbase),
-"ether")</code></td>
+<td><code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code></td>
 </tr>
 <tr class="odd">
 <td>Current block number</td>
@@ -91,13 +107,11 @@ href="index.md">md</a>)</p>
 </tr>
 <tr class="odd">
 <td>Unlock account until geth exits</td>
-<td><code>personal.unlockAccount(eth.coinbase, "password",
-0)</code></td>
+<td><code>personal.unlockAccount(eth.coinbase, "password", 0)</code></td>
 </tr>
 <tr class="even">
 <td>Send money</td>
-<td><code>eth.sendTransaction({from:eth.coinbase, to:'0xaddress',
-value:web3.toWei(1,"ether"), gas:21000});</code></td>
+<td><code>eth.sendTransaction({from:eth.coinbase, to:'0xaddress', value:web3.toWei(1,"ether"), gas:21000});</code></td>
 </tr>
 <tr class="odd">
 <td>Get info on transaction</td>
@@ -111,10 +125,6 @@ value:web3.toWei(1,"ether"), gas:21000});</code></td>
 </table>
 <h5 id="calling-a-contract">Calling a contract</h5>
 <table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 75%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Action</th>
@@ -151,13 +161,11 @@ value:web3.toWei(1,"ether"), gas:21000});</code></td>
 <td><code>contract.entries.call(0)[2]</code></td>
 </tr>
 <tr class="even">
-<td>Call <code>view</code> or <code>pure</code> method with no
-parameters</td>
+<td>Call <code>view</code> or <code>pure</code> method with no parameters</td>
 <td><code>contract.methodName.call()</code></td>
 </tr>
 <tr class="odd">
-<td>Call <code>view</code> or <code>pure</code> method with one
-parameter</td>
+<td>Call <code>view</code> or <code>pure</code> method with one parameter</td>
 <td><code>contract.methodName.call(2)</code></td>
 </tr>
 <tr class="even">
@@ -166,21 +174,16 @@ parameter</td>
 </tr>
 <tr class="odd">
 <td>Call method via transaction (requires mining)</td>
-<td><code>contract.methodName.sendTransaction("param1","param2",
-{from:eth.coinbase, gas:1000000})</code></td>
+<td><code>contract.methodName.sendTransaction("param1","param2", {from:eth.coinbase, gas:1000000})</code></td>
 </tr>
 </tbody>
 </table>
 <h5 id="preloading-a-script">Preloading a script</h5>
-<p>Create a preload.js script such as the one below, and then start
-geth’s attach with the <code>--preload preload.js</code> parameter, as
-described above.</p>
+<p>Create a preload.js script such as the one below, and then start geth’s attach with the <code>--preload preload.js</code> parameter, as described above.</p>
 <p>What the functions do:</p>
 <ul>
-<li><code>checkAllBalances()</code> will print out all the balances, in
-ETH, for all of the accounts in <code>eth.accounts</code></li>
-<li><code>getRevertReason()</code> will, when passed a transaction hash
-that reverted, attempt to determine why it reverted</li>
+<li><code>checkAllBalances()</code> will print out all the balances, in ETH, for all of the accounts in <code>eth.accounts</code></li>
+<li><code>getRevertReason()</code> will, when passed a transaction hash that reverted, attempt to determine why it reverted</li>
 </ul>
 <pre><code>function checkAllBalances() { 
     // this function from https://stackoverflow.com/questions/32312884/how-do-i-get-the-balance-of-an-account-in-ethereum

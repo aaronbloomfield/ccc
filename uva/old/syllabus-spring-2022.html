@@ -8,259 +8,120 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <script>
+  function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function insertCopyLink(text) {
+    document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
+  }
+  </script>
 </head>
 <body>
-<h1 id="cs-4501-cryptocurrency-syllabus">CS 4501: Cryptocurrency
-Syllabus</h1>
-<p><a href="index.html">Go up to the CCC UVa page</a> (<a
-href="index.md">md</a>)</p>
+<h1 id="cs-4501-cryptocurrency-syllabus">CS 4501: Cryptocurrency Syllabus</h1>
+<p><a href="index.html">Go up to the CCC UVa page</a> (<a href="index.md">md</a>)</p>
 <h2 id="quick-version">Quick version</h2>
 <p>I realize that nobody reads these through. So the TL;DR version:</p>
 <ul>
-<li>One midterm, on Wed, Mar 2 during lecture; one final, on Tue, May 10
-from 2-5</li>
-<li>Grades are 50% homeworks, 15% midterm, 20% final exam, and 15%
-participation (quizzes &amp; attendance)</li>
-<li>This is a large course, with little TA support, so everything is
-going to be auto-graded</li>
-<li>There may be some rough spots in the course, since this is the first
-time it is taught (homework difficulty, auto-grading oddities) – please
-be patient, and provide constructive feedback, and I’ll do my best to
-get it all fixed</li>
-<li>There will be both larger programming homeworks and smaller
-tutorial-style homeworks or readings – often one of each will be
-assigned at any given time</li>
-<li>Lecture attendance is required, and occasional attendance quizzes
-will be taken to ensure that</li>
+<li>One midterm, on Wed, Mar 2 during lecture; one final, on Tue, May 10 from 2-5</li>
+<li>Grades are 50% homeworks, 15% midterm, 20% final exam, and 15% participation (quizzes &amp; attendance)</li>
+<li>This is a large course, with little TA support, so everything is going to be auto-graded</li>
+<li>There may be some rough spots in the course, since this is the first time it is taught (homework difficulty, auto-grading oddities) – please be patient, and provide constructive feedback, and I’ll do my best to get it all fixed</li>
+<li>There will be both larger programming homeworks and smaller tutorial-style homeworks or readings – often one of each will be assigned at any given time</li>
+<li>Lecture attendance is required, and occasional attendance quizzes will be taken to ensure that</li>
 <li>Readings will typically have in-class quizzes when they are due</li>
-<li>Attendance quizzes and reading quizzes are online, so bring a
-connected device (phone is fine)</li>
-<li>Due to the size of the course, please contact me via <a
-href="https://pegasus.cs.virginia.edu/satori/cs3710-su2021/tickets/"
-title="support request link">support request</a></li>
+<li>Attendance quizzes and reading quizzes are online, so bring a connected device (phone is fine)</li>
+<li>Due to the size of the course, please contact me via <a href="https://pegasus.cs.virginia.edu/satori/cs3710-su2021/tickets/" title="support request link">support request</a></li>
 <li>Office hours are posted on the Collab landing page</li>
-<li>I want you to succeed in this course and enjoy it – if you are
-having any problems (personal, academic, what-not) that I can help with,
-please let me know</li>
+<li>I want you to succeed in this course and enjoy it – if you are having any problems (personal, academic, what-not) that I can help with, please let me know</li>
 </ul>
 <p>And now for the really long-winded version…</p>
 <h2 id="spring-2022">Spring 2022</h2>
 <h3 id="course-staff">Course Staff</h3>
 <ul>
-<li><a href="https://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> /
-aaron at virginia dot edu. Office: Rice Hall, room 402. Office hours are
-posted on the Collab landing page</li>
+<li><a href="https://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> / aaron at virginia dot edu. Office: Rice Hall, room 402. Office hours are posted on the Collab landing page</li>
 <li>TA office hours are also posted on the Collab landing page</li>
 </ul>
 <h3 id="course-info">Course Info</h3>
 <ul>
 <li>Lecture: M/W 3:30-4:45 in Thornton E303</li>
-<li>Email: none; fill out a <a
-href="https://pegasus.cs.virginia.edu/satori/cs3710-su2021/tickets/"
-title="support request link">support request</a> instead</li>
-<li>Announcements will be done through the <a
-href="daily-announcements.html#/">daily announcements slide set</a>
-<!-- - TAs and their office hours will be posted on the Collab course main page; all office hours start the second day of classes --></li>
+<li>Email: none; fill out a <a href="https://pegasus.cs.virginia.edu/satori/cs3710-su2021/tickets/" title="support request link">support request</a> instead</li>
+<li>Announcements will be done through the <a href="daily-announcements.html#/">daily announcements slide set</a> <!-- - TAs and their office hours will be posted on the Collab course main page; all office hours start the second day of classes --></li>
 </ul>
-<p><strong>Course content:</strong> All the course content is available
-free online at <a
-href="http://aaronbloomfield.github.io/ccc">http://aaronbloomfield.github.io/ccc</a>,
-which is from a public github repository: <a
-href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>.
-All the material in that repo is released under a <a
-href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
-license</a> (CC BY-SA). Note that this license and the public
-availability does NOT apply to the lecture videos.</p>
-<p><strong>Lectures:</strong> Lecture attendance is required. There will
-be occasional attendance quizzes to verify this. These quizzes will be
-online, so bring a connected device (phone is fine) to take said
-quizzes.</p>
-<p><strong>Readings:</strong> No textbook required. Various online
-readings will be assigned. You should expect a reading quiz on the day
-that a reading is due. These quizzes will be online, so bring a
-connected device (phone is fine) to take said quizzes.</p>
-<p><strong>Purchases:</strong> None. In particular, you will NOT have to
-purchase any cryptocurrency for this course. You should be aware of the
-legal and tax ramifications of purchasing cryptocurrency if you every do
-want to buy some – we will discuss this during the course.</p>
-<p><strong>Course Description:</strong> This course is meant as a
-general introduction to cryptocurrency. Students who complete the course
-will:</p>
+<p><strong>Course content:</strong> All the course content is available free online at <a href="http://aaronbloomfield.github.io/ccc">http://aaronbloomfield.github.io/ccc</a>, which is from a public github repository: <a href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>. All the material in that repo is released under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons license</a> (CC BY-SA). Note that this license and the public availability does NOT apply to the lecture videos.</p>
+<p><strong>Lectures:</strong> Lecture attendance is required. There will be occasional attendance quizzes to verify this. These quizzes will be online, so bring a connected device (phone is fine) to take said quizzes.</p>
+<p><strong>Readings:</strong> No textbook required. Various online readings will be assigned. You should expect a reading quiz on the day that a reading is due. These quizzes will be online, so bring a connected device (phone is fine) to take said quizzes.</p>
+<p><strong>Purchases:</strong> None. In particular, you will NOT have to purchase any cryptocurrency for this course. You should be aware of the legal and tax ramifications of purchasing cryptocurrency if you every do want to buy some – we will discuss this during the course.</p>
+<p><strong>Course Description:</strong> This course is meant as a general introduction to cryptocurrency. Students who complete the course will:</p>
 <ul>
 <li>Understand the theoretical aspects of cryptocurrency</li>
-<li>Understand the basics of blockchain in general, and the details of a
-selected number of blockchains</li>
-<li>Understand the uses of cryptocurrency and blockchain beyond that as
-a form of money</li>
-<li>Understand the policy, ethical, legal, and tax implications of
-cryptocurrency</li>
+<li>Understand the basics of blockchain in general, and the details of a selected number of blockchains</li>
+<li>Understand the uses of cryptocurrency and blockchain beyond that as a form of money</li>
+<li>Understand the policy, ethical, legal, and tax implications of cryptocurrency</li>
 <li>Be able to develop programs for a specific Blockchain</li>
 <li>Implement a fully working modern cryptocurrency</li>
 </ul>
-<p><strong>Availability:</strong> It is important to me to be available
-to my students, and to address their concerns. If you cannot meet with
-me during office hours, e-mail (or, ideally, submit a support request)
-and I will try to find the time to meet. That being said, like everybody
-else I am quite busy, so it may take a day or more to find a time to
-meet. And if you have any comments on the course - what is working, what
-is not working, what can be done better, etc. - I am very interested in
-hearing about them. There is an <a
-href="https://collab.its.virginia.edu/portal/site/6ec853e6-b6e3-40f7-8c72-0f7f966ffa71/tool/f17a5899-fa57-4f82-956f-b24f83d19e6a/main"
-title="collab anonymous tool link">anonymous feedback tool through
-Collab</a>, or you can send me an e-mail (please do NOT email the TAs
-directly). I tend to get bogged down by e-mail as the semester
-progresses, so seeing me “in person” (during office hours or right after
-class) is often a good way to get a more immediate response.</p>
-<p><strong>Prerequisites:</strong> CS 2150 (Program and Data
-Representation) or CS 3100 (Data Structures and Algorithms 2) with a
-grade of C- or above. As per departmental policy, this pre-req will be
-checked, and if it is not met, you will be de-registered from the
-course.</p>
-<p><strong>Grades:</strong> Grades will be calculated by the following
-formula:</p>
+<p><strong>Availability:</strong> It is important to me to be available to my students, and to address their concerns. If you cannot meet with me during office hours, e-mail (or, ideally, submit a support request) and I will try to find the time to meet. That being said, like everybody else I am quite busy, so it may take a day or more to find a time to meet. And if you have any comments on the course - what is working, what is not working, what can be done better, etc. - I am very interested in hearing about them. There is an <a href="https://collab.its.virginia.edu/portal/site/6ec853e6-b6e3-40f7-8c72-0f7f966ffa71/tool/f17a5899-fa57-4f82-956f-b24f83d19e6a/main" title="collab anonymous tool link">anonymous feedback tool through Collab</a>, or you can send me an e-mail (please do NOT email the TAs directly). I tend to get bogged down by e-mail as the semester progresses, so seeing me “in person” (during office hours or right after class) is often a good way to get a more immediate response.</p>
+<p><strong>Prerequisites:</strong> CS 2150 (Program and Data Representation) or CS 3100 (Data Structures and Algorithms 2) with a grade of C- or above. As per departmental policy, this pre-req will be checked, and if it is not met, you will be de-registered from the course.</p>
+<p><strong>Grades:</strong> Grades will be calculated by the following formula:</p>
 <ul>
 <li>Programming and written assignments (50%)</li>
 <li>Midterm (15%)</li>
 <li>Final exam (20%)</li>
 <li>Class attendance, reading quizzes (15%)</li>
 </ul>
-<p>I <em>expect</em> that grades will follow the standard decade curve:
-90 and above is an A of some sort (A-, A, or A+), 80 and above is some
-sort of a B, etc. <strong>Note:</strong> I reserve the right to modify
-the weighting (changing the curve, adding pop quizzes, etc.), especially
-if attendance drops off significantly. In particular, if the grade
-averages are very high, then you will need higher than a 90 to get an
-A-.</p>
-<p><strong>Assignments:</strong> There will be both larger programming
-homeworks and smaller tutorial-style homeworks. Often one of each will
-be currently assigned at any given time, but their due dates will be
-scheduled so that they are not both due at once. All assignments will be
-submitted via Gradescope; source code will be submitted this way. Many
-assignments will require you to deploy your code to a private Ethereum
-blockchain in addition to the Gradescope submission. Due to the class
-size, and the limited TA support, all assignments will be auto-graded.
-You will need to be familiar with the <a
-href="hw-policies.html">homework policies</a> (<a
-href="hw-policies.md">md</a>), as you will be bound by them on the
-assignments.</p>
-<p><strong>Course rules:</strong> You are fully responsible for all
-material presented in class and on the required readings. Exams and due
-dates are scheduled in advance. A grade of zero will be recorded for
-missed exams and late assignments unless prior arrangements are made
-(see below for details) or there are truly extenuating circumstances
-(which will require appropriate documentation). Assignments turned in
-after the due date are penalized 25% per day (or fraction thereof) late;
-this means a maximum of 3 days (i.e. 72 hours) late.</p>
-<p><strong>Computing Resources:</strong> You are free to develop
-assignments on any platform/OS you wish. We will provide a <a
-href="https://www.virtualbox.org/">VirtualBox</a> image that has all the
-necessary software already installed and configured. Thus, your computer
-must have enough hard drive space (and memory) to use a course
-VirtualBox image (about 30 Gb will be needed for the install, and then
-20 Gb will be used once the installation files are deleted). Any
-computer made in the last 3 years will suffice for these requirements,
-and many older ones will as well. It doesn’t matter if it’s a desktop or
-notebook; nor does the speed matter. If you have an M1 Mac, please let
-me know, as this will affect what you can run.</p>
-<p>If you want to develop on your own machine, you will need to install
-the necessary software. We will provide links and tutorials for that,
-but ultimately we cannot be responsible for ensuring 100 students’
-individual installs all work.</p>
-<p><strong>Disabilities:</strong> The University of Virginia strives to
-provide accessibility to all students. If you require an accommodation
-to fully access this course, please contact the Student Disability
-Access Center (SDAC) at (434) 243-5180 or sdac@virginia.edu. If you are
-unsure if you require an accommodation, or to learn more about their
-services, you may contact the SDAC at the number above or by visiting
-their website at
-http://studenthealth.virginia.edu/student-disability-access-center/faculty-staff.</p>
-<p><strong>Special Circumstances:</strong> Students with special
-circumstances (athletics, extra time required on exams, final exam
-conflicts, SDAC considerations, etc.) need to let me know during the
-<strong>first two weeks of class</strong>.</p>
-<p><strong>Exams:</strong> There will be one midterm exam (worth 15% of
-the final grade) and one final exam (worth 20% of the final grade).</p>
+<p>I <em>expect</em> that grades will follow the standard decade curve: 90 and above is an A of some sort (A-, A, or A+), 80 and above is some sort of a B, etc. <strong>Note:</strong> I reserve the right to modify the weighting (changing the curve, adding pop quizzes, etc.), especially if attendance drops off significantly. In particular, if the grade averages are very high, then you will need higher than a 90 to get an A-.</p>
+<p><strong>Assignments:</strong> There will be both larger programming homeworks and smaller tutorial-style homeworks. Often one of each will be currently assigned at any given time, but their due dates will be scheduled so that they are not both due at once. All assignments will be submitted via Gradescope; source code will be submitted this way. Many assignments will require you to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission. Due to the class size, and the limited TA support, all assignments will be auto-graded. You will need to be familiar with the <a href="hw-policies.html">homework policies</a> (<a href="hw-policies.md">md</a>), as you will be bound by them on the assignments.</p>
+<p><strong>Course rules:</strong> You are fully responsible for all material presented in class and on the required readings. Exams and due dates are scheduled in advance. A grade of zero will be recorded for missed exams and late assignments unless prior arrangements are made (see below for details) or there are truly extenuating circumstances (which will require appropriate documentation). Assignments turned in after the due date are penalized 25% per day (or fraction thereof) late; this means a maximum of 3 days (i.e. 72 hours) late.</p>
+<p><strong>Computing Resources:</strong> You are free to develop assignments on any platform/OS you wish. We will provide a <a href="https://www.virtualbox.org/">VirtualBox</a> image that has all the necessary software already installed and configured. Thus, your computer must have enough hard drive space (and memory) to use a course VirtualBox image (about 30 Gb will be needed for the install, and then 20 Gb will be used once the installation files are deleted). Any computer made in the last 3 years will suffice for these requirements, and many older ones will as well. It doesn’t matter if it’s a desktop or notebook; nor does the speed matter. If you have an M1 Mac, please let me know, as this will affect what you can run.</p>
+<p>If you want to develop on your own machine, you will need to install the necessary software. We will provide links and tutorials for that, but ultimately we cannot be responsible for ensuring 100 students’ individual installs all work.</p>
+<p><strong>Disabilities:</strong> The University of Virginia strives to provide accessibility to all students. If you require an accommodation to fully access this course, please contact the Student Disability Access Center (SDAC) at (434) 243-5180 or sdac@virginia.edu. If you are unsure if you require an accommodation, or to learn more about their services, you may contact the SDAC at the number above or by visiting their website at http://studenthealth.virginia.edu/student-disability-access-center/faculty-staff.</p>
+<p><strong>Special Circumstances:</strong> Students with special circumstances (athletics, extra time required on exams, final exam conflicts, SDAC considerations, etc.) need to let me know during the <strong>first two weeks of class</strong>.</p>
+<p><strong>Exams:</strong> There will be one midterm exam (worth 15% of the final grade) and one final exam (worth 20% of the final grade).</p>
 <ul>
 <li>Midterm exam: Wednesday, March 2nd, during lecture</li>
 <li>Final exam: Tuesday, May 10th, from 2pm to 5pm</li>
 </ul>
-<p>Under <strong>NO</strong> circumstances will anybody be allowed to
-take the final exam early. You may <strong>ONLY</strong> request to take
-the final exam at a different time if you have a final exam
-<strong>CONFLICT</strong>, not a busy final exam schedule. Since there
-are no other exams scheduled during that time, it is unlikely that you
-will have a conflict.</p>
-<p><strong>Regrades:</strong> You may submit graded homeworks and exams
-for regrading within one week of when they are returned to you (less
-time for the final due to the end of the semester). Regrades are
-submitted via Gradescope. As long as people submit responsibly, I will
-not institute a frivolous regrade policy that existed in some semesters
-of CS 2150 (if one is instituted, you will be told of this ahead of
-time). This time limit will be strictly enforced.</p>
-<p><strong>Honor pledge:</strong> The UVa Honor Code is in effect for
-this course. There is one course specific addition: You may not look at
-any other student’s code for ANY reason, period. Not to debug, not to
-help, not to learn. You may not let another student look at
-<em>your</em> code for any reason. Needless to say, you cannot copy code
-from online sources unless the assignment specifically allows it (and in
-those cases, you must cite your source). The next paragraph describes
-this more.</p>
-<p>Students are encouraged to discuss programs and assignments in
-general. However, helping others find bugs in existing programs, using
-another person’s code, or writing code for someone else is cheating and
-a violation of the University’s Honor System. Basically, you should not
-be looking at another person’s code for <strong>ANY</strong> reason
-(obviously you can after BOTH have submitted the assignment, or if there
-is a group project). This includes consulting programming solutions to
-assignments from previous years. This also includes looking up solutions
-online. Any honor violation or cheating will be referred to the honor
-committee, and will result in an <em>immediate failure for the
-course</em>, regardless of the outcome of the honor trial or your other
-grades. No exceptions! I am very strict on this, and one have
-successfully raised honor charges against students in the past due to
-violations of this policy - and I’ve blocked people from graduation
-because of honor offenses.</p>
-<p><strong>Your Well Being:</strong> The Engineering School proudly
-serves as a safe space for its students and aims to promote their well
-being. If you are feeling overwhelmed, stressed, or isolated, there are
-many individuals here who are ready and wanting to help. In addition to
-the course instructors, you can seek help through the Engineering
-Undergraduate office (Thornton A122), or Alex Hall (aec5d, 924-7601) who
-is the assistant dean of students for the Engineering school.</p>
-<p>Alternatively, there are also other University of Virginia resources
-available. The Student Health Center offers Counseling and Psychological
-Services (CAPS) for its students. Call 434-243-5150 (or 434-972-7004 for
-after hours and weekend crisis assistance) to get started and schedule
-an appointment. If you prefer to speak anonymously and confidentially
-over the phone, call Madison House’s HELP Line at any hour of any day:
-434-295-8255.</p>
-<p>If you or someone you know is struggling with gender, sexual, or
-domestic violence, there are many community and University of Virginia
-resources available. The Office of the Dean of Students, Sexual Assault
-Resource Agency (SARA), Shelter for Help in Emergency (SHE), and UVA
-Women’s Center are ready and eager to help. Contact the Director of
-Sexual and Domestic Violence Services at 434-982-2774.</p>
-<p><strong>Legality:</strong> This course has received approval from the
-necessary parts of UVA: <a
-href="https://virginia.service-now.com/its/">ITS</a>, <a
-href="https://security.virginia.edu/">InfoSec</a>, and the <a
-href="https://universitycounsel.virginia.edu/">Office of the University
-Counsel</a>. Specifically, the cryptocurrencies created in this course
-will be exchangeable with each other, but not with any cryptocurrency
-outside the course; thus they have no monetary value. Because they have
-no monetary value, and because the activities in this course are
-necessary to achieve the academic goals of the course, these various
-activities of this course, including mining, have been judged to be
-legal.</p>
+<p>Under <strong>NO</strong> circumstances will anybody be allowed to take the final exam early. You may <strong>ONLY</strong> request to take the final exam at a different time if you have a final exam <strong>CONFLICT</strong>, not a busy final exam schedule. Since there are no other exams scheduled during that time, it is unlikely that you will have a conflict.</p>
+<p><strong>Regrades:</strong> You may submit graded homeworks and exams for regrading within one week of when they are returned to you (less time for the final due to the end of the semester). Regrades are submitted via Gradescope. As long as people submit responsibly, I will not institute a frivolous regrade policy that existed in some semesters of CS 2150 (if one is instituted, you will be told of this ahead of time). This time limit will be strictly enforced.</p>
+<p><strong>Honor pledge:</strong> The UVa Honor Code is in effect for this course. There is one course specific addition: You may not look at any other student’s code for ANY reason, period. Not to debug, not to help, not to learn. You may not let another student look at <em>your</em> code for any reason. Needless to say, you cannot copy code from online sources unless the assignment specifically allows it (and in those cases, you must cite your source). The next paragraph describes this more.</p>
+<p>Students are encouraged to discuss programs and assignments in general. However, helping others find bugs in existing programs, using another person’s code, or writing code for someone else is cheating and a violation of the University’s Honor System. Basically, you should not be looking at another person’s code for <strong>ANY</strong> reason (obviously you can after BOTH have submitted the assignment, or if there is a group project). This includes consulting programming solutions to assignments from previous years. This also includes looking up solutions online. Any honor violation or cheating will be referred to the honor committee, and will result in an <em>immediate failure for the course</em>, regardless of the outcome of the honor trial or your other grades. No exceptions! I am very strict on this, and one have successfully raised honor charges against students in the past due to violations of this policy - and I’ve blocked people from graduation because of honor offenses.</p>
+<p><strong>Your Well Being:</strong> The Engineering School proudly serves as a safe space for its students and aims to promote their well being. If you are feeling overwhelmed, stressed, or isolated, there are many individuals here who are ready and wanting to help. In addition to the course instructors, you can seek help through the Engineering Undergraduate office (Thornton A122), or Alex Hall (aec5d, 924-7601) who is the assistant dean of students for the Engineering school.</p>
+<p>Alternatively, there are also other University of Virginia resources available. The Student Health Center offers Counseling and Psychological Services (CAPS) for its students. Call 434-243-5150 (or 434-972-7004 for after hours and weekend crisis assistance) to get started and schedule an appointment. If you prefer to speak anonymously and confidentially over the phone, call Madison House’s HELP Line at any hour of any day: 434-295-8255.</p>
+<p>If you or someone you know is struggling with gender, sexual, or domestic violence, there are many community and University of Virginia resources available. The Office of the Dean of Students, Sexual Assault Resource Agency (SARA), Shelter for Help in Emergency (SHE), and UVA Women’s Center are ready and eager to help. Contact the Director of Sexual and Domestic Violence Services at 434-982-2774.</p>
+<p><strong>Legality:</strong> This course has received approval from the necessary parts of UVA: <a href="https://virginia.service-now.com/its/">ITS</a>, <a href="https://security.virginia.edu/">InfoSec</a>, and the <a href="https://universitycounsel.virginia.edu/">Office of the University Counsel</a>. Specifically, the cryptocurrencies created in this course will be exchangeable with each other, but not with any cryptocurrency outside the course; thus they have no monetary value. Because they have no monetary value, and because the activities in this course are necessary to achieve the academic goals of the course, these various activities of this course, including mining, have been judged to be legal.</p>
 </body>
 </html>
