@@ -249,20 +249,20 @@ Given a Merkle tree:
 
 ## Unix time conversion
 - In Python:
-  ```
+```
 import datetime
 print(datetime.datetime.utcfromtimestamp(1640995200).\
         strftime('%Y-%m-%d %H:%M:%S'))
 ```
 - In Java:
-  ```
+```
 import java.util.Date;
 ...
 Date d = new Date(1640995200);
 System.out.println(d);
 ```
 - In C/C++:
-  ```
+```
 #include <time.h>
 ...
   time_t t = 1640995200;
