@@ -80,7 +80,7 @@ Course calendar
 | Week # | Week of Monday | Lecture days | HWs due | Expected Topics | Actual Progress |
 |----|----|----|----|----|----|
 | 1  | Jan 15 | W,F   |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) |  introduction (finished); Wed: overview to 4.11 |
-| 2  | Jan 22 | M,W,F |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) | |
+| 2  | Jan 22 | M,W,F |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) | Mon: finished overview |
 | 3  | Jan 29 | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) | |
 | 4  | Feb 5  | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) | |
 | 5  | Feb 12 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) | |
