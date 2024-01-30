@@ -20,7 +20,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 ### Languages
 
-You can write this assignment in Java or Python.  If you want to use a different language, please speak to me first.  The intent is for you to write all this code yourself -- you can NOT use any libraries that do field arithmetic, elliptic curve arithmetic, etc.  This includes any hashing functions (such as hashlib in Python); note that you never have to take a hash in this assignment.  We expect you to only need the most common standard libraries as a result.
+The recommended language to write this in is Python.  If you want to use a different language, please speak to me first.  The intent is for you to write all this code yourself -- you can NOT use any libraries that do field arithmetic, elliptic curve arithmetic, etc.  This includes any hashing functions (such as hashlib in Python); note that you never have to take a hash in this assignment.  We expect you to only need the most common standard libraries as a result.
 
 We realize that the default random number generators in most (all?) programming languages are not cryptographically secure random number generators, but that's fine for this assignment.
 
