@@ -81,7 +81,7 @@ Course calendar
 |----|----|----|----|----|----|
 | 1  | Jan 15 | W,F   |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) |  introduction (finished); Wed: overview to 4.11; Fri: encryption to 6.13 |
 | 2  | Jan 22 | M,W,F |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) | Mon: finished overview; Wed: encryption to 4.23; Fri: encryption to 6.? |
-| 3  | Jan 29 | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) | Mon: encryption to 7.8; Wed: finished encryption |
+| 3  | Jan 29 | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) | Mon: encryption to 7.8; Wed: finished encryption; Fri: bitcoin to 5.9 |
 | 4  | Feb 5  | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) | |
 | 5  | Feb 12 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) | |
 | 6  | Feb 19 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/), [Solidity](../slides/solidity.html#/) | |
