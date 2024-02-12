@@ -302,17 +302,17 @@ contract EZTokens {
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Function selectors
 - You can get individual function selectors via either:
-  ```
+```
   this.funcName.selector
   myInterface.funcName.selector
-  ```
+```
   - The first one is only to get a function selector of a function in the current contract
 - An *interface selector* is just the XOR of all the contained function selectors
   - But just the outward-facing ones: public and external only
 - You can get the interface selector via:
-  ```
+```
   type(myInterface).interfaceId
-  ```
+```
 
 
 
@@ -555,7 +555,7 @@ interface IERC20Metadata is IERC20 {
 
 ## Implementing our Token Cryptocurrencies
 - Our starting contract line:
-  ```
+```
 contract TokenCC is ITokenCC, ERC20 {
 ```
 - We have to implement:

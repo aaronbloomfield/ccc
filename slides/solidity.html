@@ -141,7 +141,7 @@ line-height:120%;
   - Keeping track of who is the contract initiator
   - Addresses of other contracts to call
 - Can cast between `address` and: `uint160` or `bytes20`
-  ```
+```
 address a = address(0);
 uint160 u = uint160(a);
 bytes20 b = bytes20(u);
@@ -152,7 +152,7 @@ bytes20 b = bytes20(u);
 
 ## Address examples
 - You can convert to a payable address:
-  ```
+```
 address a;
 // set a = something...
 address payable b = payable(a);
@@ -173,7 +173,7 @@ address initiator = msg.sender;
 ## Address fields
 - Although a primitive type, it has fields and methods:
   - `balance`: the balance, in wei, for that address
-    ```
+  ```
 address payable x = payable(0x123);
 address myAddress = address(this);
 if (x.balance < 10 && myAddress.balance >= 10) {...}
@@ -208,7 +208,7 @@ if (x.balance < 10 && myAddress.balance >= 10) {...}
 - Strings can be enclosed in single quotes or double quotes
 - Can use the backslash for escape characters
 - Two strings next to each other is concatenation:
-  ```
+```
 string s = "CS" '4501'; // equals "CS4501"
 ```
 
@@ -216,7 +216,7 @@ string s = "CS" '4501'; // equals "CS4501"
 
 ## More general arrays
 - We can create arrays of any type:
-  ```
+```
 uint8[6] memory p = [ 1, 2, 3, 4, 5, 6 ];
 ```
   - We'll see the `memory` keyword shortly...
@@ -429,12 +429,12 @@ assert(1 ether == 1e18);
   - Reasons:
     - It is difficult / expensive to compare across memory locations
   - Instead, compare their hashes: 
-    ```
+  ```
 if ( keccak256(x) == keccak256(y) ) { ... }
 ```
     - Note that `keccak256()` uses a lot of gas
 - Can concatenate two strings:
-  ```
+```
 string memory s = string.concat(s1, s2);
 ```
   - Only returns a `string memory`
@@ -670,7 +670,7 @@ contract Student is Person, Learner {
   - All function prototypes in interfaces are assumed to be `virtual`
 - `override`: when a sub-class is replacing an inherited function
   - If the function is multiply inherited, you may have to specify which (or all) that it overrides:
-      ```
+    ```
 function foo() public override(IERC165,ERC721) {
 ```
     - This will be needed in the Tokens assignment
@@ -775,7 +775,7 @@ function twodmap(uint id, string s) public view
 
 ## Declarations for fields
 - Format:
-  ```
+```
 <type> <visibility> <override?> <name> [= <value>];
 ```
 - Examples:
@@ -875,7 +875,7 @@ constructor(uint foo) {
 - You put in conditions (or whatever) and then indicate where the function body goes
 - That indication is with the underscore
 - Example:
-  ```
+```
     modifier onlyOwner() {
         require(msg.sender == owner, "Not owner");
         _;
@@ -954,10 +954,10 @@ try <something> {
     <section data-markdown data-separator="^\n\n\n" id='payeth'><textarea>
 ## ~~Transferring ether in Solidity~~
 - To transfer ether from a Solidity contract:
-  ```
+```
   (bool success, ) = payable(a).call{value: v}("");
   require(success, "Failed to transfer ETH");
-  ```
+```
 - The amount, in `v`, is in wei
 - The address to pay it to is in `a`
 - This reverts if the contract does not have sufficient balance
@@ -968,15 +968,15 @@ try <something> {
 ## ~~Contracts creating contracts~~
 - We can have a contract `Foo` deploy another contract `Bar`
 - Given a field in Foo such as either:
-  ```
+```
   Bar public b;
   address public b;
-  ```
+```
 - Then we can initialize it via either (respectively):
-  ```
+```
   b = new Bar();
   b = address(new Bar());
-  ```
+```
 
 
 
@@ -1351,7 +1351,7 @@ contract Poll is IPoll {
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Interacting via geth
 - You should all start up your geth node via:
-  ```
+```
 geth --config geth-config.toml \
      --rpc.enabledeprecatedpersonal
 ```
@@ -1392,12 +1392,12 @@ geth attach \\.\pipe\geth.ipc
 ## Transactions from geth
 - We are going to call the smart contract directly from geth
 - First, save the smart contract address in a variable:
-  ```
+```
 var addr = "0xffffffffffffffffffffffffffffffffffffffff";
 ```
   - But use the actual address, not that address!
 - Next we have to save the ABI:
-  ```
+```
 var abi = [...];
 ```
   - Copy-and-paste the ABI from the Canvas landing page into that command
@@ -1408,11 +1408,11 @@ var abi = [...];
     <section data-markdown data-separator="^\n\n\n"><textarea>
 ## Transactions from geth
 - Next we have to have geth create a contract object for us:
-  ```
+```
 var interface = eth.contract(abi);
 ```
 - Lastly, we need to link that to the specific contract address that we are going to be using:
-  ```
+```
 var contract = interface.at(addr);
 ```
 
@@ -1421,19 +1421,19 @@ var contract = interface.at(addr);
 ## Geth read transactions
 - We can call read-only transactions (`view` or `pure` functions) via the `.call()` method
 - To read a variable:
-  ```
+```
 contract.num_entries.call()
 ```
 - To read a mapping:
-  ```
+```
 contract.entries.call(0)
 ```
 - To get a name from a mapping:
-  ```
+```
 contract.entries.call(0)[2]
 ```
 - To call a (`view` or `pure`) method:
-  ```
+```
 contract.thisMethodDoesNotExist.call()
 ```
 
@@ -1441,12 +1441,12 @@ contract.thisMethodDoesNotExist.call()
 
 ## Geth write transactions
 - First, unlock your account:
-  ```
+```
 personal.unlockAccount(eth.coinbase,"password",0)
 ```
 - Use *your* password, though!
 - Does it not know `eth.coinbase`?  If not, then enter:
-  ```
+```
 miner.setEtherbase(eth.accounts[0])
 ```
 - Recall that the blockchain explorer updates every 1 minute
@@ -1462,7 +1462,7 @@ miner.setEtherbase(eth.accounts[0])
 
 ## Adding an alias
 - Transactions that write to the blockchain use the `.sendTransaction()` method
-  ```
+```
 contract.addAlias.sendTransaction("mst3k", 
          "Your Name", {from:eth.coinbase, gas:1000000})
 ```
@@ -1485,7 +1485,7 @@ contract.addAlias.sendTransaction("mst3k",
 
 ## Pay off some debts!
 - You can now enter some debts:
-  ```
+```
 contract.payToAlias.sendTransaction("mst3k",17,
                {from:eth.coinbase, gas:1000000});
 ```
@@ -1523,12 +1523,12 @@ Also, we have the source code available:
 ## Use `require()` with 2 parameters
 
 - Consider:
-  ```
+```
 require (value > 0);
 ```
 - If this reverts, all Remix will state is that the contract reverted, but not where or why
 - Instead, use:
-  ```
+```
 require (value > 0, "value must be > 0 in foo()");
 ```
 - Now Remix will report that specific string if/when it reverts

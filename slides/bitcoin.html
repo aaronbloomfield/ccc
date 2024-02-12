@@ -1185,7 +1185,7 @@ OP_CHECKSIG
 
 ## P2SH: Simple version:
 - pubKey script:
-  ```
+```
 OP_HASH160 <pubKeyHash> OP_EQUAL
 ```
 - sigScript: `<sig>`
@@ -1205,7 +1205,7 @@ OP_EQUAL
 
 ## P2SH: Complicated version
 - pubKey script:
-  ```
+```
 OP_HASH160 <pubKeyHash> OP_EQUAL
 ```
 - sigScript is much more complicated:
@@ -1283,12 +1283,12 @@ OP_EQUAL
 
 ## Witness structure
 - Current TX hash (aka *txid*) is:
-  ```
+```
 sha256(sha256(<version><txins><txouts><locktime>))
 ```
   - (assume that tx_in_cout & tx_out_out are in txins / txouts)
 - Transaction *witness hash* (aka *wtxid*) is:
-  ```
+```
 sha256(sha256(<version><marker><flag><txins><txouts>
                 <witness><locktime>))
 ```
@@ -1387,7 +1387,7 @@ sha256(sha256(<version><marker><flag><txins><txouts>
 <section data-markdown data-separator="^\n\n\n" id="unspendable"><textarea>
 ## Provably unspendable
 - Output script:
-  ```
+```
 OP_RETURN
 ```
 - `OP_RETURN` marks the transaction as invalid and terminates
