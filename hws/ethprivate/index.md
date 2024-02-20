@@ -212,7 +212,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 $
 ```
 
-The decoded private key is the hex line at the end.  Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.  You are welcome to put it in the ethprivate.py file -- just create a new field.  Again, since the ether on this blockchain is workt nothing, we can bypass what would otherwise be a security problem by listing our private key in plain text.
+The decoded private key is the hex line at the end.  Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.  You are welcome to put it in the ethprivate.py file -- just create a new field.  Again, since the ether on this blockchain is worth nothing, we can bypass what would otherwise be a security problem by listing our private key in plain text.
 
 
 ### Part 6: Send ether
