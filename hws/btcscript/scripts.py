@@ -82,19 +82,20 @@ def create_CHECKSIG_signature(txin, txout, txin_scriptPubKey, private_key):
 # address that corresponds to the private key above
 txid_split = txid_funding_list[0]
 
+# How much BTC is in that UTXO; look this up on https://live.blockcypher.com
+# to get the correct amount.
+split_amount_to_split = 0.001
+
 # After all the splits, you should have around 10 (or more) UTXOs, all for the
 # amount specified in this variable. That amount should not be less than
 # 0.0001 BTC, and can be greater.  It will make your life easier if each
 # amount is a negative power of 10, but that's not required.
-split_amount_to_split = 0.01
-
-# How much BTC is in that UTXO; look this up on https://live.blockcypher.com
-# to get the correct amount.
-split_amount_after_split = 0.001
+split_amount_after_split = 0.0001
 
 # How many UTXO indices to split it into -- you should not have to change
 # this!  Note that it will actually split into one less, and use the last one
 # as the transaction fee.
+assert split_amount_to_split > split_amount_after_split, "Your split_amount_to_split is less than or equal to split_amount_after_split"
 split_into_n = int(split_amount_to_split/split_amount_after_split)
 
 # The transaction IDs obtained after successfully splitting the tBTC.
