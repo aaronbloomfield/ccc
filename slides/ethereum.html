@@ -519,8 +519,8 @@ A space-optimized Trie
 
 
 
-## Binary Radix Tree
-- Like a Radix tree, but any node can have at most 2 children
+## Binary Trie
+- Like a regular Trie, but any node can have at most 2 children
   - Left child is a 0 bit, right child is a 1 bit
 - Used to store binary values (hashes, etc.)
   - Not great for dictionaries of ASCII characters
@@ -529,7 +529,7 @@ A space-optimized Trie
 
 
 <!-- .slide: class="right-float-img" -->
-## Example Binary Radix Tree
+## Example Binary Trie
 [![](images/ethereum/tries/tries.dot.1.svg)](images/ethereum/tries/tries.dot.1.svg)
 - We store the hex digits 3, 7, e, and f
 - The bit transitions are on the edges
@@ -542,7 +542,7 @@ A space-optimized Trie
 
 
 <!-- .slide: class="img-max-height-500" -->
-## Insert into a Binary Radix Tree
+## Insert into a Binary Trie
 [![](images/ethereum/tries/tries.dot.2.svg)](images/ethereum/tries/tries.dot.2.svg)
 - Insertion of hex value b (1011) into the tree
 - Notice that we had to add 3 nodes
@@ -551,7 +551,7 @@ A space-optimized Trie
 
 <!-- .slide: class="img-max-height-500" -->
 ## Insert into a Binary Radix Tree
-- What about the compact form of the tree?
+- What about the compact (radix) form of the trie?
 [![](images/ethereum/tries/tries.dot.3.svg)](images/ethereum/tries/tries.dot.3.svg)
 
 
