@@ -173,7 +173,7 @@ address initiator = msg.sender;
 ## Address fields
 - Although a primitive type, it has fields and methods:
   - `balance`: the balance, in wei, for that address
-  ```
+```
 address payable x = payable(0x123);
 address myAddress = address(this);
 if (x.balance < 10 && myAddress.balance >= 10) {...}
@@ -228,10 +228,10 @@ uint8[6] memory p = [ 1, 2, 3, 4, 5, 6 ];
 ```
 enum ActionChoices { GoLeft, GoRight, 
                        GoStraight, SitStill }
-//
+
 ActionChoices choice;
 ActionChoices constant default = ActionChoices.GoLeft;
-//
+
 function setGoStraight() public {
     choice = ActionChoices.GoStraight;
 }
@@ -288,11 +288,11 @@ twodmap[3]["foo"]
 - Consider:
 ```
 mapping (address => bool) public override voted;
+
 // this next one was not in the original Poll.sol:
 mapping (address => uint) public how_voted;
-//
+
 // or:
-//
 mapping (uint => Choice) internal _choices;
 uint public override num_choices;
 ```
@@ -429,7 +429,7 @@ assert(1 ether == 1e18);
   - Reasons:
     - It is difficult / expensive to compare across memory locations
   - Instead, compare their hashes: 
-  ```
+```
 if ( keccak256(x) == keccak256(y) ) { ... }
 ```
     - Note that `keccak256()` uses a lot of gas
@@ -669,11 +669,10 @@ contract Student is Person, Learner {
 - `virtual`: if a *thing* (function, field, etc.) in a contract can be overridden
   - All function prototypes in interfaces are assumed to be `virtual`
 - `override`: when a sub-class is replacing an inherited function
-  - If the function is multiply inherited, you may have to specify which (or all) that it overrides:
-    ```
+  - If the function is multiply inherited, you may have to specify which (or all) that it overrides (needed for the Tokens assignment):
+```
 function foo() public override(IERC165,ERC721) {
 ```
-    - This will be needed in the Tokens assignment
   - The requirement to specify `override` varies by compiler and version
     </textarea></section>
 
@@ -824,7 +823,7 @@ function overridePureFunction() external pure
 
 
 
-## ~~Receiving ether~~
+## Receiving ether
 - The `payable` qualifier means the function can accept ether as part of the call
 - The amount of ether received is in `msg.value`
   - And is added to the contract's balance
@@ -852,7 +851,7 @@ constructor(uint foo) {
 
 
 
-## ~~Destructor~~
+## Destructor
 - `selfdesctruct()`
   - Only if enabled (declared)
   - Disables the contract permanently
@@ -860,7 +859,7 @@ constructor(uint foo) {
 
 
 
-## ~~Contract elements~~
+## Contract elements
 - A contract can have:
   - Fields
   - Functions
@@ -870,21 +869,21 @@ constructor(uint foo) {
 
 
 
-## ~~Modifiers~~
+## Modifiers
 - A modifier changes how a function works
 - You put in conditions (or whatever) and then indicate where the function body goes
 - That indication is with the underscore
 - Example:
 ```
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Not owner");
-        _;
-    }
+modifier onlyOwner() {
+    require(msg.sender == owner, "Not owner");
+    _;
+}
 ```
 
 
 
-## ~~Modifiers~~
+## Modifiers
 - This code adapted from [solidity-by-example.org](https://solidity-by-example.org/function-modifier/):
 
 <pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
@@ -933,14 +932,14 @@ emit votedEvent(_id);
 
 
 
-## ~~Try-catch~~
+## Try-catch
 - Try-catch:
 
 ```
 try <something> {
   // what to do if it succeeds
 } catch {
-  // what to do if it fails
+  // what to do if it fails (reverts)
 }
 
 ```
@@ -952,11 +951,11 @@ try <something> {
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n" id='payeth'><textarea>
-## ~~Transferring ether in Solidity~~
+## Transferring ether in Solidity
 - To transfer ether from a Solidity contract:
 ```
-  (bool success, ) = payable(a).call{value: v}("");
-  require(success, "Failed to transfer ETH");
+(bool success, ) = payable(a).call{value: v}("");
+require(success, "Failed to transfer ETH");
 ```
 - The amount, in `v`, is in wei
 - The address to pay it to is in `a`
@@ -965,17 +964,17 @@ try <something> {
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-## ~~Contracts creating contracts~~
+## Contracts creating contracts
 - We can have a contract `Foo` deploy another contract `Bar`
 - Given a field in Foo such as either:
 ```
-  Bar public b;
-  address public b;
+Bar public b;
+address public b;
 ```
 - Then we can initialize it via either (respectively):
 ```
-  b = new Bar();
-  b = address(new Bar());
+b = new Bar();
+b = address(new Bar());
 ```
 
 
@@ -994,7 +993,7 @@ From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.
 
 
 
-## ~~Other global variables~~
+## Other global variables
 - block.basefee (uint): current block's base fee
 - block.chainid (uint): current chain id
 - block.coinbase (address payable): current block miner's address
@@ -1022,7 +1021,7 @@ From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.
 
 
 
-## ~~Solidity bytecode~~
+## Solidity bytecode
 Consider the following Solidity smart contract:
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -1038,7 +1037,7 @@ The bytecode was generated via:
 
 
 
-## ~~Solidity bytecode~~
+## Solidity bytecode
 <pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
 >.code
   PUSH 80     contract MyContract {\n    uin...
@@ -1128,7 +1127,7 @@ tag 1     contract MyContract {\n    uin...
 
 
 
-## ~~Solidity hex bytecode~~
+## Solidity hex bytecode
 - That bytecode is compiled into hex (binary):
 ```
 60806040526003600055348015601457600080fd5b50607d80
