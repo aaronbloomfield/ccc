@@ -38,7 +38,7 @@ The file is [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)).  That file has many com
 
 import "./IERC165.sol";
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 interface IDAO is IERC165 {
 

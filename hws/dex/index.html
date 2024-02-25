@@ -99,7 +99,7 @@
 <p>The <code>price()</code> function will return the current price in cents. Thus, if the price is $99.23 per (fake) ETH, it would return <code>9923</code>.</p>
 <p>There are two deployed contracts that implemented this interface, the contract addresses of which are on the Canvas landing page. The first is a constant implementation, which always returns $100.00 (formally: <code>10000</code>) as the price. The implementation for this is in <a href='EtherPriceOracleConstant.sol.html'>EtherPriceOracleConstant.sol</a> (<a href='EtherPriceOracleConstant.sol'>src</a>), and shown below. You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 import "./IEtherPriceOracle.sol";
 
 contract EtherPriceOracleConstant is IEtherPriceOracle {
@@ -179,7 +179,7 @@ require (success, "payment didn't work");</code></pre>
 <p>Note that many of these functions are just the getter functions from <code>public</code> variables; which ones are described in the full source file and also below. Also note that <span class='math inline'><em>x</em></span> is the amount of ether liquidity (with 18 decimals) and <span class='math inline'><em>y</em></span> is the amount of token liquidity (with 8-12 decimals).</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 import "./IERC165.sol";
 import "./IEtherPriceOracle.sol";
@@ -398,7 +398,7 @@ require (success, string.concat("Payment to DEX didn't work: ", getRevertMsg(res
 // This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 import "./DEX.sol";
 import "./TokenCC.sol";

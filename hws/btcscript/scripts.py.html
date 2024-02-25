@@ -93,19 +93,20 @@ txid_funding_list <font color="#990000">=</font> <font color="#990000">[</font><
 <i><font color="#9A1900"># address that corresponds to the private key above</font></i>
 txid_split <font color="#990000">=</font> txid_funding_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
 
+<i><font color="#9A1900"># How much BTC is in that UTXO; look this up on https://live.blockcypher.com</font></i>
+<i><font color="#9A1900"># to get the correct amount.</font></i>
+split_amount_to_split <font color="#990000">=</font> <font color="#993399">0.001</font>
+
 <i><font color="#9A1900"># After all the splits, you should have around 10 (or more) UTXOs, all for the</font></i>
 <i><font color="#9A1900"># amount specified in this variable. That amount should not be less than</font></i>
 <i><font color="#9A1900"># 0.0001 BTC, and can be greater.  It will make your life easier if each</font></i>
 <i><font color="#9A1900"># amount is a negative power of 10, but that's not required.</font></i>
-split_amount_to_split <font color="#990000">=</font> <font color="#993399">0.01</font>
-
-<i><font color="#9A1900"># How much BTC is in that UTXO; look this up on https://live.blockcypher.com</font></i>
-<i><font color="#9A1900"># to get the correct amount.</font></i>
-split_amount_after_split <font color="#990000">=</font> <font color="#993399">0.001</font>
+split_amount_after_split <font color="#990000">=</font> <font color="#993399">0.0001</font>
 
 <i><font color="#9A1900"># How many UTXO indices to split it into -- you should not have to change</font></i>
 <i><font color="#9A1900"># this!  Note that it will actually split into one less, and use the last one</font></i>
 <i><font color="#9A1900"># as the transaction fee.</font></i>
+<b><font color="#0000FF">assert</font></b> split_amount_to_split <font color="#990000">&gt;</font> split_amount_after_split<font color="#990000">,</font> <font color="#FF0000">"Your split_amount_to_split is less than or equal to split_amount_after_split"</font>
 split_into_n <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>split_amount_to_split<font color="#990000">/</font>split_amount_after_split<font color="#990000">)</font>
 
 <i><font color="#9A1900"># The transaction IDs obtained after successfully splitting the tBTC.</font></i>

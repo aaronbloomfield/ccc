@@ -10,12 +10,12 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC20/IERC20.sol)</font></i>
 
-<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Interface of the ERC20 standard as defined in the EIP.</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Interface of the ERC-20 standard as defined in the ERC.</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">interface</font> IERC20 <font color="#FF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
@@ -33,23 +33,23 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">event</font> <b><font color="#000000">Approval</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> owner<font color="#990000">,</font> address <font color="#008080">indexed</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the amount of tokens in existence.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the value of tokens in existence.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">totalSupply</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the amount of tokens owned by `account`.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the value of tokens owned by `account`.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves `amount` tokens from the caller's account to `to`.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves a `value` amount of tokens from the caller's account to `to`.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Returns a boolean value indicating whether the operation succeeded.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the remaining number of tokens that `spender` will be</font></i>
@@ -61,7 +61,8 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets `amount` as the allowance of `spender` over the caller's tokens.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets a `value` amount of tokens as the allowance of `spender` over the</font></i>
+<i><font color="#9A1900">     * caller's tokens.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Returns a boolean value indicating whether the operation succeeded.</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -74,18 +75,18 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits an {Approval} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves `amount` tokens from `from` to `to` using the</font></i>
-<i><font color="#9A1900">     * allowance mechanism. `amount` is then deducted from the caller's</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves a `value` amount of tokens from `from` to `to` using the</font></i>
+<i><font color="#9A1900">     * allowance mechanism. `value` is then deducted from the caller's</font></i>
 <i><font color="#9A1900">     * allowance.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Returns a boolean value indicating whether the operation succeeded.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>

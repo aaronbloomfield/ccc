@@ -137,7 +137,7 @@
 <p>The interface is as follows. There are much more detailed comments in the <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file.</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 import &quot;./IERC165.sol&quot;;
 
@@ -263,7 +263,7 @@ Some people are having problems in Remix with determining the return value of a 
 <h4 id="block.timestamp-behavior"><code>block.timestamp</code> behavior</h4>
 <p><code>block.timestamp</code> behaves differently on the Javascript blockchain in Remix and on the course blockchain. Consider the following contract:</p>
 <pre><code>// SPDX-License-Identifier: Unlicensed
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 contract BlockTimestamp {
     function getTimestamp() public view returns (uint) {
         return block.timestamp;

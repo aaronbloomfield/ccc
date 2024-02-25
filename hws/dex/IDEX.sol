@@ -7,7 +7,7 @@
 // y is the token liquidity, with a variable number of decimals
 // k = x * y, and will have somewhere around 30 decimals
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 import "./IERC165.sol";
 import "./IEtherPriceOracle.sol";

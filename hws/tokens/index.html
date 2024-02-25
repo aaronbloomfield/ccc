@@ -110,7 +110,7 @@
 <li>Your contract MUST be in a file called <code>TokenCC.sol</code>.</li>
 <li>You must put your name and userid as the second line of the file (right after the SPDX line).</li>
 <li>Your contract opening line MUST be: <code>contract TokenCC is ITokenCC, ERC20 {</code>; this will inherit the other contracts and interfaces (Context, IERC20, IERC20Metadata, ERC20, and IERC165).</li>
-<li>The pragma line should be: <code>pragma solidity ^0.8.21;</code>.</li>
+<li>The pragma line should be: <code>pragma solidity ^0.8.24;</code>.</li>
 <li>You are NOT to submit any of the <em>files</em> for the interfaces above (Context.sol, IERC20.sol, IERC20Metadata.sol, ITokenCC.sol, or IERC165.sol), nor the ERC20.sol file. And don’t include the code from those files in your TokenCC.sol file. You should <code>import</code> them in <code>TokenCC.sol</code> as such: <code>import "./ITokenCC.sol";</code> and <code>import "./ERC20.sol";</code> – those two files import all the other contracts and interfaces. The necessary files will be put into the appropriate directory on Gradescope when it compiles your program.</li>
 <li>You cannot edit the <a href='ERC20.sol.html'>ERC20.sol</a> (<a href='ERC20.sol'>src</a>) file – any changes have to go into your <code>TokenCC.sol</code> file.</li>
 </ol>
@@ -191,7 +191,7 @@
 <li>You must put your name and userid as the second line of the file (right after the SPDX line)</li>
 <li>Your contract MUST be in a file called <code>NFTManager.sol</code> – note the capitalization!</li>
 <li>Your contract line MUST be: <code>contract NFTManager is INFTManager, ERC721 {</code>; this will inherit all the other necessary interfaces and contracts.</li>
-<li>The pragma line should be: <code>pragma solidity ^0.8.21;</code></li>
+<li>The pragma line should be: <code>pragma solidity ^0.8.24;</code></li>
 <li>You are NOT to submit any of the <em>files</em> for the interfaces above (ERC721, IERC721, INFTManager, IERC165.sol, etc.), nor the ERC721 file either. And don’t copy-and-paste that code in your file. You should <code>import</code> them in <code>NFTManager.sol</code> as such: <code>import "./INFTManager.sol";</code>; they will be put into the appropriate directory on Gradescope when it attempts to compile your program</li>
 </ol>
 <p>Some implementation notes:</p>

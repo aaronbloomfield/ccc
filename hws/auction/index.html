@@ -59,7 +59,7 @@
 <button class='tablinks' onclick="openTab(event,'ttask-2-iauctioneer-interface')">IAuctioneer Interface</button>
 <button class='tablinks' onclick="openTab(event,'ttask-3-create-auctions')">Create Auctions</button>
 <button class='tablinks' onclick="openTab(event,'ttask-4-class-auctions')">Class Auctions</button>
-<button class='tablinks' onclick="openTab(event,'tnotes-and-hints')">Notes And Hints</button>
+<button class='tablinks' onclick="openTab(event,'tnotes-and-hints')">Notes &amp; Hints</button>
 <button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
 </div>
 <div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
@@ -139,7 +139,7 @@
 <p>The interface is as follows. There are much more detailed comments in the <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file.</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 import "./IERC165.sol";
 
@@ -263,7 +263,7 @@ require(success, "Failed to transfer ETH");</code></pre>
 <h4 id='block.timestamp-behavior'><code>block.timestamp</code> behavior</h4>
 <p><code>block.timestamp</code> behaves differently on the Javascript blockchain in Remix and on the course blockchain. Consider the following contract:</p>
 <pre><code>// SPDX-License-Identifier: Unlicensed
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 contract BlockTimestamp {
     function getTimestamp() public view returns (uint) {
         return block.timestamp;

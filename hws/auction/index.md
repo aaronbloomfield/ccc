@@ -91,7 +91,7 @@ The interface is as follows.  There are much more detailed comments in the [IAuc
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 import "./IERC165.sol";
 
@@ -265,7 +265,7 @@ In Remix, any call -- meaning a `view` or `pure` function, which shows up in Rem
 
 ```
 // SPDX-License-Identifier: Unlicensed
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 contract BlockTimestamp {
     function getTimestamp() public view returns (uint) {
         return block.timestamp;

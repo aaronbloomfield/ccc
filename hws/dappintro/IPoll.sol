@@ -3,7 +3,7 @@
 // This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 
 // This is an interface that specifies a common API for a Poll contract.

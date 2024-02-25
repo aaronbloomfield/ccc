@@ -554,12 +554,12 @@ contract C {
 ## Pragma
 - We'll only use the following Solidity version pragma:
 ```
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 ```
 - The three numbers are: major version, minor version, bugfix version
 - By default, it forces a compiler error if the wrong compiler version is being used
   - Some platforms, such as Truffle or Remix, will try to find the right compiler version
-- This will only compile with version 0.8.21 or later
+- This will only compile with version 0.8.24 or later
   - But will NOT allow compilation with version 0.9.0 or later
 - Note that breaking changes (very few!) are only (intentionally) introduced on major versions
 
@@ -583,7 +583,7 @@ pragma solidity 0.8.11;
   - As this will compile on all of the platforms we will be using
 
 ```
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 ```
 
 
@@ -696,7 +696,7 @@ abstract contract Foo is Bar {
 ## What we have so far
 ```
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 interface IERC165 {
   // ...
@@ -1026,7 +1026,7 @@ From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.
 Consider the following Solidity smart contract:
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 contract MyContract {
     uint public i = 1 + 2 * 3 - 4;
 }
@@ -1167,7 +1167,7 @@ tag 1     contract MyContract {\n    uin...
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 interface IPoll {
 
@@ -1202,7 +1202,7 @@ interface IPoll {
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 import "./IPoll.sol";
 

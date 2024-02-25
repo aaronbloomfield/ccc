@@ -10,18 +10,78 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v4.8.0) (utils/math/Math.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/Math.sol)</font></i>
 
-<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">0</font><font color="#990000">;</font>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+
+import <font color="#FF0000">{</font>Panic<font color="#FF0000">}</font> from <font color="#FF0000">"../Panic.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from <font color="#FF0000">"./SafeCast.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Standard math utilities missing in the Solidity language.</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> Math <font color="#FF0000">{</font>
     <b><font color="#0000FF">enum</font></b> <font color="#008080">Rounding</font> <font color="#FF0000">{</font>
-        Down<font color="#990000">,</font> <i><font color="#9A1900">// Toward negative infinity</font></i>
-        Up<font color="#990000">,</font> <i><font color="#9A1900">// Toward infinity</font></i>
-        Zero <i><font color="#9A1900">// Toward zero</font></i>
+        Floor<font color="#990000">,</font> <i><font color="#9A1900">// Toward negative infinity</font></i>
+        Ceil<font color="#990000">,</font> <i><font color="#9A1900">// Toward positive infinity</font></i>
+        Trunc<font color="#990000">,</font> <i><font color="#9A1900">// Toward zero</font></i>
+        Expand <i><font color="#9A1900">// Away from zero</font></i>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the addition of two unsigned integers, with an success flag (no overflow).</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryAdd</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <font color="#008080">uint256</font> c <font color="#990000">=</font> a <font color="#990000">+</font> b<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">&lt;</font> a<font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> c<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the subtraction of two unsigned integers, with an success flag (no overflow).</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">trySub</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>b <font color="#990000">&gt;</font> a<font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> a <font color="#990000">-</font> b<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the multiplication of two unsigned integers, with an success flag (no overflow).</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryMul</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// Gas optimization: this is cheaper than requiring 'a' not being zero, but the</font></i>
+            <i><font color="#9A1900">// benefit is lost if 'b' is also tested.</font></i>
+            <i><font color="#9A1900">// See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522</font></i>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>a <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <font color="#008080">uint256</font> c <font color="#990000">=</font> a <font color="#990000">*</font> b<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>c <font color="#990000">/</font> a <font color="#990000">!=</font> b<font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> c<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the division of two unsigned integers, with a success flag (no division by zero).</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryDiv</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>b <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> a <font color="#990000">/</font> b<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the remainder of dividing two unsigned integers, with a success flag (no division by zero).</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryMod</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>b <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> a <font color="#990000">%</font> b<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -50,29 +110,41 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the ceiling of the division of two numbers.</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * This differs from standard division with `/` in that it rounds up instead</font></i>
-<i><font color="#9A1900">     * of rounding down.</font></i>
+<i><font color="#9A1900">     * This differs from standard division with `/` in that it rounds towards infinity instead</font></i>
+<i><font color="#9A1900">     * of rounding towards zero.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">ceilDiv</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <i><font color="#9A1900">// (a + b - 1) / b can overflow on addition, so we distribute.</font></i>
-        <b><font color="#0000FF">return</font></b> a <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">?</font> <font color="#993399">0</font> <font color="#990000">:</font> <font color="#990000">(</font>a <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> b <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>b <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// Guarantee the same behavior as in a regular Solidity division.</font></i>
+            Panic<font color="#990000">.</font><b><font color="#000000">panic</font></b><font color="#990000">(</font>Panic<font color="#990000">.</font>DIVISION_BY_ZERO<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+
+        <i><font color="#9A1900">// The following calculation ensures accurate ceiling division without overflow.</font></i>
+        <i><font color="#9A1900">// Since a is non-zero, (a - 1) / b will not overflow.</font></i>
+        <i><font color="#9A1900">// The largest possible result occurs when (a - 1) / b is type(uint256).max,</font></i>
+        <i><font color="#9A1900">// but the largest value we can obtain is type(uint256).max - 1, which happens</font></i>
+        <i><font color="#9A1900">// when a = type(uint256).max and b = 1.</font></i>
+        unchecked <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> a <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">?</font> <font color="#993399">0</font> <font color="#990000">:</font> <font color="#990000">(</font>a <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> b <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@notice</font><i><font color="#9A1900"> Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Original credit to Remco Bloemen under MIT license (</font></i><u><font color="#0000FF">https://xn--2-umb.com/21/muldiv</font></u><i><font color="#9A1900">)</font></i>
-<i><font color="#9A1900">     * with further edits by Uniswap Labs also under MIT license.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or</font></i>
+<i><font color="#9A1900">     * denominator == 0.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Original credit to Remco Bloemen under MIT license (</font></i><u><font color="#0000FF">https://xn--2-umb.com/21/muldiv</font></u><i><font color="#9A1900">) with further edits by</font></i>
+<i><font color="#9A1900">     * Uniswap Labs also under MIT license.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font><font color="#008080">uint256</font> x<font color="#990000">,</font> <font color="#008080">uint256</font> y<font color="#990000">,</font> <font color="#008080">uint256</font> denominator<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
         unchecked <font color="#FF0000">{</font>
-            <i><font color="#9A1900">// 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use</font></i>
+            <i><font color="#9A1900">// 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2²⁵⁶ and mod 2²⁵⁶ - 1, then use</font></i>
             <i><font color="#9A1900">// use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256</font></i>
-            <i><font color="#9A1900">// variables such that product = prod1 * 2^256 + prod0.</font></i>
-            <font color="#008080">uint256</font> prod0<font color="#990000">;</font> <i><font color="#9A1900">// Least significant 256 bits of the product</font></i>
+            <i><font color="#9A1900">// variables such that product = prod1 * 2²⁵⁶ + prod0.</font></i>
+            <font color="#008080">uint256</font> prod0 <font color="#990000">=</font> x <font color="#990000">*</font> y<font color="#990000">;</font> <i><font color="#9A1900">// Least significant 256 bits of the product</font></i>
             <font color="#008080">uint256</font> prod1<font color="#990000">;</font> <i><font color="#9A1900">// Most significant 256 bits of the product</font></i>
             assembly <font color="#FF0000">{</font>
                 <font color="#008080">let</font> mm <font color="#990000">:=</font> <b><font color="#000000">mulmod</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> <b><font color="#000000">not</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font>
-                prod0 <font color="#990000">:=</font> <b><font color="#000000">mul</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">)</font>
                 prod1 <font color="#990000">:=</font> <b><font color="#000000">sub</font></b><font color="#990000">(</font><b><font color="#000000">sub</font></b><font color="#990000">(</font>mm<font color="#990000">,</font> prod0<font color="#990000">),</font> <b><font color="#000000">lt</font></b><font color="#990000">(</font>mm<font color="#990000">,</font> prod0<font color="#990000">))</font>
             <font color="#FF0000">}</font>
 
@@ -84,8 +156,10 @@ http://www.gnu.org/software/src-highlite">
                 <b><font color="#0000FF">return</font></b> prod0 <font color="#990000">/</font> denominator<font color="#990000">;</font>
             <font color="#FF0000">}</font>
 
-            <i><font color="#9A1900">// Make sure the result is less than 2^256. Also prevents denominator == 0.</font></i>
-            <b><font color="#000000">require</font></b><font color="#990000">(</font>denominator <font color="#990000">&gt;</font> prod1<font color="#990000">,</font> <font color="#FF0000">"Math: mulDiv overflow"</font><font color="#990000">);</font>
+            <i><font color="#9A1900">// Make sure the result is less than 2²⁵⁶. Also prevents denominator == 0.</font></i>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>denominator <font color="#990000">&lt;=</font> prod1<font color="#990000">)</font> <font color="#FF0000">{</font>
+                Panic<font color="#990000">.</font><b><font color="#000000">panic</font></b><font color="#990000">(</font>denominator <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">?</font> Panic<font color="#990000">.</font>DIVISION_BY_ZERO <font color="#990000">:</font> Panic<font color="#990000">.</font>UNDER_OVERFLOW<font color="#990000">);</font>
+            <font color="#FF0000">}</font>
 
             <i><font color="#9A1900">///////////////////////////////////////////////</font></i>
             <i><font color="#9A1900">// 512 by 256 division.</font></i>
@@ -102,11 +176,10 @@ http://www.gnu.org/software/src-highlite">
                 prod0 <font color="#990000">:=</font> <b><font color="#000000">sub</font></b><font color="#990000">(</font>prod0<font color="#990000">,</font> remainder<font color="#990000">)</font>
             <font color="#FF0000">}</font>
 
-            <i><font color="#9A1900">// Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always &gt;= 1.</font></i>
-            <i><font color="#9A1900">// See https://cs.stackexchange.com/q/138556/92363.</font></i>
+            <i><font color="#9A1900">// Factor powers of two out of denominator and compute largest power of two divisor of denominator.</font></i>
+            <i><font color="#9A1900">// Always &gt;= 1. See https://cs.stackexchange.com/q/138556/92363.</font></i>
 
-            <i><font color="#9A1900">// Does not overflow because the denominator cannot be zero at this stage in the function.</font></i>
-            <font color="#008080">uint256</font> twos <font color="#990000">=</font> denominator <font color="#990000">&amp;</font> <font color="#990000">(~</font>denominator <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+            <font color="#008080">uint256</font> twos <font color="#990000">=</font> denominator <font color="#990000">&amp;</font> <font color="#990000">(</font><font color="#993399">0</font> <font color="#990000">-</font> denominator<font color="#990000">);</font>
             assembly <font color="#FF0000">{</font>
                 <i><font color="#9A1900">// Divide denominator by twos.</font></i>
                 denominator <font color="#990000">:=</font> <b><font color="#000000">div</font></b><font color="#990000">(</font>denominator<font color="#990000">,</font> twos<font color="#990000">)</font>
@@ -114,30 +187,30 @@ http://www.gnu.org/software/src-highlite">
                 <i><font color="#9A1900">// Divide [prod1 prod0] by twos.</font></i>
                 prod0 <font color="#990000">:=</font> <b><font color="#000000">div</font></b><font color="#990000">(</font>prod0<font color="#990000">,</font> twos<font color="#990000">)</font>
 
-                <i><font color="#9A1900">// Flip twos such that it is 2^256 / twos. If twos is zero, then it becomes one.</font></i>
+                <i><font color="#9A1900">// Flip twos such that it is 2²⁵⁶ / twos. If twos is zero, then it becomes one.</font></i>
                 twos <font color="#990000">:=</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">div</font></b><font color="#990000">(</font><b><font color="#000000">sub</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> twos<font color="#990000">),</font> twos<font color="#990000">),</font> <font color="#993399">1</font><font color="#990000">)</font>
             <font color="#FF0000">}</font>
 
             <i><font color="#9A1900">// Shift in bits from prod1 into prod0.</font></i>
             prod0 <font color="#990000">|=</font> prod1 <font color="#990000">*</font> twos<font color="#990000">;</font>
 
-            <i><font color="#9A1900">// Invert denominator mod 2^256. Now that denominator is an odd number, it has an inverse modulo 2^256 such</font></i>
-            <i><font color="#9A1900">// that denominator * inv = 1 mod 2^256. Compute the inverse by starting with a seed that is correct for</font></i>
-            <i><font color="#9A1900">// four bits. That is, denominator * inv = 1 mod 2^4.</font></i>
+            <i><font color="#9A1900">// Invert denominator mod 2²⁵⁶. Now that denominator is an odd number, it has an inverse modulo 2²⁵⁶ such</font></i>
+            <i><font color="#9A1900">// that denominator * inv ≡ 1 mod 2²⁵⁶. Compute the inverse by starting with a seed that is correct for</font></i>
+            <i><font color="#9A1900">// four bits. That is, denominator * inv ≡ 1 mod 2⁴.</font></i>
             <font color="#008080">uint256</font> inverse <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> denominator<font color="#990000">)</font> <font color="#990000">^</font> <font color="#993399">2</font><font color="#990000">;</font>
 
-            <i><font color="#9A1900">// Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works</font></i>
-            <i><font color="#9A1900">// in modular arithmetic, doubling the correct bits in each step.</font></i>
-            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2^8</font></i>
-            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2^16</font></i>
-            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2^32</font></i>
-            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2^64</font></i>
-            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2^128</font></i>
-            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2^256</font></i>
+            <i><font color="#9A1900">// Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also</font></i>
+            <i><font color="#9A1900">// works in modular arithmetic, doubling the correct bits in each step.</font></i>
+            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2⁸</font></i>
+            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2¹⁶</font></i>
+            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2³²</font></i>
+            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2⁶⁴</font></i>
+            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2¹²⁸</font></i>
+            inverse <font color="#990000">*=</font> <font color="#993399">2</font> <font color="#990000">-</font> denominator <font color="#990000">*</font> inverse<font color="#990000">;</font> <i><font color="#9A1900">// inverse mod 2²⁵⁶</font></i>
 
             <i><font color="#9A1900">// Because the division is now exact we can divide by multiplying with the modular inverse of denominator.</font></i>
-            <i><font color="#9A1900">// This will give us the correct result modulo 2^256. Since the preconditions guarantee that the outcome is</font></i>
-            <i><font color="#9A1900">// less than 2^256, this is the final result. We don't need to compute the high bits of the result and prod1</font></i>
+            <i><font color="#9A1900">// This will give us the correct result modulo 2²⁵⁶. Since the preconditions guarantee that the outcome is</font></i>
+            <i><font color="#9A1900">// less than 2²⁵⁶, this is the final result. We don't need to compute the high bits of the result and prod1</font></i>
             <i><font color="#9A1900">// is no longer required.</font></i>
             result <font color="#990000">=</font> prod0 <font color="#990000">*</font> inverse<font color="#990000">;</font>
             <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
@@ -145,102 +218,340 @@ http://www.gnu.org/software/src-highlite">
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@notice</font><i><font color="#9A1900"> Calculates x * y / denominator with full precision, following the selected rounding direction.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Calculates x * y / denominator with full precision, following the selected rounding direction.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font><font color="#008080">uint256</font> x<font color="#990000">,</font> <font color="#008080">uint256</font> y<font color="#990000">,</font> <font color="#008080">uint256</font> denominator<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <font color="#008080">uint256</font> result <font color="#990000">=</font> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> denominator<font color="#990000">);</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> <b><font color="#000000">mulmod</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> denominator<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            result <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">mulDiv</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> denominator<font color="#990000">)</font> <font color="#990000">+</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font><b><font color="#000000">unsignedRoundsUp</font></b><font color="#990000">(</font>rounding<font color="#990000">)</font> <font color="#990000">&amp;&amp;</font> <b><font color="#000000">mulmod</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">,</font> denominator<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Calculate the modular multiplicative inverse of a number in Z/nZ.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * If n is a prime, then Z/nZ is a field. In that case all elements are inversible, expect 0.</font></i>
+<i><font color="#9A1900">     * If n is not a prime, then Z/nZ is not a field, and some elements might not be inversible.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * If the input value is not inversible, 0 is returned.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: If you know for sure that n is (big) a prime, it may be cheaper to use Ferma's little theorem and get the</font></i>
+<i><font color="#9A1900">     * inverse using `Math.modExp(a, n - 2, n)`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">invMod</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> n<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>n <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
+
+            <i><font color="#9A1900">// The inverse modulo is calculated using the Extended Euclidean Algorithm (iterative version)</font></i>
+            <i><font color="#9A1900">// Used to compute integers x and y such that: ax + ny = gcd(a, n).</font></i>
+            <i><font color="#9A1900">// When the gcd is 1, then the inverse of a modulo n exists and it's x.</font></i>
+            <i><font color="#9A1900">// ax + ny = 1</font></i>
+            <i><font color="#9A1900">// ax = 1 + (-y)n</font></i>
+            <i><font color="#9A1900">// ax ≡ 1 (mod n) # x is the inverse of a modulo n</font></i>
+
+            <i><font color="#9A1900">// If the remainder is 0 the gcd is n right away.</font></i>
+            <font color="#008080">uint256</font> remainder <font color="#990000">=</font> a <font color="#990000">%</font> n<font color="#990000">;</font>
+            <font color="#008080">uint256</font> gcd <font color="#990000">=</font> n<font color="#990000">;</font>
+
+            <i><font color="#9A1900">// Therefore the initial coefficients are:</font></i>
+            <i><font color="#9A1900">// ax + ny = gcd(a, n) = n</font></i>
+            <i><font color="#9A1900">// 0a + 1n = n</font></i>
+            <font color="#008080">int256</font> x <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <font color="#008080">int256</font> y <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+            <b><font color="#0000FF">while</font></b> <font color="#990000">(</font>remainder <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <font color="#008080">uint256</font> quotient <font color="#990000">=</font> gcd <font color="#990000">/</font> remainder<font color="#990000">;</font>
+
+                <font color="#990000">(</font>gcd<font color="#990000">,</font> remainder<font color="#990000">)</font> <font color="#990000">=</font> <font color="#990000">(</font>
+                    <i><font color="#9A1900">// The old remainder is the next gcd to try.</font></i>
+                    remainder<font color="#990000">,</font>
+                    <i><font color="#9A1900">// Compute the next remainder.</font></i>
+                    <i><font color="#9A1900">// Can't overflow given that (a % gcd) * (gcd // (a % gcd)) &lt;= gcd</font></i>
+                    <i><font color="#9A1900">// where gcd is at most n (capped to type(uint256).max)</font></i>
+                    gcd <font color="#990000">-</font> remainder <font color="#990000">*</font> quotient
+                <font color="#990000">);</font>
+
+                <font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">)</font> <font color="#990000">=</font> <font color="#990000">(</font>
+                    <i><font color="#9A1900">// Increment the coefficient of a.</font></i>
+                    y<font color="#990000">,</font>
+                    <i><font color="#9A1900">// Decrement the coefficient of n.</font></i>
+                    <i><font color="#9A1900">// Can overflow, but the result is casted to uint256 so that the</font></i>
+                    <i><font color="#9A1900">// next value of y is "wrapped around" to a value between 0 and n - 1.</font></i>
+                    x <font color="#990000">-</font> y <font color="#990000">*</font> <b><font color="#000000">int256</font></b><font color="#990000">(</font>quotient<font color="#990000">)</font>
+                <font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>gcd <font color="#990000">!=</font> <font color="#993399">1</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// No inverse exists.</font></i>
+            <b><font color="#0000FF">return</font></b> x <font color="#990000">&lt;</font> <font color="#993399">0</font> <font color="#990000">?</font> <font color="#990000">(</font>n <font color="#990000">-</font> <b><font color="#000000">uint256</font></b><font color="#990000">(-</font>x<font color="#990000">))</font> <font color="#990000">:</font> <b><font color="#000000">uint256</font></b><font color="#990000">(</font>x<font color="#990000">);</font> <i><font color="#9A1900">// Wrap the result if it's negative.</font></i>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the modular exponentiation of the specified base, exponent and modulus (b ** e % m)</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - modulus can't be zero</font></i>
+<i><font color="#9A1900">     * - underlying staticcall to precompile must succeed</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * IMPORTANT: The result is only valid if the underlying call succeeds. When using this function, make</font></i>
+<i><font color="#9A1900">     * sure the chain you're using it on supports the precompiled contract for modular exponentiation</font></i>
+<i><font color="#9A1900">     * at address 0x05 as specified in </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-198</font></u><i><font color="#9A1900">[EIP-198]. Otherwise,</font></i>
+<i><font color="#9A1900">     * the underlying function will succeed given the lack of a revert, but the result may be incorrectly</font></i>
+<i><font color="#9A1900">     * interpreted as 0.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">modExp</font></b><font color="#990000">(</font><font color="#008080">uint256</font> b<font color="#990000">,</font> <font color="#008080">uint256</font> e<font color="#990000">,</font> <font color="#008080">uint256</font> m<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">tryModExp</font></b><font color="#990000">(</font>b<font color="#990000">,</font> e<font color="#990000">,</font> m<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            Panic<font color="#990000">.</font><b><font color="#000000">panic</font></b><font color="#990000">(</font>Panic<font color="#990000">.</font>DIVISION_BY_ZERO<font color="#990000">);</font>
         <font color="#FF0000">}</font>
         <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the square root of a number. If the number is not a perfect square, the value is rounded down.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the modular exponentiation of the specified base, exponent and modulus (b ** e % m).</font></i>
+<i><font color="#9A1900">     * It includes a success flag indicating if the operation succeeded. Operation will be marked has failed if trying</font></i>
+<i><font color="#9A1900">     * to operate modulo 0 or if the underlying precompile reverted.</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * Inspired by Henry S. Warren, Jr.'s "Hacker's Delight" (Chapter 11).</font></i>
+<i><font color="#9A1900">     * IMPORTANT: The result is only valid if the success flag is true. When using this function, make sure the chain</font></i>
+<i><font color="#9A1900">     * you're using it on supports the precompiled contract for modular exponentiation at address 0x05 as specified in</font></i>
+<i><font color="#9A1900">     * </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-198</font></u><i><font color="#9A1900">[EIP-198]. Otherwise, the underlying function will succeed given the lack</font></i>
+<i><font color="#9A1900">     * of a revert, but the result may be incorrectly interpreted as 0.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>a <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#0000FF">return</font></b> <font color="#993399">0</font><font color="#990000">;</font>
-        <font color="#FF0000">}</font>
+    <font color="#008080">function</font> <b><font color="#000000">tryModExp</font></b><font color="#990000">(</font><font color="#008080">uint256</font> b<font color="#990000">,</font> <font color="#008080">uint256</font> e<font color="#990000">,</font> <font color="#008080">uint256</font> m<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>m <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+        <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+        assembly <font color="#FF0000">{</font>
+            <font color="#008080">let</font> ptr <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font><font color="#993399">0x40</font><font color="#990000">)</font>
+            <i><font color="#9A1900">// | Offset    | Content    | Content (Hex)                                                      |</font></i>
+            <i><font color="#9A1900">// |-----------|------------|--------------------------------------------------------------------|</font></i>
+            <i><font color="#9A1900">// | 0x00:0x1f | size of b  | 0x0000000000000000000000000000000000000000000000000000000000000020 |</font></i>
+            <i><font color="#9A1900">// | 0x20:0x3f | size of e  | 0x0000000000000000000000000000000000000000000000000000000000000020 |</font></i>
+            <i><font color="#9A1900">// | 0x40:0x5f | size of m  | 0x0000000000000000000000000000000000000000000000000000000000000020 |</font></i>
+            <i><font color="#9A1900">// | 0x60:0x7f | value of b | 0x&lt;.............................................................b&gt; |</font></i>
+            <i><font color="#9A1900">// | 0x80:0x9f | value of e | 0x&lt;.............................................................e&gt; |</font></i>
+            <i><font color="#9A1900">// | 0xa0:0xbf | value of m | 0x&lt;.............................................................m&gt; |</font></i>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <font color="#993399">0x20</font><font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x40</font><font color="#990000">),</font> <font color="#993399">0x20</font><font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x60</font><font color="#990000">),</font> b<font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x80</font><font color="#990000">),</font> e<font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0xa0</font><font color="#990000">),</font> m<font color="#990000">)</font>
 
-        <i><font color="#9A1900">// For our first guess, we get the biggest power of 2 which is smaller than the square root of the target.</font></i>
-        <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// We know that the "msb" (most significant bit) of our target number `a` is a power of 2 such that we have</font></i>
-        <i><font color="#9A1900">// `msb(a) &lt;= a &lt; 2*msb(a)`. This value can be written `msb(a)=2**k` with `k=log2(a)`.</font></i>
-        <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// This can be rewritten `2**log2(a) &lt;= a &lt; 2**(log2(a) + 1)`</font></i>
-        <i><font color="#9A1900">// → `sqrt(2**k) &lt;= sqrt(a) &lt; sqrt(2**(k+1))`</font></i>
-        <i><font color="#9A1900">// → `2**(k/2) &lt;= sqrt(a) &lt; 2**((k+1)/2) &lt;= 2**(k/2 + 1)`</font></i>
-        <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// Consequently, `2**(log2(a) / 2)` is a good first approximation of `sqrt(a)` with at least 1 correct bit.</font></i>
-        <font color="#008080">uint256</font> result <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#990000">(</font><b><font color="#000000">log2</font></b><font color="#990000">(</font>a<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">);</font>
-
-        <i><font color="#9A1900">// At this point `result` is an estimation with one bit of precision. We know the true value is a uint128,</font></i>
-        <i><font color="#9A1900">// since it is the square root of a uint256. Newton's method converges quadratically (precision doubles at</font></i>
-        <i><font color="#9A1900">// every iteration). We thus need at most 7 iteration to turn our partial result with one bit of precision</font></i>
-        <i><font color="#9A1900">// into the expected uint128 result.</font></i>
-        unchecked <font color="#FF0000">{</font>
-            result <font color="#990000">=</font> <font color="#990000">(</font>result <font color="#990000">+</font> a <font color="#990000">/</font> result<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font>
-            result <font color="#990000">=</font> <font color="#990000">(</font>result <font color="#990000">+</font> a <font color="#990000">/</font> result<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font>
-            result <font color="#990000">=</font> <font color="#990000">(</font>result <font color="#990000">+</font> a <font color="#990000">/</font> result<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font>
-            result <font color="#990000">=</font> <font color="#990000">(</font>result <font color="#990000">+</font> a <font color="#990000">/</font> result<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font>
-            result <font color="#990000">=</font> <font color="#990000">(</font>result <font color="#990000">+</font> a <font color="#990000">/</font> result<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font>
-            result <font color="#990000">=</font> <font color="#990000">(</font>result <font color="#990000">+</font> a <font color="#990000">/</font> result<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font>
-            result <font color="#990000">=</font> <font color="#990000">(</font>result <font color="#990000">+</font> a <font color="#990000">/</font> result<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font>
-            <b><font color="#0000FF">return</font></b> <b><font color="#000000">min</font></b><font color="#990000">(</font>result<font color="#990000">,</font> a <font color="#990000">/</font> result<font color="#990000">);</font>
+            <i><font color="#9A1900">// Given the result &lt; m, it's guaranteed to fit in 32 bytes,</font></i>
+            <i><font color="#9A1900">// so we can use the memory scratch space located at offset 0.</font></i>
+            success <font color="#990000">:=</font> <b><font color="#000000">staticcall</font></b><font color="#990000">(</font><b><font color="#000000">gas</font></b><font color="#990000">(),</font> <font color="#993399">0x05</font><font color="#990000">,</font> ptr<font color="#990000">,</font> <font color="#993399">0xc0</font><font color="#990000">,</font> <font color="#993399">0x00</font><font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">)</font>
+            result <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font><font color="#993399">0x00</font><font color="#990000">)</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@notice</font><i><font color="#9A1900"> Calculates sqrt(a), following the selected rounding direction.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {modExp} that supports inputs of arbitrary length.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">modExp</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> b<font color="#990000">,</font> bytes <font color="#008080">memory</font> e<font color="#990000">,</font> bytes <font color="#008080">memory</font> m<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> result<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">tryModExp</font></b><font color="#990000">(</font>b<font color="#990000">,</font> e<font color="#990000">,</font> m<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            Panic<font color="#990000">.</font><b><font color="#000000">panic</font></b><font color="#990000">(</font>Panic<font color="#990000">.</font>DIVISION_BY_ZERO<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {tryModExp} that supports inputs of arbitrary length.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryModExp</font></b><font color="#990000">(</font>
+        bytes <font color="#008080">memory</font> b<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> e<font color="#990000">,</font>
+        bytes memory m
+    <font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">_zeroBytes</font></b><font color="#990000">(</font>m<font color="#990000">))</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">bytes</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
+
+        <font color="#008080">uint256</font> mLen <font color="#990000">=</font> m<font color="#990000">.</font>length<font color="#990000">;</font>
+
+        <i><font color="#9A1900">// Encode call args in result and move the free memory pointer</font></i>
+        result <font color="#990000">=</font> abi<font color="#990000">.</font><b><font color="#000000">encodePacked</font></b><font color="#990000">(</font>b<font color="#990000">.</font>length<font color="#990000">,</font> e<font color="#990000">.</font>length<font color="#990000">,</font> mLen<font color="#990000">,</font> b<font color="#990000">,</font> e<font color="#990000">,</font> m<font color="#990000">);</font>
+
+        <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+        assembly <font color="#FF0000">{</font>
+            <font color="#008080">let</font> dataPtr <font color="#990000">:=</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>result<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">)</font>
+            <i><font color="#9A1900">// Write result on top of args to avoid allocating extra memory.</font></i>
+            success <font color="#990000">:=</font> <b><font color="#000000">staticcall</font></b><font color="#990000">(</font><b><font color="#000000">gas</font></b><font color="#990000">(),</font> <font color="#993399">0x05</font><font color="#990000">,</font> dataPtr<font color="#990000">,</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>result<font color="#990000">),</font> dataPtr<font color="#990000">,</font> mLen<font color="#990000">)</font>
+            <i><font color="#9A1900">// Overwrite the length.</font></i>
+            <i><font color="#9A1900">// result.length &gt; returndatasize() is guaranteed because returndatasize() == m.length</font></i>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font>result<font color="#990000">,</font> mLen<font color="#990000">)</font>
+            <i><font color="#9A1900">// Set the memory pointer after the returned data.</font></i>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><font color="#993399">0x40</font><font color="#990000">,</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>dataPtr<font color="#990000">,</font> mLen<font color="#990000">))</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns whether the provided byte array is zero.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_zeroBytes</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> byteArray<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> byteArray<font color="#990000">.</font>length<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>byteArray<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the square root of a number. If the number is not a perfect square, the value is rounded</font></i>
+<i><font color="#9A1900">     * towards zero.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * This method is based on Newton's method for computing square roots; the algorithm is restricted to only</font></i>
+<i><font color="#9A1900">     * using integer operations.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// Take care of easy edge cases when a == 0 or a == 1</font></i>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>a <font color="#990000">&lt;=</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <b><font color="#0000FF">return</font></b> a<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+
+            <i><font color="#9A1900">// In this function, we use Newton's method to get a root of `f(x) := x² - a`. It involves building a</font></i>
+            <i><font color="#9A1900">// sequence x_n that converges toward sqrt(a). For each iteration x_n, we also define the error between</font></i>
+            <i><font color="#9A1900">// the current value as `ε_n = | x_n - sqrt(a) |`.</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// For our first estimation, we consider `e` the smallest power of 2 which is bigger than the square root</font></i>
+            <i><font color="#9A1900">// of the target. (i.e. `2**(e-1) ≤ sqrt(a) &lt; 2**e`). We know that `e ≤ 128` because `(2¹²⁸)² = 2²⁵⁶` is</font></i>
+            <i><font color="#9A1900">// bigger than any uint256.</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// By noticing that</font></i>
+            <i><font color="#9A1900">// `2**(e-1) ≤ sqrt(a) &lt; 2**e → (2**(e-1))² ≤ a &lt; (2**e)² → 2**(2*e-2) ≤ a &lt; 2**(2*e)`</font></i>
+            <i><font color="#9A1900">// we can deduce that `e - 1` is `log2(a) / 2`. We can thus compute `x_n = 2**(e-1)` using a method similar</font></i>
+            <i><font color="#9A1900">// to the msb function.</font></i>
+            <font color="#008080">uint256</font> aa <font color="#990000">=</font> a<font color="#990000">;</font>
+            <font color="#008080">uint256</font> xn <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>aa <font color="#990000">&gt;=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">128</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                aa <font color="#990000">&gt;&gt;=</font> <font color="#993399">128</font><font color="#990000">;</font>
+                xn <font color="#990000">&lt;&lt;=</font> <font color="#993399">64</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>aa <font color="#990000">&gt;=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">64</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                aa <font color="#990000">&gt;&gt;=</font> <font color="#993399">64</font><font color="#990000">;</font>
+                xn <font color="#990000">&lt;&lt;=</font> <font color="#993399">32</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>aa <font color="#990000">&gt;=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">32</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                aa <font color="#990000">&gt;&gt;=</font> <font color="#993399">32</font><font color="#990000">;</font>
+                xn <font color="#990000">&lt;&lt;=</font> <font color="#993399">16</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>aa <font color="#990000">&gt;=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">16</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                aa <font color="#990000">&gt;&gt;=</font> <font color="#993399">16</font><font color="#990000">;</font>
+                xn <font color="#990000">&lt;&lt;=</font> <font color="#993399">8</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>aa <font color="#990000">&gt;=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                aa <font color="#990000">&gt;&gt;=</font> <font color="#993399">8</font><font color="#990000">;</font>
+                xn <font color="#990000">&lt;&lt;=</font> <font color="#993399">4</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>aa <font color="#990000">&gt;=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">4</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                aa <font color="#990000">&gt;&gt;=</font> <font color="#993399">4</font><font color="#990000">;</font>
+                xn <font color="#990000">&lt;&lt;=</font> <font color="#993399">2</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>aa <font color="#990000">&gt;=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">2</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                xn <font color="#990000">&lt;&lt;=</font> <font color="#993399">1</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+
+            <i><font color="#9A1900">// We now have x_n such that `x_n = 2**(e-1) ≤ sqrt(a) &lt; 2**e = 2 * x_n`. This implies ε_n ≤ 2**(e-1).</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// We can refine our estimation by noticing that the the middle of that interval minimizes the error.</font></i>
+            <i><font color="#9A1900">// If we move x_n to equal 2**(e-1) + 2**(e-2), then we reduce the error to ε_n ≤ 2**(e-2).</font></i>
+            <i><font color="#9A1900">// This is going to be our x_0 (and ε_0)</font></i>
+            xn <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> xn<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// ε_0 := | x_0 - sqrt(a) | ≤ 2**(e-2)</font></i>
+
+            <i><font color="#9A1900">// From here, Newton's method give us:</font></i>
+            <i><font color="#9A1900">// x_{n+1} = (x_n + a / x_n) / 2</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// One should note that:</font></i>
+            <i><font color="#9A1900">// x_{n+1}² - a = ((x_n + a / x_n) / 2)² - a</font></i>
+            <i><font color="#9A1900">//              = ((x_n² + a) / (2 * x_n))² - a</font></i>
+            <i><font color="#9A1900">//              = (x_n⁴ + 2 * a * x_n² + a²) / (4 * x_n²) - a</font></i>
+            <i><font color="#9A1900">//              = (x_n⁴ + 2 * a * x_n² + a² - 4 * a * x_n²) / (4 * x_n²)</font></i>
+            <i><font color="#9A1900">//              = (x_n⁴ - 2 * a * x_n² + a²) / (4 * x_n²)</font></i>
+            <i><font color="#9A1900">//              = (x_n² - a)² / (2 * x_n)²</font></i>
+            <i><font color="#9A1900">//              = ((x_n² - a) / (2 * x_n))²</font></i>
+            <i><font color="#9A1900">//              ≥ 0</font></i>
+            <i><font color="#9A1900">// Which proves that for all n ≥ 1, sqrt(a) ≤ x_n</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// This gives us the proof of quadratic convergence of the sequence:</font></i>
+            <i><font color="#9A1900">// ε_{n+1} = | x_{n+1} - sqrt(a) |</font></i>
+            <i><font color="#9A1900">//         = | (x_n + a / x_n) / 2 - sqrt(a) |</font></i>
+            <i><font color="#9A1900">//         = | (x_n² + a - 2*x_n*sqrt(a)) / (2 * x_n) |</font></i>
+            <i><font color="#9A1900">//         = | (x_n - sqrt(a))² / (2 * x_n) |</font></i>
+            <i><font color="#9A1900">//         = | ε_n² / (2 * x_n) |</font></i>
+            <i><font color="#9A1900">//         = ε_n² / | (2 * x_n) |</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// For the first iteration, we have a special case where x_0 is known:</font></i>
+            <i><font color="#9A1900">// ε_1 = ε_0² / | (2 * x_0) |</font></i>
+            <i><font color="#9A1900">//     ≤ (2**(e-2))² / (2 * (2**(e-1) + 2**(e-2)))</font></i>
+            <i><font color="#9A1900">//     ≤ 2**(2*e-4) / (3 * 2**(e-1))</font></i>
+            <i><font color="#9A1900">//     ≤ 2**(e-3) / 3</font></i>
+            <i><font color="#9A1900">//     ≤ 2**(e-3-log2(3))</font></i>
+            <i><font color="#9A1900">//     ≤ 2**(e-4.5)</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// For the following iterations, we use the fact that, 2**(e-1) ≤ sqrt(a) ≤ x_n:</font></i>
+            <i><font color="#9A1900">// ε_{n+1} = ε_n² / | (2 * x_n) |</font></i>
+            <i><font color="#9A1900">//         ≤ (2**(e-k))² / (2 * 2**(e-1))</font></i>
+            <i><font color="#9A1900">//         ≤ 2**(2*e-2*k) / 2**e</font></i>
+            <i><font color="#9A1900">//         ≤ 2**(e-2*k)</font></i>
+            xn <font color="#990000">=</font> <font color="#990000">(</font>xn <font color="#990000">+</font> a <font color="#990000">/</font> xn<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// ε_1 := | x_1 - sqrt(a) | ≤ 2**(e-4.5)  -- special case, see above</font></i>
+            xn <font color="#990000">=</font> <font color="#990000">(</font>xn <font color="#990000">+</font> a <font color="#990000">/</font> xn<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// ε_2 := | x_2 - sqrt(a) | ≤ 2**(e-9)    -- general case with k = 4.5</font></i>
+            xn <font color="#990000">=</font> <font color="#990000">(</font>xn <font color="#990000">+</font> a <font color="#990000">/</font> xn<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// ε_3 := | x_3 - sqrt(a) | ≤ 2**(e-18)   -- general case with k = 9</font></i>
+            xn <font color="#990000">=</font> <font color="#990000">(</font>xn <font color="#990000">+</font> a <font color="#990000">/</font> xn<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// ε_4 := | x_4 - sqrt(a) | ≤ 2**(e-36)   -- general case with k = 18</font></i>
+            xn <font color="#990000">=</font> <font color="#990000">(</font>xn <font color="#990000">+</font> a <font color="#990000">/</font> xn<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// ε_5 := | x_5 - sqrt(a) | ≤ 2**(e-72)   -- general case with k = 36</font></i>
+            xn <font color="#990000">=</font> <font color="#990000">(</font>xn <font color="#990000">+</font> a <font color="#990000">/</font> xn<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// ε_6 := | x_6 - sqrt(a) | ≤ 2**(e-144)  -- general case with k = 72</font></i>
+
+            <i><font color="#9A1900">// Because e ≤ 128 (as discussed during the first estimation phase), we know have reached a precision</font></i>
+            <i><font color="#9A1900">// ε_6 ≤ 2**(e-144) &lt; 1. Given we're operating on integers, then we can ensure that xn is now either</font></i>
+            <i><font color="#9A1900">// sqrt(a) or sqrt(a) + 1.</font></i>
+            <b><font color="#0000FF">return</font></b> xn <font color="#990000">-</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>xn <font color="#990000">&gt;</font> a <font color="#990000">/</font> xn<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Calculates sqrt(a), following the selected rounding direction.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         unchecked <font color="#FF0000">{</font>
             <font color="#008080">uint256</font> result <font color="#990000">=</font> <b><font color="#000000">sqrt</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
-            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> result <font color="#990000">*</font> result <font color="#990000">&lt;</font> a <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font><b><font color="#000000">unsignedRoundsUp</font></b><font color="#990000">(</font>rounding<font color="#990000">)</font> <font color="#990000">&amp;&amp;</font> result <font color="#990000">*</font> result <font color="#990000">&lt;</font> a<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 2, rounded down, of a positive value.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 2 of a positive value rounded towards zero.</font></i>
 <i><font color="#9A1900">     * Returns 0 if given 0.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">log2</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <font color="#008080">uint256</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#008080">uint256</font> exp<font color="#990000">;</font>
         unchecked <font color="#FF0000">{</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">128</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">128</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">128</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">64</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">64</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">64</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">32</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">32</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">32</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">16</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">16</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">16</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">8</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">8</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">8</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">4</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">4</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">4</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">2</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">2</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">2</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                result <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
+            exp <font color="#990000">=</font> <font color="#993399">128</font> <font color="#990000">*</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">128</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> exp<font color="#990000">;</font>
+            result <font color="#990000">+=</font> exp<font color="#990000">;</font>
+
+            exp <font color="#990000">=</font> <font color="#993399">64</font> <font color="#990000">*</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">64</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> exp<font color="#990000">;</font>
+            result <font color="#990000">+=</font> exp<font color="#990000">;</font>
+
+            exp <font color="#990000">=</font> <font color="#993399">32</font> <font color="#990000">*</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">32</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> exp<font color="#990000">;</font>
+            result <font color="#990000">+=</font> exp<font color="#990000">;</font>
+
+            exp <font color="#990000">=</font> <font color="#993399">16</font> <font color="#990000">*</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">16</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> exp<font color="#990000">;</font>
+            result <font color="#990000">+=</font> exp<font color="#990000">;</font>
+
+            exp <font color="#990000">=</font> <font color="#993399">8</font> <font color="#990000">*</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> exp<font color="#990000">;</font>
+            result <font color="#990000">+=</font> exp<font color="#990000">;</font>
+
+            exp <font color="#990000">=</font> <font color="#993399">4</font> <font color="#990000">*</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">4</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> exp<font color="#990000">;</font>
+            result <font color="#990000">+=</font> exp<font color="#990000">;</font>
+
+            exp <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> exp<font color="#990000">;</font>
+            result <font color="#990000">+=</font> exp<font color="#990000">;</font>
+
+            result <font color="#990000">+=</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#993399">1</font><font color="#990000">);</font>
         <font color="#FF0000">}</font>
         <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
     <font color="#FF0000">}</font>
@@ -252,12 +563,12 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">log2</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         unchecked <font color="#FF0000">{</font>
             <font color="#008080">uint256</font> result <font color="#990000">=</font> <b><font color="#000000">log2</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
-            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> <font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> result <font color="#990000">&lt;</font> value <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font><b><font color="#000000">unsignedRoundsUp</font></b><font color="#990000">(</font>rounding<font color="#990000">)</font> <font color="#990000">&amp;&amp;</font> <font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> result <font color="#990000">&lt;</font> value<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 10, rounded down, of a positive value.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 10 of a positive value rounded towards zero.</font></i>
 <i><font color="#9A1900">     * Returns 0 if given 0.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">log10</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
@@ -301,38 +612,37 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">log10</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         unchecked <font color="#FF0000">{</font>
             <font color="#008080">uint256</font> result <font color="#990000">=</font> <b><font color="#000000">log10</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
-            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> <font color="#993399">10</font> <font color="#990000">**</font> result <font color="#990000">&lt;</font> value <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font><b><font color="#000000">unsignedRoundsUp</font></b><font color="#990000">(</font>rounding<font color="#990000">)</font> <font color="#990000">&amp;&amp;</font> <font color="#993399">10</font> <font color="#990000">**</font> result <font color="#990000">&lt;</font> value<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 256, rounded down, of a positive value.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Return the log in base 256 of a positive value rounded towards zero.</font></i>
 <i><font color="#9A1900">     * Returns 0 if given 0.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">log256</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <font color="#008080">uint256</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#008080">uint256</font> isGt<font color="#990000">;</font>
         unchecked <font color="#FF0000">{</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">128</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">128</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">16</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">64</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">64</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">8</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">32</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">32</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">4</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">16</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                value <font color="#990000">&gt;&gt;=</font> <font color="#993399">16</font><font color="#990000">;</font>
-                result <font color="#990000">+=</font> <font color="#993399">2</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">8</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                result <font color="#990000">+=</font> <font color="#993399">1</font><font color="#990000">;</font>
-            <font color="#FF0000">}</font>
+            isGt <font color="#990000">=</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">128</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> isGt <font color="#990000">*</font> <font color="#993399">128</font><font color="#990000">;</font>
+            result <font color="#990000">+=</font> isGt <font color="#990000">*</font> <font color="#993399">16</font><font color="#990000">;</font>
+
+            isGt <font color="#990000">=</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">64</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> isGt <font color="#990000">*</font> <font color="#993399">64</font><font color="#990000">;</font>
+            result <font color="#990000">+=</font> isGt <font color="#990000">*</font> <font color="#993399">8</font><font color="#990000">;</font>
+
+            isGt <font color="#990000">=</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">32</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> isGt <font color="#990000">*</font> <font color="#993399">32</font><font color="#990000">;</font>
+            result <font color="#990000">+=</font> isGt <font color="#990000">*</font> <font color="#993399">4</font><font color="#990000">;</font>
+
+            isGt <font color="#990000">=</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">16</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+            value <font color="#990000">&gt;&gt;=</font> isGt <font color="#990000">*</font> <font color="#993399">16</font><font color="#990000">;</font>
+            result <font color="#990000">+=</font> isGt <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">;</font>
+
+            result <font color="#990000">+=</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
         <font color="#FF0000">}</font>
         <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
     <font color="#FF0000">}</font>
@@ -344,8 +654,15 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">log256</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         unchecked <font color="#FF0000">{</font>
             <font color="#008080">uint256</font> result <font color="#990000">=</font> <b><font color="#000000">log256</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
-            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> <font color="#990000">(</font>rounding <font color="#990000">==</font> Rounding<font color="#990000">.</font>Up <font color="#990000">&amp;&amp;</font> <font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#990000">(</font>result <font color="#990000">&lt;&lt;</font> <font color="#993399">3</font><font color="#990000">)</font> <font color="#990000">&lt;</font> value <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> result <font color="#990000">+</font> SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font><b><font color="#000000">unsignedRoundsUp</font></b><font color="#990000">(</font>rounding<font color="#990000">)</font> <font color="#990000">&amp;&amp;</font> <font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#990000">(</font>result <font color="#990000">&lt;&lt;</font> <font color="#993399">3</font><font color="#990000">)</font> <font color="#990000">&lt;</font> value<font color="#990000">);</font>
         <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns whether a provided rounding mode is considered rounding up for unsigned integers.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">unsignedRoundsUp</font></b><font color="#990000">(</font><font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint8</font></b><font color="#990000">(</font>rounding<font color="#990000">)</font> <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>

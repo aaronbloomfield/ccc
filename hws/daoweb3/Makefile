@@ -5,3 +5,6 @@ doc:
 	source-highlight -d *.py
 	-solc --abi IDAO.sol > IDAO.abi.txt
 	../maketabs.py
+
+sync:
+	/bin/cp -f ../tokens/IERC165.sol .

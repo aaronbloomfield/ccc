@@ -5,7 +5,7 @@
 
 import "./IERC165.sol";
 
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.24;
 
 // This file is heavily adapted from the DAO interface at
 // https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol
