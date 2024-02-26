@@ -85,7 +85,7 @@ Course calendar
 | 4  | Feb 5  | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 6.10; Wed: bitcoin to 7.17; Fri: bitcoin to 7.39 |
 | 5  | Feb 12 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) | Mon: finished bitcoin; Wed: ethereum to 3.19; Fri: ethereum to 3.31 |
 | 6  | Feb 19 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/), [Solidity](../slides/solidity.html#/) | Mon: finished ethereum, mining to 3.15; Wed: mining to 5.18; Fri: mining to 7.7 |
-| 7  | Feb 26 | M,W,F | midterm, S4 (ETH Private) | [Solidity](../slides/solidity.html#/). midterm on Wed | |
+| 7  | Feb 26 | M,W,F | midterm, S4 (ETH Private) | [Solidity](../slides/solidity.html#/). midterm on Wed | Mon: solidity to 4.10; Wed: midterm |
 |    | Mar 4  |       | Spring break        | Spring break | |
 | 8  | Mar 11 | M,W,F | S5 (dApp intro)     | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) | |
 | 9  | Mar 18 | M,W,F | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) | |
