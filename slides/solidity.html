@@ -969,12 +969,12 @@ require(success, "Failed to transfer ETH");
 - Given a field in Foo such as either:
 ```
 Bar public b;
-address public b;
+address public c;
 ```
 - Then we can initialize it via either (respectively):
 ```
 b = new Bar();
-b = address(new Bar());
+c = address(new Bar());
 ```
 
 
