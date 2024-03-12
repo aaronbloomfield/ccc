@@ -131,6 +131,7 @@ The ABI for `IGradebook.sol` is as follows, can can be copied by clicking on: <s
 - Note that ONLY the instructor can designate other TAs
 - The `supportsInterface()` function should be exactly as is specified above
 - The `requestTAAccess()` will grant *anybody* who calls it TA access; it's not realistic in a contract deployed on a public blockchain, but we need it to test your code (the details are in the IGradebook.sol comments for that function)
+- Your gradebook MUST index assignments starting from 0 so that our auto-grading scripts will work.  Thus, the first assignment created will have an index of 0, the second an index of 1, etc.
 
 The first six methods (after the two events) in the [IGradebook.sol](IGradebook.sol.html) ([src](IGradebook.sol)) interface are getter functions.  As long as you set the visibility of the field in the contract as `public`, then the getter method is created for you, as [discussed in the lecture slides](../../slides/solidity.html#/getters).  For example, for the getter function `function num_assignments() external returns (uint)`, the appropriate field declaration would be `uint public override num_assignments;`.  The lecture slide set explains this a bit more.
 

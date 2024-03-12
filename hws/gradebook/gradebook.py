@@ -83,6 +83,11 @@ sanity_checks = {
 	# Is your gradebook contract opening line *exactly:*
 	# `contract Gradebook is IGradebook {`?
 	'contract_opening_line_is_correct': False,
+
+	# Does your gradebook index assignments starting from 0?  Thus, the first
+	# assignment created will have an index of 0, the second an index of 1, etc.
+	'assignments_index_from_0': False,
+	
 }
 
 
