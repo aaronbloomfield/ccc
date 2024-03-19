@@ -10,10 +10,12 @@ interface IGradebook {
     //------------------------------------------------------------
     // Events
 
-    // This should be emitted when an assignment is created
+    // This should be emitted when an assignment is created; the parameter is
+    // the assignment id.
     event assignmentCreationEvent (uint indexed _id);
 
-    // This should be emitted when a grade is updated
+    // This should be emitted when a grade is updated; the parameter is the
+    // assignment id.
     event gradeEntryEvent (uint indexed _id);
 
     //------------------------------------------------------------
