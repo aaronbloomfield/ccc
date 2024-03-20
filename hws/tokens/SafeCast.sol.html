@@ -1,0 +1,1177 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>SafeCast.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/SafeCast.sol)</font></i>
+<i><font color="#9A1900">// This file was procedurally generated from scripts/generate/templates/SafeCast.js.</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Wrappers over Solidity's uintXX/intXX/bool casting operators with added overflow</font></i>
+<i><font color="#9A1900"> * checks.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * Downcasting from uint256/int256 in Solidity does not revert on overflow. This can</font></i>
+<i><font color="#9A1900"> * easily result in undesired exploitation or bugs, since developers usually</font></i>
+<i><font color="#9A1900"> * assume that overflows raise errors. `SafeCast` restores this intuition by</font></i>
+<i><font color="#9A1900"> * reverting the transaction when such an operation overflows.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * Using this library instead of the unchecked operations eliminates an entire</font></i>
+<i><font color="#9A1900"> * class of bugs, so it's recommended to use it always.</font></i>
+<i><font color="#9A1900"> */</font></i>
+<font color="#008080">library</font> SafeCast <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Value doesn't fit in an uint of `bits` size.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#008080">uint8</font> bits<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> An int value doesn't fit in an uint of `bits` size.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedIntToUint</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Value doesn't fit in an int of `bits` size.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#008080">uint8</font> bits<font color="#990000">,</font> <font color="#008080">int256</font> value<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> An uint value doesn't fit in an int of `bits` size.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedUintToInt</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint248 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint248).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint248` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 248 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint248</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint248<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint248<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">248</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint248</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint240 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint240).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint240` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 240 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint240</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint240<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint240<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">240</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint240</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint232 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint232).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint232` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 232 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint232</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint232<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint232<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">232</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint232</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint224 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint224).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint224` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 224 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint224</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint224<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint224<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">224</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint224</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint216 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint216).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint216` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 216 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint216</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint216<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint216<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">216</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint216</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint208 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint208).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint208` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 208 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint208</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint208<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint208<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">208</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint208</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint200 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint200).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint200` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 200 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint200</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint200<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint200<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">200</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint200</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint192 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint192).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint192` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 192 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint192</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint192<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint192<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">192</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint192</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint184 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint184).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint184` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 184 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint184</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint184<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint184<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">184</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint184</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint176 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint176).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint176` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 176 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint176</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint176<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint176<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">176</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint176</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint168 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint168).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint168` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 168 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint168</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint168<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint168<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">168</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint168</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint160 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint160).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint160` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 160 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint160</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint160<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint160<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">160</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint160</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint152 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint152).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint152` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 152 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint152</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint152<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint152<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">152</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint152</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint144 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint144).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint144` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 144 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint144</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint144<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint144<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">144</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint144</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint136 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint136).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint136` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 136 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint136</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint136<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint136<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">136</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint136</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint128 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint128).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint128` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 128 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint128</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint128<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint128<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">128</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint128</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint120 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint120).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint120` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 120 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint120</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint120<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint120<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">120</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint120</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint112 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint112).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint112` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 112 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint112</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint112<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint112<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">112</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint112</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint104 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint104).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint104` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 104 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint104</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint104<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint104<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">104</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint104</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint96 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint96).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint96` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 96 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint96</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint96<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint96<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">96</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint96</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint88 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint88).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint88` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 88 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint88</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint88<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint88<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">88</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint88</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint80 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint80).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint80` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 80 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint80</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint80<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint80<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">80</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint80</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint72 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint72).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint72` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 72 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint72</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint72<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint72<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">72</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint72</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint64 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint64).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint64` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 64 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint64</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint64<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint64<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">64</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint64</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint56 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint56).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint56` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 56 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint56</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint56<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint56<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">56</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint56</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint48 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint48).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint48` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 48 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint48</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint48<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint48<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">48</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint48</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint40 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint40).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint40` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 40 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint40</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint40<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint40<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">40</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint40</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint32 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint32).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint32` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 32 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint32</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint32<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint32<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint32</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint24 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint24).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint24` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 24 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint24</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint24<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint24<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">24</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint24</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint16 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint16).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint16` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 16 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint16</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint16<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint16<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">16</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint16</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted uint8 from uint256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is greater than largest uint8).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `uint8` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 8 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint8</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint8<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#993399">8</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint8</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts a signed int256 into an unsigned uint256.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must be greater than or equal to 0.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint256</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&lt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntToUint</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint256</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int248 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int248 or</font></i>
+<i><font color="#9A1900">     * greater than largest int248).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int248` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 248 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt248</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int248</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int248</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">248</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int240 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int240 or</font></i>
+<i><font color="#9A1900">     * greater than largest int240).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int240` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 240 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt240</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int240</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int240</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">240</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int232 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int232 or</font></i>
+<i><font color="#9A1900">     * greater than largest int232).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int232` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 232 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt232</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int232</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int232</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">232</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int224 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int224 or</font></i>
+<i><font color="#9A1900">     * greater than largest int224).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int224` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 224 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt224</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int224</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int224</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">224</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int216 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int216 or</font></i>
+<i><font color="#9A1900">     * greater than largest int216).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int216` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 216 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt216</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int216</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int216</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">216</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int208 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int208 or</font></i>
+<i><font color="#9A1900">     * greater than largest int208).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int208` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 208 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt208</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int208</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int208</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">208</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int200 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int200 or</font></i>
+<i><font color="#9A1900">     * greater than largest int200).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int200` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 200 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt200</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int200</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int200</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">200</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int192 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int192 or</font></i>
+<i><font color="#9A1900">     * greater than largest int192).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int192` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 192 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt192</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int192</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int192</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">192</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int184 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int184 or</font></i>
+<i><font color="#9A1900">     * greater than largest int184).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int184` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 184 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt184</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int184</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int184</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">184</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int176 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int176 or</font></i>
+<i><font color="#9A1900">     * greater than largest int176).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int176` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 176 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt176</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int176</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int176</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">176</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int168 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int168 or</font></i>
+<i><font color="#9A1900">     * greater than largest int168).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int168` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 168 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt168</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int168</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int168</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">168</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int160 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int160 or</font></i>
+<i><font color="#9A1900">     * greater than largest int160).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int160` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 160 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt160</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int160</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int160</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">160</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int152 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int152 or</font></i>
+<i><font color="#9A1900">     * greater than largest int152).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int152` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 152 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt152</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int152</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int152</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">152</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int144 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int144 or</font></i>
+<i><font color="#9A1900">     * greater than largest int144).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int144` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 144 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt144</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int144</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int144</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">144</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int136 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int136 or</font></i>
+<i><font color="#9A1900">     * greater than largest int136).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int136` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 136 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt136</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int136</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int136</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">136</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int128 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int128 or</font></i>
+<i><font color="#9A1900">     * greater than largest int128).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int128` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 128 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt128</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int128</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int128</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">128</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int120 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int120 or</font></i>
+<i><font color="#9A1900">     * greater than largest int120).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int120` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 120 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt120</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int120</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int120</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">120</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int112 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int112 or</font></i>
+<i><font color="#9A1900">     * greater than largest int112).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int112` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 112 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt112</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int112</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int112</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">112</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int104 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int104 or</font></i>
+<i><font color="#9A1900">     * greater than largest int104).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int104` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 104 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt104</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int104</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int104</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">104</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int96 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int96 or</font></i>
+<i><font color="#9A1900">     * greater than largest int96).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int96` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 96 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt96</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int96</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int96</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">96</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int88 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int88 or</font></i>
+<i><font color="#9A1900">     * greater than largest int88).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int88` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 88 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt88</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int88</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int88</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">88</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int80 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int80 or</font></i>
+<i><font color="#9A1900">     * greater than largest int80).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int80` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 80 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt80</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int80</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int80</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">80</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int72 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int72 or</font></i>
+<i><font color="#9A1900">     * greater than largest int72).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int72` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 72 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt72</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int72</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int72</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">72</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int64 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int64 or</font></i>
+<i><font color="#9A1900">     * greater than largest int64).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int64` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 64 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt64</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int64</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int64</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">64</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int56 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int56 or</font></i>
+<i><font color="#9A1900">     * greater than largest int56).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int56` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 56 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt56</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int56</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int56</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">56</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int48 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int48 or</font></i>
+<i><font color="#9A1900">     * greater than largest int48).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int48` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 48 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt48</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int48</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int48</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">48</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int40 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int40 or</font></i>
+<i><font color="#9A1900">     * greater than largest int40).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int40` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 40 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt40</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int40</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int40</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">40</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int32 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int32 or</font></i>
+<i><font color="#9A1900">     * greater than largest int32).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int32` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 32 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt32</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int32</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int32</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int24 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int24 or</font></i>
+<i><font color="#9A1900">     * greater than largest int24).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int24` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 24 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt24</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int24</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int24</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">24</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int16 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int16 or</font></i>
+<i><font color="#9A1900">     * greater than largest int16).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int16` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 16 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt16</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int16</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int16</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">16</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the downcasted int8 from int256, reverting on</font></i>
+<i><font color="#9A1900">     * overflow (when the input is less than smallest int8 or</font></i>
+<i><font color="#9A1900">     * greater than largest int8).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Counterpart to Solidity's `int8` operator.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must fit into 8 bits</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt8</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">int8</font> downcasted<font color="#990000">)</font> <font color="#FF0000">{</font>
+        downcasted <font color="#990000">=</font> <b><font color="#000000">int8</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>downcasted <font color="#990000">!=</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#993399">8</font><font color="#990000">,</font> value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts an unsigned uint256 into a signed int256.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * - input must be less than or equal to maxInt256.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toInt256</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// Note: Unsafe cast below is okay because `type(int256).max` is guaranteed to be positive</font></i>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <b><font color="#000000">uint256</font></b><font color="#990000">(</font><b><font color="#000000">type</font></b><font color="#990000">(</font>int256<font color="#990000">).</font>max<font color="#990000">))</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">SafeCastOverflowedUintToInt</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">int256</font></b><font color="#990000">(</font>value<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Cast a boolean (false or true) to a uint256 (0 or 1) with no jump.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toUint</font></b><font color="#990000">(</font><font color="#009900">bool</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> u<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+        assembly <font color="#FF0000">{</font>
+            u <font color="#990000">:=</font> <b><font color="#000000">iszero</font></b><font color="#990000">(</font><b><font color="#000000">iszero</font></b><font color="#990000">(</font>b<font color="#990000">))</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

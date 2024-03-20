@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>ERC721Utils.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+
+import <font color="#FF0000">{</font>IERC721Receiver<font color="#FF0000">}</font> from <font color="#FF0000">"../IERC721Receiver.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">{</font>IERC721Errors<font color="#FF0000">}</font> from <font color="#FF0000">".././draft-IERC6093.sol"</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Library that provide common ERC-721 utility functions.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * See </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-721</font></u><i><font color="#9A1900">[ERC-721].</font></i>
+<i><font color="#9A1900"> */</font></i>
+<font color="#008080">library</font> ERC721Utils <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Performs an acceptance check for the provided `operator` by calling {IERC721-onERC721Received}</font></i>
+<i><font color="#9A1900">     * on the `to` address. The `operator` is generally the address that initiated the token transfer (i.e. `msg.sender`).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * The acceptance call is not executed and treated as a no-op if the target address doesn't contain code (i.e. an EOA).</font></i>
+<i><font color="#9A1900">     * Otherwise, the recipient must implement {IERC721Receiver-onERC721Received} and return the acceptance magic value to accept</font></i>
+<i><font color="#9A1900">     * the transfer.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">checkOnERC721Received</font></b><font color="#990000">(</font>
+        <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font>
+        <font color="#008080">address</font> from<font color="#990000">,</font>
+        <font color="#008080">address</font> to<font color="#990000">,</font>
+        <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
+        bytes memory data
+    <font color="#990000">)</font> internal <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">try</font></b> <b><font color="#000000">IERC721Receiver</font></b><font color="#990000">(</font>to<font color="#990000">).</font><b><font color="#000000">onERC721Received</font></b><font color="#990000">(</font><b><font color="#0000FF">operator</font></b><font color="#990000">,</font> from<font color="#990000">,</font> tokenId<font color="#990000">,</font> data<font color="#990000">)</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes4</font> retval<font color="#990000">)</font> <font color="#FF0000">{</font>
+                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>retval <font color="#990000">!=</font> IERC721Receiver<font color="#990000">.</font>onERC721Received<font color="#990000">.</font>selector<font color="#990000">)</font> <font color="#FF0000">{</font>
+                    <i><font color="#9A1900">// Token rejected</font></i>
+                    <font color="#008080">revert</font> IERC721Errors<font color="#990000">.</font><b><font color="#000000">ERC721InvalidReceiver</font></b><font color="#990000">(</font>to<font color="#990000">);</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font> <b><font color="#0000FF">catch</font></b> <font color="#990000">(</font>bytes <font color="#008080">memory</font> reason<font color="#990000">)</font> <font color="#FF0000">{</font>
+                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>reason<font color="#990000">.</font>length <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                    <i><font color="#9A1900">// non-IERC721Receiver implementer</font></i>
+                    <font color="#008080">revert</font> IERC721Errors<font color="#990000">.</font><b><font color="#000000">ERC721InvalidReceiver</font></b><font color="#990000">(</font>to<font color="#990000">);</font>
+                <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+                    <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+                    assembly <font color="#FF0000">{</font>
+                        <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> reason<font color="#990000">),</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>reason<font color="#990000">))</font>
+                    <font color="#FF0000">}</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

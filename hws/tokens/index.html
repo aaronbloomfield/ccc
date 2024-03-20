@@ -8,18 +8,10 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
+    ul.task-list{list-style: none;}
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel='stylesheet' href='../../markdown.css'></link>
@@ -49,6 +41,7 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
+  
 </head>
 <body>
 <h1 id='ethereum-tokens'>Ethereum Tokens</h1>
@@ -98,7 +91,9 @@
 <li><a href='IERC20Metadata.sol.html'>IERC20Metadata.sol</a> (<a href='IERC20Metadata.sol'>src</a>), as <a href='../../slides/tokens.html#/erc20'>discussed in lecture</a>; this is the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/IERC20Metadata.sol'>OpenZeppellin implementation</a></li>
 <li><a href='ERC20.sol.html'>ERC20.sol</a> (<a href='ERC20.sol'>src</a>); this is the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol'>OpenZeppellin implementation</a></li>
 <li><a href='ITokenCC.sol.html'>ITokenCC.sol</a> (<a href='ITokenCC.sol'>src</a>), as <a href='../../slides/tokens.html#/erc20'>discussed in lecture</a></li>
+<li><a href='draft-IERC6093.sol.html'>draft-IERC6093.sol</a> (<a href='draft-IERC6093.sol'>src</a>) is an imported file needed by some of the above</li>
 </ul>
+<p>You can download <em>all</em> of these files via <a href='sol-includes.zip'>sol-includes.zip</a>; this also includes the includes for the next section.</p>
 <p>The <em>only</em> changes made to the OpenZeppelin code above is the paths in the <code>import</code> statements.</p>
 <p>You should look over and familiarize yourself with all this code. The inheritance hierarchy of this code is shown below.</p>
 <p><img src='inheritance.dot.1.svg'></img></p>
@@ -163,7 +158,7 @@
 <p>You will upload three such images to the URL given on the Canvas landing page.</p>
 <h4 id='part-2-task-2-review-the-starter-code'>Part 2, task 2: Review the starter code</h4>
 <p>The code we are going to start with is the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol'>OpenZeppelin ERC-721 implementation</a> from the the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts'>OpenZeppelin github repo</a>. This code was the same as was discussed in class. Other than the <code>import</code> lines, there have been no changes to the code in this repo.</p>
-<p>In addition to some of the files used above (IERC165.sol. ERC165.sol, and Context.sol), there are a few additional files that this part uses; you will need to familiarize yourself with hwo they work.</p>
+<p>In addition to some of the files used above (IERC165.sol. ERC165.sol, and Context.sol), there are a few additional files that this part uses; you will need to familiarize yourself with how they work.</p>
 <ul>
 <li><a href='Address.sol.html'>Address.sol</a> (<a href='Address.sol'>src</a>) is a library (not a contract!) that provides some useful functions when dealing with Ethereum addresses; this is the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol'>OpenZeppellin implementation</a></li>
 <li><a href='Strings.sol.html'>Strings.sol</a> (<a href='Strings.sol'>src</a>) is a library (not a contract!) that provides some useful String manipulation functions; this is the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol'>OpenZeppellin implementation</a></li>
@@ -177,7 +172,12 @@
 <li><a href='IERC721Metadata.sol.html'>IERC721Metadata.sol</a> (<a href='IERC721Metadata.sol'>src</a>): this add three functions on top of the ERC-721 standard: <code>name()</code>, <code>symbol()</code>, and <code>tokenURI()</code>; the first two are for the NFT manager, the last one is the URI (aka URL) of the image that the NFT represents; this is the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Metadata.sol'>OpenZeppellin implementation</a></li>
 <li><a href='IERC721Receiver.sol.html'>IERC721Receiver.sol</a> (<a href='IERC721Receiver.sol'>src</a>): we won’t use the functionality in this interface, but it is needed for the ERC721.sol file to compile.; this is the <a href='https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol'>OpenZeppellin implementation</a></li>
 <li><a href='INFTManager.sol.html'>INFTManager.sol</a> (<a href='INFTManager.sol'>src</a>): this adds two <code>mintWithURI()</code> functions on top of the IERC721Metadata interface, which allow creation of NFTs, and setting it’s image URI (aka URL) in one function call. This also adds a <code>count()</code> method, which is how many NFTs have been minted by this manager. Note that the <code>mintWithURI()</code> function will return a token ID, which is just a <code>uint</code> that is used to identify (and find) that particular NFT in your token manager.</li>
+<li><a href='ERC721Utils.sol.html'>ERC721Utils.sol</a> (<a href='ERC721Utils.sol'>src</a>) is an imported file needed by some of the above</li>
+<li><a href='Panic.sol.html'>Panic.sol</a> (<a href='Panic.sol'>src</a>) is an imported file needed by some of the above</li>
+<li><a href='SafeCast.sol'>SafeCast.sol</a> (<a href='SafeCast.sol'>src</a>) is an imported file needed by some of the above</li>
+<li><a href='draft-IERC6093.sol.html'>draft-IERC6093.sol</a> (<a href='draft-IERC6093.sol'>src</a>) is an imported file needed by some of the above</li>
 </ul>
+<p>You can download <em>all</em> of these files via <a href='sol-includes.zip'>sol-includes.zip</a>; this also includes the includes for the next section.</p>
 <p>The <em>only</em> changes made to the OpenZeppelin code above is the paths in the <code>import</code> statements.</p>
 <p>Why so many files? Three of the interfaces (IERC165, IERC721, and IERC721Metadata) are Ethereum standards, and the practice is to include them as-is without modifications. Four of the files are utilities (libraries or abstract contracts): Address, Context, Math, and Strings. The INFTManager adds a few functions that we need, and the ERC721.sol is the implementation itself. ERC165.sol is needed for ERC721 to compile. We realize that’s a lot of files to use, but that’s why there are so many of them.</p>
 <p>You should look over and familiarize yourself with this code. The inheritance hierarchy of this code is shown below. Note that two of the entries (<code>Address</code> and <code>Strings</code>) are type substitutions in <code>ERC721.sol</code>. <code>IERC721Recevier</code> is used as a casting type.</p>

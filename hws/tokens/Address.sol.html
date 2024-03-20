@@ -14,24 +14,16 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
+import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <font color="#FF0000">"./Errors.sol"</font><font color="#990000">;</font>
+
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Collection of functions related to the address type</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> Address <font color="#FF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> The ETH balance of the account is not enough to perform the operation.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">error</font> <b><font color="#000000">AddressInsufficientBalance</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">);</font>
-
-    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> There's no code at `target` (it is not a contract).</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">error</font> <b><font color="#000000">AddressEmptyCode</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">);</font>
-
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> A call to an address target failed. The target may have reverted.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">error</font> <b><font color="#000000">FailedInnerCall</font></b><font color="#990000">();</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Replacement for Solidity's `transfer`: sends `amount` wei to</font></i>
@@ -51,12 +43,12 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">sendValue</font></b><font color="#990000">(</font>address <font color="#008080">payable</font> recipient<font color="#990000">,</font> <font color="#008080">uint256</font> amount<font color="#990000">)</font> internal <font color="#FF0000">{</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&lt;</font> amount<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <font color="#008080">revert</font> <b><font color="#000000">AddressInsufficientBalance</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">));</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">InsufficientBalance</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance<font color="#990000">,</font> amount<font color="#990000">);</font>
         <font color="#FF0000">}</font>
 
         <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#990000">)</font> <font color="#990000">=</font> recipient<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> amount<font color="#FF0000">}</font><font color="#990000">(</font><font color="#FF0000">""</font><font color="#990000">);</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <font color="#008080">revert</font> <b><font color="#000000">FailedInnerCall</font></b><font color="#990000">();</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
@@ -68,7 +60,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     * If `target` reverts with a revert reason or custom error, it is bubbled</font></i>
 <i><font color="#9A1900">     * up by this function (like regular Solidity function calls). However, if</font></i>
 <i><font color="#9A1900">     * the call reverted with no returned reason, this function reverts with a</font></i>
-<i><font color="#9A1900">     * {FailedInnerCall} error.</font></i>
+<i><font color="#9A1900">     * {Errors.FailedCall} error.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Returns the raw returned data. To convert to the expected return value,</font></i>
 <i><font color="#9A1900">     * use </font></i><u><font color="#0000FF">https://solidity.readthedocs.io/en/latest/units-and-global-variables.html</font></u><i><font color="#9A1900">?highlight=abi.decode#abi-encoding-and-decoding-functions[`abi.decode`].</font></i>
@@ -93,7 +85,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">functionCallWithValue</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&lt;</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <font color="#008080">revert</font> <b><font color="#000000">AddressInsufficientBalance</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">));</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">InsufficientBalance</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance<font color="#990000">,</font> value<font color="#990000">);</font>
         <font color="#FF0000">}</font>
         <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> value<font color="#FF0000">}</font><font color="#990000">(</font>data<font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>target<font color="#990000">,</font> success<font color="#990000">,</font> returndata<font color="#990000">);</font>
@@ -119,8 +111,8 @@ http://www.gnu.org/software/src-highlite">
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Tool to verify that a low level call to smart-contract was successful, and reverts if the target</font></i>
-<i><font color="#9A1900">     * was not a contract or bubbling up the revert reason (falling back to {FailedInnerCall}) in case of an</font></i>
-<i><font color="#9A1900">     * unsuccessful call.</font></i>
+<i><font color="#9A1900">     * was not a contract or bubbling up the revert reason (falling back to {Errors.FailedCall}) in case</font></i>
+<i><font color="#9A1900">     * of an unsuccessful call.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>
         <font color="#008080">address</font> target<font color="#990000">,</font>
@@ -141,7 +133,7 @@ http://www.gnu.org/software/src-highlite">
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Tool to verify that a low level call was successful, and reverts if it wasn't, either by bubbling the</font></i>
-<i><font color="#9A1900">     * revert reason or with a default {FailedInnerCall} error.</font></i>
+<i><font color="#9A1900">     * revert reason or with a default {Errors.FailedCall} error.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">verifyCallResult</font></b><font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
@@ -152,7 +144,7 @@ http://www.gnu.org/software/src-highlite">
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reverts with returndata if present. Otherwise reverts with {FailedInnerCall}.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reverts with returndata if present. Otherwise reverts with {Errors.FailedCall}.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">_revert</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> pure <font color="#FF0000">{</font>
         <i><font color="#9A1900">// Look for revert reason and bubble it up if present</font></i>
@@ -164,7 +156,7 @@ http://www.gnu.org/software/src-highlite">
                 <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> returndata<font color="#990000">),</font> returndata_size<font color="#990000">)</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
-            <font color="#008080">revert</font> <b><font color="#000000">FailedInnerCall</font></b><font color="#990000">();</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>

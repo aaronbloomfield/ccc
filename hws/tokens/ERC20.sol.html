@@ -17,7 +17,7 @@ http://www.gnu.org/software/src-highlite">
 import <font color="#FF0000">{</font>IERC20<font color="#FF0000">}</font> from <font color="#FF0000">"./IERC20.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">{</font>IERC20Metadata<font color="#FF0000">}</font> from <font color="#FF0000">"./IERC20Metadata.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">{</font>Context<font color="#FF0000">}</font> from <font color="#FF0000">"./Context.sol"</font><font color="#990000">;</font>
-import <font color="#FF0000">{</font>IERC20Errors<font color="#FF0000">}</font> from <font color="#FF0000">"../../interfaces/draft-IERC6093.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">{</font>IERC20Errors<font color="#FF0000">}</font> from <font color="#FF0000">"./draft-IERC6093.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Implementation of the {IERC20} interface.</font></i>
@@ -36,11 +36,6 @@ import <font color="#FF0000">{</font>IERC20Errors<font color="#FF0000">}</font> 
 <i><font color="#9A1900"> * instead returning `false` on failure. This behavior is nonetheless</font></i>
 <i><font color="#9A1900"> * conventional and does not conflict with the expectations of ERC-20</font></i>
 <i><font color="#9A1900"> * applications.</font></i>
-<i><font color="#9A1900"> *</font></i>
-<i><font color="#9A1900"> * Additionally, an {Approval} event is emitted on calls to {transferFrom}.</font></i>
-<i><font color="#9A1900"> * This allows applications to reconstruct the allowance for all accounts just</font></i>
-<i><font color="#9A1900"> * by listening to said events. Other implementations of the ERC may not emit</font></i>
-<i><font color="#9A1900"> * these events, as it isn't required by the specification.</font></i>
 <i><font color="#9A1900"> */</font></i>
 abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20<font color="#990000">,</font> IERC20Metadata<font color="#990000">,</font> IERC20Errors <font color="#FF0000">{</font>
     <b><font color="#000000">mapping</font></b><font color="#990000">(</font><font color="#008080">address</font> account <font color="#990000">=&gt;</font> uint256<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> _balances<font color="#990000">;</font>

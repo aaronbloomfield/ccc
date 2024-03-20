@@ -5,11 +5,11 @@ pragma solidity ^0.8.20;
 
 import {IERC721} from "./IERC721.sol";
 import {IERC721Metadata} from "./IERC721Metadata.sol";
-import {ERC721Utils} from "./utils/ERC721Utils.sol";
+import {ERC721Utils} from "./ERC721Utils.sol";
 import {Context} from "./Context.sol";
 import {Strings} from "./Strings.sol";
 import {IERC165, ERC165} from "./ERC165.sol";
-import {IERC721Errors} from "../../interfaces/draft-IERC6093.sol";
+import {IERC721Errors} from "./draft-IERC6093.sol";
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC-721] Non-Fungible Token Standard, including

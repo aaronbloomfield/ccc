@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Panic.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Helper library for emitting standardized panic codes.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * ```solidity</font></i>
+<i><font color="#9A1900"> * contract Example {</font></i>
+<i><font color="#9A1900"> *      using Panic for uint256;</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> *      // Use any of the declared internal constants</font></i>
+<i><font color="#9A1900"> *      function foo() { Panic.GENERIC.panic(); }</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> *      // Alternatively</font></i>
+<i><font color="#9A1900"> *      function foo() { Panic.panic(Panic.GENERIC); }</font></i>
+<i><font color="#9A1900"> * }</font></i>
+<i><font color="#9A1900"> * ```</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * Follows the list from </font></i><u><font color="#0000FF">https://github.com/ethereum/solidity/blob/v0.8.24/libsolutil/ErrorCodes.h</font></u><i><font color="#9A1900">[libsolutil].</font></i>
+<i><font color="#9A1900"> */</font></i>
+<i><font color="#9A1900">// slither-disable-next-line unused-state</font></i>
+<font color="#008080">library</font> Panic <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> generic / unspecified error</font></i>
+    uint256 internal <font color="#008080">constant</font> GENERIC <font color="#990000">=</font> <font color="#993399">0x00</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> used by the assert() builtin</font></i>
+    uint256 internal <font color="#008080">constant</font> ASSERT <font color="#990000">=</font> <font color="#993399">0x01</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> arithmetic underflow or overflow</font></i>
+    uint256 internal <font color="#008080">constant</font> UNDER_OVERFLOW <font color="#990000">=</font> <font color="#993399">0x11</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> division or modulo by zero</font></i>
+    uint256 internal <font color="#008080">constant</font> DIVISION_BY_ZERO <font color="#990000">=</font> <font color="#993399">0x12</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> enum conversion error</font></i>
+    uint256 internal <font color="#008080">constant</font> ENUM_CONVERSION_ERROR <font color="#990000">=</font> <font color="#993399">0x21</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> invalid encoding in storage</font></i>
+    uint256 internal <font color="#008080">constant</font> STORAGE_ENCODING_ERROR <font color="#990000">=</font> <font color="#993399">0x22</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> empty array pop</font></i>
+    uint256 internal <font color="#008080">constant</font> EMPTY_ARRAY_POP <font color="#990000">=</font> <font color="#993399">0x31</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> array out of bounds access</font></i>
+    uint256 internal <font color="#008080">constant</font> ARRAY_OUT_OF_BOUNDS <font color="#990000">=</font> <font color="#993399">0x32</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> resource error (too large allocation or too large array)</font></i>
+    uint256 internal <font color="#008080">constant</font> RESOURCE_ERROR <font color="#990000">=</font> <font color="#993399">0x41</font><font color="#990000">;</font>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> calling invalid internal function</font></i>
+    uint256 internal <font color="#008080">constant</font> INVALID_INTERNAL_FUNCTION <font color="#990000">=</font> <font color="#993399">0x51</font><font color="#990000">;</font>
+
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reverts with a panic code. Recommended to use with</font></i>
+    <i><font color="#9A1900">/// the internal constants with predefined codes.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">panic</font></b><font color="#990000">(</font><font color="#008080">uint256</font> code<font color="#990000">)</font> <font color="#008080">internal</font> pure <font color="#FF0000">{</font>
+        <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
+        assembly <font color="#FF0000">{</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><font color="#993399">0x00</font><font color="#990000">,</font> <font color="#993399">0x4e487b71</font><font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><font color="#993399">0x20</font><font color="#990000">,</font> code<font color="#990000">)</font>
+            <b><font color="#000000">revert</font></b><font color="#990000">(</font><font color="#993399">0x1c</font><font color="#990000">,</font> <font color="#993399">0x24</font><font color="#990000">)</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>

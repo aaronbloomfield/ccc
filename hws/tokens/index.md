@@ -77,6 +77,9 @@ The included code is:
 - [IERC20Metadata.sol](IERC20Metadata.sol.html) ([src](IERC20Metadata.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/IERC20Metadata.sol)
 - [ERC20.sol](ERC20.sol.html) ([src](ERC20.sol)); this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol)
 - [ITokenCC.sol](ITokenCC.sol.html) ([src](ITokenCC.sol)), as [discussed in lecture](../../slides/tokens.html#/erc20)
+- [draft-IERC6093.sol](draft-IERC6093.sol.html) ([src](draft-IERC6093.sol)) is an imported file needed by some of the above
+
+You can download *all* of these files via [sol-includes.zip](sol-includes.zip); this also includes the includes for the next section.
 
 The *only* changes made to the OpenZeppelin code above is the paths in the `import` statements.
 
@@ -166,7 +169,7 @@ You will upload three such images to the URL given on the Canvas landing page.
 
 The code we are going to start with is the [OpenZeppelin ERC-721 implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC721/ERC721.sol) from the the [OpenZeppelin github repo](https://github.com/OpenZeppelin/openzeppelin-contracts).  This code was the same as was discussed in class.  Other than the `import` lines, there have been no changes to the code in this repo.
 
-In addition to some of the files used above (IERC165.sol. ERC165.sol, and Context.sol), there are a few additional files that this part uses; you will need to familiarize yourself with hwo they work.
+In addition to some of the files used above (IERC165.sol. ERC165.sol, and Context.sol), there are a few additional files that this part uses; you will need to familiarize yourself with how they work.
 
 - [Address.sol](Address.sol.html) ([src](Address.sol)) is a library (not a contract!) that provides some useful functions when dealing with Ethereum addresses; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol)
 - [Strings.sol](Strings.sol.html) ([src](Strings.sol)) is a library (not a contract!) that provides some useful String manipulation functions; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol)
@@ -180,6 +183,12 @@ In addition to some of the files used above (IERC165.sol. ERC165.sol, and Contex
 - [IERC721Metadata.sol](IERC721Metadata.sol.html) ([src](IERC721Metadata.sol)): this add three functions on top of the ERC-721 standard: `name()`, `symbol()`, and `tokenURI()`; the first two are for the NFT manager, the last one is the URI (aka URL) of the image that the NFT represents; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Metadata.sol)
 - [IERC721Receiver.sol](IERC721Receiver.sol.html) ([src](IERC721Receiver.sol)): we won't use the functionality in this interface, but it is needed for the ERC721.sol file to compile.; this is the [OpenZeppellin implementation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol)
 - [INFTManager.sol](INFTManager.sol.html) ([src](INFTManager.sol)): this adds two `mintWithURI()` functions on top of the IERC721Metadata interface, which allow creation of NFTs, and setting it's image URI (aka URL) in one function call.  This also adds a `count()` method, which is how many NFTs have been minted by this manager.  Note that the `mintWithURI()` function will return a token ID, which is just a `uint` that is used to identify (and find) that particular NFT in your token manager.
+- [ERC721Utils.sol](ERC721Utils.sol.html) ([src](ERC721Utils.sol)) is an imported file needed by some of the above
+- [Panic.sol](Panic.sol.html) ([src](Panic.sol)) is an imported file needed by some of the above
+- [SafeCast.sol](SafeCast.sol) ([src](SafeCast.sol)) is an imported file needed by some of the above
+- [draft-IERC6093.sol](draft-IERC6093.sol.html) ([src](draft-IERC6093.sol)) is an imported file needed by some of the above
+
+You can download *all* of these files via [sol-includes.zip](sol-includes.zip); this also includes the includes for the next section.
 
 The *only* changes made to the OpenZeppelin code above is the paths in the `import` statements.
 
