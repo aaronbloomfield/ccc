@@ -82,6 +82,15 @@ other = {
 	# manager.  It must have been done by eth_coinbase, above.
 	'course_nft_txn_hash': None,
 
+	# Did you use generative AI when creating your cryptocurrency logo?  It's
+	# fine if you did -- you were allowed to do so -- we just wanted to know
+	# how many people did or did not.  This should be either True or False.
+	'used_gen_ai_for_cclogo': None,
+
+	# Did you use generative AI when creating any (or all) of your NFTs?  It's
+	# fine if you did -- you were allowed to do so -- we just wanted to know
+	# how many people did or did not.  This should be either True or False.
+	'used_gen_ai_for_nfts': None,
 }
 
 

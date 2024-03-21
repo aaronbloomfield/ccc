@@ -31,7 +31,9 @@ In addition to your source code, you will submit an edited version of [tokens.py
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
+
+- Thu, 3/21: Added two more fields to the `other` dictionary in [tokens.py](tokens.py.html) ([src](tokens.py)): `'used_gen_ai_for_cclogo'` and `'used_gen_ai_for_nfts'`.  See the comments therein for details.  If you already downloaded the tokens.py file and started editing it, you can just cut-and-paste those two fields into the `other` dictionary.
 
 
 ### Part 1: ERC-20 Fungible Token
