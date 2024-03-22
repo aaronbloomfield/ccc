@@ -8,18 +8,10 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
+    ul.task-list{list-style: none;}
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
@@ -49,6 +41,9 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="ethereum-tokens">Ethereum Tokens</h1>
@@ -73,6 +68,7 @@
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. --></p>
 <ul>
+<li>Fri, 3/22: Added one more field to the <code>other</code> dictionary: <code>'which_gen_ai_tool_used'</code></li>
 <li>Thu, 3/21: Added one more sanity check to <a href="tokens.py.html">tokens.py</a> (<a href="tokens.py">src</a>): <code>'created_two_nfts_on_own'</code></li>
 <li>Thu, 3/21: Added two more fields to the <code>other</code> dictionary in <a href="tokens.py.html">tokens.py</a> (<a href="tokens.py">src</a>): <code>'used_gen_ai_for_cclogo'</code> and <code>'used_gen_ai_for_nfts'</code>. See the comments therein for details. If you already downloaded the tokens.py file and started editing it, you can just cut-and-paste those two fields into the <code>other</code> dictionary.</li>
 </ul>

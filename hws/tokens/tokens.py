@@ -91,6 +91,10 @@ other = {
 	# fine if you did -- you were allowed to do so -- we just wanted to know
 	# how many people did or did not.  This should be either True or False.
 	'used_gen_ai_for_nfts': None,
+
+	# If you did use a generative AI tool, which one did you use?  If you
+	# didn't, you can have this be an empty string.
+	'which_gen_ai_tool_used': None,
 }
 
 
