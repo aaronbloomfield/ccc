@@ -112,6 +112,8 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># need to be changed to True (instead of False).</font></i>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
+	<i><font color="#9A1900"># TokenCC sanity checks</font></i>
+
 	<i><font color="#9A1900"># Is your cryptocurrency logo image correct?  It should be 512x512, a .png</font></i>
 	<i><font color="#9A1900"># file, generally circular in appearance, and with a transparent</font></i>
 	<i><font color="#9A1900"># background outside the coin, and a non-white background in the circle</font></i>
@@ -144,6 +146,8 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># `contract TokenCC is ITokenCC, ERC20 {`?</font></i>
 	<font color="#FF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># NFTManager sanity checks</font></i>
+
 	<i><font color="#9A1900"># Did you upload three NFT images?  They must be either .jpg, .png,</font></i>
 	<i><font color="#9A1900"># or .webp images.</font></i>
 	<font color="#FF0000">'uploaded_three_nft_images'</font><font color="#990000">:</font> False<font color="#990000">,</font>
@@ -161,6 +165,9 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># minter is the deployer, for example.</font></i>
 	<font color="#FF0000">'anybody_can_mint_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Did you create two NFTs on *your* NFTManager?</font></i>
+	<font color="#FF0000">'created_two_nfts_on_own'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># Did you send me one of your NFTs?  Which one was specified in</font></i>
 	<i><font color="#9A1900"># the 'nft_id_sent' field in the 'other' dictionary, above.</font></i>
 	<font color="#FF0000">'sent_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
@@ -173,7 +180,8 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># `contract NFTManager is INFTManager, ERC721 {`?</font></i>
 	<font color="#FF0000">'nftmanager_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Did you create a NFT on the course-wide NFT manager?  The NFT ID for this was put into the </font></i>
+	<i><font color="#9A1900"># Did you create a NFT on the course-wide NFT manager?  The NFT ID for</font></i>
+	<i><font color="#9A1900"># this was put into the other['course_nft_id'] field, above.</font></i>
 	<font color="#FF0000">'created_course_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>

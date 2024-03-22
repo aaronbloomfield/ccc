@@ -101,6 +101,8 @@ other = {
 # need to be changed to True (instead of False).
 sanity_checks = {
 	
+	# TokenCC sanity checks
+
 	# Is your cryptocurrency logo image correct?  It should be 512x512, a .png
 	# file, generally circular in appearance, and with a transparent
 	# background outside the coin, and a non-white background in the circle
@@ -133,6 +135,8 @@ sanity_checks = {
 	# `contract TokenCC is ITokenCC, ERC20 {`?
 	'tokencc_opening_line_is_correct': False,
 
+	# NFTManager sanity checks
+
 	# Did you upload three NFT images?  They must be either .jpg, .png,
 	# or .webp images.
 	'uploaded_three_nft_images': False,
@@ -150,6 +154,9 @@ sanity_checks = {
 	# minter is the deployer, for example.
 	'anybody_can_mint_nft': False,
 
+	# Did you create two NFTs on *your* NFTManager?
+	'created_two_nfts_on_own': False,
+
 	# Did you send me one of your NFTs?  Which one was specified in
 	# the 'nft_id_sent' field in the 'other' dictionary, above.
 	'sent_nft': False,
@@ -162,7 +169,8 @@ sanity_checks = {
 	# `contract NFTManager is INFTManager, ERC721 {`?
 	'nftmanager_opening_line_is_correct': False,
 
-	# Did you create a NFT on the course-wide NFT manager?  The NFT ID for this was put into the 
+	# Did you create a NFT on the course-wide NFT manager?  The NFT ID for
+	# this was put into the other['course_nft_id'] field, above.
 	'created_course_nft': False,
 
 }

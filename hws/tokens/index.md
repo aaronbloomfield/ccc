@@ -33,6 +33,7 @@ In addition to your source code, you will submit an edited version of [tokens.py
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
 
+- Thu, 3/21: Added one more sanity check to [tokens.py](tokens.py.html) ([src](tokens.py)): `'created_two_nfts_on_own'`
 - Thu, 3/21: Added two more fields to the `other` dictionary in [tokens.py](tokens.py.html) ([src](tokens.py)): `'used_gen_ai_for_cclogo'` and `'used_gen_ai_for_nfts'`.  See the comments therein for details.  If you already downloaded the tokens.py file and started editing it, you can just cut-and-paste those two fields into the `other` dictionary.
 
 
@@ -289,6 +290,6 @@ Submission 2: You will need to upload your cryptocurrency logo (properly named!)
 
 Submission 3: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Canvas landing page.  The transaction hashes of these go into the `tokens.py` file.
 
-Submission 4: You need to create an NFT on the course-wide NFT manager.
+Submission 4: You need to create one NFT on the course-wide NFT manager, and two on your NFTManager.
 
 Submission 5: You should submit your `TokenCC.sol` and `NFTManager.sol` files and your completed `tokens.py` file, and ONLY those three files, to Gradescope.  All your Solidity code should be in the first two files, and you should specifically import the necessary interfaces.  Those interface files will be placed in the same directory on Gradescope when you submit.  **NOTE:** Gradescope cannot fully test this assignment, as it does not have access to the private blockchain. So it can only do a few sanity tests (correct files submitted, successful compilation, valid values in auction.py, etc.).
