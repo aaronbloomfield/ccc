@@ -88,7 +88,7 @@ Course calendar
 | 7  | Feb 26 | M,W,F | midterm, S4 (ETH Private) | [Solidity](../slides/solidity.html#/). midterm on Wed | Mon: solidity to 4.10; Wed: midterm; Fri: solidity to 4.27 |
 |    | Mar 4  |       | Spring break        | Spring break | |
 | 8  | Mar 11 | M,W,F | S5 (dApp intro)     | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) | Mon: solidity to 5.4; Wed: solidity to 6.6; Fri: finished solidity (Debts exercise) |
-| 9  | Mar 18 | M,W,F | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) | Mon: tokens to 4.9 |
+| 9  | Mar 18 | M,W,F | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) | Mon: tokens to 4.9; Wed: tokens to 5.18; Fri: finished tokens |
 | 10 | Mar 25 | M,W,F | P6 (Tokens)         | [Mining](../slides/mining.html#/), [Blockchain applications](../slides/applications.html#/) | |
 | 11 | Apr 1  | M,W,F | P7 (Auction)        | [Blockchain applications](../slides/applications.html#/), [Scalability](../slides/scalability.html#/) | |
 | 12 | Apr 8  | M,W,F | P8 (DEX)            | [Scalability](../slides/scalability.html#/), [Stablecoins](../slides/stablecoins.html#/) | |

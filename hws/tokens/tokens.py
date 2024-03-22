@@ -44,6 +44,8 @@ contracts = {
 # assignment.
 other = {
 	
+	# TokenCC fields
+
 	# This is the name of your cryptocurrency.  Be creative!  But don't use
 	# something that will get me in trouble.  This can have any printable
 	# ASCII character (no emojis) and spaces.
@@ -57,6 +59,8 @@ other = {
 	# must have been done by eth_coinbase, above.  And it must have used your
 	# deployed TokenCC contract, above.
 	'cc_sent_txn_hash': None,
+
+	# NFTManager fields
 
 	# The NFT ID that you created from YOUR NFTManager (the nft_manager
 	# contract, above) and kept (meaning you did not send to the course
