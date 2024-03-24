@@ -25,6 +25,7 @@ sync:
 	wget -q -O Context.sol $(BASE_ZEP_URL)/utils/Context.sol
 	wget -q -O Strings.sol $(BASE_ZEP_URL)/utils/Strings.sol
 	wget -q -O Math.sol $(BASE_ZEP_URL)/utils/math/Math.sol
+	wget -q -O Errors.sol $(BASE_ZEP_URL)/utils/Errors.sol
 	wget -q -O SignedMath.sol $(BASE_ZEP_URL)/utils/math/SignedMath.sol
 	wget -q -O ERC165.sol $(BASE_ZEP_URL)/utils/introspection/ERC165.sol
 	wget -q -O IERC165.sol $(BASE_ZEP_URL)/utils/introspection/IERC165.sol

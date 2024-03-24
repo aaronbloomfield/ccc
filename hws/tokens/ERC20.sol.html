@@ -144,8 +144,8 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-transferFrom}.</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * Emits an {Approval} event indicating the updated allowance. This is not</font></i>
-<i><font color="#9A1900">     * required by the ERC. See the note at the beginning of {ERC20}.</font></i>
+<i><font color="#9A1900">     * Skips emitting an {Approval} event indicating an allowance update. This is not</font></i>
+<i><font color="#9A1900">     * required by the ERC. See {xref-ERC20-_approve-address-address-uint256-bool-}[_approve].</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * NOTE: Does not update the allowance if the current allowance</font></i>
 <i><font color="#9A1900">     * is the maximum `uint256`.</font></i>
@@ -279,7 +279,8 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to</font></i>
 <i><font color="#9A1900">     * true using the following override:</font></i>
-<i><font color="#9A1900">     * ```</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * ```solidity</font></i>
 <i><font color="#9A1900">     * function _approve(address owner, address spender, uint256 value, bool) internal virtual override {</font></i>
 <i><font color="#9A1900">     *     super._approve(owner, spender, value, true);</font></i>
 <i><font color="#9A1900">     * }</font></i>

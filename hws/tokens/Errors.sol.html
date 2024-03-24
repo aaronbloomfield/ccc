@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Errors.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Collection of common custom errors used in multiple contracts</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * IMPORTANT: Backwards compatibility is not guaranteed in future versions of the library.</font></i>
+<i><font color="#9A1900"> * It is recommended to avoid relying on the error API for critical functionality.</font></i>
+<i><font color="#9A1900"> */</font></i>
+<font color="#008080">library</font> Errors <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> The ETH balance of the account is not enough to perform the operation.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">InsufficientBalance</font></b><font color="#990000">(</font><font color="#008080">uint256</font> balance<font color="#990000">,</font> <font color="#008080">uint256</font> needed<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> A call to an address target failed. The target may have reverted.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> The deployment failed.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">FailedDeployment</font></b><font color="#990000">();</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>
