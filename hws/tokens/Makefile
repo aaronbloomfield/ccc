@@ -41,8 +41,10 @@ sync:
 	sed -i s_"\./utils"_._g ERC721.sol
 	sed -i s_"\.\./"_./_g IERC20Metadata.sol IERC721Metadata.sol
 	sed -i s_"\.\./../interfaces"_._g ERC20.sol ERC721.sol ERC721Utils.sol
+	sed -i s_"\.\./\."_._g ERC20.sol ERC721Utils.sol
+	sed -i s_"\.\."_._g ERC20.sol ERC721Utils.sol Math.sol
 	source-highlight -s cpp -d *.sol
 
 zip:
-	/bin/rm -f sol-includes.zip TokenCC.sol NFTManager.sol NFTmanager.sol IERC20Receiver.sol
+	/bin/rm -f sol-includes.zip TokenCC.sol* NFTManager.sol* NFTmanager.sol* IERC20Receiver.sol
 	zip -9q sol-includes.zip *.sol

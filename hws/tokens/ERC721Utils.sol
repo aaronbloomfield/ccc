@@ -2,8 +2,8 @@
 
 pragma solidity ^0.8.20;
 
-import {IERC721Receiver} from "../IERC721Receiver.sol";
-import {IERC721Errors} from ".././draft-IERC6093.sol";
+import {IERC721Receiver} from "./IERC721Receiver.sol";
+import {IERC721Errors} from "./draft-IERC6093.sol";
 
 /**
  * @dev Library that provide common ERC-721 utility functions.

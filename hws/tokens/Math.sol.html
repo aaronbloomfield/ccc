@@ -14,7 +14,7 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
-import <font color="#FF0000">{</font>Panic<font color="#FF0000">}</font> from <font color="#FF0000">"../Panic.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">{</font>Panic<font color="#FF0000">}</font> from <font color="#FF0000">"./Panic.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from <font color="#FF0000">"./SafeCast.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
@@ -324,9 +324,9 @@ import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from
             <i><font color="#9A1900">// | 0x00:0x1f | size of b  | 0x0000000000000000000000000000000000000000000000000000000000000020 |</font></i>
             <i><font color="#9A1900">// | 0x20:0x3f | size of e  | 0x0000000000000000000000000000000000000000000000000000000000000020 |</font></i>
             <i><font color="#9A1900">// | 0x40:0x5f | size of m  | 0x0000000000000000000000000000000000000000000000000000000000000020 |</font></i>
-            <i><font color="#9A1900">// | 0x60:0x7f | value of b | 0x&lt;.............................................................b&gt; |</font></i>
-            <i><font color="#9A1900">// | 0x80:0x9f | value of e | 0x&lt;.............................................................e&gt; |</font></i>
-            <i><font color="#9A1900">// | 0xa0:0xbf | value of m | 0x&lt;.............................................................m&gt; |</font></i>
+            <i><font color="#9A1900">// | 0x60:0x7f | value of b | 0x&lt;...............................b&gt; |</font></i>
+            <i><font color="#9A1900">// | 0x80:0x9f | value of e | 0x&lt;...............................e&gt; |</font></i>
+            <i><font color="#9A1900">// | 0xa0:0xbf | value of m | 0x&lt;...............................m&gt; |</font></i>
             <b><font color="#000000">mstore</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">)</font>
             <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <font color="#993399">0x20</font><font color="#990000">)</font>
             <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <font color="#993399">0x40</font><font color="#990000">),</font> <font color="#993399">0x20</font><font color="#990000">)</font>
