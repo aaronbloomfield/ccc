@@ -8,10 +8,18 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../markdown.css" />
@@ -41,9 +49,6 @@
     document.write("<span class=\"copylink copy_img\" onclick=\"navigator.clipboard.writeText('" + text.replace(/\"/g,"\\'") + "')\"></span>");
   }
   </script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 id="ethereum-tokens">Ethereum Tokens</h1>
@@ -194,7 +199,7 @@
 <p><img src="inheritance.dot.2.svg" /></p>
 <p>The only new files, beyond the the OpenZeppelin implementation, are the two bottom grey nodes. We added was the INFTManager abstract contract, and you have to implement the NFTManager contract. There are a lot of lines because of how the OpenZeppelin code is set up.</p>
 <h4 id="part-2-task-3-compile-and-test-the-provided-code">Part 2, task 3: Compile and test the provided code</h4>
-<p>You should compile the <a href="ERC721.sol.html">ERC721.sol</a> (<a href="ERC721.sol">src</a>) code in Remix. Deploy it to the Javascript environment and play with the various functions. Note that you need to understand what the code in that smart contract does! As this is the provided code, and does not have all the features that we need (yet).</p>
+<p>You should compile the <a href="ERC721.sol.html">ERC721.sol</a> (<a href="ERC721.sol">src</a>) code in Remix. Deploy it to the Javascript environment and play with the various functions. Note that you will have to remove the <code>abstract</code> keyword (right before the <code>contract</code> keyword) and re-compile it, to be able to deploy it. Note that you need to understand what the code in that smart contract does! As this is the provided code, and does not have all the features that we need (yet).</p>
 <h4 id="part-2-task-4-create-an-nft-manager-for-images">Part 2, task 4: Create an NFT manager for images</h4>
 <p>We are going to assemble all this code together to create an NFT manager. Most of the code is already done in the <a href="ERC721.sol.html">ERC721.sol</a> (<a href="ERC721.sol">src</a>). We are going to create a smart contract called <code>NFTManager</code> that will work for image URLs (or any other URL). The updated smart contract will implement the <a href="INFTManager.sol.html">INFTManager.sol</a> (<a href="INFTManager.sol">src</a>) interface (and, though inheritance, a number of other interfaces).</p>
 <p>There are some very strict submission requirements for this submission so that we can grade it in a sane manner:</p>

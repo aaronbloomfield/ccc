@@ -124,6 +124,12 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># course auction web site?</font></i>
 	<font color="#FF0000">'will_have_bid_on_course_auctions'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># In startAuction(), the account starting the auction must be msg.sender;</font></i>
+	<i><font color="#9A1900"># if you use deployer (may have done this), it will work for you, but</font></i>
+	<i><font color="#9A1900"># fail all of the grading tests (since the grading account is not the</font></i>
+	<i><font color="#9A1900"># deployer).</font></i>
+	<font color="#FF0000">'start_auction_uses_msg.sender'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 <font color="#990000">}</font>
 
 

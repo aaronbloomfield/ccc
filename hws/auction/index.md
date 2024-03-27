@@ -52,6 +52,7 @@ This section is meant as a high-level overview of the process; the detailed spec
         - (Note that the above two lines are the only ones needed to be called on the NFT Manager contract for an auction; all successive calls are on the Auctioneer contract)
 - The user can then start an auction via the `startAuction()` function, and this involves setting the auction duration, reserve (minimum) price, and various other parameters.  If this function does not revert, then the auction will start.
     - The person who started the auction is called the 'initiator'
+    - Note that the user should have approved the auctioneer for the relevant NFT already; the auctioneer, as part of this call, will transfer the ownership of the NFT to it
     - If the Auctioneer can't transfer the NFT ownership to itself, the function reverts
     - A diagram for this process, including the interaction with the NFTManager contract, is shown below (in the next section)
 - The reserve price is the minimum bid that is considered acceptable for this auction.  To make life easier, we can just start out the auction amount at the reserve price.  Keep in mind that all monetary amounts are in wei.
@@ -118,7 +119,7 @@ interface IAuctioneer is IERC165 {
 
     function nftmanager() external view returns (address);
 
-    function num_auctions() external view returns (uint);
+    function numAuctions() external view returns (uint);
 
     function totalFees() external view returns (uint);
 
@@ -235,7 +236,7 @@ You are going to participate in a class-wide auction manager.
 
 We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Canvas landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
 
-You should use the third of your (three) NFTs.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the auction ID from the auction you created as well as the NFT token ID.  ***YOUR RESERVE*** should be no higher than 5 ETH.
+You should use one of your three NFTs that you didn't use in the previous section.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the auction ID from the auction you created as well as the NFT token ID.  ***YOUR RESERVE*** should be no higher than 5 ETH.
 
 Lastly, bid on at least *three* auctions that are not your own.  Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on.  That's fine -- you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids.  We are going to judge lateness on this assignment by the Gradescope submission time, and the information you have to submit does not include the transaction hashes of the bids.  We are going to check whether you bid on the auctions by looking if your `eth.coinbase` account, the address of which you will submit below, initiated bids on any one of your classmate's submitted NFT manager addresses by two days after the due date.  Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 

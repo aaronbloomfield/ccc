@@ -60,7 +60,7 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
 
     <i><font color="#9A1900">// How many auctions have been created on this Auctioneer contract; this</font></i>
     <i><font color="#9A1900">// can just be via the getter method from a public variable.</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">num_auctions</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">numAuctions</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
     <i><font color="#9A1900">// How much fees, in wei, have been collected so far -- the auction</font></i>
     <i><font color="#9A1900">// collects 1% fees of *successful* auctions; these are the total fees</font></i>
@@ -104,7 +104,8 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
     <i><font color="#9A1900">// configured auction.  These auction IDs have to start from 0 for the</font></i>
     <i><font color="#9A1900">// auctions.php web page to work properly.  Note that only the owner of a</font></i>
     <i><font color="#9A1900">// NFT can start an auction for it, and this should be checked via</font></i>
-    <i><font color="#9A1900">// require().</font></i>
+    <i><font color="#9A1900">// require().  Make sure the account used is msg.sender, not deployer!</font></i>
+    <i><font color="#9A1900">// Otherwise it will work for you but not for any of our grading tests.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">startAuction</font></b><font color="#990000">(</font><font color="#008080">uint</font> m<font color="#990000">,</font> <font color="#008080">uint</font> h<font color="#990000">,</font> <font color="#008080">uint</font> d<font color="#990000">,</font> string <font color="#008080">memory</font> data<font color="#990000">,</font> 
                           <font color="#008080">uint</font> reserve<font color="#990000">,</font> <font color="#008080">uint</font> nftid<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
 
@@ -121,11 +122,12 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
 
     <i><font color="#9A1900">// When one wants to submit a bid on a NFT; the ID of the auction is</font></i>
     <i><font color="#9A1900">// passed in as a parameter, and some amount of ETH is transferred with</font></i>
-    <i><font color="#9A1900">// this function call.  So many sanity checks here!  See the homework</font></i>
-    <i><font color="#9A1900">// description some of various cases where this function should revert;</font></i>
-    <i><font color="#9A1900">// you get to figure out the rest.  On a successful higher bid, it should</font></i>
-    <i><font color="#9A1900">// update the auction struct.  Be sure to refund the previous higher</font></i>
-    <i><font color="#9A1900">// bidder, since they have now been outbid.</font></i>
+    <i><font color="#9A1900">// this function call (that amount is in msg.value, which is in wei).  So</font></i>
+    <i><font color="#9A1900">// many sanity checks here!  See the homework description some of various</font></i>
+    <i><font color="#9A1900">// cases where this function should revert; you get to figure out the</font></i>
+    <i><font color="#9A1900">// rest.  On a successful higher bid, it should update the auction</font></i>
+    <i><font color="#9A1900">// struct.  Be sure to refund the previous higher bidder, since they have</font></i>
+    <i><font color="#9A1900">// now been outbid.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">placeBid</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> <font color="#008080">payable</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// The time left (in seconds) for the given auction, the ID of which is</font></i>

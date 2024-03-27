@@ -206,7 +206,7 @@ The only new files, beyond the the OpenZeppelin implementation, are the two bott
 
 #### Part 2, task 3: Compile and test the provided code
 
-You should compile the [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)) code in Remix.  Deploy it to the Javascript environment and play with the various functions.  Note that you need to understand what the code in that smart contract does!  As this is the provided code, and does not have all the features that we need (yet).
+You should compile the [ERC721.sol](ERC721.sol.html) ([src](ERC721.sol)) code in Remix.  Deploy it to the Javascript environment and play with the various functions.  Note that you will have to remove the `abstract` keyword (right before the `contract` keyword) and re-compile it, to be able to deploy it.  Note that you need to understand what the code in that smart contract does!  As this is the provided code, and does not have all the features that we need (yet).
 
 
 #### Part 2, task 4: Create an NFT manager for images

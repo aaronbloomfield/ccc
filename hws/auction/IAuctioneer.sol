@@ -49,7 +49,7 @@ interface IAuctioneer is IERC165 {
 
     // How many auctions have been created on this Auctioneer contract; this
     // can just be via the getter method from a public variable.
-    function num_auctions() external view returns (uint);
+    function numAuctions() external view returns (uint);
 
     // How much fees, in wei, have been collected so far -- the auction
     // collects 1% fees of *successful* auctions; these are the total fees
@@ -93,7 +93,8 @@ interface IAuctioneer is IERC165 {
     // configured auction.  These auction IDs have to start from 0 for the
     // auctions.php web page to work properly.  Note that only the owner of a
     // NFT can start an auction for it, and this should be checked via
-    // require().
+    // require().  Make sure the account used is msg.sender, not deployer!
+    // Otherwise it will work for you but not for any of our grading tests.
     function startAuction(uint m, uint h, uint d, string memory data, 
                           uint reserve, uint nftid) external returns (uint);
 
@@ -110,11 +111,12 @@ interface IAuctioneer is IERC165 {
 
     // When one wants to submit a bid on a NFT; the ID of the auction is
     // passed in as a parameter, and some amount of ETH is transferred with
-    // this function call.  So many sanity checks here!  See the homework
-    // description some of various cases where this function should revert;
-    // you get to figure out the rest.  On a successful higher bid, it should
-    // update the auction struct.  Be sure to refund the previous higher
-    // bidder, since they have now been outbid.
+    // this function call (that amount is in msg.value, which is in wei).  So
+    // many sanity checks here!  See the homework description some of various
+    // cases where this function should revert; you get to figure out the
+    // rest.  On a successful higher bid, it should update the auction
+    // struct.  Be sure to refund the previous higher bidder, since they have
+    // now been outbid.
     function placeBid(uint id) payable external;
 
     // The time left (in seconds) for the given auction, the ID of which is

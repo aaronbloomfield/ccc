@@ -113,6 +113,12 @@ sanity_checks = {
 	# course auction web site?
 	'will_have_bid_on_course_auctions': False,
 
+	# In startAuction(), the account starting the auction must be msg.sender;
+	# if you use deployer (may have done this), it will work for you, but
+	# fail all of the grading tests (since the grading account is not the
+	# deployer).
+	'start_auction_uses_msg.sender': False,
+
 }
 
 
