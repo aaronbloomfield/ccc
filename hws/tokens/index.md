@@ -64,6 +64,7 @@ The logo itself needs to have the following requirements:
 - The background outside the circle of the coin needs to be transparent.
 - The background of the coin circle itself needs to be something more interesting than white.
 - The file must be a .png file, and it will have to be named `xyz.png`, where "xyz" is your coin abbreviation.
+- The image should be 512x512 in size.  This means that the circular logo itself should be about 512 pixels in diameter -- having a 512x512 square image with a tiny logo in the center is not the intent.
 
 We provide a [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background outside the circle.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  
 
