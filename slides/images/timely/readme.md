@@ -24,6 +24,6 @@ From the [Bitcoin slide set](../../bitcoin.html#/)
 
 From the [Scalability slide set](../../scalability.html#/).
 
-- ETH & BTC fees, last year: from [2022-04-17](btc-eth-fees-1year.webp)
-- ETH & BTC fees, all time: from [2022-04-17](btc-eth-fees-alltime.webp)
-- BTC transactions per second, all time: from [2022-04-17](btc-tps.webp)
+- ETH & BTC fees, last year: from [2022-04-17](btc-eth-fees-1year-2022-04-17.webp), [2022-11-09](btc-eth-fees-1year-2022-11-09.webp), [2023-04-20](btc-eth-fees-1year-2023-04-20.webp), [2024-03-31](btc-eth-fees-1year.webp)
+- ETH & BTC fees, all time: from [2022-04-17](btc-eth-fees-alltime-2022-04-17.webp), [2022-11-09](btc-eth-fees-alltime-2022-11-09.webp), [2023-04-20](btc-eth-fees-alltime-2023-04-20.webp), [2024-03-31](btc-eth-fees-alltime-2022-04-17.webp)
+- BTC transactions per second, all time: from [2022-04-17](btc-tps.webp), [2022-11-09](btc-tps-2022-11-09.webp), [2023-04-20](btc-tps-2023-04-20.webp), [2024-03-31](btc-tps.webp)
