@@ -19,16 +19,21 @@ interface IERC20Receiver {
     function onERC20Received(address from, uint amount, address erc20) external returns (bool);
 }
 
-/* to use this code, put the following in your ERC-20 implementation:
+/* to use this code, put the following in your ERC-20 sub-class implementation:
 
-    function _afterTokenTransfer(address from, address to, uint256 amount) internal override {
+    function _update(address from, address to, uint256 value) internal override virtual {
+        ERC20._update(from,to,value);
+        afterTokenTransfer(from,to,value);
+    }
+
+    function afterTokenTransfer(address from, address to, uint256 amount) internal {
         if ( to.code.length > 0  && from != address(0) && to != address(0) ) {
             // token recipient is a contract, notify them
             try IERC20Receiver(to).onERC20Received(from, amount, address(this)) returns (bool success) {
                 require(success,"ERC-20 receipt rejected by destination of transfer");
             } catch {
                 // the notification failed (maybe they don't implement the `IERC20Receiver` interface?)
-                // we choose to ignore this case
+                // we choose to silently ignore this case
             }
         }
     }

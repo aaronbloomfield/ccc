@@ -92,23 +92,33 @@ When tokens are transferred to any contract address, we are going to have our To
 
 The first change is that you will have to import the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) file.  This file defines the `IERC20Receiver` interface which defines only one function: `onERC20Received()`.  Our TokenCC contracts are going to call this function any time tokens are transferred to another contract.  There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts.  Note that your TokenCC contract does NOT implement this interface; it just needs to know about it so it can call a function (`onERC20Received()`) on *another* contract that implements this interface.
 
-The second change is that we have to include the following function, adapted from [here](https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function), in our TokenCC.sol file:
+The second change is that we have to include the following two functions, adapted from [here](https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function), in our TokenCC.sol file:
 
 ```
-function _afterTokenTransfer(address from, address to, uint256 amount) internal override {
+// This overrides the _update() function in ERC20.sol -- first we call the
+// overridden function, then we call afterTokenTransfer().  Note that this is
+// called on a mint, burn, or transfer.
+function _update(address from, address to, uint256 value) internal override virtual {
+    ERC20._update(from,to,value);
+    afterTokenTransfer(from,to,value);
+}
+
+// When a transfer occurs to a contract, this function will call
+// onERC20Received() on that contract.
+function afterTokenTransfer(address from, address to, uint256 amount) internal override {
     if ( to.code.length > 0  && from != address(0) && to != address(0) ) {
         // token recipient is a contract, notify them
         try IERC20Receiver(to).onERC20Received(from, amount, address(this)) returns (bool success) {
             require(success,"ERC-20 receipt rejected by destination of transfer");
         } catch {
             // the notification failed (maybe they don't implement the `IERC20Receiver` interface?)
-            // we choose to ignore this case
+            // we choose to silently ignore this case
         }
     }
 }
 ```
 
-This function overrides the `_afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size; owned accounts always have zero length code.  It also checks that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation).  If it passed those checks, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` clause as well).
+This function overrides the `afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size; owned accounts always have zero length code.  It also checks that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation).  If it passed those checks, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` clause as well).
 
 The net effect of these two changes is that any time your TokenCC is transferred to a contract, it will attempt to notify that contract that it just received some ERC-20 tokens.
 
@@ -520,11 +530,10 @@ Step 1: You will need to have deployed your (updated) TokenCC smart contract to 
 
 Step 2: Deploy your DEX smart contract to the private Ethereum blockchain.  So that it will work properly with all of your other classmates' DEX implementations, we have some strict requirements for the deployment:
 
-- It must be initialized with the *variable* EtherPriceOracle contract for the price of our (fake) ether.  While you are welcome to use the constant one for testing, you MUST use the variable one for the final deployment.
+- It must be initialized (in `createPool()`) with the *variable* EtherPriceOracle contract for the price of our (fake) ether.  While you are welcome to use the constant one for testing, you MUST use the variable one for the final deployment.
     - Keep in mind that you can always update it via the `setEtherPricer()` function if you initialize it with the wrong one
-- You need to call `createPool()`
+- You need to call `createPool()`; save the TXN from this call, as that will need to be submitted
 	- You must fund it with 100 (fake) ether.  ***Do not put a different amount in!***
-	   - Save the TXN from this call, as that will need to be submitted
     - You can put as many or as little of your token in as you like (but no less than 10.0 TCC).  Putting in fewer will give them a higher monetary value, but allow for less growth.  But you should keep some for yourself, as you will need it below -- so don't put them all in.  We recommend putting in no more than half of what you own, and you can certainly put in less.
         - Or you can just mint a million of your TCC, and put in 1,000 each time you run another test
         - This implies initializing the TokenCC and allowing the DEX to transfer it via `approve()`

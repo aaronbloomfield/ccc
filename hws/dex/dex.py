@@ -44,7 +44,8 @@ contracts = {
 other = {
 	
 	# This is the transaction hash from when you called createPool() on the
-	# deployed DEX, above, with exactly 100 ether and at least 10.0 TC
+	# deployed DEX, above, with exactly 100 ether and at least 10.0 TC.  This
+	# should be a string.
 	'createpool_call_txn': None,
 
 }
@@ -59,7 +60,7 @@ sanity_checks = {
 	
 	# For the TokenCC that you are using for this assignment, did you make the
 	# changes required in the DEX homework?  This is adding the
-	# `_afterTokenTransfer()` function.
+	# `afterTokenTransfer()` function.
 	'modified_tokencc': False,
 
 	# Does the `symbol()` function in your DEX contract return the symbol for
@@ -90,6 +91,11 @@ sanity_checks = {
 	# Did you, or will you, make 4 exchanges on somebody else's DEX?  These
 	# bids are due 24 hours after the assignment due date
 	'made_4_exchanges_on_other_dexes': False,
+
+	# Your createPool() needs to trasnfer the ERC20 tokens to itself via
+	# `transferFrom()`, otherwise nothing is going to work correctly.  Did
+	# you call `transferFrom()` in your `createPool()`?
+	'called_transferFrom_in_createPool': False,
 
 }
 

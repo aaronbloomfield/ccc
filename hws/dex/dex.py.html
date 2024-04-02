@@ -55,7 +55,8 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># This is the transaction hash from when you called createPool() on the</font></i>
-	<i><font color="#9A1900"># deployed DEX, above, with exactly 100 ether and at least 10.0 TC</font></i>
+	<i><font color="#9A1900"># deployed DEX, above, with exactly 100 ether and at least 10.0 TC.  This</font></i>
+	<i><font color="#9A1900"># should be a string.</font></i>
 	<font color="#FF0000">'createpool_call_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
@@ -70,7 +71,7 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># For the TokenCC that you are using for this assignment, did you make the</font></i>
 	<i><font color="#9A1900"># changes required in the DEX homework?  This is adding the</font></i>
-	<i><font color="#9A1900"># `_afterTokenTransfer()` function.</font></i>
+	<i><font color="#9A1900"># `afterTokenTransfer()` function.</font></i>
 	<font color="#FF0000">'modified_tokencc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does the `symbol()` function in your DEX contract return the symbol for</font></i>
@@ -101,6 +102,11 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Did you, or will you, make 4 exchanges on somebody else's DEX?  These</font></i>
 	<i><font color="#9A1900"># bids are due 24 hours after the assignment due date</font></i>
 	<font color="#FF0000">'made_4_exchanges_on_other_dexes'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># Your createPool() needs to trasnfer the ERC20 tokens to itself via</font></i>
+	<i><font color="#9A1900"># `transferFrom()`, otherwise nothing is going to work correctly.  Did</font></i>
+	<i><font color="#9A1900"># you call `transferFrom()` in your `createPool()`?</font></i>
+	<font color="#FF0000">'called_transferFrom_in_createPool'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 

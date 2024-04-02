@@ -30,16 +30,21 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">uint</font> amount<font color="#990000">,</font> <font color="#008080">address</font> erc20<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
 <font color="#FF0000">}</font>
 
-<i><font color="#9A1900">/* to use this code, put the following in your ERC-20 implementation:</font></i>
+<i><font color="#9A1900">/* to use this code, put the following in your ERC-20 sub-class implementation:</font></i>
 
-<i><font color="#9A1900">    function _afterTokenTransfer(address from, address to, uint256 amount) internal override {</font></i>
+<i><font color="#9A1900">    function _update(address from, address to, uint256 value) internal override virtual {</font></i>
+<i><font color="#9A1900">        ERC20._update(from,to,value);</font></i>
+<i><font color="#9A1900">        afterTokenTransfer(from,to,value);</font></i>
+<i><font color="#9A1900">    }</font></i>
+
+<i><font color="#9A1900">    function afterTokenTransfer(address from, address to, uint256 amount) internal {</font></i>
 <i><font color="#9A1900">        if ( to.code.length &gt; 0  &amp;&amp; from != address(0) &amp;&amp; to != address(0) ) {</font></i>
 <i><font color="#9A1900">            // token recipient is a contract, notify them</font></i>
 <i><font color="#9A1900">            try IERC20Receiver(to).onERC20Received(from, amount, address(this)) returns (bool success) {</font></i>
 <i><font color="#9A1900">                require(success,"ERC-20 receipt rejected by destination of transfer");</font></i>
 <i><font color="#9A1900">            } catch {</font></i>
 <i><font color="#9A1900">                // the notification failed (maybe they don't implement the `IERC20Receiver` interface?)</font></i>
-<i><font color="#9A1900">                // we choose to ignore this case</font></i>
+<i><font color="#9A1900">                // we choose to silently ignore this case</font></i>
 <i><font color="#9A1900">            }</font></i>
 <i><font color="#9A1900">        }</font></i>
 <i><font color="#9A1900">    }</font></i>
