@@ -92,7 +92,7 @@ Course calendar
 | 10 | Mar 25 | M,W,F | P6 (Tokens)         | [Mining](../slides/mining.html#/), [Blockchain applications](../slides/applications.html#/) | Mon: finished mining, applications to 3.6; Wed: applications to 3.31; Fri: applications to 4.4 |
 | 11 | Apr 1  | M,W,F | P7 (Auction)        | [Blockchain applications](../slides/applications.html#/), [Scalability](../slides/scalability.html#/) | Mon: finished applications, scalability to 3.8; Wed: scalability to 7.12; Fri: finished scalability, consensus to 4.12 |
 | 12 | Apr 8  | M,W,F | P8 (DEX)            | [Scalability](../slides/scalability.html#/), [Stablecoins](../slides/stablecoins.html#/) | Mon: consensus to 7.31; Wed: finished consensus; Fri: stablecoins to 6.7 |
-| 13 | Apr 15 | M,W,F | P9 (DAO&web3)       | [Stablecoins](../slides/stablecoins.html#/), [Consensus](../slides/consensus.html#/) | |
+| 13 | Apr 15 | M,W,F | P9 (DAO&web3)       | [Stablecoins](../slides/stablecoins.html#/), [Consensus](../slides/consensus.html#/) | Mon: stablecoins to 9.8 |
 | 14 | Apr 22 | M,W,F | P10 (Arbitrage)     | [Consensus](../slides/consensus.html#/), [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/) | |
 | 15 | Apr 29 | M     | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) | |
 
