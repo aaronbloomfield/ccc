@@ -61,6 +61,7 @@
 <button class='tablinks' onclick="openTab(event,'ttesting')">Testing</button>
 <button class='tablinks' onclick="openTab(event,'treal-world-profit')">Real World Profit</button>
 <button class='tablinks' onclick="openTab(event,'tnotes-and-hints')">Notes &amp; Hints</button>
+<button class='tablinks' onclick="openTab(event,'texecution-runs')">Execution Runs</button>
 <button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
 </div>
 <div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
@@ -228,19 +229,19 @@ print(w3.is_connected())</code></pre>
 <pre><code>Exchanged -123.0000 ETH for 2.3400 TC; fees: 1.23 USD; prices: ETH 12.30 USD, TC: 1.23 USD; holdings: 34.30 USD</code></pre>
 
 <p>To ensure you output in the correct format, we provide a function that will print the appropriate lines in the required format. This function is also provided in the <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) file.</p>
-<pre><code>def output(ethAmt, tcAmt, fees, holdings_after):
-    if ethAmt == 0 and tcAmt == 0:
+<pre><code>def output(ethDelta, tccDelta, fees, holdings_after):
+    if ethDelta == 0 and tccDelta == 0:
         print("No profitable arbitrage trades available")
         return
-    assert ethAmt * tcAmt &lt; 0, "Exactly one of ethAmt and tcAmt should be negative, the other positive"
-    if ethAmt &lt; 0:
+    assert ethDelta * tccDelta &lt; 0, f"Exactly one of ethDelta {ethDelta} and tccDelta {tccDelta} should be negative, the other positive"
+    if ethDelta &lt; 0:
         print("Exchanged %.4f ETH for %.4f TC; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
-              (ethAmt, tcAmt, fees, config['price_eth'], config['price_tc'], holdings_after))
+              (abs(ethDelta), abs(tccDelta), fees, config['price_eth'], config['price_tc'], holdings_after))
     else:
         print("Exchanged %.4f TC for %.4f ETH; fees: %.2f USD; prices: ETH %.2f USD, TC: %.2f USD; holdings: %.2f USD" %
-              (tcAmt, ethAmt, fees, config['price_eth'], config['price_tc'], holdings_after))</code></pre>
+              (abs(tccDelta), abs(ethDelta), fees, config['price_eth'], config['price_tc'], holdings_after))</code></pre>
 <p><strong><em>YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER OUTPUT</em></strong> other than the result of calling the <code>output()</code> function, above.</p>
-<p>If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case. When a transaction is made, then one of <code>ethAmt</code> or <code>tcAmt</code> should be negative – that’s the one that is being sold. The other should be positive, and is how much of the other you received for that exchange. These values should be the amount of coin being bought or sold as a floating-point number, and without all the decimals (so 1.5 TC rather than 15000000000 TC). The prices for ETH and TC are pulled from <code>config</code> dictionary in <code>arbitrage_config.py</code>, so they do not have to be passed into this function. The <code>fees</code> and <code>holdings_after</code> parameters should be in USD.</p>
+<p>If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case. When a transaction is made, then one of <code>ethDelta</code> or <code>tccDelta</code> should be negative – that’s the one that is being sold. The other should be positive, and is how much of the other you received for that exchange. These values should be the amount of coin being bought or sold as a floating-point number, and without all the decimals (so 1.5 TC rather than 15000000000 TC). The prices for ETH and TC are pulled from <code>config</code> dictionary in <code>arbitrage_config.py</code>, so they do not have to be passed into this function. The <code>fees</code> and <code>holdings_after</code> parameters should be in USD.</p>
 <p>The <code>fees</code> value that you are reporting is just the USD value of the Ethereum transaction fees. The DEX fees were deducted from the amount obtained.</p>
 </div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
 <p>To see if your program makes the right decision, you can hard-code the <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span> values in your arbitrage_trading.py program and print out the results to see if it computed the correct values to trade.</p>
@@ -342,11 +343,190 @@ print(w3.is_connected())</code></pre>
 <ul>
 <li>Be sure to put the <code>chainId</code> value in <em>each</em> transaction that you call from Python – things don’t always work well otherwise. The sample transactions on the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>) page all have this value present. Be sure to set it to the correct value for the course blockchain!</li>
 <li>On Macs, there seems to be a problem using web3 via Python. When connecting to the course endpoint (the one with the <code>wss://</code> start of the URI), if you get an error such as: <code>ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED]</code>, try running going into your application/python_3.11 directory (might be different on your machine) and running the “Install Certificates.command” script</li>
+<li>Write a function that, given a transaction, will print out if it succeeds or fails (reverts), and if it reverts, will state why. You can get the status of the transaction in the <code>'status'</code> field of the transaction receipt (<code>w3.eth.wait_for_transaction_receipt()</code>), and the provided <code>getTXNResult()</code> function in the arbitrage_config.py file will return both the success (or failure) and, if it fails, the reversion message.</li>
+<li>Consider writing separate functions that will compute the holdings, as that will make your code easier to manage when you have to compute both <span class='math inline'><em>h</em><sub><em>b</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em></sub></span> and <span class='math inline'><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span> (the holdings before and after).</li>
+<li>In web3.py, be sure to include a ‘from’ field in the transaction for the account that is sending the transaction.</li>
+<li>Gas: recall how gas is computed: the number of steps times the price per step. The latter (price per step) is set in the arbitrage_config.py file. For the former, you should try to use <code>w3.eth.estimate_gas()</code>. If that is causing problems, then the estimated gas amounts can be posted to Piazza. In either case, the <em>actual</em> gas used is not likely to be the exact amount as the estimate, so you will have to get the ether balance after the transaction.</li>
+<li>Keep in mind that the DEX fees, which are in addition to the gas fees, also need to be taken into account.</li>
+<li>When working through the examples, and getting your code to run correctly, be sure that the amounts are all in the same unit (ether versus wei, etc.).</li>
 </ul>
+</div><div id='texecution-runs' class='tabcontent'><h3 id='execution-runs'>Execution Runs</h3>
+<p>Below are some sample executions. Note that these runs print a <em>lot</em> of output so that you can understand what is going on. Your program should only print the one line via the <code>output()</code> function.</p>
+<p>For the execution runs, do not pay attention to the DEX addresses, as they will be different than what you are dealing with. Also, ignore the starting amount of ether or TCC – it is either sufficient for that transaction or zero, depending on the execution run.</p>
+<h4 id='all-dexes-sufficient-eth-no-tcc'>All DEXes, sufficient ETH, no TCC</h4>
+<p>If all DEXes are enabled, and the account has sufficient ether but no TCC, the following is an example execution run. In particular, given sufficient funds and the availability of the D20 DEX, it will always choose that to exchange.</p>
+<pre><code>Connected: True
+Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
+TokenCC decimals: 10
+
+ETH balance: 495.6973727043121 with price: $100.0
+TCC balance: 0.0 with price: $10.0
+Holdings: 49,569.74 USD
+
+DEX 0 @ 0xf3e8ac6d4a3e7fa6bc023c2260ee58822e2e982f, symbol: D4C
+    k = 40000.0, x = 100.0, y = 400.0, f = 0.995
+    trading in TC minima/maxima:          0.00 TC;  holdings after:     49569.73 USD; difference:        -0.01
+    trading in TC minima/maxima:      -1030.87 TC;  holdings after:     76137.17 USD; difference:     26567.44
+    trading in ETH minima/maxima:       -36.91 ETH; holdings after:     50932.28 USD; difference:      1362.54
+    trading in ETH minima/maxima:      -163.09 ETH; holdings after:     76167.17 USD; difference:     26597.44
+DEX 1 @ 0x4987a13d818df9170778297603a937dc837714b1, symbol: D6C
+    k = 60000.0, x = 100.0, y = 600.0, f = 0.995
+    trading in TC minima/maxima:          0.00 TC;  holdings after:     49569.73 USD; difference:        -0.01
+    trading in TC minima/maxima:      -1372.66 TC;  holdings after:     80972.88 USD; difference:     31403.14
+    trading in ETH minima/maxima:       -22.73 ETH; holdings after:     50086.57 USD; difference:       516.83
+    trading in ETH minima/maxima:      -177.27 ETH; holdings after:     80992.88 USD; difference:     31423.14
+DEX 2 @ 0x68429fb5fb49f1b8310110fd26357d21ed8183a8, symbol: D8C
+    k = 80000.0, x = 100.0, y = 800.0, f = 0.995
+    trading in TC minima/maxima:          0.00 TC;  holdings after:     49569.73 USD; difference:        -0.01
+    trading in TC minima/maxima:      -1692.19 TC;  holdings after:     85363.49 USD; difference:     35793.75
+    trading in ETH minima/maxima:       -10.78 ETH; holdings after:     49685.96 USD; difference:       116.22
+    trading in ETH minima/maxima:      -189.22 ETH; holdings after:     85373.49 USD; difference:     35803.76
+DEX 3 @ 0x029e1e74421be44460c29b56e56cfbee0244333a, symbol: D10C
+    k = 100000.0, x = 100.0, y = 1000.0, f = 0.995
+    trading in TC minima/maxima:         -2.50 TC;  holdings after:     49569.79 USD; difference:         0.05
+    trading in TC minima/maxima:      -1997.50 TC;  holdings after:     89469.66 USD; difference:     39899.93
+    trading in ETH minima/maxima:        -0.25 ETH; holdings after:     49569.79 USD; difference:         0.05
+    trading in ETH minima/maxima:      -199.75 ETH; holdings after:     89469.66 USD; difference:     39899.93
+DEX 4 @ 0x7a199e0fbbb26c75df0dbb4b9b26ef363d260ab6, symbol: D12C
+    k = 120000.0, x = 100.0, y = 1200.0, f = 0.995
+    trading in TC minima/maxima:       -107.30 TC;  holdings after:     49665.66 USD; difference:        95.93
+    trading in TC minima/maxima:      -2292.70 TC;  holdings after:     93373.79 USD; difference:     43804.05
+    trading in ETH minima/maxima:         9.27 ETH; holdings after:     49655.67 USD; difference:        85.93
+    trading in ETH minima/maxima:      -209.27 ETH; holdings after:     93363.79 USD; difference:     43794.05
+DEX 5 @ 0xe32368eaf6b456c99bd0514177181ed396df57eb, symbol: D20C
+    k = 200000.0, x = 100.0, y = 2000.0, f = 0.995
+    trading in TC minima/maxima:       -589.33 TC;  holdings after:     51306.25 USD; difference:      1736.52
+    trading in TC minima/maxima:      -3410.67 TC;  holdings after:    107733.20 USD; difference:     58163.46
+    trading in ETH minima/maxima:        41.07 ETH; holdings after:     51256.25 USD; difference:      1686.52
+    trading in ETH minima/maxima:      -241.07 ETH; holdings after:    107683.20 USD; difference:     58113.46
+
+Best amount of 41.06735979665885 exceeds ETH max of 10.0
+Best transaction: DEX # 5, trading in ETH: True, ETH transacted: 10.0, TCC transacted: 51256.254611099444
+
+Trading in 10.0 ETH: 10000000000000000000 wei at DEX 0xe32368eaf6b456c99bd0514177181ed396df57eb symbol D20C
+
+Gas estimate (gwei): 107000
+ETH & TCC before: 495.6973727043121 0.0
+waiting for eth-&gt;tcc txn to be mined; txn 0x6cf0a845776a3ff97913856cd0133f1a66d38c20f21e1994d88d1765bfba4836
+The TXN was mined successfully
+ETH & TCC after: 485.69567145431205 180.9090909092 
+
+Exchanged 10.0000 ETH for 180.9091 TC; fees: 0.11 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 50378.66 USD
+
+Final ETH balance: 485.69567145431205
+Final TC balance: 180.9090909092
+Holdings before: $49,569.74 USD
+Holdings after: $50,378.66 USD</code></pre>
+<h4 id='lower-dexes-sufficient-eth-tcc'>Lower DEXes, sufficient ETH & TCC</h4>
+<p>If only the lower three DEXes are available (D4, D6, and D8), then the trade will be TCC -&gt; ETH.</p>
+<pre><code>Connected: True
+Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
+TokenCC decimals: 10
+
+ETH balance: 465.69297913431205 with price: $100.0
+TCC balance: 542.7272727276 with price: $10.0
+Holdings: 51,996.57 USD
+
+DEX 0 @ 0xf3e8ac6d4a3e7fa6bc023c2260ee58822e2e982f, symbol: D4C
+    k = 40000.0, x = 100.0, y = 400.0, f = 0.995
+    trading in TC minima/maxima:        230.87 TC;  holdings after:     53329.11 USD; difference:      1332.54
+    trading in TC minima/maxima:      -1030.87 TC;  holdings after:     78564.01 USD; difference:     26567.44
+    trading in ETH minima/maxima:       -36.91 ETH; holdings after:     53359.11 USD; difference:      1362.54
+    trading in ETH minima/maxima:      -163.09 ETH; holdings after:     78594.01 USD; difference:     26597.44
+DEX 1 @ 0x4987a13d818df9170778297603a937dc837714b1, symbol: D6C
+    k = 60000.0, x = 100.0, y = 600.0, f = 0.995
+    trading in TC minima/maxima:        172.66 TC;  holdings after:     52493.40 USD; difference:       496.83
+    trading in TC minima/maxima:      -1372.66 TC;  holdings after:     83399.71 USD; difference:     31403.14
+    trading in ETH minima/maxima:       -22.73 ETH; holdings after:     52513.40 USD; difference:       516.83
+    trading in ETH minima/maxima:      -177.27 ETH; holdings after:     83419.71 USD; difference:     31423.14
+DEX 2 @ 0x68429fb5fb49f1b8310110fd26357d21ed8183a8, symbol: D8C
+    k = 80000.0, x = 100.0, y = 800.0, f = 0.995
+    trading in TC minima/maxima:         92.19 TC;  holdings after:     52102.79 USD; difference:       106.22
+    trading in TC minima/maxima:      -1692.19 TC;  holdings after:     87790.33 USD; difference:     35793.75
+    trading in ETH minima/maxima:       -10.78 ETH; holdings after:     52112.79 USD; difference:       116.22
+    trading in ETH minima/maxima:      -189.22 ETH; holdings after:     87800.33 USD; difference:     35803.76
+
+Best amount of 230.87241182350022 exceeds TC max of 100.0
+Best transaction: DEX # 0, trading in ETH: False, ETH transacted: 100.0, TCC transacted: 53329.1107042372
+
+Trading in 100.0 TC: 1000000000000 tcc_wei at DEX 0xf3e8ac6d4a3e7fa6bc023c2260ee58822e2e982f D4C
+ETH & TCC before: 465.69297913431205 542.7272727276
+waiting for tcc-&gt;eth txn to be mined; txn 0x1cbef0f25021a620088feecf26abf1303322108686b77e12d029e5876d3e2a73
+The TXN was mined successfully
+ETH & TCC after: 485.5917184843121 442.7272727276 
+
+Exchanged 100.0000 TC for 19.8987 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 52986.44 USD
+
+Final ETH balance: 485.5917184843121
+Final TC balance: 442.7272727276
+Holdings before: $51,996.57 USD
+Holdings after: $52,986.44 USD</code></pre>
+<h4 id='only-d10-dex-sufficient-eth-tcc'>Only D10 DEX, sufficient ETH & TCC</h4>
+<p>The D10 DEX exchanges the assets at the same amount as the price ratio (1:10 for the DEX, and the default prices are 10:100 USD), so with gas fees, there cannot be a profitable trade.</p>
+<pre><code>Connected: True
+Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
+TokenCC decimals: 10
+
+ETH balance: 485.5917184843121 with price: $100.0
+TCC balance: 442.7272727276 with price: $10.0
+Holdings: 52,986.44 USD
+
+DEX 0 @ 0x029e1e74421be44460c29b56e56cfbee0244333a, symbol: D10C
+    k = 100000.0, x = 100.0, y = 1000.0, f = 0.995
+    trading in TC minima/maxima:         -2.50 TC;  holdings after:     52986.50 USD; difference:         0.05
+    trading in TC minima/maxima:      -1997.50 TC;  holdings after:     92886.37 USD; difference:     39899.93
+    trading in ETH minima/maxima:        -0.25 ETH; holdings after:     52986.50 USD; difference:         0.05
+    trading in ETH minima/maxima:      -199.75 ETH; holdings after:     92886.37 USD; difference:     39899.93
+Best transaction: DEX # 0, trading in ETH: 0, ETH transacted: 0, TCC transacted: 0
+
+No profitable arbitrage trades available</code></pre>
+<h4 id='middle-dexes-sufficient-eth-tcc'>Middle DEXes, sufficient ETH & TCC</h4>
+<p>If the middle DEXes are available (D8, D10, and D12), and there is sufficient ETH and TCC, it will exchange TCC for ETH at the D8 DEX. However, the maxima is not at 100 TCC, but a bit less.</p>
+<pre><code>Connected: True
+Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
+TokenCC decimals: 10
+
+ETH balance: 485.5917184843121 with price: $100.0
+TCC balance: 442.7272727276 with price: $10.0
+Holdings: 52,986.44 USD
+
+DEX 0 @ 0x68429fb5fb49f1b8310110fd26357d21ed8183a8, symbol: D8C
+    k = 80000.0, x = 100.0, y = 800.0, f = 0.995
+    trading in TC minima/maxima:         92.19 TC;  holdings after:     53092.67 USD; difference:       106.22
+    trading in TC minima/maxima:      -1692.19 TC;  holdings after:     88780.20 USD; difference:     35793.75
+    trading in ETH minima/maxima:       -10.78 ETH; holdings after:     53102.67 USD; difference:       116.22
+    trading in ETH minima/maxima:      -189.22 ETH; holdings after:     88790.20 USD; difference:     35803.76
+DEX 1 @ 0x029e1e74421be44460c29b56e56cfbee0244333a, symbol: D10C
+    k = 100000.0, x = 100.0, y = 1000.0, f = 0.995
+    trading in TC minima/maxima:         -2.50 TC;  holdings after:     52986.50 USD; difference:         0.05
+    trading in TC minima/maxima:      -1997.50 TC;  holdings after:     92886.37 USD; difference:     39899.93
+    trading in ETH minima/maxima:        -0.25 ETH; holdings after:     52986.50 USD; difference:         0.05
+    trading in ETH minima/maxima:      -199.75 ETH; holdings after:     92886.37 USD; difference:     39899.93
+DEX 2 @ 0x7a199e0fbbb26c75df0dbb4b9b26ef363d260ab6, symbol: D12C
+    k = 120000.0, x = 100.0, y = 1200.0, f = 0.995
+    trading in TC minima/maxima:       -107.30 TC;  holdings after:     53082.37 USD; difference:        95.93
+    trading in TC minima/maxima:      -2292.70 TC;  holdings after:     96790.49 USD; difference:     43804.05
+    trading in ETH minima/maxima:         9.27 ETH; holdings after:     53072.37 USD; difference:        85.93
+    trading in ETH minima/maxima:      -209.27 ETH; holdings after:     96780.50 USD; difference:     43794.05
+Best transaction: DEX # 0, trading in ETH: False, ETH transacted: 92.1883209278185, TCC transacted: 53092.66645715084
+
+Trading in 92.1883209278185 TC: 921883209278 tcc_wei at DEX 0x68429fb5fb49f1b8310110fd26357d21ed8183a8 D8C
+ETH & TCC before: 485.5917184843121 442.7272727276
+waiting for tcc-&gt;eth txn to be mined; txn 0x03f9db92b51037203781e732b2ec0634073d11eb8aad7a0898962845987a61f4
+The TXN was mined successfully
+ETH & TCC after: 495.8716256215284 350.5389517998 
+
+Exchanged 92.1883 TC for 10.2799 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 53092.55 USD
+
+Final ETH balance: 495.8716256215284
+Final TC balance: 350.5389517998
+Holdings before: $52,986.44 USD
+Holdings after: $53,092.55 USD</code></pre>
 </div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
 <p>You will need to fill in the various values from this assignment into the <a href='arbitrage.py.html'>arbitrage.py</a> (<a href='arbitrage.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Python source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There is only one submission for this assignment.</p>
-<p>Submission 1: Submit your <code>arbitrage_trading.py</code> source code file, along with your completed <code>arbitrage.py</code> file, to Gradescope. You should not submit the arbitrage_config.py file. #### Execution runs</p>
+<p>Submission 1: Submit your <code>arbitrage_trading.py</code> source code file, along with your completed <code>arbitrage.py</code> file, to Gradescope. You should not submit the arbitrage_config.py file.</p>
+<h4 id='execution-runs-1'>Execution runs</h4>
 <p>The submission will make three execution runs, all on the same account. The account will start with 10 ether and 0 TCC. For all the execution runs, the following value are set:</p>
 <ul>
 <li>gas price: 10 gwei</li>
