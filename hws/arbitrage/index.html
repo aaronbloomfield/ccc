@@ -119,7 +119,7 @@ print(w3.is_connected())</code></pre>
 <li>The quantity of each that we currently have is <span class='math inline'><em>q</em><sub><em>e</em></sub></span> and <span class='math inline'><em>q</em><sub><em>t</em></sub></span>, for the quantity of ETH and TC, respectively</li>
 <li>Our holdings, in USD, are <span class='math inline'><em>h</em><sub><em>b</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em></sub></span> (our current holdings, before any potential transaction) and <span class='math inline'><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span> (our holdings after the transaction)</li>
 <li>The gas fees, computed as per the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>) page, are <span class='math inline'><em>g</em></span>; this is in units of ETH. Gas fees are discussed below (in the “Assignment” section). Note that this is NOT the price (in gwei) per gas step, nor the gas price in USD, but the total expected cost in ether of the transaction.</li>
-<li><span class='math inline'><em>f</em></span> is the percentage (out of 1.0) obtained after the DEX fees are removed. So if <span class='math inline'><em>f</em><sub><em>n</em></sub></span> is the fee numerator (say, 3) and <span class='math inline'><em>f</em><sub><em>d</em></sub></span> is the fee denominator (say, 1000), then <span class='math inline'><em>f</em> = 1 − <em>f</em><sub><em>n</em></sub>/<em>f</em><sub><em>d</em></sub></span>. As an example, if <span class='math inline'><em>f</em><sub><em>n</em></sub> = 3</span> and <span class='math inline'><em>f</em><sub><em>d</em></sub> = 1000</span>, then <span class='math inline'><em>f</em> = 0.997</span>. Note that this fee applies to both ETH and TC transactions, but only on the amount paid out. While each DEX <em>could</em> have their own fee values, for this assignment we will assume that each DEX has the same fee amount (specified in the arbitrage_config.py file).</li>
+<li><span class='math inline'><em>f</em></span> is the percentage (out of 1.0) obtained after the DEX fees are removed. So if <span class='math inline'><em>f</em><sub><em>n</em></sub></span> is the fee numerator (say, 3) and <span class='math inline'><em>f</em><sub><em>d</em></sub></span> is the fee denominator (say, 1000), then <span class='math inline'><em>f</em> = 1 − <em>f</em><sub><em>n</em></sub>/<em>f</em><sub><em>d</em></sub></span>. As an example, if <span class='math inline'><em>f</em><sub><em>n</em></sub> = 3</span> and <span class='math inline'><em>f</em><sub><em>d</em></sub> = 1000</span>, then <span class='math inline'><em>f</em> = 0.997</span>. Note that this fee applies to both ETH and TC transactions, but only on the amount paid out. You should query the DEXes to get their fee amounts.</li>
 </ul>
 <p>The above values are all fixed for each time the program runs – either from the config file (described below) or by querying the DEXes. Different DEXes will have different values for <span class='math inline'><em>x</em><sub><em>d</em></sub></span>, <span class='math inline'><em>y</em><sub><em>d</em></sub></span>, and <span class='math inline'><em>k</em><sub><em>d</em></sub></span>, of course. The only values that the program chooses are the amount of ETH that we trade in (we’ll call this <span class='math inline'><em>δ</em><sub><em>e</em></sub></span>) or the amount of TC that we trade in (we’ll call this <span class='math inline'><em>δ</em><sub><em>t</em></sub></span>). As we are only considering a single trade, only one of them will be non-zero.</p>
 <p>The formulas that we need are (derivations <a href='extra.html'>here</a> (<a href='extra.md'>md</a>)):</p>
@@ -518,37 +518,7 @@ Holdings after: $53,092.55 USD</code></pre>
 <p>You will need to fill in the various values from this assignment into the <a href='arbitrage.py.html'>arbitrage.py</a> (<a href='arbitrage.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Python source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There is only one submission for this assignment.</p>
 <p>Submission 1: Submit your <code>arbitrage_trading.py</code> source code file, along with your completed <code>arbitrage.py</code> file, to Gradescope. You should not submit the arbitrage_config.py file.</p>
-<h4 id='execution-runs-1'>Execution runs</h4>
-<p>The submission will make three execution runs, all on the same account. The account will start with 10 ether and 0 TCC. For all the execution runs, the following value are set:</p>
-<ul>
-<li>gas price: 10 gwei</li>
-<li>ether price: $100</li>
-<li>TCC price: $10</li>
-<li>max ether to trade: 5</li>
-<li>max TCC to trade: 50</li>
-</ul>
-<p>Each run assumes the state from the previous run. The trades are:</p>
-<ul>
-<li>Before first run: 10 ether, 0 TCC, holdings of 1000.00 USD</li>
-<li>First run: with all the DEXes enabled in the config file, it should send 5 ether (the max allowed) to the d20 DEX
-<ul>
-<li>That will result in a receipt of 94.7619 TC</li>
-<li>Output line: <code>Exchanged -5.0000 ETH for 94.7619 TC; fees: 0.18 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 1447.45 USD</code></li>
-<li>Balances after: 4.99826916 ether (5 ether minus gas fees), TC balance of 94.7619047620, holdings of $1,447.45</li>
-</ul></li>
-<li>Second run: with only the d10 DEX enabled in the config file, it should not find a profitable trade
-<ul>
-<li>Output line: <code>No profitable arbitrage trades available</code></li>
-<li>Balances after: same as above, since no trades were made</li>
-</ul></li>
-<li>Third run: with only the lower 3 DEXes enabled (d4, d6, and d8), it should send 50 TC (the max allowed) to the d4 DEX
-<ul>
-<li>That will result in a gain of 11.0544 ether</li>
-<li>Output line: <code>Exchanged -50.0000 TC for 11.0544 ETH; fees: 0.12 USD; prices: ETH 100.00 USD, TC: 10.00 USD; holdings: 2052.89 USD</code></li>
-<li>Balances after: 16.052676835555555 ether, TC balance of 44.7619047620, holdings of $2,052.89</li>
-</ul></li>
-</ul>
-<p>These should happen fairly quickly, as the Gradescope auto-grader can bypass the 60-second DEX waiting period.</p>
+
 </div><script>document.getElementById('defaultOpen').click();</script></body>
 </html>
 

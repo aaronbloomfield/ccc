@@ -148,7 +148,7 @@ We can formulaically determine how much to trade.  The full derivation of the fo
 - The quantity of each that we currently have is $q_e$ and $q_t$, for the quantity of ETH and TC, respectively
 - Our holdings, in USD, are $h_{before}$ (our current holdings, before any potential transaction) and $h_{after}$ (our holdings after the transaction)
 - The gas fees, computed as per the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)) page, are $g$; this is in units of ETH.  Gas fees are discussed below (in the "Assignment" section).  Note that this is NOT the price (in gwei) per gas step, nor the gas price in USD, but the total expected cost in ether of the transaction.
-- $f$ is the percentage (out of 1.0) obtained after the DEX fees are removed.  So if $f_n$ is the fee numerator (say, 3) and $f_d$ is the fee denominator (say, 1000), then $f=1-f_n/f_d$.  As an example, if $f_n=3$ and $f_d=1000$, then $f=0.997$.  Note that this fee applies to both ETH and TC transactions, but only on the amount paid out.  While each DEX *could* have their own fee values, for this assignment we will assume that each DEX has the same fee amount (specified in the arbitrage_config.py file).
+- $f$ is the percentage (out of 1.0) obtained after the DEX fees are removed.  So if $f_n$ is the fee numerator (say, 3) and $f_d$ is the fee denominator (say, 1000), then $f=1-f_n/f_d$.  As an example, if $f_n=3$ and $f_d=1000$, then $f=0.997$.  Note that this fee applies to both ETH and TC transactions, but only on the amount paid out.  You should query the DEXes to get their fee amounts.
 
 The above values are all fixed for each time the program runs -- either from the config file (described below) or by querying the DEXes.  Different DEXes will have different values for $x_d$, $y_d$, and $k_d$, of course.  The only values that the program chooses are the amount of ETH that we trade in (we'll call this $\delta_e$) or the amount of TC that we trade in (we'll call this $\delta_t$).  As we are only considering a single trade, only one of them will be non-zero.
 
@@ -629,6 +629,8 @@ There is only one submission for this assignment.
 
 Submission 1: Submit your `arbitrage_trading.py` source code file, along with your completed `arbitrage.py` file, to Gradescope.  You should not submit the arbitrage_config.py file.
 
+<!--
+
 #### Execution runs
 
 The submission will make three execution runs, all on the same account.  The account will start with 10 ether and 0 TCC.  For all the execution runs, the following value are set:
@@ -655,3 +657,4 @@ Each run assumes the state from the previous run.  The trades are:
     - Balances after: 16.052676835555555 ether, TC balance of 44.7619047620, holdings of $2,052.89
 
 These should happen fairly quickly, as the Gradescope auto-grader can bypass the 60-second DEX waiting period.
+-->
