@@ -422,6 +422,7 @@ But the concepts are certainly the same!
 - Gas: recall how gas is computed: the number of steps times the price per step.  The latter (price per step) is set in the arbitrage_config.py file.  For the former, you should try to use `w3.eth.estimate_gas()`.  If that is causing problems, then the estimated gas amounts can be posted to Piazza.  In either case, the *actual* gas used is not likely to be the exact amount as the estimate, so you will have to get the ether balance after the transaction.
 - Keep in mind that the DEX fees, which are in addition to the gas fees, also need to be taken into account.
 - When working through the examples, and getting your code to run correctly, be sure that the amounts are all in the same unit (ether versus wei, etc.).
+- If you are calling `estimate_gas()`, make sure you call it on the unsigned version of the transaction, not the signed version.
 
 ### Execution Runs
 

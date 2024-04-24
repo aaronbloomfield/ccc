@@ -344,6 +344,7 @@ print(w3.is_connected())</code></pre>
 <li>Gas: recall how gas is computed: the number of steps times the price per step. The latter (price per step) is set in the arbitrage_config.py file. For the former, you should try to use <code>w3.eth.estimate_gas()</code>. If that is causing problems, then the estimated gas amounts can be posted to Piazza. In either case, the <em>actual</em> gas used is not likely to be the exact amount as the estimate, so you will have to get the ether balance after the transaction.</li>
 <li>Keep in mind that the DEX fees, which are in addition to the gas fees, also need to be taken into account.</li>
 <li>When working through the examples, and getting your code to run correctly, be sure that the amounts are all in the same unit (ether versus wei, etc.).</li>
+<li>If you are calling <code>estimate_gas()</code>, make sure you call it on the unsigned version of the transaction, not the signed version.</li>
 </ul>
 </div><div id='texecution-runs' class='tabcontent'><h3 id='execution-runs'>Execution Runs</h3>
 <p>Below are some sample executions. Note that these runs print a <em>lot</em> of output so that you can understand what is going on. Your program should only print the one line via the <code>output()</code> function.</p>
