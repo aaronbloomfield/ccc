@@ -23,12 +23,7 @@ In addition to your source code, you will submit an edited version of [metamask.
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. <!-- So far there aren't any significant changes to report. -->
-
-- Mon, Dec 3: Added the `sleepms()` function, needed by `showReturnIntegerValue()`
-- Sun, Dec 2: Updated the `showReturnIntegerValue()` Javascript function
-- Sun, Dec 2: Updated the Metamask setup instructions for a new look-and-feel that is on some platforms
-
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report.
 
 
 ### MetaMask Setup 
