@@ -80,156 +80,20 @@ line-height:120%;
 
 
 
-## The rest of The Dark Side
-- We missed the ending of [the dark side of cryptocurrency](../slides/darkside.html#/); the second half of the [Solidity Attacks](../slides/darkside.html#/solidity) section
-  - Obscure details of Solidity that make it attackable
-  - Rubixi (constructor attacks)
-  - `tx.origin` attacks
-
-
 
 <!-- .slide: class="cclogo-slide" -->
 ## Advanced Cyrpocurrenty
 - The intent was to go over a more recent, and thus more advanced, cryptocurrency
 - I'm not sure there is time for this in the course
 - The intended example was [![algo logo](../slides/images/logos/algo-coin-symbol.svg)](https://coinmarketcap.com/currencies/algorand/) ALGO (Algorand)
+- Other options: Aleo, Polygon, or Polkadot
 
 
 
 ## Zero-knowledge proofs
-- In the [zkSNARKs](zksnarks.html#/) slide set
-- zkSNARK = Zero Knowledge Succinct Non-Interactive ARgument of Knowledge
-- This lecture set is very math-heavy, and was due to be significantly revised anyway
-
-
-
-## Example: The Ali Baba cave
-![](images/zksnarks/Zkip_alibaba1.webp)
-- A circular cave has a locked door
-- Peggy (the "prover") knows how to open it, and wants to prove it to Victor (the "verifier")
-  - But she doesn't want Victor to see how to open it
-- How can she prove this to him?
-  - And not show it to the rest of the world?
-- (Images from [Wikipedia](https://en.wikipedia.org/wiki/Zero-knowledge_proof))
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Example: The Ali Baba cave
-![](images/zksnarks/Zkip_alibaba1.webp)
-- Victor waits outside, and Peggy randomly chooses path A or B
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Example: The Ali Baba cave
-![](images/zksnarks/Zkip_alibaba2.webp)
-- Victor waits outside, and Peggy randomly chooses path A or B
-- Victor enters the cave, and states which path he wants Peggy to exit
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Example: The Ali Baba cave
-![](images/zksnarks/Zkip_alibaba3.webp)
-- Victor waits outside, and Peggy randomly chooses path A or B
-- Victor enters the cave, and states which path he wants Peggy to exit
-- Peggy either:
-  - Went down that path, and doesn't have to open the door
-  - Went down the other path, and does have to open the door
-- Each with 50% probability
-
-
-
-## Results
-- This shows, with 50% probability, that Alice knows a "key"
-  - If run twice, then it shows with 75% probability
-- To get a higher confidence level, run it many times
-  - 10?  100? 1000?
-- But this is not a proof!
-  - Since there is a $\frac{1}{2^n}$ chance that Peggy was just really lucky
-- We'll call it a *verification*
-- Note that this is an *interactive* verification
-
-
-
-## But wait...
-- Why doesn't Victor check that the door is locked, and then have Peggy do a loop?
-- Recall that Peggy wants to prove to Victor that she knows the key
-  - But not show it to the rest of the world
-- The current experiment:
-  - Does convince Victor (with probability $1/2^n$ for $n$ tries)
-  - Will look staged to the rest of the world
-- Peggy doing a loop:
-  - Will still convince Victor
-  - Will reveal that Peggy knows the key to the rest of the world
-
-
-
-<!-- .slide: class="right-float-img" -->
-## Where's Waldo
-![](images/zksnarks/MartinHandfordWallyandFriends.webp)
-- A series of illustrations in books by Martin Handford
-- Each image is very busy, and one has to find Waldo
-- If I know where Waldo is, I can prove it by showing you
-- But how do I prove it without showing you his position?
-- (Image from [Wikipedia](https://en.wikipedia.org/wiki/Where%27s_Wally%3F))
-
-
-
-## Where's Waldo
-- Let's do an example!
-- This *is* a proof, since I can definitively show where Waldo is
-  - There could be *multiple* Waldos, but I have still showed where one is
-- This is still an *interactive* proof
-  - Although I could leave it lying around, and it would be (mostly) non-interactive
-- Note who I verified it to, though...
-
-
-
-## Qualities of a Zero-Knowledge Proof
-- *Completeness:* the verifier can be (almost) certain that the prover "knows" the information
-  - After $n=100$ iterations, Peggy knows how to work the lock
-  - I definitively know where Waldo is
-- *Soundness:* the prover cannot "prove" false information to the verifier
-  - After $n=100$, Peggy cannot (realistically) have faked it
-  - I cannot have shared a false location of Waldo
-- *Zero-Knowledge:* The information being proven by the prover is never shared to the verifier
-  - Victor does not know how to work the lock
-  - You do not find out where Waldo is
-
-
-
-## Brief (Very) Simple Example
-- Given an agreed-upon base $b$ and modulus $m$, I want to prove to you that I know two numbers, $x$ and $y$, that add to 7, but without telling you those numbers
-- Rather than showing the numbers, we will perform a *homomorphic hiding*, wherein all numbers are powers of a base
-  - So I am showing two numbers, $x$ and $y$, such that $b^x \ast b^y=b^7$
-  - All operations are mod $m$
-  - Thus, we want to show two numbers that result in $A=b^7$
-- Anybody can figure out $b^?\mod m$, but going back is hard (discrete logs)
-  - Assuming large values of $b$ and $m$
-
-
-
-## Brief (Very) Simple Example
-- I am showing two numbers, $x$ and $y$, such that $b^x \ast b^y=b^7$
-  - Let $A=b^7$
-- I compute $X=b^3$ and $Y=b^4$, and present them
-- Anybody can verify that $X \ast Y=A$
-  - If $x+y=7$, then $b^x \ast b^y=b^7$
-  - Thus I know two numbers that add to 7
-- But I have not revealed my values for $x$ and $y$
-
-
-
-<!-- .slide: class="cclogo-slide" -->
-## ZK uses
-- [![zec logo](../slides/images/logos/zec-coin-symbol.svg)](https://coinmarketcap.com/currencies/zcash/) ZEC:  Zcash, the first viable zk cryptocurrency
-- [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) FIRO: originally called Zcoin, it hosed the first widespread democratic election (Thai party primary)
-- Newer systems, such as Aelo, are attempting to allow Turing-complete languages to be programmed on a ZK blockchain
-  - It provides smart-contract capabilities
-
-
+- We saw it a bit, but didn't go into detail
+  - Some last Friday, some today
+- It's very math-heavy, and would require a different set of pre-reqs
 </textarea></section>
 
   </section>
@@ -272,7 +136,7 @@ line-height:120%;
 - Relatively expensive to interact with
 - Low transaction rate, although that is likely to change with sharding
 - Now proof-of-stake
-- Technology is now 7 years old (although it has been updated)
+- Technology is now 8  years old (although it has been updated)
 
 
 
@@ -315,11 +179,11 @@ Image from [Beam's home page](https://beam.mw/)
 
 
 ## Is buying a miner worth it?
-- Numbers as of December 2022
-- A high-end graphics card uses about `$`1 per day in electrical costs and generates `$`0.40 in cryptocurrency profit
+- Numbers as of spring 2024
+- A high-end graphics card uses about `$`1 per day in electrical costs and generates `$`0.80 in cryptocurrency profit
   - It's worth it if you don't pay for your electricity usage
 - A Bitcoin ASIC miner, such as the [Avalon 1166 miner](https://canaan.io/product/a1166pro-s-75t), uses about `$`9 in electrical costs and generates maybe half that in profit
-- This can be profitable at scale, when electricity is cheap, and/or when the heat generated is used for something else
+- This can be profitable at scale, when electricity is cheap, miners are cheap, and/or when the heat generated is used for something else
 
 
 
@@ -333,7 +197,8 @@ Image from [Beam's home page](https://beam.mw/)
 
 
 
-## Want to start a cryptocurrency?
+<h2 class="r-fit-text">Want to start a cryptocurrency?</h2>
+
 - Starting it is easy
   - Make a ERC-20 token or fork existing source code
 - Getting people to trust it is *hard*
@@ -411,60 +276,61 @@ Image from [Beam's home page](https://beam.mw/)
 
 
 <!-- .slide: class="cclogo-slide" -->
-## 52 Cryptocurrencies created
+## ~50 Cryptocurrencies created
 ![](https://www.cs.virginia.edu/~asb2t/cclogos/ad.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/adx.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/ber.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/bigh.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ash.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/blc.png#cclogosmall)
 ![](https://www.cs.virginia.edu/~asb2t/cclogos/brd.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/ccc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/cc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/cmee.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/cme.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/cohn.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/bro.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/bwtc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/chc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/cmmc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/coco.png#cclogosmall)
 ![](https://www.cs.virginia.edu/~asb2t/cclogos/ddc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/dino.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/fb.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/filo.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/flth.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/gbx.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/gee.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/hcc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/hcky.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/hcn.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/hc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/hth.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dis.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dmj.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dpwe.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dsy.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ekm.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/embg.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/fbx.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/gc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/gg.png.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/habbii.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/hbiu.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/hobs.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/jdo.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/jlc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/jw.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/kay.png#cclogosmall)
 ![](https://www.cs.virginia.edu/~asb2t/cclogos/kc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/kldc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/kmc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/kohacoin.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/koha.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/lc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/mc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/mm.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/nard.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/nots.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/nyom.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/otf.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/phcn.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/qc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/rcn.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/ris.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/sc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/shc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/slop.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/smly.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/stdo.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/syd.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/tlm.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/transparent.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/tmpr.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/tnk.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/vngc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/wc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/yag.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/yc.png#cclogosmall)
-![](https://www.cs.virginia.edu/~asb2t/cclogos/yetc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ktc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/maby.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/magt.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mal.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mass.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mcc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/milk.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mobu.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mook.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/narb.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/nft.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/pbtc03.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/pmc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/pook.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/rad.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/scn.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/scor.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/scx.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/skrt.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/stpd.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/tcc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/tenz.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/toby.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/twc.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/wtw.png#cclogosmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/zkn.png#cclogosmall)
+
 
 
 
@@ -617,10 +483,9 @@ This is from our daily announcements lecture set
 - Debugging Solidity programs
   - Although I think it went about as well as it could have gone...
 - General Remix & geth issues
-- My slowness in (some) grading & (all) regrading
-- Arbitrage was rougher than anticipated
+- My slowness in regrading
+- Arbitrage was rougher than anticipated (although overall it worked well)
 - Support request response slowness
-- Me deleting the entire blockchain, and then having to restore it
 
 
 
@@ -643,12 +508,14 @@ This is from our daily announcements lecture set
 
 
 
-## Changes for next semester
+## Changes for next time
+- This course is moving to once a year rather than once a semester
+- And getting a new number: CS 4790
 - Restart the blockchain, and with a different chain ID
 - Same course structure, same homeworks
-- Add an advanced cryptocurrency lecture, such as Algorand
+- Add an advanced cryptocurrency lecture, such as Algorand, Aleo, Polygon, or Polkadot
 - More diagrams in the lectures
-- Fix the Arbitrage homework
+- See if BTC scripting can be done in a way that does not rely on the BTC test network
 
 
 

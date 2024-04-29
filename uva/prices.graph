@@ -8,7 +8,7 @@
 # - gas price (gwei, float)
 # - gas fees in (USD, float)
 #
-# - to generate the data, run:
+# - to generate the data, run (on Linux, not a Mac):
 #   `grep gwei daily-announcements.html  | grep ETH | sed s/[\`,\;\$]//g | awk '{print 43-NR" "$3" "$5" "$8" "$11}' > prices.data`
 # - then clean it up, fixing the lecture number (the first value of each
 #   line), adjusting the scales (below in this file) as necessary, and change the date axis
@@ -16,10 +16,10 @@
 # - run `make graph`
 
 set xrange [1:43]
-set yrange [0:42]
+set yrange [0:75]
 set key left top
-set xtics ( "Aug 25" 2, "Sep 6" 7, "Sep 18" 12, "Sep 29" 17, "Oct 13" 22, "Oct 25" 27, "Nov 6" 32, "Nov 17" 37, "Dec 5" 42 )
-set title "BTC and ETH prices, fall 2023"
+set xtics ( "Jan 19" 2, "Jan 31" 7, "Feb 12" 12, "Feb 23" 17, "Mar 13" 22, "Mar 25" 27, "Apr 5 6" 32, "Apr 17" 37, "Apr 29" 42 )
+set title "BTC and ETH prices & fees, spring 2024"
 set xlabel "Date"
 set ylabel "Price (USD)"
 set terminal svg size 1000,500 background rgb 'white'
