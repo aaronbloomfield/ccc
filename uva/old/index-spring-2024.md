@@ -1,4 +1,4 @@
-Cryptocurrency: UVA specific material, spring 2025
+Cryptocurrency: UVA specific material, spring 2024
 ==================================================
 
 [Go up to the main CCC readme](../readme.html) ([md](../readme.md))
@@ -79,22 +79,23 @@ Course calendar
 
 | Week # | Week of Monday | Lecture days | HWs due | Expected Topics | Actual Progress |
 |----|----|----|----|----|----|
-| 1  | Jan 13 | W,F   |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) |  |
-| 2  | Jan 20 | M,W,F |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) |  |
-| 3  | Jan 27 | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) |  |
-| 4  | Feb 3  | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) |  |
-| 5  | Feb 10 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) |  |
-| 6  | Feb 17 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/), [Solidity](../slides/solidity.html#/) |  |
-| 7  | Feb 24 | M,W,F | midterm, S4 (ETH Private) | [Solidity](../slides/solidity.html#/). midterm on Wed |  |
-|    | Mar 3  |       | Spring break        | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) |  |
-| 8  | Mar 10 | M,W,F | S5 (dApp intro)     | Spring break | |
-| 9  | Mar 17 | M,W,F | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) |  |
-| 10 | Mar 24 | M,W,F | P6 (Tokens)         | [Mining](../slides/mining.html#/), [Blockchain applications](../slides/applications.html#/) |  |
-| 11 | Mar 31  | M,W,F | P7 (Auction)        | [Blockchain applications](../slides/applications.html#/), [Scalability](../slides/scalability.html#/) |  |
-| 12 | Apr 7  | M,W,F | P8 (DEX)            | [Scalability](../slides/scalability.html#/), [Stablecoins](../slides/stablecoins.html#/) |  |
-| 13 | Apr 14 | M,W,F | P9 (DAO&web3)       | [Stablecoins](../slides/stablecoins.html#/), [Consensus](../slides/consensus.html#/) |  |
-| 14 | Apr 21 | M,W,F | P10 (Arbitrage)     | [Consensus](../slides/consensus.html#/), [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/) |  |
-| 15 | Apr 28 | M     | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) |  |
+| 1  | Jan 15 | W,F   |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) |  introduction (finished); Wed: overview to 4.11; Fri: encryption to 6.13 |
+| 2  | Jan 22 | M,W,F |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) | Mon: finished overview; Wed: encryption to 4.23; Fri: encryption to 6.? |
+| 3  | Jan 29 | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) | Mon: encryption to 7.8; Wed: finished encryption; Fri: bitcoin to 5.9 |
+| 4  | Feb 5  | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) | Mon: bitcoin to 6.10; Wed: bitcoin to 7.17; Fri: bitcoin to 7.39 |
+| 5  | Feb 12 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) | Mon: finished bitcoin; Wed: ethereum to 3.19; Fri: ethereum to 3.31 |
+| 6  | Feb 19 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/), [Solidity](../slides/solidity.html#/) | Mon: finished ethereum, mining to 3.15; Wed: mining to 5.18; Fri: mining to 7.7 |
+| 7  | Feb 26 | M,W,F | midterm, S4 (ETH Private) | [Solidity](../slides/solidity.html#/). midterm on Wed | Mon: solidity to 4.10; Wed: midterm; Fri: solidity to 4.27 |
+|    | Mar 4  |       | Spring break        | Spring break | |
+| 8  | Mar 11 | M,W,F | S5 (dApp intro)     | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) | Mon: solidity to 5.4; Wed: solidity to 6.6; Fri: finished solidity (Debts exercise) |
+| 9  | Mar 18 | M,W,F | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) | Mon: tokens to 4.9; Wed: tokens to 5.18; Fri: finished tokens |
+| 10 | Mar 25 | M,W,F | P6 (Tokens)         | [Mining](../slides/mining.html#/), [Blockchain applications](../slides/applications.html#/) | Mon: finished mining, applications to 3.6; Wed: applications to 3.31; Fri: applications to 4.4 |
+| 11 | Apr 1  | M,W,F | P7 (Auction)        | [Blockchain applications](../slides/applications.html#/), [Scalability](../slides/scalability.html#/) | Mon: finished applications, scalability to 3.8; Wed: scalability to 7.12; Fri: finished scalability, consensus to 4.12 |
+| 12 | Apr 8  | M,W,F | P8 (DEX)            | [Scalability](../slides/scalability.html#/), [Stablecoins](../slides/stablecoins.html#/) | Mon: consensus to 7.31; Wed: finished consensus; Fri: stablecoins to 6.7 |
+| 13 | Apr 15 | M,W,F | P9 (DAO&web3)       | [Stablecoins](../slides/stablecoins.html#/), [Consensus](../slides/consensus.html#/) | Mon: stablecoins to 9.8; Wed: finished stablecoins, ethics/legal/policy to 3.8; Fri: finished ethics/legal/policy, dark side to 4.4 |
+| 14 | Apr 22 | M,W,F | P10 (Arbitrage)     | [Consensus](../slides/consensus.html#/), [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/) | Mon: darkside to 6.19; Wed: finished darkside, zksnarks to 4.13; Fri: no lecture progress (open office hours instead) |
+| 15 | Apr 29 | M     | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) | Fri: zksnarks to 5.9, finished conclusion |
+
 
 ## Legal Issues
 

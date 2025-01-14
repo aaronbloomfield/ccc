@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <title>CCC: Cryptocurrency Course slide set</title>
+    <meta name="description" content="A set of slides for a course on Cryptocurrency">
+    <meta name="author" content="Aaron Bloomfield">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../../slides/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../slides/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../slides/reveal.js/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="../../slides/ccc.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../../slides/reveal.js/plugin/highlight/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../slides/reveal.js/css/print/pdf.scss' : '../../slides/reveal.js/css/print/paper.scss';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+	<script src="../../slides/reveal.js/lib/js/html5shiv.js"></script>
+	<![endif]-->
+    <style>
+.reveal li {
+font-size:70%;
+line-height:115%;
+}
+.reveal li ul li {
+font-size:90%;
+line-height:115%;
+}
+    </style>
+  </head>
+  <body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+	<section data-markdown><textarea>
+# CS 4501
+&nbsp;
+### Cryptocurrency
+
+<p class='titlep'>&nbsp;</p>
+<div class="titlesmall"><p>
+<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="./03-numbers.html?print-pdf"><img class="print" width="20" src="../../slides/images/print-icon.png" style="top:0px;vertical-align:middle" class="nopad"></a>
+</p></div>
+<p class='titlep'>&nbsp;</p>
+
+## Daily Announcements
+
+## Spring 2024
+	</textarea></section>
+
+<!--
+
+Template for first line:
+
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`...; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`...; [ETH gas](https://ethgas.watch/): ... gwei => `$`...
+
+-->
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section><h2 class='xkcd'>Final Exam</h2><img src="https://imgs.xkcd.com/comics/final_exam.png" title="For those of you also taking Game Theory, your grade in that class will be based on how close your grade on this exam is to 80% of the average." alt="Final Exam" srcset="https://imgs.xkcd.com/comics/final_exam_2x.png 2x" style="image-orientation:none" class='stretch'><p class='center'><a href='http://xkcd.com/2385/'>xkcd # 2385</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## The End
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`62,417; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,197; [ETH gas](https://etherscan.io/gastracker): 7 gwei => `$`0.47 @ 2024-04-29 01:20:10
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are mostly caught up
+- Grading
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is manually graded, so won't be back for a while
+  - [HW 10: Arbitrage](../../hws/arbitrage/index.html) was due this past Tuesday
+    - Grades will be back in a few days
+- Homeworks
+  - [HW 11: Metamask](../../hws/metamask/index.html) is out and due tomorrow (Tuesday, 4/30)
+- Final exam
+  - There *may be* a *practical* component, for which you'll have to bring your notebook (with S4 & S5 run)
+  - Details to follow in a few days
+- Today we'll quickly finish up [zkSNARKs](../../slides/zksnarks.html#/), starting on 5.1, then the [course conclusion](../../slides/conclusion.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/ape-degree.jpg" class="stretch" style="padding:0" class="center">From <a href='https://nftevening.com/nft-memes-we-couldnt-get-enough-of-prepare-to-laugh-your-ass-off/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 41: Fri, Apr 26th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`64,414; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,146; [ETH gas](https://etherscan.io/gastracker): 5 gwei => `$`0.33 @ 2024-04-25 23:14:09
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are mostly caught up
+- Grading
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is manually graded, so won't be back for a while
+- Homeworks
+  - [HW 10: Arbitrage](../../hws/arbitrage/index.html) was due this past Tuesday
+    - Average time taken: 8.18 hours, stdev 3.74, n=44
+  - [HW 11: Metamask](../../hws/metamask/index.html) is out and due next Tuesday (4/30)
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today is an open work day
+  - Monday we'll quickly finish up [zkSNARKs](../../slides/zksnarks.html#/), starting on 5.1, then a course wrap-up
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/lotr-nfts.jpg" class="stretch" style="padding:0" class="center">From <a href='https://nftevening.com/nft-memes-we-couldnt-get-enough-of-prepare-to-laugh-your-ass-off/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 40: Wed, Apr 24th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`66,664; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,225; [ETH gas](https://etherscan.io/gastracker): 7 gwei => `$`0.47 @ 2024-04-23 20:41:30
+- The [Bitcoin halving](https://crypto.com/bitcoin/halving-countdown): price was $64,120
+  - [Hash rate graph](https://www.blockchain.com/explorer/charts/hash-rate)
+  - Part of the reason: [Bitcoin Runes](https://www.coingecko.com/learn/what-are-bitcoin-runes)
+    - Send money to an `OP_RETURN` (which cannot be redeemed) to create a fungible token of that value
+    - Included in the TXN are a number of parameters for the token (ID, symbol, etc.)
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are mostly caught up
+- Grading
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is manually graded, so won't be back for a while
+- Homeworks
+  - [HW 10: Arbitrage](../../hws/arbitrage/index.html): how did it go?
+  - [HW 11: Metamask](../../hws/metamask/index.html) will be out tonight (I'll post on Piazza when it's ready)
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [The Dark Side of Cryptocurrency](../../slides/darkside.html#/) starting on 6.19
+  - Next up: [zkSNARKs](../../slides/zksnarks.html#/), but briefly
+  - Then... what?
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/explaining-nfts.webp" class="stretch" style="padding:0" class="center">From <a href='https://coindoo.com/nft-memes/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 39: Mon, Apr 22nd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`64,545; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,142; [ETH gas](https://etherscan.io/gastracker): 6 gwei => `$`0.40 @ 2024-04-21 16:40:11
+- The [Bitcoin halving](https://crypto.com/bitcoin/halving-countdown): price was $64,120
+  - Last block of 6.25 BTC: [839,999](https://www.blockchain.com/explorer/blocks/btc/839999)
+  - First block of 3.125 BTC: [840,000](https://www.blockchain.com/explorer/blocks/btc/840000) on April 19, 2024 at 08:09:27 am (with massive TXN fees)
+  - So far the price has remained stable
+  - It's too early to see the effect on the network hash rate
+  - Next [halving countdown](https://www.theblock.co/trackers/bitcoin-halving): April 2028
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are mostly caught up
+- Grading
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is manually graded, so won't be back for a while
+- Homeworks
+  - [HW 10: Arbitrage](../../hws/arbitrage/index.html) is out, and due on tomorrow (Tuesday, April 23rd)
+    - The necessary information is on the Canvas landing page
+  - HW 11: Metamask (not yet ready) will be out by Wednesday
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [The Dark Side of Cryptocurrency](../../slides/darkside.html#/) starting on 5.1
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/pet-rock.jpg" class="stretch" style="padding:0" class="center">From <a href='https://nftevening.com/nft-memes-we-couldnt-get-enough-of-prepare-to-laugh-your-ass-off/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 38: Fri, Apr 19th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`63,157; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,057; [ETH gas](https://etherscan.io/gastracker): 7 gwei => `$`0.45 @ 2024-04-18 20:40:50
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are mostly caught up
+- Grading
+  - [HW P8: DEX](../../hws/dex/index.html) grades were released Sunday night
+- Homeworks
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) was due Wednesday
+    - This requires manual grading, so it won't be back for a while
+    - Average time taken: 5.35 hours, stdev 1.91, n=44
+  - [HW 10: Arbitrage](../../hws/arbitrage/index.html) is out, and due on Tuesday
+    - The necessary information is on the Canvas landing page
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [Ethics, Legality, and Policy](../../slides/ethics-legal-policy.html#/), starting on 4.1
+  - Next up: [The Dark Side of Cryptocurrency](../../slides/darkside.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/nft-inheritance.webp" class="stretch" style="padding:0" class="center">From <a href='https://nftevening.com/nft-memes-we-couldnt-get-enough-of-prepare-to-laugh-your-ass-off/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 37: Wed, Apr 17th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`64,009; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,096; [ETH gas](https://etherscan.io/gastracker): 7 gwei => `$`0.46 @ 2024-04-16 23:45:59
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are all caught up!!!
+  - Or, rather, they were as of late Sunday
+- Grading
+  - [HW P8: DEX](../../hws/dex/index.html) grades were released Sunday night
+- Homeworks
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) was due yesterday; how did it go?
+    - Average time taken: 5.35 hours, stdev 1.91, n=44
+  - [HW 10: Arbitrage](../../hws/arbitrage/index.html) is *mostly* ready
+    - A few more explanations will be entered today (execution runs)
+    - The DEXes will be enabled today as well
+    - The necessary information is (or will be) on the Canvas landing page
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will finish with [Stablecoins & Oracles](../../slides/stablecoins.html#/), starting on 9.8
+  - Next up: [Ethics, Legality, and Policy](../../slides/ethics-legal-policy.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/nft-value-estimator.jpg" class="stretch" style="padding:0" class="center">From <a href='https://twitter.com/NFT_Memes1/status/1495888936513978370'>twitter</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 36: Mon, Apr 15th: TAX DAY
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`65,099; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,130; [ETH gas](https://etherscan.io/gastracker): 9 gwei => `$`0.59 @ 2024-04-14 22:42:10
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are all caught up!!!
+- Grading
+  - [HW P8: DEX](../../hws/dex/index.html) grades were released last night
+- Homeworks
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is due this Tuesday, April 16th
+    - The necessary information is on the Canvas landing page
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [Stablecoins & Oracles](../../slides/stablecoins.html#/), starting on 6.7
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/stablecoin-pyramid-scheme.jpg" class="stretch" style="padding:0" class="center">From <a href='https://medium.com/stably-blog/10-crypto-memes-to-make-your-day-better-9eb2c7ac55ba'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 35: Fri, Apr 12th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`70,935; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,524; [ETH gas](https://etherscan.io/gastracker): 12 gwei => `$`0.89 @ 2024-04-11 23:36:55
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Grading
+  - [HW P7: Auction](../../hws/auction/index.html) grades were released on Sunday
+    - The auto-grader bombed on a few assignments -- if this happened to you, please submit a regrade
+- Homeworks
+  - [HW P8: DEX](../../hws/auction/index.html) was due Tuesday
+    - Average time taken: 7.93 hours, stdev 3.37, n=45
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is due next Tuesday, April 16th
+    - The necessary information is on the Canvas landing page
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will start on [Stablecoins & Oracles](../../slides/stablecoins.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/disaster-girl-nft-tweet.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://www.republicworld.com/technology-news/social-media-news/disaster-girl-cashes-in-on-nft-of-her-meme-for-whopping-rs-3-dot-20-crore.html'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 34: Wed, Apr 10th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`69,239; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,507; [ETH gas](https://etherscan.io/gastracker): 20 gwei => `$`1.47 @ 2024-04-09 18:31:02
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Grading
+  - [HW P7: Auction](../../hws/auction/index.html) grades were released on Sunday
+    - The auto-grader bombed on a few assignments -- if this happened to you, please submit a regrade
+- Homeworks
+  - [HW P8: DEX](../../hws/auction/index.html) was due yesterday -- how did it go?
+    - Stats: ...
+  - [HW P9: DAO & web3](../../hws/daoweb3/index.html) is due next Tuesday, April 16th
+    - The necessary information is on the Canvas landing page
+- "Reading" due today: listen to the [Radiolab: The Ceremony episode](https://radiolab.org/podcast/ceremony) from Feb 25, 2021 (47 min)
+  - You can listen to it online [here](https://podtail.com/podcast/radiolab/radiolab-the-ceremony/) for free, downloaded from [here](https://waaa.wnyc.org/radiolab_podcast/radiolab_podcast17crypto.mp3/radiolab_podcast17crypto.mp3_ywr3ahjkcgo_e4bd84ddb629a65cd62a138756850481_46335275.mp3) for free, and a copy is in Canvas' files
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [Consensus](../../slides/consensus.html#/) starting on 7.31
+  - Next up: [Stablecoins & Oracles](../../slides/stablecoins.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb/ccc-img/wired_how-meme-detectives-stop-nft-fraud.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://www.wired.com/video/watch/how-meme-detectives-stop-nft-fraud'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## ECLIPSE DAY!!!
+- Eclipse information
+  - Begins at 2:01 pm, ends at 4:31 pm
+  - Maximum at 3:17 pm (88.3% covered)
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`69,413; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,430; [ETH gas](https://etherscan.io/gastracker): 10 gwei => `$`0.72 @ 2024-04-07 22:08:40
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+  - No OH for me today because of the eclipse
+- Grading
+  - [HW P7: Auction](../../hws/auction/index.html) grades ...
+- Homeworks
+  - [HW P8: DEX](../../hws/auction/index.html) is due this Tuesday
+    - The necessary information is on the Canvas landing page
+    - If you didn't get your TokenCC to work correctly, I can deploy one for you
+- "Reading" due this Wed, 4/10: listen to the [Radiolab: The Ceremony episode](https://radiolab.org/podcast/ceremony) from Feb 25, 2021 (47 min)
+  - You can listen to it online [here](https://podtail.com/podcast/radiolab/radiolab-the-ceremony/) for free, downloaded from [here](https://waaa.wnyc.org/radiolab_podcast/radiolab_podcast17crypto.mp3/radiolab_podcast17crypto.mp3_ywr3ahjkcgo_e4bd84ddb629a65cd62a138756850481_46335275.mp3) for free, and a copy is in Canvas' files
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [Consensus](../../slides/consensus.html#/) starting on 5.1
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb/ccc-img/nfts-vs-kids.png" class="stretch" style="padding:0px" class="center">From <a href='https://www.zerocodenft.com/post/best-non-fungible-tokens-jokes-nft-memes-top-10'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 32: Fri, Apr 5th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`67,925; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,298; [ETH gas](https://etherscan.io/gastracker): 36 gwei => `$`2.49 @ 2024-04-04 21:44:04
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+  - My OH on Monday will be 2-4, with an eclipse break in the middle
+- Grading
+  - [HW P6: Tokens](../../hws/tokens/index.html) grades were returned this past Tuesday
+- Homeworks
+  - [HW P8: DEX](../../hws/auction/index.html) is due next Tuesday
+    - The necessary information is on the Canvas landing page
+    - If you didn't get your TokenCC to work correctly, I can deploy one for you
+- "Reading" due next Wed, 4/10: listen to the [Radiolab: The Ceremony episode](https://radiolab.org/podcast/ceremony) from Feb 25, 2021 (47 min)
+  - You can listen to it online [here](https://podtail.com/podcast/radiolab/radiolab-the-ceremony/) for free, downloaded from [here](https://waaa.wnyc.org/radiolab_podcast/radiolab_podcast17crypto.mp3/radiolab_podcast17crypto.mp3_ywr3ahjkcgo_e4bd84ddb629a65cd62a138756850481_46335275.mp3) for free, and a copy is in Canvas' files
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [Scalability](../../slides/scalability.html#/) starting on 7.12
+  - Next up: [Consensus](../../slides/consensus.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/akudreams.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://www.reddit.com/r/ProgrammerHumor/comments/uam1l7/just_push_they_said/'>reddit</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 31: Wed, Apr 3rd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`66,322; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,316; [ETH gas](https://etherscan.io/gastracker): 21 gwei => `$`1.46 @ 2024-04-03 00:11:02
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Grading
+  - [HW P6: Tokens](../../hws/tokens/index.html) grades were returned last night
+- Homeworks
+  - [HW P7: Auctioneer](../../hws/auction/index.html) was due yesterday: how did it go?
+    - Average time taken: 4.90 hours, stdev 1.74, n=41
+  - [HW P8: DEX](../../hws/auction/index.html) is due next Tuesday
+    - The necessary information is on the Canvas landing page
+    - If you didn't get your TokenCC to work correctly, I can deploy one for you
+- "Reading" due next Wed, 4/10: listen to the [Radiolab: The Ceremony episode](https://radiolab.org/podcast/ceremony) from Feb 25, 2021 (47 min)
+  - You can listen to it online [here](https://podtail.com/podcast/radiolab/radiolab-the-ceremony/) for free, downloaded from [here](https://waaa.wnyc.org/radiolab_podcast/radiolab_podcast17crypto.mp3/radiolab_podcast17crypto.mp3_ywr3ahjkcgo_e4bd84ddb629a65cd62a138756850481_46335275.mp3) for free, and a copy is in Canvas' files
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [Scalability](../../slides/scalability.html#/) starting on 3.8
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb/ccc-img/ape-sales.png" class="stretch" style="padding:0px" class="center">From <a href='https://www.zerocodenft.com/post/best-non-fungible-tokens-jokes-nft-memes-top-10'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 30: Mon, Apr 1st
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`70,847; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,610; [ETH gas](https://etherscan.io/gastracker): 20 gwei => `$`1.52 @ 2024-03-31 22:15:26
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW P7: Auctioneer](../../hws/auction/index.html) is out and due next Tuesday (April 2nd)
+    - If you didn't get your NFTManager working correctly, let me know and I'll deploy one for you
+      - But you have to let me know well before next Tuesday evening
+  - HW P8: DEX will be out in a day or two
+    - We'll go over it today
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we are going to continue with [Blockchain Applications](../../slides/applications.html#/), starting on 4.4
+  - Next up: [Scalability](../../slides/scalability.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb/ccc-img/nfts-what-sells.jpg" class="stretch" style="padding:0" class="center">From <a href='https://www.ebaumsworld.com/pictures/15-memes-about-current-state-of-nfts/87105709/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 29: Fri, Mar 29th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`70,844; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,578; [ETH gas](https://etherscan.io/gastracker): 25 gwei => `$`1.88 @ 2024-03-28 21:39:51
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW P6: Tokens](../../hws/tokens/index.html) was due yesterday; how did it go?
+    - A few people have issues with their logo, and were emailed; please fix by the end of the day today
+  - [HW P7: Auctioneer](../../hws/auction/index.html) is out and due next Tuesday (April 2nd)
+    - If you didn't get your NFTManager working correctly, let me know and I'll deploy one for you
+      - But you have to let me know well before next Tuesday evening
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we are going to continue with [Blockchain Applications](../../slides/applications.html#/), starting on 3.31
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/nft-trident.webp" class="stretch" style="padding:0px" class="center">From <a href='https://www.reddit.com/r/DnD/comments/urohzn/oc_you_may_have_seen_this_reposted_on_rdndmemes/'>reddit</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 28: Wed, Mar 27th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`70,305; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,613; [ETH gas](https://etherscan.io/gastracker): 23 gwei => `$`1.75 @ 2024-03-26 22:06:15
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW P6: Tokens](../../hws/tokens/index.html) was due yesterday; how did it go?
+    - Note that the explorer shows a list of TCCs; also NFT holders
+    - Compilation of the .sol files in Remix was a bit bumpy
+    - A bunch of you didn't follow all the guidelines for the TCC logos
+      - I'll email you tonight, and you can fix it until this Friday without a penalty
+    - Average time taken: 3.67 hours, stdev 1.43, n=46
+    - Used GenAI for TCC logo: 43.5% (20/46); for NFTs: 52.2% (24/46)
+      - 19 GPT4 / DALL-E, 2 Canva, 6 other individual ones (Designer, Craiyon, DaVinci, Gemini, Nightcafe, PIXLR)
+    - Let's look at the NFT images and the TCC logos!
+  - [HW P7: Auctioneer](../../hws/auction/index.html) is out and due next Tuesday (April 2nd)
+    - If you didn't get your NFTManager working correctly, let me know and I'll deploy one for you
+      - But you have to let me know well before next Tuesday evening
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we are going to continue with [Blockchain Applications](../../slides/applications.html#/), starting on 3.6
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/nft-trident.webp" class="stretch" style="padding:0px" class="center">From <a href='https://www.reddit.com/r/DnD/comments/urohzn/oc_you_may_have_seen_this_reposted_on_rdndmemes/'>reddit</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 28: Wed, Mar 27th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`70,305; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,613; [ETH gas](https://etherscan.io/gastracker): 23 gwei => `$`1.75 @ 2024-03-26 22:06:15
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW P6: Tokens](../../hws/tokens/index.html) was due yesterday; how did it go?
+    - Note that the explorer shows a list of TCCs; also NFT holders
+    - Compilation of the .sol files in Remix was a bit bumpy
+    - A bunch of you didn't follow all the guidelines for the TCC logos
+      - I'll email you tonight, and you can fix it until this Friday without a penalty
+    - Average time taken: 3.67 hours, stdev 1.43, n=46
+    - Used GenAI for TCC logo: 43.5% (20/46); for NFTs: 52.2% (24/46)
+      - 19 GPT4 / DALL-E, 2 Canva, 6 other individual ones (Designer, Craiyon, DaVinci, Gemini, Nightcafe, PIXLR)
+    - Let's look at the NFT images and the TCC logos!
+  - [HW P7: Auctioneer](../../hws/auction/index.html) is out and due next Tuesday (April 2nd)
+    - If you didn't get your NFTManager working correctly, let me know and I'll deploy one for you
+      - But you have to let me know well before next Tuesday evening
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we are going to continue with [Blockchain Applications](../../slides/applications.html#/), starting on 3.6
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/opensea-world-burning.jpg" class="stretch" style="padding:0" class="center">From <a href='https://coingape.com/us-midterm-elections-and-ftx-collapse-heres-how-crypto-twitter-is-reacting/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 27: Mon, Mar 25th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`66,747; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,435; [ETH gas](https://etherscan.io/gastracker): 19 gwei => `$`1.37 @ 2024-03-24 18:26:20
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW P6: Tokens](../../hws/tokens/index.html) is out, and due this Tuesday (3/26)
+    - The necessary contract (NFTManager) has been deployed; link on Canvas landing page and explorer home page
+    - I fixed the .sol includes on Wednesday -- you can download them as a .zip file also
+    - I just added three keys in the 'other' dictionary in tokens.py, and one in the 'sanity_checks' dictionary
+    - Note that the explorer shows a list of TCCs; also NFT holders
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- We are going to go back to [Mining](../../slides/mining.html#/), starting on 7.7
+  - Next up: [Blockchain Applications](../../slides/applications.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/nft-do-something.png" class="stretch" style="padding:0" class="center">From <a href='https://www.pinata.cloud/blog/a-new-era-erc-6551-and-token-bound-accounts-tbas/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 26: Fri, Mar 22nd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`65,847; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,520; [ETH gas](https://etherscan.io/gastracker): 26 gwei => `$`1.92 @ 2024-03-21 18:16:37
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW P6: Tokens](../../hws/tokens/index.html) is out, and due next Tuesday (3/26)
+    - The necessary contract (NFTManager) has been deployed; link on Canvas landing page and explorer home page
+    - I fixed the .sol includes on Wednesday -- you can download them as a .zip file also
+    - I just added three keys in the 'other' dictionary in tokens.py, and one in the 'sanity_checks' dictionary
+    - Note that the explorer shows a list of TCCs; also NFT holders
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Today we will continue with [Tokens](../../slides/tokens.html#/) starting on 6.1
+  - We will come back to Mining, starting on 7.7, later in the semester
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/nft-save-as.webp" class="stretch" style="padding:10px" class="center">From <a href='https://www.workandmoney.com/s/funniest-nft-memes-e7d1e578da334371'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 25: Wed, Mar 20th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`62,270; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,167; [ETH gas](https://etherscan.io/gastracker): 32 gwei => `$`2.13 @ 2024-03-19 22:06:51
+- Let's see how our [silly ape NFT](https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/4753) is doing!
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW P5: Gradebook](../../hws/gradebook/index.html) was due yesterday: how did it go?
+    - Average time taken: 3.19 hours, stdev 1.27, n=44
+  - [HW P6: Tokens](../../hws/tokens/index.html) is out, and due next Tuesday (3/26)
+    - Some of the contracts have not yet been deployed; that should happen by Friday
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- [Midterm](../../exams/midterm-s24.pdf) before spring break
+  - Average was 33.9/48 (70.5%) with a standard deviation of 5.5 (11.5%)
+  - I changed the rubric for the Satoshi question
+  - Regrades are open the middle of this week
+- Today we will continue with [Tokens](../../slides/tokens.html#/) starting on 5.1
+  - We will come back to Mining, starting on 7.7, later in the semester
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/headaches.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://cryptocurrencykb.com/100-of-the-best-crypto-memes-so-funny-youll-laugh-your-face-off/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 24: Mon, Mar 18th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`67,852; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,599; [ETH gas](https://etherscan.io/gastracker): 23 gwei => `$`1.74 @ 2024-03-17 23:02:03
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW S5: dApp Introduction](../../dappintro/index.html) was due last Thursday
+    - We'll see the list of poll purposes next
+  - [HW P5: Gradebook](../../hws/gradebook/index.html) is ready, and due next Tuesday (March 19th)
+    - The necessary information is on the Canvas landing page
+  - HW P6: Tokens will be out by Wednesday
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- [Midterm](../../exams/midterm-s24.pdf) before spring break
+  - Average was 33.9/48 (70.5%) with a standard deviation of 5.5 (11.5%)
+  - I changed the rubric for the Satoshi question
+  - Regrades are open the middle of this week
+- Today we will start on [Tokens](../../slides/tokens.html#/)
+  - We will come back to Mining, starting on 7.7, later in the semester
+
+
+
+## Poll Purposes
+
+<table class="transparent"><tr><td>
+
+- Best ACC Basketball Team
+- Best Movie?
+- Best Virginia college
+- Favorite Computer Science Professor (not a comprehensive list)
+- Favorite Pokemon
+- Favorite UVA sports team
+- Favorite animal
+- Favorite anti-hero in fiction
+- Favorite car!
+- Favorite coffee chain
+- Favorite continent
+- Favorite coordinal direction
+- Favorite cuisine
+- Favorite democracy
+- Favorite food (x2)
+- Favorite form of pineapple
+- Favorite gen 1 Pokemon starter?
+- Favorite instrument
+- Favorite movie genre
+- Favorite music genre
+
+</td><td>
+
+- Favorite name for my dnd character
+- Favorite pet
+- Favorite prime number
+- Favorite programming language (x2)
+- Favorite season (x2)
+- Favorite shoe brand
+- Favorite soup
+- Favorite sport (x2)
+- Favorite swim stroke
+- Favorite video game
+- If you could only have one social media, which one would it be
+- Rate this poll
+- What color is the sky?
+- What type of UVA student are you?
+- What would you rather have as a pet?
+- Which of the seven dwarves are you?
+- Who is your Favorite UVA basketball player?
+- Who will win the NCAA mens lacrosse championship?
+- Who would win in a free for all battle?
+
+</td></tr></table>
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/buy-the-dip.jpg" class="stretch" style="padding:0" class="center">From <a href='https://wagmi.tips/nft-memes/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 23: Fri, Mar 15th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`70,776; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,830; [ETH gas](https://etherscan.io/gastracker): 48 gwei => `$`3.86 @ 2024-03-14 17:46:03
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Homeworks
+  - [HW S5: dApp Introduction](../../dappintro/index.html) was due last night, with a late submission deadline of 11 a.m. today
+    - Let's see the results of the poll!
+    - I'll have a list of all your polls on Monday
+  - [HW P5: Gradebook](../../hws/gradebook/index.html) is ready, and due next Tuesday (March 19th)
+    - The necessary info is on the Canvas landing page
+- Please bring your laptops to class today, with HWs S4 & S5 run on them
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- [Midterm](../../exams/midterm-s24.pdf) before spring break
+  - Average was 33.9/48 (70.5%) with a standard deviation of 5.5 (11.5%)
+  - I changed the rubric for the Satoshi question
+  - Regrades are open until early next week
+- Today we will continue with [Solidity](../../slides/solidity.html#/) starting on 6.7
+  - Next up: [Tokens](../../slides/tokens.html#/)
+  - We will come back to Mining, starting on 7.7, later in the semester
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb/ccc-img/you-only-lose-when-you-sell.jpg" class="stretch" style="padding:0" class="center">From <a href='https://www.boredpanda.com/crypto-crash-memes/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 22: Wed, Mar 13th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`71,491; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,983; [ETH gas](https://etherscan.io/gastracker): 45 gwei => `$`3.76 @ 2024-03-12 21:11:41
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+    - My office hours today will be 12-1:30, not 8:30-9
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are all caught up
+- Homeworks
+  - [HW S5: dApp Introduction](../../dappintro/index.html) is out, and due this *Thursday* (tomorrow) by 11:59 pm
+    - There will not be (much of) a late period for this one!
+  - [HW P5: Gradebook](../../hws/gradebook/index.html) is ready, and due next Tuesday (March 19th)
+    - The necessary info is on the Canvas landing page
+- Please bring your laptops to class on Friday, with HWs S4 & S5 run on them
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- [Midterm](../../exams/midterm-s24.pdf) before spring break
+  - Average was 33.9/48 (70.5%) with a standard deviation of 5.5 (11.5%)
+  - I changed the rubric for the Satoshi question
+  - Regrades are open
+- Today we will continue with [Solidity](../../slides/solidity.html#/) starting on 5.4
+  - We will come back to Mining, starting on 7.7, later in the semester (possibly today, if we finish early)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/hold-hold-sell.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://www.reddit.com/r/cryptocurrencymemes/comments/nhmo5k/crypto_meme/'>reddit</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 21: Mon, Mar 11th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`68,360; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,830; [ETH gas](https://etherscan.io/gastracker): 42 gwei => `$`3.38 @ 2024-03-10 23:02:13
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402, TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+    - My office hours Wednesday will be 12-1:30, not 8:30-9
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are all caught up
+- Homeworks
+  - [HW S5: dApp Introduction](../../dappintro/index.html) is out, and due this *Thursday* by 11:59 pm
+    - There will not be (much of) a late period for this one!
+  - HW P5: Gradebook will be out by Wednesday
+- Please bring your laptops to class on Friday, with HWs S4 & S5 run on them
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- [Midterm](../../exams/midterm-s24.pdf) before spring break
+  - Average was 33.9/48 (70.5%) with a standard deviation of 5.5 (11.5%)
+  - I changed the rubric for the Satoshi question
+  - Regrades will open up today
+- Today we will continue with [Solidity](../../slides/solidity.html#/) starting on 4.27
+  - We will come back to Mining, starting on 7.7, later in the semester
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/crypto-make-me-a-millionaire.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://humornama.com/memes/crypto-memes/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 20: Fri, Mar 1st
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`60,857; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,356; [ETH gas](https://etherscan.io/gastracker): 38 gwei => `$`2.68 @ 2024-02-29 21:25:27
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+    - And also right after class today
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+    - But 1-3 (not 2-4) today
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are backed up again
+- Homeworks
+  - [HW S4: Private Ethereum Blockchain](../../hws/ethprivate/index.html) is out and due today, Friday, March 1st
+    - The info needed is on the Canvas landing page
+    - Grades are available as soon as you submit
+  - [HW S5: dApp Introduction](../../dappintro/index.html) is out, and the *Thursday* after spring break
+    - There will not be a late period for this one!
+- You will need your laptop / notebook in class the Friday after spring break
+  - With HW S4 and HW S5 run on it
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- [Midterm](../../exams/midterm-s24.pdf) on Wednesday!  How was it?  We'll go over it today
+  - Average was 33.9/48 (70.5%) with a standard deviation of 5.5 (11.5%)
+  - Regrades will open up today
+- HooHacks!  March 23-24.  Info at https://hoohacks.io, sign up at https://app.hoohacks.io.
+- Today we will continue with [Solidity](../../slides/solidity.html#/) starting on 4.10
+  - We will come back to Mining, starting on 7.7, later in the semester
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 19: Wed, Feb 28th
+
+Midterm today, so no daily announcements.
+</textarea></section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/daenerys-goodnight.jpg" class="stretch" style="padding:0" class="center">From <a href='https://twitter.com/Zehavit25/status/1523062877858693120'>twitter</a><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 18: Mon, Feb 26th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`51,676; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,099; [ETH gas](https://etherscan.io/gastracker): 25 gwei => `$`1.63 @ 2024-02-25 18:22:43
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW S4: Private Ethereum Blockchain](../../hws/ethprivate/index.html) is out and due next Friday, March 1st
+    - The info needed is on the Canvas landing page
+    - Grades are available as soon as you submit
+  - HW S5: dApp Introduction, will be due the Wednesday or Thursday after spring break
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Midterm on Wednesday!
+- HooHacks!  March 23-24.  Info at https://hoohacks.io, sign up at https://app.hoohacks.io.
+- Today we will start on [Solidity](../../slides/solidity.html#/)
+  - We will come back to Mining, starting on 7.7, later in the semester
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/my-lambo-after-eth-dip.jpg" class="stretch" style="padding:0"><p class="center">From <a href='https://cryptocurrencykb.com/100-of-the-best-crypto-memes-so-funny-youll-laugh-your-face-off/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 17: Fri, Feb 23rd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`51,028; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,939; [ETH gas](https://etherscan.io/gastracker): 31 gwei => `$`1.91 @ 2024-02-22 22:26:15
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+  - No office hours after the midterm until classes resume after spring break
+- Support requests are now enabled
+- Homeworks
+  - [HW S4: Private Ethereum Blockchain](../../hws/ethprivate/index.html) is out and due next Friday, March 1st
+    - The info needed is on the Canvas landing page
+    - Grades are available as soon as you submit
+  - HW S5: dApp Introduction, will be due the Wednesday or Thursday after spring break
+- About the course blockchain: it's there for educational purposes, so feel free to experiment with it
+  - But don't do anything like sending a huge number of TXNs
+- Next week is the midterm, on Wednesday
+- Today we will continue with [Mining](../../slides/mining.html#/), starting on 5.18
+  - Monday we start on [Solidity](../../slides/solidity.html#/), and will come back to finish mining later
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/ethereum-thanos-everything.png" class="stretch" style="padding:0"><p class="center">From <a href='https://coinmotion.com/crypto-memes-2021/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 16: Wed, Feb 21st
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`51,964; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`3,009; [ETH gas](https://etherscan.io/gastracker): 31 gwei => `$`1.96 @ 2024-02-20 23:40:34
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled, and I'm all caught up
+  - Other than a few recent regrades that I'm working through
+- Homeworks
+  - [HW P4: BTC Scripting](../../hws/btcscript/index.html) was due yesterday
+    - Um.... how did it go?
+  - [HW S4: Private Ethereum Blockchain](../../hws/ethprivate/index.html) is out and due next Friday, March 1st
+    - The info needed is on the Canvas landing page
+    - Grades are available as soon as you submit
+  - HW S5: dApp Introduction, will be due the Wednesday or Thursday after spring break
+- Next week is the midterm, on Wednesday
+- Today we will continue with [Mining](../../slides/mining.html#/), starting on 4.1
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="http://www.cs.virginia.edu/~asb2t/ccc-img/buying-groceries-buying-crypto.jpg" class="stretch" style="padding:0" class="center">From <a href='https://ahseeit.com/finance/?qa=1141/buying-groceries-vs-crypto-meme'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 15: Mon, Feb 19th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`52,190; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,886; [ETH gas](https://etherscan.io/gastracker): 18 gwei => `$`1.09 @ 2024-02-18 23:40:44
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled, and I'm all caught up
+- Homeworks
+  - [HW P4: BTC Scripting](../../hws/btcscript/index.html) is ready, and is due tomorrow, Tuesday, February 20th
+    - There are typical delays on the BTC test networks, so don't wait until the last minute to start this
+    - The submission system is having problems with some of the tests, which is why it is not ready yet
+    - About the caching of TXNs upon submission
+  - HW S4: Private Ethereum Blockchain, will be due late next week (after the midterm)
+  - HW S5: dApp Introduction, will be due the Wednesday or Thursday after spring break
+- Next week is the midterm, on Wednesday
+- Today we will continue with [Ethereum](../../slides/ethereum.html#/), starting on 4.1
+  - Next up: [Mining](../../slides/mining.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/cryptocurrency-trader.png" class="stretch" style="padding:0"><p class="center">From <a href='https://freewallet.org/blog/top-crypto-and-bitcoin-memes/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 14: Fri, Feb 16th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`52,203; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,842; [ETH gas](https://etherscan.io/gastracker): 16 gwei => `$`0.95 @ 2024-02-16 00:28:25
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled, but I'm way behind; I'll catch up this weekend
+- Homeworks
+  - [HW P4: BTC Scripting](../../hws/btcscript/index.html) is ready, and is due next Tuesday, February 20th
+    - There are typical delays on the BTC test networks, so don't wait until the last minute to start this
+  - HW S3, reading of the Ethereum whitepaper, is due this today
+    - Details about what parts to read and what parts to skip are on the Canvas landing page
+  - The week after that is the midterm, the week after that is spring break
+- Today we will continue with [Ethereum](../../slides/ethereum.html#/), starting on 3.19
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/crypto-holders-2020-vs-2021.jpg" class="stretch" style="padding:0"><p class='center'>From <a href='https://financeillustrated.com/trending/40-bitcoin-memes-to-share-with-your-friends/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Happy Valentines Day!
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`49,616; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,633; [ETH gas](https://etherscan.io/gastracker): 18 gwei => `$`1.00 @ 2024-02-13 22:28:10
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P3: BTC Parser](../../hws/btcparser/index.html) was due yesterday; how did it go?
+  - [HW P4: BTC Scripting](../../hws/btcscript/index.html) is ready, and is due next Tuesday, February 20th
+    - There are typical delays on the BTC test networks, so don't wait until the last minute to start this
+  - HW S3, reading of the Ethereum whitepaper, is due this Friday, February 16th
+    - Details about what parts to read and what parts to skip are on the Canvas landing page
+  - The week after that is the midterm, the week after that is spring break
+- Today we will start on [Ethereum](../../slides/ethereum.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/btc-in-it-for-the-tech.jpg" class="stretch" style="padding:0"><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 12: Mon, Feb 12th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`48,134; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,503; [ETH gas](https://etherscan.io/gastracker): 21 gwei => `$`1.10 @ 2024-02-11 23:29:21
+- Office hours
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P3: BTC Parser](../../hws/btcparser/index.html) is ready, and is due tomorrow, Tuesday, February 13th
+  - HW S3, reading of the Ethereum whitepaper, is due this Friday, February 16th
+    - Details about what parts to read and what parts to skip are on the Canvas landing page
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting, and will be out Wednesday
+  - The week after that is the midterm, the week after that is spring break
+- Today we will continue with [Bitcoin](../../slides/bitcoin.html#/), starting on 7.39
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/trading-plan.jpg" class="stretch" style="padding:0"><p class='center'>From <a href='https://financeillustrated.com/trending/40-bitcoin-memes-to-share-with-your-friends/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 11: Fri, Feb 9th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`45,338; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,422; [ETH gas](https://etherscan.io/gastracker): 56 gwei => `$`2.85 @ 2024-02-08 20:32:44
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P3: BTC Parser](../../hws/btcparser/index.html) is ready, and is due Tuesday, February 13th
+  - HW S3, reading of the Ethereum whitepaper, is due Friday, February 16th
+    - Details about what parts to read and what parts to skip are on the Canvas landing page
+- Upcoming HWs (not yet ready!)
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- Upcoming schedule
+  - HW P3 due next week
+  - HW P4 due the following week
+  - Then is the week of the midterm
+  - Then spring break!
+- Today we will continue with [Bitcoin](../../slides/bitcoin.html#/), starting on 7.17
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/bitcoin-terminator.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://financeillustrated.com/trending/40-bitcoin-memes-to-share-with-your-friends/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 10: Wed, Feb 7th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`42,982; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,317; [ETH gas](https://etherscan.io/gastracker): 31 gwei => `$`1.51 @ 2024-02-06 22:23:27
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - HW S2, reading the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/), was due Mon, Feb 5th (at the start of lecture)
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+  - [HW P2: ECDSA](../../hws/ecdsa/index.html) was due yesterday: how did it go?
+  - [HW P3: BTC Parser](../../hws/btcparser/index.html) is ready, and is due next Tuesday, February 13th
+  - HW S3, reading of the Ethereum whitepaper, will be due late next week (or early the following week)
+    - Details about what parts to read and what parts to skip are on the Canvas landing page
+- Upcoming HWs (not yet ready!)
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- WICS hack-a-thon Feb 24th & 25th: https://www.wicsatuva.com/hack-the-map
+- I've organized a middle school girls computing club!  Interested in helping out?
+- Today we will continue with [Bitcoin](../../slides/bitcoin.html#/), starting on 7.1
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/I-do-not-trade-crypto-but-when-I-do-I-lose-everyting.jpg" class="stretch" style="padding:0px" class="center">From <a href='https://www.piplum.com/crypto-quotes/funny-crypto-quotes/'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 9: Mon, Feb 5th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`42,503; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,300; [ETH gas](https://etherscan.io/gastracker): 12 gwei => `$`0.58 @ 2024-02-04 22:40:12
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html) grades were returned: avg 8.4, stdev 2.9
+  - HW S2, reading the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/), will be due Mon, Feb 5th (at the start of lecture)
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+  - HW [P2: ECDSA](../../hws/ecdsa/index.html) is out, and due Tuesday, February 6th
+- Upcoming HWs (not yet ready!)
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- Today we will continue with [Bitcoin](../../slides/bitcoin.html#/), starting on 5.9
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/evolution-of-money-shirt.jpg" class='stretch' style="padding:0;object-fit:none;object-position:47% 54%"><p class='center'>From <a href='https://breakshirts.com/products/bitcoin-the-evolution-of-money-btc-elon-musk-tee-shirt'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 8: Fri, Feb 2nd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`42,125; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,294; [ETH gas](https://etherscan.io/gastracker): 22 gwei => `$`1.06 @ 2024-02-01 22:31:47
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html): the grades can be returned this weekend
+  - HW S2, reading the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/), will be due Mon, Feb 5th (at the start of lecture)
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+  - HW [P2: ECDSA](../../hws/ecdsa/index.html) is out, and due Tuesday, February 6th
+- Note the Python version on Gradescope is 3.10.12; I can upgrade that, if desired
+- Upcoming HWs (not yet ready!)
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- Today we will start on [Bitcoin](../../slides/bitcoin.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><h2 class='xkcd'>Password Strength</h2><img src="https://imgs.xkcd.com/comics/password_strength.png" title="To anyone who understands information theory and security and is in an infuriating argument with someone who does not (possibly involving mixed case), I sincerely apologize." alt="Password Strength"  style="image-orientation:none" class='stretch'><p class='center'><a href='http://xkcd.com/936/'>xkcd # 936</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 7: Wed, Jan 31st
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`42,900; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,341; [ETH gas](https://etherscan.io/gastracker): 18 gwei => `$`0.89 @ 2024-01-30 23:10:01
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html) due yesterday: how did it go?
+    - Grades can be returned this weekend
+  - HW S2, reading the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/), will be due Mon, Feb 5th (at the start of lecture)
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+  - HW [P2: ECDSA](../../hws/ecdsa/index.html) is out, and due next Tuesday, February 6th
+- Upcoming HWs (not yet ready!)
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- Today we will continue with [Encryption](../../slides/encryption.html#/), starting on slide 7.8
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><h2 class='xkcd'>Cryptography</h2><img src="https://imgs.xkcd.com/comics/cryptography.png" title="If you got a big keyspace, let me search it." alt="Cryptography"  style="image-orientation:none" ><p class='center'><a href='http://xkcd.com/153/'>xkcd # 153</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 6: Mon, Jan 29th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`42,234; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,268; [ETH gas](https://etherscan.io/gastracker): 10 gwei => `$`0.48 @ 2024-01-28 21:57:28
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html) is out, and is due tomorrow, Tuesday (Jan 30th) by midnight
+    - Gradescope submission opens up 3 days before it is due
+  - HW S2, reading the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/), will be due Mon, Feb 5th (at the start of lecture)
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+  - HW P2: ECDSA, will be out later today or early tomorrow
+- Upcoming HWs (not yet ready!)
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- Today we will continue with [Encryption](../../slides/encryption.html#/), starting on slide 6.1
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src="https://www.cs.virginia.edu/~asb2t/ccc-img/matrix-bitcoin-millions.png" class="stretch" style="padding:0px" class="center">From <a href='https://www.zerocodenft.com/post/best-non-fungible-tokens-jokes-nft-memes-top-10'>here</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 5: Fri, Jan 26th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`39,916; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,220; [ETH gas](https://etherscan.io/gastracker): 21 gwei => `$`0.98 @ 2024-01-25 21:18:47
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html) is out, and is due Tuesday (Jan 30th) by midnight
+    - Gradescope submission opens up 3 days before it is due
+  - HW S2, reading the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/), will be due Mon, Feb 5th (at the start of lecture)
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+- Upcoming HWs (not yet ready!)
+  - HW P2 (due Tue, Feb 6th) will be on ECDSA
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- Today we will continue with [Encryption](../../slides/encryption.html#/), starting on slide 4.23
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><img src='https://www.cs.virginia.edu/~asb2t/ccc-img/mining-house.webp' class='stretch' style="padding:0"><p class='center'>From <a href='https://www.reddit.com/r/HolUp/comments/q57ha2/tell_me/'>reddit</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 4: Wed, Jan 24th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`39,630; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,217; [ETH gas](https://etherscan.io/gastracker): 9 gwei => `$`0.42 @ 2024-01-23 23:32:40
+- Office hours are underway
+  - Mine: M/W 8:30-10 am in Rice 402
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; all in Rice 442
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are now enabled
+- Homeworks
+  - Due yesterday: HW S1: course introduction survey
+    - We'll go over the results on the next slide
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html) is out, and is due Tuesday (Jan 30th) by midnight
+    - Gradescope submission opens up 3 days before it is due
+  - HW S2, reading the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/), will be due Mon, Feb 5th (at the start of lecture)
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+- Upcoming HWs (not yet ready!)
+  - HW P2 (due Tue, Feb 6th) will be on ECDSA
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- Today we will start on [Encryption](../../slides/encryption.html#/)
+
+
+
+## Survey Topics Requested (n=72)
+- Specific coins not previously scheduled: Dogecoin, Ripple, Lunar, Cardano
+- Specific coins in the schedule: Solana, XRP (Stellar Lumens), Bitcoin Cash
+- NFTs
+- Gaming in web3
+- Pros and cons of obtaining cryptocurrency ourselves
+- How it works, does it translate to real money, current events i.e why did people lose so much money in 2020/2021
+- Development of “s&@$ coins” and how there development can show clear indication of rug pulls and scams, and how to differentiate between high quality and innovative coins vs not
+- I would like to know why coins like Cardano fail
+- FTX fail, Mt. Gox fail, The DAO hack, L1s and L2s
+- How bridging works across networks and how its implemented on obscure chains 
+- Interested in learning about sustainability of cryptos
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section><img src='https://www.cs.virginia.edu/~asb2t/ccc-img/twitter-investments.png' class='stretch' style="padding:0;background:transparent">From <a href='https://twitter.com/sprainhill/status/1492861918419329025'>twitter</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 3: Mon, Jan 22nd
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`41,679; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,467; [ETH gas](https://etherscan.io/gastracker): 10 gwei => `$`0.52 @ 2024-01-21 17:09:19
+- Office hours start this week
+  - Mine: M/W 8:30-10 am
+  - TAs: Mon 6-8, Tue 2-4, Tue 6-8, Fri 2-4; room TBA
+  - This is listed on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490), along with a link to the TA pictures and bios
+- Support requests are enabled
+- Homeworks
+  - HW S1: course introduction survey is due this Tuesday (Jan 23rd) by midnight
+    - The link is on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490)
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html) is ready, and is due next Tuesday (Jan 30th) by midnight
+    - Gradescope submission opens up 3 days before it is due
+  - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), due the week *after* this week
+    - I mis-spoke last Friday about the due date
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+- Upcoming HWs (not yet ready!)
+  - HW P2 (due Tue, Feb 6th) will be on ECDSA
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- ENGR 1501: Cryptocurrency Mining class this semester! 1 credit; see the [flyer](https://www.cs.virginia.edu/~asb2t/engr1501-ccmining-flyer.pdf) & [syllabus](https://www.cs.virginia.edu/~asb2t/engr1501-ccmining-syllabus.pdf)
+- Today we will continue with the [Cryptocurrency overview](../../slides/overview.html#/) slide set, starting with the [Mining](../../slides/overview.html#/mining) section
+  - Next up: [Encryption](../../slides/encryption.html#/)
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+
+  <section>
+
+<section class="center"><h2 class='xkcd'>Blockchain</h2><img src="https://imgs.xkcd.com/comics/blockchain.png" title="Blockchains are like grappling hooks, in that it&#39;s extremely cool when you encounter a problem for which they&#39;re the right solution, but it happens way too rarely in real life." alt="Blockchain" srcset="https://imgs.xkcd.com/comics/blockchain_2x.png 2x" style="image-orientation:none" ><p class='center'><a href='http://xkcd.com/2267/'>xkcd # 2267</a></p><!-- comic slide --></section>
+
+    <section data-markdown data-separator="^\n\n\n" style="font-size:85%;line-height:115%;"><textarea>
+## Lecture 2: Fri, Jan 19th
+- [BTC](https://finance.yahoo.com/quote/BTC-USD): `$`41,267; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,468; [ETH gas](https://etherscan.io/gastracker): 31 gwei => `$`1.61 @ 2024-01-18 20:37:12
+- Homeworks
+  - HW S1: course introduction survey is due next Tuesday (Jan 23rd) by midnight
+    - The link is on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490)
+  - [HW P1: Cryptocurrency Introductory](../../hws/intro/index.html) is due the following Tuesday (Jan 30th) by midnight
+    - It's all ready to go
+    - Gradescope submission opens up 3 days before it is due
+  - HW S2 will be a reading (the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)), due in late January
+    - A PDF of it is also in Canvas' Files (named [bitcoin-whitepaper.pdf](https://canvas.its.virginia.edu/courses/93490/files?preview=6015859))
+- Upcoming HWs (not yet ready!)
+  - HW P2 (due Tue, Feb 6th) will be on ECDSA
+  - HW P3 (due Tue, Feb 13th) will be on Bitcoin's blockchain
+  - HW P4 (due Tue, Feb 20th) will be on Bitcoin scripting
+- ENGR 1501: Cryptocurrency Mining class this semester! 1 credit; see the [flyer](https://www.cs.virginia.edu/~asb2t/engr1501-ccmining-flyer.pdf) and the [syllabus](https://www.cs.virginia.edu/~asb2t/engr1501-ccmining-syllabus.pdf)
+- Office hours start next week
+  - All are currently TBA; the times will be posted this weekend, but the locations may not be ready until Monday
+  - This all will be on the [Canvas landing page](https://canvas.its.virginia.edu/courses/93490)
+- Today we will start on the [Cryptocurrency overview](../../slides/overview.html#/) slide set
+</textarea></section>
+
+  </section>
+
+<!-- ============================================================ -->
+	
+      </div>
+
+    </div>
+
+    <script src='../../slides/reveal.js/dist/reveal.js'></script><script src='../../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../../slides/reveal.js/plugin/notes/notes.js'></script><script src='../../slides/reveal.js/plugin/search/search.js'></script><script src='../../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../../slides/reveal.js/plugin/math/math.js'></script>
+    <script src="../../slides/settings.js"></script>
+
+    <script>
+      var vals = new Array();
+      
+      // often changed variables
+      vals['btc_price'] = 65000;
+
+      // rarely changed variables
+      vals['btc_reward_btc'] = 6.25;
+
+      // computations; not changed
+      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+
+      Reveal.addEventListener( 'update', function() { myupdate(); } );
+
+      function myupdate() {
+	  for (var k in vals) {
+	      if ( document.getElementById(k) ) {
+		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	      }
+	  }
+      }
+      
+    </script>
+
+  </body>
+</html>
