@@ -1,0 +1,508 @@
+---
+title: "Introduction"
+---
+
+# Motivation
+
+::: {.cclogosubtitle}
+![](images/logos/btc-coin-symbol.svg)
+![](images/logos/eth-coin-symbol.svg)
+:::
+
+
+
+## If you bought Bitcoin...
+
+::: {.right-float-img .nopad}
+![](images/overview/bitcoin-coin.webp)
+:::
+
+- ...in 2010 for $0.25 per BTC
+  - Let's say you spent $100
+  - You would have owned 400 BTC
+- That would be worth $37 million today!
+  - (assuming [a price of $94k per BTC](https://coinmarketcap.com/currencies/bitcoin/))
+- That amount of growth is not likely to ever happen again...
+
+
+
+
+## This course will not make you rich
+
+- It does not teach you about investing in cryptocurrency
+- Instead, it will focus on the technical aspects of cryptocurrency
+- Two rock-solid investing tips:
+  1. Go back in time to 10 years ago and buy a *lot* of Bitcoin
+  2. Be VERY wary of anything cryptocurrency related, as it's [full of scams](https://web3isgoinggreat.com/)
+
+
+
+## Coins Studied
+
+- This course will primarily focus on the technical aspects of two coins / networkss:
+  - <a href='https://coinmarketcap.com/currencies/bitcoin/'><img src="images/logos/btc-coin-symbol.svg" style="display:inline-block;float:left;margin-right:20px;width:100px"></a> Bitcoin (BTC, &#8383;): the first real viable cryptocurrency and the most valuable; ASIC mineable <br clear='all'>
+  - <a href='https://coinmarketcap.com/currencies/ethereum/'><img src="images/logos/eth-coin-symbol.svg" style="display:inline-block;float:left;margin-right:30px;width:100px"></a> Ethereum (ETH, &Xi;): has significant improvements over Bitcoin with much more functionality; no longer ASIC mineable <br clear='all'>
+- We'll also see a bunch more, but in lesser detail...
+
+
+<aside data-markdown class='notes'>
+ASIC = application-specific integrated circuit
+</aside>
+
+
+## All the coins we'll discuss
+
+[![algo logo](images/logos/algo-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/algorand/)
+[![atom logo](images/logos/atom-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/cosmos/)
+[![aust logo](images/logos/aust-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/anchorust/)
+[![beam logo](images/logos/beam-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/beam/)
+[![btc logo](images/logos/btc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/bitcoin/)
+[![btg logo](images/logos/btg-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/bitcoin-gold/)
+[![dai logo](images/logos/dai-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/multi-collateral-dai/)
+[![dot logo](images/logos/dot-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/polkadot-new/)
+[![erg logo](images/logos/erg-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ergo/)
+[![etc logo](images/logos/etc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ethereum-classic/)
+[![eth logo](images/logos/eth-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ethereum/)
+[![fei logo](images/logos/fei-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/fei-usd/)
+[![fil logo](images/logos/fil-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/filecoin/)
+[![firo logo](images/logos/firo-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/firo/)
+[![frax logo](images/logos/frax-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/frax/)
+[![juno logo](images/logos/juno-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/juno/)
+[![luna logo](images/logos/lunac-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/terra-luna/)
+[![matic logo](images/logos/matic-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/polygon/)
+[![mim logo](images/logos/mim-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/magic-internet-money/)
+[![mkr logo](images/logos/mkr-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/maker/)
+[![neox logo](images/logos/neox-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/neoxa/)
+[![nmc logo](images/logos/nmc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/namecoin/)
+[![ppc logo](images/logos/ppc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/peercoin/)
+[![rvn logo](images/logos/rvn-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ravencoin/)
+[![sai logo](images/logos/sai-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/single-collateral-dai/)
+[![shib logo](images/logos/shib-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/shiba-inu/)
+[![sol logo](images/logos/sol-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/solana/)
+[![spell logo](images/logos/spell-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/spell-token/)
+[![storj logo](images/logos/storj-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/storj/)
+[![tomb logo](images/logos/tomb-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/tomb/)
+[![tribe logo](images/logos/tribe-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/tribe/)
+[![usdc logo](images/logos/usdc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/usd-coin/)
+[![usdt logo](images/logos/usdt-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/tether/)
+[![ustc logo](images/logos/ustc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/terrausd/)
+[![wbtc logo](images/logos/wbtc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/wrapped-bitcoin/)
+[![weth logo](images/logos/weth-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/weth/)
+[![xlm logo](images/logos/xlm-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/stellar/)
+[![xpd logo](images/logos/xpd-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/petrodollar/)
+[![xpm logo](images/logos/xpm-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/primecoin/)
+[![zec logo](images/logos/zec-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/zcash/)
+
+
+
+## Cryptocurrency Market Cap
+
+<img src="images/timely/cc-market-cap.webp" class="stretch" style="padding:0">
+
+From [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/)
+
+
+<!--
+
+## CC Market Cap w/o BTC
+
+<img src="images/timely/cc-market-cap-no-btc.svg" class="stretch" style="padding:0">
+
+From [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/)
+
+-->
+
+## Bitcoin dominance
+
+<img src="images/timely/btc-dominance.webp" class="stretch" style="padding:0">
+
+From [https://coinmarketcap.com/charts/](https://coinmarketcap.com/charts/)
+
+<!-- ============================================================ -->
+	
+
+# Course Structure and Logistics
+
+## Instructional Staff
+
+<img src="images/introduction/aaronbloomfield.jpg" style="padding:0;margin:auto;height:35vh">
+<p style='text-align:center'>Aaron Bloomfield</p>
+<p style='text-align:center'>Rice Hall, room 402<br>aaron@virginia.edu</p>
+
+## Course TAs
+
+::: {.center}
+<img src="https://andromeda.cs.virginia.edu/ccc/tas/wcb8ze.jpg" style="display:inline;height:28vh">
+<img src="https://andromeda.cs.virginia.edu/ccc/tas/jja3em.jpg" style="display:inline;height:28vh">
+<img src="https://andromeda.cs.virginia.edu/ccc/tas/hse2dq.jpg" style="display:inline;height:28vh">
+<img src="https://andromeda.cs.virginia.edu/ccc/tas/jhu7uc.jpg" style="display:inline;height:28vh">
+:::
+
+William, Youssef, Abby, and Jonah
+
+## Course resources
+- Contained in the [Canvas](https://canvas.its.virginia.edu/) workspace: landing page of links, Piazza, Gradescope, lecture videos, files download
+  - And a link to the course email address
+- External course materials
+  - Most of the course materials can be found online at <br> [https://aaronbloomfield.github.io/ccc](https://aaronbloomfield.github.io/ccc)
+  - Or via the github repo at <br> [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc)
+
+
+
+## Contacting Us
+- Feel free to chat with me right after any class
+  - ~~Although I teach another class right after this, so it will have to be quick~~
+- Please email the course email rather than emailing me
+    - Linked to from the Canvas landing page
+- Office hours will start next week
+- Anonymous feedback through Canvas
+
+
+
+## Contacting You
+- The [daily announcements slide set](../uva/daily-announcements.html)
+  - If you miss lecture, you are responsible for checking it!
+- Anything else that is "urgent" will be posted to Piazza as an instructor note
+- VERY few notifications (possibly none!) will be sent out as a course email
+  - How to do this is non-intuitive in Canvas
+- Thus, you have to check two places for updates: the [daily announcements slide set](../uva/daily-announcements.html) and Piazza
+  - But if you log into Piazza via Canvas, then that one action will check two of them
+
+
+
+## Meetings
+- Lectures: Tu/Th 11:00-12:15 in Thornton A120
+- Lectures are required
+  - There will be surprise pop quizzes and/or attendance taking in lecture
+- If you have to miss a lecture, there (will be) a Google form for you to fill out
+  - Linked to from the Canvas landing page
+  - Please don't email me or the course email that you are going to miss a lecture!
+  - These generally have to be in before class starts
+    - Reasonable exceptions for unexpected circumstances and emergencies, of course
+
+
+
+## Expectations
+- Prerequisites: CS 2150 (PDR) or CS 3100 (DSA2), with a grade of C- or higher
+  - This is a strict pre-req!
+  - Reason: you need three semesters of collegiate-level programming courses
+  - Another programming class, that requires CS 2100 as it's pre-req, is likely acceptable
+    - Chat with me after class
+
+
+## Homeworks
+- There will be a combination of:
+  - Larger programming homeworks (about a dozen): the 'P' homeworks
+  - Smaller ('S') homeworks, such as tutorials and readings (currently about half a dozen; more may be added)
+- Often one of each may be assigned at any given time
+  - But their due dates will be staggered
+- There will also be random in-class quizzes on the readings; if you are absent that day, you get a zero
+  - Unless it's an emergency, you can only be excused if you fill out the excuse form BEFORE lecture with a valid reason
+
+
+
+## Homeworks
+- You can see them all on the [homeworks page](../hws/index.html)
+- Please don't start them early!
+  - They are all going to have changes made, including some fairly significant changes
+  - I'll have them ready a week or so before they are due
+  - And I will clearly announce when that happens
+    - Either in the daily announcements or on Piazza
+
+
+
+## HW submission: Gradescope
+- We will be using [Gradescope](https://gradescope.com)
+- All assignments will be ***autograded***
+- The specifications and *some* test cases will be included in the homework descriptions
+  - Gradescope will use the same *type* of tests, but with different data
+  - You may submit as many (reasonable!) times to Gradescope as you want before the deadline passes
+- Gradescope submissions will open 3 days (72 hours) before the due date/time
+
+
+
+## HW Submission: smart contracts
+
+- Starting with homework P5, you will have to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission
+  - You can deploy as many times as you would like
+- There will be a bunch of other oddball submission requirements
+- To ensure you submit everything you should, you will have to submit a Python file as well
+  - We'll provide the template, such as [this one](../hws/gradebook/gradebook.py.html); you just have to fill in the values
+
+
+
+## Piazza
+- We all know [Piazza](https://piazza.com)
+  - If the e-mail settings default to "send annoying emails all the time", you can easily change this
+  - In Piazza, in the upper-right, click on the gear/settings icon, select "Account/Email Settings", and then select "Edit Email Notifications" under "Class & Email Settings"
+- Rules
+    - Don't post any code on it, period (that's an honor violation!)
+    - Note that you can post anonymously to each other, but the course instructional staff will know who you are
+    - If you start trolling other students on Piazza, I will permanently ban you from it
+      - Please be respectful of your fellow students in the course!
+
+
+
+## Development environment
+- You will have to have a (working and recent) notebook computer for this course
+  - Don't have one?  Speak to me, and the dept can loan you one
+- You can use any development environment you want (Windows, Mac, Linux; IDEs are okay also)
+- You will have to use a free development environment that we will provide info on
+  - Either the [Remix IDE](https://remix.ethereum.org/) or the [Truffle Suite](https://archive.trufflesuite.com) or [Hardhat](https://hardhat.org)
+
+
+
+## Nothing to buy!
+- Textbooks: Nope!  Too expensive and too much of a scam
+- Cryptocurrency: also nope; not required for this course
+  - If you want to buy it on your own, please wait until we discuss the legal and tax implications before doing so
+
+
+
+## Course syllabus
+- It is available in the github repo
+  - Click [here](../uva/syllabus.html) to view it
+- It contains all the information covered so far, plus some more information
+
+
+
+## Grades
+- Grades are computed by:
+  - 10% class participation (in-class quizzes)
+  - 45% homeworks
+  - 20% midterm: Thursday, February 27th, in class
+  - 25% final exam: Friday, May 9th, from 9am - noon
+
+
+
+## Learning your names...
+I am determined to learn each of your (first) names  
+&nbsp;  
+So if you raise your hand in lecture, and I don't call on you by name, you have to say your first name before your question  
+&nbsp;  
+Don't be offended if it takes me a while -- there are 80 students in this course (and 200+ in my other course)...
+
+
+
+## Course Goals
+- Understand the theoretical aspects of cryptocurrency
+- Understand the basics of blockchain in general, and the details of a selected number of blockchains
+- Understand the uses of cryptocurrency and blockchain beyond that as a form of money
+- Understand the policy, ethical, legal, and tax implications of cryptocurrency
+- Be able to develop programs for a specific Blockchain
+- Implement a fully working modern cryptocurrency
+
+
+
+## Lecture topics
+You can see the slides on the [lecture slides page](index.html)
+
+
+<table class="transparent"><tr><td>
+
+- Course Introduction
+- Cryptocurrency overview
+- Encryption
+- Bitcoin
+- Mining
+- Ethereum
+- Solidity
+- Tokens
+- Consensus
+
+</td><td>
+
+- Blockchain Applications
+- Stablecoins
+- zkSNARKs
+- Scalability
+- Algorand
+- Ethics, Legality, and Policy
+- The Dark Side of Cryptocurrency
+- Course Conclusion
+
+</td></tr></table>
+
+
+
+## Initial assignments
+- HW S1: Introductory Survey is an online Google survey
+  - Link on the Canvas landing page
+  - Due next Tuesday (by midnight)
+- Soon (but not ready yet!): start on [HW P1: Introduction](../hws/intro/index.html)
+  - You may want to wait until the [Cryptocurrency Overview](overview.html#/) slide set is discussed first
+  - This is (essentially) the same as what was assigned in my sections of CS 3710: ICS
+    - So you can use *your* code from that course, if you did it in that course
+    - But there are a couple of tweaks to the program and output format
+  - Due the Tuesday, January 21st (the second week of the semester)
+
+## Late Policy
+- There are expected to be 13 assignments this semester (12 P assignments, and 2 S assignments)
+  - The other few S assignments are readings and surveys
+- Standard late penalty: 25% off per day (or fraction thereof)
+- You may submit 6 of them up to 4 days late with no penalty
+  - You have to fill out a form *before* the due date for this; it will be on the Canvas landing page
+- After using your 6 free passes, the late penalty applies
+- This covers *ALL* circumstances: sick, busy, travel, dog ate your homework, family emergencies, etc.
+  - And, generally, SDAC accommodations
+
+## Late Policy Rules
+- There is no penalty for using all of them
+- There is no bonus for not using some of them
+- You have to submit the request (via the Google form) *BEFORE* the due date/time
+- If you use them all early, and an emergency comes up, then you do not get any more extensions
+- You can only use one per assignment
+- After 4 free days, the standard late penalty applies
+
+
+
+## Programming Homeworks
+
+::: {.font-85}
+
+- Introduction & Bitcoin assignments:
+  - HW P1: Overview
+  - HW P2: ECDSA
+  - HW P3: BTC parser
+  - HW P4: Bitcoin scripting
+- Ethereum smart contract assignments:
+  - HW P5: dApp Gradebook
+  - HW P6: dApp Tokens
+  - HW P7: dApp Auction
+  - HW P8: DEX
+- Web3 assignments:
+  - HW P9: DAO & web3
+  - HW P10: Arbitrage trading
+  - HW P11: MetaMask
+:::
+
+<!-- ============================================================ -->
+	  
+
+# Honor Policy
+
+
+## Class Honor Policy
+The University of Virginia Honor Policy in effect.  In addition to the normal rules, we have additional rules (full details in the [course syllabus](../uva/syllabus.html)):
+
+1. You may not look at the code of another student (past or present) for ANY reason
+2. You may not try to hack my submission system
+3. You may not discuss the midterm details to someone who has not already taken it
+4. You may not release your source code online (including in a public github repo)
+
+
+
+## Class Honor Policy, continued
+The University of Virginia Honor Policy in effect.  In addition to the normal rules, we have additional rules (full details in the [course syllabus](../uva/syllabus.html)):
+
+5. We realize we shouldn't have to say this, but we will not sign more than one conscientious retraction for a given student within one semester.
+6. We thought this was obvious also, but apparently we have to say it: you can't submit somebody else's code as the main part of the assignment and claim it is valid because you cited that code.  The point of the labs is for *you* to do the work, not for you to do a Google search.
+
+
+
+## Generative AI
+- You may use generative AI, such as ChatGPT, to help you study and understand concepts
+- All the *code* you submit must be your own, and cannot come from a generative AI
+  - It turns out that generative AI is not all that useful for most of our assignments
+
+
+
+## Class Honor Policy
+Any honor violation or cheating will be referred to the honor committee, and will result in <strong class="red">immediate failure</strong> for the course  
+&nbsp;  
+We have done this before, and we will do it again.  Please don't test me on this.  
+
+  <!-- ============================================================ -->
+	
+
+# Legal Issues
+
+<!-- .slide: class="right-float-img-600" -->
+## Cryptocurrency mining
+
+::: right-float-img-600
+[![](images/introduction/bitcoin-mining.svg)](https://vectorportal.com/vector/bitcoin-mining/36004)
+:::
+
+
+- "Mining" cryptocurrency is a process by which a computer performs significant comptuations to help the cryptocurrency
+- The user gets a small amount of the cryptocurrency as a reward for doing so
+- This uses a *lot* of electricity, and costs money as a result
+- We will see mining in great detail this semester
+
+
+
+## Disclaimer
+
+I am not a lawyer.  But I have discussed this with UVA's lawyers.  However, they are lawyers for me (as a UVA employee) but not for you (as a UVA student).
+
+
+
+## Mining legality
+- Can you mine cryptocurrency at UVA?
+- Consider Virginia statute [6.2-1901](https://law.lis.virginia.gov/vacode/6.2-1901):
+
+> No person shall engage in the business of selling money orders or engage in the business of money transmission, whether or not the person has a location in the Commonwealth, unless the person obtains from the Commission a license issued pursuant to this chapter.
+
+
+
+## Mining legality
+- Virginia statute [6.2-1901](https://law.lis.virginia.gov/vacode/6.2-1901) requires:
+  - You get a license if you are in the *business* of money transmission
+- Bug if mining is not your business, then you are not directly targetted by that statute
+- Thus, so far, mining is fine in the state of Virginia.  But...
+
+
+
+## UVA's acceptable use
+- UVA has an [acceptable use policy](https://security.virginia.edu/acceptable-use) -- and policy [PRM-011](https://uvapolicy.virginia.edu/policy/PRM-011):
+
+<blockquote style="width:85%">
+<p>Students are allowed reasonable use of University equipment when it is related to scholarship, research, and public service, and/or approved extracurricular activities. Such use requires approval of the appropriate equipment supervisor, provided the University incurs no unreasonable costs for materials, supplies, maintenance, and/or repairs.</p>
+</blockquote>
+
+
+
+## UVA's acceptable use
+- This means you can NOT mine cryptocurrency that:
+  - Uses UVA equipment
+    - Either server-based machines or a loaned notebook
+    - This includes a UVA machine mining at your off-grounds apartment
+  - Uses UVA electricity
+    - This means you are not allowed to mine in your dorm room, even on your own machine
+
+
+
+## Legal permission
+- But... how to teach cryptocurrency without mining?
+- This course has received legal permission from UVA's general counsel to mine cryptocurrency, as long as ALL of the following are true:
+  - The mining resource use is "reasonable" and necessary in pursuit of the academic goals of this course
+  - The cryptocurrency mined has zero market value (a "fake" cryptocurrency)
+    - This implies that it cannot be traded for any other "real" cryptocurrency (meaning one with a monetary value)
+
+
+
+## Further permissions
+- ITS and InfoSec have also approved the use of "fake" cryptocurrency in this course, as long as...
+  - Any mining that you do must ONLY use mining software or libraries that I approve
+    - The reason is that there is a LOT of malware distributed through shady mining software
+  - Any software linked to from an assignment for this course, or provided on the VirtualBox image, is thus considered approved for your use
+
+
+
+## Tax implications
+- The IRS will ask this question on the IRS [form 1040](https://www.irs.gov/pub/irs-pdf/f1040.pdf):
+  - "At any time during the past tax year, did you: (a) receive (as a reward, award, or payment for property or services); or (b) sell, exchange, gift, or otherwise dispose of a digital asset (or a financial interest in a digital asset)?"
+    - The wording tends to change slightly from year to year; previous years used the phrase "virtual currency"
+- This is why we aren't making you buy any cryptocurrency for this course
+- The "fake" cryptocurrency that you mine and trade in this course does not qualify as a 'yes' for that question...
+  - ... as there is no "financial interest" with it since it has zero market value
+
+
+
+## Can (should?) you mine cryptocurrency on your own?
+- Not on UVA equipment or on grounds!
+  - ITS scans for this, and can revoke your computing access if they catch you
+- If you do it on your own off grounds...
+  - Be sure to understand the tax implications involved
+  - And the electrical cost versus the reward gained
