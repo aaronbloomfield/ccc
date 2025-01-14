@@ -193,7 +193,7 @@ p.blankline { height:1em; }
   box-shadow: none !important;
 }
 
-div.right-float-img p img {
+div.right-float-img p img, img.right-float-img {
     float:right;
     max-width: 50%;
     margin-left:20px !important;
@@ -215,14 +215,14 @@ div.right-float-img p img {
     margin-left:40px !important;
 }
 
-div.right-float-img-200 p img {
+div.right-float-img-200 p img, img.right-float-img-200 {
     float:right;
     max-width:200px;
     max-height:100px;
     margin-left:20px !important;
 }
 
-div.right-float-img-nb-300 p img {
+div.right-float-img-nb-300 p img, img.right-float-img-nb-300 {
     float:right;
     max-width: 50%;
     margin-left:20px !important;
@@ -233,25 +233,23 @@ div.right-float-img-nb-300 p img {
     max-height: 300px;
 }
 
-div.right-float-img-400 p img {
+div.right-float-img-400 p img, img.right-float-img-400 {
     float:right;
     max-width:400px;
     max-height:200px;
     margin-left:20px !important;
 }
 
-div.right-float-img-nb-400 p img {
+div.right-float-img-nb-400 p img, img.right-float-img-nb-400 {
     float:right;
-    max-width: 50%;
     margin-left:20px !important;
-    max-height: 600px;
     margin-top: 12px;
     padding: 0;
     max-width: 400px;
     max-height: 400px;
 }
 
-div .right-float-img-500 p img {
+div .right-float-img-500 p img, img.right-float-img-500 {
     float:right;
     max-width:500px;
     max-height:250px;
@@ -341,15 +339,15 @@ section.small-code pre {
   line-height:110%;
 }
 
-.max-image-height-200 img {
+.max-image-height-200 img, img.max-image-height-200 {
     max-height:200px;
 }
 
-.max-image-height-300 img {
+.max-image-height-300 img, img.max-image-height-300 {
     max-height:300px;
 }
 
-.max-image-height-500 img {
+.max-image-height-500 img, img.max-image-height-500 {
     max-height:500px;
 }
 
