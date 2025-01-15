@@ -1,0 +1,1572 @@
+---
+title: "Encryption"
+---
+
+
+
+
+# Overview
+
+
+## Content coverage
+- You may have seen some of this material in the [encryption slide set](https://aaronbloomfield.github.io/ics/slides/encryption.html#/) from CS 3710: Introduction to Cybersecurity
+  - But only this first column of slides is the same (a dozen or so slides)
+- If you didn't see that material, that's fine
+  - We'll go over all of it
+
+
+## Codes versus Ciphers
+- Codes change the meaning of words, ciphers encrypt them
+- Coded messages:
+  - "The light is on in the attic"
+  - "The condor has left the nest"
+- Cipher'ed messages:
+  - wkh txlfn eurzq ira mxpsv ryhu wkh odcb grj
+  - wecrl teerd soeef eaoca ivden
+- [Reference](http://en.wikipedia.org/wiki/Cipher#Ciphers_versus_codes) 
+
+
+## Block-ciphers vs. stream ciphers
+- Block ciphers require a block of text (examples: 256 bits (32 bytes), 1 Kb, etc.)
+  - [Reference](http://en.wikipedia.org/wiki/Block_cipher)
+- Stream ciphers, a.k.a. character ciphers, encrypt data as it is provided, character-by-character
+  - I prefer the name 'character cipher' over 'stream cipher'
+  - [Reference](http://en.wikipedia.org/wiki/Stream_cipher)
+
+
+## One-time pad (OTP)
+- A substitution cipher
+- Take a *random* string that is as long as the plain text you want encrypt
+  - Use modular arithmetic (or XOR, or Vigenere) to determine the encrypted version
+  - Plain text: 	 helloworld
+  - One-time pad: zdxwhtsvtv
+  - Encrypted:	  hijiwqhnfz
+- [Reference](http://en.wikipedia.org/wiki/One-time_pad)
+
+
+## One-time pad (OTP) analysis
+<ul><li>Pros:</li>
+
+  - Proven to be perfectly secure if:
+    - the pad is truly random
+    - the pad is only used once
+    - the pad is kept secret
+  - This, it is the ONLY cryptosystem with perfect secrecy
+  - It can be performed by hand
+
+<li class='fragment'>Cons:
+
+  - Good for short messages; it's hard to transport large pads (i.e. network communication)
+  - Does not provide message authentication
+  - How do you get the pad to the recipient?
+  - Can never use it twice
+
+</li></ul>
+
+
+## Re-using a one-time pad
+
+<table class="transparent">
+  <tr><td>Use an OTP:&nbsp;</td><td><img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-1.png"> &oplus;
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid green" src="images/encryption/otp/otp.png"> =
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid red" src="images/encryption/otp/otp-1e.png"></td></tr>
+  <tr class="fragment"><td>Re-use the<br>same OTP:&nbsp;</td><td><img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-2.png"> &oplus;
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid green" src="images/encryption/otp/otp.png"> =
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid blue" src="images/encryption/otp/otp-2e.png"></td></tr>
+<tr class="fragment"><td>Extract<br>the images:&nbsp;</td><td><img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid red" src="images/encryption/otp/otp-1e.png"> &oplus;
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial;border:2px solid blue" src="images/encryption/otp/otp-2e.png"> =
+  <img alt="re-using OTP"  class="nopad" style="vertical-align:middle;display:initial" src="images/encryption/otp/otp-ans.png"></td></tr>
+</table>
+<p>This example from <a href="https://crypto.stackexchange.com/questions/59/taking-advantage-of-one-time-pad-key-reuse">StackExchange</a></p>
+
+
+## Data Encryption Standard ([DES](http://en.wikipedia.org/wiki/Data_Encryption_Standard))
+- A secret key encryption/decryption block cipher
+  - 64 bits, but only 56 are usable
+- Lots of bit-shifting in rounds to encrypt/decrypt a message
+- Susceptible to brute force attacks ($2^{56} = 7 \ast 10^{16}$ keys)
+- Solution: use DES three times => "Triple DES"
+  - Use 168 bit keys: three 56 bit keys, and encrypt the message three times, once with each key
+- NIST considers it secure through 2030
+
+
+## [Advanced Encryption Standard (AES)]{.r-fit-text}
+- The successor to DES
+- Has three possible key lengths: 128, 192, and 256
+- NSA approved this standard, and kept the process open
+- Also lots of bit-shifting in rounds to encrypt/decrypt a message
+- Many worry about the security of the standard
+  - ... that somebody may figure a way to crack it mathematically, in particular
+- [Reference](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
+
+
+## Public key cryptography
+- Everybody has a key that encrypts and a separate key that decrypts
+  - They are not interchangeable!
+  - If one key encrypts a message, the *only* the other key can decrypt it
+- The encryption key is made public
+- The decryption key is kept private
+
+
+## Public key cryptography
+- Alice (A) wants to send a message to Bob (B)
+  - Alice and Bob already have each other's public keys
+- Alice encrypts message $m_1$ with Bob's public key $B_{pub}$ to create ciphertext $c_1$
+  - She cannot decrypt $c_1$ with $B_{pub}$
+    - Although she likely has a copy of $m_1$
+- Bob decrypts $c_1$ with his private key $B_{pri}$ to get the original $m_1$
+- Bob encrypts response message $m_2$ with Alice's public key $A_{pub}$ to create $c_2$
+- Alice can decrypt $c_2$ with her private key $A_{pri}$ to get the original $m_2$
+
+
+## Public key signatures
+- What if Alice wants to publish a message publicly, and prove that it really came from her?
+- She needs to *digitally sign* the message:
+  - Given message $m$, compute $h = sha256(m)$ using a known hash function such as SHA-256
+  - Encrypt $h$ with her *private* key $A_{pri}$ to get signature $s$
+  - Publicly release both the message $m$ and the signature $s$
+
+
+## Public key signatures
+- Now anybody can verify that it came from her:
+  - Given public message $m$, anybody can take the hash of it: $h' = sha256(m)$
+  - Given the signature $s$, anybody can decrypt it with Alice's *public* key $A_{pub}$ to get the original $h$
+    - Recall that $s$ is the encryption of $h$ using $A_{pri}$
+    - If one key encrypts, then the other can decrypt
+  - If $h == h'$, then the original message was signed by Alice's private key
+
+
+## Public key cryptography math
+- Public key cryptography uses some type of mathematical theory...
+  - ... such as prime numbers, elliptic curves, or discrete logs ...
+- Where some things are "easy" (read: polynomial time)
+  - These are the operations used for key generation, encryption, and decryption
+  - Examples: determining if a number is prime, elliptic point multiplication, discrete exponentiation
+- And some things are "hard" (read: exponential time)
+  - These are the operations needed to "crack" the encryption
+  - Examples: factoring a large composite number, elliptic point division, discrete logs
+
+
+## [Public key cryptography challenges]{.r-fit-text}
+- Ensuring you obtain the correct key (not a malicious fake)
+- Ensuring somebody "in the middle" doesn't modify your communications
+- Speed of key generation
+- Speed of encryption / decryption
+- Size of the signatures
+
+
+<!-- ============================================================ -->
+
+
+# Elliptic Curves
+
+
+## Elliptic Curves
+Any curve of the form $y^2=x^3+ax+b$
+
+<a href="https://en.wikipedia.org/wiki/Elliptic_curve"><img alt="wikipedia elliptic curve diagram" src="images/encryption/EllipticCurveCatalog.svg" style="background-color:white;padding:10px;border-radius:5px"></a>
+<aside data-markdown class="notes">
+  notes...
+</aside>
+
+
+## Specific Elliptic Curves
+- We are going to study curve [secp256k1](http://www.secg.org/sec2-v2.pdf)
+  - Where $a=0$ and $b=7$, so the curve formula is $y^2=x^3+7$
+- Operations:
+  - Elliptic curve point "addition": $P = Q \oplus R$
+  - Elliptic curve point "multiplication": $Q = k \otimes P = kP$
+    - We'll show that $k \otimes P = \sum_{i=1}^{k}P$
+      - That summation is repeated elliptic curve "addition"
+  - Note that numerical values are always lower case variables and points are always upper case variables
+<aside data-markdown class="notes">
+  notes...
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-a.svg" alt="image secp256k1-a.svg" class="stretch">
+<aside data-markdown class="notes">
+- note the scale differs on each axis
+- it reflects across the horizontal ($x$) axis due to the $y^2$ part
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-q-zoomed-out.svg" alt="image secp256k1-q-zoomed-out.svg" class="stretch">
+<aside data-markdown class="notes">
+- just showing it zoomed out
+- the slope approaches infinity, meaning the line approaches vertical, but not asymptotically
+- note the different scales -- the line is almost vertical at the end
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-r-zoomed-out-with-line.svg" alt="image secp256k1-r-zoomed-out-with-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- just trying to show the curvature of the curve
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-a.svg" alt="image secp256k1-a.svg" class="stretch">
+<aside data-markdown class="notes">
+- back to the zoomed-in version
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-b-2points.svg" alt="image secp256k1-b-2points.svg" class="stretch">
+<aside data-markdown class="notes">
+- arbitrarily picked to allow the math to all work out on the area shown by this slide
+  - for each $x$-value there are two possible $y$ values due to the square root
+- in reality, the numbers used are huge: 256 bits
+  - $2^{256} \approx 1.1*10^{77}$
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-c-2points-line.svg" alt="image secp256k1-c-2points-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- given any two points, use basic arithmetic to compute the slope
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-d-3points-line.svg" alt="image secp256k1-d-3points-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- find the third point where this line intersects the curve
+  - in the RARE case it doesn't, pick new points
+  - that chance is infinitesimally small in practice
+- for real numbers, this requires finding a cube root
+  - we will be able to compute this with basic arithmetic...
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-e-4points-line.svg" alt="image secp256k1-e-4points-line.svg" class="stretch">
+<aside data-markdown class="notes">
+- reflect the point just found across the y-axis
+- the reflected point, C', is A+B
+- this is elliptic point "addition"
+  - represented with oplus
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-f-point-p.svg" alt="image secp256k1-f-point-p.svg" class="stretch">
+<aside data-markdown class="notes">
+- we can add a point to itself as well
+- this point P is different than A and B from before
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-g-point-p-tangent.svg" alt="image secp256k1-g-point-p-tangent.svg" class="stretch">
+<aside data-markdown class="notes">
+- to elliptically add a point to itself, find the tangent of the line...
+  - we can do that via the derivative of the curve formula
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-h-points-pq-tangent.svg" alt="image secp256k1-h-points-pq-tangent.svg" class="stretch">
+<aside data-markdown class="notes">
+- find the point, Q, where that tangent intersects the curve...
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-i-points-pq-tangent.svg" alt="image secp256k1-i-points-pq-tangent.svg" class="stretch">
+<aside data-markdown class="notes">
+- then reflect that across the y-axis
+- this is P+P and also 2*P
+- but does adding P to itself, say, 4 times equal 4*P?
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-j-to-find-3p.svg" alt="image secp256k1-j-to-find-3p.svg" class="stretch">
+<aside data-markdown class="notes">
+- here we are adding P to Q
+  - or P to P+P
+  - or P to 2*P
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-k-to-find-3p.svg" alt="image secp256k1-k-to-find-3p.svg" class="stretch">
+<aside data-markdown class="notes">
+- the line intersects the curve at R
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-l-found-3p.svg" alt="image secp256k1-l-found-3p.svg" class="stretch">
+<aside data-markdown class="notes">
+- which we reflect across the y-axis
+- R' is now P+P+P or 3*P
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-m-showing-found-points.svg" alt="image secp256k1-m-showing-found-points.svg" class="stretch">
+<aside data-markdown class="notes">
+- The points from the previous slide without all the text
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-n-associative-1.svg" alt="image secp256k1-n-associative-1.svg" class="stretch">
+<aside data-markdown class="notes">
+- we add P and R' to get S'
+- S' is 4*P or P+P+P+P
+- we can all agree that adding P to itself 4 times yields S'
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-o-associative-2.svg" alt="image secp256k1-o-associative-2.svg" class="stretch">
+<aside data-markdown class="notes">
+- we can also add Q', which is 2*P (or P+P) to itself to yield S'
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-p-associative-3.svg" alt="image secp256k1-p-associative-3.svg" class="stretch">
+<aside data-markdown class="notes">
+- this means that adding P to itself k times yields k*P
+</aside>
+
+---
+
+<img src="images/encryption/secp256k1/secp256k1-q-point-at-infinity.svg" alt="image secp256k1-q-point-at-infinity.svg" class="stretch">
+<aside data-markdown class="notes">
+- ...
+</aside>
+
+
+
+## The Point at Infinity
+- Represented by the digit 0 or capital O
+- Considered one of the points "on" the curve
+- Considered the identity element: $0 \oplus P = P$
+- And $P \oplus P'=0$
+
+
+## Elliptical Curve notes
+- Most operations were the standard arithmetic operations  on scalars
+  - Given the $y=mx+b$ formula and an $x$ value, finding the corresponding $y$ is easy
+- The only ones that were not were:
+    1. Finding the initial points using square roots to determine $y$ from $y^2$
+    2. Finding the 3rd root of a quadratic equation when the other two roots are known
+- We can perform these two with basic arithmetic by:
+    1. Being given an initial point on the curve
+    2. Taking a formulaic shortcut to find the intersection of a line and the curve
+
+
+## Elliptical Curve Identities
+
+- Multiplication
+  - Generalized: $\sum_{i=1}^{k} P = k \otimes P$
+    - Note that the summation operation is EC point $\oplus$, not scalar $+$
+  - Example: $P \oplus P \oplus P \oplus P  = 4 \otimes P$
+- Notation
+  - Generalized: $k \otimes P = kP$
+
+
+## Elliptical Curve Identities
+- Distributive property
+  - Generalized: $(a+b) \otimes P = (a \otimes P) \oplus (b \otimes P)$
+    - Due to the order of operations ($\otimes$ before $\oplus$), we can rewrite that as:
+    - $(a+b) \otimes P = a \otimes P \oplus b \otimes P$
+  - Example: $(2+2) \otimes P = (2 \otimes P) \oplus (2 \otimes P) = 2P \oplus 2P = 4P$
+- Associative property
+  - $A \oplus B \oplus C = (A \oplus B) \oplus C = A \oplus (B \oplus C)$
+
+
+<!-- ============================================================ -->
+
+# Finite Fields
+
+
+## Finite Fields
+
+::: {.right-float-img}
+![](https://upload.wikimedia.org/wikipedia/commons/a/a4/Clock_face_one_hand.png)
+:::
+
+- A *field* is just a set of numbers that you can perform the basic arithmetic operations on
+  - The real numbers are also a field (but not integers!)
+- An integer [finite field](https://en.wikipedia.org/wiki/Finite_field):
+  - Is defined by a (tyipcally prime) value $p$
+  - All operations are mod $p$
+  - Thus the possible values are the integers $0$ to $p-1$
+  - Denoted as $Z_p$ (and, sometimes, $F_p$)
+
+<aside data-markdown class="notes">
+- a finite field doesn't have to have a prime $p$...
+  - a clock is (almost) a finite field with a non-prime $p$
+  - *almost* because it's 1-12, not 0-11
+- but for the elliptic curves, we'll always use a prime $p$ else the math won't work right
+- integers are a ring, not a field, as some operations are not valid therein (7/3, for example)
+</aside>
+
+
+## Finite Field Operations
+- Operations in $Z_{17}$
+- Addition: easy -- just add the two numbers and mod by $p$
+  - $13+25 = 38 \mod 17 = 4$
+- Multiplication: easy -- just multiply and mod by $p$
+  - $6*6 = 36 \mod 17 = 2$
+- Exponentiation: easy -- just exponentiate and mod by $p$
+  - $3^3 = 27 \mod 17 = 10$
+  - There are more efficient ways to do this, not covered here
+
+
+## Finite Field Subtraction
+- Additive inverse: let $-x$ be defined as $p-x$
+  - Example: $-10=17-10=7$ in $Z_{17}$
+    - Thus the additive inverse of $10$ is $7$ in $Z_{17}$
+  - Verify: 
+    - $15-10= 5$
+    - $15+7=22 \mod 17 = 5$
+- Mod'ing a negative number
+  - Keep adding $p$ until it becomes positive
+  - Equivalent: $-x \mod p = p-(x \mod p)$
+  - Example: 
+    - $-23 \mod 17 = -23+17+17=11$
+    - $17-(23 \mod 17) = 17-6=11$
+
+
+## Fermat's Little Theorem
+<ul>
+  <li>In $Z_p$, if $p$ is prime, then $a^p-a$ is a multiple of $p$
+
+  - Rephrased: $a^p-a \mod p = 0$
+  - Rephrased: $a^p \equiv a$ (mod $p$)
+
+</li>
+<li class='fragment'>Example in $Z_{7}$: let $a=2$ and $p=7$
+
+  - $a^p-a=2^7-2=128-2=126$
+  - $126=7*18$, so 126 is divisible by 7
+
+</li>
+<li class='fragment'>Rephrased:
+
+  - $a^p \equiv a$ (mod $p$)
+  - $2^7 \equiv 2$ (mod $7$)
+  - Take the mod of both sides...
+  - $128 \mod 7 \equiv 2 \mod 7$
+  - $2 \equiv 2$
+
+</li></ul>
+
+
+## Finite Field Mult Inverse
+
+<ul>
+
+<li>Fermat's Little Theorem: $a^p-a \mod p = 0$ 
+
+<li class='fragment'>Divide both sides by $a$:
+
+  - $a^{p-1}-1 \mod p = 0$
+
+</li>
+<li class='fragment'>Add 1 to both sides: 
+
+  - $a^{p-1} \mod p = 1$
+  - Example: $2^6 = 64 \mod 7 = 1$
+
+</li>
+<li class='fragment'>Divide both sides by $a$ again: 
+
+  - $a^{p-2} \mod p = 1/a$
+
+</li>
+<li class='fragment'>Re-arrange to get $1/a$, our multiplicative inverse 
+
+- $1/a = a^{-1} = a^{p-2} \mod p$
+
+</li>
+</ul>
+
+
+## Finite Field Mult Inverse
+- To find the multipliciative inverse in $Z_p$:
+  - $1/a = a^{-1} = a^{p-2} \mod p$
+- Example: $a=13$, $p=17$
+  - $1/13 = 13^{17-2} \mod 17 = 4$
+  - Division by 13 is the same as multiplication by 4 in $Z_{17}$
+    - Or: $x/13 = x \ast 4$ in $Z_{17}$
+  - Verify: $13*4 = 52 \mod 17 = 1$
+
+
+## Finite Field Division
+- The multiplicative inverse:
+  - $1/a = a^{-1} = a^{p-2} \mod p$
+- Division is thus:
+  - $x/a = x*a^{-1} = x \ast a^{p-2} \mod p$
+- Example: let $x=13$, $a=5$, and $p=17$
+  - $13/5 = 13 \ast 5^{17-2} = 13 \ast 5^{15}=6$
+  - Verify: $6*5=30 \mod 17 = 13$
+- ([reference](https://eng.paxos.com/blockchain-101-foundational-math))
+- The net result is that given a value $a$, we can compute $a^{-1}$
+
+
+## Discrete Elliptic Curves
+- We can now perform the four arithmetic operations on a finite field
+  - They are "easy" (read: polynomial time)
+- The $x$ value is always an integer $0 \le x < p$
+  - For the algorithm we will study, $p=2^{256}-2^{32}-977$
+    - (more on this value later)
+- But we can't take the square root to determine $y$ from the right side of $y^2=x^3+7$
+  - That's "hard" (read: exponential time)
+- It turns out we don't need to...
+
+
+## Elliptical Point Addition
+- Adding two (different) points is the same as before:
+  - Determine the line equation
+    - $y=mx+b$ and $m=(y_2-y_1)/(x_2-x_1)$
+    - All these operations are done *within the field*
+  - Plug it into the equation for the curve: $y^2=x^3+ax+b$
+    - (the $b$ terms on the previous 2 lines are not the same)
+  - $(mx+b)^2 = x^3+ax+b$, then [solve for the 3 values](https://www.calculatorsoup.com/calculators/algebra/cubicequation.php?) of $x$
+    - We know $x_1$ and $x_2$, so we need $x_3$
+  - To determine $y_3$, use the formula for the line: $y_3=m*x_3+b$
+- Problem
+  - This requires square roots or cube roots
+  - Hard to do in a field!
+
+
+## Elliptical Point Addition
+- Given two points on the curve: $(x_1,y_1)$ and $(x_2,y_2)$
+  - Determine the slope: $m=(y_2-y_1)/(x_2-x_1)$
+- A shortcut (not derived here) for secp256k1:
+  - $x_3=m^2-x_1-x_2$
+  - $y_3=m(x_1-x_3)-y_1$
+
+
+## Elliptical Point Addition
+- Adding the same point $P$ to itself
+  - Curve: $y^2=x^3+7$
+  - Curve: $y= \pm \sqrt{x^3+7}$
+  - Slope is the derivative: $dy/dx = 3x^2/2y$
+    - ([reference](https://github.com/mulllhausen/visual-secp256k1/blob/master/grunt.py), line 92) (or your calculus class)
+- Use the math on the previous slide to determine the resultant point
+  - The slope just computed is $m$ on the previous slide
+
+
+
+## Elliptical Curve Arithmetic
+- Given a point $P$ on a curve, you can keep ellipticlly adding it to itself to get $R=k \otimes P$
+  - Given $k$ and $P$, it is feasible to determine $R$ -- this is "easy"
+  - But given $R$ and $P$, it is *NOT* feasible to determine $k$
+- Note we can do elliptic curve exponentiation as well:
+  - If $k=2^{10}=1024$, then $R=1024 \otimes P$, then we can compute that in about 10 steps:
+    - $P_2 = 2  \otimes  P=P \oplus P$
+    - $P_4 = 4  \otimes  P=P_2 \oplus P_2$
+    - $P_8 = 8  \otimes  P=P_4 \oplus P_4$
+    - ...
+    - $R=P_{1024} = 1024 \otimes P =P_{512} \oplus P_{512}$
+- Total steps: $\Theta(\log_2k)$ 
+
+
+## Reflections in a field
+- A reflection in a field means using the other $y$ value for that $x$-value
+  - The other $y$ value is just $-y$
+- Consider secp256k1 with the field $Z_{43}$ (i.e., $p=43$)
+- For $x=2$, there are two $y$ values: 12 and 31
+  - $(12,31) \oplus (29,31) = (2,12)$
+  - It intersects at $(2,31)$, but then reflects to $(2,12)$
+  - You can see this [here](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=12&py=31&qx=29&qy=31)
+- The two $y$ values (here, 12 and 31) will always add to $p$ (here, 43)
+- The formulas provided herein already handle this reflection
+
+
+## Elliptical Curve notes
+- Even in a finite field, we do not need anything more than the basic arithmetic operations (and exponentiation)
+  - Nowhere do we require square root, in particular
+  - Nor a more general discrete log operation
+
+
+## Relevant formulas
+- Division in a field $Z_p$:
+  - $x/a = x*a^{-1} = x \ast a^{p-2} \mod p$
+- Elliptic point addition: given points $(x_1,y_1)$ and $(x_2,y_2)$, to find the third point:
+  - Determine the slope: $m=(y_2-y_1)/(x_2-x_1)$
+  - Point #3 is $(x_3,y_3)$ and determined by:
+    - $x_3=m^2-x_1-x_2$
+    - $y_3=m(x_1-x_3)-y_1$
+- Finding the slope at a point on secp256k1:
+  - $m=3x^2/2y$
+
+
+<!-- ============================================================ -->
+
+
+
+# ECDSA
+
+
+## Elliptical curve cryptography
+- ECDSA = Elliptic Curve Digital Signature Algorithm
+- This ECDSA algorithm is specifically to encrypt the *signature*
+  - Meaning the hash of the message
+  - This algorithm is not really used for general purpose cryptography, as the keys are not interchangeable
+
+
+## Elliptical curve cryptography
+- Can use any elliptical curve equation of the form $y^2=x^3+ax+b$
+- We will use the secp256k1 curve
+  - Sets $a=0$ and $b=7$, so the curve is $y^2=x^3+7$
+    - No $x$ term
+  - secp256k1 defines a pre-defined $p$ (modulus) value
+  - secp256k1 defines a pre-defined $G$ (base point) value
+
+
+## secp256k1
+![](images/encryption/secp256k1/secp256k1-a.svg)
+
+
+## secp256k1 curve: modulus
+- secp256k1 curve: $y^2=x^3+7$
+- $p$ is the prime modulus (the size of the field), and is defined as 
+  - $p=2^{256}-2^{32}-977$
+  - $p$ = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+  - $p$ = 115,792,089,237,316,195,423,570,985,008,687,907,853,269,984,665, 640,564,039,457,584,007,908,834,671,663
+  - $p \approx 1.16 \ast 10^{77}$
+  - Note that $p$ is 256 bits in size (to match SHA-256)
+- Must be prime, and $p$ is
+
+
+## secp256k1 curve: order
+- secp256k1 curve: $y^2=x^3+7$
+- $o$ is the *order*, which is the number of points on the curve
+  - We include the point at infinity in $o$
+  - $o$ = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
+  - $o$ = 115,792,089,237,316,195,423,570,985,008,687,907,852,837,564,279, 074,904,382,605,163,141,518,161,494,337
+  - $o \approx 1.16 \ast 10^{77}$, a little less than $p$
+- *SOME* modulo operations in ECDSA are with $o$, not $p$
+- Also must be prime, and $o$ is
+- How to determine the order?
+  - Count all the points (*very* slow)
+  - [Schoof's algorithm](https://en.wikipedia.org/wiki/Schoof%27s_algorithm), which takes polynomial time
+
+
+## secp256k1 curve: order
+- Notation:
+  - Most references use $n$ to represent the order
+  - We'll use $o$
+  - This will lower confusion with one of the elliptic curve computation websites we'll be using a lot
+
+
+## secp256k1 curve: values
+- Why these values?
+  - Both $p$ and $o$ are 256 bits (size of a SHA-256 hash)
+  - The modulus, $p$, is prime
+  - The order, $o$, is also prime
+- We could have used any values for $p$ and $o$ that fulfilled these properties
+
+
+## secp256k1 curve: base point
+- The starting point or "base point" $G$
+  - $x$ = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F 2815B16F81798
+    - $x$ = 55,066,263,022,277,343,669,578,718,895,168,534,326,250,603,453,777, 594,175,500,187,360,389,116,729,240
+    - $x \approx 5.51 \ast 10^{63}$
+  - y = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C4 7D08FFB10D4B8
+    - $y$ = 32,670,510,020,758,816,978,083,085,130,507,043,184,471,273,380,659, 243,275,938,904,335,757,337,482,424
+    - $y \approx 3.27 \ast 10^{63}$
+- $G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
+- How do you think this was determined?
+
+
+## Base Point properties
+- In order for the base point to be able to generate all the points in the range $[0,o-1]$, $G$ needs to lie on the secp256k1 curve
+- We can verify this in Python (here use use $p$, not $o$):
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ python3
+>>> p = 2**256 - 2**32 - 977
+>>> x = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
+>>> y = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
+>>> y**2 % p == (x**3 + 7) % p
+True
+>>> (y**2 - x**3 - 7) % p == 0
+True
+>>> exit()
+$
+</code></pre>
+
+
+## SEC format key encoding
+- This encoding is for 256-bit (32 byte) keys
+- Given the base point $G$ = (<span style="color: skyblue">79B...789</span>, <span style="color: pink">483...4B8</span>)
+- Uncompressed: use prefix '04', then concatenate $x$ and $y$:
+  - 04<span style="color: skyblue">779B...789</span><span style="color: pink">483...4B8</span>
+  - 65 bytes
+- Compressed (when we don't care about the $y$ value): 
+  - If $y$ is negative ("even"), use prefix '02' and concatenate $x$:
+    - 02<span style="color: skyblue">779B...789</span>
+    - 33 bytes
+  - If $y$ is positive ("odd"), use prefix '03' and concatenate $x$:
+    - 03<span style="color: skyblue">779B...789</span>
+    - 33 bytes
+
+
+## ECDSA Key Generation: setup
+- So we have:
+  - Curve parameters $a$ and $b$ (secp256k1: $a=0$ and $b=7$)
+  - Prime modulus $p$ (secp256k1: $p=2^{256}-2^{32}-977$)
+    - Size is $b$ bits, selected to match the hash size (for us, $b=256$)
+  - Curve order $o$ (for secp256k1: $o \approx 1.16 \ast 10^{77}$)
+  - Base point $G$; for secp256k1,<br>$G \approx (5.51 \ast 10^{63}, 3.27 \ast 10^{63})$
+  - A $b$-bit hash algorithm that we plan on using
+    - It could be any $b$-bit hash algorithm, but we'll assume it's SHA-256 herein
+
+
+## ECDSA Key Generation
+- Determine a $b$ bit random number $d$ such that $1 \le d \le o-1$
+  - This is the private key
+- Compute point $Q=d \otimes G$
+  - Point $Q$ is the public key
+  - Note that $d$ is a number, but $Q$ is a point
+- $Q$ is the public key and $d$ is the private key
+  - They are not the same -- $d$ is a scalar and $Q$ is a point
+  - Thus, they are *not* interchangeable
+
+<aside data-markdown class="notes">
+- private keys are often called 'd' because they decrypt
+  - although in ECDSA, there isn't much decryption going on
+  - but it's still called that anyway...
+</aside>
+
+
+## Signing an ECDSA message
+::: {.font-90}
+- Curve parameters:
+  - $p$, the prime modulus
+  - $o$, the order of the curve
+  - point $G$, the base point
+- Alice knows:
+  - $m$, the message to sign
+  - $d$ (or $d_A$), her private key (secret!)
+  - point $Q$, her public key
+- Alice generates:
+  - $h$, the hash of the message $m$ being signed
+    - Using a $b$-bit hash algorithm such as SHA-256
+  - $k$, a $b$-bit one time pad (secret!) such that $1 \le k \le o-1$
+  - $k^{-1}$, the (secret) inverse mod-$o$ of $k$ (this is in $Z_o$, not $Z_p$)
+:::
+
+<aside data-markdown class="notes">
+- because we want to find the multiplicitative inverse of $k$, in order to use Fermat's little theorem, $o$ must be prime
+</aside>
+
+
+## Signing an ECDSA message
+::: {.font-90}
+- Curve parameters: $p$, $o$, $G$ (and $a$ and $b$)
+- Alice knows: $m$, $d$, $Q$
+- Alice generated: $h$, $k$, $k^{-1}$
+- Alice computes $R=k \otimes G$
+  - Let $r$ be the $x$ component of $R$
+- Alice also computes: $s=k^{-1}(h+r*d) \mod o$
+  - This computation used the private key ($d$), the hash ($h$), and $r$
+    - $r$ needed the the one-time pad $k$ to compute
+- The signature is $(r,s)$
+  - Both $r$ and $s$ are $b$ bits in size, so the signature is $2b$ bits
+- To verify, we have to show that formula Alice used holds
+  - $s=k^{-1}(h+r*d) \mod o$
+:::
+
+
+## Why those formulas?
+- We want to encode the hash in such a way that:
+  1. It can NOT be "cracked" in polynomial time
+  2. With the public key $Q$, the formulas can be verified in polynomial time
+- Part 1: does "reversing" it take exponential time?
+  - We obtain $r$ as the $x$ value of  $R=k \otimes G$
+    - Elliptic multiplication is in polynomial time; the reverse (division) would be in exponential time
+  - We obtain $s$ via $s=k^{-1}(h+r*d) \mod o$
+    - This is a discrete log, so "reversing" this is exponential time
+- Part 2: can it be verified without knowing $d$ (the private key) or $k$ (the secret OTP)
+  - Yes; we'll see this next
+
+
+## Sanity checks
+- If either $r$ or $s$ are zero, then restart the algorithm
+  - Compute a new $k$, and redo the computations
+- This is highly unlikely (although possible!) to occur with the actual values used with secp256k1
+- But is quite likely to occur with the values we will use in our upcoming homework
+
+
+## Verifying an ECDSA message
+::: {.font-90}
+- Curve parameters: $p$, $o$, $G$ (and $a$ and $b$)
+- Bob has to verify the message; he knows:
+  - $m$, the message whose signature is being checked
+  - $Q$, Alice's public key
+  - $(r,s)$, the signature
+- Bob does NOT know:
+  - $d$, Alice's private key
+  - $k$, the one-time pad used
+  - $k^{-1}$, the inverse, mod $o$, of $k$
+- Bob generates:
+  - $h$, the hash of the message $m$
+  - $s^{-1}$, the inverse mod-$o$ of $s$ (this is in $Z_o$, not $Z_p$)
+:::
+
+
+## Verifying an ECDSA message
+- Bob has to verify that the following equation holds: $s=k^{-1}(h+r*d) \mod o$
+  - This was the equation Alice computed to determine $s$
+  - He uses his computation of the hash $h$
+  - But he doesn't know $d$ nor $k$
+    - But recall that $r$ is computed using $k$
+    - And $Q$ was computed using $d$
+- Bob knows: $m$, $Q$, $(r,s)$, and the curve parameters
+  - Knowing $r$ (the $x$ value of $R$) implies knowing all of $R$ (the point)
+- Bob computes: $h$ and $s^{-1}$
+- All further steps omit the 'mod $o$' part for clarity
+
+
+## Verifying an ECDSA message
+
+<ul>
+  <li>The formula Bob is to verify without $d$, $k$, or $k^{-1}$:<br> $s=k^{-1}(h+r \ast d)$ </li>
+  <li class="fragment" data-fragment-index="1">Multiply both sides by $s^{-1}$:<br> $1=s^{-1}k^{-1}(h+r \ast d)$ </li>
+  <li class="fragment" data-fragment-index="2">Multiply both sides by $k$:<br> $k=s^{-1}(h+r \ast d)$ </li>
+  <li class="fragment" data-fragment-index="3">Multiply both sides by $G$:<br> $k \otimes G=s^{-1}(h+r*d) \otimes G$ </li>
+  <li class="fragment" data-fragment-index="4">Distribute the parenthetical:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \ast d \otimes G$ </li>
+  <li class="fragment" data-fragment-index="5">The public key is defined as $Q = d \otimes G$:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
+</ul>
+
+
+## Verifying an ECDSA message
+
+<ul>
+  <li>The last formula from the previous slide:<br> $k \otimes G = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ or:<br>$k \otimes G = (s^{-1} \ast h) \otimes G \oplus (s^{-1} \ast r) \otimes Q$ </li>
+
+  <li class="fragment" data-fragment-index="1">Point $R$ was computed as: $R=k \otimes G$:<br> $R = s^{-1} \ast h \otimes G \oplus s^{-1} \ast r \otimes Q$ </li>
+  <li class="fragment" data-fragment-index="2">Bob knows:
+
+  - $r$, the $x$ component of $R$, from the signature
+  - $s$ (and computed $s^{-1}$) from the signature
+  - $h$, the hash value computed from the message $m$
+  - $G$, the base point
+  - $Q$, Alice's public key
+
+</li>
+<li class="fragment" data-fragment-index="3">Bob can now verify that this formula holds!</li>
+</ul>
+
+
+## A note about the math
+- Given point $P$, and scalars $x$, $y$, and $z$, let
+  - $Q = z \otimes P$
+- We have order of operations:
+  - $x \ast y \ast z \otimes P = (x \ast y \ast z) \otimes P$
+- Given:
+  - $x \ast y \ast d \otimes G$ and $Q = d \otimes G$
+  - We can state: $x \ast y \ast d \otimes G = x \ast  y \otimes Q$
+
+
+## When to mod by $o$ versus $p$
+::: {.font-90}
+- $p$ is the prime modulus, $o$ is the order (# of points)
+- If counting *points*, we mod by $o$
+  - In EC multiplication
+- If checking *scalars*, we mod by $p$
+  - Does this point lie on the curve?
+- Example
+  - Let $p=43$ and $o=31$ and consider: $R=50 \otimes G$
+  - As this is counting the number of *points*, we mod by $o$, not $p$
+  - So $50 \otimes G = 19 \otimes G$, but $50 \otimes G \ne 7 \otimes G$
+  - Verify this [here](https://andrea.corbellini.name/ecc/interactive/modk-mul.html)
+    - Set $a=0$, $b=7$, $p=43$, and let $P=(25,25)$
+    - The resultant point is the same for $o=50$ and $o=19$
+    - But not the same for $o=50$ and $o=7$
+:::
+
+
+## When to mod by $o$ versus $p$
+- In the signing algorithm, we mod by $o$ (instead of by $p$):
+  - When computing $s=k^{-1}(h+r*d) \mod o$
+  - When computing $k^{-1}$
+- In the verification algorithm, we mod by $o$ (instead of by $p$):
+  - When computing $s^{-1}$
+- In any elliptic curve multiplication:
+  - If computing $R = k \otimes G$, we can mod $k$ by $o$ to get the same result
+
+
+## Computing $k \otimes G$
+
+::: {.font-90}
+
+<ul>
+<li>Let $p=43$, $o=31$, $G=(25,25)$, and $k=21$</li>
+<li class="fragment">Compute $21 \otimes G$ <ul>
+  
+  - $21 = 10101_b = 2^4+2^2+2^0 = 16+4+1$
+  - $21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$
+
+</ul></li>
+<li class="fragment">Compute the powers of $G$: <ul>
+
+  <li class="fragment">$1 \otimes G = G = (25,25)$</li>
+  <li class="fragment">$2 \otimes G = (1 \otimes G) \oplus (1 \otimes G) = (25,25) \oplus (25,25) = (34,3)$</li>
+  <li class="fragment">$4 \otimes G = (2 \otimes G) \oplus (2 \otimes G) = (34,3) \oplus (34,3) = (35,21)$</li>
+  <li class="fragment">$8 \otimes G = (4 \otimes G) \oplus (4 \otimes G) = (35,21) \oplus (35,21) = (29,31)$</li>
+  <li class="fragment">$16 \otimes G = (8 \otimes G) \oplus (8 \otimes G) = (29,31) \oplus (29,31) = (37,36)$</li></ul></li>
+<li class="fragment">$21 \otimes G = 16 \otimes G \oplus 4 \otimes G \oplus 1 \otimes G$<ul>
+  <li class="fragment">$21 \otimes G = (37,36) \oplus (35,21) \oplus (25,25)$</li>
+  <li class="fragment">$21 \otimes G = (38,21) \oplus (25,25) = (32,40)$</li></ul></li>
+</ul>
+
+:::
+
+
+## Useful sites
+- [A gentle introduction to elliptic curve cryptography](https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/)
+  - That site has an online [EC point addition page](https://andrea.corbellini.name/ecc/interactive/modk-add.html) and [EC point multiplication page](https://andrea.corbellini.name/ecc/interactive/modk-mul.html)
+  - And also display the points of the field, and tell you the order of the curve
+  - We are using secp256k1, so set $a=0$ and $b=7$
+
+
+## Why ECDSA over RSA?
+- ECDSA keys are much quicker to generate
+- ECDSA encryption & decryption is faster
+- Cracking a 256-bit ECDSA signature would take about as long as cracking a 3072-bit RSA signature ([source](https://avinetworks.com/glossary/elliptic-curve-cryptography/))
+  - Which means the signed message is *significantly* shorter (256 bits versus 3072 bits) for the same level of security
+  - That's 1/12th the size!
+- ECDSA is really for digital signatures only
+
+
+## Why RSA over ECDSA?
+- Longer messages don't have to be broken down into as many parts
+- Much easier to implement
+  - And much easier to implement quickly
+- RSA keys are interchangeable; ECDSA keys are not
+  - Thus, you cannot use ECDSA for sending encrypted messages back and forth
+  - ECDSA is for digital signatures only
+
+
+## Security Level
+- A security level of $n$ means that it takes $2^n$ operations to "break" it
+  - A means to compare different algorithms
+- 3072 bit RSA and 256-bit ECDSA have about the same security level ($n=128$)
+- [Reference](https://en.wikipedia.org/wiki/Security_level)
+
+
+<!-- ============================================================ -->
+
+# Randomness
+
+
+## xkcd on randomness
+
+::: {.stretch}
+![](https://imgs.xkcd.com/comics/random_number.png){title="RFC 1149.5 specifies 4 as the standard IEEE-vetted random number." style='border:10px solid white'  }
+:::
+::: {.r-stack}
+[xkcd \# 221](https://xkcd.com/221)
+:::
+
+
+## Computers and randomness
+- A computer, by definition, produces the same output for the same input
+- So how, then, can it produce truly random numbers?
+- The answer: it can't
+  - We instead generate [*pseudo-random* numbers](https://en.wikipedia.org/wiki/Pseudorandomness)
+- Pseudorandomness: "A pseudorandom process is a process that appears to be random but is not"
+  - That's all a computer can really generate
+
+
+## Necessity of randomness
+- Much of encryption depends on randomness
+- If you could "guess" the random number sequence, then you could figure out the one-time pad
+  - ... or the generated ssh keys, or the RSA keys...
+- So we need really good random numbers
+- Formally, we need a [cryptographically secure pseudorandom number generator](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator)
+  - Formal definition shortly, but basically, it produces pseudo-random numbers that appear truly random
+
+
+## Typical method: LCG
+- The [linear congruential generator (LCG)](https://en.wikipedia.org/wiki/Linear_congruential_generator)
+- $X_{n+1}=(a*X_n+c) \text{ mod } m$
+  - $m$ is the modulus, and must be positive
+  - $a$ is the multiplier: $0 < a < m$
+  - $c$ is the increment: $0 < c < m$
+  - $X_0$ is the seed value
+- libc (C's `rand()`) uses $a=1103515245$, $c=12345$, and $m=2^{31}$
+  - This will cycle through 2 billion ($2^{31}$) values before repeating
+- With a seed of 1, the initial sequence is:
+  - 1, 1103527590, 377401575, 662824084, 1147902781, 2035015474, 368800899, ...
+
+
+## Typical method: example
+- Let $m=9$, $a=4$, $c=7$
+ - This will cycle through all the values &lt;$m$ before repeating
+   - We know that via magic we won't see here
+- $X_{n+1}=(a*X_n+c) \text{ mod } m$
+  - $X_0 = 1$
+  - $X_1 = (4*1+7) \text{ mod } 9 = 2$
+  - $X_2 = (4*2+7) \text{ mod } 9 = 6$
+  - $X_2 = (4*6+7) \text{ mod } 9 = 4$
+  - $X_3 = (4*4+7) \text{ mod } 9 = 5$
+  - Rest of the sequence: 0, 7, 8, 3, and then back to 1
+
+
+## Typical method: example
+- The linear congruential generator (LCG) sequence with $m=9$, $a=4$, $c=7$:
+  - 1, 2, 6, 4, 5, 0, 7, 8, 3, and then back to 1
+- But where to start in the sequence?
+  - We could start anywhere therein
+- Where we start is called the *seed*
+- Different seed values just start at a different spot in the cycle of random numbers
+
+
+## What seed to use?
+- If you use the same seed, you will always get the same random sequence
+- Many people use `time(NULL)` in C/C++
+  - This is the current number of seconds since January 1st, 1970
+  - Which is how UNIX systems keep track of time
+- But if you run the program twice in the same second, it will use the same sequence!
+- That being said, this is probably sufficient for non-cryptographic purposes
+  - You could use the current time in milliseconds...
+
+
+## CSPRNG Requirements
+- CSPRNG = Cryptographically Secure Pseudo-Random Number Generator
+- A CSPRNG needs:
+  - A good source of entropy for the seed
+    - Should appear random
+  - Enough entropy to have an good initial seed
+  - A good algorithm whose output appears to be unpredictable
+
+
+## [Why libc is not cryptographically secure]{.r-fit-text}
+- The seed can be only one of $2^{31} \approx 2.1$ billion values
+- One can generate all 2.1 billion!  On a modern computer:
+  - A 2048-bit RSA key takes less than 0.1 seconds to generate
+    - To compute all 2.1 billion: 6.5 years
+  - A 256-bit ECDSA key takes less than 0.005 seconds to generate
+    - 1/20th of the time!
+    - To compute all 2.1 billion: 3.5 months
+- Much faster on a parallel computer or a GPU...
+
+
+## CSPRNG: Entropy sources
+- Linux accumulates entropy in /dev/random & /dev/urandom from:
+  - "environmental noise from device drivers and other sources"
+  - Various timings of things at boot-up time, as there are always small variances between boots
+  - Various sensors, such as the CPU temperature sensor or the fan speed sensor
+  - User interaction (keyboard timings, etc.)
+  - Physical devices designed for this exact purpose
+- Reads from /dev/urandom never block; /dev/random will block until enough entropy is present
+  - /dev/urandom is much better...
+
+
+## Use more entropy
+- Essentially, have more bits in the seed
+- Typical cryptocurrency solution: use 128 bits
+  - That's $2^{128}=3.4*10^{38}$ possible keys
+  - Computing that many ECDSA keys would take $4.6*10^{28}$ years
+- Some use 256 bits ($1.1 \ast 10^{77}$ ECDSA keys, $1.6 \ast 10^{67}$ years to generate all)
+- Problem: how to allow the owner to remember 128 (or 256) bits of entropy?
+  - That's a 16 byte (32 digit) hex number
+  - For 256-bit keys, that's a 32 byte (64 digit) hex number
+
+
+## Remembering your seed
+- Imagine a list of $2048=2^{11}$ words
+  - Each word thus provides 11 bits of entropy
+- Generate a list of 12 of these words
+  - $11 \ast 12=132$; use the last 4 bits as a checksum
+- Or a list of 24 of them (264 bits => 256 bit seed)
+- List is defined in [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
+  - Different versions for different languages including the [English list](https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt)
+  - Implementations in various programming languages are provided as well
+
+
+## Seed phrases
+- Most cryptocurrency wallets use these
+- It only works if the algorithm to compute the keys for the given cryptocurrency is repeatable with the same seed!
+- Then this phrase can be used to re-generate your keys
+- And you can store it in a device like [this](https://www.amazon.com/dp/B07RZW8CWY)
+
+
+## Cloudflare uses a wall of lava lamps ([source](https://it.slashdot.org/story/17/11/07/1927239/how-cloudflare-uses-lava-lamps-to-encrypt-the-internet))
+
+<img src="http://blog.cloudflare.com/content/images/2017/11/lava-lamps.jpg" style="padding:0">
+
+
+## CSPRNG: Algorithms
+- Cryptographic primitives: ciphertext bytes, hash results, etc.
+- Number-theoretic designs: mathematical concepts that turned out to be good for this
+- Special designs: algorithms designed for this specific purpose
+- See [here](https://en.wikipedia.org/wiki/Cryptographically-secure_pseudorandom_number_generator#Designs) for a fuller list
+
+
+## Determining randomness
+- To tell if a number sequence is truly (pseudo-) random, you run [randomness tests](https://en.wikipedia.org/wiki/Randomness_tests) on it
+- Examples:
+  - Run it a bagillion times and see if the distributions of the numbers is uniform across the range
+  - See if the numbers follow a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) (when run through the correct formulas)
+  - Interpret the numbers as 5 card stud poker hands, and see if the distrubtion of hands is the expected distribution
+  - And many others...
+
+
+## Security
+::: {.stretch}
+![](https://imgs.xkcd.com/comics/security.png){title="Actual actual reality: nobody cares about his secrets.  (Also, I would be hard-pressed to find that wrench for $5.)" style='border:10px solid white'  }
+:::
+::: {.r-stack}
+[xkcd \# 538](https://xkcd.com/538)
+:::
+
+
+<!-- ============================================================ -->
+
+
+# Hashing
+
+
+## Terminology
+- Message Digest == Secure Hash
+  - The former is an older term, the latter is what is currently used
+  - It's just a hash with the algorithm described herein...
+
+
+## [Ensuring the download is correct...]{.r-fit-text}
+- What if we don't want to encrypt the data?
+  - So anybody can download it: patches, open source code, etc.
+  - But we want to be sure to allow those people to verify that they downloaded the correct file
+    - And that they didn't have any download errors
+- Solution: provide a hash code of the file
+
+
+## Hashing properties
+- Hash goals:
+  - Changing even a single bit has a dramatic effect on the hash code
+- Pigeon hole principle:
+  - If we use a 128-bit hash, that yields $2^{128} \approx 3.4 \ast 10^{38}$ possible values
+  - If we have files that are 129+ bits, then there will be more possible files than there are hashes
+  - Thus, multiple files will provide the same hash
+  - This will hold for *all* hashes, as long as the hash code is of a finite length
+
+
+## Hash vulnerabilities
+- For a hash function to be really vulnerable, we want to be able to take an *arbitrary* text and make it match the desired hash code
+  - Sender sends: "deposit $1 million into account 12345" with hash "abcdefg"
+  - You intercept and send a new message: "deposit $1 million into account 67890; *(fl*_0" with hash "abcdefg"
+    - The trailing "; *(fl*_0" allowed the different document to match the same hash
+- Being able to create two "random" files that match the same hash indicates a weakness, but is not yet a vulnerability
+
+
+## Hashes are one-way!
+- Consider the following two files:
+  - (from [here](https://stackoverflow.com/questions/26217076/example-of-hash-collision-printable-strings), as it may not render properly on the slides)
+```
+1i=\/ʵF~@X>U4 䈃%qAZQ%ɟ7<[؂>1V4[m6Sⴇ9cH͠3BW~Tp
+Ƙ!e+o*p
+```
+```
+1i=\/ʵF~@X>U4    䈃%AZQ%ɟr7<[؂>1V4[m6S49cH͠3BW~Tp(
+Ƙ!eo*p
+```
+- The both have the same MD5 hash of 79054025255fb1a26e4bc422aef54eb4
+- So given the MD5 hash, how do we know which one it came from?
+
+
+## Pigeonhole principle
+- An MD5 hash is 128 bits; SHA hashes go up to 512 bits
+- There are more files possibilites of 129 bits (or 513 bits) than there are possible hashes
+- Thus, as per the pigeonhole principle, there will be multiple inputs for a given hash
+- So how do you know how to go *back* from a hash?
+  - Answer: you don't
+
+
+## Collision resistant hashes
+- A *collision resistant hash* means that it is "hard" to find two inputs that hash to the same value
+  - Harder than, say, brute force
+  - If there is any way easier than brute force, that's bad
+
+
+## Collision resistant hashes
+- Due to the birthday paradox, one will typically have to brute force $2^{n/2}$ attempted values before a collision is found
+  - For MD5 (128 bits): $2^{128/2} = 2^{64} = 1.84 \ast 10^{19}$ attempts
+    - Computing 1 million a second takes $5.85 \ast 10^{11}$ years
+    - But a better attack can achieve this in under a minute
+    - (MD5 is *not* collision resistant, as described later)
+
+
+## Collision resistant hashes
+- For SHA-256 (256 bits): $2^{256/2} = 2^{128} = 3.40 \ast 10^{38}$ attempts
+  - Computing 1 million a second takes $1.08 \ast 10^{31}$ years
+- [reference](http://en.wikipedia.org/wiki/Collision_resistant )
+
+
+## [CRC32: Cyclic Redundancy Check](http://en.wikipedia.org/wiki/Crc32)
+- The hash value is a 32-bit integer
+  - There are variants of other bits: 16, 64, etc.
+- Is used for downloading files (via modem, download program, etc.) -- i.e. as a checksum
+  - It works great for this purpose
+- With the (simple) math behind the checksum, and "only" 4 billion possibilities, one can target a specific CRC 32 hash value
+
+
+## MD5: Message Digest 5
+- Produces a 128-bit value ($3.4 \ast 10^{38}$ possible values)
+  - Expressed as a 32-digit hex number
+- It used to be the most widely used algorithm
+- Designed in 1991 when research indicated its predecessor (MD4) was insecure
+- Printed in hex:
+```
+$ md5sum message1.txt 
+afe68f753a65f773a591bcf6f9ce3c63  message1.txt
+```
+- Still sometimes used for file downloading
+  - CERT: "should be considered cryptographically broken and unsuitable for further use"
+
+
+## SHA-0 and SHA-1
+- Designed by the NSA
+  - After the DES debacle, it's become an open standard
+  - Published by NIST (National Institute of Standards and Technology)
+- 160 bit hash
+- SHA-0 (1993): had a flaw, was quickly corrected
+  - The flaw introduced an unintended weakness
+- SHA-1 (1995): fixed that flaw, was very widely used for security applications
+  - But typically not for downloading files
+
+
+## SHA-0 and SHA-1
+- In 2005, security flaws were discovered in SHA-1
+  - A vulnerability has not been shown, however
+  - [reference](http://en.wikipedia.org/wiki/Sha-1)
+
+
+## [SHA-2](http://en.wikipedia.org/wiki/SHA-2)
+- Designed in 2001 to address the flaw discovered in SHA-1
+  - There are 4 variants, depending on the length of key desired: SHA-224, SHA-256, SHA-384, SHA-512
+- SHA-2 is mathematically similar (but not identical!) to SHA-1
+  - So if there are vulnerabilities in SHA-1, do they exist in SHA-2?
+  - Nobody knows, but this lead to the development of SHA-3
+- Most US gov't applications require a SHA-2 hash
+- See the pseudocode [here](https://en.wikipedia.org/wiki/SHA-2#Pseudocode)
+
+
+## [SHA-3](http://en.wikipedia.org/wiki/SHA-3)
+- Intent is for it NOT to derive (or be similar to) SHA-2
+  - So if the SHA-1 vulnerability exists in SHA-2, it thus will not affect SHA-3
+- NIST (National Institute for Standards and Technology) had an open solicitation / compettion for the algorithm
+  - The particular one selected was [Keccak](https://en.wikipedia.org/wiki/SHA-3)
+
+
+## Storing passwords
+- No (secure) system stores user passwords in plaintext
+- Instead it stores a *hash* of those passwords
+  - On login, it hashes your attempt, and then compares the hashes
+  - Thus, there could be *multiple* passwords that would log you in
+- This leads to vulnerabilities...
+
+
+## Dictionary attacks
+- To perform a [dictionary attack](https://en.wikipedia.org/wiki/Dictionary_attack):
+  - Take every hashed password for a given system
+  - Take every word in the English language, and hash it
+  - Find the intersection of those, and you have a bunch of passwords
+
+
+## Rainbow tables
+- A [rainbow table](https://en.wikipedia.org/wiki/Rainbow_table) is a pre-computed list of all hashed passwords
+  - [Here](https://md5hashing.net/hash/md5/5f4dcc3b5aa765d61d8327deb882cf99) is the one for 'password'
+- They are searchable (by hash) via Google
+
+
+## Password Salting
+- To prevent dictionary attacks, and limit the usefulness of rainbow tables, passwords are *salted*
+- Each password is given a random number, or salt, which is added to the hash
+- Normally, 'password' has MD5 hash of 5f4dcc3b5aa765d61d8327deb882cf99
+- Adding a random salt: 'password935723798539' has MD5 hash of 80d2b285e1d5e9b3078383a2e96074bf
+  - With a reasonable size salt, rainbow tables and dictionary attacks are of less use due to the search space size
+
+
+## Hashes we'll see
+- SHA2
+  - Different lengths: SHA-224, SHA-256, SHA-384, SHA-512
+  - Consider the [SHA-256 pseudocode from Wikipedia](https://en.wikipedia.org/wiki/SHA-2#Pseudocode)
+    - It's not magic!
+  - Used in Bitcoin
+- [RIPEMD-160](https://en.wikipedia.org/wiki/RIPEMD)
+  - 160-bit hash
+  - Used in Bitcoin
+- Keccak-256, aka SHA-3
+  - Used in Ethereum
+- Falcon-512
+  - A finalist for NIST's [Post-Quantum Cryptography](https://csrc.nist.gov/projects/post-quantum-cryptography)
+
+
+## Calling SHA-256 in C
+From [rossettacode.org](https://rosettacode.org/wiki/SHA-256); compile with `-lssl -lcrypto`:
+```
+#include <stdio.h>
+#include <string.h>
+#include <openssl/sha.h>
+ 
+int main (void) {
+  const char *s = "Rosetta code";
+  unsigned char *d = SHA256(s, strlen(s), 0);
+ 
+  int i;
+  for (i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    printf("%02x", d[i]);
+  putchar('\n');
+ 
+  return 0;
+}
+```
+
+
+## Calling SHA-256 in Python & Java
+From [rossettacode.org](https://rosettacode.org/wiki/SHA-256) -- just call `hashlib.sha256()`:
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">>>> import hashlib
+>>> hashlib.sha256( "Rosetta code".encode() ).hexdigest()
+'764faf5c61ac315f1497f9dfa542713965b785e5cc2f707d6468d7d1124cdfcf'
+>>> 
+</code></pre>
+
+For Java, see [here](https://rosettacode.org/wiki/MD5#Java), but change `MD5` to `SHA-256` ([reference](https://rosettacode.org/wiki/SHA-256#Java))
+
+
+## [Calling SHA-256 from the command line]{.r-fit-text}
+<pre class="code-wrapper" style="width:95%;margin-left:0"><code class="hljs awk small" style="height:auto">$ sha256sum lorem-ipsum.txt 
+32e7ac08ab60eff44f6f69fcb3ef45713bfdf3338d4e62a725e451f8f0b08eef  lorem-ipsum.txt
+$
+</code></pre>
+
+
+<!-- ============================================================ -->
+
+
+# Applied Cryptography
+
+
+
+## Openssl to generate a RSA Key
+
+```
+$ openssl genpkey -algorithm RSA \
+    -pkeyopt rsa_keygen_bits:2048 \
+    -out key.pem
+....+++++
+....+++++
+$
+```
+
+
+
+## PEM key file format
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ cat key.pem
+-----BEGIN PRIVATE KEY-----
+MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDKmfQPMEZiho43
+7rYfHB6bXDW1aQWrSJLlufEB23akwgyiHI85XcejJ10prWGU8aJA4VW8UJ1e6EZu
+m0LFln1LCEZJX1Os/H9zR2OxV52Xd+/U5ooy+nxg9VfBwUOcEx6gmNfQu06zLDuf
+cyKWXkF3DOE7rlPSq1xLk0GxYq+VvQEexMphMswdIiqcx4swdDWdA7x7z/nX6opx
+TDp+tY3M/QIJVh6mn1MvIbhc+PDLQRvEi1ZhMiAgk69LkA32gxXFaSU+x5Cl44dH
+69SJX3Z3xVhy/dpRpac9yEf/iVbSyV9z7as2qcD7PEfa3vIiQ+5o1O3O0jG40d8T
+bxCsPe7TAgMBAAECggEBAJ3AVBWDfDp5FMGeYDZG+dn0aWlwddaRcrfnGS5eCLpu
+0dFkNWzwhWKXYuXxt3p2zuR/z/cKOg7NAxJaWBpre/FxZvD4hbm6/S3wl0JduzpW
+S+rU+ySIf1IrloIqDo+3H3DisaA4SCYguegEiRjWGVkuMS38Jg5yGTJLXapV8eu/
+VGetSD7o6icG3QUs44NUOgoDPJeM41WpndgqPl558p6Y0wo48o08GBnQ7eAn+ERW
+06JBeQ70/lrsj0RbkJdBqou17O2fpTJW0MM4fEWa9c8DCWmQIIS2R17sZNIT2/i1
+9hnMWnvu5N+cIU53zefpskzmv6VdDLa0o1prqvvmlEECgYEA87t8HnvI1RzSvJUe
++/Knioe2PK9Ebd6HMJjNPhzuHOGjSDVbxMmBmDuxFgA7ia/PRGQLKUPcqlMBEJo+
+C8t7gyAa5v8kJFvn8Y1+gdRkVqV/g7yV8Bes/0ZbDNzHra4vOVzkIO+gopy/9/Iz
+CmSBP56p4/VUV5MC4l6OeTTHJPMCgYEA1Mx955btDWa8vqJJCsXcNp+Av1J9dI2e
+T3Jx2/7ETNTCAD98r/2PryboHq1R20DqE/lTWE06gOphHl1OOyoR8YaV7zT0bzlP
+4DoTvxamp7Xah8mgnnG0FjGSclKeMSeFsQAIfX+VJGqw+8UWTHgVsu+B8OQCHQ1n
+wIZ3mp/WBqECgYAqhAHar20Q/74i90A4YtOm7pVzcH9XSwH6EC19MD64+wMojWY8
+pYndrEvvsoqwMeLN40WvJQ9RBrmg08cO96fL78XBlbAQR5fmIvB2ZT47fxMHP9ZH
+01lyDivDyp9qRIAoWXPR6vryYrV54t3UakPBfUPVZ+4WeKaAJk5kBjjW0QKBgQCb
+19ctUD7zXZZFFpzfouAPsOidNVBjl4OlM29nakFg8z/Q5q3uRYiBAcFlFhGovPWx
+Axuiw4xg9UWC81pjwf+6HpKXyPRqsFJrKJ1liLUsheYxI9zZrPPyfQN/bjokTYl/
+g0K0hkc3kFtlR4V5I0jg7r7/KDzUAglF2jSlrQEVgQKBgQCVbKjqCbDzTIrct8jQ
+xVrEpND1JcnyQoAdBIi8Lf8ffVpCxBhOBklJhhXqjaZ8iE7nS7xWfDOR2Jm0RUu0
+3KpnWcKQz7MCGjkXVWrm412T1lrnp2UlD0MhqLps27NUJ6bybr200kwHxJcrZLb0
+p4ZuGFwSn9QTFdGG3Y/OPRGWhg==
+-----END PRIVATE KEY-----
+$
+
+</code>
+</pre>
+
+
+
+## OpenSSL to view a RSA Key
+
+<pre class="code-wrapper">
+<code class="hljs awk small" style="height:600px">$ openssl rsa -in key.pem -text -noout
+RSA Private-Key: (2048 bit, 2 primes)
+modulus:
+    00:ca:99:f4:0f:30:46:62:86:8e:37:ee:b6:1f:1c:
+    1e:9b:5c:35:b5:69:05:ab:48:92:e5:b9:f1:01:db:
+    76:a4:c2:0c:a2:1c:8f:39:5d:c7:a3:27:5d:29:ad:
+    61:94:f1:a2:40:e1:55:bc:50:9d:5e:e8:46:6e:9b:
+    42:c5:96:7d:4b:08:46:49:5f:53:ac:fc:7f:73:47:
+    63:b1:57:9d:97:77:ef:d4:e6:8a:32:fa:7c:60:f5:
+    57:c1:c1:43:9c:13:1e:a0:98:d7:d0:bb:4e:b3:2c:
+    3b:9f:73:22:96:5e:41:77:0c:e1:3b:ae:53:d2:ab:
+    5c:4b:93:41:b1:62:af:95:bd:01:1e:c4:ca:61:32:
+    cc:1d:22:2a:9c:c7:8b:30:74:35:9d:03:bc:7b:cf:
+    f9:d7:ea:8a:71:4c:3a:7e:b5:8d:cc:fd:02:09:56:
+    1e:a6:9f:53:2f:21:b8:5c:f8:f0:cb:41:1b:c4:8b:
+    56:61:32:20:20:93:af:4b:90:0d:f6:83:15:c5:69:
+    25:3e:c7:90:a5:e3:87:47:eb:d4:89:5f:76:77:c5:
+    58:72:fd:da:51:a5:a7:3d:c8:47:ff:89:56:d2:c9:
+    5f:73:ed:ab:36:a9:c0:fb:3c:47:da:de:f2:22:43:
+    ee:68:d4:ed:ce:d2:31:b8:d1:df:13:6f:10:ac:3d:
+    ee:d3
+publicExponent: 65537 (0x10001)
+privateExponent:
+    00:9d:c0:54:15:83:7c:3a:79:14:c1:9e:60:36:46:
+    f9:d9:f4:69:69:70:75:d6:91:72:b7:e7:19:2e:5e:
+    08:ba:6e:d1:d1:64:35:6c:f0:85:62:97:62:e5:f1:
+    b7:7a:76:ce:e4:7f:cf:f7:0a:3a:0e:cd:03:12:5a:
+    58:1a:6b:7b:f1:71:66:f0:f8:85:b9:ba:fd:2d:f0:
+    97:42:5d:bb:3a:56:4b:ea:d4:fb:24:88:7f:52:2b:
+    96:82:2a:0e:8f:b7:1f:70:e2:b1:a0:38:48:26:20:
+    b9:e8:04:89:18:d6:19:59:2e:31:2d:fc:26:0e:72:
+    19:32:4b:5d:aa:55:f1:eb:bf:54:67:ad:48:3e:e8:
+    ea:27:06:dd:05:2c:e3:83:54:3a:0a:03:3c:97:8c:
+    e3:55:a9:9d:d8:2a:3e:5e:79:f2:9e:98:d3:0a:38:
+    f2:8d:3c:18:19:d0:ed:e0:27:f8:44:56:d3:a2:41:
+    79:0e:f4:fe:5a:ec:8f:44:5b:90:97:41:aa:8b:b5:
+    ec:ed:9f:a5:32:56:d0:c3:38:7c:45:9a:f5:cf:03:
+    09:69:90:20:84:b6:47:5e:ec:64:d2:13:db:f8:b5:
+    f6:19:cc:5a:7b:ee:e4:df:9c:21:4e:77:cd:e7:e9:
+    b2:4c:e6:bf:a5:5d:0c:b6:b4:a3:5a:6b:aa:fb:e6:
+    94:41
+prime1:
+    00:f3:bb:7c:1e:7b:c8:d5:1c:d2:bc:95:1e:fb:f2:
+    a7:8a:87:b6:3c:af:44:6d:de:87:30:98:cd:3e:1c:
+    ee:1c:e1:a3:48:35:5b:c4:c9:81:98:3b:b1:16:00:
+    3b:89:af:cf:44:64:0b:29:43:dc:aa:53:01:10:9a:
+    3e:0b:cb:7b:83:20:1a:e6:ff:24:24:5b:e7:f1:8d:
+    7e:81:d4:64:56:a5:7f:83:bc:95:f0:17:ac:ff:46:
+    5b:0c:dc:c7:ad:ae:2f:39:5c:e4:20:ef:a0:a2:9c:
+    bf:f7:f2:33:0a:64:81:3f:9e:a9:e3:f5:54:57:93:
+    02:e2:5e:8e:79:34:c7:24:f3
+prime2:
+    00:d4:cc:7d:e7:96:ed:0d:66:bc:be:a2:49:0a:c5:
+    dc:36:9f:80:bf:52:7d:74:8d:9e:4f:72:71:db:fe:
+    c4:4c:d4:c2:00:3f:7c:af:fd:8f:af:26:e8:1e:ad:
+    51:db:40:ea:13:f9:53:58:4d:3a:80:ea:61:1e:5d:
+    4e:3b:2a:11:f1:86:95:ef:34:f4:6f:39:4f:e0:3a:
+    13:bf:16:a6:a7:b5:da:87:c9:a0:9e:71:b4:16:31:
+    92:72:52:9e:31:27:85:b1:00:08:7d:7f:95:24:6a:
+    b0:fb:c5:16:4c:78:15:b2:ef:81:f0:e4:02:1d:0d:
+    67:c0:86:77:9a:9f:d6:06:a1
+exponent1:
+    2a:84:01:da:af:6d:10:ff:be:22:f7:40:38:62:d3:
+    a6:ee:95:73:70:7f:57:4b:01:fa:10:2d:7d:30:3e:
+    b8:fb:03:28:8d:66:3c:a5:89:dd:ac:4b:ef:b2:8a:
+    b0:31:e2:cd:e3:45:af:25:0f:51:06:b9:a0:d3:c7:
+    0e:f7:a7:cb:ef:c5:c1:95:b0:10:47:97:e6:22:f0:
+    76:65:3e:3b:7f:13:07:3f:d6:47:d3:59:72:0e:2b:
+    c3:ca:9f:6a:44:80:28:59:73:d1:ea:fa:f2:62:b5:
+    79:e2:dd:d4:6a:43:c1:7d:43:d5:67:ee:16:78:a6:
+    80:26:4e:64:06:38:d6:d1
+exponent2:
+    00:9b:d7:d7:2d:50:3e:f3:5d:96:45:16:9c:df:a2:
+    e0:0f:b0:e8:9d:35:50:63:97:83:a5:33:6f:67:6a:
+    41:60:f3:3f:d0:e6:ad:ee:45:88:81:01:c1:65:16:
+    11:a8:bc:f5:b1:03:1b:a2:c3:8c:60:f5:45:82:f3:
+    5a:63:c1:ff:ba:1e:92:97:c8:f4:6a:b0:52:6b:28:
+    9d:65:88:b5:2c:85:e6:31:23:dc:d9:ac:f3:f2:7d:
+    03:7f:6e:3a:24:4d:89:7f:83:42:b4:86:47:37:90:
+    5b:65:47:85:79:23:48:e0:ee:be:ff:28:3c:d4:02:
+    09:45:da:34:a5:ad:01:15:81
+coefficient:
+    00:95:6c:a8:ea:09:b0:f3:4c:8a:dc:b7:c8:d0:c5:
+    5a:c4:a4:d0:f5:25:c9:f2:42:80:1d:04:88:bc:2d:
+    ff:1f:7d:5a:42:c4:18:4e:06:49:49:86:15:ea:8d:
+    a6:7c:88:4e:e7:4b:bc:56:7c:33:91:d8:99:b4:45:
+    4b:b4:dc:aa:67:59:c2:90:cf:b3:02:1a:39:17:55:
+    6a:e6:e3:5d:93:d6:5a:e7:a7:65:25:0f:43:21:a8:
+    ba:6c:db:b3:54:27:a6:f2:6e:bd:b4:d2:4c:07:c4:
+    97:2b:64:b6:f4:a7:86:6e:18:5c:12:9f:d4:13:15:
+    d1:86:dd:8f:ce:3d:11:96:86
+$
+</code>
+</pre>
+<!--
+  modulus: n
+  prime1: p or q
+  prime2: q or p
+  pube: e
+  prie: d
+  exp1, exp2, and coefficient are used in the Chinese Remainder Theorem
+-->
+<!-- bc code for these numbers:
+ibase=16
+n=00CA99F40F304662868E37EEB61F1C1E9B5C35B56905AB4892E5B9F101DB76A4C20CA21C8F395DC7A3275D29AD6194F1A240E155BC509D5EE8466E9B42C5967D4B0846495F53ACFC7F734763B1579D9777EFD4E68A32FA7C60F557C1C1439C131EA098D7D0BB4EB32C3B9F7322965E41770CE13BAE53D2AB5C4B9341B162AF95BD011EC4CA6132CC1D222A9CC78B3074359D03BC7BCFF9D7EA8A714C3A7EB58DCCFD0209561EA69F532F21B85CF8F0CB411BC48B566132202093AF4B900DF68315C569253EC790A5E38747EBD4895F7677C55872FDDA51A5A73DC847FF8956D2C95F73EDAB36A9C0FB3C47DADEF22243EE68D4EDCED231B8D1DF136F10AC3DEED3
+p=00F3BB7C1E7BC8D51CD2BC951EFBF2A78A87B63CAF446DDE873098CD3E1CEE1CE1A348355BC4C981983BB116003B89AFCF44640B2943DCAA5301109A3E0BCB7B83201AE6FF24245BE7F18D7E81D46456A57F83BC95F017ACFF465B0CDCC7ADAE2F395CE420EFA0A29CBFF7F2330A64813F9EA9E3F554579302E25E8E7934C724F3
+q=00D4CC7DE796ED0D66BCBEA2490AC5DC369F80BF527D748D9E4F7271DBFEC44CD4C2003F7CAFFD8FAF26E81EAD51DB40EA13F953584D3A80EA611E5D4E3B2A11F18695EF34F46F394FE03A13BF16A6A7B5DA87C9A09E71B416319272529E312785B100087D7F95246AB0FBC5164C7815B2EF81F0E4021D0D67C086779A9FD606A1
+pube=10001
+prie=009DC05415837C3A7914C19E603646F9D9F469697075D69172B7E7192E5E08BA6ED1D164356CF085629762E5F1B77A76CEE47FCFF70A3A0ECD03125A581A6B7BF17166F0F885B9BAFD2DF097425DBB3A564BEAD4FB24887F522B96822A0E8FB71F70E2B1A038482620B9E8048918D619592E312DFC260E7219324B5DAA55F1EBBF5467AD483EE8EA2706DD052CE383543A0A033C978CE355A99DD82A3E5E79F29E98D30A38F28D3C1819D0EDE027F84456D3A241790EF4FE5AEC8F445B909741AA8BB5ECED9FA53256D0C3387C459AF5CF030969902084B6475EEC64D213DBF8B5F619CC5A7BEEE4DF9C214E77CDE7E9B24CE6BFA55D0CB6B4A35A6BAAFBE69441
+exp1=2A8401DAAF6D10FFBE22F7403862D3A6EE9573707F574B01FA102D7D303EB8FB03288D663CA589DDAC4BEFB28AB031E2CDE345AF250F5106B9A0D3C70EF7A7CBEFC5C195B0104797E622F076653E3B7F13073FD647D359720E2BC3CA9F6A4480285973D1EAFAF262B579E2DDD46A43C17D43D567EE1678A680264E640638D6D1
+exp2=009BD7D72D503EF35D9645169CDFA2E00FB0E89D3550639783A5336F676A4160F33FD0E6ADEE45888101C1651611A8BCF5B1031BA2C38C60F54582F35A63C1FFBA1E9297C8F46AB0526B289D6588B52C85E63123DCD9ACF3F27D037F6E3A244D897F8342B4864737905B654785792348E0EEBEFF283CD4020945DA34A5AD011581
+c=00956CA8EA09B0F34C8ADCB7C8D0C55AC4A4D0F525C9F242801D0488BC2DFF1F7D5A42C4184E0649498615EA8DA67C884EE74BBC567C3391D899B4454BB4DCAA6759C290CFB3021A3917556AE6E35D93D65AE7A765250F4321A8BA6CDBB35427A6F26EBDB4D24C07C4972B64B6F4A7866E185C129FD41315D186DD8FCE3D119686
+
+p*q==n
+scale=0
+(prie*pube) % ((p-1)*(q-1))
+
+-->
+
+
+## [Openssl to generate & view ECDSA keys]{.r-fit-text}
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ openssl ecparam -out ec_key.pem -name secp256k1 -genkey
+$ cat ec_key.pem 
+-----BEGIN EC PARAMETERS-----
+BgUrgQQACg==
+-----END EC PARAMETERS-----
+-----BEGIN EC PRIVATE KEY-----
+MHQCAQEEIGcgMEVvdpER8E/FsnK2CsUWJWy9X39WLHdDtvFHCx8zoAcGBSuBBAAK
+oUQDQgAE3jzNUf91RHMzRiob3KZLZI3BFcxZMg7UeHrM6ifVAjTNcBi9iqwYlCy8
+LYKcHMYYna0smEOaQL6o0oPDV2hh9w==
+-----END EC PRIVATE KEY-----
+$
+</code></pre>
+
+
+## Openssl to view an ECDSA key
+<!--
+d=46645095665948752159725390617705266833925338929901767141886312735501806411571
+qx=100520880278031488762125882754878952466629466830145810675677838350919375585844
+qy=92922191582770924169293325173158913322815666845532262217119080172645576630775
+-->
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">$ cat ec_key.pem
+read EC key
+Private-Key: (256 bit)
+priv:
+    67:20:30:45:6f:76:91:11:f0:4f:c5:b2:72:b6:0a:
+    c5:16:25:6c:bd:5f:7f:56:2c:77:43:b6:f1:47:0b:
+    1f:33
+pub:
+    04:de:3c:cd:51:ff:75:44:73:33:46:2a:1b:dc:a6:
+    4b:64:8d:c1:15:cc:59:32:0e:d4:78:7a:cc:ea:27:
+    d5:02:34:cd:70:18:bd:8a:ac:18:94:2c:bc:2d:82:
+    9c:1c:c6:18:9d:ad:2c:98:43:9a:40:be:a8:d2:83:
+    c3:57:68:61:f7
+ASN1 OID: secp256k1
+$
+</code></pre>
+- Private key (scalar) $d \approx 4.66 \ast 10^{76}$
+- Public key (point) $Q \approx (1.01 \ast 10^{76}, 9.29 \ast 10^{76})$
+
