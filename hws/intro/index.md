@@ -19,9 +19,7 @@ This assignment is based on the material covered in the [Cryptocurrency Overview
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
-
-- Mon, 1/29: added a few `rsa` module examples to [sample.py](sample.py.html) ([src](sample.py))
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Languages
