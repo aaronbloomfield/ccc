@@ -1,4 +1,4 @@
-SLIDE_SETS: introduction.html overview.html
+SLIDE_SETS: introduction.html overview.html encryption.html
 .SUFFIXES: .qmd .html
 .PHONY: slides all clean
 
