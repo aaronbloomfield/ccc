@@ -342,7 +342,7 @@ Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
 - Initially 50 BTC per mined block
   - A block is mined every 10 minutes (ideally)
 - Reward halves every 210,000 blocks mined (about every 4 years)
-  - Current reward: 6.25 BTC
+  - Current reward: 3.125 BTC
   - Current circulation: about 19M BTC (90% of final amount)
 - [Next halving](https://www.bitcoinblockhalf.com/) is expected in April 2024
 - Last halving is around 2140
@@ -516,7 +516,7 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
   00 f54a5851e9372b87810a8e60cdd2e7cfd80b6e31 c7f18fe8
 - Convert that (binary) hex value to base 58: 
   1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
-
+</code></pre>
 
 
 ## Bitcoin address -> hash
@@ -1347,7 +1347,7 @@ sha256(sha256(<version><marker><flag><txins><txouts>
 
 
 ## Bitcoin block size
-- A bitcoin block can only be 4 Kb in size
+- A bitcoin block can only be 4 Mb in size
   - But how many transactions is that?
 - A Bitcoin block can also only have 20,000 signature operations (sigops) per block
   - OP_CHECKMULTISIG [uses 20](https://en.bitcoin.it/wiki/OP_CHECKMULTISIG)
