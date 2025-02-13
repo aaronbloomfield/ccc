@@ -227,6 +227,24 @@ utxo <font color="#990000">=</font> <font color="#990000">-</font><font color="#
 		<b><font color="#0000FF">print</font></b><font color="#990000">(</font>response<font color="#990000">.</font>text<font color="#990000">)</font>
 
 
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">bcy_key</font></b><font color="#990000">(</font>_<font color="#990000">):</font>
+	<b><font color="#0000FF">assert</font></b> blockcypher_api_token <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">,</font> <font color="#FF0000">"You must fill in the blockcypher_api_token field for this to work"</font>
+	r <font color="#990000">=</font> requests<font color="#990000">.</font><b><font color="#000000">post</font></b><font color="#990000">(</font>f<font color="#FF0000">'https://api.blockcypher.com/v1/bcy/test/addrs?token={blockcypher_api_token}'</font><font color="#990000">)</font>
+	<b><font color="#0000FF">if</font></b> r<font color="#990000">.</font>status_code <font color="#990000">!=</font> <font color="#993399">200</font> <b><font color="#0000FF">and</font></b> r<font color="#990000">.</font>status_code <font color="#990000">!=</font> <font color="#993399">201</font><font color="#990000">:</font>
+		<b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">"Error: the http request returned status code {r.status_code} ({r.reason}) (200 or 201 was expected), so something didn't work correctly."</font><font color="#990000">)</font>
+	<b><font color="#0000FF">else</font></b><font color="#990000">:</font>
+		<b><font color="#0000FF">print</font></b><font color="#990000">(</font>r<font color="#990000">.</font>text<font color="#990000">)</font>
+
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">fund_bob</font></b><font color="#990000">(</font>_<font color="#990000">):</font>
+	<b><font color="#0000FF">assert</font></b> blockcypher_api_token <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">,</font> <font color="#FF0000">"You must fill in the blockcypher_api_token field for this to work"</font>
+	<b><font color="#0000FF">assert</font></b> bob_invoice_address_bcy_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">,</font> <font color="#FF0000">"You must fill in the bob_invoice_address_bcy_str field for this to work"</font>
+	r <font color="#990000">=</font> requests<font color="#990000">.</font><b><font color="#000000">post</font></b><font color="#990000">(</font>f<font color="#FF0000">"https://api.blockcypher.com/v1/bcy/test/faucet?token={blockcypher_api_token}"</font><font color="#990000">,</font> json<font color="#990000">={</font><font color="#FF0000">"address"</font><font color="#990000">:</font> bob_invoice_address_bcy_str<font color="#990000">,</font> <font color="#FF0000">"amount"</font><font color="#990000">:</font> <font color="#993399">100000</font><font color="#990000">})</font>
+	<b><font color="#0000FF">if</font></b> r<font color="#990000">.</font>status_code <font color="#990000">!=</font> <font color="#993399">200</font> <b><font color="#0000FF">and</font></b> r<font color="#990000">.</font>status_code <font color="#990000">!=</font> <font color="#993399">201</font><font color="#990000">:</font>
+		<b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">"Error: the http request returned status code {r.status_code} ({r.reason}) (200 or 201 was expected), so something didn't work correctly."</font><font color="#990000">)</font>
+	<b><font color="#0000FF">else</font></b><font color="#990000">:</font>
+		<b><font color="#0000FF">print</font></b><font color="#990000">(</font>r<font color="#990000">.</font>text<font color="#990000">)</font>
+
+
 functions <font color="#990000">=</font> <font color="#990000">{</font>
 	<font color="#FF0000">'keygen'</font><font color="#990000">:</font> keygen<font color="#990000">,</font>
 	<font color="#FF0000">'genkey'</font><font color="#990000">:</font> keygen<font color="#990000">,</font>
@@ -244,6 +262,10 @@ functions <font color="#990000">=</font> <font color="#990000">{</font>
 	<font color="#FF0000">'geturls'</font><font color="#990000">:</font> get_urls<font color="#990000">,</font>
 	<font color="#FF0000">'urls'</font><font color="#990000">:</font> get_urls<font color="#990000">,</font>
 	<font color="#FF0000">'url'</font><font color="#990000">:</font> get_urls<font color="#990000">,</font>
+	<font color="#FF0000">'bcykey'</font><font color="#990000">:</font> bcy_key<font color="#990000">,</font>
+	<font color="#FF0000">'bcy_key'</font><font color="#990000">:</font> bcy_key<font color="#990000">,</font>
+	<font color="#FF0000">'fund_bob'</font><font color="#990000">:</font> fund_bob<font color="#990000">,</font>
+	<font color="#FF0000">'fundbob'</font><font color="#990000">:</font> fund_bob<font color="#990000">,</font>
 <font color="#990000">}</font>
 
 

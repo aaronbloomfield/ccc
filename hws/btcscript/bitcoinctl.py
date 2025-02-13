@@ -216,6 +216,24 @@ def handle_txn(param):
 		print(response.text)
 
 
+def bcy_key(_):
+	assert blockcypher_api_token != "", "You must fill in the blockcypher_api_token field for this to work"
+	r = requests.post(f'https://api.blockcypher.com/v1/bcy/test/addrs?token={blockcypher_api_token}')
+	if r.status_code != 200 and r.status_code != 201:
+		print(f"Error: the http request returned status code {r.status_code} ({r.reason}) (200 or 201 was expected), so something didn't work correctly.")
+	else:
+		print(r.text)
+
+def fund_bob(_):
+	assert blockcypher_api_token != "", "You must fill in the blockcypher_api_token field for this to work"
+	assert bob_invoice_address_bcy_str != "", "You must fill in the bob_invoice_address_bcy_str field for this to work"
+	r = requests.post(f"https://api.blockcypher.com/v1/bcy/test/faucet?token={blockcypher_api_token}", json={"address": bob_invoice_address_bcy_str, "amount": 100000})
+	if r.status_code != 200 and r.status_code != 201:
+		print(f"Error: the http request returned status code {r.status_code} ({r.reason}) (200 or 201 was expected), so something didn't work correctly.")
+	else:
+		print(r.text)
+
+
 functions = {
 	'keygen': keygen,
 	'genkey': keygen,
@@ -233,6 +251,10 @@ functions = {
 	'geturls': get_urls,
 	'urls': get_urls,
 	'url': get_urls,
+	'bcykey': bcy_key,
+	'bcy_key': bcy_key,
+	'fund_bob': fund_bob,
+	'fundbob': fund_bob,
 }
 
 
