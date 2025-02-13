@@ -193,7 +193,7 @@ p.blankline { height:1em; }
   box-shadow: none !important;
 }
 
-div.right-float-img p img, img.right-float-img {
+div.right-float-img p img, img.right-float-img, a.right-float-img-600 img {
     float:right;
     max-width: 50%;
     margin-left:20px !important;
@@ -518,7 +518,7 @@ img.cclogotitle {
 }
 
 /* on a slide column heading page, it appears below the <h1> title and small */
-div.cclogosubtitle p img {
+div.cclogosubtitle p img, img.cclogosubtitle {
   width: 100px;
   background-color: transparent !important;
   margin-top: auto;
@@ -528,7 +528,7 @@ div.cclogosubtitle p img {
 }
 
 /* on a regular slide, it appears at the start of the <h2> slide title */
-img.cclogoheader, .cclogo-slide h2 a img {
+img.cclogoheader, .cclogo-slide h2 a img, img.cclogo-slide, a.cclogo-slide img {
   width: 70px !important;
   height: 70px !important;
   max-height: 70px;
