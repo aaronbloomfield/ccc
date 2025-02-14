@@ -18,7 +18,7 @@ from bitcoin.core import x
 SelectParams('testnet')
 
 # The address that we will pay our tBTC to -- do not change this!
-tbtc_return_address = CBitcoinAddress('mohjSavDdQYHRYXcS3uS6ttaHP8amyvX78') # https://testnet-faucet.com/btc-testnet/
+tbtc_return_address = CBitcoinAddress('n46XTn44wkBSyjHmMZMiiwzcSw4htMbR9V')
 
 # The address that we will pay our BCY to -- do not change this!
 bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')
