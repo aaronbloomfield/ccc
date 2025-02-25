@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns='http://www.w3.org/1999/xhtml' lang='' xml:lang=''>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta charset='utf-8'></meta>
-  <meta name='generator' content='pandoc'></meta>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes'></meta>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Connecting to the Private Ethereum Blockchain</title>
   <style>
     code{white-space: pre-wrap;}
@@ -22,7 +22,7 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel='stylesheet' href='../../markdown.css'></link>
+  <link rel="stylesheet" href="../../markdown.css" />
   <script>
   function openTab(evt, tabName) {
     // Declare all variables
@@ -51,32 +51,32 @@
   </script>
 </head>
 <body>
-<h1 id='connecting-to-the-private-ethereum-blockchain'>Connecting to the Private Ethereum Blockchain</h1>
-<p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
-<button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
-<button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
-<button class='tablinks' onclick="openTab(event,'tpart-1-installation')">Installation</button>
-<button class='tablinks' onclick="openTab(event,'tpart-2-blockchain')">Blockchain</button>
-<button class='tablinks' onclick="openTab(event,'tpart-3-geth')">Geth</button>
-<button class='tablinks' onclick="openTab(event,'tpart-4-get-ether')">Get Ether</button>
-<button class='tablinks' onclick="openTab(event,'tpart-5-extract-key')">Extract Key</button>
-<button class='tablinks' onclick="openTab(event,'tpart-6-send-ether')">Send Ether</button>
-<button class='tablinks' onclick="openTab(event,'tpart-7-explore-geth')">Explore Geth</button>
-<button class='tablinks' onclick="openTab(event,'tpart-8-explorer')">Explorer</button>
-<button class='tablinks' onclick="openTab(event,'tclosing-down')">Closing Down</button>
-<button class='tablinks' onclick="openTab(event,'tsubmission')">Submission</button>
-</div>
-<div id='toverview' class='tabcontent'><h3 id='overview'>Overview</h3>
+<h1 id="connecting-to-the-private-ethereum-blockchain">Connecting to the Private Ethereum Blockchain</h1>
+<p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>)</p>
+<!--
+
+    What to provide on the Canvas landing page:
+
+    - part 2, step 2: link to genesis.json file
+    - part 2, step 3: hash of genesis block (in the format used below)
+    - part 2, step 4: link to geth-config-???.toml file
+    - part 2, step 5: course chainid / networkid
+    - part 4: faucet URL
+    - part 6: course account to send eth to
+    - part 8: blockchain explorer URL
+
+-->
+<h3 id="overview">Overview</h3>
 <p>We will shortly be developing applications for the Ethereum blockchain. We won’t be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.). Instead, we are going to use a private Ethereum blockchain – a test network – that has been set up for this class. This assignment is to connect to it, explore it, and perform a few operations.</p>
 <p>This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through <code>pip</code> (or <code>pip3</code>). Don’t worry if you don’t know Python – we give you the exact code to use. This document also assumes you can install applications on your machine.</p>
-<p>As you proceed through this assignment, you will be filling in values into the <a href='ethprivate.py.html'>ethprivate.py</a> (<a href='ethprivate.py'>src</a>) file, which is the only file you will submit at the end.</p>
-</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
+<p>As you proceed through this assignment, you will be filling in values into the <a href="ethprivate.py.html">ethprivate.py</a> (<a href="ethprivate.py">src</a>) file, which is the only file you will submit at the end.</p>
+<h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-</div><div id='tpart-1-installation' class='tabcontent'><h3 id='part-1-installation'>Part 1: Installation</h3>
+<h3 id="part-1-installation">Part 1: Installation</h3>
 <p>Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.</p>
-<p>You will need to install <a href='https://geth.ethereum.org'>geth</a> (aka go-ethereum), which you can download from the <a href='https://geth.ethereum.org/downloads'>geth downloads page</a>. The instructions differ depending on your OS – some OS’es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package. If prompted (only on some OS’es), you don’t need to install the development tools.</p>
+<p>You will need to install <a href="https://geth.ethereum.org">geth</a> (aka go-ethereum), which you can download from the <a href="https://geth.ethereum.org/downloads">geth downloads page</a>. The instructions differ depending on your OS – some OS’es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package. If prompted (only on some OS’es), you don’t need to install the development tools.</p>
 <p><strong>WARNING:</strong> After installation, DO NOT JUST RUN <code>geth</code>! Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a “light” node and almost 2 Tb for a “full” node. It also takes a full week (at least) to synchronize all that data.</p>
-</div><div id='tpart-2-blockchain' class='tabcontent'><h3 id='part-2-blockchain'>Part 2: Blockchain</h3>
+<h3 id="part-2-blockchain">Part 2: Blockchain</h3>
 <p>Here we will connect to our private blockchain.</p>
 <p><strong>Step 1:</strong> Create a directory to hold the blockchain info – this can be anywhere you want, but we’ll call it <code>/path/to/ethprivate</code> herein.</p>
 <p><strong>Step 2:</strong> In that data directory, copy the course genesis.json file, which can be found in the Canvas Files section, and is linked to off of the Canvas landing page. You cannot modify this file – if you do, the genesis block will be different, which will cause the hash to be different, and then your local geth instance will not sync with the course blockchain.</p>
@@ -88,27 +88,28 @@
 <pre><code>INFO [07-26|09:11:07.145] Successfully wrote genesis state          database=lightchaindata          hash=XXXXXX..XXXXXX</code></pre>
 <p>There are two things to check to ensure that this worked correctly:</p>
 <ul>
-<li>It should say “Successfully wrote genesis state”</li>
+<li>It should say “Successfully wrote genesis state (on the last line)”</li>
 <li>The genesis block hash, shown above as <code>XXXXXX..XXXXXX</code>, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the “..”) in the middle of it</li>
 </ul>
-<p><strong>Step 4:</strong> Copy the <code>geth-config-???.toml</code> file, in Canvas’ Files, onto your computer (it will have a semester/year suffix to it); save it as <code>geth-config.toml</code>. You can copy it anywhere, but we recommend putting it into the geth directory you created above. You need to change two values in that file:</p>
+<p><strong>Step 4:</strong> Copy the <code>geth-config-???.toml</code> file, in Canvas’ Files, onto your computer (it will have a semester/year suffix to it); save it as <code>geth-config.toml</code>. You can copy it anywhere, but we recommend putting it into the geth directory you created above. You need to change two values in that file (search for “CHANGE ME”):</p>
 <ul>
 <li>The <code>UserIdent = "mst3k"</code> line should be changed to your UVA userid</li>
 <li>The <code>DataDir = "/path/to/ethprivate"</code> line needs to change to the data directory you created above.</li>
+<li>There is one other value, but that is modified in the next assignment</li>
 </ul>
 <p>Don’t change anything else! In the next assignment you may need to change the <code>HTTPCors</code> value, but not in this assignment.</p>
 <p><strong>Step 5:</strong> Start geth. Run the following command to start a geth node. You will use this exact same command for the entire semester, whenever you need to start a new geth node.</p>
-<pre><code>geth --config geth-config.toml</code></pre>
+<pre><code>geth --config geth-config-???.toml</code></pre>
 <p>You may have to add one more command-line parameter to that command, described at the end of part 3 (Geth).</p>
 <p>There is lots of output when it is running, and we will verify that it has connected properly in a moment.</p>
 <p>This is running the <em>node</em>, and we are going to run geth (again) in a moment to connect to that node.</p>
-</div><div id='tpart-3-geth' class='tabcontent'><h3 id='part-3-geth'>Part 3: Geth</h3>
+<h3 id="part-3-geth">Part 3: Geth</h3>
 <p>What is running from the previous part is the Ethereum node, but that is not interactive. You must leave it running while you perform the next few parts of this assignment.</p>
-<h4 id='attach-to-the-geth-node'>Attach to the geth node</h4>
+<h4 id="attach-to-the-geth-node">Attach to the geth node</h4>
 <p>To enter commands via the keyboard, you have to “attach” to the local Ethereum node. You do this by entering the following command:</p>
 <pre><code>geth attach /path/to/ethprivate/geth.ipc</code></pre>
 <p>If you are in the same directory as geth.ipc, you may have to enter <code>./geth.ipc</code> as the file name. Note that this won’t work unless the geth node, from the previous step, is running. You will then get a prompt, which is just a greater-than sign. This is a JavaScript console.</p>
-<p>If you have this installed on Windows, when you start the geth node (from the previous step), you will see output like <a href='geth-on-windows.png'>this</a> – the text circled in red is the file name for the geth.ipc file (putting <code>geth attach</code> before it). It will likely be one of the following:</p>
+<p>If you have this installed on Windows, when you start the geth node (from the previous step), you will see output like <a href="geth-on-windows.png">this</a> – the text circled in red is the file name for the geth.ipc file (putting <code>geth attach</code> before it). It will likely be one of the following:</p>
 <pre><code>geth attach \\.\pipe\geth.ipc
 geth attach ipc:\\.\pipe\geth.ipc
 geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
@@ -116,14 +117,14 @@ geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
 <p>In either case, you will then get a prompt, which is just a greater-than sign. This is a JavaScript console. It should look something like this:</p>
 <pre><code>Welcome to the Geth JavaScript console!
 
-instance: Geth/asb2t/v1.10.25-stable-69568c55/linux-amd64/go1.18.5
+instance: Geth/andromeda/v1.13.1-stable-3f40e65c/linux-amd64/go1.21.1
 at block: 0 (Fri Sep 16 2022 12:52:06 GMT+0000 (UTC))
  datadir: /path/to/ethprivate
  modules: admin:1.0 clique:1.0 debug:1.0 engine:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
 
 To exit, press ctrl-d or type exit
 &gt; </code></pre>
-<h4 id='interacting-with-geth'>Interacting with geth</h4>
+<h4 id="interacting-with-geth">Interacting with geth</h4>
 <p>First, let’s wait for it to sync. Since you have saved the geth-config.toml file, it should connect to the course server and start downloading all the blocks in the blockchain. This may take some time, but hopefully less than 5 minutes.</p>
 <p>As it is syncing, you can try these commands:</p>
 <ul>
@@ -155,7 +156,7 @@ To exit, press ctrl-d or type exit
 </ul></li>
 <li>You can get that account number anytime via <code>eth.coinbase</code>
 <ul>
-<li>Versions 1.11.* of geth will report that <code>eth.coinbase</code> is not working. If that is the case, enter <code>eth.accounts</code> – if it is not empty (meaning the list has at least 1 account number), you can use <code>eth.accounts[0]</code> in lieu of your <code>eth.coinbase</code>. You will have to do this when you turn in your assignments as well – use the <code>eth.accounts[0]</code> value for <code>eth.coinbase</code> when completing the <a href='ethprivate.py.html'>ethprivate.py</a> (<a href='ethprivate.py'>src</a>) file.</li>
+<li>Some versions of geth will report that <code>eth.coinbase</code> is not working. If that is the case, enter <code>eth.accounts</code> – if it is not empty (meaning the list has at least 1 account number), you can use <code>eth.accounts[0]</code> in lieu of your <code>eth.coinbase</code>. You will have to do this when you turn in your assignments as well – use the <code>eth.accounts[0]</code> value for <code>eth.coinbase</code> when completing the <a href="ethprivate.py.html">ethprivate.py</a> (<a href="ethprivate.py">src</a>) file.</li>
 <li>You can fix this by running <code>miner.setEtherbase(eth.accounts[0])</code>; this will register your <code>eth.accounts[0]</code> as your <code>eth.coinbase</code>. Apparently this only has to be done once.</li>
 </ul></li>
 <li>You can check the balance in your account by <code>eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")</code>, using your account number as the parameter – it should be zero at this point
@@ -163,48 +164,49 @@ To exit, press ctrl-d or type exit
 <li>Or try: <code>eth.getBalance(eth.coinbase)</code> or <code>eth.getBalance(eth.accounts[0])</code></li>
 </ul></li>
 </ul>
-</div><div id='tpart-4-get-ether' class='tabcontent'><h3 id='part-4-get-ether'>Part 4: Get ether</h3>
-<p>You cannot mine on this blockchain – it has been set up to automatically mine any transaction to the blockchain for you. In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page. Each time you use this faucet you will obtain 100 (fake) ETH. <strong>USE THIS RESPONSIBLY!!!</strong> The intent of the faucet is for you to obtain as much funds as you need for this course. But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work. This will make me cranky. If you request funds a few dozen times throughout the semester, that’s totally fine. Even a hundred requests this semester would be fine. But if you are making the requests thousands of times, that’s going to be a problem.</p>
+<h3 id="part-4-get-ether">Part 4: Get ether</h3>
+<p>You cannot mine on this blockchain – it has been set up to automatically mine any transaction to the blockchain for you. In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page. Each time you use this faucet you will obtain 100 (fake) ETH. <strong>USE THIS RESPONSIBLY!!!</strong> The intent of the faucet is for you to obtain as much funds as you need for this course. But if you spam that site with unnecessary requests to gain lots of funds, it will cause a slowdown of the system, and a dramatic increase in the blockchain size, which will interfere with your classmates ability to do their work. This will make me cranky. If you request funds a few dozen times throughout the semester, that’s totally fine. Even a hundred requests this semester would be fine. But if you are making the requests thousands of times, that’s going to be a problem.</p>
 <p>You should request funds once or twice for this assignment. After you make the requests – you’ll need your full eth.coinbase account address – you should check that your balance was updated in the geth terminal. You can use <code>eth.getBalance(eth.coinbase)</code>, but that reports it in wei (which has 18 more zeroes). You can also use <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code> to get the value in ether.</p>
 <p>You will determine the transaction hash and the block number for this transaction later in this assignment (in part 8).</p>
 <p>To verify that you did this part, we are going to check that you have a non-zero balance in your eth.coinbase account.</p>
-</div><div id='tpart-5-extract-key' class='tabcontent'><h3 id='part-5-extract-key'>Part 5: Extract key</h3>
+<h3 id="part-5-extract-key">Part 5: Extract key</h3>
 <p>We need to get the private key of the account you created, as we will need that for our dApp development in future assignments. The private key is encrypted in a .json file in the <code>keystore/</code> sub-directory of your geth data directory. The file will have a name like: UTC–2022-01-08T19-53-08.823103866Z–0123456789abcdef0123456789abcdef01234567. Note that the last part of that name (“0123456789abcdef0123456789abcdef01234567”) matches the Ethereum address we obtained and that is returned from <code>eth.coinbase</code>.</p>
 <p>First, ensure that the <code>web3</code> and <code>hexbytes</code> Python packages are installed – run <code>pip install web3 hexbytes</code> or <code>pip3 install web3 hexbytes</code>.</p>
 <p>Run python (or python3, depending on your OS). Note that we are going back to Python for now, and will come back to geth later. In Python, enter the following two lines, changing the values as appropriate to the file name (with full path) and the password for the Ethereum account you created in geth:</p>
-<pre><code>password="password"
-filename="/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567"</code></pre>
+<pre><code>password=&quot;password&quot;
+filename=&quot;/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567&quot;</code></pre>
+<p>Note the “keystore” sub-directory in that path!</p>
 <p>Next, cut-and-paste the following code into your Python terminal.:</p>
 <pre><code>from web3.auto import w3
 keyfile = open(filename)
 encrypted_key = keyfile.read()
 private_key = w3.eth.account.decrypt(encrypted_key,password)
 import binascii
-binascii.b2a_hex(private_key).decode('ascii')</code></pre>
+binascii.b2a_hex(private_key).decode(&#39;ascii&#39;)</code></pre>
 <p>You do not need to know what the above commands do, although you are welcome to look into it. When you run those commands, it will look like the following:</p>
 <pre><code>$ python3
 Python 3.8.10 (default, Nov 26 2021, 20:14:08) 
 [GCC 9.3.0] on linux
-Type "help", "copyright", "credits" or "license" for more information.
-&gt;&gt;&gt; password='password'
-&gt;&gt;&gt; filename='/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567'
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; password=&#39;password&#39;
+&gt;&gt;&gt; filename=&#39;/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567&#39;
 &gt;&gt;&gt; from web3.auto import w3
 &gt;&gt;&gt; keyfile = open(filename)
 &gt;&gt;&gt; encrypted_key = keyfile.read()
 &gt;&gt;&gt; private_key = w3.eth.account.decrypt(encrypted_key,password)
 &gt;&gt;&gt; import binascii
-&gt;&gt;&gt; binascii.b2a_hex(private_key).decode('ascii')
-'0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+&gt;&gt;&gt; binascii.b2a_hex(private_key).decode(&#39;ascii&#39;)
+&#39;0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&#39;
 &gt;&gt;&gt; 
 $</code></pre>
 <p>The decoded private key is the hex line at the end. Save this decoded private key somewhere, as you will need it in future assignments. Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0. You are welcome to put it in the ethprivate.py file – just create a new field. Again, since the ether on this blockchain is worth nothing, we can bypass what would otherwise be a security problem by listing our private key in plain text.</p>
-</div><div id='tpart-6-send-ether' class='tabcontent'><h3 id='part-6-send-ether'>Part 6: Send ether</h3>
+<h3 id="part-6-send-ether">Part 6: Send ether</h3>
 <p>Next you are going to send me some money via the geth command line. We are done with Python for this assignment, and have to go back to the geth prompt (via <code>geth attach /path/to/ethprivate/geth.ipc</code>) for this.</p>
 <p>To send (fake) ETH, you have to first unlock your account:</p>
-<pre><code>personal.unlockAccount("0x0123456789abcdef0123456789abcdef01234567");</code></pre>
+<pre><code>personal.unlockAccount(&quot;0x0123456789abcdef0123456789abcdef01234567&quot;);</code></pre>
 <p>This will prompt you for your password. You have to replace the address shown with your account address. You can also use <code>eth.coinbase</code> as the account address, as that should be the same account: <code>personal.unlockAccount(eth.coinbase)</code>. By default it unlocks for 5 minutes; you can unlock it until geth exits via: <code>personal.unlockAccount(eth.coinbase, "password", 0)</code> (replacing <code>password</code> with your account’s password).</p>
 <p>You can then send me 1 (fake) ETH:</p>
-<pre><code>eth.sendTransaction({from:eth.coinbase, to:'0xffffffffffffffffffffffffffffffffffffffff', value:web3.toWei(1,"ether"), gas:21000});</code></pre>
+<pre><code>eth.sendTransaction({from:eth.coinbase, to:&#39;0xffffffffffffffffffffffffffffffffffffffff&#39;, value:web3.toWei(1,&quot;ether&quot;), gas:21000});</code></pre>
 <p>You have to replace the ‘to’ field with the address found on the Canvas landing page. Note that we replaced your account address with <code>eth.coinbase</code>. This will print out a hex string – save it! That’s the hash of the transaction, and we’ll need it shortly. It will be something long like: 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef (it’s the 256-bit SHA3 hash of the transaction). This goes into the <code>send_txn_hash</code> field in ethprivate.py.</p>
 <p><strong>NOTE:</strong> Be sure you cut-and-paste the destination account properly! It’s easy to mis-type the account, and send the ether to the wrong place where it can never be accessed again. And it’s easy to cut-and-paste that command, which sends the money to the account with all f’s as the address, which will also lose the ether.</p>
 <p>Further steps to do in the geth console:</p>
@@ -212,6 +214,7 @@ $</code></pre>
 <li>Check your balance via <code>eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")</code> – you may notice that the balanace has not changed if you enter that before the transaction was not mined into a block.
 <ul>
 <li>You can also get your account balance in (fake) ETH via: <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code></li>
+<li>It will have taken out a bit more than 1 ETH, as there were gas fees as well (which should have been 0.000021 ETH)</li>
 </ul></li>
 <li>You can see your pending transaction via <code>eth.pendingTransactions</code> (again, only if you enter that before it is mined into a block).</li>
 <li>Get information on the mined transaction: <code>eth.getTransactionReceipt("0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef")</code> – replace the hash there with the transaction hash you recorded, above.
@@ -220,7 +223,7 @@ $</code></pre>
 </ul></li>
 </ul>
 <p>We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the specified course account. You will need to submit both the transaction hash and the block number from when you sent 1 ether.</p>
-</div><div id='tpart-7-explore-geth' class='tabcontent'><h3 id='part-7-explore-geth'>Part 7: Explore geth</h3>
+<h3 id="part-7-explore-geth">Part 7: Explore geth</h3>
 <p>You should explore geth on your own. When you start geth (via <code>geth attach geth.ipc</code>), it lists the modules available:</p>
 <pre><code>Welcome to the Geth JavaScript console!
 
@@ -233,17 +236,17 @@ To exit, press ctrl-d or type exit
 &gt; </code></pre>
 <p>Your geth version number may be more recent. The modules are listed on the 7th line (admin, clique, debug, eth, miner, net, personal, rpc, txpool, and web3). In the console, type the start of the module, a period, and hit the Tab key – it will show you all the possible completions. If you type in the name and it’s a function, it will tell you that. And if you try to run the function with no parameters, and it needs parameters, it will tell you that as well. Lastly, it’s a JavaScript console, so you can use any JavaScript programming, if you happen to know JavaScript. (You won’t need to know much JavaScript for this course). If you do know Javascript, note that this is a much older version of Javascript, before any of the <code>async</code> functionality was added (if you don’t know Javascript, you can ignore this sentence).</p>
 <p>There isn’t much you can break here – worst case you lose your (fake) ether, and then you can just request more for the faucet. This course blockchain is for you to use and learn from, so feel free to play around if you would like.</p>
-</div><div id='tpart-8-explorer' class='tabcontent'><h3 id='part-8-explorer'>Part 8: Explorer</h3>
+<h3 id="part-8-explorer">Part 8: Explorer</h3>
 <p>We have a web-based blockchain explorer for our private Ethereum blockchain. The link to that is on the Canvas landing page. Browse that site, and play around with the search functionality. Directions for how to use it are on the main page. Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there – the time of the last update is listed on the main page (the second to last bullet under ‘Statistics’).</p>
 <p>Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL. You should also see the block number listed there as well. These go into the <code>send_txn_url</code> and <code>send_txn_block_number</code> fields in ethprivate.py.</p>
-<p>For the transaction where you received funds from the faucet, from part 4 of this assignment, you will need to determine the transaction hash, block number, and URL in the explorer. You can look for your specific eth.coinbase account address – either on the page of all addresses, or use the search box in the upper right. The very first transaction (which will be on the bottom of the list) is likely the faucet transaction. Copy the transaction hash (not the ‘from’ or ‘to’), and note the block number. You can copy the transaction hash by clicking on the copy icon (<img src='copy.svg' style='width:18px;vertical-align:middle'>) in the explorer. Also click on that transaction to get the URL in the explorer. These three will have to entered into the respective fields in the <code>other</code> dictionary (<code>faucet_txn_block_number</code>, <code>faucet_txn_hash</code>, <code>faucet_txn_url</code>).</p>
-</div><div id='tclosing-down' class='tabcontent'><h3 id='closing-down'>Closing down</h3>
+<p>For the transaction where you received funds from the faucet, from part 4 of this assignment, you will need to determine the transaction hash, block number, and URL in the explorer. You can look for your specific eth.coinbase account address – either on the page of all addresses, or use the search box in the upper right. The very first transaction (which will be on the bottom of the list) is likely the faucet transaction. Copy the transaction hash (not the ‘from’ or ‘to’), and note the block number. You can copy the transaction hash by clicking on the copy icon (<img src="copy.svg" style="width:18px;vertical-align:middle">) in the explorer. Also click on that transaction to get the URL in the explorer. These three will have to entered into the respective fields in the <code>other</code> dictionary (<code>faucet_txn_block_number</code>, <code>faucet_txn_hash</code>, <code>faucet_txn_url</code>).</p>
+<h3 id="closing-down">Closing down</h3>
 <p>If you are not actively using it, you should shut your geth node down. UVA ITS has given permission to do all this, but they do perform port scans on all machines, so no need to raise their hackles by keeping a geth node up and running when we aren’t using it. You can easily re-launch it when you need it again for a future assignment. Likewise for the console from part (3); if you close down the geth node, the console won’t work.</p>
-</div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
-<p>You will need to fill in the various values from this assignment into the <a href='ethprivate.py.html'>ethprivate.py</a> (<a href='ethprivate.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file is the only file that must be submitted for this assignment; future assignments will have additional Solidity source code submitted as well. The <code>sanity_checks</code> dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
+<h3 id="submission">Submission</h3>
+<p>You will need to fill in the various values from this assignment into the <a href="ethprivate.py.html">ethprivate.py</a> (<a href="ethprivate.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file is the only file that must be submitted for this assignment; future assignments will have additional Solidity source code submitted as well. The <code>sanity_checks</code> dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>two</em> forms of submission for this assignment; you must do both.</p>
 <p>Submission 1: You will need to send 1 (fake) ether to the course-wide address indicated on the Canvas landing page; this was done in part 6, above. This implies that you received ether from the faucet so that you can send that required 1 ether.</p>
 <p>Submission 2: Submit your completed <code>ethprivate.py</code> file, and ONLY that file, to Gradescope.</p>
-</div><script>document.getElementById('defaultOpen').click();</script></body>
+<p>Because this is a tutorial, rather than a homework assignment, your grade is shown when you submit. If you receive a grade less than 10, it will tell you the errors, and you should fix them and resubmit.</p>
+</body>
 </html>
-

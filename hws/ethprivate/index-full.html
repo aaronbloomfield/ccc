@@ -88,17 +88,18 @@
 <pre><code>INFO [07-26|09:11:07.145] Successfully wrote genesis state          database=lightchaindata          hash=XXXXXX..XXXXXX</code></pre>
 <p>There are two things to check to ensure that this worked correctly:</p>
 <ul>
-<li>It should say “Successfully wrote genesis state”</li>
+<li>It should say “Successfully wrote genesis state (on the last line)”</li>
 <li>The genesis block hash, shown above as <code>XXXXXX..XXXXXX</code>, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the “..”) in the middle of it</li>
 </ul>
-<p><strong>Step 4:</strong> Copy the <code>geth-config-???.toml</code> file, in Canvas’ Files, onto your computer (it will have a semester/year suffix to it); save it as <code>geth-config.toml</code>. You can copy it anywhere, but we recommend putting it into the geth directory you created above. You need to change two values in that file:</p>
+<p><strong>Step 4:</strong> Copy the <code>geth-config-???.toml</code> file, in Canvas’ Files, onto your computer (it will have a semester/year suffix to it); save it as <code>geth-config.toml</code>. You can copy it anywhere, but we recommend putting it into the geth directory you created above. You need to change two values in that file (search for “CHANGE ME”):</p>
 <ul>
 <li>The <code>UserIdent = "mst3k"</code> line should be changed to your UVA userid</li>
 <li>The <code>DataDir = "/path/to/ethprivate"</code> line needs to change to the data directory you created above.</li>
+<li>There is one other value, but that is modified in the next assignment</li>
 </ul>
 <p>Don’t change anything else! In the next assignment you may need to change the <code>HTTPCors</code> value, but not in this assignment.</p>
 <p><strong>Step 5:</strong> Start geth. Run the following command to start a geth node. You will use this exact same command for the entire semester, whenever you need to start a new geth node.</p>
-<pre><code>geth --config geth-config.toml</code></pre>
+<pre><code>geth --config geth-config-???.toml</code></pre>
 <p>You may have to add one more command-line parameter to that command, described at the end of part 3 (Geth).</p>
 <p>There is lots of output when it is running, and we will verify that it has connected properly in a moment.</p>
 <p>This is running the <em>node</em>, and we are going to run geth (again) in a moment to connect to that node.</p>
@@ -116,7 +117,7 @@ geth attach ipc:\\\\.\\pipe\\geth.ipc</code></pre>
 <p>In either case, you will then get a prompt, which is just a greater-than sign. This is a JavaScript console. It should look something like this:</p>
 <pre><code>Welcome to the Geth JavaScript console!
 
-instance: Geth/asb2t/v1.10.25-stable-69568c55/linux-amd64/go1.18.5
+instance: Geth/andromeda/v1.13.1-stable-3f40e65c/linux-amd64/go1.21.1
 at block: 0 (Fri Sep 16 2022 12:52:06 GMT+0000 (UTC))
  datadir: /path/to/ethprivate
  modules: admin:1.0 clique:1.0 debug:1.0 engine:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0

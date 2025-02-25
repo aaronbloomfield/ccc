@@ -66,20 +66,21 @@ INFO [07-26|09:11:07.145] Successfully wrote genesis state          database=lig
 
 There are two things to check to ensure that this worked correctly:
 
-- It should say "Successfully wrote genesis state"
+- It should say "Successfully wrote genesis state (on the last line)"
 - The genesis block hash, shown above as `XXXXXX..XXXXXX`, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the "..") in the middle of it
 
-**Step 4:** Copy the `geth-config-???.toml` file, in Canvas' Files, onto your computer (it will have a semester/year suffix to it); save it as `geth-config.toml`.  You can copy it anywhere, but we recommend putting it into the geth directory you created above.  You need to change two values in that file:
+**Step 4:** Copy the `geth-config-???.toml` file, in Canvas' Files, onto your computer (it will have a semester/year suffix to it); save it as `geth-config.toml`.  You can copy it anywhere, but we recommend putting it into the geth directory you created above.  You need to change two values in that file (search for "CHANGE ME"):
 
-  - The `UserIdent = "mst3k"` line should be changed to your UVA userid
-  - The `DataDir = "/path/to/ethprivate"` line needs to change to the data directory you created above.
+- The `UserIdent = "mst3k"` line should be changed to your UVA userid
+- The `DataDir = "/path/to/ethprivate"` line needs to change to the data directory you created above.
+- There is one other value, but that is modified in the next assignment
 
 Don't change anything else!  In the next assignment you may need to change the `HTTPCors` value, but not in this assignment.
 
 **Step 5:** Start geth.  Run the following command to start a geth node.  You will use this exact same command for the entire semester, whenever you need to start a new geth node.
 
 ```
-geth --config geth-config.toml
+geth --config geth-config-???.toml
 ```
 
 You may have to add one more command-line parameter to that command, described at the end of part 3 (Geth).
@@ -117,7 +118,7 @@ In either case, you will then get a prompt, which is just a greater-than sign.  
 ```
 Welcome to the Geth JavaScript console!
 
-instance: Geth/asb2t/v1.10.25-stable-69568c55/linux-amd64/go1.18.5
+instance: Geth/andromeda/v1.13.1-stable-3f40e65c/linux-amd64/go1.21.1
 at block: 0 (Fri Sep 16 2022 12:52:06 GMT+0000 (UTC))
  datadir: /path/to/ethprivate
  modules: admin:1.0 clique:1.0 debug:1.0 engine:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
@@ -151,7 +152,7 @@ Once it is synced, here are some commands for you to try out:
   - If you were to do this on the Ethereum Mainnet, you would most definitely have to enter a password.  You probably don't need to have one for this key, since the ether on this blockchain has no monetary value.  It will give you an account address back, such as 0x0123456789abcdef0123456789abcdef01234567.  Let's only create one account for now; you can always create more later if you want.
   - If this command does not work (often an error such as "ReferenceError: personal is not defined"), then you have to re-launch the geth node with the `--rpc.enabledeprecatedpersonal` flag *when starting the node* (not when attaching); your full geth command to start the node would be: `geth --config geth-config.toml --rpc.enabledeprecatedpersonal` (changing the config file name as appropriate).  This happens on version 1.11.* of geth, which has removed the personal API; versions 1.10.* and lower do not need this flag.  You will have to re-run the geth-attach command as well.
 - You can get that account number anytime via `eth.coinbase`
-  - Versions 1.11.* of geth will report that `eth.coinbase` is not working.  If that is the case, enter `eth.accounts` -- if it is not empty (meaning the list has at least 1 account number), you can use `eth.accounts[0]` in lieu of your `eth.coinbase`.  You will have to do this when you turn in your assignments as well -- use the `eth.accounts[0]` value for `eth.coinbase` when completing the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file.
+  - Some versions of geth will report that `eth.coinbase` is not working.  If that is the case, enter `eth.accounts` -- if it is not empty (meaning the list has at least 1 account number), you can use `eth.accounts[0]` in lieu of your `eth.coinbase`.  You will have to do this when you turn in your assignments as well -- use the `eth.accounts[0]` value for `eth.coinbase` when completing the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file.
   - You can fix this by running `miner.setEtherbase(eth.accounts[0])`; this will register your `eth.accounts[0]` as your `eth.coinbase`.  Apparently this only has to be done once.
 - You can check the balance in your account by `eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")`, using your account number as the parameter -- it should be zero at this point
   - Or try: `eth.getBalance(eth.coinbase)` or `eth.getBalance(eth.accounts[0])`
@@ -159,7 +160,7 @@ Once it is synced, here are some commands for you to try out:
 
 ### Part 4: Get ether
 
-You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need for this course.  But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
+You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need for this course.  But if you spam that site with unnecessary requests to gain lots of funds, it will cause a slowdown of the system, and a dramatic increase in the blockchain size, which will interfere with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
 
 You should request funds once or twice for this assignment.  After you make the requests -- you'll need your full eth.coinbase account address -- you should check that your balance was updated in the geth terminal.  You can use `eth.getBalance(eth.coinbase)`, but that reports it in wei (which has 18 more zeroes).  You can also use `web3.fromWei(eth.getBalance(eth.coinbase), "ether")` to get the value in ether.
 
@@ -180,6 +181,8 @@ Run python (or python3, depending on your OS).  Note that we are going back to P
 password="password"
 filename="/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567"
 ```
+
+Note the "keystore" sub-directory in that path!
 
 Next, cut-and-paste the following code into your Python terminal.:
 
@@ -241,6 +244,7 @@ Further steps to do in the geth console:
 
 - Check your balance via `eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")` -- you may notice that the balanace has not changed if you enter that before the transaction was not mined into a block.
     - You can also get your account balance in (fake) ETH via: `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`
+    - It will have taken out a bit more than 1 ETH, as there were gas fees as well (which should have been 0.000021 ETH)
 - You can see your pending transaction via `eth.pendingTransactions` (again, only if you enter that before it is mined into a block).
 - Get information on the mined transaction: `eth.getTransactionReceipt("0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef")` -- replace the hash there with the transaction hash you recorded, above.
   - Note the block number, which you will have to submit along with the transaction hash
@@ -290,3 +294,5 @@ There are *two* forms of submission for this assignment; you must do both.
 Submission 1: You will need to send 1 (fake) ether to the course-wide address indicated on the Canvas landing page; this was done in part 6, above.  This implies that you received ether from the faucet so that you can send that required 1 ether.
 
 Submission 2: Submit your completed `ethprivate.py` file, and ONLY that file, to Gradescope.
+
+Because this is a tutorial, rather than a homework assignment, your grade is shown when you submit.  If you receive a grade less than 10, it will tell you the errors, and you should fix them and resubmit.
