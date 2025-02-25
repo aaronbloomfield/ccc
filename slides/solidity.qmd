@@ -1,0 +1,1513 @@
+---
+title: "Solidity"
+---
+
+# Types
+
+
+## Sources
+- The main reference for this slide set is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
+  - URL: [https://docs.soliditylang.org/en/latest/index.html](https://docs.soliditylang.org/en/latest/index.html)
+- This section is the [Types section therein](https://docs.soliditylang.org/en/latest/types.html)
+  - [https://docs.soliditylang.org/en/latest/types.html](https://docs.soliditylang.org/en/latest/types.html)
+  - Many of the examples herein are from there
+- Also some code examples from the [Poll.sol](../hws/dappintro/Poll.sol.html) contract from the [dApp introduction](../hws/dappintro/index.html) assignment
+
+
+
+## A note about these slides
+- These slides are meant as a explanation
+  - You are not expected to remember everything!
+- Since you all know OOP, it's just showing what is different in Solidity
+- You can come back to use this as a reference later
+
+
+
+## Value types: integers
+- Signed and unsigned ints from 8 bits (1 byte) to 256 bits (32 bytes) in size
+  - And in all byte sizes between
+- Unsigned: `uint8`, `uint16`, `uint24`, ... `uint256`
+  - `uint` is an alias for `uint256`
+- Signed: `int8`, `int16`, `int24`, ..., `int256`
+  - `int` is an alias for `int256`
+- Standard operations (arithmetic, comparisons, bit operators, shift operators)
+  - Exponentiation is $\ast \ast$
+- `type(int256).max` and `type(uint160).min` for min/max
+
+
+
+
+## Value types: integers
+- Most used: `uint` (aka `uint256`) and `uint8`
+- Warning: a subtraction into a `uint` that is negative will cause a reversion
+  - A revert is basically an abort -- more on this later
+  - And it will not give a useful error message indicating so!
+
+
+
+## Integer literals
+- Scientific notation: `1e12` equals $10^{12}$
+  - `3.4e8` equals $3.4 \ast 10^8$
+- Underscores separate digits for readability, but do not affect its value
+  - 0x12345678 == 0x1234_5678
+
+
+
+## Other value types
+- Booleans: type is `bool`, values are `true` and `false`
+- All comparisons evaluate to a Boolean
+- Fixed point numbers: not yet fully supported
+  - Types are `fixed` and `ufixed`
+  - But don't use them!
+- No floating point numbers!
+- Note that all variables have an initial value of 0
+
+
+
+## Addresses
+- Types are `address` and `address payable`
+- It's just a number: a 160-bit (20 byte) Ethereum address
+  - Allows standard comparison operators
+- Used for:
+  - Keeping track of who is the contract initiator
+  - Addresses of other contracts to call
+- Can cast between `address` and: `uint160` or `bytes20`
+```
+address a = address(0);
+uint160 u = uint160(a);
+bytes20 b = bytes20(u);
+```
+- The address of a caller of a function is in `msg.sender`
+
+
+
+## Address examples
+- You can convert to a payable address:
+```
+address a;
+// set a = something...
+address payable b = payable(a);
+```
+- Conversions:
+```
+uint160 b = uint160(msg.sender);
+bytes20 c = bytes20(msg.sender);
+```
+- More examples:
+```
+if ( a == address(0) ) { ... }
+address initiator = msg.sender;
+```
+
+
+
+## Address fields
+- Although a primitive type, it has fields and methods:
+  - `balance`: the balance, in wei, for that address
+```
+address payable x = payable(0x123);
+address myAddress = address(this);
+if (x.balance < 10 && myAddress.balance >= 10) {...}
+```
+- Other methods we won't see in this course: 
+  - `transfer()` to send wei (requires a `receive()` function on the receiving contract)
+  - `send()`: low-level and not safe version of `transfer()`
+  - `call()`, `delegatecall()`, and `staticcall()`: calling a contract with an unknown ABI
+  - `code()` and `codehash()` to get the bytecode of the contract
+
+
+
+## Fixed-sized Byte Arrays
+- Fixed sized array of bytes: `bytes1`, `bytes2`, up to `bytes32`
+  - The size is the integer in the type name; max of 32 bytes
+  - `.length` to get the length
+  - Indexing with `[]`
+- Operators:
+  - Comparisons, bit operators, shift operators
+  - Treats the byte array like a similarly sized `uint` when performing the operation
+
+
+
+## Dynamically-sized arrays
+- `bytes`: dynamically sized array of bytes
+- `string`: dynamically sized array of UTF-8 characters
+  - We'll see string functions in a bit...
+
+
+
+## String literals
+- Strings can be enclosed in single quotes or double quotes
+- Can use the backslash for escape characters
+- Two strings next to each other is concatenation:
+```
+string s = "CS" '4501'; // equals "CS4501"
+```
+
+
+
+## More general arrays
+- We can create arrays of any type:
+```
+uint8[6] memory p = [ 1, 2, 3, 4, 5, 6 ];
+```
+  - We'll see the `memory` keyword shortly...
+
+
+
+## Enums
+- Enumerated type, which is mapped to a `uint`
+```
+enum ActionChoices { GoLeft, GoRight, 
+                       GoStraight, SitStill }
+
+ActionChoices choice;
+ActionChoices constant default = ActionChoices.GoLeft;
+
+function setGoStraight() public {
+    choice = ActionChoices.GoStraight;
+}
+```
+
+
+
+## Mappings
+- An associative array (like a hash table) that holds a key-value pair
+```
+mapping (address => bool) public override voted;
+mapping (uint => Choice) internal _choices;
+```
+  - We'll talk about `public`, `internal`, and `override` later
+- To access a mapping value:
+```
+if ( voted[msg.sender] ) { ... }
+```
+- To write to a mapping:
+```
+voted[msg.sender] = true;
+```
+
+
+
+## Mappings of mappings
+- You can have mappings to mappings:
+```
+mapping (uint => mapping(string => address) ) 
+              public twodmap;
+```
+- It's just like a 2-dimensional array:
+```
+twodmap[3]["foo"]
+```
+
+
+
+## Mapping keys
+- The keys are actually the *hash* of the key you provide
+  - If you provide the character `1` as the key, the actual key is the Keccak256 hash of that
+  - Or 0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f 298b8bc6
+- In every mapping, *all* $2^{256}$ keys exist
+  - Anything not explicitly set returns 0 / false / all zero's
+  - All mappings thus have size $2^{256} \approx 1.15 \ast 10^{77}$
+- You can delete an element from a mapping:
+  - `delete map[1];`
+  - This really just sets the value to 0
+  - And it *restores* gas (since it's shrinking the EVM state)
+
+
+
+## Is an element in a mapping?
+- Consider:
+```
+mapping (address => bool) public override voted;
+
+// this next one was not in the original Poll.sol:
+mapping (address => uint) public how_voted;
+
+// or:
+mapping (uint => Choice) internal _choices;
+uint public override num_choices;
+```
+- The `voters` tells if an address has voted
+  - If they haven't, then that key's value will be 0 (false)
+  - The `how_voted` will tell what they voted for
+- For the Choices, the uint tells how many keys there are
+  - Our code has keys 0 to num_choies-1
+
+
+
+## Structs
+- Like a class without methods
+```
+struct Choice {
+    uint id;
+    string name;
+    uint votes;
+}
+```
+  - Structs can contain mappings as well
+- They are often kept in a mapping:
+```
+mapping (uint => Choice) internal _choices;
+```
+- If you put the same `Choice` struct into different mappings, you *might* now have *two* copies of that struct!
+
+
+
+## Time
+- All time is kept as a UNIX timestamp
+  - The number of seconds since January 1st, 1970
+  - This is how it's kept in the blockchain as well
+- Only time available in a contract is the timestamp of the block
+  - Via `block.timestamp`
+- Can use `seconds`, `minutes`, `hours`, `days`, and `weeks` as time units
+  - They are always pluralized
+  - But the number before each must be a literal, not a variable!
+  - Example on the next slide
+
+
+
+## Time units example
+```
+uint a = 1;
+uint b = 5;
+uint c = 2;
+
+// valid:
+uint endTime = block.timestamp + 
+               1 seconds + 5 minutes + 2 days;
+
+// not valid:
+uint endTime = block.timestamp +
+               a seconds + b minutes + c days;
+
+// valid:
+uint endTime = block.timestamp + 
+               a * 1 seconds + b * 1 minutes + c * 1 days;
+```
+
+
+
+## Ether units
+- Can convert ether units as well
+- All convert to wei (recall that 1 ether is $10^{18}$ wei)
+```
+assert(1 wei == 1);
+assert(1 gwei == 1e9);
+assert(1 ether == 1e18);
+```
+
+
+
+
+## Reference types
+- Reference types are: strings, arrays, mappings, and structs
+- Like Java and Python, the language often hides that it's a reference
+
+
+
+
+
+## Memory locations
+- All reference types must specify a memory location
+  - `storage`: for all state variables, it is stored on the blockchain
+    - statically allocated, like the stack on x86
+    - two sub-types:
+      - local storage (local subroutine variable)
+      - state storage (state/class variable on the blockchain)
+  - `memory`: a local variable, it only exists while the subroutine is executing
+    - dynamically allocated, like the heap in x86
+  - `calldata`: read-only, used for function parameters
+
+
+
+## Assignments of references
+- If you assign one reference type to another, what happens depends on where the data is stored:
+
+| To (lhs) | From (rhs) | Result |
+|--|--|--|
+| memory | memory | reference aliasing |
+| memory | any storage | full copy |
+| memory | calldata | full copy |
+| any storage | memory | full copy |
+| any storage | calldata | full copy |
+| local storage | any storage | reference aliasing |
+| state storage | any storage | full copy |
+| calldata | (any) | not allowed |
+
+
+
+## Assignments of references
+- How to remember:
+  - You can't ever write to `calldata`
+  - Anything assigned between *different* types of memory is always a copy, as references can't point from one memory type to another
+  - State storage, which is on the blockchain, never stores references -- so anything copied to state storage is always a full copy
+  - Reference aliasing works in the 2 cases when the memory types are the same and it's not going into state storage: memory to memory, and any storage to local storage
+
+
+
+## Type names
+- For certain types, you have to give a qualifier as to where it is stored
+  - `bytes` and `string`
+- The qualifier is `memory`, `storage`, or `calldata`
+- The type name is *two words*
+  - `string memory`
+  - `bytes storage`
+
+
+
+## String functions
+- No (direct) built-in string comparison!
+  - Reasons:
+    - It is difficult / expensive to compare across memory locations
+  - Instead, compare their hashes: 
+```
+if ( keccak256(x) == keccak256(y) ) { ... }
+```
+    - Note that `keccak256()` uses a lot of gas
+- Can concatenate two strings:
+```
+string memory s = string.concat(s1, s2);
+```
+  - Only returns a `string memory`
+- There are 3rd party string function libraries
+  - Which contain comparisons, among other functions
+
+
+
+## Code Example
+
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;">// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.5.0 <0.9.0;
+
+contract C {
+  // The data location of x is storage; this is the 
+  // only place where the data location can be omitted
+  uint[] x;
+
+  // The data location of memoryArray is memory.
+  function f(uint[] memory memoryArray) public {
+    x = memoryArray; // works, copies the whole array to storage
+    uint[] storage y = x; // works, assigns a pointer, y's location is storage
+    y[7]; // fine, returns the 8th element
+    y.pop(); // fine, modifies x through y
+    delete x; // fine, clears the array, also modifies y
+    // The following doesn't work; it would need to create a new temporary /
+    // unnamed array in storage, but storage is "statically" allocated:
+    // y = memoryArray;
+    // This does not work either, since it would "reset" the pointer, 
+    // but there is no sensible location it could point to.
+    // delete y;
+    g(x); // calls g, handing over a reference to x
+    h(x); // calls h and creates an independent, temporary copy in memory
+  }
+
+  function g(uint[] storage) internal pure {}
+  function h(uint[] memory) public pure {}
+}
+</code></pre>
+
+
+
+## Even more...
+- There are a lot of types we are skipping
+- See them all in the [Solidity types reference](https://docs.soliditylang.org/en/latest/types.html)
+  - https://docs.soliditylang.org/en/latest/types.html
+
+
+
+<!-- ============================================================ -->
+
+# Concepts
+
+
+## Learning Solidity
+- The easy part: learning the language
+  - It's just an OO language with familiar syntax
+- The hard part is understanding:
+  - The restrictions that blockchain programs have
+    - No time or random numbers
+    - No print statements!
+  - How to best interact with the blockchain
+  - What the heck do you do with it?
+- The easy part will be done in the next 20 minutes
+- The hard part will be the rest of this course
+
+
+
+## Sources
+- The main reference is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
+  - URL: [https://docs.soliditylang.org/en/latest/index.html](https://docs.soliditylang.org/en/latest/index.html)
+- [Ethereum developer resources](https://ethereum.org/en/developers/)
+  - URL: [https://ethereum.org/en/developers/](https://ethereum.org/en/developers/)
+- [Solidity reference](https://docs.soliditylang.org)
+  - URL: [https://docs.soliditylang.org](https://docs.soliditylang.org)
+- [Remix documentation](https://remix-ide.readthedocs.io/en/latest/) (the Solidity IDE)
+  - URL: [https://remix-ide.readthedocs.io/en/latest/](https://remix-ide.readthedocs.io/en/latest/)
+
+
+
+
+## Solidity Overview
+- An object-oriented language with C++/Java like syntax
+  - Same set of control structures with the same syntax (for, if/else, while, etc.)
+- A class is called a "contract"
+- Methods are called functions
+
+
+
+## License identifier
+- All Solidity smart contracts must have a license line as the first line
+  - SPDX is the [Software Package Development Exchange](https://spdx.org/licenses/)
+- Examples:
+```
+// SPDX-License-Identifier: MIT
+```
+```
+// SPDX-License-Identifier: CC BY-SA
+```
+```
+// SPDX-License-Identifier: GPL
+```
+- A compiler will issue a warning if it's not there
+- The actual license type is not checked, so you can also use:
+```
+// SPDX-License-Identifier: Unlicensed
+```
+
+
+
+## Pragma
+- We'll only use the following Solidity version pragma:
+```
+pragma solidity ^0.8.29;
+```
+- The three numbers are: major version, minor version, bugfix version
+- By default, it forces a compiler error if the wrong compiler version is being used
+  - Some platforms, such as Truffle or Remix, will try to find the right compiler version
+- This will only compile with version 0.8.29 or later
+  - But will NOT allow compilation with version 0.9.0 or later
+- Note that breaking changes (very few!) are only (intentionally) introduced on major versions
+
+
+
+## Pragma
+- More complicated examples are possible:
+
+```
+pragma solidity >=0.4.0 <0.6.0;
+```
+
+- One to avoid: note there is no carat before the version number
+  - Reason: a later bugfix version, 0.8.12, will not compile this program
+
+```
+pragma solidity 0.8.11;
+```
+
+- In this course, we'll use ONLY the following:
+  - As this will compile on all of the platforms we will be using
+
+```
+pragma solidity ^0.8.29;
+```
+
+
+
+## Comments
+- C++ and Java style comments
+
+```
+// this is a comment
+
+/* this is a
+   multi-line
+   comment
+ */
+
+/* this is a
+ * multi-line
+ * comment with better
+ * formatting
+ */
+ ```
+
+
+
+## Import
+- Default import statement:
+```
+import "./filename.sol";
+```
+  - Note that this will pollute the namespace
+- We can also use:
+```
+import * as symbolName from "./filename.sol";
+```
+  - All names from the file can be accessed via `symbolName.thing`
+  - An equivalent version of this is:
+```
+import "./filename.sol" as symbolName;
+```
+- Naming collision?  Then rename it upon import:
+```
+import {symbol1 as alias, symbol2} from "./filename.sol";
+```
+
+
+
+## High-level "things"
+- `contract`
+  - Essentially an OO class
+  - Can also be `abstract`
+- `interface`
+  - Just like interfaces in Java, or pure abstract classes in C++
+  - By convention, their names always start with a capital I (India)
+- `library`
+  - Can contain ONLY functions that do not access state
+    - Meaning no contract field access
+    - Specifically, they can only contain `pure` functions (we'll see `pure` shortly)
+  - Unless you have a reason otherwise, have everything inside have `internal` visibility
+    - We'll see visibilities shortly...
+
+
+
+## Inheritance
+- Contracts can inherit from interfaces and other contracts
+  - Interfaces can inherit from (only) other interfaces
+  - Via the `is` keyword
+- The super-class (or super-interface) must be defined above or `import`'ed
+```
+interface Foo is Bar {
+  // ...
+}
+```
+```
+contract Student is Person, Learner {
+  // ...
+}
+```
+- Any contract that inherits from an interface, but does not implement all the methods, must be declared `abstract`
+
+
+## Inheritance
+- `virtual`: if a *thing* (function, field, etc.) in a contract can be overridden
+  - All function prototypes in interfaces are assumed to be `virtual`
+- `override`: when a sub-class is replacing an inherited function
+  - If the function is multiply inherited, you may have to specify which (or all) that it overrides (needed for the Tokens assignment):
+```
+function foo() public override(IERC165,ERC721) {
+```
+  - The requirement to specify `override` varies by compiler and version
+
+
+## Abstract Contracts
+- A `contract` must have all the methods implemented
+- An `interface` must have no methods implemented
+- An `abstract contract` can have some methods implemented and some not
+  - Part interface, part contract
+  - Example: if you inherit from an interface, but only implement some of the methods
+
+```
+abstract contract Foo is Bar {
+  // ...
+}
+```
+
+
+## What we have so far
+```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.29;
+
+interface IERC165 {
+  // ...
+}
+
+interface IERC721 is IERC165 {
+  // ...
+}
+
+contract ERC721 is IERC721 {
+  // ...
+}
+
+library Address {
+  // ...
+}
+```
+
+
+
+## Visibilities
+- `public`: like any other OO language, it can be called by anybody or anyone
+  - For fields, this is only the *readability* of the field; only contract functions can *write* to the field
+- `private`: like any other OO language, it can be called only by code in that class
+- `internal`: like `protected` in other OO languages: it can be called by that class or it's sub-classes
+- `external`: like `public`, but can ONLY be called by code *outside* the contract; code in the contract can not call an `external` function
+  - Functions in interfaces must be declared `external`
+  - The implementing contract can then "raise" the visibility to `public`
+
+
+## Visibilities
+- The stated visibility in an interface can be expanded (only) in the contract
+  - Example: if an interface specifies a function as `external`...
+    - Then the implementing contract can specify it either as `external` or `public` (`public` is *more* visible than `external`)
+- Anything field defined as `public` has a getter function defined for it -- see the next slide
+  - If you have `uint public k`, then you can call the `k()` getter function to access its value
+- The default, if unspecified, is `public`
+  - But without a getter function
+- Note that all data is still visible on the blockchain, even for `private` fields!
+
+
+## Getter functions
+- The following code:
+```
+uint public num_assignments;
+mapping (address => string) public aliases;
+mapping (uint => mapping(string => address) ) 
+              public twodmap;
+```
+- Creates the following getter functions:
+```
+function num_assignments() public view returns (uint);
+function aliases(address a) public view
+                  returns (string memory);
+function twodmap(uint id, string s) public view
+                  returns (address);
+```
+
+
+
+## Function Qualifiers
+- `view`: this function does not *modify* (write to) the state of the contract
+  - It can read from state variables, but not write to any state variables
+  - It can write to local variables, of course
+  - Like `const` in C++
+- `pure`: this function does not *read from or write to* the state of the contract
+  - Any function in a `library` must be `pure`
+  - `view` and `pure` are mutually exclusive
+- Using these qualifiers allows calls without having to make a transaction
+  - And *may* allow optimizations which reduce contract size and gas costs
+
+
+
+## Declarations for fields
+- Format:
+```
+<type> <visibility> <override?> <name> [= <value>];
+```
+- Examples:
+```
+uint public duration = 86400;
+uint public override k;
+address public override initiator;
+mapping (address => uint) internal values;
+```
+- Local variables are similar
+  - But without the visibility and `override` qualifiers
+
+
+
+## Declarations for functions
+- Format:
+```
+function <name> ([<parameter_list>]) <visibility> 
+                <qualifiers> [returns (<list>)] {
+```
+- Examples:
+
+```
+function addChoice (string memory _name) public 
+              { /* ... */ }
+
+function unnecessaryFunction() public view 
+              returns (string memory) { /* ... */ }
+
+function overridePureFunction() external pure 
+              override returns (uint,bool) { /* ... */ }
+```
+
+
+
+## Require and revert
+- A reversion means the transaction method fails, and all state is rolled back to before it started
+  - Still costs gas fees!
+- `revert()` will do this
+- Also:
+  - `require(a>0);` will revert if $a$ is not greater than zero
+  - Better to use the two-parameter version:
+  - `require(a>0,"a must be greater than zero");`
+    - Now, if/when it reverts, it will tell you why
+  - Use this all the time!!!
+
+
+
+## Receiving ether
+- The `payable` qualifier means the function can accept ether as part of the call
+- The amount of ether received is in `msg.value`
+  - And is added to the contract's balance
+    - ... assuming it doesn't revert
+
+
+
+## Constructors
+- Syntax:
+```
+constructor() {
+    // ...
+}
+```
+- No `function` keyword, no return type
+- Default, if not specified, is an empty body
+- Can take parameters:
+```
+constructor(uint foo) {
+    // ...
+}
+```
+- Only one constructor is allowed per class!
+  - They may eventually allow multiple, differentiated by the parameter list
+
+
+
+## Destructor
+- `selfdesctruct()`
+  - Only if enabled (declared)
+  - Disables the contract permanently
+  - Caller claims the ether balance
+
+
+
+## Contract elements
+- A contract can have:
+  - Fields
+  - Functions
+  - A constructor and a `selfdestruct()` method
+  - A few other special-purpose methods we won't see here
+  - Modifiers
+
+
+
+## Modifiers
+- A modifier changes how a function works
+- You put in conditions (or whatever) and then indicate where the function body goes
+- That indication is with the underscore
+- Example:
+```
+modifier onlyOwner() {
+    require(msg.sender == owner, "Not owner");
+    _;
+}
+```
+
+
+
+## Modifiers
+- This code adapted from [solidity-by-example.org](https://solidity-by-example.org/function-modifier/):
+
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
+>contract Modifiers {
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+
+    modifier validAddress(address _addr) {
+        require(_addr != address(0), "Not valid address");
+        _;
+    }
+
+    function changeOwner(address _newOwner) public onlyOwner 
+                                            validAddress(_newOwner) {
+        owner = _newOwner;
+    }
+}
+</code></pre>
+
+
+
+## Events & emit
+- An *event* is when something happens
+- Allows for logging of what has happened to a contract
+- They are declared in contracts or interfaces:
+```
+event votedEvent (uint indexed _id);
+event choiceAddedEvent (uint indexed _id);
+```
+  - The `indexed` keyword allows for searching the event log by that value
+- Events are called via `emit`:
+```
+emit choiceAddedEvent(num_choices);
+emit votedEvent(_id);
+```
+- Events can be "watched" for (or "subscribed to")
+  - We'll see this later this semester
+
+
+
+## Try-catch
+- Try-catch:
+
+```
+try <something> {
+  // what to do if it succeeds
+} catch {
+  // what to do if it fails (reverts)
+}
+
+```
+- The "something" can be:
+  - Calling a function
+  - Creating a new contract
+  - Or anything else
+- If the *something* reverts, the catch clause is executed
+
+
+## Transferring ether in Solidity
+- To transfer ether from a Solidity contract:
+```
+(bool success, ) = payable(a).call{value: v}("");
+require(success, "Failed to transfer ETH");
+```
+- The amount, in `v`, is in wei
+- The address to pay it to is in `a`
+- This reverts if the contract does not have sufficient balance
+  - Or if it fails for any other reason, such as an invalid address
+
+
+## Contracts creating contracts
+- We can have a contract `Foo` deploy another contract `Bar`
+- Given a field in Foo such as either:
+```
+Bar public b;
+address public c;
+```
+- Then we can initialize it via either (respectively):
+```
+b = new Bar();
+c = address(new Bar());
+```
+
+
+
+## Most useful global variables
+From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.html)
+
+- block.timestamp (uint)
+  - current block timestamp as seconds since unix epoch
+- msg.sender (address)
+  - sender of the message (current call)
+- msg.value (uint)
+  - number of wei sent with the message
+- this
+  - the current contract (example: address(this).balance)
+
+
+
+## Other global variables
+- block.basefee (uint): current block's base fee
+- block.chainid (uint): current chain id
+- block.coinbase (address payable): current block miner's address
+- block.difficulty (uint): current block difficulty
+- block.gaslimit (uint): current block gaslimit
+- block.number (uint): current block number
+- gasleft() returns (uint256): remaining gas
+- msg.data (bytes calldata): complete calldata
+- msg.sig (bytes4): first four bytes of the calldata (i.e. function identifier)
+- tx.gasprice (uint): gas price of the transaction
+- tx.origin (address): sender of the transaction (full call chain)
+
+
+
+## Global functions
+- blockhash(uint blockNumber) returns (bytes32)
+  - hash of the given block when blocknumber is one of the 256 most recent blocks; otherwise returns zero
+- keccak256(bytes memory) returns (bytes32)
+
+
+
+## Solidity reference
+- See the Solidity cheatsheet online at [https://docs.soliditylang.org/en/latest/cheatsheet.html](https://docs.soliditylang.org/en/latest/cheatsheet.html)
+- In PDF form in the repo as [docs/solidity_reference.pdf](../docs/solidity_reference.pdf)
+
+
+
+## Solidity bytecode
+Consider the following Solidity smart contract:
+```
+// SPDX-License-Identifier: GPL-3.0-or-later
+pragma solidity ^0.8.29;
+contract MyContract {
+    uint public i = 1 + 2 * 3 - 4;
+}
+```
+
+The bytecode was generated via:
+
+- Going to [remix.ethereum.org](http://remix.ethereum.org), create a new contract file, and enter the text
+- Select the compiler icon on the left, and click 'compile'
+- Select 'compilation details', the 'Assembly' at the bottom
+
+
+
+## Solidity bytecode
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
+>.code
+  PUSH 80     contract MyContract {\n    uin...
+  PUSH 40     contract MyContract {\n    uin...
+  MSTORE      contract MyContract {\n    uin...
+  PUSH 3      1 + 2 * 3 - 4
+  PUSH 0      uint public i = 1 + 2 * 3 - 4
+  SSTORE      uint public i = 1 + 2 * 3 - 4
+  CALLVALUE       contract MyContract {\n    uin...
+  DUP1      contract MyContract {\n    uin...
+  ISZERO      contract MyContract {\n    uin...
+  PUSH [tag] 1      contract MyContract {\n    uin...
+  JUMPI       contract MyContract {\n    uin...
+  PUSH 0      contract MyContract {\n    uin...
+  DUP1      contract MyContract {\n    uin...
+  REVERT      contract MyContract {\n    uin...
+tag 1     contract MyContract {\n    uin...
+  JUMPDEST      contract MyContract {\n    uin...
+  POP       contract MyContract {\n    uin...
+  PUSH #[$] 0000000000000000000000000000000000000000000000000000000000000000      contract MyContract {\n    uin...
+  DUP1      contract MyContract {\n    uin...
+  PUSH [$] 0000000000000000000000000000000000000000000000000000000000000000     contract MyContract {\n    uin...
+  PUSH 0      contract MyContract {\n    uin...
+  CODECOPY      contract MyContract {\n    uin...
+  PUSH 0      contract MyContract {\n    uin...
+  RETURN      contract MyContract {\n    uin...
+.data
+  0:
+    .code
+      PUSH 80     contract MyContract {\n    uin...
+      PUSH 40     contract MyContract {\n    uin...
+      MSTORE      contract MyContract {\n    uin...
+      CALLVALUE       contract MyContract {\n    uin...
+      DUP1      contract MyContract {\n    uin...
+      ISZERO      contract MyContract {\n    uin...
+      PUSH [tag] 1      contract MyContract {\n    uin...
+      JUMPI       contract MyContract {\n    uin...
+      PUSH 0      contract MyContract {\n    uin...
+      DUP1      contract MyContract {\n    uin...
+      REVERT      contract MyContract {\n    uin...
+    tag 1     contract MyContract {\n    uin...
+      JUMPDEST      contract MyContract {\n    uin...
+      POP       contract MyContract {\n    uin...
+      PUSH 4      contract MyContract {\n    uin...
+      CALLDATASIZE      contract MyContract {\n    uin...
+      LT      contract MyContract {\n    uin...
+      PUSH [tag] 2      contract MyContract {\n    uin...
+      JUMPI       contract MyContract {\n    uin...
+      PUSH 0      contract MyContract {\n    uin...
+      CALLDATALOAD      contract MyContract {\n    uin...
+      PUSH E0     contract MyContract {\n    uin...
+      SHR       contract MyContract {\n    uin...
+      DUP1      contract MyContract {\n    uin...
+      PUSH E5AA3D58     contract MyContract {\n    uin...
+      EQ      contract MyContract {\n    uin...
+      PUSH [tag] 3      contract MyContract {\n    uin...
+      JUMPI       contract MyContract {\n    uin...
+    tag 2     contract MyContract {\n    uin...
+      JUMPDEST      contract MyContract {\n    uin...
+      PUSH 0      contract MyContract {\n    uin...
+      DUP1      contract MyContract {\n    uin...
+      REVERT      contract MyContract {\n    uin...
+    tag 3     uint public i = 1 + 2 * 3 - 4
+      JUMPDEST      uint public i = 1 + 2 * 3 - 4
+      PUSH [tag] 4      uint public i = 1 + 2 * 3 - 4
+      PUSH 0      uint public i = 1 + 2 * 3 - 4
+      SLOAD       uint public i = 1 + 2 * 3 - 4
+      DUP2      uint public i = 1 + 2 * 3 - 4
+      JUMP      uint public i = 1 + 2 * 3 - 4
+    tag 4     uint public i = 1 + 2 * 3 - 4
+      JUMPDEST      uint public i = 1 + 2 * 3 - 4
+      PUSH 40     uint public i = 1 + 2 * 3 - 4
+      MLOAD       uint public i = 1 + 2 * 3 - 4
+      SWAP1       
+      DUP2      
+      MSTORE      
+      PUSH 20     
+      ADD       
+      PUSH 40     uint public i = 1 + 2 * 3 - 4
+      MLOAD       uint public i = 1 + 2 * 3 - 4
+      DUP1      uint public i = 1 + 2 * 3 - 4
+      SWAP2       uint public i = 1 + 2 * 3 - 4
+      SUB       uint public i = 1 + 2 * 3 - 4
+      SWAP1       uint public i = 1 + 2 * 3 - 4
+      RETURN      uint public i = 1 + 2 * 3 - 4
+    .data</code></pre>
+
+
+
+## Solidity hex bytecode
+- That bytecode is compiled into hex (binary):
+```
+60806040526003600055348015601457600080fd5b50607d80
+6100236000396000f3fe6080604052348015600f57600080fd
+5b506004361060285760003560e01c8063e5aa3d5814602d57
+5b600080fd5b603560005481565b6040519081526020016040
+5180910390f3fea26469706673582212206e6ad71c40961eec
+8c1886164d5d543228ad45839283845f4e3bdbb431243be364
+736f6c63430008110033
+```
+- This hex code is as it would show up in the blockchain Ethereum explorer
+  - In the "input" field
+- Total of 160 bytes (compilation optimization was used)
+
+
+
+<!-- ============================================================ -->
+  
+
+
+# Poll Example
+
+
+## Poll Example
+- This is the [Poll.sol](../hws/dappintro/Poll.sol.html) smart contract from the the [dApp Introduction](../hws/dappintro/index.html) assignment
+  - It implements the [IPoll.sol](../hws/dappintro/IPoll.sol.html) interface
+  - Both are shown in full on the next two slides
+  - But the comments were removed for compactness in the slides
+
+
+
+## IPoll.sol
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
+
+pragma solidity ^0.8.29;
+
+interface IPoll {
+
+  struct Choice {
+    uint id;
+    string name;
+    uint votes;
+  }
+
+  function purpose() external pure returns (string memory);
+
+  function voted(address a) external view returns (bool);
+
+  function choices(uint i) external view returns (Choice memory);
+
+  function num_choices() external view returns (uint);
+
+  function addChoice (string memory _name) external;
+
+  function vote (uint _id) external;
+
+  event votedEvent (uint indexed _id);
+
+  event choiceAddedEvent (uint indexed _id);
+
+}
+</code></pre>
+
+
+
+## Poll.sol
+
+<pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
+
+pragma solidity ^0.8.29;
+
+import "./IPoll.sol";
+
+contract Poll is IPoll {
+
+  mapping (address => bool) public override voted;
+
+  mapping (uint => Choice) internal _choices;
+
+  function choices(uint i) public view override returns (Choice memory) {
+    return _choices[i];
+  }
+
+  uint public override num_choices;
+
+  string public override constant purpose = "Vote on your favorite color";
+
+  constructor() {
+    addChoice("red");
+    addChoice("orange");
+    addChoice("yellow");
+    addChoice("green");
+    addChoice("blue");
+    addChoice("purple");
+  }
+
+  function addChoice (string memory _name) public override {
+    _choices[num_choices] = Choice(num_choices, _name, 0);
+    emit choiceAddedEvent(num_choices);
+    num_choices++;
+  }
+
+  function vote (uint _id) public override {
+    require(!voted[msg.sender], "sender has already voted");
+    require(_id >= 0 && _id < num_choices, "invalid vote selection");
+    voted[msg.sender] = true;
+    _choices[_id].votes++;
+    emit votedEvent(_id);
+  }
+
+  function unnecessaryFunction() public view returns (string memory) {
+    return _choices[0].name;
+  }
+
+  function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
+    return interfaceId == type(IPoll).interfaceId || interfaceId == 0x01ffc9a7;
+  }
+
+}
+</code></pre>
+
+
+
+## Poll Compilation Artifacts
+- ABI (Application Binary Interface):
+  - [IPoll ABI](../hws/dappintro/IPoll.abi.txt)
+  - [Poll ABI](../hws/dappintro/Poll.abi.txt)
+- Compiled bytecode
+  - [Normal](../hws/dappintro/Poll-normal.bin.txt) (5,656 bytes)
+    - Contract @ 0x8f8a7d8CCD4aEb500c1708A0f22231e3d86Fea59 (fall 2023)
+  - [Optimized](../hws/dappintro/Poll-optimized.bin.txt) (3,010 bytes)
+    - Contract @ 0xeB08a2F5A484Cd5f1B7bE3014bDD1215C9C962Bd (fall 2023)
+  - See these on the blockchain explorer as well
+- [EVM opcodes](../hws/dappintro/Poll.asm.txt) for Poll.sol
+
+
+
+## Security holes
+- Did you notice the (intentional) security holes in the Poll contract?
+  - There were at least two, one inherent to Solidity and one I put in there
+
+
+
+<!-- ============================================================ -->
+  
+
+# Debtor's Example
+
+
+## A Circle of Debt
+- A group of friends always cover each other for expenses
+- They want a way to resolve these debts
+- Example:
+  - Alice pays `$`5 to cover Bob
+  - Bob pays `$`5 to cover Charlie
+  - Charlie pays `$`10 to cover Alice
+  - The net result is that Alice owes `$`5 to Charlie; all other debts cancel out
+- We'll implement this as a smart contract in Solidity on Ethereum
+
+
+
+## Design considerations
+- The blockchain will hold the history of who owes money (ether), and how much
+- Nobody wants to remember people by their Ethereum address
+  - So we will use an *alias*, which is a string ("alice", "bob", etc.) that corresponds to an address
+  - It has an optional *name* field as well
+- The group of friends all trust each other, so either side can enter a debt
+  - But Alice cannot enter a debt between Bob and Charlie
+
+
+
+## Insight
+- The key insight is that if Alice pays Bob $x$, then Alice's balance goes *up* by $x$, and Bob's goes *down* by $x$
+  - A negative balance means you owe money
+  - A positive balance means you are owed money
+- The system will keep track of how much one owes or is owed, but not necessarily who to
+
+
+
+## Development
+- Let's jointly live develop it on [remix.ethereum.org](https://remix.ethereum.org/)
+
+
+
+## Interface
+- Given the code in Debts.sol, let's extract out an interface
+  - What we developed: [Debts-no-interface.sol](code/Debts-no-interface.sol.html)
+- The [IDebts.sol](code/IDebts.sol.html) interface will have:
+  - The Entry struct
+  - The events
+  - The function prototypes (and public getter methods), all with `external` visibility
+  - The `entries()` function has a tuple return type, not an `Entry memory` return type
+- The [Debts.sol](code/Debts.sol.html) changes:
+  - Import the IDebts interface
+  - Remove (comment out) the Entry struct and the events
+  - All methods change to `override`
+  - Add a `supportsInterface()` method
+
+
+## Start of in-class activity
+- The slides below are for the in-class activity
+- The column to the right is not
+
+
+
+## Deployment
+- A request: please do not go ahead of me in the following deployment steps
+- This has already been deployed on our private Ethereum blockchain
+  - But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the [dApp Introduction](../hws/dappintro/index.html) assignment
+- I've added an alias for me, but not for any of you
+- On the Canvas landing page is the relevant contract address (and other information)
+- Look at the Blockchain Explorer
+  - The smart contract was deployed in a specific block
+  - The adding of some aliases was in a specific block
+
+
+## Interacting via geth
+- You should all start up your geth node via:
+```
+geth --config geth-config.toml \
+     --rpc.enabledeprecatedpersonal
+```
+- Once done, you should start a geth terminal in a *new* window/tab:
+```
+geth attach /path/to/ethprivate/geth.ipc
+```
+Or:
+```
+geth attach ./geth.ipc
+```
+In Windows, it's something like:
+```
+geth attach \\.\pipe\geth.ipc
+```
+
+
+
+## Your eth.coinbase
+- If your eth.coinbase is *different* than what you submitted in either of the last two assignments...
+  - Or you think it might be different, but aren't sure...
+- Email me, right now, with your updated eth.coinbase
+  - This way I can give you credit for participating
+  - That email has to arrive before class ends today!
+
+
+
+## Relevant information
+- On the Canvas landing page, at the bottom, are a few pieces of information we will need:
+  - The Debts smart contract address
+  - A [link to the ABI for the IDebts.sol interface](code/IDebts.sol.abi.txt) -- you will need to copy that shortly
+    - About where we get that ABI...
+  - A link to this part of the slide set so you can copy-and-paste some of the code
+  - And other useful links
+
+
+## Transactions from geth
+- We are going to call the smart contract directly from geth
+- First, save the smart contract address in a variable:
+```
+var addr = "0xffffffffffffffffffffffffffffffffffffffff";
+```
+  - But use the actual address, not that address!
+- Next we have to save the ABI:
+```
+var abi = [...];
+```
+  - Copy-and-paste the ABI from the Canvas landing page into that command
+  - Notice no quotes around the variable's value!
+  - It should present that same ABI back to you, but nicely formatted
+
+
+
+## Transactions from geth
+- Next we have to have geth create a contract object for us:
+```
+var interface = eth.contract(abi);
+```
+- Lastly, we need to link that to the specific contract address that we are going to be using:
+```
+var contract = interface.at(addr);
+```
+
+
+
+## Geth read transactions
+- We can call read-only transactions (`view` or `pure` functions) via the `.call()` method
+- To read a variable:
+```
+contract.num_entries.call()
+```
+- To read a mapping:
+```
+contract.entries.call(0)
+```
+- To get a name from a mapping:
+```
+contract.entries.call(0)[2]
+```
+- To call a (`view` or `pure`) method:
+```
+contract.thisMethodDoesNotExist.call()
+```
+
+
+
+## Geth write transactions
+- First, unlock your account:
+```
+personal.unlockAccount(eth.coinbase,"password",0)
+```
+- Use *your* password, though!
+- Does it not know `eth.coinbase`?  If not, then enter:
+```
+miner.setEtherbase(eth.accounts[0])
+```
+- Recall that the blockchain explorer updates every 1 minute
+
+
+
+## Adding an alias
+- You have to add yourself as an alias
+- Request: please use your UVA userid as the alias itself
+  - If you don't want to use your own, make up a believable fake one
+
+
+
+## Adding an alias
+- Transactions that write to the blockchain use the `.sendTransaction()` method
+```
+contract.addAlias.sendTransaction("mst3k", 
+         "Your Name", {from:eth.coinbase, gas:1000000})
+```
+- Don't use mst3k!  Use your userid and name
+  - Possibly fake, but make it realistic
+- Notice, in the value printed after that call, the transaction hash
+  - Search for the address in the Blockchain Explorer
+  - It will take up to a minute for the explorer to refresh
+- In the explorer transaction page, notice the decoded function call
+  - It states the function called, and the parameters passed in
+
+
+
+## View the list of debts
+- We have a web page that allows you to view all the entered aliases and who owes what
+- The URL is on the Canvas landing page
+  - You can also view it from the explorer page for the contract account
+
+
+
+## Pay off some debts!
+- You can now enter some debts:
+```
+contract.payToAlias.sendTransaction("mst3k",17,
+               {from:eth.coinbase, gas:1000000});
+```
+- Don't use mst3k!  Use the userid of the *other* person
+- Note that this is entering that the other person owes *you* money
+  - If you owe them money, you would enter a negative value
+- The amount must be between -100 and 100, inclusive
+- And, again, view the web page for this exercise that lists the current balances
+- You can also see those transactions in the blockchain explorer
+  - Note the transaction hash when you enter that command
+
+
+## The result...
+... how much do I owe???
+
+Also, we have the source code available:
+
+- The original code we developed is [Debts-no-interface.sol](code/Debts-no-interface.sol.html) ([src](code/Debts-no-interface.sol))
+- The updated code (with the interface) is in [IDebts.sol](code/IDebts.sol.html) ([src](code/IDebts.sol)) and [Debts.sol](code/Debts.sol.html) ([src](code/Debts.sol))
+
+
+<!-- ============================================================ -->
+  
+
+# Testing & Debugging
+
+
+## Use `require()` with 2 parameters
+
+- Consider:
+```
+require (value > 0);
+```
+- If this reverts, all Remix will state is that the contract reverted, but not where or why
+- Instead, use:
+```
+require (value > 0, "value must be > 0 in foo()");
+```
+- Now Remix will report that specific string if/when it reverts
+
+
+## Use `require()` to assure the correct state
+- Using `require()` a lot to make sure that the variables are in the state you expect them to be
+```
+require (msg.value > 0,
+           "must transfer ether with this transaction");
+require (from_address != address(0), 
+           "must specify a non-null from address");
+require (to_address != address(0), 
+           "must specify a non-null to address");
+// and so on...
+```
+
+
+
+## Capturing intermediate state
+- We don't have print statements to ensure that our intermediate values are correct
+- So instead we save those values in state variables
+- Make sure those variables are `public`!!!
+- Once the function is run, you can view those variables in Remix
+
+
+
+## Capturing intermediate state
+```
+contract Test {
+  uint public debug1;
+  uint public debug2;
+
+  function whyYouNotWork(uint a, uint b, uint c) 
+                         public returns (uint) {
+    uint x = 10**a;
+    debug1 = x;
+    x = x / b + c;
+    debug2 = x;
+    return x*123;
+  }
+}
+```
+
+## Managing setup
+
+- Some projects will require multiple contracts working together
+- We can create a third contract to manage all this setup
+
+```
+contract Test {
+  address erc20 = 0x123456...;
+  address tokenUser = 0x123456...;
+  function setup() {
+    IERC20(erc20).callFunction(param1,2,3);
+    tokenUser.setERC20(erc20);
+    // ... and so on
+  }
+}
+```
+
+
+
+## Unit testing
+- This is gone over in the [dApp Introduction HW](../hws/dappintro/index.html)
+  - Some are having issues with it.  Sigh...
+
+
+
+## Still stuck?
+- Try adding in more `require()` statements
+  - And then put in some more
+    - And yet even more
+- Note that a subtraction on a uint that causes a negative number will revert the call
+

@@ -1,232 +1,560 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <base target="_blank">
-    <meta charset="utf-8">
-    <title>CCC: Cryptocurrency Course slide set</title>
-    <meta name="description" content="A set of slides for a course on Cryptocurrency">
-    <meta name="author" content="Aaron Bloomfield">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-    <link rel="stylesheet" href="../slides/reveal.js/dist/reset.css">
-    <link rel="stylesheet" href="../slides/reveal.js/dist/reveal.css">
-    <link rel="stylesheet" href="../slides/reveal.js/dist/theme/black.css" id="theme">
-    <link rel="stylesheet" href="../slides/ccc.css">
-    <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="../slides/reveal.js/plugin/highlight/zenburn.css">
-    <!-- Printing and PDF exports -->
-    <script>
-      var link = document.createElement( 'link' );
-      link.rel = 'stylesheet';
-      link.type = 'text/css';
-      link.href = window.location.search.match( /print-pdf/gi ) ? '../slides/reveal.js/css/print/pdf.scss' : '../slides/reveal.js/css/print/paper.scss';
-      document.getElementsByTagName( 'head' )[0].appendChild( link );
-    </script>
-    <!--[if lt IE 9]>
-	<script src="../slides/reveal.js/lib/js/html5shiv.js"></script>
-	<![endif]-->
-    <style>
-.reveal li {
-font-size:90%;
-line-height:120%;
-}
-    </style>
-  </head>
-  <body>
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="quarto_files/clipboard/clipboard.min.js"></script>
+<script src="quarto_files/quarto-html/tabby.min.js"></script>
+<script src="quarto_files/quarto-html/popper.min.js"></script>
+<script src="quarto_files/quarto-html/tippy.umd.min.js"></script>
+<link href="quarto_files/quarto-html/tippy.css" rel="stylesheet">
+<link href="quarto_files/quarto-html/light-border.css" rel="stylesheet">
+<link href="quarto_files/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="quarto_files/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.56">
 
-		<div class="reveal">
+  <title>Solidity</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="quarto_files/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="quarto_files/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="quarto_files/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="ccc.css">
+  <link href="quarto_files/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="quarto_files/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="quarto_files/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="quarto_files/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="quarto_files/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="quarto_files/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
 
-	<section data-markdown><textarea>
-# CS 4501
-&nbsp;
-### Cryptocurrency
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
 
-<p class='titlep'>&nbsp;</p>
-<div class="titlesmall"><p>
-<a href="http://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
-<a href="http://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">&uarr;</a> | <a href="?print-pdf"><img class="print" width="20" src="../slides/images/print-icon.png" style="top:0px;vertical-align:middle"></a>
-</p></div>
-<p class='titlep'>&nbsp;</p>
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
 
-## Solidity
-	</textarea></section>
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
 
-	<section data-markdown><textarea>
-# Contents
-&nbsp;  
-[Types](#/types)  
-[Concepts](#/concepts)  
-[Poll Example](#/poll)  
-[Debtor's Example](#/debtor)  
-[Testing & Debugging](#/debugging)  
-	</textarea></section>
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
 
-<!-- ============================================================ -->
-  
-  <section>
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
 
-    <section id="types" data-markdown class="center"><textarea>
-# Types
-    </textarea></section>
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
 
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Sources
-- The main reference for this slide set is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
-  - URL: https://docs.soliditylang.org/en/latest/index.html
-- This section is the [Types section therein](https://docs.soliditylang.org/en/latest/types.html)
-  - https://docs.soliditylang.org/en/latest/types.html
-  - Many of the examples herein are from there
-- Also some code examples from the [Poll.sol](../hws/dappintro/Poll.sol.html) contract from the [dApp introduction](../hws/dappintro/index.html) assignment
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
 
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
 
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
 
-## A note about these slides
-- These slides are meant as a explanation
-  - You are not expected to remember everything!
-- Since you all know OOP, it's just showing what is different in Solidity
-- You can come back to use this as a reference later
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
 
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
 
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
 
-## Value types: integers
-- Signed and unsigned ints from 8 bits (1 byte) to 256 bits (32 bytes) in size
-  - And in all byte sizes between
-- Unsigned: `uint8`, `uint16`, `uint24`, ... `uint256`
-  - `uint` is an alias for `uint256`
-- Signed: `int8`, `int16`, `int24`, ..., `int256`
-  - `int` is an alias for `int256`
-- Standard operations (arithmetic, comparisons, bit operators, shift operators)
-  - Exponentiation is $\ast \ast$
-- `type(int256).max` and `type(uint160).min` for min/max
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
 
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
 
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
 
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
 
-## Value types: integers
-- Most used: `uint` (aka `uint256`) and `uint8`
-- Warning: a subtraction into a `uint` that is negative will cause a reversion
-  - A revert is basically an abort -- more on this later
-  - And it will not give a useful error message indicating so!
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
 
+  .callout.no-icon::before {
+    display: none !important;
+  }
 
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
 
-## Integer literals
-- Scientific notation: `1e12` equals $10^{12}$
-  - `3.4e8` equals $3.4 \ast 10^8$
-- Underscores separate digits for readability, but do not affect its value
-  - 0x12345678 == 0x1234_5678
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
 
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
 
+  /* Callout Types */
 
-## Other value types
-- Booleans: type is `bool`, values are `true` and `false`
-- All comparisons evaluate to a Boolean
-- Fixed point numbers: not yet fully supported
-  - Types are `fixed` and `ufixed`
-  - But don't use them!
-- No floating point numbers!
-- Note that all variables have an initial value of 0
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
 
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
 
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
 
-## Addresses
-- Types are `address` and `address payable`
-- It's just a number: a 160-bit (20 byte) Ethereum address
-  - Allows standard comparison operators
-- Used for:
-  - Keeping track of who is the contract initiator
-  - Addresses of other contracts to call
-- Can cast between `address` and: `uint160` or `bytes20`
-```
-address a = address(0);
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <p class="titlep">&nbsp;</p>
+<div class="orangetitle">
+  <h1 class="title" style="color:white !important">CS 4970</h1>
+  <h2 class="subtitle" style="color:white !important">Cryptocurrency</h2>
+  <h2 class="subtitle" style="color:white !important">Solidity</h2>
+</div>
+  <p class="titlep">&nbsp;</p>
+  <p class="titlep">&nbsp;</p>
+  <div class="titlesmall"><p>
+    <a href="https://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+    <a href="https://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">↑</a> | <a href="?print-pdf"><img class="print" width="20" src="images/print-icon.svg" style="top:0px;vertical-align:middle;background-color:transparent;display:inline;width:30px;height:30px"></a>
+  </p></div>
+  <p class="titlep">&nbsp;</p>
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Contents</h2>
+<ul>
+<li><a href="#/types" id="/toc-types">Types</a></li>
+<li><a href="#/concepts" id="/toc-concepts">Concepts</a></li>
+<li><a href="#/poll-example" id="/toc-poll-example">Poll Example</a></li>
+<li><a href="#/debtors-example" id="/toc-debtors-example">Debtor’s Example</a></li>
+<li><a href="#/testing-debugging" id="/toc-testing-debugging">Testing &amp; Debugging</a></li>
+</ul>
+</nav>
+</section>
+<section>
+<section id="types" class="title-slide slide level1 center">
+<h1>Types</h1>
+
+</section>
+<section id="sources" class="slide level2">
+<h2>Sources</h2>
+<ul>
+<li>The main reference for this slide set is the <a href="https://docs.soliditylang.org/en/latest/index.html">Solidity language documentation</a>
+<ul>
+<li>URL: <a href="https://docs.soliditylang.org/en/latest/index.html">https://docs.soliditylang.org/en/latest/index.html</a></li>
+</ul></li>
+<li>This section is the <a href="https://docs.soliditylang.org/en/latest/types.html">Types section therein</a>
+<ul>
+<li><a href="https://docs.soliditylang.org/en/latest/types.html">https://docs.soliditylang.org/en/latest/types.html</a></li>
+<li>Many of the examples herein are from there</li>
+</ul></li>
+<li>Also some code examples from the <a href="../hws/dappintro/Poll.sol.html">Poll.sol</a> contract from the <a href="../hws/dappintro/index.html">dApp introduction</a> assignment</li>
+</ul>
+</section>
+<section id="a-note-about-these-slides" class="slide level2">
+<h2>A note about these slides</h2>
+<ul>
+<li>These slides are meant as a explanation
+<ul>
+<li>You are not expected to remember everything!</li>
+</ul></li>
+<li>Since you all know OOP, it’s just showing what is different in Solidity</li>
+<li>You can come back to use this as a reference later</li>
+</ul>
+</section>
+<section id="value-types-integers" class="slide level2">
+<h2>Value types: integers</h2>
+<ul>
+<li>Signed and unsigned ints from 8 bits (1 byte) to 256 bits (32 bytes) in size
+<ul>
+<li>And in all byte sizes between</li>
+</ul></li>
+<li>Unsigned: <code>uint8</code>, <code>uint16</code>, <code>uint24</code>, … <code>uint256</code>
+<ul>
+<li><code>uint</code> is an alias for <code>uint256</code></li>
+</ul></li>
+<li>Signed: <code>int8</code>, <code>int16</code>, <code>int24</code>, …, <code>int256</code>
+<ul>
+<li><code>int</code> is an alias for <code>int256</code></li>
+</ul></li>
+<li>Standard operations (arithmetic, comparisons, bit operators, shift operators)
+<ul>
+<li>Exponentiation is <span class="math inline">\(\ast \ast\)</span></li>
+</ul></li>
+<li><code>type(int256).max</code> and <code>type(uint160).min</code> for min/max</li>
+</ul>
+</section>
+<section id="value-types-integers-1" class="slide level2">
+<h2>Value types: integers</h2>
+<ul>
+<li>Most used: <code>uint</code> (aka <code>uint256</code>) and <code>uint8</code></li>
+<li>Warning: a subtraction into a <code>uint</code> that is negative will cause a reversion
+<ul>
+<li>A revert is basically an abort – more on this later</li>
+<li>And it will not give a useful error message indicating so!</li>
+</ul></li>
+</ul>
+</section>
+<section id="integer-literals" class="slide level2">
+<h2>Integer literals</h2>
+<ul>
+<li>Scientific notation: <code>1e12</code> equals <span class="math inline">\(10^{12}\)</span>
+<ul>
+<li><code>3.4e8</code> equals <span class="math inline">\(3.4 \ast 10^8\)</span></li>
+</ul></li>
+<li>Underscores separate digits for readability, but do not affect its value
+<ul>
+<li>0x12345678 == 0x1234_5678</li>
+</ul></li>
+</ul>
+</section>
+<section id="other-value-types" class="slide level2">
+<h2>Other value types</h2>
+<ul>
+<li>Booleans: type is <code>bool</code>, values are <code>true</code> and <code>false</code></li>
+<li>All comparisons evaluate to a Boolean</li>
+<li>Fixed point numbers: not yet fully supported
+<ul>
+<li>Types are <code>fixed</code> and <code>ufixed</code></li>
+<li>But don’t use them!</li>
+</ul></li>
+<li>No floating point numbers!</li>
+<li>Note that all variables have an initial value of 0</li>
+</ul>
+</section>
+<section id="addresses" class="slide level2">
+<h2>Addresses</h2>
+<ul>
+<li>Types are <code>address</code> and <code>address payable</code></li>
+<li>It’s just a number: a 160-bit (20 byte) Ethereum address
+<ul>
+<li>Allows standard comparison operators</li>
+</ul></li>
+<li>Used for:
+<ul>
+<li>Keeping track of who is the contract initiator</li>
+<li>Addresses of other contracts to call</li>
+</ul></li>
+<li>Can cast between <code>address</code> and: <code>uint160</code> or <code>bytes20</code></li>
+</ul>
+<pre><code>address a = address(0);
 uint160 u = uint160(a);
-bytes20 b = bytes20(u);
-```
-- The address of a caller of a function is in `msg.sender`
-
-
-
-## Address examples
-- You can convert to a payable address:
-```
-address a;
+bytes20 b = bytes20(u);</code></pre>
+<ul>
+<li>The address of a caller of a function is in <code>msg.sender</code></li>
+</ul>
+</section>
+<section id="address-examples" class="slide level2">
+<h2>Address examples</h2>
+<ul>
+<li>You can convert to a payable address:</li>
+</ul>
+<pre><code>address a;
 // set a = something...
-address payable b = payable(a);
-```
-- Conversions:
-```
-uint160 b = uint160(msg.sender);
-bytes20 c = bytes20(msg.sender);
-```
-- More examples:
-```
-if ( a == address(0) ) { ... }
-address initiator = msg.sender;
-```
-
-
-
-## Address fields
-- Although a primitive type, it has fields and methods:
-  - `balance`: the balance, in wei, for that address
-```
-address payable x = payable(0x123);
+address payable b = payable(a);</code></pre>
+<ul>
+<li>Conversions:</li>
+</ul>
+<pre><code>uint160 b = uint160(msg.sender);
+bytes20 c = bytes20(msg.sender);</code></pre>
+<ul>
+<li>More examples:</li>
+</ul>
+<pre><code>if ( a == address(0) ) { ... }
+address initiator = msg.sender;</code></pre>
+</section>
+<section id="address-fields" class="slide level2">
+<h2>Address fields</h2>
+<ul>
+<li>Although a primitive type, it has fields and methods:
+<ul>
+<li><code>balance</code>: the balance, in wei, for that address</li>
+</ul>
+<pre><code>address payable x = payable(0x123);
 address myAddress = address(this);
-if (x.balance < 10 && myAddress.balance >= 10) {...}
-```
-- Other methods we won't see in this course: 
-  - `transfer()` to send wei (requires a `receive()` function on the receiving contract)
-  - `send()`: low-level and not safe version of `transfer()`
-  - `call()`, `delegatecall()`, and `staticcall()`: calling a contract with an unknown ABI
-  - `code()` and `codehash()` to get the bytecode of the contract
-
-
-
-## Fixed-sized Byte Arrays
-- Fixed sized array of bytes: `bytes1`, `bytes2`, up to `bytes32`
-  - The size is the integer in the type name; max of 32 bytes
-  - `.length` to get the length
-  - Indexing with `[]`
-- Operators:
-  - Comparisons, bit operators, shift operators
-  - Treats the byte array like a similarly sized `uint` when performing the operation
-
-
-
-## Dynamically-sized arrays
-- `bytes`: dynamically sized array of bytes
-- `string`: dynamically sized array of UTF-8 characters
-  - We'll see string functions in a bit...
-
-
-
-## String literals
-- Strings can be enclosed in single quotes or double quotes
-- Can use the backslash for escape characters
-- Two strings next to each other is concatenation:
-```
-string s = "CS" '4501'; // equals "CS4501"
-```
-
-
-
-## More general arrays
-- We can create arrays of any type:
-```
-uint8[6] memory p = [ 1, 2, 3, 4, 5, 6 ];
-```
-  - We'll see the `memory` keyword shortly...
-
-
-
-## Enums
-- Enumerated type, which is mapped to a `uint`
-```
-enum ActionChoices { GoLeft, GoRight, 
+if (x.balance &lt; 10 &amp;&amp; myAddress.balance &gt;= 10) {...}</code></pre></li>
+<li>Other methods we won’t see in this course:
+<ul>
+<li><code>transfer()</code> to send wei (requires a <code>receive()</code> function on the receiving contract)</li>
+<li><code>send()</code>: low-level and not safe version of <code>transfer()</code></li>
+<li><code>call()</code>, <code>delegatecall()</code>, and <code>staticcall()</code>: calling a contract with an unknown ABI</li>
+<li><code>code()</code> and <code>codehash()</code> to get the bytecode of the contract</li>
+</ul></li>
+</ul>
+</section>
+<section id="fixed-sized-byte-arrays" class="slide level2">
+<h2>Fixed-sized Byte Arrays</h2>
+<ul>
+<li>Fixed sized array of bytes: <code>bytes1</code>, <code>bytes2</code>, up to <code>bytes32</code>
+<ul>
+<li>The size is the integer in the type name; max of 32 bytes</li>
+<li><code>.length</code> to get the length</li>
+<li>Indexing with <code>[]</code></li>
+</ul></li>
+<li>Operators:
+<ul>
+<li>Comparisons, bit operators, shift operators</li>
+<li>Treats the byte array like a similarly sized <code>uint</code> when performing the operation</li>
+</ul></li>
+</ul>
+</section>
+<section id="dynamically-sized-arrays" class="slide level2">
+<h2>Dynamically-sized arrays</h2>
+<ul>
+<li><code>bytes</code>: dynamically sized array of bytes</li>
+<li><code>string</code>: dynamically sized array of UTF-8 characters
+<ul>
+<li>We’ll see string functions in a bit…</li>
+</ul></li>
+</ul>
+</section>
+<section id="string-literals" class="slide level2">
+<h2>String literals</h2>
+<ul>
+<li>Strings can be enclosed in single quotes or double quotes</li>
+<li>Can use the backslash for escape characters</li>
+<li>Two strings next to each other is concatenation:</li>
+</ul>
+<pre><code>string s = "CS" '4501'; // equals "CS4501"</code></pre>
+</section>
+<section id="more-general-arrays" class="slide level2">
+<h2>More general arrays</h2>
+<ul>
+<li>We can create arrays of any type:</li>
+</ul>
+<pre><code>uint8[6] memory p = [ 1, 2, 3, 4, 5, 6 ];</code></pre>
+<ul>
+<li>We’ll see the <code>memory</code> keyword shortly…</li>
+</ul>
+</section>
+<section id="enums" class="slide level2">
+<h2>Enums</h2>
+<ul>
+<li>Enumerated type, which is mapped to a <code>uint</code></li>
+</ul>
+<pre><code>enum ActionChoices { GoLeft, GoRight, 
                        GoStraight, SitStill }
 
 ActionChoices choice;
@@ -234,110 +562,125 @@ ActionChoices constant default = ActionChoices.GoLeft;
 
 function setGoStraight() public {
     choice = ActionChoices.GoStraight;
-}
-```
-
-
-
-## Mappings
-- An associative array (like a hash table) that holds a key-value pair
-```
-mapping (address => bool) public override voted;
-mapping (uint => Choice) internal _choices;
-```
-  - We'll talk about `public`, `internal`, and `override` later
-- To access a mapping value:
-```
-if ( voted[msg.sender] ) { ... }
-```
-- To write to a mapping:
-```
-voted[msg.sender] = true;
-```
-
-
-
-## Mappings of mappings
-- You can have mappings to mappings:
-```
-mapping (uint => mapping(string => address) ) 
-              public twodmap;
-```
-- It's just like a 2-dimensional array:
-```
-twodmap[3]["foo"]
-```
-
-
-
-## Mapping keys
-- The keys are actually the *hash* of the key you provide
-  - If you provide the character `1` as the key, the actual key is the Keccak256 hash of that
-  - Or 0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cd cb4c672f298b8bc6
-- In every mapping, *all* $2^{256}$ keys exist
-  - Anything not explicitly set returns 0 / false / all zero's
-  - All mappings thus have size $2^{256} \approx 1.15 \ast 10^{77}$
-- You can delete an element from a mapping:
-  - `delete map[1];`
-  - This really just sets the value to 0
-  - And it *restores* gas (since it's shrinking the EVM state)
-
-
-
-## Is an element in a mapping?
-- Consider:
-```
-mapping (address => bool) public override voted;
+}</code></pre>
+</section>
+<section id="mappings" class="slide level2">
+<h2>Mappings</h2>
+<ul>
+<li>An associative array (like a hash table) that holds a key-value pair</li>
+</ul>
+<pre><code>mapping (address =&gt; bool) public override voted;
+mapping (uint =&gt; Choice) internal _choices;</code></pre>
+<ul>
+<li>We’ll talk about <code>public</code>, <code>internal</code>, and <code>override</code> later</li>
+<li>To access a mapping value:</li>
+</ul>
+<pre><code>if ( voted[msg.sender] ) { ... }</code></pre>
+<ul>
+<li>To write to a mapping:</li>
+</ul>
+<pre><code>voted[msg.sender] = true;</code></pre>
+</section>
+<section id="mappings-of-mappings" class="slide level2">
+<h2>Mappings of mappings</h2>
+<ul>
+<li>You can have mappings to mappings:</li>
+</ul>
+<pre><code>mapping (uint =&gt; mapping(string =&gt; address) ) 
+              public twodmap;</code></pre>
+<ul>
+<li>It’s just like a 2-dimensional array:</li>
+</ul>
+<pre><code>twodmap[3]["foo"]</code></pre>
+</section>
+<section id="mapping-keys" class="slide level2">
+<h2>Mapping keys</h2>
+<ul>
+<li>The keys are actually the <em>hash</em> of the key you provide
+<ul>
+<li>If you provide the character <code>1</code> as the key, the actual key is the Keccak256 hash of that</li>
+<li>Or 0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f 298b8bc6</li>
+</ul></li>
+<li>In every mapping, <em>all</em> <span class="math inline">\(2^{256}\)</span> keys exist
+<ul>
+<li>Anything not explicitly set returns 0 / false / all zero’s</li>
+<li>All mappings thus have size <span class="math inline">\(2^{256} \approx 1.15 \ast 10^{77}\)</span></li>
+</ul></li>
+<li>You can delete an element from a mapping:
+<ul>
+<li><code>delete map[1];</code></li>
+<li>This really just sets the value to 0</li>
+<li>And it <em>restores</em> gas (since it’s shrinking the EVM state)</li>
+</ul></li>
+</ul>
+</section>
+<section id="is-an-element-in-a-mapping" class="slide level2">
+<h2>Is an element in a mapping?</h2>
+<ul>
+<li>Consider:</li>
+</ul>
+<pre><code>mapping (address =&gt; bool) public override voted;
 
 // this next one was not in the original Poll.sol:
-mapping (address => uint) public how_voted;
+mapping (address =&gt; uint) public how_voted;
 
 // or:
-mapping (uint => Choice) internal _choices;
-uint public override num_choices;
-```
-- The `voters` tells if an address has voted
-  - If they haven't, then that key's value will be 0 (false)
-  - The `how_voted` will tell what they voted for
-- For the Choices, the uint tells how many keys there are
-  - Our code has keys 0 to num_choies-1
-
-
-
-## Structs
-- Like a class without methods
-```
-struct Choice {
+mapping (uint =&gt; Choice) internal _choices;
+uint public override num_choices;</code></pre>
+<ul>
+<li>The <code>voters</code> tells if an address has voted
+<ul>
+<li>If they haven’t, then that key’s value will be 0 (false)</li>
+<li>The <code>how_voted</code> will tell what they voted for</li>
+</ul></li>
+<li>For the Choices, the uint tells how many keys there are
+<ul>
+<li>Our code has keys 0 to num_choies-1</li>
+</ul></li>
+</ul>
+</section>
+<section id="structs" class="slide level2">
+<h2>Structs</h2>
+<ul>
+<li>Like a class without methods</li>
+</ul>
+<pre><code>struct Choice {
     uint id;
     string name;
     uint votes;
-}
-```
-  - Structs can contain mappings as well
-- They are often kept in a mapping:
-```
-mapping (uint => Choice) internal _choices;
-```
-- If you put the same `Choice` struct into different mappings, you *might* now have *two* copies of that struct!
-
-
-
-## Time
-- All time is kept as a UNIX timestamp
-  - The number of seconds since January 1st, 1970
-  - This is how it's kept in the blockchain as well
-- Only time available in a contract is the timestamp of the block
-  - Via `block.timestamp`
-- Can use `seconds`, `minutes`, `hours`, `days`, and `weeks` as time units
-  - They are always pluralized
-  - But the number before each must be a literal, not a variable!
-  - Example on the next slide
-
-
-
-## Time units example
-```
-uint a = 1;
+}</code></pre>
+<ul>
+<li>Structs can contain mappings as well</li>
+<li>They are often kept in a mapping:</li>
+</ul>
+<pre><code>mapping (uint =&gt; Choice) internal _choices;</code></pre>
+<ul>
+<li>If you put the same <code>Choice</code> struct into different mappings, you <em>might</em> now have <em>two</em> copies of that struct!</li>
+</ul>
+</section>
+<section id="time" class="slide level2">
+<h2>Time</h2>
+<ul>
+<li>All time is kept as a UNIX timestamp
+<ul>
+<li>The number of seconds since January 1st, 1970</li>
+<li>This is how it’s kept in the blockchain as well</li>
+</ul></li>
+<li>Only time available in a contract is the timestamp of the block
+<ul>
+<li>Via <code>block.timestamp</code></li>
+</ul></li>
+<li>Can use <code>seconds</code>, <code>minutes</code>, <code>hours</code>, <code>days</code>, and <code>weeks</code> as time units
+<ul>
+<li>They are always pluralized</li>
+<li>But the number before each must be a literal, not a variable!</li>
+<li>Example on the next slide</li>
+</ul></li>
+</ul>
+</section>
+<section id="time-units-example" class="slide level2">
+<h2>Time units example</h2>
+<pre><code>uint a = 1;
 uint b = 5;
 uint c = 2;
 
@@ -351,102 +694,161 @@ uint endTime = block.timestamp +
 
 // valid:
 uint endTime = block.timestamp + 
-               a * 1 seconds + b * 1 minutes + c * 1 days;
-```
-
-
-
-## Ether units
-- Can convert ether units as well
-- All convert to wei (recall that 1 ether is $10^{18}$ wei)
-```
-assert(1 wei == 1);
+               a * 1 seconds + b * 1 minutes + c * 1 days;</code></pre>
+</section>
+<section id="ether-units" class="slide level2">
+<h2>Ether units</h2>
+<ul>
+<li>Can convert ether units as well</li>
+<li>All convert to wei (recall that 1 ether is <span class="math inline">\(10^{18}\)</span> wei)</li>
+</ul>
+<pre><code>assert(1 wei == 1);
 assert(1 gwei == 1e9);
-assert(1 ether == 1e18);
-```
-
-
-
-
-## Reference types
-- Reference types are: strings, arrays, mappings, and structs
-- Like Java and Python, the language often hides that it's a reference
-
-
-
-
-
-## Memory locations
-- All reference types must specify a memory location
-  - `storage`: for all state variables, it is stored on the blockchain
-    - statically allocated, like the stack on x86
-    - two sub-types:
-      - local storage (local subroutine variable)
-      - state storage (state/class variable on the blockchain)
-  - `memory`: a local variable, it only exists while the subroutine is executing
-    - dynamically allocated, like the heap in x86
-  - `calldata`: read-only, used for function parameters
-
-
-
-## Assignments of references
-- If you assign one reference type to another, what happens depends on where the data is stored:
-
-| To (lhs) | From (rhs) | Result |
-|--|--|--|
-| memory | memory | reference aliasing |
-| memory | any storage | full copy |
-| memory | calldata | full copy |
-| any storage | memory | full copy |
-| any storage | calldata | full copy |
-| local storage | any storage | reference aliasing |
-| state storage | any storage | full copy |
-| calldata | (any) | not allowed |
-
-
-
-## Assignments of references
-- How to remember:
-  - You can't ever write to `calldata`
-  - Anything assigned between *different* types of memory is always a copy, as references can't point from one memory type to another
-  - State storage, which is on the blockchain, never stores references -- so anything copied to state storage is always a full copy
-  - Reference aliasing works in the 2 cases when the memory types are the same and it's not going into state storage: memory to memory, and any storage to local storage
-
-
-
-## Type names
-- For certain types, you have to give a qualifier as to where it is stored
-  - `bytes` and `string`
-- The qualifier is `memory`, `storage`, or `calldata`
-- The type name is *two words*
-  - `string memory`
-  - `bytes storage`
-
-
-
-## String functions
-- No (direct) built-in string comparison!
-  - Reasons:
-    - It is difficult / expensive to compare across memory locations
-  - Instead, compare their hashes: 
-```
-if ( keccak256(x) == keccak256(y) ) { ... }
-```
-    - Note that `keccak256()` uses a lot of gas
-- Can concatenate two strings:
-```
-string memory s = string.concat(s1, s2);
-```
-  - Only returns a `string memory`
-- There are 3rd party string function libraries
-  - Which contain comparisons, among other functions
-
-
-
+assert(1 ether == 1e18);</code></pre>
+</section>
+<section id="reference-types" class="slide level2">
+<h2>Reference types</h2>
+<ul>
+<li>Reference types are: strings, arrays, mappings, and structs</li>
+<li>Like Java and Python, the language often hides that it’s a reference</li>
+</ul>
+</section>
+<section id="memory-locations" class="slide level2">
+<h2>Memory locations</h2>
+<ul>
+<li>All reference types must specify a memory location
+<ul>
+<li><code>storage</code>: for all state variables, it is stored on the blockchain
+<ul>
+<li>statically allocated, like the stack on x86</li>
+<li>two sub-types:
+<ul>
+<li>local storage (local subroutine variable)</li>
+<li>state storage (state/class variable on the blockchain)</li>
+</ul></li>
+</ul></li>
+<li><code>memory</code>: a local variable, it only exists while the subroutine is executing
+<ul>
+<li>dynamically allocated, like the heap in x86</li>
+</ul></li>
+<li><code>calldata</code>: read-only, used for function parameters</li>
+</ul></li>
+</ul>
+</section>
+<section id="assignments-of-references" class="slide level2">
+<h2>Assignments of references</h2>
+<ul>
+<li>If you assign one reference type to another, what happens depends on where the data is stored:</li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>To (lhs)</th>
+<th>From (rhs)</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>memory</td>
+<td>memory</td>
+<td>reference aliasing</td>
+</tr>
+<tr class="even">
+<td>memory</td>
+<td>any storage</td>
+<td>full copy</td>
+</tr>
+<tr class="odd">
+<td>memory</td>
+<td>calldata</td>
+<td>full copy</td>
+</tr>
+<tr class="even">
+<td>any storage</td>
+<td>memory</td>
+<td>full copy</td>
+</tr>
+<tr class="odd">
+<td>any storage</td>
+<td>calldata</td>
+<td>full copy</td>
+</tr>
+<tr class="even">
+<td>local storage</td>
+<td>any storage</td>
+<td>reference aliasing</td>
+</tr>
+<tr class="odd">
+<td>state storage</td>
+<td>any storage</td>
+<td>full copy</td>
+</tr>
+<tr class="even">
+<td>calldata</td>
+<td>(any)</td>
+<td>not allowed</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="assignments-of-references-1" class="slide level2">
+<h2>Assignments of references</h2>
+<ul>
+<li>How to remember:
+<ul>
+<li>You can’t ever write to <code>calldata</code></li>
+<li>Anything assigned between <em>different</em> types of memory is always a copy, as references can’t point from one memory type to another</li>
+<li>State storage, which is on the blockchain, never stores references – so anything copied to state storage is always a full copy</li>
+<li>Reference aliasing works in the 2 cases when the memory types are the same and it’s not going into state storage: memory to memory, and any storage to local storage</li>
+</ul></li>
+</ul>
+</section>
+<section id="type-names" class="slide level2">
+<h2>Type names</h2>
+<ul>
+<li>For certain types, you have to give a qualifier as to where it is stored
+<ul>
+<li><code>bytes</code> and <code>string</code></li>
+</ul></li>
+<li>The qualifier is <code>memory</code>, <code>storage</code>, or <code>calldata</code></li>
+<li>The type name is <em>two words</em>
+<ul>
+<li><code>string memory</code></li>
+<li><code>bytes storage</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="string-functions" class="slide level2">
+<h2>String functions</h2>
+<ul>
+<li>No (direct) built-in string comparison!
+<ul>
+<li>Reasons:
+<ul>
+<li>It is difficult / expensive to compare across memory locations</li>
+</ul></li>
+<li>Instead, compare their hashes:</li>
+</ul>
+<pre><code>if ( keccak256(x) == keccak256(y) ) { ... }</code></pre>
+<ul>
+<li>Note that <code>keccak256()</code> uses a lot of gas</li>
+</ul></li>
+<li>Can concatenate two strings:</li>
+</ul>
+<pre><code>string memory s = string.concat(s1, s2);</code></pre>
+<ul>
+<li>Only returns a <code>string memory</code></li>
+<li>There are 3rd party string function libraries
+<ul>
+<li>Which contain comparisons, among other functions</li>
+</ul></li>
+</ul>
+</section>
+<section id="code-example" class="slide level2">
 <h2>Code Example</h2>
-
 <pre class="code-wrapper"><code class="hljs d small" style="height:100%;">// SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.5.0 <0.9.0;
+pragma solidity &gt;=0.5.0 &lt;0.9.0;
 
 contract C {
   // The data location of x is storage; this is the 
@@ -474,125 +876,140 @@ contract C {
   function h(uint[] memory) public pure {}
 }
 </code></pre>
-
-
-
-## Even more...
-- There are a lot of types we are skipping
-- See them all in the [Solidity types reference](https://docs.soliditylang.org/en/latest/types.html)
-  - https://docs.soliditylang.org/en/latest/types.html
-
-</textarea></section>
-
-  </section>
-
+</section>
+<section id="even-more" class="slide level2">
+<h2>Even more…</h2>
+<ul>
+<li>There are a lot of types we are skipping</li>
+<li>See them all in the <a href="https://docs.soliditylang.org/en/latest/types.html">Solidity types reference</a>
+<ul>
+<li>https://docs.soliditylang.org/en/latest/types.html</li>
+</ul></li>
+</ul>
 <!-- ============================================================ -->
-  
-  <section>
+</section></section>
+<section>
+<section id="concepts" class="title-slide slide level1 center">
+<h1>Concepts</h1>
 
-    <section id="concepts" data-markdown class="center"><textarea>
-# Concepts
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Learning Solidity
-- The easy part: learning the language
-  - It's just an OO language with familiar syntax
-- The hard part is understanding:
-  - The restrictions that blockchain programs have
-    - No time or random numbers
-    - No print statements!
-  - How to best interact with the blockchain
-  - What the heck do you do with it?
-- The easy part will be done in the next 20 minutes
-- The hard part will be the rest of this course
-
-
-
-## Sources
-- The main reference is the [Solidity language documentation](https://docs.soliditylang.org/en/latest/index.html)
-  - URL: https://docs.soliditylang.org/en/latest/index.html
-- [Ethereum developer resources](https://ethereum.org/en/developers/)
-  - URL: https://ethereum.org/en/developers/
-- [Solidity reference](https://docs.soliditylang.org)
-  - URL: https://docs.soliditylang.org
-- [Remix documentation](https://remix-ide.readthedocs.io/en/latest/) (the Solidity IDE)
-  - URL: https://remix-ide.readthedocs.io/en/latest/
-
-
-
-
-## Solidity Overview
-- An object-oriented language with C++/Java like syntax
-  - Same set of control structures with the same syntax (for, if/else, while, etc.)
-- A class is called a "contract"
-- Methods are called functions
-
-
-
-## License identifier
-- All Solidity smart contracts must have a license line as the first line
-  - SPDX is the [Software Package Development Exchange](https://spdx.org/licenses/)
-- Examples:
-```
-// SPDX-License-Identifier: MIT
-```
-```
-// SPDX-License-Identifier: CC BY-SA
-```
-```
-// SPDX-License-Identifier: GPL
-```
-- A compiler will issue a warning if it's not there
-- The actual license type is not checked, so you can also use:
-```
-// SPDX-License-Identifier: Unlicensed
-```
-
-
-
-## Pragma
-- We'll only use the following Solidity version pragma:
-```
-pragma solidity ^0.8.24;
-```
-- The three numbers are: major version, minor version, bugfix version
-- By default, it forces a compiler error if the wrong compiler version is being used
-  - Some platforms, such as Truffle or Remix, will try to find the right compiler version
-- This will only compile with version 0.8.24 or later
-  - But will NOT allow compilation with version 0.9.0 or later
-- Note that breaking changes (very few!) are only (intentionally) introduced on major versions
-
-
-
-## Pragma
-- More complicated examples are possible:
-
-```
-pragma solidity >=0.4.0 <0.6.0;
-```
-
-- One to avoid: note there is no carat before the version number
-  - Reason: a later bugfix version, 0.8.12, will not compile this program
-
-```
-pragma solidity 0.8.11;
-```
-
-- In this course, we'll use ONLY the following:
-  - As this will compile on all of the platforms we will be using
-
-```
-pragma solidity ^0.8.24;
-```
-
-
-
-## Comments
-- C++ and Java style comments
-
-```
-// this is a comment
+</section>
+<section id="learning-solidity" class="slide level2">
+<h2>Learning Solidity</h2>
+<ul>
+<li>The easy part: learning the language
+<ul>
+<li>It’s just an OO language with familiar syntax</li>
+</ul></li>
+<li>The hard part is understanding:
+<ul>
+<li>The restrictions that blockchain programs have
+<ul>
+<li>No time or random numbers</li>
+<li>No print statements!</li>
+</ul></li>
+<li>How to best interact with the blockchain</li>
+<li>What the heck do you do with it?</li>
+</ul></li>
+<li>The easy part will be done in the next 20 minutes</li>
+<li>The hard part will be the rest of this course</li>
+</ul>
+</section>
+<section id="sources-1" class="slide level2">
+<h2>Sources</h2>
+<ul>
+<li>The main reference is the <a href="https://docs.soliditylang.org/en/latest/index.html">Solidity language documentation</a>
+<ul>
+<li>URL: <a href="https://docs.soliditylang.org/en/latest/index.html">https://docs.soliditylang.org/en/latest/index.html</a></li>
+</ul></li>
+<li><a href="https://ethereum.org/en/developers/">Ethereum developer resources</a>
+<ul>
+<li>URL: <a href="https://ethereum.org/en/developers/">https://ethereum.org/en/developers/</a></li>
+</ul></li>
+<li><a href="https://docs.soliditylang.org">Solidity reference</a>
+<ul>
+<li>URL: <a href="https://docs.soliditylang.org">https://docs.soliditylang.org</a></li>
+</ul></li>
+<li><a href="https://remix-ide.readthedocs.io/en/latest/">Remix documentation</a> (the Solidity IDE)
+<ul>
+<li>URL: <a href="https://remix-ide.readthedocs.io/en/latest/">https://remix-ide.readthedocs.io/en/latest/</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="solidity-overview" class="slide level2">
+<h2>Solidity Overview</h2>
+<ul>
+<li>An object-oriented language with C++/Java like syntax
+<ul>
+<li>Same set of control structures with the same syntax (for, if/else, while, etc.)</li>
+</ul></li>
+<li>A class is called a “contract”</li>
+<li>Methods are called functions</li>
+</ul>
+</section>
+<section id="license-identifier" class="slide level2">
+<h2>License identifier</h2>
+<ul>
+<li>All Solidity smart contracts must have a license line as the first line
+<ul>
+<li>SPDX is the <a href="https://spdx.org/licenses/">Software Package Development Exchange</a></li>
+</ul></li>
+<li>Examples:</li>
+</ul>
+<pre><code>// SPDX-License-Identifier: MIT</code></pre>
+<pre><code>// SPDX-License-Identifier: CC BY-SA</code></pre>
+<pre><code>// SPDX-License-Identifier: GPL</code></pre>
+<ul>
+<li>A compiler will issue a warning if it’s not there</li>
+<li>The actual license type is not checked, so you can also use:</li>
+</ul>
+<pre><code>// SPDX-License-Identifier: Unlicensed</code></pre>
+</section>
+<section id="pragma" class="slide level2">
+<h2>Pragma</h2>
+<ul>
+<li>We’ll only use the following Solidity version pragma:</li>
+</ul>
+<pre><code>pragma solidity ^0.8.29;</code></pre>
+<ul>
+<li>The three numbers are: major version, minor version, bugfix version</li>
+<li>By default, it forces a compiler error if the wrong compiler version is being used
+<ul>
+<li>Some platforms, such as Truffle or Remix, will try to find the right compiler version</li>
+</ul></li>
+<li>This will only compile with version 0.8.29 or later
+<ul>
+<li>But will NOT allow compilation with version 0.9.0 or later</li>
+</ul></li>
+<li>Note that breaking changes (very few!) are only (intentionally) introduced on major versions</li>
+</ul>
+</section>
+<section id="pragma-1" class="slide level2">
+<h2>Pragma</h2>
+<ul>
+<li>More complicated examples are possible:</li>
+</ul>
+<pre><code>pragma solidity &gt;=0.4.0 &lt;0.6.0;</code></pre>
+<ul>
+<li>One to avoid: note there is no carat before the version number
+<ul>
+<li>Reason: a later bugfix version, 0.8.12, will not compile this program</li>
+</ul></li>
+</ul>
+<pre><code>pragma solidity 0.8.11;</code></pre>
+<ul>
+<li>In this course, we’ll use ONLY the following:
+<ul>
+<li>As this will compile on all of the platforms we will be using</li>
+</ul></li>
+</ul>
+<pre><code>pragma solidity ^0.8.29;</code></pre>
+</section>
+<section id="comments" class="slide level2">
+<h2>Comments</h2>
+<ul>
+<li>C++ and Java style comments</li>
+</ul>
+<pre><code>// this is a comment
 
 /* this is a
    multi-line
@@ -603,99 +1020,112 @@ pragma solidity ^0.8.24;
  * multi-line
  * comment with better
  * formatting
- */
- ```
-
-
-
-## Import
-- Default import statement:
-```
-import "./filename.sol";
-```
-  - Note that this will pollute the namespace
-- We can also use:
-```
-import * as symbolName from "./filename.sol";
-```
-  - All names from the file can be accessed via `symbolName.thing`
-  - An equivalent version of this is:
-```
-import "./filename.sol" as symbolName;
-```
-- Naming collision?  Then rename it upon import:
-```
-import {symbol1 as alias, symbol2} from "./filename.sol";
-```
-
-
-
-## High-level "things"
-- `contract`
-  - Essentially an OO class
-  - Can also be `abstract`
-- `interface`
-  - Just like interfaces in Java, or pure abstract classes in C++
-  - By convention, their names always start with a capital I (India)
-- `library`
-  - Can contain ONLY functions that do not access state
-    - Meaning no contract field access
-    - Specifically, they can only contain `pure` functions (we'll see `pure` shortly)
-  - Unless you have a reason otherwise, have everything inside have `internal` visibility
-    - We'll see visibilities shortly...
-
-
-
-## Inheritance
-- Contracts can inherit from interfaces and other contracts
-  - Interfaces can inherit from (only) other interfaces
-  - Via the `is` keyword
-- The super-class (or super-interface) must be defined above or `import`'ed
-```
-interface Foo is Bar {
+ */</code></pre>
+</section>
+<section id="import" class="slide level2">
+<h2>Import</h2>
+<ul>
+<li>Default import statement:</li>
+</ul>
+<pre><code>import "./filename.sol";</code></pre>
+<ul>
+<li>Note that this will pollute the namespace</li>
+<li>We can also use:</li>
+</ul>
+<pre><code>import * as symbolName from "./filename.sol";</code></pre>
+<ul>
+<li>All names from the file can be accessed via <code>symbolName.thing</code></li>
+<li>An equivalent version of this is:</li>
+</ul>
+<pre><code>import "./filename.sol" as symbolName;</code></pre>
+<ul>
+<li>Naming collision? Then rename it upon import:</li>
+</ul>
+<pre><code>import {symbol1 as alias, symbol2} from "./filename.sol";</code></pre>
+</section>
+<section id="high-level-things" class="slide level2">
+<h2>High-level “things”</h2>
+<ul>
+<li><code>contract</code>
+<ul>
+<li>Essentially an OO class</li>
+<li>Can also be <code>abstract</code></li>
+</ul></li>
+<li><code>interface</code>
+<ul>
+<li>Just like interfaces in Java, or pure abstract classes in C++</li>
+<li>By convention, their names always start with a capital I (India)</li>
+</ul></li>
+<li><code>library</code>
+<ul>
+<li>Can contain ONLY functions that do not access state
+<ul>
+<li>Meaning no contract field access</li>
+<li>Specifically, they can only contain <code>pure</code> functions (we’ll see <code>pure</code> shortly)</li>
+</ul></li>
+<li>Unless you have a reason otherwise, have everything inside have <code>internal</code> visibility
+<ul>
+<li>We’ll see visibilities shortly…</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="inheritance" class="slide level2">
+<h2>Inheritance</h2>
+<ul>
+<li>Contracts can inherit from interfaces and other contracts
+<ul>
+<li>Interfaces can inherit from (only) other interfaces</li>
+<li>Via the <code>is</code> keyword</li>
+</ul></li>
+<li>The super-class (or super-interface) must be defined above or <code>import</code>’ed</li>
+</ul>
+<pre><code>interface Foo is Bar {
   // ...
-}
-```
-```
-contract Student is Person, Learner {
+}</code></pre>
+<pre><code>contract Student is Person, Learner {
   // ...
-}
-```
-- Any contract that inherits from an interface, but does not implement all the methods, must be declared `abstract`
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id='multioverride'><textarea>
-## Inheritance
-- `virtual`: if a *thing* (function, field, etc.) in a contract can be overridden
-  - All function prototypes in interfaces are assumed to be `virtual`
-- `override`: when a sub-class is replacing an inherited function
-  - If the function is multiply inherited, you may have to specify which (or all) that it overrides (needed for the Tokens assignment):
-```
-function foo() public override(IERC165,ERC721) {
-```
-  - The requirement to specify `override` varies by compiler and version
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id='abscon'><textarea>
-## Abstract Contracts
-- A `contract` must have all the methods implemented
-- An `interface` must have no methods implemented
-- An `abstract contract` can have some methods implemented and some not
-  - Part interface, part contract
-  - Example: if you inherit from an interface, but only implement some of the methods
-
-```
-abstract contract Foo is Bar {
+}</code></pre>
+<ul>
+<li>Any contract that inherits from an interface, but does not implement all the methods, must be declared <code>abstract</code></li>
+</ul>
+</section>
+<section id="inheritance-1" class="slide level2">
+<h2>Inheritance</h2>
+<ul>
+<li><code>virtual</code>: if a <em>thing</em> (function, field, etc.) in a contract can be overridden
+<ul>
+<li>All function prototypes in interfaces are assumed to be <code>virtual</code></li>
+</ul></li>
+<li><code>override</code>: when a sub-class is replacing an inherited function
+<ul>
+<li>If the function is multiply inherited, you may have to specify which (or all) that it overrides (needed for the Tokens assignment):</li>
+</ul>
+<pre><code>function foo() public override(IERC165,ERC721) {</code></pre>
+<ul>
+<li>The requirement to specify <code>override</code> varies by compiler and version</li>
+</ul></li>
+</ul>
+</section>
+<section id="abstract-contracts" class="slide level2">
+<h2>Abstract Contracts</h2>
+<ul>
+<li>A <code>contract</code> must have all the methods implemented</li>
+<li>An <code>interface</code> must have no methods implemented</li>
+<li>An <code>abstract contract</code> can have some methods implemented and some not
+<ul>
+<li>Part interface, part contract</li>
+<li>Example: if you inherit from an interface, but only implement some of the methods</li>
+</ul></li>
+</ul>
+<pre><code>abstract contract Foo is Bar {
   // ...
-}
-```
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## What we have so far
-```
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+}</code></pre>
+</section>
+<section id="what-we-have-so-far" class="slide level2">
+<h2>What we have so far</h2>
+<pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.29;
 
 interface IERC165 {
   // ...
@@ -711,183 +1141,221 @@ contract ERC721 is IERC721 {
 
 library Address {
   // ...
-}
-```
-
-
-
-## Visibilities
-- `public`: like any other OO language, it can be called by anybody or anyone
-  - For fields, this is only the *readability* of the field; only contract functions can *write* to the field
-- `private`: like any other OO language, it can be called only by code in that class
-- `internal`: like `protected` in other OO languages: it can be called by that class or it's sub-classes
-- `external`: like `public`, but can ONLY be called by code *outside* the contract; code in the contract can not call an `external` function
-  - Functions in interfaces must be declared `external`
-  - The implementing contract can then "raise" the visibility to `public`
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id="getters"><textarea>
-## Visibilities
-- The stated visibility in an interface can be expanded (only) in the contract
-  - Example: if an interface specifies a function as `external`...
-    - Then the implementing contract can specify it either as `external` or `public`
-      - As `public` is *more* visible than `external`
-- Anything field defined as `public` has a getter function defined for it -- see the next slide
-  - If you have `uint public k`, then you can call the `k()` getter function to access its value
-- The default, if unspecified, is `public`
-  - But without a getter function
-- Note that all data is still visible on the blockchain, even for `private` fields!
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Getter functions
-- The following code:
-```
-uint public num_assignments;
-mapping (address => string) public aliases;
-mapping (uint => mapping(string => address) ) 
-              public twodmap;
-```
-- Creates the following getter functions:
-```
-function num_assignments() public view returns (uint);
+}</code></pre>
+</section>
+<section id="visibilities" class="slide level2">
+<h2>Visibilities</h2>
+<ul>
+<li><code>public</code>: like any other OO language, it can be called by anybody or anyone
+<ul>
+<li>For fields, this is only the <em>readability</em> of the field; only contract functions can <em>write</em> to the field</li>
+</ul></li>
+<li><code>private</code>: like any other OO language, it can be called only by code in that class</li>
+<li><code>internal</code>: like <code>protected</code> in other OO languages: it can be called by that class or it’s sub-classes</li>
+<li><code>external</code>: like <code>public</code>, but can ONLY be called by code <em>outside</em> the contract; code in the contract can not call an <code>external</code> function
+<ul>
+<li>Functions in interfaces must be declared <code>external</code></li>
+<li>The implementing contract can then “raise” the visibility to <code>public</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="visibilities-1" class="slide level2">
+<h2>Visibilities</h2>
+<ul>
+<li>The stated visibility in an interface can be expanded (only) in the contract
+<ul>
+<li>Example: if an interface specifies a function as <code>external</code>…
+<ul>
+<li>Then the implementing contract can specify it either as <code>external</code> or <code>public</code> (<code>public</code> is <em>more</em> visible than <code>external</code>)</li>
+</ul></li>
+</ul></li>
+<li>Anything field defined as <code>public</code> has a getter function defined for it – see the next slide
+<ul>
+<li>If you have <code>uint public k</code>, then you can call the <code>k()</code> getter function to access its value</li>
+</ul></li>
+<li>The default, if unspecified, is <code>public</code>
+<ul>
+<li>But without a getter function</li>
+</ul></li>
+<li>Note that all data is still visible on the blockchain, even for <code>private</code> fields!</li>
+</ul>
+</section>
+<section id="getter-functions" class="slide level2">
+<h2>Getter functions</h2>
+<ul>
+<li>The following code:</li>
+</ul>
+<pre><code>uint public num_assignments;
+mapping (address =&gt; string) public aliases;
+mapping (uint =&gt; mapping(string =&gt; address) ) 
+              public twodmap;</code></pre>
+<ul>
+<li>Creates the following getter functions:</li>
+</ul>
+<pre><code>function num_assignments() public view returns (uint);
 function aliases(address a) public view
                   returns (string memory);
 function twodmap(uint id, string s) public view
-                  returns (address);
-```
-
-
-
-## Function Qualifiers
-- `view`: this function does not *modify* the state of the contract
-  - It can read state variables, but not write to any state variables
-  - It can write to local variables, of course
-  - Like `const` in C++
-- `pure`: this function does not *read or write* the state of the contract
-  - Any function in a `library` must be `pure`
-  - `view` and `pure` are mutually exclusive
-- Using these qualifiers allows calls without having to make a transaction
-  - And *may* allow optimizations which reduce contract size and gas costs
-
-
-
-## Declarations for fields
-- Format:
-```
-<type> <visibility> <override?> <name> [= <value>];
-```
-- Examples:
-```
-uint public duration = 86400;
+                  returns (address);</code></pre>
+</section>
+<section id="function-qualifiers" class="slide level2">
+<h2>Function Qualifiers</h2>
+<ul>
+<li><code>view</code>: this function does not <em>modify</em> (write to) the state of the contract
+<ul>
+<li>It can read from state variables, but not write to any state variables</li>
+<li>It can write to local variables, of course</li>
+<li>Like <code>const</code> in C++</li>
+</ul></li>
+<li><code>pure</code>: this function does not <em>read from or write to</em> the state of the contract
+<ul>
+<li>Any function in a <code>library</code> must be <code>pure</code></li>
+<li><code>view</code> and <code>pure</code> are mutually exclusive</li>
+</ul></li>
+<li>Using these qualifiers allows calls without having to make a transaction
+<ul>
+<li>And <em>may</em> allow optimizations which reduce contract size and gas costs</li>
+</ul></li>
+</ul>
+</section>
+<section id="declarations-for-fields" class="slide level2">
+<h2>Declarations for fields</h2>
+<ul>
+<li>Format:</li>
+</ul>
+<pre><code>&lt;type&gt; &lt;visibility&gt; &lt;override?&gt; &lt;name&gt; [= &lt;value&gt;];</code></pre>
+<ul>
+<li>Examples:</li>
+</ul>
+<pre><code>uint public duration = 86400;
 uint public override k;
 address public override initiator;
-mapping (address => uint) internal values;
-```
-- Local variables are similar
-  - But without the visibility and `override` qualifiers
-
-
-
-## Declarations for functions
-- Format:
-```
-function <name> ([<parameter_list>]) <visibility> 
-                <qualifiers> [returns (<list>)] {
-```
-- Examples:
-
-```
-function addChoice (string memory _name) public 
+mapping (address =&gt; uint) internal values;</code></pre>
+<ul>
+<li>Local variables are similar
+<ul>
+<li>But without the visibility and <code>override</code> qualifiers</li>
+</ul></li>
+</ul>
+</section>
+<section id="declarations-for-functions" class="slide level2">
+<h2>Declarations for functions</h2>
+<ul>
+<li>Format:</li>
+</ul>
+<pre><code>function &lt;name&gt; ([&lt;parameter_list&gt;]) &lt;visibility&gt; 
+                &lt;qualifiers&gt; [returns (&lt;list&gt;)] {</code></pre>
+<ul>
+<li>Examples:</li>
+</ul>
+<pre><code>function addChoice (string memory _name) public 
               { /* ... */ }
 
 function unnecessaryFunction() public view 
               returns (string memory) { /* ... */ }
 
 function overridePureFunction() external pure 
-              override returns (uint,bool) { /* ... */ }
-```
-
-
-
-## Require and revert
-- A reversion means the transaction method fails, and all state is rolled back to before it started
-  - Still costs gas fees!
-- `revert()` will do this
-- Also:
-  - `require(a>0);` will revert if $a$ is not greater than zero
-  - Better to use the two-parameter version:
-  - `require(a>0,"a must be greater than zero");`
-    - Now, if/when it reverts, it will tell you why
-  - Use this all the time!!!
-
-
-
-## Receiving ether
-- The `payable` qualifier means the function can accept ether as part of the call
-- The amount of ether received is in `msg.value`
-  - And is added to the contract's balance
-    - ... assuming it doesn't revert
-
-
-
-## Constructors
-- Syntax:
-```
-constructor() {
+              override returns (uint,bool) { /* ... */ }</code></pre>
+</section>
+<section id="require-and-revert" class="slide level2">
+<h2>Require and revert</h2>
+<ul>
+<li>A reversion means the transaction method fails, and all state is rolled back to before it started
+<ul>
+<li>Still costs gas fees!</li>
+</ul></li>
+<li><code>revert()</code> will do this</li>
+<li>Also:
+<ul>
+<li><code>require(a&gt;0);</code> will revert if <span class="math inline">\(a\)</span> is not greater than zero</li>
+<li>Better to use the two-parameter version:</li>
+<li><code>require(a&gt;0,"a must be greater than zero");</code>
+<ul>
+<li>Now, if/when it reverts, it will tell you why</li>
+</ul></li>
+<li>Use this all the time!!!</li>
+</ul></li>
+</ul>
+</section>
+<section id="receiving-ether" class="slide level2">
+<h2>Receiving ether</h2>
+<ul>
+<li>The <code>payable</code> qualifier means the function can accept ether as part of the call</li>
+<li>The amount of ether received is in <code>msg.value</code>
+<ul>
+<li>And is added to the contract’s balance
+<ul>
+<li>… assuming it doesn’t revert</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="constructors" class="slide level2">
+<h2>Constructors</h2>
+<ul>
+<li>Syntax:</li>
+</ul>
+<pre><code>constructor() {
     // ...
-}
-```
-- No `function` keyword, no return type
-- Default, if not specified, is an empty body
-- Can take parameters:
-```
-constructor(uint foo) {
+}</code></pre>
+<ul>
+<li>No <code>function</code> keyword, no return type</li>
+<li>Default, if not specified, is an empty body</li>
+<li>Can take parameters:</li>
+</ul>
+<pre><code>constructor(uint foo) {
     // ...
-}
-```
-- Only one constructor is allowed per class!
-  - They may eventually allow multiple, differentiated by the parameter list
-
-
-
-## Destructor
-- `selfdesctruct()`
-  - Only if enabled (declared)
-  - Disables the contract permanently
-  - Caller claims the ether balance
-
-
-
-## Contract elements
-- A contract can have:
-  - Fields
-  - Functions
-  - A constructor and a `selfdestruct()` method
-  - A few other special-purpose methods we won't see here
-  - Modifiers
-
-
-
-## Modifiers
-- A modifier changes how a function works
-- You put in conditions (or whatever) and then indicate where the function body goes
-- That indication is with the underscore
-- Example:
-```
-modifier onlyOwner() {
+}</code></pre>
+<ul>
+<li>Only one constructor is allowed per class!
+<ul>
+<li>They may eventually allow multiple, differentiated by the parameter list</li>
+</ul></li>
+</ul>
+</section>
+<section id="destructor" class="slide level2">
+<h2>Destructor</h2>
+<ul>
+<li><code>selfdesctruct()</code>
+<ul>
+<li>Only if enabled (declared)</li>
+<li>Disables the contract permanently</li>
+<li>Caller claims the ether balance</li>
+</ul></li>
+</ul>
+</section>
+<section id="contract-elements" class="slide level2">
+<h2>Contract elements</h2>
+<ul>
+<li>A contract can have:
+<ul>
+<li>Fields</li>
+<li>Functions</li>
+<li>A constructor and a <code>selfdestruct()</code> method</li>
+<li>A few other special-purpose methods we won’t see here</li>
+<li>Modifiers</li>
+</ul></li>
+</ul>
+</section>
+<section id="modifiers" class="slide level2">
+<h2>Modifiers</h2>
+<ul>
+<li>A modifier changes how a function works</li>
+<li>You put in conditions (or whatever) and then indicate where the function body goes</li>
+<li>That indication is with the underscore</li>
+<li>Example:</li>
+</ul>
+<pre><code>modifier onlyOwner() {
     require(msg.sender == owner, "Not owner");
     _;
-}
-```
-
-
-
-## Modifiers
-- This code adapted from [solidity-by-example.org](https://solidity-by-example.org/function-modifier/):
-
-<pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
->contract Modifiers {
+}</code></pre>
+</section>
+<section id="modifiers-1" class="slide level2">
+<h2>Modifiers</h2>
+<ul>
+<li>This code adapted from <a href="https://solidity-by-example.org/function-modifier/">solidity-by-example.org</a>:</li>
+</ul>
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;">contract Modifiers {
     address public owner;
 
     constructor() {
@@ -910,136 +1378,153 @@ modifier onlyOwner() {
     }
 }
 </code></pre>
-
-
-
-## Events & emit
-- An *event* is when something happens
-- Allows for logging of what has happened to a contract
-- They are declared in contracts or interfaces:
-```
-event votedEvent (uint indexed _id);
-event choiceAddedEvent (uint indexed _id);
-```
-  - The `indexed` keyword allows for searching the event log by that value
-- Events are called via `emit`:
-```
-emit choiceAddedEvent(num_choices);
-emit votedEvent(_id);
-```
-- Events can be "watched" for (or "subscribed to")
-  - We'll see this later this semester
-
-
-
-## Try-catch
-- Try-catch:
-
-```
-try <something> {
+</section>
+<section id="events-emit" class="slide level2">
+<h2>Events &amp; emit</h2>
+<ul>
+<li>An <em>event</em> is when something happens</li>
+<li>Allows for logging of what has happened to a contract</li>
+<li>They are declared in contracts or interfaces:</li>
+</ul>
+<pre><code>event votedEvent (uint indexed _id);
+event choiceAddedEvent (uint indexed _id);</code></pre>
+<ul>
+<li>The <code>indexed</code> keyword allows for searching the event log by that value</li>
+<li>Events are called via <code>emit</code>:</li>
+</ul>
+<pre><code>emit choiceAddedEvent(num_choices);
+emit votedEvent(_id);</code></pre>
+<ul>
+<li>Events can be “watched” for (or “subscribed to”)
+<ul>
+<li>We’ll see this later this semester</li>
+</ul></li>
+</ul>
+</section>
+<section id="try-catch" class="slide level2">
+<h2>Try-catch</h2>
+<ul>
+<li>Try-catch:</li>
+</ul>
+<pre><code>try &lt;something&gt; {
   // what to do if it succeeds
 } catch {
   // what to do if it fails (reverts)
 }
-
-```
-- The "something" can be:
-  - Calling a function
-  - Creating a new contract
-  - Or anything else
-- If the *something* reverts, the catch clause is executed
-</textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id='payeth'><textarea>
-## Transferring ether in Solidity
-- To transfer ether from a Solidity contract:
-```
-(bool success, ) = payable(a).call{value: v}("");
-require(success, "Failed to transfer ETH");
-```
-- The amount, in `v`, is in wei
-- The address to pay it to is in `a`
-- This reverts if the contract does not have sufficient balance
-  - Or if it fails for any other reason, such as an invalid address
-</textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Contracts creating contracts
-- We can have a contract `Foo` deploy another contract `Bar`
-- Given a field in Foo such as either:
-```
-Bar public b;
-address public c;
-```
-- Then we can initialize it via either (respectively):
-```
-b = new Bar();
-c = address(new Bar());
-```
-
-
-
-## Most useful global variables
-From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.html)
-
-- block.timestamp (uint)
-  - current block timestamp as seconds since unix epoch
-- msg.sender (address)
-  - sender of the message (current call)
-- msg.value (uint)
-  - number of wei sent with the message
-- this
-  - the current contract (example: address(this).balance)
-
-
-
-## Other global variables
-- block.basefee (uint): current block's base fee
-- block.chainid (uint): current chain id
-- block.coinbase (address payable): current block miner's address
-- block.difficulty (uint): current block difficulty
-- block.gaslimit (uint): current block gaslimit
-- block.number (uint): current block number
-- gasleft() returns (uint256): remaining gas
-- msg.data (bytes calldata): complete calldata
-- msg.sig (bytes4): first four bytes of the calldata (i.e. function identifier)
-- tx.gasprice (uint): gas price of the transaction
-- tx.origin (address): sender of the transaction (full call chain)
-
-
-
-## Global functions
-- blockhash(uint blockNumber) returns (bytes32)
-  - hash of the given block when blocknumber is one of the 256 most recent blocks; otherwise returns zero
-- keccak256(bytes memory) returns (bytes32)
-
-
-
-## Solidity reference
-- See the one at https://docs.soliditylang.org/en/latest/cheatsheet.html
-- In PDF form in the repo as [docs/solidity_reference.pdf](../docs/solidity_reference.pdf)
-
-
-
-## Solidity bytecode
-Consider the following Solidity smart contract:
-```
-// SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.24;
+</code></pre>
+<ul>
+<li>The “something” can be:
+<ul>
+<li>Calling a function</li>
+<li>Creating a new contract</li>
+<li>Or anything else</li>
+</ul></li>
+<li>If the <em>something</em> reverts, the catch clause is executed</li>
+</ul>
+</section>
+<section id="transferring-ether-in-solidity" class="slide level2">
+<h2>Transferring ether in Solidity</h2>
+<ul>
+<li>To transfer ether from a Solidity contract:</li>
+</ul>
+<pre><code>(bool success, ) = payable(a).call{value: v}("");
+require(success, "Failed to transfer ETH");</code></pre>
+<ul>
+<li>The amount, in <code>v</code>, is in wei</li>
+<li>The address to pay it to is in <code>a</code></li>
+<li>This reverts if the contract does not have sufficient balance
+<ul>
+<li>Or if it fails for any other reason, such as an invalid address</li>
+</ul></li>
+</ul>
+</section>
+<section id="contracts-creating-contracts" class="slide level2">
+<h2>Contracts creating contracts</h2>
+<ul>
+<li>We can have a contract <code>Foo</code> deploy another contract <code>Bar</code></li>
+<li>Given a field in Foo such as either:</li>
+</ul>
+<pre><code>Bar public b;
+address public c;</code></pre>
+<ul>
+<li>Then we can initialize it via either (respectively):</li>
+</ul>
+<pre><code>b = new Bar();
+c = address(new Bar());</code></pre>
+</section>
+<section id="most-useful-global-variables" class="slide level2">
+<h2>Most useful global variables</h2>
+<p>From <a href="https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.html">here</a></p>
+<ul>
+<li>block.timestamp (uint)
+<ul>
+<li>current block timestamp as seconds since unix epoch</li>
+</ul></li>
+<li>msg.sender (address)
+<ul>
+<li>sender of the message (current call)</li>
+</ul></li>
+<li>msg.value (uint)
+<ul>
+<li>number of wei sent with the message</li>
+</ul></li>
+<li>this
+<ul>
+<li>the current contract (example: address(this).balance)</li>
+</ul></li>
+</ul>
+</section>
+<section id="other-global-variables" class="slide level2">
+<h2>Other global variables</h2>
+<ul>
+<li>block.basefee (uint): current block’s base fee</li>
+<li>block.chainid (uint): current chain id</li>
+<li>block.coinbase (address payable): current block miner’s address</li>
+<li>block.difficulty (uint): current block difficulty</li>
+<li>block.gaslimit (uint): current block gaslimit</li>
+<li>block.number (uint): current block number</li>
+<li>gasleft() returns (uint256): remaining gas</li>
+<li>msg.data (bytes calldata): complete calldata</li>
+<li>msg.sig (bytes4): first four bytes of the calldata (i.e.&nbsp;function identifier)</li>
+<li>tx.gasprice (uint): gas price of the transaction</li>
+<li>tx.origin (address): sender of the transaction (full call chain)</li>
+</ul>
+</section>
+<section id="global-functions" class="slide level2">
+<h2>Global functions</h2>
+<ul>
+<li>blockhash(uint blockNumber) returns (bytes32)
+<ul>
+<li>hash of the given block when blocknumber is one of the 256 most recent blocks; otherwise returns zero</li>
+</ul></li>
+<li>keccak256(bytes memory) returns (bytes32)</li>
+</ul>
+</section>
+<section id="solidity-reference" class="slide level2">
+<h2>Solidity reference</h2>
+<ul>
+<li>See the Solidity cheatsheet online at <a href="https://docs.soliditylang.org/en/latest/cheatsheet.html">https://docs.soliditylang.org/en/latest/cheatsheet.html</a></li>
+<li>In PDF form in the repo as <a href="../docs/solidity_reference.pdf">docs/solidity_reference.pdf</a></li>
+</ul>
+</section>
+<section id="solidity-bytecode" class="slide level2">
+<h2>Solidity bytecode</h2>
+<p>Consider the following Solidity smart contract:</p>
+<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+pragma solidity ^0.8.29;
 contract MyContract {
     uint public i = 1 + 2 * 3 - 4;
-}
-```
-The bytecode was generated via:
-- Going to [remix.ethereum.org](http://remix.ethereum.org), create a new contract file, and enter the text
-- Select the compiler icon on the left, and click 'compile'
-- Select 'compilation details', the 'Assembly' at the bottom
-
-
-
-## Solidity bytecode
-<pre class="code-wrapper"><code class="hljs d small" style="height:100%;"
->.code
+}</code></pre>
+<p>The bytecode was generated via:</p>
+<ul>
+<li>Going to <a href="http://remix.ethereum.org">remix.ethereum.org</a>, create a new contract file, and enter the text</li>
+<li>Select the compiler icon on the left, and click ‘compile’</li>
+<li>Select ‘compilation details’, the ‘Assembly’ at the bottom</li>
+</ul>
+</section>
+<section id="solidity-bytecode-1" class="slide level2">
+<h2>Solidity bytecode</h2>
+<pre class="code-wrapper"><code class="hljs d small" style="height:100%;">.code
   PUSH 80     contract MyContract {\n    uin...
   PUSH 40     contract MyContract {\n    uin...
   MSTORE      contract MyContract {\n    uin...
@@ -1124,49 +1609,49 @@ tag 1     contract MyContract {\n    uin...
       SWAP1       uint public i = 1 + 2 * 3 - 4
       RETURN      uint public i = 1 + 2 * 3 - 4
     .data</code></pre>
-
-
-
-## Solidity hex bytecode
-- That bytecode is compiled into hex (binary):
-```
-60806040526003600055348015601457600080fd5b50607d80
+</section>
+<section id="solidity-hex-bytecode" class="slide level2">
+<h2>Solidity hex bytecode</h2>
+<ul>
+<li>That bytecode is compiled into hex (binary):</li>
+</ul>
+<pre><code>60806040526003600055348015601457600080fd5b50607d80
 6100236000396000f3fe6080604052348015600f57600080fd
 5b506004361060285760003560e01c8063e5aa3d5814602d57
 5b600080fd5b603560005481565b6040519081526020016040
 5180910390f3fea26469706673582212206e6ad71c40961eec
 8c1886164d5d543228ad45839283845f4e3bdbb431243be364
-736f6c63430008110033
-```
-- This hex code is as it would show up in the blockchain Ethereum explorer
-  - In the "input" field
-- Total of 160 bytes (compilation optimization was used)
-</textarea></section>
-
-  </section>
-
+736f6c63430008110033</code></pre>
+<ul>
+<li>This hex code is as it would show up in the blockchain Ethereum explorer
+<ul>
+<li>In the “input” field</li>
+</ul></li>
+<li>Total of 160 bytes (compilation optimization was used)</li>
+</ul>
 <!-- ============================================================ -->
-  
-  <section>
+</section></section>
+<section>
+<section id="poll-example" class="title-slide slide level1 center">
+<h1>Poll Example</h1>
 
-    <section id="poll" data-markdown class="center"><textarea>
-# Poll Example
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Poll Example
-- This is the [Poll.sol](../hws/dappintro/Poll.sol.html) smart contract from the the [dApp Introduction](../hws/dappintro/index.html) assignment
-  - It implements the [IPoll.sol](../hws/dappintro/IPoll.sol.html) interface
-  - Both are shown in full on the next two slides
-  - But the comments were removed for compactness in the slides
-
-
-
+</section>
+<section id="poll-example-1" class="slide level2">
+<h2>Poll Example</h2>
+<ul>
+<li>This is the <a href="../hws/dappintro/Poll.sol.html">Poll.sol</a> smart contract from the the <a href="../hws/dappintro/index.html">dApp Introduction</a> assignment
+<ul>
+<li>It implements the <a href="../hws/dappintro/IPoll.sol.html">IPoll.sol</a> interface</li>
+<li>Both are shown in full on the next two slides</li>
+<li>But the comments were removed for compactness in the slides</li>
+</ul></li>
+</ul>
+</section>
+<section id="ipoll.sol" class="slide level2">
 <h2>IPoll.sol</h2>
-
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.29;
 
 interface IPoll {
 
@@ -1194,22 +1679,20 @@ interface IPoll {
 
 }
 </code></pre>
-
-
-
+</section>
+<section id="poll.sol" class="slide level2">
 <h2>Poll.sol</h2>
-
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.29;
 
 import "./IPoll.sol";
 
 contract Poll is IPoll {
 
-  mapping (address => bool) public override voted;
+  mapping (address =&gt; bool) public override voted;
 
-  mapping (uint => Choice) internal _choices;
+  mapping (uint =&gt; Choice) internal _choices;
 
   function choices(uint i) public view override returns (Choice memory) {
     return _choices[i];
@@ -1236,7 +1719,7 @@ contract Poll is IPoll {
 
   function vote (uint _id) public override {
     require(!voted[msg.sender], "sender has already voted");
-    require(_id >= 0 && _id < num_choices, "invalid vote selection");
+    require(_id &gt;= 0 &amp;&amp; _id &lt; num_choices, "invalid vote selection");
     voted[msg.sender] = true;
     _choices[_id].votes++;
     emit votedEvent(_id);
@@ -1252,319 +1735,367 @@ contract Poll is IPoll {
 
 }
 </code></pre>
-
-
-
-## Poll Compilation Artifacts
-- ABI (Application Binary Interface):
-  - [IPoll ABI](../hws/dappintro/IPoll.abi.txt)
-  - [Poll ABI](../hws/dappintro/Poll.abi.txt)
-- Compiled bytecode
-  - [Normal](../hws/dappintro/Poll-normal.bin.txt) (5,656 bytes)
-    - Contract @ 0x8f8a7d8CCD4aEb500c1708A0f22231e3d86Fea59 (fall 2023)
-  - [Optimized](../hws/dappintro/Poll-optimized.bin.txt) (3,010 bytes)
-    - Contract @ 0xeB08a2F5A484Cd5f1B7bE3014bDD1215C9C962Bd (fall 2023)
-  - See these on the blockchain explorer as well
-- [EVM opcodes](../hws/dappintro/Poll.asm.txt) for Poll.sol
-
-
-
-## Security holes
-- Did you notice the (intentional) security holes in the Poll contract?
-  - There were at least two, one inherent to Solidity and one I put in there
-</textarea></section>
-
-  </section>
-
+</section>
+<section id="poll-compilation-artifacts" class="slide level2">
+<h2>Poll Compilation Artifacts</h2>
+<ul>
+<li>ABI (Application Binary Interface):
+<ul>
+<li><a href="../hws/dappintro/IPoll.abi.txt">IPoll ABI</a></li>
+<li><a href="../hws/dappintro/Poll.abi.txt">Poll ABI</a></li>
+</ul></li>
+<li>Compiled bytecode
+<ul>
+<li><a href="../hws/dappintro/Poll-normal.bin.txt">Normal</a> (5,656 bytes)
+<ul>
+<li>Contract @ 0x8f8a7d8CCD4aEb500c1708A0f22231e3d86Fea59 (fall 2023)</li>
+</ul></li>
+<li><a href="../hws/dappintro/Poll-optimized.bin.txt">Optimized</a> (3,010 bytes)
+<ul>
+<li>Contract @ 0xeB08a2F5A484Cd5f1B7bE3014bDD1215C9C962Bd (fall 2023)</li>
+</ul></li>
+<li>See these on the blockchain explorer as well</li>
+</ul></li>
+<li><a href="../hws/dappintro/Poll.asm.txt">EVM opcodes</a> for Poll.sol</li>
+</ul>
+</section>
+<section id="security-holes" class="slide level2">
+<h2>Security holes</h2>
+<ul>
+<li>Did you notice the (intentional) security holes in the Poll contract?
+<ul>
+<li>There were at least two, one inherent to Solidity and one I put in there</li>
+</ul></li>
+</ul>
 <!-- ============================================================ -->
-  
-  <section>
+</section></section>
+<section>
+<section id="debtors-example" class="title-slide slide level1 center">
+<h1>Debtor’s Example</h1>
 
-    <section id="debtor" data-markdown class="center"><textarea>
-# Debtor's Example
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## A Circle of Debt
-- A group of friends always cover each other for expenses
-- They want a way to resolve these debts
-- Example:
-  - Alice pays `$`5 to cover Bob
-  - Bob pays `$`5 to cover Charlie
-  - Charlie pays `$`10 to cover Alice
-  - The net result is that Alice owes `$`5 to Charlie; all other debts cancel out
-- We'll implement this as a smart contract in Solidity on Ethereum
-
-
-
-## Design considerations
-- The blockchain will hold the history of who owes money (ether), and how much
-- Nobody wants to remember people by their Ethereum address
-  - So we will use an *alias*, which is a string ("alice", "bob", etc.) that corresponds to an address
-  - It has an optional *name* field as well
-- The group of friends all trust each other, so either side can enter a debt
-  - But Alice cannot enter a debt between Bob and Charlie
-
-
-
-## Insight
-- The key insight is that if Alice pays Bob $x$, then Alice's balance goes *up* by $x$, and Bob's goes *down* by $x$
-  - A negative balance means you owe money
-  - A positive balance means you are owed money
-- The system will keep track of how much one owes or is owed, but not necessarily who to
-
-
-
-## Development
-- Let's jointly live develop it on [remix.ethereum.org](https://remix.ethereum.org/)
-
-
-
-## Interface
-- Given the code in Debts.sol, let's extract out an interface
-  - What we developed: [Debts-no-interface.sol](code/Debts-no-interface.sol.html)
-- The [IDebts.sol](code/IDebts.sol.html) interface will have:
-  - The Entry struct
-  - The events
-  - The function prototypes (and public getter methods), all with `external` visibility
-  - The `entries()` function has a tuple return type, not an `Entry memory` return type
-- The [Debts.sol](code/Debts.sol.html) changes:
-  - Import the IDebts interface
-  - Remove (comment out) the Entry struct and the events
-  - All methods change to `override`
-  - Add a `supportsInterface()` method
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id="demostart"><textarea>
-## Start of in-class activity
-- The slides below are for the in-class activity
-- The column to the right is not
-
-
-
-## Deployment
-- A request: please do not go ahead of me in the following deployment steps
-- This has already been deployed on our private Ethereum blockchain
-  - But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the [dApp Introduction](../hws/dappintro/index.html) assignment
-- I've added an alias for me, but not for any of you
-- On the Canvas landing page is the relevant contract address (and other information)
-- Look at the Blockchain Explorer
-  - The smart contract was deployed in a specific block
-  - The adding of some aliases was in a specific block
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Interacting via geth
-- You should all start up your geth node via:
-```
-geth --config geth-config.toml \
-     --rpc.enabledeprecatedpersonal
-```
-- Once done, you should start a geth terminal in a *new* window/tab:
-```
-geth attach /path/to/ethprivate/geth.ipc
-```
-Or:
-```
-geth attach ./geth.ipc
-```
-In Windows, it's something like:
-```
-geth attach \\.\pipe\geth.ipc
-```
-
-
-
-## Your eth.coinbase
-- If your eth.coinbase is *different* than what you submitted in either of the last two assignments...
-  - Or you think it might be different, but aren't sure...
-- Email me, right now, with your updated eth.coinbase
-  - This way I can give you credit for participating
-  - That email has to arrive before class ends today!
-
-
-
-## Relevant information
-- On the Canvas landing page, at the bottom, are a few pieces of information we will need:
-  - The Debts smart contract address
-  - A [link to the ABI for the IDebts.sol interface](code/IDebts.sol.abi.txt) -- you will need to copy that shortly
-    - About where we get that ABI...
-  - A link to this part of the slide set so you can copy-and-paste some of the code
-  - And other useful links
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id='geth'><textarea>
-## Transactions from geth
-- We are going to call the smart contract directly from geth
-- First, save the smart contract address in a variable:
-```
-var addr = "0xffffffffffffffffffffffffffffffffffffffff";
-```
-  - But use the actual address, not that address!
-- Next we have to save the ABI:
-```
-var abi = [...];
-```
-  - Copy-and-paste the ABI from the Canvas landing page into that command
-  - Notice no quotes around the variable's value!
-  - It should present that same ABI back to you, but nicely formatted
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Transactions from geth
-- Next we have to have geth create a contract object for us:
-```
-var interface = eth.contract(abi);
-```
-- Lastly, we need to link that to the specific contract address that we are going to be using:
-```
-var contract = interface.at(addr);
-```
-
-
-
-## Geth read transactions
-- We can call read-only transactions (`view` or `pure` functions) via the `.call()` method
-- To read a variable:
-```
-contract.num_entries.call()
-```
-- To read a mapping:
-```
-contract.entries.call(0)
-```
-- To get a name from a mapping:
-```
-contract.entries.call(0)[2]
-```
-- To call a (`view` or `pure`) method:
-```
-contract.thisMethodDoesNotExist.call()
-```
-
-
-
-## Geth write transactions
-- First, unlock your account:
-```
-personal.unlockAccount(eth.coinbase,"password",0)
-```
-- Use *your* password, though!
-- Does it not know `eth.coinbase`?  If not, then enter:
-```
-miner.setEtherbase(eth.accounts[0])
-```
-- Recall that the blockchain explorer updates every 1 minute
-
-
-
-## Adding an alias
-- You have to add yourself as an alias
-- Request: please use your UVA userid as the alias itself
-  - If you don't want to use your own, make up a believable fake one
-
-
-
-## Adding an alias
-- Transactions that write to the blockchain use the `.sendTransaction()` method
-```
-contract.addAlias.sendTransaction("mst3k", 
-         "Your Name", {from:eth.coinbase, gas:1000000})
-```
-- Don't use mst3k!  Use your userid and name
-  - Possibly fake, but make it realistic
-- Notice, in the value printed after that call, the transaction hash
-  - Search for the address in the Blockchain Explorer
-  - It will take up to a minute for the explorer to refresh
-- In the explorer transaction page, notice the decoded function call
-  - It states the function called, and the parameters passed in
-
-
-
-## View the list of debts
-- We have a web page that allows you to view all the entered aliases and who owes what
-- The URL is on the Canvas landing page
-  - You can also view it from the explorer page for the contract account
-
-
-
-## Pay off some debts!
-- You can now enter some debts:
-```
-contract.payToAlias.sendTransaction("mst3k",17,
-               {from:eth.coinbase, gas:1000000});
-```
-- Don't use mst3k!  Use the userid of the *other* person
-- Note that this is entering that the other person owes *you* money
-  - If you owe them money, you would enter a negative value
-- The amount must be between -100 and 100, inclusive
-- And, again, view the web page for this exercise that lists the current balances
-- You can also see those transactions in the blockchain explorer
-  - Note the transaction hash when you enter that command
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id="demoend"><textarea>
-## The result...
-... how much do I owe???
-
-Also, we have the source code available:
-
-- The original code we developed is [Debts-no-interface.sol](code/Debts-no-interface.sol.html) ([src](code/Debts-no-interface.sol))
-- The updated code (with the interface) is in [IDebts.sol](code/IDebts.sol.html) ([src](code/IDebts.sol)) and [Debts.sol](code/Debts.sol.html) ([src](code/Debts.sol))
-
-</textarea></section>
-
-  </section>
-
+</section>
+<section id="a-circle-of-debt" class="slide level2">
+<h2>A Circle of Debt</h2>
+<ul>
+<li>A group of friends always cover each other for expenses</li>
+<li>They want a way to resolve these debts</li>
+<li>Example:
+<ul>
+<li>Alice pays <code>$</code>5 to cover Bob</li>
+<li>Bob pays <code>$</code>5 to cover Charlie</li>
+<li>Charlie pays <code>$</code>10 to cover Alice</li>
+<li>The net result is that Alice owes <code>$</code>5 to Charlie; all other debts cancel out</li>
+</ul></li>
+<li>We’ll implement this as a smart contract in Solidity on Ethereum</li>
+</ul>
+</section>
+<section id="design-considerations" class="slide level2">
+<h2>Design considerations</h2>
+<ul>
+<li>The blockchain will hold the history of who owes money (ether), and how much</li>
+<li>Nobody wants to remember people by their Ethereum address
+<ul>
+<li>So we will use an <em>alias</em>, which is a string (“alice”, “bob”, etc.) that corresponds to an address</li>
+<li>It has an optional <em>name</em> field as well</li>
+</ul></li>
+<li>The group of friends all trust each other, so either side can enter a debt
+<ul>
+<li>But Alice cannot enter a debt between Bob and Charlie</li>
+</ul></li>
+</ul>
+</section>
+<section id="insight" class="slide level2">
+<h2>Insight</h2>
+<ul>
+<li>The key insight is that if Alice pays Bob <span class="math inline">\(x\)</span>, then Alice’s balance goes <em>up</em> by <span class="math inline">\(x\)</span>, and Bob’s goes <em>down</em> by <span class="math inline">\(x\)</span>
+<ul>
+<li>A negative balance means you owe money</li>
+<li>A positive balance means you are owed money</li>
+</ul></li>
+<li>The system will keep track of how much one owes or is owed, but not necessarily who to</li>
+</ul>
+</section>
+<section id="development" class="slide level2">
+<h2>Development</h2>
+<ul>
+<li>Let’s jointly live develop it on <a href="https://remix.ethereum.org/">remix.ethereum.org</a></li>
+</ul>
+</section>
+<section id="interface" class="slide level2">
+<h2>Interface</h2>
+<ul>
+<li>Given the code in Debts.sol, let’s extract out an interface
+<ul>
+<li>What we developed: <a href="code/Debts-no-interface.sol.html">Debts-no-interface.sol</a></li>
+</ul></li>
+<li>The <a href="code/IDebts.sol.html">IDebts.sol</a> interface will have:
+<ul>
+<li>The Entry struct</li>
+<li>The events</li>
+<li>The function prototypes (and public getter methods), all with <code>external</code> visibility</li>
+<li>The <code>entries()</code> function has a tuple return type, not an <code>Entry memory</code> return type</li>
+</ul></li>
+<li>The <a href="code/Debts.sol.html">Debts.sol</a> changes:
+<ul>
+<li>Import the IDebts interface</li>
+<li>Remove (comment out) the Entry struct and the events</li>
+<li>All methods change to <code>override</code></li>
+<li>Add a <code>supportsInterface()</code> method</li>
+</ul></li>
+</ul>
+</section>
+<section id="start-of-in-class-activity" class="slide level2">
+<h2>Start of in-class activity</h2>
+<ul>
+<li>The slides below are for the in-class activity</li>
+<li>The column to the right is not</li>
+</ul>
+</section>
+<section id="deployment" class="slide level2">
+<h2>Deployment</h2>
+<ul>
+<li>A request: please do not go ahead of me in the following deployment steps</li>
+<li>This has already been deployed on our private Ethereum blockchain
+<ul>
+<li>But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the <a href="../hws/dappintro/index.html">dApp Introduction</a> assignment</li>
+</ul></li>
+<li>I’ve added an alias for me, but not for any of you</li>
+<li>On the Canvas landing page is the relevant contract address (and other information)</li>
+<li>Look at the Blockchain Explorer
+<ul>
+<li>The smart contract was deployed in a specific block</li>
+<li>The adding of some aliases was in a specific block</li>
+</ul></li>
+</ul>
+</section>
+<section id="interacting-via-geth" class="slide level2">
+<h2>Interacting via geth</h2>
+<ul>
+<li>You should all start up your geth node via:</li>
+</ul>
+<pre><code>geth --config geth-config.toml \
+     --rpc.enabledeprecatedpersonal</code></pre>
+<ul>
+<li>Once done, you should start a geth terminal in a <em>new</em> window/tab:</li>
+</ul>
+<pre><code>geth attach /path/to/ethprivate/geth.ipc</code></pre>
+<p>Or:</p>
+<pre><code>geth attach ./geth.ipc</code></pre>
+<p>In Windows, it’s something like:</p>
+<pre><code>geth attach \\.\pipe\geth.ipc</code></pre>
+</section>
+<section id="your-eth.coinbase" class="slide level2">
+<h2>Your eth.coinbase</h2>
+<ul>
+<li>If your eth.coinbase is <em>different</em> than what you submitted in either of the last two assignments…
+<ul>
+<li>Or you think it might be different, but aren’t sure…</li>
+</ul></li>
+<li>Email me, right now, with your updated eth.coinbase
+<ul>
+<li>This way I can give you credit for participating</li>
+<li>That email has to arrive before class ends today!</li>
+</ul></li>
+</ul>
+</section>
+<section id="relevant-information" class="slide level2">
+<h2>Relevant information</h2>
+<ul>
+<li>On the Canvas landing page, at the bottom, are a few pieces of information we will need:
+<ul>
+<li>The Debts smart contract address</li>
+<li>A <a href="code/IDebts.sol.abi.txt">link to the ABI for the IDebts.sol interface</a> – you will need to copy that shortly
+<ul>
+<li>About where we get that ABI…</li>
+</ul></li>
+<li>A link to this part of the slide set so you can copy-and-paste some of the code</li>
+<li>And other useful links</li>
+</ul></li>
+</ul>
+</section>
+<section id="transactions-from-geth" class="slide level2">
+<h2>Transactions from geth</h2>
+<ul>
+<li>We are going to call the smart contract directly from geth</li>
+<li>First, save the smart contract address in a variable:</li>
+</ul>
+<pre><code>var addr = "0xffffffffffffffffffffffffffffffffffffffff";</code></pre>
+<ul>
+<li>But use the actual address, not that address!</li>
+<li>Next we have to save the ABI:</li>
+</ul>
+<pre><code>var abi = [...];</code></pre>
+<ul>
+<li>Copy-and-paste the ABI from the Canvas landing page into that command</li>
+<li>Notice no quotes around the variable’s value!</li>
+<li>It should present that same ABI back to you, but nicely formatted</li>
+</ul>
+</section>
+<section id="transactions-from-geth-1" class="slide level2">
+<h2>Transactions from geth</h2>
+<ul>
+<li>Next we have to have geth create a contract object for us:</li>
+</ul>
+<pre><code>var interface = eth.contract(abi);</code></pre>
+<ul>
+<li>Lastly, we need to link that to the specific contract address that we are going to be using:</li>
+</ul>
+<pre><code>var contract = interface.at(addr);</code></pre>
+</section>
+<section id="geth-read-transactions" class="slide level2">
+<h2>Geth read transactions</h2>
+<ul>
+<li>We can call read-only transactions (<code>view</code> or <code>pure</code> functions) via the <code>.call()</code> method</li>
+<li>To read a variable:</li>
+</ul>
+<pre><code>contract.num_entries.call()</code></pre>
+<ul>
+<li>To read a mapping:</li>
+</ul>
+<pre><code>contract.entries.call(0)</code></pre>
+<ul>
+<li>To get a name from a mapping:</li>
+</ul>
+<pre><code>contract.entries.call(0)[2]</code></pre>
+<ul>
+<li>To call a (<code>view</code> or <code>pure</code>) method:</li>
+</ul>
+<pre><code>contract.thisMethodDoesNotExist.call()</code></pre>
+</section>
+<section id="geth-write-transactions" class="slide level2">
+<h2>Geth write transactions</h2>
+<ul>
+<li>First, unlock your account:</li>
+</ul>
+<pre><code>personal.unlockAccount(eth.coinbase,"password",0)</code></pre>
+<ul>
+<li>Use <em>your</em> password, though!</li>
+<li>Does it not know <code>eth.coinbase</code>? If not, then enter:</li>
+</ul>
+<pre><code>miner.setEtherbase(eth.accounts[0])</code></pre>
+<ul>
+<li>Recall that the blockchain explorer updates every 1 minute</li>
+</ul>
+</section>
+<section id="adding-an-alias" class="slide level2">
+<h2>Adding an alias</h2>
+<ul>
+<li>You have to add yourself as an alias</li>
+<li>Request: please use your UVA userid as the alias itself
+<ul>
+<li>If you don’t want to use your own, make up a believable fake one</li>
+</ul></li>
+</ul>
+</section>
+<section id="adding-an-alias-1" class="slide level2">
+<h2>Adding an alias</h2>
+<ul>
+<li>Transactions that write to the blockchain use the <code>.sendTransaction()</code> method</li>
+</ul>
+<pre><code>contract.addAlias.sendTransaction("mst3k", 
+         "Your Name", {from:eth.coinbase, gas:1000000})</code></pre>
+<ul>
+<li>Don’t use mst3k! Use your userid and name
+<ul>
+<li>Possibly fake, but make it realistic</li>
+</ul></li>
+<li>Notice, in the value printed after that call, the transaction hash
+<ul>
+<li>Search for the address in the Blockchain Explorer</li>
+<li>It will take up to a minute for the explorer to refresh</li>
+</ul></li>
+<li>In the explorer transaction page, notice the decoded function call
+<ul>
+<li>It states the function called, and the parameters passed in</li>
+</ul></li>
+</ul>
+</section>
+<section id="view-the-list-of-debts" class="slide level2">
+<h2>View the list of debts</h2>
+<ul>
+<li>We have a web page that allows you to view all the entered aliases and who owes what</li>
+<li>The URL is on the Canvas landing page
+<ul>
+<li>You can also view it from the explorer page for the contract account</li>
+</ul></li>
+</ul>
+</section>
+<section id="pay-off-some-debts" class="slide level2">
+<h2>Pay off some debts!</h2>
+<ul>
+<li>You can now enter some debts:</li>
+</ul>
+<pre><code>contract.payToAlias.sendTransaction("mst3k",17,
+               {from:eth.coinbase, gas:1000000});</code></pre>
+<ul>
+<li>Don’t use mst3k! Use the userid of the <em>other</em> person</li>
+<li>Note that this is entering that the other person owes <em>you</em> money
+<ul>
+<li>If you owe them money, you would enter a negative value</li>
+</ul></li>
+<li>The amount must be between -100 and 100, inclusive</li>
+<li>And, again, view the web page for this exercise that lists the current balances</li>
+<li>You can also see those transactions in the blockchain explorer
+<ul>
+<li>Note the transaction hash when you enter that command</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-result" class="slide level2">
+<h2>The result…</h2>
+<p>… how much do I owe???</p>
+<p>Also, we have the source code available:</p>
+<ul>
+<li>The original code we developed is <a href="code/Debts-no-interface.sol.html">Debts-no-interface.sol</a> (<a href="code/Debts-no-interface.sol">src</a>)</li>
+<li>The updated code (with the interface) is in <a href="code/IDebts.sol.html">IDebts.sol</a> (<a href="code/IDebts.sol">src</a>) and <a href="code/Debts.sol.html">Debts.sol</a> (<a href="code/Debts.sol">src</a>)</li>
+</ul>
 <!-- ============================================================ -->
-  
-  <section>
+</section></section>
+<section>
+<section id="testing-debugging" class="title-slide slide level1 center">
+<h1>Testing &amp; Debugging</h1>
 
-    <section id="debugging" data-markdown class="center"><textarea>
-# Testing & Debugging
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n" id='require'><textarea>
-## Use `require()` with 2 parameters
-
-- Consider:
-```
-require (value > 0);
-```
-- If this reverts, all Remix will state is that the contract reverted, but not where or why
-- Instead, use:
-```
-require (value > 0, "value must be > 0 in foo()");
-```
-- Now Remix will report that specific string if/when it reverts
-    </textarea></section>
-
-    <section data-markdown data-separator="^\n\n\n"><textarea>
-## Use `require()` to assure the correct state
-- Using `require()` a lot to make sure that the variables are in the state you expect them to be
-```
-require (msg.value > 0,
+</section>
+<section id="use-require-with-2-parameters" class="slide level2">
+<h2>Use <code>require()</code> with 2 parameters</h2>
+<ul>
+<li>Consider:</li>
+</ul>
+<pre><code>require (value &gt; 0);</code></pre>
+<ul>
+<li>If this reverts, all Remix will state is that the contract reverted, but not where or why</li>
+<li>Instead, use:</li>
+</ul>
+<pre><code>require (value &gt; 0, "value must be &gt; 0 in foo()");</code></pre>
+<ul>
+<li>Now Remix will report that specific string if/when it reverts</li>
+</ul>
+</section>
+<section id="use-require-to-assure-the-correct-state" class="slide level2">
+<h2>Use <code>require()</code> to assure the correct state</h2>
+<ul>
+<li>Using <code>require()</code> a lot to make sure that the variables are in the state you expect them to be</li>
+</ul>
+<pre><code>require (msg.value &gt; 0,
            "must transfer ether with this transaction");
 require (from_address != address(0), 
            "must specify a non-null from address");
 require (to_address != address(0), 
            "must specify a non-null to address");
-// and so on...
-```
-
-
-
-## Capturing intermediate state
-- We don't have print statements to ensure that our intermediate values are correct
-- So instead we save those values in state variables
-- Make sure those variables are `public`!!!
-- Once the function is run, you can view those variables in Remix
-
-
-
-## Capturing intermediate state
-```
-contract Test {
+// and so on...</code></pre>
+</section>
+<section id="capturing-intermediate-state" class="slide level2">
+<h2>Capturing intermediate state</h2>
+<ul>
+<li>We don’t have print statements to ensure that our intermediate values are correct</li>
+<li>So instead we save those values in state variables</li>
+<li>Make sure those variables are <code>public</code>!!!</li>
+<li>Once the function is run, you can view those variables in Remix</li>
+</ul>
+</section>
+<section id="capturing-intermediate-state-1" class="slide level2">
+<h2>Capturing intermediate state</h2>
+<pre><code>contract Test {
   uint public debug1;
   uint public debug2;
 
@@ -1576,16 +2107,15 @@ contract Test {
     debug2 = x;
     return x*123;
   }
-}
-
-
-
-## Managing setup
-- Some projects will require multiple contracts working together
-- We can create a third contract to manage all this setup
-
-```
-contract Test {
+}</code></pre>
+</section>
+<section id="managing-setup" class="slide level2">
+<h2>Managing setup</h2>
+<ul>
+<li>Some projects will require multiple contracts working together</li>
+<li>We can create a third contract to manage all this setup</li>
+</ul>
+<pre><code>contract Test {
   address erc20 = 0x123456...;
   address tokenUser = 0x123456...;
   function setup() {
@@ -1593,61 +2123,440 @@ contract Test {
     tokenUser.setERC20(erc20);
     // ... and so on
   }
-}
-```
-
-
-
-## Unit testing
-- This is gone over in the [dApp Introduction HW](../hws/dappintro/index.html)
-  - Some are having issues with it.  Sigh...
-
-
-
-## Still stuck?
-- Try adding in more `require()` statements
-  - And then put in some more
-    - And yet even more
-- Note that a subtraction on a uint that causes a negative number will revert the call
-
-</textarea></section>
-
-  </section>
-
-<!-- ============================================================ -->
-	
-      </div>
-
+}</code></pre>
+</section>
+<section id="unit-testing" class="slide level2">
+<h2>Unit testing</h2>
+<ul>
+<li>This is gone over in the <a href="../hws/dappintro/index.html">dApp Introduction HW</a>
+<ul>
+<li>Some are having issues with it. Sigh…</li>
+</ul></li>
+</ul>
+</section>
+<section id="still-stuck" class="slide level2">
+<h2>Still stuck?</h2>
+<ul>
+<li>Try adding in more <code>require()</code> statements
+<ul>
+<li>And then put in some more
+<ul>
+<li>And yet even more</li>
+</ul></li>
+</ul></li>
+<li>Note that a subtraction on a uint that causes a negative number will revert the call</li>
+</ul>
+<div class="quarto-auto-generated-content">
+<p><img src="images/quarto.webp" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://github.com/aaronbloomfield/ccc" class="uri">https://github.com/aaronbloomfield/ccc</a></p>
+</div>
+</div>
+</section></section>
     </div>
+  </div>
 
-    <script src='../slides/reveal.js/dist/reveal.js'></script><script src='../slides/reveal.js/plugin/zoom/zoom.js'></script><script src='../slides/reveal.js/plugin/notes/notes.js'></script><script src='../slides/reveal.js/plugin/search/search.js'></script><script src='../slides/reveal.js/plugin/markdown/markdown.js'></script><script src='../slides/reveal.js/plugin/highlight/highlight.js'></script><script src='../slides/reveal.js/plugin/math/math.js'></script>
-    <script src="../slides/settings.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="quarto_files/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="quarto_files/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="quarto_files/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="quarto_files/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="quarto_files/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="quarto_files/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="quarto_files/revealjs/plugin/quarto-support/support.js"></script>
+  
 
-    <script>
-      var vals = new Array();
-      
-      // often changed variables
-      vals['btc_price'] = 65000;
+  <script src="quarto_files/revealjs/plugin/notes/notes.js"></script>
+  <script src="quarto_files/revealjs/plugin/search/search.js"></script>
+  <script src="quarto_files/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="quarto_files/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
-      // rarely changed variables
-      vals['btc_reward_btc'] = 6.25;
+  <script>
 
-      // computations; not changed
-      vals['btc_reward_usd'] = vals['btc_price'] * vals['btc_reward_btc'];
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
 
-      Reveal.addEventListener( 'update', function() { myupdate(); } );
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
 
-      function myupdate() {
-	  for (var k in vals) {
-	      if ( document.getElementById(k) ) {
-		  document.getElementById(k).innerHTML = vals[k].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	      }
-	  }
-      }
-      
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'h.v',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
     </script>
-
-
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+              // target, if specified
+              link.setAttribute("target", "_blank");
+              if (link.getAttribute("rel") === null) {
+                link.setAttribute("rel", "noopener");
+              }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
     
-  </body>
-</html>
+
+</body></html>
