@@ -1,4 +1,4 @@
-CS 4501: Syllabus for Cryptocurrency (CCC), spring 2025
+CS 4970: Syllabus for Cryptocurrency (CCC), spring 2025
 =============================================
 
 [Go up to the CCC UVA page](index.html) ([md](index.md))
