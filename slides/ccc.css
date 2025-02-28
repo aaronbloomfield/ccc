@@ -509,6 +509,24 @@ img.cclogosmall, div.cclogosmall img, img[src$='#cclogosmall'] {
   box-shadow: none !important;
 }
 
+img.cclogolesssmall, div.cclogolesssmall img, img[src$='#cclogolesssmall'] {
+  /* used by sigcse2025.md/html */
+  /* same as cclogosmall */
+  max-height: 70px;
+  float: left;
+  background-color: transparent !important;
+  margin-right: 10px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  box-shadow: none !important;
+  /* changes for this class */
+  max-width:unset;
+  max-height:unset;
+  width:90px;
+  padding:4px;
+  height:90px;
+}
+
 /* on a slide column heading page, it appears above the <h1> title and very large */
 img.cclogotitle {
   width: 200px;
@@ -675,7 +693,12 @@ div.wikitablediv {
 }
 
 /* sigcse2025.html css */
-#course-structure > div > ul > li, #course-structure > div > ul > li > ul > li {
+div.cclogolist2 > ul > li > ul > li {
+  margin-top:100px;
+  margin-bottom:-100px;
+}
+div.cclogolist > ul > li > ul > li {
+  height:85px;
   margin-top:0;
   margin-bottom:0;
 }

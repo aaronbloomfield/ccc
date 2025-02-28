@@ -2,7 +2,344 @@
 title: "SIGCSE 2025"
 ---
 
+## Disclaimer
 
-## Thar be slides!
+![](https://upload.wikimedia.org/wikipedia/commons/a/a6/Disclaimer_logo.svg){style="float:right;margin-left:20px;height:unset;width:300px"}
 
-(slides will be posted here in a few days)
+- This presentation and course are not about cryptocurrency investing
+	- Nor is it trying to promote cryptocurrency
+	- Rather, its focus is to understand the technology and theory behind cryptocurrency
+- You will need to consider legal authorization from your institution
+	- Cryptocurrency mining is typically forbidden by universities
+		- Or on state property or with state equipment
+
+
+----
+
+<figure style="float:right;margin-left:20px">
+<img src="images/qrcode.webp" style="height:300px;padding:0">
+<p style="text-align:center;font-size:75%"><a href="https://aaronbloomfield.github.io/ccc/slides/sigcse2025.html#/">https://aaronbloomfield.<br>github.io/ccc/slides/<br>sigcse2025.html#/</a></p>
+</figure>
+
+<h2>Introduction</h2>
+
+[BTC](https://finance.yahoo.com/quote/BTC-USD): `$`78,248; [ETH](https://finance.yahoo.com/quote/ETH-USD): `$`2,076; [ETH gas](https://etherscan.io/gastracker): 1.044 gwei => `$`0.05 @ 2025-02-28 12:43:36<br>&nbsp;
+
+- CS 4970: Cryptocurrency, first taught in spring 2022 at UVA
+  - Currently in its 6th semester
+- Goals
+	- To create a 4th year CS elective on Cryptocurrency
+	- To make the course materials available to all
+		- Source code released under a [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) license
+		- ![](images/cc-by-sa-icon.svg){style="float:right;padding:5px;margin-left:10px"} Non-source code content released under a [Creative Commons BY-SA license](https://creativecommons.org/licenses/by-sa/4.0/)
+
+
+
+## Background
+
+- *Blockchain*: a append-only linked list
+	- Blockchain is simple; what's *on* the blockchain is what's interesting
+- *Web3*: programs and libraries that interact with a blockchain
+  - Websites, command-line programs, GUI cryptocurrency wallets, etc.
+  - Typically through a software endpoint or API
+- *Mining*: a process that takes recent transactions and puts them into a block to go onto the blockchain
+  - Can be *very* computationally expensive
+- *Smart contract*: a program whose compiled binary is on the blockchain
+  - It is executed by each of the nodes in the P2P cryptocurrency network
+
+
+## Course Goals
+
+::: {.right-float-img-600 .no-border}
+
+![](https://upload.wikimedia.org/wikipedia/commons/e/e7/Steaua_vs._CFR_Cluj_in_2010.jpg)
+
+- Understand the theoretical aspects of cryptocurrency
+- Understand the basics of blockchain in general, and the details of a selected number of blockchains
+- Understand the uses of cryptocurrency and blockchain beyond that as a form of money
+- Understand the policy, ethical, legal, and tax implications of cryptocurrency
+- Be able to develop programs for a specific Blockchain
+- Implement a fully working modern cryptocurrency
+
+:::
+
+
+## Course Structure
+
+<div class='cclogolist2'>
+
+- [![btc logo](../slides/images/logos/btc-coin-symbol.svg#cclogomed){style="width:75px;height:75px"}](https://coinmarketcap.com/currencies/bitcoin/) Introduction and Bitcoin: [Introduction](introduction.html#/), [Overview](overview.html#/), [Encryption](encryption.html#/), [Bitcoin](bitcoin.html#/), [Mining](mining.html#/)
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg#cclogomed){style="width:75px;height:75px"}](https://coinmarketcap.com/currencies/ethereum/) Ethereum and Web3: [Ethereum](ethereum.html#/), [Solidity](solidity.html#/), [Tokens](tokens.html#/), [Blockchain Applications](applications.html#/)
+- Advanced concepts: [Scalability](scalability.html#/), [Consensus](consensus.html#/), [Stablecoins](stablecoins.html#/), [Zero-knowledge proofs](zksnarks.html#/)
+- [Ethics, Legality, and Policy](ethics-legal-policy.html#/)
+- [The Dark Side of Cryptocurrency](darkside.html#/)
+- [Course Conclusion](conclusion.html)
+
+</div>
+
+
+
+## Environment
+
+<div class="font-90">
+
+- We setup our own Ethereum blockchain
+  - All *ether* on that blockchain is free
+- The students have nothing to buy at all in the course
+- The development IDE we use is [Remix](https://remix.ethereum.org) (online and desktop versions)
+  - Other ideas considered: [Truffle Suite](https://archive.trufflesuite.com/truffle/), [Hardhat](https://hardhat.org/), [solc](https://docs.soliditylang.org/en/latest/installing-solidity.html) & [geth](https://geth.ethereum.org/downloads)
+
+</div>
+
+<iframe src='https://remix.ethereum.org' style="width:95%;height:50%;border-radius:20px"></iframe>
+
+
+
+## 40 Cryptocurrencies studied
+[![algo logo](../slides/images/logos/algo-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/algorand/)
+[![atom logo](../slides/images/logos/atom-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/cosmos/)
+[![aust logo](../slides/images/logos/aust-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/anchorust/)
+[![beam logo](../slides/images/logos/beam-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/beam/)
+[![btc logo](../slides/images/logos/btc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/bitcoin/)
+[![btg logo](../slides/images/logos/btg-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/bitcoin-gold/)
+[![dai logo](../slides/images/logos/dai-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/multi-collateral-dai/)
+[![dot logo](../slides/images/logos/dot-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/polkadot-new/)
+[![erg logo](../slides/images/logos/erg-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ergo/)
+[![etc logo](../slides/images/logos/etc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ethereum-classic/)
+[![eth logo](../slides/images/logos/eth-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ethereum/)
+[![fei logo](../slides/images/logos/fei-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/fei-usd/)
+[![fil logo](../slides/images/logos/fil-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/filecoin/)
+[![firo logo](../slides/images/logos/firo-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/firo/)
+[![frax logo](../slides/images/logos/frax-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/frax/)
+[![juno logo](../slides/images/logos/juno-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/juno/)
+[![luna logo](../slides/images/logos/lunac-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/terra-luna/)
+[![matic logo](../slides/images/logos/matic-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/polygon/)
+[![mim logo](../slides/images/logos/mim-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/magic-internet-money/)
+[![mkr logo](../slides/images/logos/mkr-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/maker/)
+[![neox logo](../slides/images/logos/neox-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/neoxa/)
+[![nmc logo](../slides/images/logos/nmc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/namecoin/)
+[![ppc logo](../slides/images/logos/ppc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/peercoin/)
+[![rvn logo](../slides/images/logos/rvn-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/ravencoin/)
+[![sai logo](../slides/images/logos/sai-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/single-collateral-dai/)
+[![shib logo](../slides/images/logos/shib-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/shiba-inu/)
+[![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/solana/)
+[![spell logo](../slides/images/logos/spell-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/spell-token/)
+[![storj logo](../slides/images/logos/storj-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/storj/)
+[![tomb logo](../slides/images/logos/tomb-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/tomb/)
+[![tribe logo](../slides/images/logos/tribe-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/tribe/)
+[![usdc logo](../slides/images/logos/usdc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/usd-coin/)
+[![usdt logo](../slides/images/logos/usdt-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/tether/)
+[![ustc logo](../slides/images/logos/ustc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/terrausd/)
+[![wbtc logo](../slides/images/logos/wbtc-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/wrapped-bitcoin/)
+[![weth logo](../slides/images/logos/weth-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/weth/)
+[![xlm logo](../slides/images/logos/xlm-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/stellar/)
+[![xpd logo](../slides/images/logos/xpd-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/petrodollar/)
+[![xpm logo](../slides/images/logos/xpm-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/primecoin/)
+[![zec logo](../slides/images/logos/zec-coin-symbol.svg#cclogomed)](https://coinmarketcap.com/currencies/zcash/)
+
+
+----
+
+<img src="../hws/hwflow.svg" style="background-color:white;border-radius:20px;width:300px;height:600px;max-width:300px;max-height:600px;float:right">
+
+<h2>Assignments</h2>
+
+<table class="transparent">
+<tr><td style="width:40%">
+<p>&quot;Small&quot; homeworks</p>
+
+- S1: Intro survey
+- S2: Read the [Bitcoin whitepaper](https://bitcoinwhitepaper.co/)
+- S3: Read the<br>[Ethereum whitepaper](https://ethereum.org/en/whitepaper/) ([PDF](https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf))
+- [S4: Private<br>Ethereum Blockchain](../hws/ethprivate/index.html)
+- [S5: dApp<br>Introduction](../hws/dappintro/index.html)
+
+</td><td class="top" style="width:60%;padding-right:0">
+<p>Programming homeworks</p>
+
+- [P1: Introductory homework](../hws/intro/index.html)
+- [P2: ECDSA implementation](../hws/ecdsa/index.html)
+- [P3: BTC parser](../hws/btcparser/index.html)
+- [P4: Bitcoin scripting](../hws/btcscript/index.html)
+- [P5: dApp Gradebook](../hws/gradebook/index.html)
+- [P6: dApp Tokens](../hws/tokens/index.html)
+- [P7: dApp Auction](../hws/auction/index.html)
+- [P8: DEX](../hws/dex/index.html)
+- [P9: DAO & web3](../hws/daoweb3/index.html)
+- [P10: Arbitrage trading](../hws/arbitrage/index.html)
+- [P11: MetaMask](../hws/metamask/index.html)
+
+</td></tr></table>
+
+----
+
+<img src='https://static.moneymade.io/cdn-cgi/image/width=1140,quality=100,format=auto/https://static.moneymade.io/1_d7154e63d2/1_d7154e63d2.png' style="float:right;max-width:unset;max-height:unset;width:unset;height:24vw;padding:0;margin-left:20px;border-radius:20px">
+
+<h2>NFTs</h2>
+
+- NFT = Non-fungible token
+	- Non-fungible: cannot be broken into parts or split (like how money can)
+- A blockchain entry that "represents" something *off* the blockchain
+- This one sold for 430 ETH or $1.63 million ([src](Bored Ape #3562))
+- Actual use: a design pattern to represent *something*, such as membership in an organization
+- Students make their own in the course, often with the (allowed) use of generative AI
+- Formally: an [ERC-721](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/) (or [ERC-1155](https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/), etc.) token
+
+
+----
+
+<img src="../hws/hwflow.svg" style="float:right;background-color:white;border-radius:20px;width:unset;height:600px;max-width:600px;max-height:600px;margin-left:20px">
+
+<h2 style="font-size:150%">Token cryptocurrencies</h2>
+
+<div class='cclogolist'>
+
+- A cryptocurrency that does not have its own blockchain, but is a smart contract on another blockchain, such as Ethereum
+- Some of the most well-known: 
+   - [![usdt logo](../slides/images/logos/usdt-coin-symbol.svg#cclogomed){style="width:75px;height:75px"}](https://coinmarketcap.com/currencies/tether/)
+ Tether (USDT)<br clear='all'>
+   - [![usdc logo](../slides/images/logos/usdc-coin-symbol.svg#cclogomed){style="width:75px;height:75px"}](https://coinmarketcap.com/currencies/usd-coin/)
+ USDC<br clear='all'>
+   - [![shib logo](../slides/images/logos/shib-coin-symbol.svg#cclogomed){style="width:75px;height:75px"}](https://coinmarketcap.com/currencies/shiba-inu/)
+Shiba Inu<br clear='all'>
+- Students also create their own 
+- Formally: an [ERC-20](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) (or [ERC-777](https://ethereum.org/en/developers/docs/standards/tokens/erc-777/), etc.) token
+
+</div>
+
+
+
+## ~50 Cryptocurrencies created
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ad.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ash.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/blc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/brd.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/bro.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/bwtc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/chc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/cmmc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/coco.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ddc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dis.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dmj.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dpwe.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/dsy.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ekm.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/embg.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/fbx.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/gc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/gg.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/habbii.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/hbiu.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/hobs.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/jdo.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/jlc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/jw.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/kay.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/kc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/ktc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/maby.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/magt.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mal.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mass.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mcc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/milk.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mobu.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/mook.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/narb.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/nft.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/pbtc03.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/pmc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/pook.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/rad.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/scn.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/scor.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/scx.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/skrt.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/stpd.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/tcc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/tenz.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/toby.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/twc.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/wtw.png#cclogolesssmall)
+![](https://www.cs.virginia.edu/~asb2t/cclogos/zkn.png#cclogolesssmall)
+
+
+----
+
+<img src="../hws/metamask/final-web-page.webp" style="margin-left:20px;float:right;max-height:600px;height:600px;max-width:500px;width:unset">
+
+<h2>Final assignment</h2>
+
+- [HW P11: Metamask](../hws/metamask/index.html)
+- A Web3 based assignment
+  - A HTML page that interactions with their auction smart contract
+  - ... to allow auctioning their NFTs
+- Uses MetaMask, a Chrome extension, to allow access to their Ethereum wallet
+- Similar, in concept, to a site such as [opensea.io](https://opensea.io)
+
+## Ethics & Scams
+
+<iframe src="https://www.web3isgoinggreat.com" style="width:95%;height:70%;margin-bottom:0;border-radius:30px"></iframe>
+
+<p style="text-align:center;margin-top:0"><a href='https://www.web3isgoinggreat.com'>https://www.web3isgoinggreat.com</a></p>
+
+
+## Results
+
+::: {.right-float-img-500}
+
+![](https://clipart-library.com/image_gallery/159798.png)
+
+- Well received by the students based on SETs
+  - They enjoyed the progression of assignments and the coverage of topics
+  - Even by those who were generally opposed to cryptocurrencies
+- They were (slightly) *less* likely to invest in cryptocurrency after the class
+- Exam and assignment results indicated they accomplished the course goals
+- Many students said it was one of the best courses they have taken
+
+:::
+
+
+## Availability
+
+<iframe src="https://aaronbloomfield.github.io/ccc" style="width:95%;height:70%;margin-bottom:0;background-color:white;border-radius:30px"></iframe>
+
+<p style="text-align:center;margin-top:0"><a href='https://github.com/aaronbloomfield/ccc'>https://github.com/aaronbloomfield/ccc</a></p>
+
+<p style="text-align:center;margin-top:0"><a href='https://aaronbloomfield.github.io/ccc'>https://aaronbloomfield.github.io/ccc</a></p>
+
+
+## Conclusions
+
+::: {.right-float-img-500 .no-border}
+
+![](https://www.picpedia.org/chalkboard/images/conclusions.jpg)
+
+- We developed a 4th year undergraduate elective course on cryptocurrency
+  - Well received by the students
+  - All materials available under public copyright licenses
+- Lecture topics are comprehensive
+- Homeworks build upon each other to create a real-world final assignment deliverable
+- All learning objectives and course goals achieved
+
+:::
+
+
+## Resources
+
+::: {.right-float-img .no-border .font-90}
+
+![](https://images.squarespace-cdn.com/content/v1/53ec790ae4b0396cbd14d8a1/1549603379685-8LW09B8TNRFNWAOHYAW3/settlers-of-catan-playtonic-board-games-d.jpg){style="width:400px;max-width:unset"}
+
+- Github repository:<br>[https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc)
+	- Instructor github repo available upon request
+- Easier-to-view version:<br>[https://aaronbloomfield.github.io/ccc](https://aaronbloomfield.github.io/ccc)
+- Web3 is going great:<br>[https://www.web3isgoinggreat.com](https://www.web3isgoinggreat.com)
+
+:::
+
+
+## Questions?
+
+![](https://upload.wikimedia.org/wikipedia/commons/9/9d/Question_mark_blue.png){style="background-color:transparent;box-shadow:none"}

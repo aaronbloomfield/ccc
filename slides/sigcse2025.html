@@ -342,9 +342,291 @@
   </h3></div>
   <p class="titlep">&nbsp;</p>
 </section>
-<section id="thar-be-slides" class="slide level2">
-<h2>Thar be slides!</h2>
-<p>(slides will be posted here in a few days)</p>
+<section id="disclaimer" class="slide level2">
+<h2>Disclaimer</h2>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Disclaimer_logo.svg" style="float:right;margin-left:20px;height:unset;width:300px"></p>
+<ul>
+<li>This presentation and course are not about cryptocurrency investing
+<ul>
+<li>Nor is it trying to promote cryptocurrency</li>
+<li>Rather, its focus is to understand the technology and theory behind cryptocurrency</li>
+</ul></li>
+<li>You will need to consider legal authorization from your institution
+<ul>
+<li>Cryptocurrency mining is typically forbidden by universities
+<ul>
+<li>Or on state property or with state equipment</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<figure style="float:right;margin-left:20px">
+<img src="images/qrcode.webp" style="height:300px;padding:0">
+<p style="text-align:center;font-size:75%">
+<a href="https://aaronbloomfield.github.io/ccc/slides/sigcse2025.html#/">https://aaronbloomfield.<br>github.io/ccc/slides/<br>sigcse2025.html#/</a>
+</p>
+</figure>
+<h2>
+Introduction
+</h2>
+<p><a href="https://finance.yahoo.com/quote/BTC-USD">BTC</a>: <code>$</code>78,248; <a href="https://finance.yahoo.com/quote/ETH-USD">ETH</a>: <code>$</code>2,076; <a href="https://etherscan.io/gastracker">ETH gas</a>: 1.044 gwei =&gt; <code>$</code>0.05 @ 2025-02-28 12:43:36<br>&nbsp;</p>
+<ul>
+<li>CS 4970: Cryptocurrency, first taught in spring 2022 at UVA
+<ul>
+<li>Currently in its 6th semester</li>
+</ul></li>
+<li>Goals
+<ul>
+<li>To create a 4th year CS elective on Cryptocurrency</li>
+<li>To make the course materials available to all
+<ul>
+<li>Source code released under a <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL 3.0</a> license</li>
+<li><img data-src="images/cc-by-sa-icon.svg" style="float:right;padding:5px;margin-left:10px"> Non-source code content released under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons BY-SA license</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="background" class="slide level2">
+<h2>Background</h2>
+<ul>
+<li><em>Blockchain</em>: a append-only linked list
+<ul>
+<li>Blockchain is simple; what’s <em>on</em> the blockchain is what’s interesting</li>
+</ul></li>
+<li><em>Web3</em>: programs and libraries that interact with a blockchain
+<ul>
+<li>Websites, command-line programs, GUI cryptocurrency wallets, etc.</li>
+<li>Typically through a software endpoint or API</li>
+</ul></li>
+<li><em>Mining</em>: a process that takes recent transactions and puts them into a block to go onto the blockchain
+<ul>
+<li>Can be <em>very</em> computationally expensive</li>
+</ul></li>
+<li><em>Smart contract</em>: a program whose compiled binary is on the blockchain
+<ul>
+<li>It is executed by each of the nodes in the P2P cryptocurrency network</li>
+</ul></li>
+</ul>
+</section>
+<section id="course-goals" class="slide level2">
+<h2>Course Goals</h2>
+<div class="right-float-img-600 no-border">
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Steaua_vs._CFR_Cluj_in_2010.jpg"></p>
+<ul>
+<li>Understand the theoretical aspects of cryptocurrency</li>
+<li>Understand the basics of blockchain in general, and the details of a selected number of blockchains</li>
+<li>Understand the uses of cryptocurrency and blockchain beyond that as a form of money</li>
+<li>Understand the policy, ethical, legal, and tax implications of cryptocurrency</li>
+<li>Be able to develop programs for a specific Blockchain</li>
+<li>Implement a fully working modern cryptocurrency</li>
+</ul>
+</div>
+</section>
+<section id="course-structure" class="slide level2">
+<h2>Course Structure</h2>
+<div class="cclogolist2">
+<ul>
+<li><a href="https://coinmarketcap.com/currencies/bitcoin/"><img data-src="../slides/images/logos/btc-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="btc logo"></a> Introduction and Bitcoin: <a href="introduction.html#/">Introduction</a>, <a href="overview.html#/">Overview</a>, <a href="encryption.html#/">Encryption</a>, <a href="bitcoin.html#/">Bitcoin</a>, <a href="mining.html#/">Mining</a></li>
+<li><a href="https://coinmarketcap.com/currencies/ethereum/"><img data-src="../slides/images/logos/eth-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="eth logo"></a> Ethereum and Web3: <a href="ethereum.html#/">Ethereum</a>, <a href="solidity.html#/">Solidity</a>, <a href="tokens.html#/">Tokens</a>, <a href="applications.html#/">Blockchain Applications</a></li>
+<li>Advanced concepts: <a href="scalability.html#/">Scalability</a>, <a href="consensus.html#/">Consensus</a>, <a href="stablecoins.html#/">Stablecoins</a>, <a href="zksnarks.html#/">Zero-knowledge proofs</a></li>
+<li><a href="ethics-legal-policy.html#/">Ethics, Legality, and Policy</a></li>
+<li><a href="darkside.html#/">The Dark Side of Cryptocurrency</a></li>
+<li><a href="conclusion.html">Course Conclusion</a></li>
+</ul>
+</div>
+</section>
+<section id="environment" class="slide level2">
+<h2>Environment</h2>
+<div class="font-90">
+<ul>
+<li>We setup our own Ethereum blockchain
+<ul>
+<li>All <em>ether</em> on that blockchain is free</li>
+</ul></li>
+<li>The students have nothing to buy at all in the course</li>
+<li>The development IDE we use is <a href="https://remix.ethereum.org">Remix</a> (online and desktop versions)
+<ul>
+<li>Other ideas considered: <a href="https://archive.trufflesuite.com/truffle/">Truffle Suite</a>, <a href="https://hardhat.org/">Hardhat</a>, <a href="https://docs.soliditylang.org/en/latest/installing-solidity.html">solc</a> &amp; <a href="https://geth.ethereum.org/downloads">geth</a></li>
+</ul></li>
+</ul>
+</div>
+<iframe src="https://remix.ethereum.org" style="width:95%;height:50%;border-radius:20px">
+</iframe>
+</section>
+<section id="cryptocurrencies-studied" class="slide level2">
+<h2>40 Cryptocurrencies studied</h2>
+<p><a href="https://coinmarketcap.com/currencies/algorand/"><img data-src="../slides/images/logos/algo-coin-symbol.svg#cclogomed" alt="algo logo"></a> <a href="https://coinmarketcap.com/currencies/cosmos/"><img data-src="../slides/images/logos/atom-coin-symbol.svg#cclogomed" alt="atom logo"></a> <a href="https://coinmarketcap.com/currencies/anchorust/"><img data-src="../slides/images/logos/aust-coin-symbol.svg#cclogomed" alt="aust logo"></a> <a href="https://coinmarketcap.com/currencies/beam/"><img data-src="../slides/images/logos/beam-coin-symbol.svg#cclogomed" alt="beam logo"></a> <a href="https://coinmarketcap.com/currencies/bitcoin/"><img data-src="../slides/images/logos/btc-coin-symbol.svg#cclogomed" alt="btc logo"></a> <a href="https://coinmarketcap.com/currencies/bitcoin-gold/"><img data-src="../slides/images/logos/btg-coin-symbol.svg#cclogomed" alt="btg logo"></a> <a href="https://coinmarketcap.com/currencies/multi-collateral-dai/"><img data-src="../slides/images/logos/dai-coin-symbol.svg#cclogomed" alt="dai logo"></a> <a href="https://coinmarketcap.com/currencies/polkadot-new/"><img data-src="../slides/images/logos/dot-coin-symbol.svg#cclogomed" alt="dot logo"></a> <a href="https://coinmarketcap.com/currencies/ergo/"><img data-src="../slides/images/logos/erg-coin-symbol.svg#cclogomed" alt="erg logo"></a> <a href="https://coinmarketcap.com/currencies/ethereum-classic/"><img data-src="../slides/images/logos/etc-coin-symbol.svg#cclogomed" alt="etc logo"></a> <a href="https://coinmarketcap.com/currencies/ethereum/"><img data-src="../slides/images/logos/eth-coin-symbol.svg#cclogomed" alt="eth logo"></a> <a href="https://coinmarketcap.com/currencies/fei-usd/"><img data-src="../slides/images/logos/fei-coin-symbol.svg#cclogomed" alt="fei logo"></a> <a href="https://coinmarketcap.com/currencies/filecoin/"><img data-src="../slides/images/logos/fil-coin-symbol.svg#cclogomed" alt="fil logo"></a> <a href="https://coinmarketcap.com/currencies/firo/"><img data-src="../slides/images/logos/firo-coin-symbol.svg#cclogomed" alt="firo logo"></a> <a href="https://coinmarketcap.com/currencies/frax/"><img data-src="../slides/images/logos/frax-coin-symbol.svg#cclogomed" alt="frax logo"></a> <a href="https://coinmarketcap.com/currencies/juno/"><img data-src="../slides/images/logos/juno-coin-symbol.svg#cclogomed" alt="juno logo"></a> <a href="https://coinmarketcap.com/currencies/terra-luna/"><img data-src="../slides/images/logos/lunac-coin-symbol.svg#cclogomed" alt="luna logo"></a> <a href="https://coinmarketcap.com/currencies/polygon/"><img data-src="../slides/images/logos/matic-coin-symbol.svg#cclogomed" alt="matic logo"></a> <a href="https://coinmarketcap.com/currencies/magic-internet-money/"><img data-src="../slides/images/logos/mim-coin-symbol.svg#cclogomed" alt="mim logo"></a> <a href="https://coinmarketcap.com/currencies/maker/"><img data-src="../slides/images/logos/mkr-coin-symbol.svg#cclogomed" alt="mkr logo"></a> <a href="https://coinmarketcap.com/currencies/neoxa/"><img data-src="../slides/images/logos/neox-coin-symbol.svg#cclogomed" alt="neox logo"></a> <a href="https://coinmarketcap.com/currencies/namecoin/"><img data-src="../slides/images/logos/nmc-coin-symbol.svg#cclogomed" alt="nmc logo"></a> <a href="https://coinmarketcap.com/currencies/peercoin/"><img data-src="../slides/images/logos/ppc-coin-symbol.svg#cclogomed" alt="ppc logo"></a> <a href="https://coinmarketcap.com/currencies/ravencoin/"><img data-src="../slides/images/logos/rvn-coin-symbol.svg#cclogomed" alt="rvn logo"></a> <a href="https://coinmarketcap.com/currencies/single-collateral-dai/"><img data-src="../slides/images/logos/sai-coin-symbol.svg#cclogomed" alt="sai logo"></a> <a href="https://coinmarketcap.com/currencies/shiba-inu/"><img data-src="../slides/images/logos/shib-coin-symbol.svg#cclogomed" alt="shib logo"></a> <a href="https://coinmarketcap.com/currencies/solana/"><img data-src="../slides/images/logos/sol-coin-symbol.svg#cclogomed" alt="sol logo"></a> <a href="https://coinmarketcap.com/currencies/spell-token/"><img data-src="../slides/images/logos/spell-coin-symbol.svg#cclogomed" alt="spell logo"></a> <a href="https://coinmarketcap.com/currencies/storj/"><img data-src="../slides/images/logos/storj-coin-symbol.svg#cclogomed" alt="storj logo"></a> <a href="https://coinmarketcap.com/currencies/tomb/"><img data-src="../slides/images/logos/tomb-coin-symbol.svg#cclogomed" alt="tomb logo"></a> <a href="https://coinmarketcap.com/currencies/tribe/"><img data-src="../slides/images/logos/tribe-coin-symbol.svg#cclogomed" alt="tribe logo"></a> <a href="https://coinmarketcap.com/currencies/usd-coin/"><img data-src="../slides/images/logos/usdc-coin-symbol.svg#cclogomed" alt="usdc logo"></a> <a href="https://coinmarketcap.com/currencies/tether/"><img data-src="../slides/images/logos/usdt-coin-symbol.svg#cclogomed" alt="usdt logo"></a> <a href="https://coinmarketcap.com/currencies/terrausd/"><img data-src="../slides/images/logos/ustc-coin-symbol.svg#cclogomed" alt="ustc logo"></a> <a href="https://coinmarketcap.com/currencies/wrapped-bitcoin/"><img data-src="../slides/images/logos/wbtc-coin-symbol.svg#cclogomed" alt="wbtc logo"></a> <a href="https://coinmarketcap.com/currencies/weth/"><img data-src="../slides/images/logos/weth-coin-symbol.svg#cclogomed" alt="weth logo"></a> <a href="https://coinmarketcap.com/currencies/stellar/"><img data-src="../slides/images/logos/xlm-coin-symbol.svg#cclogomed" alt="xlm logo"></a> <a href="https://coinmarketcap.com/currencies/petrodollar/"><img data-src="../slides/images/logos/xpd-coin-symbol.svg#cclogomed" alt="xpd logo"></a> <a href="https://coinmarketcap.com/currencies/primecoin/"><img data-src="../slides/images/logos/xpm-coin-symbol.svg#cclogomed" alt="xpm logo"></a> <a href="https://coinmarketcap.com/currencies/zcash/"><img data-src="../slides/images/logos/zec-coin-symbol.svg#cclogomed" alt="zec logo"></a></p>
+</section>
+<section class="slide level2">
+
+<p><img src="../hws/hwflow.svg" style="background-color:white;border-radius:20px;width:300px;height:600px;max-width:300px;max-height:600px;float:right"></p>
+<h2>
+Assignments
+</h2>
+<table class="transparent">
+<tbody><tr>
+<td style="width:40%">
+<p>
+"Small" homeworks
+</p>
+<ul>
+<li>S1: Intro survey</li>
+<li>S2: Read the <a href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
+<li>S3: Read the<br><a href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>)</li>
+<li><a href="../hws/ethprivate/index.html">S4: Private<br>Ethereum Blockchain</a></li>
+<li><a href="../hws/dappintro/index.html">S5: dApp<br>Introduction</a></li>
+</ul>
+</td>
+<td class="top" style="width:60%;padding-right:0">
+<p>
+Programming homeworks
+</p>
+<ul>
+<li><a href="../hws/intro/index.html">P1: Introductory homework</a></li>
+<li><a href="../hws/ecdsa/index.html">P2: ECDSA implementation</a></li>
+<li><a href="../hws/btcparser/index.html">P3: BTC parser</a></li>
+<li><a href="../hws/btcscript/index.html">P4: Bitcoin scripting</a></li>
+<li><a href="../hws/gradebook/index.html">P5: dApp Gradebook</a></li>
+<li><a href="../hws/tokens/index.html">P6: dApp Tokens</a></li>
+<li><a href="../hws/auction/index.html">P7: dApp Auction</a></li>
+<li><a href="../hws/dex/index.html">P8: DEX</a></li>
+<li><a href="../hws/daoweb3/index.html">P9: DAO &amp; web3</a></li>
+<li><a href="../hws/arbitrage/index.html">P10: Arbitrage trading</a></li>
+<li><a href="../hws/metamask/index.html">P11: MetaMask</a></li>
+</ul>
+</td>
+</tr>
+</tbody></table>
+</section>
+<section class="slide level2">
+
+<p><img src="https://static.moneymade.io/cdn-cgi/image/width=1140,quality=100,format=auto/https://static.moneymade.io/1_d7154e63d2/1_d7154e63d2.png" style="float:right;max-width:unset;max-height:unset;width:unset;height:24vw;padding:0;margin-left:20px;border-radius:20px"></p>
+<h2>
+NFTs
+</h2>
+<ul>
+<li>NFT = Non-fungible token
+<ul>
+<li>Non-fungible: cannot be broken into parts or split (like how money can)</li>
+</ul></li>
+<li>A blockchain entry that “represents” something <em>off</em> the blockchain</li>
+<li>This one sold for 430 ETH or $1.63 million (<a href="Bored%20Ape%20#3562">src</a>)</li>
+<li>Actual use: a design pattern to represent <em>something</em>, such as membership in an organization</li>
+<li>Students make their own in the course, often with the (allowed) use of generative AI</li>
+<li>Formally: an <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-721/">ERC-721</a> (or <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/">ERC-1155</a>, etc.) token</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><img src="../hws/hwflow.svg" style="float:right;background-color:white;border-radius:20px;width:unset;height:600px;max-width:600px;max-height:600px;margin-left:20px"></p>
+<h2 style="font-size:150%">
+Token cryptocurrencies
+</h2>
+<div class="cclogolist">
+<ul>
+<li>A cryptocurrency that does not have its own blockchain, but is a smart contract on another blockchain, such as Ethereum</li>
+<li>Some of the most well-known:
+<ul>
+<li><a href="https://coinmarketcap.com/currencies/tether/"><img data-src="../slides/images/logos/usdt-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="usdt logo"></a> Tether (USDT)<br clear="all"></li>
+<li><a href="https://coinmarketcap.com/currencies/usd-coin/"><img data-src="../slides/images/logos/usdc-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="usdc logo"></a> USDC<br clear="all"></li>
+<li><a href="https://coinmarketcap.com/currencies/shiba-inu/"><img data-src="../slides/images/logos/shib-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="shib logo"></a> Shiba Inu<br clear="all"></li>
+</ul></li>
+<li>Students also create their own</li>
+<li>Formally: an <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/">ERC-20</a> (or <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-777/">ERC-777</a>, etc.) token</li>
+</ul>
+</div>
+</section>
+<section id="cryptocurrencies-created" class="slide level2">
+<h2>~50 Cryptocurrencies created</h2>
+<p><img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/ad.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/ash.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/blc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/brd.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/bro.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/bwtc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/chc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/cmmc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/coco.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/ddc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/dis.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/dmj.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/dpwe.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/dsy.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/ekm.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/embg.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/fbx.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/gc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/gg.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/habbii.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/hbiu.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/hobs.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/jdo.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/jlc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/jw.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/kay.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/kc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/ktc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/maby.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/magt.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/mal.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/mass.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/mcc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/milk.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/mobu.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/mook.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/narb.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/nft.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/pbtc03.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/pmc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/pook.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/rad.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/scn.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/scor.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/scx.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/skrt.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/stpd.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/tcc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/tenz.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/toby.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/twc.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/wtw.png#cclogolesssmall"> <img data-src="https://www.cs.virginia.edu/~asb2t/cclogos/zkn.png#cclogolesssmall"></p>
+</section>
+<section class="slide level2">
+
+<p><img src="../hws/metamask/final-web-page.webp" style="margin-left:20px;float:right;max-height:600px;height:600px;max-width:500px;width:unset"></p>
+<h2>
+Final assignment
+</h2>
+<ul>
+<li><a href="../hws/metamask/index.html">HW P11: Metamask</a></li>
+<li>A Web3 based assignment
+<ul>
+<li>A HTML page that interactions with their auction smart contract</li>
+<li>… to allow auctioning their NFTs</li>
+</ul></li>
+<li>Uses MetaMask, a Chrome extension, to allow access to their Ethereum wallet</li>
+<li>Similar, in concept, to a site such as <a href="https://opensea.io">opensea.io</a></li>
+</ul>
+</section>
+<section id="ethics-scams" class="slide level2">
+<h2>Ethics &amp; Scams</h2>
+<iframe src="https://www.web3isgoinggreat.com" style="width:95%;height:70%;margin-bottom:0;border-radius:30px">
+</iframe>
+<p style="text-align:center;margin-top:0">
+<a href="https://www.web3isgoinggreat.com">https://www.web3isgoinggreat.com</a>
+</p>
+</section>
+<section id="results" class="slide level2">
+<h2>Results</h2>
+<div class="right-float-img-500">
+<p><img data-src="https://clipart-library.com/image_gallery/159798.png"></p>
+<ul>
+<li>Well received by the students based on SETs
+<ul>
+<li>They enjoyed the progression of assignments and the coverage of topics</li>
+<li>Even by those who were generally opposed to cryptocurrencies</li>
+</ul></li>
+<li>They were (slightly) <em>less</em> likely to invest in cryptocurrency after the class</li>
+<li>Exam and assignment results indicated they accomplished the course goals</li>
+<li>Many students said it was one of the best courses they have taken</li>
+</ul>
+</div>
+</section>
+<section id="availability" class="slide level2">
+<h2>Availability</h2>
+<iframe src="https://aaronbloomfield.github.io/ccc" style="width:95%;height:70%;margin-bottom:0;background-color:white;border-radius:30px">
+</iframe>
+<p style="text-align:center;margin-top:0">
+<a href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>
+</p>
+<p style="text-align:center;margin-top:0">
+<a href="https://aaronbloomfield.github.io/ccc">https://aaronbloomfield.github.io/ccc</a>
+</p>
+</section>
+<section id="conclusions" class="slide level2">
+<h2>Conclusions</h2>
+<div class="right-float-img-500 no-border">
+<p><img data-src="https://www.picpedia.org/chalkboard/images/conclusions.jpg"></p>
+<ul>
+<li>We developed a 4th year undergraduate elective course on cryptocurrency
+<ul>
+<li>Well received by the students</li>
+<li>All materials available under public copyright licenses</li>
+</ul></li>
+<li>Lecture topics are comprehensive</li>
+<li>Homeworks build upon each other to create a real-world final assignment deliverable</li>
+<li>All learning objectives and course goals achieved</li>
+</ul>
+</div>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<div class="right-float-img no-border font-90">
+<p><img data-src="https://images.squarespace-cdn.com/content/v1/53ec790ae4b0396cbd14d8a1/1549603379685-8LW09B8TNRFNWAOHYAW3/settlers-of-catan-playtonic-board-games-d.jpg" style="width:400px;max-width:unset"></p>
+<ul>
+<li>Github repository:<br><a href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>
+<ul>
+<li>Instructor github repo available upon request</li>
+</ul></li>
+<li>Easier-to-view version:<br><a href="https://aaronbloomfield.github.io/ccc">https://aaronbloomfield.github.io/ccc</a></li>
+<li>Web3 is going great:<br><a href="https://www.web3isgoinggreat.com">https://www.web3isgoinggreat.com</a></li>
+</ul>
+</div>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions?</h2>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Question_mark_blue.png" style="background-color:transparent;box-shadow:none"></p>
 <div class="quarto-auto-generated-content">
 <p><img src="images/quarto.webp" class="slide-logo"></p>
 <div class="footer footer-default">
@@ -526,6 +808,18 @@
         // devices. It is advisable to set this to a lower number than
         // viewDistance in order to save resources.
         mobileViewDistance: 2,
+
+        // Parallax background image
+        parallaxBackgroundImage: 'images/parallax-1.webp', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // Parallax background size
+        parallaxBackgroundSize: '3940px 1080px', // CSS syntax, e.g. "2100px 900px"
+
+        // Amount to move parallax background (horizontal and vertical) on slide change
+        // Number, e.g. 100
+        parallaxBackgroundHorizontal: 100,
+
+        parallaxBackgroundVertical: 0,
 
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
