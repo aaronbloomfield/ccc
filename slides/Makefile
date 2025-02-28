@@ -1,4 +1,4 @@
-SLIDE_SETS: introduction.html overview.html encryption.html mining.html solidity.html sigcse2025.html
+SLIDE_SETS: introduction.html overview.html encryption.html mining.html solidity.html
 .SUFFIXES: .qmd .html
 .PHONY: slides all clean
 
@@ -18,3 +18,8 @@ all:
 graphtest:
 	pdflatex graph.tex > /dev/null
 	pdf2svg graph.pdf graph.html
+
+sigcse2025:
+	/bin/cp -a title-slide-sigcse2025.html title-slide.html
+	quarto render --profile sigcse2025 sigcse2025.qmd --to revealjs
+	git checkout title-slide.html
