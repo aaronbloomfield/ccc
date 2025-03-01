@@ -23,3 +23,5 @@ sigcse2025:
 	/bin/cp -a title-slide-sigcse2025.html title-slide.html
 	quarto render --profile sigcse2025 sigcse2025.qmd --to revealjs
 	git checkout title-slide.html
+	sed -i .bak s/"a href"/"a target='_blank' href"/g sigcse2025.html
+	/bin/rm -rf sigcse2025.html.bak

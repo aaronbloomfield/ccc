@@ -336,9 +336,9 @@
 </div>
   <p class="titlep">&nbsp;</p>
   <div class="titlesmall"><h3 style="font-size:90%">
-    <a href="https://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
-    <a href="https://www.virginia.edu/">University of Virginia</a><br>
-    <a href="https://github.com/aaronbloomfield/ccc">@github</a> | <a href="../index.html">↑</a> | <a href="?print-pdf"><img class="print" width="20" src="images/print-icon.svg" style="top:0px;vertical-align:middle;background-color:transparent;display:inline;width:30px;height:30px"></a>
+    <a target='_blank' href="https://www.cs.virginia.edu/~asb">Aaron Bloomfield</a> (aaron@virginia.edu)<br>
+    <a target='_blank' href="https://www.virginia.edu/">University of Virginia</a><br>
+    <a target='_blank' href="https://github.com/aaronbloomfield/ccc">@github</a> | <a target='_blank' href="../index.html">↑</a> | <a target='_blank' href="?print-pdf"><img class="print" width="20" src="images/print-icon.svg" style="top:0px;vertical-align:middle;background-color:transparent;display:inline;width:30px;height:30px"></a>
   </h3></div>
   <p class="titlep">&nbsp;</p>
 </section>
@@ -348,14 +348,14 @@
 <ul>
 <li>This presentation and course are not about cryptocurrency investing
 <ul>
-<li>Nor is it trying to promote cryptocurrency</li>
+<li>Nor is it (or I) trying to promote cryptocurrency</li>
 <li>Rather, its focus is to understand the technology and theory behind cryptocurrency</li>
 </ul></li>
 <li>You will need to consider legal authorization from your institution
 <ul>
 <li>Cryptocurrency mining is typically forbidden by universities
 <ul>
-<li>Or on state property or with state equipment</li>
+<li>Or on state property, or with state equipment, or using state electricity, etc.</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -365,13 +365,13 @@
 <figure style="float:right;margin-left:20px">
 <img src="images/qrcode.webp" style="height:300px;padding:0">
 <p style="text-align:center;font-size:75%">
-<a href="https://aaronbloomfield.github.io/ccc/slides/sigcse2025.html#/">https://aaronbloomfield.<br>github.io/ccc/slides/<br>sigcse2025.html#/</a>
+<a target='_blank' href="https://aaronbloomfield.github.io/ccc/slides/sigcse2025.html#/">https://aaronbloomfield.<br>github.io/ccc/slides/<br>sigcse2025.html#/</a>
 </p>
 </figure>
 <h2>
 Introduction
 </h2>
-<p><a href="https://finance.yahoo.com/quote/BTC-USD">BTC</a>: <code>$</code>78,248; <a href="https://finance.yahoo.com/quote/ETH-USD">ETH</a>: <code>$</code>2,076; <a href="https://etherscan.io/gastracker">ETH gas</a>: 1.044 gwei =&gt; <code>$</code>0.05 @ 2025-02-28 12:43:36<br>&nbsp;</p>
+<p><a target='_blank' href="https://finance.yahoo.com/quote/BTC-USD">BTC</a>: <code>$</code>83,192; <a target='_blank' href="https://finance.yahoo.com/quote/ETH-USD">ETH</a>: <code>$</code>2,144; <a target='_blank' href="https://etherscan.io/gastracker">ETH gas</a>: 0.938 gwei =&gt; <code>$</code>0.04 @ 2025-03-01 10:39:52</p>
 <ul>
 <li>CS 4970: Cryptocurrency, first taught in spring 2022 at UVA
 <ul>
@@ -379,11 +379,11 @@ Introduction
 </ul></li>
 <li>Goals
 <ul>
-<li>To create a 4th year CS elective on Cryptocurrency</li>
+<li>To create a 4th year CS elective on cryptocurrency</li>
 <li>To make the course materials available to all
 <ul>
-<li>Source code released under a <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL 3.0</a> license</li>
-<li><img data-src="images/cc-by-sa-icon.svg" style="float:right;padding:5px;margin-left:10px"> Non-source code content released under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons BY-SA license</a></li>
+<li>Source code released under a <a target='_blank' href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL 3.0</a> license</li>
+<li><img data-src="images/cc-by-sa-icon.svg" style="float:right;padding:5px;margin-left:10px"> Non-source code content released under a <a target='_blank' href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons BY-SA license</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -391,7 +391,7 @@ Introduction
 <section id="background" class="slide level2">
 <h2>Background</h2>
 <ul>
-<li><em>Blockchain</em>: a append-only linked list
+<li><em>Blockchain</em>: it’s just an append-only linked list
 <ul>
 <li>Blockchain is simple; what’s <em>on</em> the blockchain is what’s interesting</li>
 </ul></li>
@@ -406,7 +406,7 @@ Introduction
 </ul></li>
 <li><em>Smart contract</em>: a program whose compiled binary is on the blockchain
 <ul>
-<li>It is executed by each of the nodes in the P2P cryptocurrency network</li>
+<li>It is executed by each of the nodes in the cryptocurrency’s P2P network</li>
 </ul></li>
 </ul>
 </section>
@@ -428,12 +428,12 @@ Introduction
 <h2>Course Structure</h2>
 <div class="cclogolist2">
 <ul>
-<li><a href="https://coinmarketcap.com/currencies/bitcoin/"><img data-src="../slides/images/logos/btc-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="btc logo"></a> Introduction and Bitcoin: <a href="introduction.html#/">Introduction</a>, <a href="overview.html#/">Overview</a>, <a href="encryption.html#/">Encryption</a>, <a href="bitcoin.html#/">Bitcoin</a>, <a href="mining.html#/">Mining</a></li>
-<li><a href="https://coinmarketcap.com/currencies/ethereum/"><img data-src="../slides/images/logos/eth-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="eth logo"></a> Ethereum and Web3: <a href="ethereum.html#/">Ethereum</a>, <a href="solidity.html#/">Solidity</a>, <a href="tokens.html#/">Tokens</a>, <a href="applications.html#/">Blockchain Applications</a></li>
-<li>Advanced concepts: <a href="scalability.html#/">Scalability</a>, <a href="consensus.html#/">Consensus</a>, <a href="stablecoins.html#/">Stablecoins</a>, <a href="zksnarks.html#/">Zero-knowledge proofs</a></li>
-<li><a href="ethics-legal-policy.html#/">Ethics, Legality, and Policy</a></li>
-<li><a href="darkside.html#/">The Dark Side of Cryptocurrency</a></li>
-<li><a href="conclusion.html">Course Conclusion</a></li>
+<li><a target='_blank' href="https://coinmarketcap.com/currencies/bitcoin/"><img data-src="../slides/images/logos/btc-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="btc logo"></a> Introduction and Bitcoin: <a target='_blank' href="introduction.html#/">Introduction</a>, <a target='_blank' href="overview.html#/">Overview</a>, <a target='_blank' href="encryption.html#/">Encryption</a>, <a target='_blank' href="bitcoin.html#/">Bitcoin</a>, <a target='_blank' href="mining.html#/">Mining</a></li>
+<li><a target='_blank' href="https://coinmarketcap.com/currencies/ethereum/"><img data-src="../slides/images/logos/eth-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="eth logo"></a> Ethereum and Web3: <a target='_blank' href="ethereum.html#/">Ethereum</a>, <a target='_blank' href="solidity.html#/">Solidity</a>, <a target='_blank' href="tokens.html#/">Tokens</a>, <a target='_blank' href="applications.html#/">Blockchain Applications</a></li>
+<li>Advanced concepts: <a target='_blank' href="scalability.html#/">Scalability</a>, <a target='_blank' href="consensus.html#/">Consensus</a>, <a target='_blank' href="stablecoins.html#/">Stablecoins</a>, <a target='_blank' href="zksnarks.html#/">Zero-knowledge proofs</a></li>
+<li><a target='_blank' href="ethics-legal-policy.html#/">Ethics, Legality, and Policy</a></li>
+<li><a target='_blank' href="darkside.html#/">The Dark Side of Cryptocurrency</a></li>
+<li><a target='_blank' href="conclusion.html">Course Conclusion</a></li>
 </ul>
 </div>
 </section>
@@ -446,9 +446,9 @@ Introduction
 <li>All <em>ether</em> on that blockchain is free</li>
 </ul></li>
 <li>The students have nothing to buy at all in the course</li>
-<li>The development IDE we use is <a href="https://remix.ethereum.org">Remix</a> (online and desktop versions)
+<li>The development IDE we use is <a target='_blank' href="https://remix.ethereum.org">Remix</a> (online and desktop versions)
 <ul>
-<li>Other ideas considered: <a href="https://archive.trufflesuite.com/truffle/">Truffle Suite</a>, <a href="https://hardhat.org/">Hardhat</a>, <a href="https://docs.soliditylang.org/en/latest/installing-solidity.html">solc</a> &amp; <a href="https://geth.ethereum.org/downloads">geth</a></li>
+<li>Other ideas considered: <a target='_blank' href="https://archive.trufflesuite.com/truffle/">Truffle Suite</a>, <a target='_blank' href="https://hardhat.org/">Hardhat</a>, <a target='_blank' href="https://docs.soliditylang.org/en/latest/installing-solidity.html">solc</a> &amp; <a target='_blank' href="https://geth.ethereum.org/downloads">geth</a></li>
 </ul></li>
 </ul>
 </div>
@@ -457,7 +457,7 @@ Introduction
 </section>
 <section id="cryptocurrencies-studied" class="slide level2">
 <h2>40 Cryptocurrencies studied</h2>
-<p><a href="https://coinmarketcap.com/currencies/algorand/"><img data-src="../slides/images/logos/algo-coin-symbol.svg#cclogomed" alt="algo logo"></a> <a href="https://coinmarketcap.com/currencies/cosmos/"><img data-src="../slides/images/logos/atom-coin-symbol.svg#cclogomed" alt="atom logo"></a> <a href="https://coinmarketcap.com/currencies/anchorust/"><img data-src="../slides/images/logos/aust-coin-symbol.svg#cclogomed" alt="aust logo"></a> <a href="https://coinmarketcap.com/currencies/beam/"><img data-src="../slides/images/logos/beam-coin-symbol.svg#cclogomed" alt="beam logo"></a> <a href="https://coinmarketcap.com/currencies/bitcoin/"><img data-src="../slides/images/logos/btc-coin-symbol.svg#cclogomed" alt="btc logo"></a> <a href="https://coinmarketcap.com/currencies/bitcoin-gold/"><img data-src="../slides/images/logos/btg-coin-symbol.svg#cclogomed" alt="btg logo"></a> <a href="https://coinmarketcap.com/currencies/multi-collateral-dai/"><img data-src="../slides/images/logos/dai-coin-symbol.svg#cclogomed" alt="dai logo"></a> <a href="https://coinmarketcap.com/currencies/polkadot-new/"><img data-src="../slides/images/logos/dot-coin-symbol.svg#cclogomed" alt="dot logo"></a> <a href="https://coinmarketcap.com/currencies/ergo/"><img data-src="../slides/images/logos/erg-coin-symbol.svg#cclogomed" alt="erg logo"></a> <a href="https://coinmarketcap.com/currencies/ethereum-classic/"><img data-src="../slides/images/logos/etc-coin-symbol.svg#cclogomed" alt="etc logo"></a> <a href="https://coinmarketcap.com/currencies/ethereum/"><img data-src="../slides/images/logos/eth-coin-symbol.svg#cclogomed" alt="eth logo"></a> <a href="https://coinmarketcap.com/currencies/fei-usd/"><img data-src="../slides/images/logos/fei-coin-symbol.svg#cclogomed" alt="fei logo"></a> <a href="https://coinmarketcap.com/currencies/filecoin/"><img data-src="../slides/images/logos/fil-coin-symbol.svg#cclogomed" alt="fil logo"></a> <a href="https://coinmarketcap.com/currencies/firo/"><img data-src="../slides/images/logos/firo-coin-symbol.svg#cclogomed" alt="firo logo"></a> <a href="https://coinmarketcap.com/currencies/frax/"><img data-src="../slides/images/logos/frax-coin-symbol.svg#cclogomed" alt="frax logo"></a> <a href="https://coinmarketcap.com/currencies/juno/"><img data-src="../slides/images/logos/juno-coin-symbol.svg#cclogomed" alt="juno logo"></a> <a href="https://coinmarketcap.com/currencies/terra-luna/"><img data-src="../slides/images/logos/lunac-coin-symbol.svg#cclogomed" alt="luna logo"></a> <a href="https://coinmarketcap.com/currencies/polygon/"><img data-src="../slides/images/logos/matic-coin-symbol.svg#cclogomed" alt="matic logo"></a> <a href="https://coinmarketcap.com/currencies/magic-internet-money/"><img data-src="../slides/images/logos/mim-coin-symbol.svg#cclogomed" alt="mim logo"></a> <a href="https://coinmarketcap.com/currencies/maker/"><img data-src="../slides/images/logos/mkr-coin-symbol.svg#cclogomed" alt="mkr logo"></a> <a href="https://coinmarketcap.com/currencies/neoxa/"><img data-src="../slides/images/logos/neox-coin-symbol.svg#cclogomed" alt="neox logo"></a> <a href="https://coinmarketcap.com/currencies/namecoin/"><img data-src="../slides/images/logos/nmc-coin-symbol.svg#cclogomed" alt="nmc logo"></a> <a href="https://coinmarketcap.com/currencies/peercoin/"><img data-src="../slides/images/logos/ppc-coin-symbol.svg#cclogomed" alt="ppc logo"></a> <a href="https://coinmarketcap.com/currencies/ravencoin/"><img data-src="../slides/images/logos/rvn-coin-symbol.svg#cclogomed" alt="rvn logo"></a> <a href="https://coinmarketcap.com/currencies/single-collateral-dai/"><img data-src="../slides/images/logos/sai-coin-symbol.svg#cclogomed" alt="sai logo"></a> <a href="https://coinmarketcap.com/currencies/shiba-inu/"><img data-src="../slides/images/logos/shib-coin-symbol.svg#cclogomed" alt="shib logo"></a> <a href="https://coinmarketcap.com/currencies/solana/"><img data-src="../slides/images/logos/sol-coin-symbol.svg#cclogomed" alt="sol logo"></a> <a href="https://coinmarketcap.com/currencies/spell-token/"><img data-src="../slides/images/logos/spell-coin-symbol.svg#cclogomed" alt="spell logo"></a> <a href="https://coinmarketcap.com/currencies/storj/"><img data-src="../slides/images/logos/storj-coin-symbol.svg#cclogomed" alt="storj logo"></a> <a href="https://coinmarketcap.com/currencies/tomb/"><img data-src="../slides/images/logos/tomb-coin-symbol.svg#cclogomed" alt="tomb logo"></a> <a href="https://coinmarketcap.com/currencies/tribe/"><img data-src="../slides/images/logos/tribe-coin-symbol.svg#cclogomed" alt="tribe logo"></a> <a href="https://coinmarketcap.com/currencies/usd-coin/"><img data-src="../slides/images/logos/usdc-coin-symbol.svg#cclogomed" alt="usdc logo"></a> <a href="https://coinmarketcap.com/currencies/tether/"><img data-src="../slides/images/logos/usdt-coin-symbol.svg#cclogomed" alt="usdt logo"></a> <a href="https://coinmarketcap.com/currencies/terrausd/"><img data-src="../slides/images/logos/ustc-coin-symbol.svg#cclogomed" alt="ustc logo"></a> <a href="https://coinmarketcap.com/currencies/wrapped-bitcoin/"><img data-src="../slides/images/logos/wbtc-coin-symbol.svg#cclogomed" alt="wbtc logo"></a> <a href="https://coinmarketcap.com/currencies/weth/"><img data-src="../slides/images/logos/weth-coin-symbol.svg#cclogomed" alt="weth logo"></a> <a href="https://coinmarketcap.com/currencies/stellar/"><img data-src="../slides/images/logos/xlm-coin-symbol.svg#cclogomed" alt="xlm logo"></a> <a href="https://coinmarketcap.com/currencies/petrodollar/"><img data-src="../slides/images/logos/xpd-coin-symbol.svg#cclogomed" alt="xpd logo"></a> <a href="https://coinmarketcap.com/currencies/primecoin/"><img data-src="../slides/images/logos/xpm-coin-symbol.svg#cclogomed" alt="xpm logo"></a> <a href="https://coinmarketcap.com/currencies/zcash/"><img data-src="../slides/images/logos/zec-coin-symbol.svg#cclogomed" alt="zec logo"></a></p>
+<p><a target='_blank' href="https://coinmarketcap.com/currencies/algorand/"><img data-src="../slides/images/logos/algo-coin-symbol.svg#cclogomed" alt="algo logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/cosmos/"><img data-src="../slides/images/logos/atom-coin-symbol.svg#cclogomed" alt="atom logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/anchorust/"><img data-src="../slides/images/logos/aust-coin-symbol.svg#cclogomed" alt="aust logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/beam/"><img data-src="../slides/images/logos/beam-coin-symbol.svg#cclogomed" alt="beam logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/bitcoin/"><img data-src="../slides/images/logos/btc-coin-symbol.svg#cclogomed" alt="btc logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/bitcoin-gold/"><img data-src="../slides/images/logos/btg-coin-symbol.svg#cclogomed" alt="btg logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/multi-collateral-dai/"><img data-src="../slides/images/logos/dai-coin-symbol.svg#cclogomed" alt="dai logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/polkadot-new/"><img data-src="../slides/images/logos/dot-coin-symbol.svg#cclogomed" alt="dot logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/ergo/"><img data-src="../slides/images/logos/erg-coin-symbol.svg#cclogomed" alt="erg logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/ethereum-classic/"><img data-src="../slides/images/logos/etc-coin-symbol.svg#cclogomed" alt="etc logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/ethereum/"><img data-src="../slides/images/logos/eth-coin-symbol.svg#cclogomed" alt="eth logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/fei-usd/"><img data-src="../slides/images/logos/fei-coin-symbol.svg#cclogomed" alt="fei logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/filecoin/"><img data-src="../slides/images/logos/fil-coin-symbol.svg#cclogomed" alt="fil logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/firo/"><img data-src="../slides/images/logos/firo-coin-symbol.svg#cclogomed" alt="firo logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/frax/"><img data-src="../slides/images/logos/frax-coin-symbol.svg#cclogomed" alt="frax logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/juno/"><img data-src="../slides/images/logos/juno-coin-symbol.svg#cclogomed" alt="juno logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/terra-luna/"><img data-src="../slides/images/logos/lunac-coin-symbol.svg#cclogomed" alt="luna logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/polygon/"><img data-src="../slides/images/logos/matic-coin-symbol.svg#cclogomed" alt="matic logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/magic-internet-money/"><img data-src="../slides/images/logos/mim-coin-symbol.svg#cclogomed" alt="mim logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/maker/"><img data-src="../slides/images/logos/mkr-coin-symbol.svg#cclogomed" alt="mkr logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/neoxa/"><img data-src="../slides/images/logos/neox-coin-symbol.svg#cclogomed" alt="neox logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/namecoin/"><img data-src="../slides/images/logos/nmc-coin-symbol.svg#cclogomed" alt="nmc logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/peercoin/"><img data-src="../slides/images/logos/ppc-coin-symbol.svg#cclogomed" alt="ppc logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/ravencoin/"><img data-src="../slides/images/logos/rvn-coin-symbol.svg#cclogomed" alt="rvn logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/single-collateral-dai/"><img data-src="../slides/images/logos/sai-coin-symbol.svg#cclogomed" alt="sai logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/shiba-inu/"><img data-src="../slides/images/logos/shib-coin-symbol.svg#cclogomed" alt="shib logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/solana/"><img data-src="../slides/images/logos/sol-coin-symbol.svg#cclogomed" alt="sol logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/spell-token/"><img data-src="../slides/images/logos/spell-coin-symbol.svg#cclogomed" alt="spell logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/storj/"><img data-src="../slides/images/logos/storj-coin-symbol.svg#cclogomed" alt="storj logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/tomb/"><img data-src="../slides/images/logos/tomb-coin-symbol.svg#cclogomed" alt="tomb logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/tribe/"><img data-src="../slides/images/logos/tribe-coin-symbol.svg#cclogomed" alt="tribe logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/usd-coin/"><img data-src="../slides/images/logos/usdc-coin-symbol.svg#cclogomed" alt="usdc logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/tether/"><img data-src="../slides/images/logos/usdt-coin-symbol.svg#cclogomed" alt="usdt logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/terrausd/"><img data-src="../slides/images/logos/ustc-coin-symbol.svg#cclogomed" alt="ustc logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/wrapped-bitcoin/"><img data-src="../slides/images/logos/wbtc-coin-symbol.svg#cclogomed" alt="wbtc logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/weth/"><img data-src="../slides/images/logos/weth-coin-symbol.svg#cclogomed" alt="weth logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/stellar/"><img data-src="../slides/images/logos/xlm-coin-symbol.svg#cclogomed" alt="xlm logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/petrodollar/"><img data-src="../slides/images/logos/xpd-coin-symbol.svg#cclogomed" alt="xpd logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/primecoin/"><img data-src="../slides/images/logos/xpm-coin-symbol.svg#cclogomed" alt="xpm logo"></a> <a target='_blank' href="https://coinmarketcap.com/currencies/zcash/"><img data-src="../slides/images/logos/zec-coin-symbol.svg#cclogomed" alt="zec logo"></a></p>
 </section>
 <section class="slide level2">
 
@@ -473,10 +473,10 @@ Assignments
 </p>
 <ul>
 <li>S1: Intro survey</li>
-<li>S2: Read the <a href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
-<li>S3: Read the<br><a href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>)</li>
-<li><a href="../hws/ethprivate/index.html">S4: Private<br>Ethereum Blockchain</a></li>
-<li><a href="../hws/dappintro/index.html">S5: dApp<br>Introduction</a></li>
+<li>S2: Read the <a target='_blank' href="https://bitcoinwhitepaper.co/">Bitcoin whitepaper</a></li>
+<li>S3: Read the<br><a target='_blank' href="https://ethereum.org/en/whitepaper/">Ethereum whitepaper</a> (<a target='_blank' href="https://blockchainlab.com/pdf/Ethereum_white_paper-a_next_generation_smart_contract_and_decentralized_application_platform-vitalik-buterin.pdf">PDF</a>)</li>
+<li><a target='_blank' href="../hws/ethprivate/index.html">S4: Private<br>Ethereum Blockchain</a></li>
+<li><a target='_blank' href="../hws/dappintro/index.html">S5: dApp<br>Introduction</a></li>
 </ul>
 </td>
 <td class="top" style="width:60%;padding-right:0">
@@ -484,17 +484,17 @@ Assignments
 Programming homeworks
 </p>
 <ul>
-<li><a href="../hws/intro/index.html">P1: Introductory homework</a></li>
-<li><a href="../hws/ecdsa/index.html">P2: ECDSA implementation</a></li>
-<li><a href="../hws/btcparser/index.html">P3: BTC parser</a></li>
-<li><a href="../hws/btcscript/index.html">P4: Bitcoin scripting</a></li>
-<li><a href="../hws/gradebook/index.html">P5: dApp Gradebook</a></li>
-<li><a href="../hws/tokens/index.html">P6: dApp Tokens</a></li>
-<li><a href="../hws/auction/index.html">P7: dApp Auction</a></li>
-<li><a href="../hws/dex/index.html">P8: DEX</a></li>
-<li><a href="../hws/daoweb3/index.html">P9: DAO &amp; web3</a></li>
-<li><a href="../hws/arbitrage/index.html">P10: Arbitrage trading</a></li>
-<li><a href="../hws/metamask/index.html">P11: MetaMask</a></li>
+<li><a target='_blank' href="../hws/intro/index.html">P1: Introductory homework</a></li>
+<li><a target='_blank' href="../hws/ecdsa/index.html">P2: ECDSA implementation</a></li>
+<li><a target='_blank' href="../hws/btcparser/index.html">P3: BTC parser</a></li>
+<li><a target='_blank' href="../hws/btcscript/index.html">P4: Bitcoin scripting</a></li>
+<li><a target='_blank' href="../hws/gradebook/index.html">P5: dApp Gradebook</a></li>
+<li><a target='_blank' href="../hws/tokens/index.html">P6: dApp Tokens</a></li>
+<li><a target='_blank' href="../hws/auction/index.html">P7: dApp Auction</a></li>
+<li><a target='_blank' href="../hws/dex/index.html">P8: DEX</a></li>
+<li><a target='_blank' href="../hws/daoweb3/index.html">P9: DAO &amp; web3</a></li>
+<li><a target='_blank' href="../hws/arbitrage/index.html">P10: Arbitrage trading</a></li>
+<li><a target='_blank' href="../hws/metamask/index.html">P11: MetaMask</a></li>
 </ul>
 </td>
 </tr>
@@ -512,10 +512,10 @@ NFTs
 <li>Non-fungible: cannot be broken into parts or split (like how money can)</li>
 </ul></li>
 <li>A blockchain entry that “represents” something <em>off</em> the blockchain</li>
-<li>This one sold for 430 ETH or $1.63 million (<a href="Bored%20Ape%20#3562">src</a>)</li>
+<li>This one sold for 430 ETH or $1.63 million (<a target='_blank' href="https://nftevening.com/this-bored-ape-nft-sold-for-430-eth-but-weirdly-enough-its-not-a-rare-one/">article</a>, <a target='_blank' href="https://etherscan.io/tx/0x851d5ec47f2d766278193961c3fd582011af1fda286f883331750fd3f1d02338">sale</a>)</li>
 <li>Actual use: a design pattern to represent <em>something</em>, such as membership in an organization</li>
 <li>Students make their own in the course, often with the (allowed) use of generative AI</li>
-<li>Formally: an <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-721/">ERC-721</a> (or <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/">ERC-1155</a>, etc.) token</li>
+<li>Formally: an <a target='_blank' href="https://ethereum.org/en/developers/docs/standards/tokens/erc-721/">ERC-721</a> (or <a target='_blank' href="https://ethereum.org/en/developers/docs/standards/tokens/erc-1155/">ERC-1155</a>, etc.) token</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -529,12 +529,12 @@ Token cryptocurrencies
 <li>A cryptocurrency that does not have its own blockchain, but is a smart contract on another blockchain, such as Ethereum</li>
 <li>Some of the most well-known:
 <ul>
-<li><a href="https://coinmarketcap.com/currencies/tether/"><img data-src="../slides/images/logos/usdt-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="usdt logo"></a> Tether (USDT)<br clear="all"></li>
-<li><a href="https://coinmarketcap.com/currencies/usd-coin/"><img data-src="../slides/images/logos/usdc-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="usdc logo"></a> USDC<br clear="all"></li>
-<li><a href="https://coinmarketcap.com/currencies/shiba-inu/"><img data-src="../slides/images/logos/shib-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="shib logo"></a> Shiba Inu<br clear="all"></li>
+<li><a target='_blank' href="https://coinmarketcap.com/currencies/tether/"><img data-src="../slides/images/logos/usdt-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="usdt logo"></a> Tether (USDT)<br clear="all"></li>
+<li><a target='_blank' href="https://coinmarketcap.com/currencies/usd-coin/"><img data-src="../slides/images/logos/usdc-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="usdc logo"></a> USDC<br clear="all"></li>
+<li><a target='_blank' href="https://coinmarketcap.com/currencies/shiba-inu/"><img data-src="../slides/images/logos/shib-coin-symbol.svg#cclogomed" style="width:75px;height:75px" alt="shib logo"></a> Shiba Inu<br clear="all"></li>
 </ul></li>
 <li>Students also create their own</li>
-<li>Formally: an <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/">ERC-20</a> (or <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-777/">ERC-777</a>, etc.) token</li>
+<li>Formally: an <a target='_blank' href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/">ERC-20</a> (or <a target='_blank' href="https://ethereum.org/en/developers/docs/standards/tokens/erc-777/">ERC-777</a>, etc.) token</li>
 </ul>
 </div>
 </section>
@@ -549,14 +549,14 @@ Token cryptocurrencies
 Final assignment
 </h2>
 <ul>
-<li><a href="../hws/metamask/index.html">HW P11: Metamask</a></li>
+<li><a target='_blank' href="../hws/metamask/index.html">HW P11: Metamask</a></li>
 <li>A Web3 based assignment
 <ul>
 <li>A HTML page that interactions with their auction smart contract</li>
 <li>… to allow auctioning their NFTs</li>
 </ul></li>
 <li>Uses MetaMask, a Chrome extension, to allow access to their Ethereum wallet</li>
-<li>Similar, in concept, to a site such as <a href="https://opensea.io">opensea.io</a></li>
+<li>Similar, in concept, to a site such as <a target='_blank' href="https://opensea.io">opensea.io</a></li>
 </ul>
 </section>
 <section id="ethics-scams" class="slide level2">
@@ -564,7 +564,7 @@ Final assignment
 <iframe src="https://www.web3isgoinggreat.com" style="width:95%;height:70%;margin-bottom:0;border-radius:30px">
 </iframe>
 <p style="text-align:center;margin-top:0">
-<a href="https://www.web3isgoinggreat.com">https://www.web3isgoinggreat.com</a>
+<a target='_blank' href="https://www.web3isgoinggreat.com">https://www.web3isgoinggreat.com</a>
 </p>
 </section>
 <section id="results" class="slide level2">
@@ -572,7 +572,7 @@ Final assignment
 <div class="right-float-img-500">
 <p><img data-src="https://clipart-library.com/image_gallery/159798.png"></p>
 <ul>
-<li>Well received by the students based on SETs
+<li>Was well received by the students based on SETs
 <ul>
 <li>They enjoyed the progression of assignments and the coverage of topics</li>
 <li>Even by those who were generally opposed to cryptocurrencies</li>
@@ -588,10 +588,10 @@ Final assignment
 <iframe src="https://aaronbloomfield.github.io/ccc" style="width:95%;height:70%;margin-bottom:0;background-color:white;border-radius:30px">
 </iframe>
 <p style="text-align:center;margin-top:0">
-<a href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>
+<a target='_blank' href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>
 </p>
 <p style="text-align:center;margin-top:0">
-<a href="https://aaronbloomfield.github.io/ccc">https://aaronbloomfield.github.io/ccc</a>
+<a target='_blank' href="https://aaronbloomfield.github.io/ccc">https://aaronbloomfield.github.io/ccc</a>
 </p>
 </section>
 <section id="conclusions" class="slide level2">
@@ -601,9 +601,9 @@ Final assignment
 <ul>
 <li>We developed a 4th year undergraduate elective course on cryptocurrency
 <ul>
-<li>Well received by the students</li>
-<li>All materials available under public copyright licenses</li>
+<li>Was well received by the students</li>
 </ul></li>
+<li>All materials available under public copyright licenses</li>
 <li>Lecture topics are comprehensive</li>
 <li>Homeworks build upon each other to create a real-world final assignment deliverable</li>
 <li>All learning objectives and course goals achieved</li>
@@ -613,24 +613,24 @@ Final assignment
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
 <div class="right-float-img no-border font-90">
-<p><img data-src="https://images.squarespace-cdn.com/content/v1/53ec790ae4b0396cbd14d8a1/1549603379685-8LW09B8TNRFNWAOHYAW3/settlers-of-catan-playtonic-board-games-d.jpg" style="width:400px;max-width:unset"></p>
+<p><img data-src="https://i.redd.it/xov07vpxsvn91.jpg" style="width:400px;max-width:unset;padding:10px"></p>
 <ul>
-<li>Github repository:<br><a href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>
+<li>Github repository:<br><a target='_blank' href="https://github.com/aaronbloomfield/ccc">https://github.com/aaronbloomfield/ccc</a>
 <ul>
 <li>Instructor github repo available upon request</li>
 </ul></li>
-<li>Easier-to-view version:<br><a href="https://aaronbloomfield.github.io/ccc">https://aaronbloomfield.github.io/ccc</a></li>
-<li>Web3 is going great:<br><a href="https://www.web3isgoinggreat.com">https://www.web3isgoinggreat.com</a></li>
+<li>Easier-to-view version:<br><a target='_blank' href="https://aaronbloomfield.github.io/ccc">https://aaronbloomfield.github.io/ccc</a></li>
+<li>Web3 is going great:<br><a target='_blank' href="https://www.web3isgoinggreat.com">https://www.web3isgoinggreat.com</a></li>
 </ul>
 </div>
 </section>
 <section id="questions" class="slide level2">
 <h2>Questions?</h2>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Question_mark_blue.png" style="background-color:transparent;box-shadow:none"></p>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/8/84/Question_Mark_Icon.png" style="background-color:transparent;box-shadow:none;width:50%"></p>
 <div class="quarto-auto-generated-content">
 <p><img src="images/quarto.webp" class="slide-logo"></p>
 <div class="footer footer-default">
-<p><a href="https://github.com/aaronbloomfield/ccc" class="uri">https://github.com/aaronbloomfield/ccc</a></p>
+<p><a target='_blank' href="https://github.com/aaronbloomfield/ccc" class="uri">https://github.com/aaronbloomfield/ccc</a></p>
 </div>
 </div>
 </section>
@@ -665,7 +665,7 @@ Final assignment
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a target='_blank' href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
 'smaller': false,
  
