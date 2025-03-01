@@ -71,7 +71,10 @@
 <p>This document assumes that you have a recent version of Python 3 installed, and that you can install Python packages through <code>pip</code> (or <code>pip3</code>). Don’t worry if you don’t know Python – we give you the exact code to use. This document also assumes you can install applications on your machine.</p>
 <p>As you proceed through this assignment, you will be filling in values into the <a href="ethprivate.py.html">ethprivate.py</a> (<a href="ethprivate.py">src</a>) file, which is the only file you will submit at the end.</p>
 <h3 id="changelog">Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. <!-- Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report. --></p>
+<ul>
+<li>Fri, 2/28: You should install geth 1.13 (the latest is 1.15). It will not work with versions newer than 1.13.</li>
+</ul>
 <h3 id="part-1-installation">Part 1: Installation</h3>
 <p>Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.</p>
 <p>You will need to install <a href="https://geth.ethereum.org">geth</a> (aka go-ethereum), which you can download from the <a href="https://geth.ethereum.org/downloads">geth downloads page</a>. The instructions differ depending on your OS – some OS’es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package. If prompted (only on some OS’es), you don’t need to install the development tools.</p>
@@ -156,7 +159,7 @@ To exit, press ctrl-d or type exit
 </ul></li>
 <li>You can get that account number anytime via <code>eth.coinbase</code>
 <ul>
-<li>Versions 1.11.* of geth will report that <code>eth.coinbase</code> is not working. If that is the case, enter <code>eth.accounts</code> – if it is not empty (meaning the list has at least 1 account number), you can use <code>eth.accounts[0]</code> in lieu of your <code>eth.coinbase</code>. You will have to do this when you turn in your assignments as well – use the <code>eth.accounts[0]</code> value for <code>eth.coinbase</code> when completing the <a href="ethprivate.py.html">ethprivate.py</a> (<a href="ethprivate.py">src</a>) file.</li>
+<li>Some versions of geth will report that <code>eth.coinbase</code> is not working. If that is the case, enter <code>eth.accounts</code> – if it is not empty (meaning the list has at least 1 account number), you can use <code>eth.accounts[0]</code> in lieu of your <code>eth.coinbase</code>. You will have to do this when you turn in your assignments as well – use the <code>eth.accounts[0]</code> value for <code>eth.coinbase</code> when completing the <a href="ethprivate.py.html">ethprivate.py</a> (<a href="ethprivate.py">src</a>) file.</li>
 <li>You can fix this by running <code>miner.setEtherbase(eth.accounts[0])</code>; this will register your <code>eth.accounts[0]</code> as your <code>eth.coinbase</code>. Apparently this only has to be done once.</li>
 </ul></li>
 <li>You can check the balance in your account by <code>eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")</code>, using your account number as the parameter – it should be zero at this point
@@ -165,7 +168,7 @@ To exit, press ctrl-d or type exit
 </ul></li>
 </ul>
 <h3 id="part-4-get-ether">Part 4: Get ether</h3>
-<p>You cannot mine on this blockchain – it has been set up to automatically mine any transaction to the blockchain for you. In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page. Each time you use this faucet you will obtain 100 (fake) ETH. <strong>USE THIS RESPONSIBLY!!!</strong> The intent of the faucet is for you to obtain as much funds as you need for this course. But if you spam that site with unnecessary requests to gain lots of funds, it will deplete the amount avaialbe for the course, interfering with your classmates ability to do their work. This will make me cranky. If you request funds a few dozen times throughout the semester, that’s totally fine. Even a hundred requests this semester would be fine. But if you are making the requests thousands of times, that’s going to be a problem.</p>
+<p>You cannot mine on this blockchain – it has been set up to automatically mine any transaction to the blockchain for you. In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page. Each time you use this faucet you will obtain 100 (fake) ETH. <strong>USE THIS RESPONSIBLY!!!</strong> The intent of the faucet is for you to obtain as much funds as you need for this course. But if you spam that site with unnecessary requests to gain lots of funds, it will cause a slowdown of the system, and a dramatic increase in the blockchain size, which will interfere with your classmates ability to do their work. This will make me cranky. If you request funds a few dozen times throughout the semester, that’s totally fine. Even a hundred requests this semester would be fine. But if you are making the requests thousands of times, that’s going to be a problem.</p>
 <p>You should request funds once or twice for this assignment. After you make the requests – you’ll need your full eth.coinbase account address – you should check that your balance was updated in the geth terminal. You can use <code>eth.getBalance(eth.coinbase)</code>, but that reports it in wei (which has 18 more zeroes). You can also use <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code> to get the value in ether.</p>
 <p>You will determine the transaction hash and the block number for this transaction later in this assignment (in part 8).</p>
 <p>To verify that you did this part, we are going to check that you have a non-zero balance in your eth.coinbase account.</p>
@@ -175,6 +178,7 @@ To exit, press ctrl-d or type exit
 <p>Run python (or python3, depending on your OS). Note that we are going back to Python for now, and will come back to geth later. In Python, enter the following two lines, changing the values as appropriate to the file name (with full path) and the password for the Ethereum account you created in geth:</p>
 <pre><code>password=&quot;password&quot;
 filename=&quot;/path/to/ethprivate/keystore/UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567&quot;</code></pre>
+<p>Note the “keystore” sub-directory in that path!</p>
 <p>Next, cut-and-paste the following code into your Python terminal.:</p>
 <pre><code>from web3.auto import w3
 keyfile = open(filename)
@@ -213,6 +217,7 @@ $</code></pre>
 <li>Check your balance via <code>eth.getBalance("0x0123456789abcdef0123456789abcdef01234567")</code> – you may notice that the balanace has not changed if you enter that before the transaction was not mined into a block.
 <ul>
 <li>You can also get your account balance in (fake) ETH via: <code>web3.fromWei(eth.getBalance(eth.coinbase), "ether")</code></li>
+<li>It will have taken out a bit more than 1 ETH, as there were gas fees as well (which should have been 0.000021 ETH)</li>
 </ul></li>
 <li>You can see your pending transaction via <code>eth.pendingTransactions</code> (again, only if you enter that before it is mined into a block).</li>
 <li>Get information on the mined transaction: <code>eth.getTransactionReceipt("0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef")</code> – replace the hash there with the transaction hash you recorded, above.
@@ -245,5 +250,6 @@ To exit, press ctrl-d or type exit
 <p>There are <em>two</em> forms of submission for this assignment; you must do both.</p>
 <p>Submission 1: You will need to send 1 (fake) ether to the course-wide address indicated on the Canvas landing page; this was done in part 6, above. This implies that you received ether from the faucet so that you can send that required 1 ether.</p>
 <p>Submission 2: Submit your completed <code>ethprivate.py</code> file, and ONLY that file, to Gradescope.</p>
+<p>Because this is a tutorial, rather than a homework assignment, your grade is shown when you submit. If you receive a grade less than 10, it will tell you the errors, and you should fix them and resubmit.</p>
 </body>
 </html>

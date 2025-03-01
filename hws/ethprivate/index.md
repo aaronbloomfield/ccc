@@ -27,7 +27,9 @@ As you proceed through this assignment, you will be filling in values into the [
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  <!-- Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report. -->
+
+- Fri, 2/28: You should install geth 1.13 (the latest is 1.15).  It will not work with versions newer than 1.13.
 
 
 ### Part 1: Installation
