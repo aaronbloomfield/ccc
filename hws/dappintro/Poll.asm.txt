@@ -13,9 +13,7 @@ EVM assembly:
   iszero
   tag_1
   jumpi
-  0x00
-  dup1
-  revert
+  revert(0x00, 0x00)
 tag_1:
   pop
     /* "Poll.sol":2517:2533  addChoice("red") */
@@ -662,6 +660,11 @@ tag_61:
 tag_30:
     /* "#utility.yul":2266:2269   */
   0x00
+    /* "#utility.yul":2287:2288   */
+  0x00
+    /* "#utility.yul":2280:2288   */
+  swap1
+  pop
     /* "#utility.yul":2221:2294   */
   swap1
   jump	// out
@@ -1238,9 +1241,7 @@ sub_0: assembly {
       iszero
       tag_1
       jumpi
-      0x00
-      dup1
-      revert
+      revert(0x00, 0x00)
     tag_1:
       pop
       jumpi(tag_2, lt(calldatasize, 0x04))
@@ -1293,9 +1294,7 @@ sub_0: assembly {
       tag_6
       jumpi
     tag_2:
-      0x00
-      dup1
-      revert
+      revert(0x00, 0x00)
         /* "Poll.sol":3217:3466  function vote (uint _id) public override {... */
     tag_3:
       tag_12
@@ -1494,7 +1493,7 @@ sub_0: assembly {
         /* "Poll.sol":3271:3276  voted */
       0x00
         /* "Poll.sol":3271:3288  voted[msg.sender] */
-      dup1
+      0x00
         /* "Poll.sol":3277:3287  msg.sender */
       caller
         /* "Poll.sol":3271:3288  voted[msg.sender] */
@@ -1593,7 +1592,7 @@ sub_0: assembly {
         /* "Poll.sol":3389:3394  voted */
       0x00
         /* "Poll.sol":3389:3406  voted[msg.sender] */
-      dup1
+      0x00
         /* "Poll.sol":3395:3405  msg.sender */
       caller
         /* "Poll.sol":3389:3406  voted[msg.sender] */
@@ -1898,7 +1897,7 @@ sub_0: assembly {
         /* "Poll.sol":3804:3815  _choices[0] */
       0x00
         /* "Poll.sol":3813:3814  0 */
-      dup1
+      0x00
         /* "Poll.sol":3804:3815  _choices[0] */
       dup2
       mstore
@@ -2229,7 +2228,7 @@ sub_0: assembly {
         /* "#utility.yul":197:198   */
       0x00
         /* "#utility.yul":194:195   */
-      dup1
+      0x00
         /* "#utility.yul":187:199   */
       revert
         /* "#utility.yul":211:328   */
@@ -2237,7 +2236,7 @@ sub_0: assembly {
         /* "#utility.yul":320:321   */
       0x00
         /* "#utility.yul":317:318   */
-      dup1
+      0x00
         /* "#utility.yul":310:322   */
       revert
         /* "#utility.yul":334:411   */
@@ -2274,7 +2273,7 @@ sub_0: assembly {
         /* "#utility.yul":529:530   */
       0x00
         /* "#utility.yul":526:527   */
-      dup1
+      0x00
         /* "#utility.yul":519:531   */
       revert
         /* "#utility.yul":470:533   */
@@ -2397,7 +2396,7 @@ sub_0: assembly {
         /* "#utility.yul":1290:1291   */
       0x00
         /* "#utility.yul":1287:1288   */
-      dup1
+      0x00
         /* "#utility.yul":1280:1292   */
       revert
         /* "#utility.yul":1232:1294   */
@@ -2607,7 +2606,7 @@ sub_0: assembly {
         /* "#utility.yul":2670:2671   */
       0x00
         /* "#utility.yul":2667:2668   */
-      dup1
+      0x00
         /* "#utility.yul":2660:2672   */
       revert
         /* "#utility.yul":2684:2801   */
@@ -2615,7 +2614,7 @@ sub_0: assembly {
         /* "#utility.yul":2793:2794   */
       0x00
         /* "#utility.yul":2790:2791   */
-      dup1
+      0x00
         /* "#utility.yul":2783:2795   */
       revert
         /* "#utility.yul":2807:2909   */
@@ -3250,7 +3249,7 @@ sub_0: assembly {
         /* "#utility.yul":6770:6771   */
       0x00
         /* "#utility.yul":6767:6768   */
-      dup1
+      0x00
         /* "#utility.yul":6760:6772   */
       revert
         /* "#utility.yul":6711:6774   */
@@ -4179,6 +4178,11 @@ sub_0: assembly {
     tag_126:
         /* "#utility.yul":13372:13375   */
       0x00
+        /* "#utility.yul":13393:13394   */
+      0x00
+        /* "#utility.yul":13386:13394   */
+      swap1
+      pop
         /* "#utility.yul":13327:13400   */
       swap1
       jump	// out
@@ -4672,6 +4676,6 @@ sub_0: assembly {
       pop
       jump	// out
 
-    auxdata: 0xa264697066735822122099a6a2398158a58724504ff9931f86316e0d13fac722af7be6dbb80184ed24c064736f6c634300081a0033
+    auxdata: 0xa264697066735822122037a6871158e8d81a33e223f4f6af1f36bf17752599a6fc281d000567d3628b7a64736f6c634300081c0033
 }
 
