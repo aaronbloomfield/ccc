@@ -79,22 +79,22 @@ Course calendar
 
 | Week # | Week of Monday | Lecture days | HWs due | Expected Topics | Actual Progress |
 |----|----|----|----|----|----|
-| 1  | Jan 13 | W,F   |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) | Tue: finished intro, overview to 4.11; Thu: finished overview, encryption to 3.12 |
-| 2  | Jan 20 | M,W,F |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) |  Tue: encryption to 6.13 |
-| 3  | Jan 27 | M,W,F | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) |  |
-| 4  | Feb 3  | M,W,F | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) |  Tue: bitcoin to ???; Thu: finished bitcoin |
-| 5  | Feb 10 | M,W,F | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) |  |
-| 6  | Feb 17 | M,W,F | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/), [Solidity](../slides/solidity.html#/) |  |
-| 7  | Feb 24 | M,W,F | midterm, S4 (ETH Private) | [Solidity](../slides/solidity.html#/). midterm on Wed |  |
-|    | Mar 3  |       | Spring break        | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) |  |
-| 8  | Mar 10 | M,W,F | S5 (dApp intro)     | Spring break | |
-| 9  | Mar 17 | M,W,F | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) |  |
-| 10 | Mar 24 | M,W,F | P6 (Tokens)         | [Mining](../slides/mining.html#/), [Blockchain applications](../slides/applications.html#/) |  |
-| 11 | Mar 31  | M,W,F | P7 (Auction)        | [Blockchain applications](../slides/applications.html#/), [Scalability](../slides/scalability.html#/) |  |
-| 12 | Apr 7  | M,W,F | P8 (DEX)            | [Scalability](../slides/scalability.html#/), [Stablecoins](../slides/stablecoins.html#/) |  |
-| 13 | Apr 14 | M,W,F | P9 (DAO&web3)       | [Stablecoins](../slides/stablecoins.html#/), [Consensus](../slides/consensus.html#/) |  |
-| 14 | Apr 21 | M,W,F | P10 (Arbitrage)     | [Consensus](../slides/consensus.html#/), [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/) |  |
-| 15 | Apr 28 | M     | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) |  |
+| 1  | Jan 13 | Tu,Th |                     | [Course introduction](../slides/introduction.html#/), [Overview](../slides/overview.html#/) | Tue: finished intro, overview to 4.11; Thu: finished overview, encryption to 3.12 |
+| 2  | Jan 20 | Tu,Th |  | [Overview](../slides/overview.html#/), [Encryption](../slides/encryption.html#/) |  Tue: encryption to 6.13 |
+| 3  | Jan 27 | Tu,Th | P1 (Introduction)   | [Encryption](../slides/encryption.html#/) |  |
+| 4  | Feb 3  | Tu,Th | P2 (ECDSA)          | [Bitcoin](../slides/bitcoin.html#/) |  Tue: bitcoin to ???; Thu: finished bitcoin |
+| 5  | Feb 10 | Tu,Th | P3 (BTC parser)     | [Bitcoin](../slides/bitcoin.html#/) |  |
+| 6  | Feb 17 | Tu,Th | P4 (BTC scripting)  | [Ethereum](../slides/ethereum.html#/), [Solidity](../slides/solidity.html#/) |  |
+| 7  | Feb 24 | Tu,Th | midterm, S4 (ETH Private) | [Solidity](../slides/solidity.html#/). midterm on Wed |  |
+|    | Mar 3  | Tu,Th | S5 (dApp intro)     | [Solidity](../slides/solidity.html#/), [Tokens](../slides/tokens.html#/) |  |
+| 8  | Mar 10 |       | Spring break        | Spring break | |
+| 9  | Mar 17 | Tu,Th | P5 (Gradebook)      | [Tokens](../slides/tokens.html#/), [Mining](../slides/mining.html#/) |  |
+| 10 | Mar 24 | Tu,Th | P6 (Tokens)         | [Mining](../slides/mining.html#/), [Blockchain applications](../slides/applications.html#/) |  |
+| 11 | Mar 31 | Tu,Th | P7 (Auction)        | [Blockchain applications](../slides/applications.html#/), [Scalability](../slides/scalability.html#/) |  |
+| 12 | Apr 7  | Tu,Th | P8 (DEX)            | [Scalability](../slides/scalability.html#/), [Stablecoins](../slides/stablecoins.html#/) |  |
+| 13 | Apr 14 | Tu,Th | P9 (DAO&web3)       | [Stablecoins](../slides/stablecoins.html#/), [Consensus](../slides/consensus.html#/) |  |
+| 14 | Apr 21 | Tu,Th | P10 (Arbitrage)     | [Consensus](../slides/consensus.html#/), [Ethics, Legality, and Policy](../slides/ethics-legal-policy.html#/), [The Dark Side of Cryptocurrency](../slides/darkside.html#/) |  |
+| 15 | Apr 28 | Tu    | P11 (Metamask)      | [Course conclusion](../slides/conclusion.html#/) |  |
 
 ## Legal Issues
 
