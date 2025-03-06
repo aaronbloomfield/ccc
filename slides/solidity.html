@@ -341,6 +341,17 @@
     <a href="https://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">↑</a> | <a href="?print-pdf"><img class="print" width="20" src="images/print-icon.svg" style="top:0px;vertical-align:middle;background-color:transparent;display:inline;width:30px;height:30px"></a>
   </p></div>
   <p class="titlep">&nbsp;</p>
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Contents</h2>
+<ul>
+<li><a href="#/types" id="/toc-types">Types</a></li>
+<li><a href="#/concepts" id="/toc-concepts">Concepts</a></li>
+<li><a href="#/poll-example" id="/toc-poll-example">Poll Example</a></li>
+<li><a href="#/debtors-example" id="/toc-debtors-example">Debtor’s Example</a></li>
+<li><a href="#/testing-debugging" id="/toc-testing-debugging">Testing &amp; Debugging</a></li>
+</ul>
+</nav>
 </section>
 <section>
 <section id="types" class="title-slide slide level1 center">
@@ -958,14 +969,14 @@ contract C {
 <ul>
 <li>We’ll only use the following Solidity version pragma:</li>
 </ul>
-<pre><code>pragma solidity ^0.8.29;</code></pre>
+<pre><code>pragma solidity ^0.8.28;</code></pre>
 <ul>
 <li>The three numbers are: major version, minor version, bugfix version</li>
 <li>By default, it forces a compiler error if the wrong compiler version is being used
 <ul>
 <li>Some platforms, such as Truffle or Remix, will try to find the right compiler version</li>
 </ul></li>
-<li>This will only compile with version 0.8.29 or later
+<li>This will only compile with version 0.8.28 or later
 <ul>
 <li>But will NOT allow compilation with version 0.9.0 or later</li>
 </ul></li>
@@ -991,7 +1002,7 @@ contract C {
 <li>As this will compile on all of the platforms we will be using</li>
 </ul></li>
 </ul>
-<pre><code>pragma solidity ^0.8.29;</code></pre>
+<pre><code>pragma solidity ^0.8.28;</code></pre>
 </section>
 <section id="comments" class="slide level2">
 <h2>Comments</h2>
@@ -1114,7 +1125,7 @@ contract C {
 <section id="what-we-have-so-far" class="slide level2">
 <h2>What we have so far</h2>
 <pre><code>// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
 interface IERC165 {
   // ...
@@ -1500,7 +1511,7 @@ c = address(new Bar());</code></pre>
 <h2>Solidity bytecode</h2>
 <p>Consider the following Solidity smart contract:</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 contract MyContract {
     uint public i = 1 + 2 * 3 - 4;
 }</code></pre>
@@ -1640,7 +1651,7 @@ tag 1     contract MyContract {\n    uin...
 <h2>IPoll.sol</h2>
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
 interface IPoll {
 
@@ -1673,7 +1684,7 @@ interface IPoll {
 <h2>Poll.sol</h2>
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
 import "./IPoll.sol";
 
@@ -1812,6 +1823,7 @@ contract Poll is IPoll {
 </section>
 <section id="interface" class="slide level2">
 <h2>Interface</h2>
+<div class="font-85">
 <ul>
 <li>Given the code in Debts.sol, let’s extract out an interface
 <ul>
@@ -1832,6 +1844,7 @@ contract Poll is IPoll {
 <li>Add a <code>supportsInterface()</code> method</li>
 </ul></li>
 </ul>
+</div>
 </section>
 <section id="start-of-in-class-activity" class="slide level2">
 <h2>Start of in-class activity</h2>
@@ -1850,10 +1863,21 @@ contract Poll is IPoll {
 </ul></li>
 <li>I’ve added an alias for me, but not for any of you</li>
 <li>On the Canvas landing page is the relevant contract address (and other information)</li>
+</ul>
+</section>
+<section id="blockchain-explorer" class="slide level2">
+<h2>Blockchain Explorer</h2>
+<ul>
 <li>Look at the Blockchain Explorer
 <ul>
-<li>The smart contract was deployed in a specific block</li>
-<li>The adding of some aliases was in a specific block</li>
+<li>There are links at the top to the Debts contract and a few TXNs</li>
+<li>Also to the PHP page that can view information about the Debts contract</li>
+</ul></li>
+<li>For the transactions:
+<ul>
+<li>The first one deployed it: notice the very large <code>input</code> field, and there is no <code>inputDecode</code> field</li>
+<li>The second one creates an alias; notice the <code>functionCall</code> and <code>inputDecode</code> fields</li>
+<li>The third one reverted; notice the <code>status</code> field that lists the reversion reason</li>
 </ul></li>
 </ul>
 </section>

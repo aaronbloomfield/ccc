@@ -479,12 +479,12 @@ contract C {
 ## Pragma
 - We'll only use the following Solidity version pragma:
 ```
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 ```
 - The three numbers are: major version, minor version, bugfix version
 - By default, it forces a compiler error if the wrong compiler version is being used
   - Some platforms, such as Truffle or Remix, will try to find the right compiler version
-- This will only compile with version 0.8.29 or later
+- This will only compile with version 0.8.28 or later
   - But will NOT allow compilation with version 0.9.0 or later
 - Note that breaking changes (very few!) are only (intentionally) introduced on major versions
 
@@ -508,7 +508,7 @@ pragma solidity 0.8.11;
   - As this will compile on all of the platforms we will be using
 
 ```
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 ```
 
 
@@ -617,7 +617,7 @@ abstract contract Foo is Bar {
 ## What we have so far
 ```
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
 interface IERC165 {
   // ...
@@ -942,7 +942,7 @@ From [here](https://docs.soliditylang.org/en/v0.8.12/units-and-global-variables.
 Consider the following Solidity smart contract:
 ```
 // SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 contract MyContract {
     uint public i = 1 + 2 * 3 - 4;
 }
@@ -1082,7 +1082,7 @@ tag 1     contract MyContract {\n    uin...
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
 interface IPoll {
 
@@ -1117,7 +1117,7 @@ interface IPoll {
 
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
 import "./IPoll.sol";
 
@@ -1233,6 +1233,9 @@ contract Poll is IPoll {
 
 
 ## Interface
+
+<div class="font-85">
+
 - Given the code in Debts.sol, let's extract out an interface
   - What we developed: [Debts-no-interface.sol](code/Debts-no-interface.sol.html)
 - The [IDebts.sol](code/IDebts.sol.html) interface will have:
@@ -1245,6 +1248,8 @@ contract Poll is IPoll {
   - Remove (comment out) the Entry struct and the events
   - All methods change to `override`
   - Add a `supportsInterface()` method
+
+</div>
 
 
 ## Start of in-class activity
@@ -1259,9 +1264,15 @@ contract Poll is IPoll {
   - But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the [dApp Introduction](../hws/dappintro/index.html) assignment
 - I've added an alias for me, but not for any of you
 - On the Canvas landing page is the relevant contract address (and other information)
+
+## Blockchain Explorer
 - Look at the Blockchain Explorer
-  - The smart contract was deployed in a specific block
-  - The adding of some aliases was in a specific block
+  - There are links at the top to the Debts contract and a few TXNs
+  - Also to the PHP page that can view information about the Debts contract
+- For the transactions:
+  - The first one deployed it: notice the very large `input` field, and there is no `inputDecode` field
+  - The second one creates an alias; notice the `functionCall` and `inputDecode` fields
+  - The third one reverted; notice the `status` field that lists the reversion reason
 
 
 ## Interacting via geth
