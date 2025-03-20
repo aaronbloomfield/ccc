@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC20/ERC20.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.2.0) (token/ERC20/ERC20.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -252,7 +252,7 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets `value` as the allowance of `spender` over the `owner` s tokens.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets `value` as the allowance of `spender` over the `owner`'s tokens.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * This internal function is equivalent to `approve`, and can be used to</font></i>
 <i><font color="#9A1900">     * e.g. set automatic allowances for certain subsystems, etc.</font></i>
@@ -302,7 +302,7 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Updates `owner` s allowance for `spender` based on spent `value`.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Updates `owner`'s allowance for `spender` based on spent `value`.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Does not update the allowance value in case of infinite allowance.</font></i>
 <i><font color="#9A1900">     * Revert if not enough allowance is available.</font></i>
@@ -311,7 +311,7 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">_spendAllowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <font color="#008080">uint256</font> currentAllowance <font color="#990000">=</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> spender<font color="#990000">);</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>currentAllowance <font color="#990000">!=</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint256<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>currentAllowance <font color="#990000">&lt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint256<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#FF0000">{</font>
             <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>currentAllowance <font color="#990000">&lt;</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
                 <font color="#008080">revert</font> <b><font color="#000000">ERC20InsufficientAllowance</font></b><font color="#990000">(</font>spender<font color="#990000">,</font> currentAllowance<font color="#990000">,</font> value<font color="#990000">);</font>
             <font color="#FF0000">}</font>

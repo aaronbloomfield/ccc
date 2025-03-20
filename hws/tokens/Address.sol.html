@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (utils/Address.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.2.0) (utils/Address.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -46,9 +46,9 @@ import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <
             <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">InsufficientBalance</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance<font color="#990000">,</font> amount<font color="#990000">);</font>
         <font color="#FF0000">}</font>
 
-        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#990000">)</font> <font color="#990000">=</font> recipient<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> amount<font color="#FF0000">}</font><font color="#990000">(</font><font color="#FF0000">""</font><font color="#990000">);</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> recipient<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> amount<font color="#FF0000">}</font><font color="#990000">(</font><font color="#FF0000">""</font><font color="#990000">);</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
+            <b><font color="#000000">_revert</font></b><font color="#990000">(</font>returndata<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
@@ -150,8 +150,7 @@ import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <
         <i><font color="#9A1900">// Look for revert reason and bubble it up if present</font></i>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
             <i><font color="#9A1900">// The easiest way to bubble the revert reason is using memory via assembly</font></i>
-            <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
-            assembly <font color="#FF0000">{</font>
+            <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
                 <font color="#008080">let</font> returndata_size <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>returndata<font color="#990000">)</font>
                 <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> returndata<font color="#990000">),</font> returndata_size<font color="#990000">)</font>
             <font color="#FF0000">}</font>

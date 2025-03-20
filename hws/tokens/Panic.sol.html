@@ -10,6 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (utils/Panic.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -29,6 +30,8 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"> * ```</font></i>
 <i><font color="#9A1900"> *</font></i>
 <i><font color="#9A1900"> * Follows the list from </font></i><u><font color="#0000FF">https://github.com/ethereum/solidity/blob/v0.8.24/libsolutil/ErrorCodes.h</font></u><i><font color="#9A1900">[libsolutil].</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * _Available since v5.1._</font></i>
 <i><font color="#9A1900"> */</font></i>
 <i><font color="#9A1900">// slither-disable-next-line unused-state</font></i>
 <font color="#008080">library</font> Panic <font color="#FF0000">{</font>
@@ -56,8 +59,7 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reverts with a panic code. Recommended to use with</font></i>
     <i><font color="#9A1900">/// the internal constants with predefined codes.</font></i>
     <font color="#008080">function</font> <b><font color="#000000">panic</font></b><font color="#990000">(</font><font color="#008080">uint256</font> code<font color="#990000">)</font> <font color="#008080">internal</font> pure <font color="#FF0000">{</font>
-        <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
-        assembly <font color="#FF0000">{</font>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
             <b><font color="#000000">mstore</font></b><font color="#990000">(</font><font color="#993399">0x00</font><font color="#990000">,</font> <font color="#993399">0x4e487b71</font><font color="#990000">)</font>
             <b><font color="#000000">mstore</font></b><font color="#990000">(</font><font color="#993399">0x20</font><font color="#990000">,</font> code<font color="#990000">)</font>
             <b><font color="#000000">revert</font></b><font color="#990000">(</font><font color="#993399">0x1c</font><font color="#990000">,</font> <font color="#993399">0x24</font><font color="#990000">)</font>

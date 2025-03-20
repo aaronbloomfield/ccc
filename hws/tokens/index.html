@@ -68,12 +68,7 @@
 <p>If you have not successfully completed those two assignments, then you will not be able to complete this assignment.</p>
 <p>In addition to your source code, you will submit an edited version of <a href='tokens.py.html'>tokens.py</a> (<a href='tokens.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. </p>
-<ul>
-<li>Fri, 3/22: Added one more field to the <code>other</code> dictionary: <code>'which_gen_ai_tool_used'</code></li>
-<li>Thu, 3/21: Added one more sanity check to <a href='tokens.py.html'>tokens.py</a> (<a href='tokens.py'>src</a>): <code>'created_two_nfts_on_own'</code></li>
-<li>Thu, 3/21: Added two more fields to the <code>other</code> dictionary in <a href='tokens.py.html'>tokens.py</a> (<a href='tokens.py'>src</a>): <code>'used_gen_ai_for_cclogo'</code> and <code>'used_gen_ai_for_nfts'</code>. See the comments therein for details. If you already downloaded the tokens.py file and started editing it, you can just cut-and-paste those two fields into the <code>other</code> dictionary.</li>
-</ul>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='tpart-1-erc-20-fungible-token' class='tabcontent'><h3 id='part-1-erc-20-fungible-token'>Part 1: ERC-20 Fungible Token</h3>
 <p>In this part, you will create a fungible token manager that follows the (enhanced) <a href='https://ethereum.org/en/developers/docs/standards/tokens/erc-20/'>ERC-20 token standard</a>. This token will represent a token cryptocurrency. You will use this code in future assignments, such as where you will be creating a decentralized cryptocurrency exchange for the cryptocurrency that you are creating here.</p>
 <h4 id='part-1-task-1-name-your-cryptocurrency'>Part 1, task 1: Name your cryptocurrency</h4>
@@ -124,7 +119,10 @@
 </ol>
 <p>Your task is to create a <code>TokenCC.sol</code> file with a <code>TokenCC</code> contract. Some implementation notes:</p>
 <ul>
-<li>You have to define the name and symbol when the constructor is called – you can do this by calling the base class (<code>ERC20</code>) constructor that takes two parameters – to see how to do this, look at <a href='../../slides/tokens.html#/erc20constructor'>this lecture slide</a> and the <a href='https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors'>Arguments for Base Constructors</a> section of the Solidity language reference. Defining them via this method means you don’t have to create a <code>name()</code> method nor a <code>name</code> public variable (and likewise for <code>symbol()</code> and <code>symbol</code>), as the ERC20 code will provide that for you.</li>
+<li>You have to define the name and symbol when the constructor is called – you can do this by calling the base class (<code>ERC20</code>) constructor that takes two parameters – to see how to do this, look at <a href='../../slides/tokens.html#/erc20constructor'>this lecture slide</a> and the <a href='https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors'>Arguments for Base Constructors</a> section of the Solidity language reference. Defining them via this method means you don’t have to create a <code>name()</code> method nor a <code>name</code> public variable (and likewise for <code>symbol()</code> and <code>symbol</code>), as the ERC20 code will provide that for you.
+<ul>
+<li>Note: your TokenCC constructor must not take any parameters! It will interfere with our grading scripts if it does. You can still pass in hard-coded strings to the ERC20 constructor.</li>
+</ul></li>
 <li>The <code>decimals()</code> function:
 <ul>
 <li>You cannot define a public variable for <code>decimals</code> because of peculiarities of Solidity inheritance; it has to be a function.</li>
@@ -214,7 +212,10 @@
 <li>If you want to concatenate strings, such as when returning a value from <code>tokenURI()</code>, which must include the base URI, you can use <code>string.concat(s1,s2)</code> where <code>s1</code> and <code>s2</code> are strings. Note that you can concatenate more than two strings via this function call via additional parameters.</li>
 <li>In Remix, when calling a <code>view</code> or <code>pure</code> function on a contract, which is a blue button, the return value is displayed right below the button itself. For a transaction (orange button), you have to look at the JSON data returned to get the return value – expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the “decoded output” field. Sometimes Remix doesn’t like to display the value. Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh, and that has to be deployed to the course blockchain for the explorer to see it).</li>
 <li>How you decide on a NFT ID is up to you. The most straight-forward way is to have consecutive integers, and a mapping from that NFT ID to a string. The course NFT manager encodes the string of the filename as a (very long) <code>uint</code>. Either one is acceptable.</li>
-<li>With the previous part, you had to call the <code>ERC20()</code> constructor with two parameters – the coin name and symbol. Similarly, you have to do so here as well – the <code>ERC721()</code> constructor takes in two parameters. They are the name of the NFT manager and the symbol of the NFT manager. (I’m not sure why it has to have a symbol, so you can put in any reasonable value here).</li>
+<li>With the previous part, you had to call the <code>ERC20()</code> constructor with two parameters – the coin name and symbol. Similarly, you have to do so here as well – the <code>ERC721()</code> constructor takes in two parameters. They are the name of the NFT manager and the symbol of the NFT manager. (I’m not sure why it has to have a symbol, so you can put in any reasonable value here).
+<ul>
+<li>Note: your NFTManager constructor must not take any parameters! It will interfere with our grading scripts if it does. You can still pass in hard-coded strings to the ERC721 constructor.</li>
+</ul></li>
 <li>Be sure to use the ERC721 functions! That is how you mint a new NFT, for example.</li>
 </ul>
 <p>The following are the functional requirements for the development of this contract:</p>

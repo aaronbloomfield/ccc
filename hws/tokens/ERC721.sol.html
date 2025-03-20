@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (token/ERC721/ERC721.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (token/ERC721/ERC721.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -206,8 +206,9 @@ abstract contract ERC721 <font color="#008080">is</font> Context<font color="#99
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Checks if `spender` can operate on `tokenId`, assuming the provided `owner` is the actual owner.</font></i>
-<i><font color="#9A1900">     * Reverts if `spender` does not have approval from the provided `owner` for the given token or for all its assets</font></i>
-<i><font color="#9A1900">     * the `spender` for the specific `tokenId`.</font></i>
+<i><font color="#9A1900">     * Reverts if:</font></i>
+<i><font color="#9A1900">     * - `spender` does not have approval from `owner` for `tokenId`.</font></i>
+<i><font color="#9A1900">     * - `spender` does not have approval to manage all of `owner`'s assets.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * WARNING: This function assumes that `owner` is the actual owner of `tokenId` and does not verify this</font></i>
 <i><font color="#9A1900">     * assumption.</font></i>

@@ -10,6 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (token/ERC721/utils/ERC721Utils.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -20,10 +21,12 @@ import <font color="#FF0000">{</font>IERC721Errors<font color="#FF0000">}</font>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Library that provide common ERC-721 utility functions.</font></i>
 <i><font color="#9A1900"> *</font></i>
 <i><font color="#9A1900"> * See </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-721</font></u><i><font color="#9A1900">[ERC-721].</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * _Available since v5.1._</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> ERC721Utils <font color="#FF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Performs an acceptance check for the provided `operator` by calling {IERC721-onERC721Received}</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Performs an acceptance check for the provided `operator` by calling {IERC721Receiver-onERC721Received}</font></i>
 <i><font color="#9A1900">     * on the `to` address. The `operator` is generally the address that initiated the token transfer (i.e. `msg.sender`).</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * The acceptance call is not executed and treated as a no-op if the target address doesn't contain code (i.e. an EOA).</font></i>
@@ -48,8 +51,7 @@ import <font color="#FF0000">{</font>IERC721Errors<font color="#FF0000">}</font>
                     <i><font color="#9A1900">// non-IERC721Receiver implementer</font></i>
                     <font color="#008080">revert</font> IERC721Errors<font color="#990000">.</font><b><font color="#000000">ERC721InvalidReceiver</font></b><font color="#990000">(</font>to<font color="#990000">);</font>
                 <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
-                    <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
-                    assembly <font color="#FF0000">{</font>
+                    <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
                         <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> reason<font color="#990000">),</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>reason<font color="#990000">))</font>
                     <font color="#FF0000">}</font>
                 <font color="#FF0000">}</font>

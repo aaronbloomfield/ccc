@@ -10,24 +10,45 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (utils/Strings.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.2.0) (utils/Strings.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
 import <font color="#FF0000">{</font>Math<font color="#FF0000">}</font> from <font color="#FF0000">"./Math.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from <font color="#FF0000">"./SafeCast.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">{</font>SignedMath<font color="#FF0000">}</font> from <font color="#FF0000">"./SignedMath.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> String operations.</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> Strings <font color="#FF0000">{</font>
+    <b><font color="#0000FF">using</font></b> <font color="#008080">SafeCast</font> <b><font color="#0000FF">for</font></b> <font color="#990000">*;</font>
+
     bytes16 <b><font color="#0000FF">private</font></b> <font color="#008080">constant</font> HEX_DIGITS <font color="#990000">=</font> <font color="#FF0000">"0123456789abcdef"</font><font color="#990000">;</font>
     uint8 <b><font color="#0000FF">private</font></b> <font color="#008080">constant</font> ADDRESS_LENGTH <font color="#990000">=</font> <font color="#993399">20</font><font color="#990000">;</font>
+    uint256 <b><font color="#0000FF">private</font></b> <font color="#008080">constant</font> SPECIAL_CHARS_LOOKUP <font color="#990000">=</font>
+        <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">0x08</font><font color="#990000">)</font> <font color="#990000">|</font> <i><font color="#9A1900">// backspace</font></i>
+            <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">0x09</font><font color="#990000">)</font> <font color="#990000">|</font> <i><font color="#9A1900">// tab</font></i>
+            <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">0x0a</font><font color="#990000">)</font> <font color="#990000">|</font> <i><font color="#9A1900">// newline</font></i>
+            <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">0x0c</font><font color="#990000">)</font> <font color="#990000">|</font> <i><font color="#9A1900">// form feed</font></i>
+            <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">0x0d</font><font color="#990000">)</font> <font color="#990000">|</font> <i><font color="#9A1900">// carriage return</font></i>
+            <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">0x22</font><font color="#990000">)</font> <font color="#990000">|</font> <i><font color="#9A1900">// double quote</font></i>
+            <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">0x5c</font><font color="#990000">);</font> <i><font color="#9A1900">// backslash</font></i>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> The `value` string doesn't fit in the specified `length`.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">error</font> <b><font color="#000000">StringsInsufficientHexLength</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008080">uint256</font> length<font color="#990000">);</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> The string being parsed contains characters that are not in scope of the given base.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">StringsInvalidChar</font></b><font color="#990000">();</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> The string being parsed is not a properly formatted address.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">StringsInvalidAddressFormat</font></b><font color="#990000">();</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts a `uint256` to its ASCII `string` decimal representation.</font></i>
@@ -37,14 +58,12 @@ import <font color="#FF0000">{</font>SignedMath<font color="#FF0000">}</font> fr
             <font color="#008080">uint256</font> length <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">log10</font></b><font color="#990000">(</font>value<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
             string <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">string</font></b><font color="#990000">(</font>length<font color="#990000">);</font>
             <font color="#008080">uint256</font> ptr<font color="#990000">;</font>
-            <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
-            assembly <font color="#FF0000">{</font>
+            <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
                 ptr <font color="#990000">:=</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> length<font color="#990000">))</font>
             <font color="#FF0000">}</font>
             <b><font color="#0000FF">while</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">)</font> <font color="#FF0000">{</font>
                 ptr<font color="#990000">--;</font>
-                <i><font color="#9A1900">/// </font></i><font color="#009900">@solidity</font><i><font color="#9A1900"> memory-safe-assembly</font></i>
-                assembly <font color="#FF0000">{</font>
+                <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
                     <b><font color="#000000">mstore8</font></b><font color="#990000">(</font>ptr<font color="#990000">,</font> <b><font color="#000000">byte</font></b><font color="#990000">(</font><b><font color="#000000">mod</font></b><font color="#990000">(</font>value<font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">),</font> HEX_DIGITS<font color="#990000">))</font>
                 <font color="#FF0000">}</font>
                 value <font color="#990000">/=</font> <font color="#993399">10</font><font color="#990000">;</font>
@@ -97,10 +116,383 @@ import <font color="#FF0000">{</font>SignedMath<font color="#FF0000">}</font> fr
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Converts an `address` with fixed length of 20 bytes to its checksummed ASCII `string` hexadecimal</font></i>
+<i><font color="#9A1900">     * representation, according to EIP-55.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toChecksumHexString</font></b><font color="#990000">(</font><font color="#008080">address</font> addr<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        bytes <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font><b><font color="#000000">toHexString</font></b><font color="#990000">(</font>addr<font color="#990000">));</font>
+
+        <i><font color="#9A1900">// hash the hex part of buffer (skip length + 2 bytes, length 40)</font></i>
+        <font color="#008080">uint256</font> hashValue<font color="#990000">;</font>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            hashValue <font color="#990000">:=</font> <b><font color="#000000">shr</font></b><font color="#990000">(</font><font color="#993399">96</font><font color="#990000">,</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <font color="#993399">0x22</font><font color="#990000">),</font> <font color="#993399">40</font><font color="#990000">))</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">41</font><font color="#990000">;</font> i <font color="#990000">&gt;</font> <font color="#993399">1</font><font color="#990000">;</font> <font color="#990000">--</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// possible values for buffer[i] are 48 (0) to 57 (9) and 97 (a) to 102 (f)</font></i>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>hashValue <font color="#990000">&amp;</font> <font color="#993399">0xf</font> <font color="#990000">&gt;</font> <font color="#993399">7</font> <font color="#990000">&amp;&amp;</font> <b><font color="#000000">uint8</font></b><font color="#990000">(</font>buffer<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">&gt;</font> <font color="#993399">96</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <i><font color="#9A1900">// case shift by xoring with 0x20</font></i>
+                buffer<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">^=</font> <font color="#993399">0x20</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            hashValue <font color="#990000">&gt;&gt;=</font> <font color="#993399">4</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">string</font></b><font color="#990000">(</font>buffer<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns true if the two strings are equal.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">equal</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> a<font color="#990000">,</font> string <font color="#008080">memory</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>a<font color="#990000">).</font>length <font color="#990000">==</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>b<font color="#990000">).</font>length <font color="#990000">&amp;&amp;</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>a<font color="#990000">))</font> <font color="#990000">==</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>b<font color="#990000">));</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Parse a decimal string and returns the value as a `uint256`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The string must be formatted as `[0-9]*`</font></i>
+<i><font color="#9A1900">     * - The result must fit into an `uint256` type</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseUint</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">parseUint</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseUint-string} that parses a substring of `input` located between position `begin` (included) and</font></i>
+<i><font color="#9A1900">     * `end` (excluded).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The substring must be formatted as `[0-9]*`</font></i>
+<i><font color="#9A1900">     * - The result must fit into an `uint256` type</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseUint</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">,</font> <font color="#008080">uint256</font> begin<font color="#990000">,</font> <font color="#008080">uint256</font> end<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">tryParseUint</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#008080">revert</font> <b><font color="#000000">StringsInvalidChar</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseUint-string} that returns false if the parsing fails because of an invalid character.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function will revert if the result does not fit in a `uint256`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseUint</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_tryParseUintUncheckedBounds</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseUint-string-uint256-uint256} that returns false if the parsing fails because of an invalid</font></i>
+<i><font color="#9A1900">     * character.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function will revert if the result does not fit in a `uint256`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseUint</font></b><font color="#990000">(</font>
+        string <font color="#008080">memory</font> input<font color="#990000">,</font>
+        <font color="#008080">uint256</font> begin<font color="#990000">,</font>
+        uint256 end
+    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>end <font color="#990000">&gt;</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length <font color="#990000">||</font> begin <font color="#990000">&gt;</font> end<font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_tryParseUintUncheckedBounds</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Implementation of {tryParseUint-string-uint256-uint256} that does not check bounds. Caller should make sure that</font></i>
+<i><font color="#9A1900">     * `begin &lt;= end &lt;= input.length`. Other inputs would result in undefined behavior.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_tryParseUintUncheckedBounds</font></b><font color="#990000">(</font>
+        string <font color="#008080">memory</font> input<font color="#990000">,</font>
+        <font color="#008080">uint256</font> begin<font color="#990000">,</font>
+        uint256 end
+    <font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        bytes <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">);</font>
+
+        <font color="#008080">uint256</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> begin<font color="#990000">;</font> i <font color="#990000">&lt;</font> end<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">uint8</font> chr <font color="#990000">=</font> <b><font color="#000000">_tryParseChr</font></b><font color="#990000">(</font><b><font color="#000000">bytes1</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> i<font color="#990000">)));</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>chr <font color="#990000">&gt;</font> <font color="#993399">9</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            result <font color="#990000">*=</font> <font color="#993399">10</font><font color="#990000">;</font>
+            result <font color="#990000">+=</font> chr<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> result<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Parse a decimal string and returns the value as a `int256`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The string must be formatted as `[-+]?[0-9]*`</font></i>
+<i><font color="#9A1900">     * - The result must fit in an `int256` type.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseInt</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">parseInt</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseInt-string} that parses a substring of `input` located between position `begin` (included) and</font></i>
+<i><font color="#9A1900">     * `end` (excluded).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The substring must be formatted as `[-+]?[0-9]*`</font></i>
+<i><font color="#9A1900">     * - The result must fit in an `int256` type.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseInt</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">,</font> <font color="#008080">uint256</font> begin<font color="#990000">,</font> <font color="#008080">uint256</font> end<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">int256</font> value<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">tryParseInt</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#008080">revert</font> <b><font color="#000000">StringsInvalidChar</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseInt-string} that returns false if the parsing fails because of an invalid character or if</font></i>
+<i><font color="#9A1900">     * the result does not fit in a `int256`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function will revert if the absolute value of the result does not fit in a `uint256`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseInt</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">int256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_tryParseIntUncheckedBounds</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    uint256 <b><font color="#0000FF">private</font></b> <font color="#008080">constant</font> ABS_MIN_INT256 <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">**</font> <font color="#993399">255</font><font color="#990000">;</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseInt-string-uint256-uint256} that returns false if the parsing fails because of an invalid</font></i>
+<i><font color="#9A1900">     * character or if the result does not fit in a `int256`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function will revert if the absolute value of the result does not fit in a `uint256`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseInt</font></b><font color="#990000">(</font>
+        string <font color="#008080">memory</font> input<font color="#990000">,</font>
+        <font color="#008080">uint256</font> begin<font color="#990000">,</font>
+        uint256 end
+    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">int256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>end <font color="#990000">&gt;</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length <font color="#990000">||</font> begin <font color="#990000">&gt;</font> end<font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_tryParseIntUncheckedBounds</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Implementation of {tryParseInt-string-uint256-uint256} that does not check bounds. Caller should make sure that</font></i>
+<i><font color="#9A1900">     * `begin &lt;= end &lt;= input.length`. Other inputs would result in undefined behavior.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_tryParseIntUncheckedBounds</font></b><font color="#990000">(</font>
+        string <font color="#008080">memory</font> input<font color="#990000">,</font>
+        <font color="#008080">uint256</font> begin<font color="#990000">,</font>
+        uint256 end
+    <font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">int256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        bytes <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// Check presence of a negative sign.</font></i>
+        <font color="#008080">bytes1</font> sign <font color="#990000">=</font> begin <font color="#990000">==</font> end <font color="#990000">?</font> <b><font color="#000000">bytes1</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">bytes1</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> begin<font color="#990000">));</font> <i><font color="#9A1900">// don't do out-of-bound (possibly unsafe) read if sub-string is empty</font></i>
+        <font color="#009900">bool</font> positiveSign <font color="#990000">=</font> sign <font color="#990000">==</font> <b><font color="#000000">bytes1</font></b><font color="#990000">(</font><font color="#FF0000">"+"</font><font color="#990000">);</font>
+        <font color="#009900">bool</font> negativeSign <font color="#990000">=</font> sign <font color="#990000">==</font> <b><font color="#000000">bytes1</font></b><font color="#990000">(</font><font color="#FF0000">"-"</font><font color="#990000">);</font>
+        <font color="#008080">uint256</font> offset <font color="#990000">=</font> <font color="#990000">(</font>positiveSign <font color="#990000">||</font> negativeSign<font color="#990000">).</font><b><font color="#000000">toUint</font></b><font color="#990000">();</font>
+
+        <font color="#990000">(</font><font color="#009900">bool</font> absSuccess<font color="#990000">,</font> <font color="#008080">uint256</font> absValue<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">tryParseUint</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin <font color="#990000">+</font> offset<font color="#990000">,</font> end<font color="#990000">);</font>
+
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>absSuccess <font color="#990000">&amp;&amp;</font> absValue <font color="#990000">&lt;</font> ABS_MIN_INT256<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> negativeSign <font color="#990000">?</font> <font color="#990000">-</font><b><font color="#000000">int256</font></b><font color="#990000">(</font>absValue<font color="#990000">)</font> <font color="#990000">:</font> <b><font color="#000000">int256</font></b><font color="#990000">(</font>absValue<font color="#990000">));</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>absSuccess <font color="#990000">&amp;&amp;</font> negativeSign <font color="#990000">&amp;&amp;</font> absValue <font color="#990000">==</font> ABS_MIN_INT256<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>int256<font color="#990000">).</font>min<font color="#990000">);</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Parse a hexadecimal string (with or without "0x" prefix), and returns the value as a `uint256`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The string must be formatted as `(0x)?[0-9a-fA-F]*`</font></i>
+<i><font color="#9A1900">     * - The result must fit in an `uint256` type.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseHexUint</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">parseHexUint</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseHexUint-string} that parses a substring of `input` located between position `begin` (included) and</font></i>
+<i><font color="#9A1900">     * `end` (excluded).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The substring must be formatted as `(0x)?[0-9a-fA-F]*`</font></i>
+<i><font color="#9A1900">     * - The result must fit in an `uint256` type.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseHexUint</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">,</font> <font color="#008080">uint256</font> begin<font color="#990000">,</font> <font color="#008080">uint256</font> end<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">tryParseHexUint</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#008080">revert</font> <b><font color="#000000">StringsInvalidChar</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseHexUint-string} that returns false if the parsing fails because of an invalid character.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function will revert if the result does not fit in a `uint256`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseHexUint</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_tryParseHexUintUncheckedBounds</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseHexUint-string-uint256-uint256} that returns false if the parsing fails because of an</font></i>
+<i><font color="#9A1900">     * invalid character.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function will revert if the result does not fit in a `uint256`.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseHexUint</font></b><font color="#990000">(</font>
+        string <font color="#008080">memory</font> input<font color="#990000">,</font>
+        <font color="#008080">uint256</font> begin<font color="#990000">,</font>
+        uint256 end
+    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>end <font color="#990000">&gt;</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length <font color="#990000">||</font> begin <font color="#990000">&gt;</font> end<font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">_tryParseHexUintUncheckedBounds</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Implementation of {tryParseHexUint-string-uint256-uint256} that does not check bounds. Caller should make sure that</font></i>
+<i><font color="#9A1900">     * `begin &lt;= end &lt;= input.length`. Other inputs would result in undefined behavior.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_tryParseHexUintUncheckedBounds</font></b><font color="#990000">(</font>
+        string <font color="#008080">memory</font> input<font color="#990000">,</font>
+        <font color="#008080">uint256</font> begin<font color="#990000">,</font>
+        uint256 end
+    <font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        bytes <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// skip 0x prefix if present</font></i>
+        <font color="#009900">bool</font> hasPrefix <font color="#990000">=</font> <font color="#990000">(</font>end <font color="#990000">&gt;</font> begin <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">&amp;&amp;</font> <b><font color="#000000">bytes2</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> begin<font color="#990000">))</font> <font color="#990000">==</font> <b><font color="#000000">bytes2</font></b><font color="#990000">(</font><font color="#FF0000">"0x"</font><font color="#990000">);</font> <i><font color="#9A1900">// don't do out-of-bound (possibly unsafe) read if sub-string is empty</font></i>
+        <font color="#008080">uint256</font> offset <font color="#990000">=</font> hasPrefix<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">()</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">;</font>
+
+        <font color="#008080">uint256</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> begin <font color="#990000">+</font> offset<font color="#990000">;</font> i <font color="#990000">&lt;</font> end<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">uint8</font> chr <font color="#990000">=</font> <b><font color="#000000">_tryParseChr</font></b><font color="#990000">(</font><b><font color="#000000">bytes1</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> i<font color="#990000">)));</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>chr <font color="#990000">&gt;</font> <font color="#993399">15</font><font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+            result <font color="#990000">*=</font> <font color="#993399">16</font><font color="#990000">;</font>
+            unchecked <font color="#FF0000">{</font>
+                <i><font color="#9A1900">// Multiplying by 16 is equivalent to a shift of 4 bits (with additional overflow check).</font></i>
+                <i><font color="#9A1900">// This guarantees that adding a value &lt; 16 will not cause an overflow, hence the unchecked.</font></i>
+                result <font color="#990000">+=</font> chr<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">,</font> result<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Parse a hexadecimal string (with or without "0x" prefix), and returns the value as an `address`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The string must be formatted as `(0x)?[0-9a-fA-F]{40}`</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseAddress</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">parseAddress</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseAddress-string} that parses a substring of `input` located between position `begin` (included) and</font></i>
+<i><font color="#9A1900">     * `end` (excluded).</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Requirements:</font></i>
+<i><font color="#9A1900">     * - The substring must be formatted as `(0x)?[0-9a-fA-F]{40}`</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">parseAddress</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">,</font> <font color="#008080">uint256</font> begin<font color="#990000">,</font> <font color="#008080">uint256</font> end<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">address</font> value<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">tryParseAddress</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#008080">revert</font> <b><font color="#000000">StringsInvalidAddressFormat</font></b><font color="#990000">();</font>
+        <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseAddress-string} that returns false if the parsing fails because the input is not a properly</font></i>
+<i><font color="#9A1900">     * formatted address. See {parseAddress-string} requirements.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseAddress</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">address</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">tryParseAddress</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {parseAddress-string-uint256-uint256} that returns false if the parsing fails because input is not a properly</font></i>
+<i><font color="#9A1900">     * formatted address. See {parseAddress-string-uint256-uint256} requirements.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">tryParseAddress</font></b><font color="#990000">(</font>
+        string <font color="#008080">memory</font> input<font color="#990000">,</font>
+        <font color="#008080">uint256</font> begin<font color="#990000">,</font>
+        uint256 end
+    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> <font color="#008080">address</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>end <font color="#990000">&gt;</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">).</font>length <font color="#990000">||</font> begin <font color="#990000">&gt;</font> end<font color="#990000">)</font> <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
+
+        <font color="#009900">bool</font> hasPrefix <font color="#990000">=</font> <font color="#990000">(</font>end <font color="#990000">&gt;</font> begin <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">&amp;&amp;</font> <b><font color="#000000">bytes2</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">),</font> begin<font color="#990000">))</font> <font color="#990000">==</font> <b><font color="#000000">bytes2</font></b><font color="#990000">(</font><font color="#FF0000">"0x"</font><font color="#990000">);</font> <i><font color="#9A1900">// don't do out-of-bound (possibly unsafe) read if sub-string is empty</font></i>
+        <font color="#008080">uint256</font> expectedLength <font color="#990000">=</font> <font color="#993399">40</font> <font color="#990000">+</font> hasPrefix<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">()</font> <font color="#990000">*</font> <font color="#993399">2</font><font color="#990000">;</font>
+
+        <i><font color="#9A1900">// check that input is the correct length</font></i>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>end <font color="#990000">-</font> begin <font color="#990000">==</font> expectedLength<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// length guarantees that this does not overflow, and value is at most type(uint160).max</font></i>
+            <font color="#990000">(</font><font color="#009900">bool</font> s<font color="#990000">,</font> <font color="#008080">uint256</font> v<font color="#990000">)</font> <font color="#990000">=</font> <b><font color="#000000">_tryParseHexUintUncheckedBounds</font></b><font color="#990000">(</font>input<font color="#990000">,</font> begin<font color="#990000">,</font> end<font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>s<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#000000">uint160</font></b><font color="#990000">(</font>v<font color="#990000">)));</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <font color="#008080">function</font> <b><font color="#000000">_tryParseChr</font></b><font color="#990000">(</font><font color="#008080">bytes1</font> chr<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#008080">uint8</font> value <font color="#990000">=</font> <b><font color="#000000">uint8</font></b><font color="#990000">(</font>chr<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// Try to parse `chr`:</font></i>
+        <i><font color="#9A1900">// - Case 1: [0-9]</font></i>
+        <i><font color="#9A1900">// - Case 2: [a-f]</font></i>
+        <i><font color="#9A1900">// - Case 3: [A-F]</font></i>
+        <i><font color="#9A1900">// - otherwise not supported</font></i>
+        unchecked <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#993399">47</font> <font color="#990000">&amp;&amp;</font> value <font color="#990000">&lt;</font> <font color="#993399">58</font><font color="#990000">)</font> value <font color="#990000">-=</font> <font color="#993399">48</font><font color="#990000">;</font>
+            <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#993399">96</font> <font color="#990000">&amp;&amp;</font> value <font color="#990000">&lt;</font> <font color="#993399">103</font><font color="#990000">)</font> value <font color="#990000">-=</font> <font color="#993399">87</font><font color="#990000">;</font>
+            <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;</font> <font color="#993399">64</font> <font color="#990000">&amp;&amp;</font> value <font color="#990000">&lt;</font> <font color="#993399">71</font><font color="#990000">)</font> value <font color="#990000">-=</font> <font color="#993399">55</font><font color="#990000">;</font>
+            <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">return</font></b> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint8<font color="#990000">).</font>max<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">return</font></b> value<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Escape special characters in JSON strings. This can be useful to prevent JSON injection in NFT metadata.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * WARNING: This function should only be used in double quoted JSON strings. Single quotes are not escaped.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">escapeJSON</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        bytes <font color="#008080">memory</font> buffer <font color="#990000">=</font> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>input<font color="#990000">);</font>
+        bytes <font color="#008080">memory</font> output <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">bytes</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> buffer<font color="#990000">.</font>length<font color="#990000">);</font> <i><font color="#9A1900">// worst case scenario</font></i>
+        <font color="#008080">uint256</font> outputLength <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i<font color="#990000">;</font> i <font color="#990000">&lt;</font> buffer<font color="#990000">.</font>length<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">bytes1</font> <font color="#009900">char</font> <font color="#990000">=</font> <b><font color="#000000">bytes1</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> i<font color="#990000">));</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(((</font>SPECIAL_CHARS_LOOKUP <font color="#990000">&amp;</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">&lt;&lt;</font> <b><font color="#000000">uint8</font></b><font color="#990000">(</font><font color="#009900">char</font><font color="#990000">)))</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">"</font><font color="#CC33CC">\\</font><font color="#FF0000">"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#009900">char</font> <font color="#990000">==</font> <font color="#993399">0x08</font><font color="#990000">)</font> output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">"b"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#009900">char</font> <font color="#990000">==</font> <font color="#993399">0x09</font><font color="#990000">)</font> output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">"t"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#009900">char</font> <font color="#990000">==</font> <font color="#993399">0x0a</font><font color="#990000">)</font> output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">"n"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#009900">char</font> <font color="#990000">==</font> <font color="#993399">0x0c</font><font color="#990000">)</font> output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">"f"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#009900">char</font> <font color="#990000">==</font> <font color="#993399">0x0d</font><font color="#990000">)</font> output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">"r"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#009900">char</font> <font color="#990000">==</font> <font color="#993399">0x5c</font><font color="#990000">)</font> output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">"</font><font color="#CC33CC">\\</font><font color="#FF0000">"</font><font color="#990000">;</font>
+                <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#009900">char</font> <font color="#990000">==</font> <font color="#993399">0x22</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                    <i><font color="#9A1900">// solhint-disable-next-line quotes</font></i>
+                    output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#FF0000">'"'</font><font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+                output<font color="#990000">[</font>outputLength<font color="#990000">++]</font> <font color="#990000">=</font> <font color="#009900">char</font><font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// write the actual length and deallocate unused memory</font></i>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font>output<font color="#990000">,</font> outputLength<font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><font color="#993399">0x40</font><font color="#990000">,</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>output<font color="#990000">,</font> <b><font color="#000000">shl</font></b><font color="#990000">(</font><font color="#993399">5</font><font color="#990000">,</font> <b><font color="#000000">shr</font></b><font color="#990000">(</font><font color="#993399">5</font><font color="#990000">,</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>outputLength<font color="#990000">,</font> <font color="#993399">63</font><font color="#990000">)))))</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">string</font></b><font color="#990000">(</font>output<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reads a bytes32 from a bytes array without bounds checking.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: making this function internal would mean it could be used with memory unsafe offset, and marking the</font></i>
+<i><font color="#9A1900">     * assembly block as such would prevent some optimizations.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">uint256</font> offset<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes32</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// This is not memory safe in the general case, but all calls to this private function are within bounds.</font></i>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            value <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">0x20</font><font color="#990000">,</font> offset<font color="#990000">)))</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>

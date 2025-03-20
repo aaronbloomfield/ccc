@@ -31,11 +31,7 @@ In addition to your source code, you will submit an edited version of [tokens.py
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
-
-- Fri, 3/22: Added one more field to the `other` dictionary: `'which_gen_ai_tool_used'`
-- Thu, 3/21: Added one more sanity check to [tokens.py](tokens.py.html) ([src](tokens.py)): `'created_two_nfts_on_own'`
-- Thu, 3/21: Added two more fields to the `other` dictionary in [tokens.py](tokens.py.html) ([src](tokens.py)): `'used_gen_ai_for_cclogo'` and `'used_gen_ai_for_nfts'`.  See the comments therein for details.  If you already downloaded the tokens.py file and started editing it, you can just cut-and-paste those two fields into the `other` dictionary.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
 ### Part 1: ERC-20 Fungible Token
@@ -111,6 +107,7 @@ There are some very strict submission requirements for this submission so that w
 Your task is to create a `TokenCC.sol` file with a `TokenCC` contract.  Some implementation notes:
 
 - You have to define the name and symbol when the constructor is called -- you can do this by calling the base class (`ERC20`) constructor that takes two parameters -- to see how to do this, look at [this lecture slide](../../slides/tokens.html#/erc20constructor) and the [Arguments for Base Constructors](https://docs.soliditylang.org/en/v0.8.13/contracts.html#arguments-for-base-constructors) section of the Solidity language reference.  Defining them via this method means you don't have to create a `name()` method nor a `name` public variable (and likewise for `symbol()` and `symbol`), as the ERC20 code will provide that for you.
+	- Note: your TokenCC constructor must not take any parameters!  It will interfere with our grading scripts if it does.  You can still pass in hard-coded strings to the ERC20 constructor.
 - The `decimals()` function:
 	- You cannot define a public variable for `decimals` because of peculiarities of Solidity inheritance; it has to be a function.
 	- Your `decimals()` function will override a method defined in two ancestors in the inheritance tree -- `ERC20` and `IERC20Metadata`.  You have to use a form of `override` that specifies the multiple items being overridden, as shown [here](../../slides/solidity.html#/multioverride).
@@ -230,6 +227,7 @@ Some implementation notes:
 - In Remix, when calling a `view` or `pure` function on a contract, which is a blue button, the return value is displayed right below the button itself.  For a transaction (orange button), you have to look at the JSON data returned to get the return value -- expand the line that is displayed in the Remix console by clicking on the down arrow, and the return value will be in the "decoded output" field.  Sometimes Remix doesn't like to display the value.  Note that the explorer will also display the return value of a transaction (although you will have to wait a minute for the explorer to refresh, and that has to be deployed to the course blockchain for the explorer to see it).
 - How you decide on a NFT ID is up to you.  The most straight-forward way is to have consecutive integers, and a mapping from that NFT ID to a string.  The course NFT manager encodes the string of the filename as a (very long) `uint`.  Either one is acceptable.
 - With the previous part, you had to call the `ERC20()` constructor with two parameters -- the coin name and symbol.  Similarly, you have to do so here as well -- the `ERC721()` constructor takes in two parameters.  They are the name of the NFT manager and the symbol of the NFT manager.  (I'm not sure why it has to have a symbol, so you can put in any reasonable value here).
+	- Note: your NFTManager constructor must not take any parameters!  It will interfere with our grading scripts if it does.  You can still pass in hard-coded strings to the ERC721 constructor.
 - Be sure to use the ERC721 functions!  That is how you mint a new NFT, for example.
 
 The following are the functional requirements for the development of this contract:

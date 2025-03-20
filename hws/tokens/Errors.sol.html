@@ -10,6 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (utils/Errors.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -18,6 +19,8 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"> *</font></i>
 <i><font color="#9A1900"> * IMPORTANT: Backwards compatibility is not guaranteed in future versions of the library.</font></i>
 <i><font color="#9A1900"> * It is recommended to avoid relying on the error API for critical functionality.</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * _Available since v5.1._</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> Errors <font color="#FF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
@@ -34,6 +37,11 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> The deployment failed.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">error</font> <b><font color="#000000">FailedDeployment</font></b><font color="#990000">();</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> A necessary precompile is missing.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">error</font> <b><font color="#000000">MissingPrecompile</font></b><font color="#990000">(</font>address<font color="#990000">);</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 </body>

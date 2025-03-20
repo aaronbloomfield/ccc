@@ -86,6 +86,8 @@ other = {
 	# manager.  It must have been done by eth_coinbase, above.
 	'course_nft_txn_hash': None,
 
+	# Generative AI fields
+
 	# Did you use generative AI when creating your cryptocurrency logo?  It's
 	# fine if you did -- you were allowed to do so -- we just wanted to know
 	# how many people did or did not.  This should be either True or False.
@@ -143,6 +145,11 @@ sanity_checks = {
 	# `contract TokenCC is ITokenCC, ERC20 {`?
 	'tokencc_opening_line_is_correct': False,
 
+	# The constructor for your TokenCC should take in zero paramteters --
+	# it will still call the ERC20 constructor (with hard-coded strings), of
+	# course.
+	'tokencc_constructor_takes_in_0_params': False,
+
 	# NFTManager sanity checks
 
 	# Did you upload three NFT images?  They must be either .jpg, .png,
@@ -176,6 +183,11 @@ sanity_checks = {
 	# Is your NFTManager contract opening line *exactly:*
 	# `contract NFTManager is INFTManager, ERC721 {`?
 	'nftmanager_opening_line_is_correct': False,
+
+	# The constructor for your NFTManager should take in zero paramteters --
+	# it will still call the ERC721 constructor (with hard-coded strings), of
+	# course.
+	'nft_manager_constructor_takes_in_0_params': False,
 
 	# Did you create a NFT on the course-wide NFT manager?  The NFT ID for
 	# this was put into the other['course_nft_id'] field, above.

@@ -10,26 +10,44 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.0.0) (utils/math/SignedMath.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (utils/math/SignedMath.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+
+import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from <font color="#FF0000">"./SafeCast.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Standard signed math utilities missing in the Solidity language.</font></i>
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> SignedMath <font color="#FF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Branchless ternary evaluation for `a ? b : c`. Gas costs are constant.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * IMPORTANT: This function may reduce bytecode size and consume less gas when used standalone.</font></i>
+<i><font color="#9A1900">     * However, the compiler may optimize Solidity ternary operations (i.e. `a ? b : c`) to only compute</font></i>
+<i><font color="#9A1900">     * one branch when needed, making this function more expensive.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">ternary</font></b><font color="#990000">(</font><font color="#009900">bool</font> condition<font color="#990000">,</font> <font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// branchless ternary works because:</font></i>
+            <i><font color="#9A1900">// b ^ (a ^ b) == a</font></i>
+            <i><font color="#9A1900">// b ^ 0 == b</font></i>
+            <b><font color="#0000FF">return</font></b> b <font color="#990000">^</font> <font color="#990000">((</font>a <font color="#990000">^</font> b<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">int256</font></b><font color="#990000">(</font>SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>condition<font color="#990000">)));</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the largest of two signed numbers.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">return</font></b> a <font color="#990000">&gt;</font> b <font color="#990000">?</font> a <font color="#990000">:</font> b<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">ternary</font></b><font color="#990000">(</font>a <font color="#990000">&gt;</font> b<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the smallest of two signed numbers.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">min</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">return</font></b> a <font color="#990000">&lt;</font> b <font color="#990000">?</font> a <font color="#990000">:</font> b<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">ternary</font></b><font color="#990000">(</font>a <font color="#990000">&lt;</font> b<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -51,10 +69,10 @@ http://www.gnu.org/software/src-highlite">
             <i><font color="#9A1900">// Since `n` is a signed integer, the generated bytecode will use the SAR opcode to perform the right shift,</font></i>
             <i><font color="#9A1900">// taking advantage of the most significant (or "sign" bit) in two's complement representation.</font></i>
             <i><font color="#9A1900">// This opcode adds new most significant bits set to the value of the previous most significant bit. As a result,</font></i>
-            <i><font color="#9A1900">// the mask will either be `bytes(0)` (if n is positive) or `~bytes32(0)` (if n is negative).</font></i>
+            <i><font color="#9A1900">// the mask will either be `bytes32(0)` (if n is positive) or `~bytes32(0)` (if n is negative).</font></i>
             <font color="#008080">int256</font> mask <font color="#990000">=</font> n <font color="#990000">&gt;&gt;</font> <font color="#993399">255</font><font color="#990000">;</font>
 
-            <i><font color="#9A1900">// A `bytes(0)` mask leaves the input unchanged, while a `~bytes32(0)` mask complements it.</font></i>
+            <i><font color="#9A1900">// A `bytes32(0)` mask leaves the input unchanged, while a `~bytes32(0)` mask complements it.</font></i>
             <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint256</font></b><font color="#990000">((</font>n <font color="#990000">+</font> mask<font color="#990000">)</font> <font color="#990000">^</font> mask<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>

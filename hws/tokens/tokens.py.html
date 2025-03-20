@@ -97,6 +97,8 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># manager.  It must have been done by eth_coinbase, above.</font></i>
 	<font color="#FF0000">'course_nft_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># Generative AI fields</font></i>
+
 	<i><font color="#9A1900"># Did you use generative AI when creating your cryptocurrency logo?  It's</font></i>
 	<i><font color="#9A1900"># fine if you did -- you were allowed to do so -- we just wanted to know</font></i>
 	<i><font color="#9A1900"># how many people did or did not.  This should be either True or False.</font></i>
@@ -154,6 +156,11 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># `contract TokenCC is ITokenCC, ERC20 {`?</font></i>
 	<font color="#FF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
+	<i><font color="#9A1900"># The constructor for your TokenCC should take in zero paramteters --</font></i>
+	<i><font color="#9A1900"># it will still call the ERC20 constructor (with hard-coded strings), of</font></i>
+	<i><font color="#9A1900"># course.</font></i>
+	<font color="#FF0000">'tokencc_constructor_takes_in_0_params'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
 	<i><font color="#9A1900"># NFTManager sanity checks</font></i>
 
 	<i><font color="#9A1900"># Did you upload three NFT images?  They must be either .jpg, .png,</font></i>
@@ -187,6 +194,11 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Is your NFTManager contract opening line *exactly:*</font></i>
 	<i><font color="#9A1900"># `contract NFTManager is INFTManager, ERC721 {`?</font></i>
 	<font color="#FF0000">'nftmanager_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+
+	<i><font color="#9A1900"># The constructor for your NFTManager should take in zero paramteters --</font></i>
+	<i><font color="#9A1900"># it will still call the ERC721 constructor (with hard-coded strings), of</font></i>
+	<i><font color="#9A1900"># course.</font></i>
+	<font color="#FF0000">'nft_manager_constructor_takes_in_0_params'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you create a NFT on the course-wide NFT manager?  The NFT ID for</font></i>
 	<i><font color="#9A1900"># this was put into the other['course_nft_id'] field, above.</font></i>
