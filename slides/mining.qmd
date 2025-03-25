@@ -776,9 +776,11 @@ Note that UTXOs are not only in the bottom level
   - In Bitcoin: having a witness hash for a transaction that cannot be changed
 
 
-## 51% attack
+----
 
-<img src='images/bitcoin/attack/attack.dot.1.svg' style='width:130px !important' class='right-float-img'>
+<img src='images/bitcoin/attack/attack.dot.1.svg' style='width:110px;height:auto;max-height:unset;margin-top:0' class='right-float-img'>
+
+<h2>51% attack</h2>
 
 - This is an attack primarily on PoW blockchains
   - But still possible on PoS blockchains as well
@@ -786,9 +788,11 @@ Note that UTXOs are not only in the bottom level
 
 
 
-## 51% attack
+----
 
-<img src='images/bitcoin/attack/attack.dot.2.svg'  class='right-float-img' style='width:130px'>
+<img src='images/bitcoin/attack/attack.dot.2.svg'  class='right-float-img' style='width:110px;height:auto;max-height:unset;margin-top:0'>
+
+<h2>51% attack</h2>
 
 - Mallory spends a UTXO
   - On something that has a quick delivery, such as a digital asset
@@ -796,9 +800,11 @@ Note that UTXOs are not only in the bottom level
 
 
 
-## 51% attack
+----
 
-<img src='images/bitcoin/attack/attack.dot.3.svg' style='width:130px' class='right-float-img'>
+<img src='images/bitcoin/attack/attack.dot.3.svg' style='width:110px;height:auto;max-height:unset;margin-top:0' class='right-float-img'>
+
+<h2>51% attack</h2>
 
 - Seller waits some number of confirmations...
   - Say, 3 (in reality, likely many more)
@@ -809,11 +815,13 @@ Note that UTXOs are not only in the bottom level
 
 
 
-## 51% attack
+----
 
-<img src='images/bitcoin/attack/attack.dot.4.svg' style='height:773px' class='right-float-img'>
+<img src='images/bitcoin/attack/attack.dot.4.svg' style='width:220px;height:auto;max-height:unset;margin-top:0' class='right-float-img'>
 
-- The original spender tries to spend the UTXO again
+<h2>51% attack</h2>
+
+- xxxThe original spender tries to spend the UTXO again
   - Mine it into a block
 - Node adoption policy: longest chain
   - The longest "chain" of blocks, starting from the genesis block, is the valid chain
@@ -822,9 +830,11 @@ Note that UTXOs are not only in the bottom level
 
 
 
-## 51% attack
+----
 
-<img src='images/bitcoin/attack/attack.dot.5.svg' style='height:773px' class='right-float-img'>
+<img src='images/bitcoin/attack/attack.dot.5.svg' style='width:220px;height:auto;max-height:unset;margin-top:0' class='right-float-img'>
+
+<h2>51% attack</h2>
 
 - But how to make the rest of the network accept it?
   - Make that second TXN part of the new longest chain
@@ -853,19 +863,19 @@ Note that UTXOs are not only in the bottom level
 - But is this viable?
   - As no one person is going to have 51% of the [BTC mining / hash capacity](https://www.blockchain.com/charts/hash-rate?timespan=all)
 - But a mining pool might for other cryptocurrencies
-- Consider the [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) Ravencoin [pool from 2miners](https://2miners.com/rvn-mining-pool)
+- Consider the [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/){class="cclogo-slide"} Ravencoin [pool from 2miners](https://2miners.com/rvn-mining-pool)
   - See what percentage they have now by dividing the pool hash rate by the network hash rate
   - On June 27th, 2021, they had over 51% ([source](https://www.reddit.com/r/Ravencoin/comments/o96qox/2miners_is_showing_over_51_on_miningpoolstats/))
     - Due to a purchase of hashpower from (likely) Nicehash
-- [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) Firo had one in January 2021
-- [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold had one in May 2018 and January 2020
+- [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/){class="cclogo-slide"} Firo had one in January 2021
+- [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/){class="cclogo-slide"} Bitcoin Gold had one in May 2018 and January 2020
 
 
 
 <!-- .slide: class="right-float-img" -->
 ## Required confirmations
 
-<img src='images/bitcoin/attack/attack.dot.6.svg' style='773px'>
+<img src="images/bitcoin/attack/attack.dot.6.svg" style="height:auto;max-height:unset;margin-top:0" class='right-float-img'>
 
 - Envision: we have two longest chains, and miners are split between the two
   - Neither has yet become "longer"
@@ -878,13 +888,13 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="cclogo-slide" -->
 ## Confirmations
 - Number of confirmations typically required (via [2miners](https://2miners.com)):
-  - [![xlm logo](../slides/images/logos/xlm-coin-symbol.svg)](https://coinmarketcap.com/currencies/stellar/) XLM: 0 blocks (5 seconds) (TXNs are irreversible)
-  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 6 blocks (about 1 hour) for "standard" transactions
-  - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) ETH: 240 blocks (about 1 hour) (maybe different w/PoS)
-  - [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) RVN: 100 blocks (about 2 hours)
-  - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/) FIRO: 100 blocks (about 9 hours)
-  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/) BTC: 60 blocks (about 10 hours) for "large" transactions
-  - [![erg logo](../slides/images/logos/erg-coin-symbol.svg)](https://coinmarketcap.com/currencies/ergo/) ERG: 720 blocks (about 1 day)
+  - [![xlm logo](../slides/images/logos/xlm-coin-symbol.svg)](https://coinmarketcap.com/currencies/stellar/){class="cclogo-slide"} XLM: 0 blocks (5 seconds) (TXNs are irreversible)
+  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/){class="cclogo-slide"} BTC: 6 blocks (about 1 hour) for "standard" transactions
+  - [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/){class="cclogo-slide"} ETH: 240 blocks (about 1 hour) (maybe different w/PoS)
+  - [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/){class="cclogo-slide"} RVN: 100 blocks (about 2 hours)
+  - [![firo logo](../slides/images/logos/firo-coin-symbol.svg)](https://coinmarketcap.com/currencies/firo/){class="cclogo-slide"} FIRO: 100 blocks (about 9 hours)
+  - [![btc logo](../slides/images/logos/btc-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin/){class="cclogo-slide"} BTC: 60 blocks (about 10 hours) for "large" transactions
+  - [![erg logo](../slides/images/logos/erg-coin-symbol.svg)](https://coinmarketcap.com/currencies/ergo/){class="cclogo-slide"} ERG: 720 blocks (about 1 day)
 - This is based on many factors: block speed, overall network hash rate, and the value of the coin
 
 
@@ -912,7 +922,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Type 1: Uncle / Orphan / Ommer
 
-<img src="images/mining/orphan/orphan.dot.1.svg" style="width:100px;padding-left:86px;padding-right:86px">
+<img src="images/mining/orphan/orphan.dot.1.svg" style="width:auto;height:200px;padding-left:86px;padding-right:86px" class='right-float-img'>
 
 - Given a starting block number (here, 1000)
 
@@ -921,7 +931,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Uncle / Orphan / Ommer blocks
 
-<img src="images/mining/orphan/orphan.dot.2.svg" style="width:120px;padding-left:76px;padding-right:76px">
+<img src="images/mining/orphan/orphan.dot.2.svg" style="width:150px !important;height:auto;max-height:unset" class='right-float-img'>
 
 - Given a starting block number (here, 1000)
 - A miner mines a given transaction $x$ into block 1001
@@ -931,7 +941,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Uncle / Orphan / Ommer blocks
 
-<img src="images/mining/orphan/orphan.dot.3.svg" style="width:250px">
+<img src="images/mining/orphan/orphan.dot.3.svg" style="width:250px !important;height:auto;max-height:unset" class='right-float-img'>
 
 - Given a starting block number (here, 1000)
 - A miner mines a given transaction into a block
@@ -942,7 +952,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Uncle / Orphan / Ommer blocks
 
-<img src="images/mining/orphan/orphan.dot.4.svg" style="width:250px">
+<img src="images/mining/orphan/orphan.dot.4.svg" style="width:250px !important;height:auto;max-height:unset" class='right-float-img'>
 
 - Given a starting block number (here, 1000)
 - A miner mines a given transaction into a block
@@ -954,7 +964,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Uncle / Orphan / Ommer blocks
 
-<img src="images/mining/orphan/orphan.dot.5.svg" style="width:250px">
+<img src="images/mining/orphan/orphan.dot.5.svg" style="width:250px !important;height:auto;max-height:unset" class='right-float-img'>
 
 - Given a starting block number (here, 1000)
 - A miner mines a given transaction into a block
@@ -967,7 +977,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Uncle / Orphan / Ommer blocks
 
-<img src="images/mining/orphan/orphan.dot.6.svg" style="width:250px">
+<img src="images/mining/orphan/orphan.dot.6.svg" style="width:250px !important;height:auto;max-height:unset" class='right-float-img'>
 
 - Given a starting block number (here, 1000)
 - A miner mines a given transaction into a block
@@ -1012,7 +1022,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Type 2: Soft forks
 
-<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent;width:400px;height:auto" class='right-float-img'>
 
 - Non-token crypto-currencies usually have a group of developers
   - Occasional changes are made to the protocol / mining algorithm / etc.
@@ -1027,7 +1037,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img" -->
 ## Soft forks
 
-<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent">
+<img src="https://miro.medium.com/max/1400/1*FBNBdZKQOI2FfJMRBto5pQ.jpeg" style="padding:0;background:transparent;width:400px;height:auto" class='right-float-img'>
 
 - How to get all the miners to adopt it?
   - Release the updated source code
@@ -1043,26 +1053,29 @@ Note that UTXOs are not only in the bottom level
 
 <!-- .slide: class="right-float-img-nb-400" -->
 ## Type 3: Hard forks
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gabel_--_2021_--_7220.jpg/800px-Gabel_--_2021_--_7220.jpg)
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gabel_--_2021_--_7220.jpg/800px-Gabel_--_2021_--_7220.jpg){class='right-float-img no-border' style="width:400px;height:auto"}
+
 - A change is proposed that some users do *NOT* want to adopt
   - Or that is not backwards-compatible, so some users choose one way and some the other way
 
 
 
 <!-- .slide: class="cclogo-slide" -->
-## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum & <br> [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic
+## [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/){class="cclogo-slide"} Ethereum & <br> [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/){class="cclogo-slide"} Ethereum Classic
+
 - June 2016: A well-known Ethereum organization had a programming bug that allowed millions to be drained from the account
   - This endangered the perception and trust of the Ethereum as a whole
   - We'll see this error in detail in [Blockchain Applications](applications.html#/)
 - The fix: roll back the blockchain to before the hack to fix it
 - This [split the users](applications.html#/etcsplit); some didn't want the fix
-- [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/) Ethereum Classic is the blockchain *without* the fix
-- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum is the blockchain *with* the fix
+- [![etc logo](../slides/images/logos/etc-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum-classic/){class="cclogo-slide"} Ethereum Classic is the blockchain *without* the fix
+- [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/){class="cclogo-slide"} Ethereum is the blockchain *with* the fix
 
 
 
 <!-- .slide: class="cclogo-slide" -->
-## [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/) Bitcoin Gold
+## [![btg logo](../slides/images/logos/btg-coin-symbol.svg)](https://coinmarketcap.com/currencies/bitcoin-gold/){class="cclogo-slide"} Bitcoin Gold
 
 - Hard fork of Bitcoin on October 24, 2017 (at block height 491,407)
 - Reasons: change to an ASIC-resistant hash
@@ -1081,7 +1094,7 @@ Note that UTXOs are not only in the bottom level
 - You can make a new cryptocurrency by:
   - Take a tested open source code base
   - Make a the modifications you want
-- The [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/) [Ravencoin (RVN) source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin); created in 2018
+- The [![rvn logo](../slides/images/logos/rvn-coin-symbol.svg)](https://coinmarketcap.com/currencies/ravencoin/){class="cclogo-slide"} [Ravencoin (RVN) source code](https://github.com/RavenProject/Ravencoin) is based off of the [Bitcoin source code](https://github.com/bitcoin/bitcoin); created in 2018
 - Changes:
   - 1000x as many coins
   - 1 minute block time instead of 10 minutes
@@ -1092,7 +1105,7 @@ Note that UTXOs are not only in the bottom level
 
 
 <!-- .slide: class="cclogo-slide" -->
-## [![nmc logo](../slides/images/logos/nmc-coin-symbol.svg)](https://coinmarketcap.com/currencies/namecoin/) Namecoin (2011)
+## [![nmc logo](../slides/images/logos/nmc-coin-symbol.svg)](https://coinmarketcap.com/currencies/namecoin/){class="cclogo-slide"} Namecoin (2011)
 - Namecoin (NMC) was created in 2011, also as a fork of Bitcoin
 - Purpose: censorship-free domain DNS registration for the .bit top-level domain
   - Anybody can transact with Namecoin to reserve a domain in .bit
