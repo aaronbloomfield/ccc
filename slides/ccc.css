@@ -313,8 +313,12 @@ div.left-float-img-800 p img {
     margin-left:20px !important;
 }
 
-div.img-max-height-500 p img {
+div.img-max-height-500 p img, img.img-max-height-500 {
     max-height: 500px;
+}
+
+div.img-max-height-400 p img, img.img-max-height-400 {
+    max-height: 400px;
 }
 
 .big-table-small table {
