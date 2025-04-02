@@ -105,7 +105,7 @@ function _update(address from, address to, uint256 value) internal override virt
 
 // When a transfer occurs to a contract, this function will call
 // onERC20Received() on that contract.
-function afterTokenTransfer(address from, address to, uint256 amount) internal override {
+function afterTokenTransfer(address from, address to, uint256 amount) internal {
     if ( to.code.length > 0  && from != address(0) && to != address(0) ) {
         // token recipient is a contract, notify them
         try IERC20Receiver(to).onERC20Received(from, amount, address(this)) returns (bool success) {
@@ -118,7 +118,7 @@ function afterTokenTransfer(address from, address to, uint256 amount) internal o
 }
 ```
 
-This function overrides the `afterTokenTransfer()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size; owned accounts always have zero length code.  It also checks that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation).  If it passed those checks, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` clause as well).
+This function overrides the `_update()` function in the [ERC20.sol](../tokens/ERC20.sol.html) ([src](../tokens/ERC20.sol)) contract; this "hook" is called any time a token is transferred.  Our overridden function above will first check if the `to` is a contract by checking if it has a non-zero code size; owned accounts always have zero length code.  It also checks that both addresses are non-zero (`from` is zero on a mint operation, and `to` is zero on a burn operation).  If it passed those checks, it will attempt to call the `onERC20Received()` function, if it exists; since it's in a try-catch block, nothing happens if it the function does not exist.  If that function does not exist, then it does nothing (we could have had it revert in the `catch` clause as well).
 
 The net effect of these two changes is that any time your TokenCC is transferred to a contract, it will attempt to notify that contract that it just received some ERC-20 tokens.
 

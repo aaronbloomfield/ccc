@@ -126,7 +126,7 @@ function _update(address from, address to, uint256 value) internal override virt
 
 // When a transfer occurs to a contract, this function will call
 // onERC20Received() on that contract.
-function afterTokenTransfer(address from, address to, uint256 amount) internal override {
+function afterTokenTransfer(address from, address to, uint256 amount) internal {
     if ( to.code.length &gt; 0  &amp;&amp; from != address(0) &amp;&amp; to != address(0) ) {
         // token recipient is a contract, notify them
         try IERC20Receiver(to).onERC20Received(from, amount, address(this)) returns (bool success) {
@@ -137,7 +137,7 @@ function afterTokenTransfer(address from, address to, uint256 amount) internal o
         }
     }
 }</code></pre>
-<p>This function overrides the <code>afterTokenTransfer()</code> function in the <a href="../tokens/ERC20.sol.html">ERC20.sol</a> (<a href="../tokens/ERC20.sol">src</a>) contract; this “hook” is called any time a token is transferred. Our overridden function above will first check if the <code>to</code> is a contract by checking if it has a non-zero code size; owned accounts always have zero length code. It also checks that both addresses are non-zero (<code>from</code> is zero on a mint operation, and <code>to</code> is zero on a burn operation). If it passed those checks, it will attempt to call the <code>onERC20Received()</code> function, if it exists; since it’s in a try-catch block, nothing happens if it the function does not exist. If that function does not exist, then it does nothing (we could have had it revert in the <code>catch</code> clause as well).</p>
+<p>This function overrides the <code>_update()</code> function in the <a href="../tokens/ERC20.sol.html">ERC20.sol</a> (<a href="../tokens/ERC20.sol">src</a>) contract; this “hook” is called any time a token is transferred. Our overridden function above will first check if the <code>to</code> is a contract by checking if it has a non-zero code size; owned accounts always have zero length code. It also checks that both addresses are non-zero (<code>from</code> is zero on a mint operation, and <code>to</code> is zero on a burn operation). If it passed those checks, it will attempt to call the <code>onERC20Received()</code> function, if it exists; since it’s in a try-catch block, nothing happens if it the function does not exist. If that function does not exist, then it does nothing (we could have had it revert in the <code>catch</code> clause as well).</p>
 <p>The net effect of these two changes is that any time your TokenCC is transferred to a contract, it will attempt to notify that contract that it just received some ERC-20 tokens.</p>
 <p>Lastly, we recommend minting a large amount of coins (a million or so, which is multiplied by <span class="math inline">10<sup><em>d</em></sup></span>, where <span class="math inline"><em>d</em></span> is how many decimals your coin uses). This will allow you to use the same deployed TokenCC contract for multiple DEX deployments and tests.</p>
 <p>The next section describes a way to “turn off” the functionality of the <code>onERC20Received()</code> function.</p>
