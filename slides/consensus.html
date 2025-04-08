@@ -78,7 +78,7 @@ line-height:120%;
 	  </textarea></section>
 
 	  <section data-markdown data-separator="^\n\n\n"><textarea>
-<!-- .slide: class="right-float-img-nb-400" -->
+
 ## Nakamoto Consensus
 
 <img src='https://upload.wikimedia.org/wikipedia/commons/7/77/Satoshi_Nakamoto.jpg' class='right-float-img-600 no-border'>
@@ -246,7 +246,7 @@ line-height:120%;
 
 
 
-<!-- .slide: class="right-float-img-nb-400" -->
+
 ## Modelling Traitors
 
 <a href='https://commons.wikimedia.org/wiki/File:Benedict_Arnold_1color.jpg'><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Benedict_Arnold_1color.jpg/589px-Benedict_Arnold_1color.jpg' class='right-float-img-700 no-border'></a>
@@ -278,7 +278,7 @@ line-height:120%;
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## Insight
 
 <img src="images/consensus/bgp/communication.svg" style="width:45%" class='right-float-img-700 no-border'>
@@ -332,9 +332,9 @@ line-height:120%;
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## Communication
-<img src="images/consensus/bgp/2gen.svg" style="width:45%">
+<img src="images/consensus/bgp/2gen.svg" style="width:45%" class='right-float-img'>
 
 - One general (here, the commander) needs to communicate his/her opinion to the other generals (here, lieutenants)
   - In the full BGP, all generals have to do this with all the others
@@ -355,9 +355,11 @@ line-height:120%;
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## Three Generals Problem
-![](images/consensus/3gen/3gen.dot.1.svg)
+
+<img src='images/consensus/3gen/3gen.dot.1.svg' class='right-float-img'>
+
 - A commander sends a message to his two lieutenants:
   - The message is either "Attack" (A) or "Retreat" (R)
   - The lieutenants are just the two receiving the message
@@ -608,10 +610,10 @@ This implies:
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-<!-- .slide: class="right-float-img" -->
+
 ## $OM(0)$
 
-<img src="images/consensus/bgp/om0.svg" style="width:30%">
+<img src="images/consensus/bgp/om0.svg" style="width:30%" class='right-float-img'>
 
 - If there are no traitors, no need to have the lieutenants verify the message
 - This is a base case
@@ -619,10 +621,10 @@ This implies:
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## $OM(0)$ Running time
 
-<img src="images/consensus/bgp/om0.svg" style="width:35%">
+<img src="images/consensus/bgp/om0.svg" style="width:35%" class='right-float-img'>
 
 - If there were really no traitors, then the lieutenants would not need to communicate with each other
 - The commander communicates with his/her $n-1$ lieutenants, so it's $\Theta(n)$
@@ -654,10 +656,10 @@ This implies:
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-<!-- .slide: class="right-float-img" -->
+
 ## $OM(1)$ Running time
 
-<img src="images/consensus/bgp/om1-d.svg" style="width:35%">
+<img src="images/consensus/bgp/om1-d.svg" style="width:35%" class='right-float-img'>
 
 - Each of the $n-1$ lieutenants performs $OM(0)$ with the other $n-2$ lieutenants
   - And we have established that $OM(0)$ is $\Theta(n)$
@@ -688,10 +690,10 @@ This implies:
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## $OM(2)$, case 1
 
-<img src="images/consensus/bgp/om2-a.svg" style="width:30%">
+<img src="images/consensus/bgp/om2-a.svg" style="width:30%" class='right-float-img'>
 
 - The commander and one lieutenant are traitors
 - The commander will give varying orders
@@ -732,10 +734,10 @@ This implies:
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## $OM(2)$, case 2
 
-<img src="images/consensus/bgp/om2-f.svg" style="width:30%">
+<img src="images/consensus/bgp/om2-f.svg" style="width:30%" class='right-float-img'>
 
 - The commander is loyal and two lieutenants are traitors
   - The commander will send the same order to all
@@ -756,10 +758,10 @@ This implies:
 </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-<!-- .slide: class="right-float-img" -->
+
 ## $OM(2)$, case 2
 
-<img src="images/consensus/bgp/om2-i.svg" style="width:40%">
+<img src="images/consensus/bgp/om2-i.svg" style="width:40%" class='right-float-img'>
 
 - The messages the loyal lieutenants receive from the traitors may not all be the same!
   - Since $OM(1)$ does not work with 6 generals, 2 traitors
@@ -804,10 +806,10 @@ This implies:
     </textarea></section>
 
     <section data-markdown data-separator="^\n\n\n"><textarea>
-<!-- .slide: class="right-float-img" -->
+
 ## Problems with $OM(m)$
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Baronnet-signet-ring.JPG/800px-Baronnet-signet-ring.JPG" style="padding:0">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Baronnet-signet-ring.JPG/800px-Baronnet-signet-ring.JPG" style="padding:0" class='right-float-img'>
 
 - It's *very* expensive
 - The lieutenants can lie
@@ -892,9 +894,9 @@ The commander is a traitor, and sends out different messages
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## $SM(1)$, case 1
-<img src="images/consensus/bgp/sm1-b.svg" style="width:40%">
+<img src="images/consensus/bgp/sm1-b.svg" style="width:40%" class='right-float-img'>
 
 - Each lieutenant broadcasts the message the commander sent to them
   - As our communication is reliable, each broadcast is received by all the other lieutenants
@@ -910,9 +912,9 @@ Lieutenant 2 (on the right) is a traitor, but cannot change the commander's sign
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## $SM(1)$, case 2
-<img src="images/consensus/bgp/sm1-c.svg" style="width:40%">
+<img src="images/consensus/bgp/sm1-c.svg" style="width:40%" class='right-float-img'>
 
 - Lieutenant 2 (on the right) cannot force the commander's signature, so must send the commander's original message
 - The message sent along contains the commander's original order
@@ -928,9 +930,9 @@ Lieutenant 2 (on the right) is a traitor, and does not send a message to lieuten
 
 
 
-<!-- .slide: class="right-float-img" -->
+
 ## $SM(1)$, case 3
-<img src="images/consensus/bgp/sm1-d.svg" style="width:40%">
+<img src="images/consensus/bgp/sm1-d.svg" style="width:40%" class='right-float-img'>
 
 - Lieutenant 2 (on the right) opts not to send a message
 - The algorithm requires that *m+1* messages are received
