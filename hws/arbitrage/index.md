@@ -18,9 +18,7 @@ In addition to your source code, you will submit an edited version of [arbitrage
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <!-- So far there aren't any significant changes to report. -->
-
-- Tue, Apr 23: Updated the execution runs to be more verbose (not change in their output).  Updated the submission information to explain those submission tests better (the previous ones were incorrect, but obviously so).
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 <!--
 
