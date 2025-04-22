@@ -18,7 +18,9 @@ In addition to your source code, you will submit an edited version of [arbitrage
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <~-- So far there aren't any significant changes to report. -->
+
+- Tue, 4/22: fixed sample code in web3.py section
 
 <!--
 
@@ -87,13 +89,13 @@ The following code will handle the connection based on the values in the `arbitr
 
 ```
 from web3 import Web3
-from web3.middleware import geth_poa_middleware
+from web3.middleware import ExtraDataToPOAMiddleware
 import arbitrage_config
 if arbitrage_config.config['connection_is_ipc']:
     w3 = Web3(Web3.IPCProvider(arbitrage_config.config['connection_uri']))
 else:
-    w3 = Web3(Web3.WebsocketProvider(arbitrage_config.config['connection_uri']))
-w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+    w3 = Web3(Web3.LegacyWebSocketProvider(arbitrage_config.config['connection_uri']))
+w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
 print(w3.is_connected())
 ```
 

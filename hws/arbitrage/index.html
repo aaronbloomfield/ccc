@@ -74,20 +74,23 @@
 </ul>
 <p>In addition to your source code, you will submit an edited version of <a href='arbitrage.py.html'>arbitrage.py</a> (<a href='arbitrage.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
-<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. &lt;~– So far there aren’t any significant changes to report. –&gt;</p>
+<ul>
+<li>Tue, 4/22: fixed sample code in web3.py section</li>
+</ul>
 
 </div><div id='tweb3.py' class='tabcontent'><h3 id='web3.py'>Web3.py</h3>
 <p>You will need to read the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>). While you do not need to have all of that memorized, you do need to understand it all! The intent is that you will use that page as a reference while you write this assignment.</p>
 <h4 id='connecting'>Connecting</h4>
 <p>The following code will handle the connection based on the values in the <code>arbitrage_config.py</code> file, which is introduced below. After reading this part, you may want to come back to it again once the <code>arbitrage_config.py</code> file has been introduced.</p>
 <pre><code>from web3 import Web3
-from web3.middleware import geth_poa_middleware
+from web3.middleware import ExtraDataToPOAMiddleware
 import arbitrage_config
 if arbitrage_config.config['connection_is_ipc']:
     w3 = Web3(Web3.IPCProvider(arbitrage_config.config['connection_uri']))
 else:
-    w3 = Web3(Web3.WebsocketProvider(arbitrage_config.config['connection_uri']))
-w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+    w3 = Web3(Web3.LegacyWebSocketProvider(arbitrage_config.config['connection_uri']))
+w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
 print(w3.is_connected())</code></pre>
 <p>The code above will connect either through a local geth.ipc endpoint or a server’s <code>wss://</code> connection based on the values in the <code>arbitrage_config.py</code> file:</p>
 <ul>
