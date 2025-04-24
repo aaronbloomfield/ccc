@@ -19,7 +19,7 @@ Slide sets, in the intended order to be presented in lecture, are below:
 - [Consensus](consensus.html#/)
 - [Blockchain Applications](applications.html#/)
 - [Stablecoins](stablecoins.html#/) <!-- present after applications, as it refers to DEXes and DAOs -->
-- [zkSNARKs](zksnarks.html#/)
+- [Zero-knowledge proofs](znps.html#/)
 - [Scalability](scalability.html#/)
 - [Ethics, Legality, and Policy](ethics-legal-policy.html#/)
 - [The Dark Side of Cryptocurrency](darkside.html#/)
