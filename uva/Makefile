@@ -10,3 +10,6 @@ slides: $(SLIDE_SETS)
 
 doc:
 	@cd .. && make -s
+
+graph:
+	gnuplot prices.graph
