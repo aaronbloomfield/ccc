@@ -111,8 +111,8 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 
 
 ## Cryptocurrencies
-- There are 10,626 existing cryptocurrencies (that have value) <!-- change each semester -->
-  - As per [investing.com](https://www.investing.com/crypto/currencies) (as of Jan 24, 2025)
+- There are 8,992 existing cryptocurrencies (that have value) <!-- change each semester -->
+  - As per [investing.com](https://www.investing.com/crypto/currencies) (as of Jan 12, 2026)
 - One estimate is that 100 new ones are created *each day*
   - Most don't make investing.com's list
 - Some are [Ponzi schemes](https://en.wikipedia.org/wiki/Ponzi_scheme), some are [pyramid schemes](https://en.wikipedia.org/wiki/Ponzi_scheme), and some are worthwhile
@@ -135,7 +135,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 ## A note about numbers...
 <a href='https://commons.wikimedia.org/wiki/File:One_bitcoin_sitting_atop_bundles_of_US_$100_notes.png'><img src='images/overview/bitcoin-coin.webp' class='right-float-img-nb-300'></a>
 
-- The data in this slide set was all updated for the current semester (as of Jan 13, 2025) <!-- change each semester -->
+- The data in this slide set was all updated for the current semester (as of Jan 12, 2026) <!-- change each semester -->
 - Bitcoin is highly volatile (the value changes so fast) that it is likely to be quite different in a day or two
   - Indeed, the value of a Bitcoin changed *during* the updating of the numbers!
     - So you will see (slightly) different values for the price, for example
@@ -158,7 +158,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 
 
 ## Bitcoin price
-From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November 2021 ([source](https://www.blockchain.com/charts/market-price?timespan=all))
+From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October 2025 ([source](https://www.blockchain.com/charts/market-price?timespan=all))
 ![BTC price](images/timely/btc-price.webp)
 <!-- change each semester -->
 
@@ -227,8 +227,8 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 - The first block was the "genesis block"
 - Each successive block includes the SHA-256 hash of the previous block
   - Thus, you can't make a change to a previous block without changing all successive blocks
-- The current blockchain (as of Jan 13, 2025) is  826,343 blocks (aka 'height'; [source](https://bitinfocharts.com/))
-  - About 530 Gb in size ([source](https://www.blockchain.com/charts/blocks-size))
+- The current blockchain (as of Jan 12, 2026) is  932,038 blocks (aka 'height') ([source](https://bitinfocharts.com/))
+  - About 696 Gb in size ([source](https://www.blockchain.com/charts/blocks-size))
 <!-- change each semester (be sure to divide that number by 1024) -->
 
 
@@ -296,11 +296,11 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 ## Difficulty
 - First target ($ft$): 00000000ffff00000000000000 00000000000000000000000000000000000000
 <!-- formula: ft=26959535291011309493156476344723991336010898738574164086137773096960 -->
-- The current target ($ct$) is 000000000000000000028c63e000000 000000000000000000000000000000000
-<!-- formula: ct=244088142064384875447319840151416852295254855034623487 -->
-  - As of Jan 13, 2025 and derived from [here](https://blockstream.info)
-  <!-- change each semester -->
-  - The new target is harder than the old: specifically $ft/ct$ = 110.45 *trillion*
+- The current target ($ct$) is 00000000000000000001ebf2 0000000000000000000000000000000000000000
+<!-- formula: ct=184058593202179251712735660462623250929428832597311488 -->
+  - As of Jan 12, 2026 and derived from the nbits value of 0x1701EBF2 from the latest block
+  <!-- change each semester --><!-- nbits conversion formula at mining.html#/mining-nbits -->
+  - The new target is harder than the old: specifically $ft/ct$ = 146.47 *trillion*
 - This number is the bitcoin *difficulty*, and the latest value can be found [here](https://www.coinwarz.com/mining/bitcoin/difficulty-chart)
 <!-- formula: diff=ft/ct -->
 
@@ -308,8 +308,8 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 
 ## Current hash difficulty
 - For the first target, a random nonce had a 1 in 4.3 billion chance of success
-- The current target is 110.45 trillion times harder
-  - A random nonce now has a 1 in $4.74 \times 10^{23}$ chance of success
+- The current target is 146.47 trillion times harder
+  - A random nonce now has a 1 in $6.29 \times 10^{23}$ chance of success
     <!-- change each semester; formula: chance=diff*2^32 -->
 
 
@@ -322,9 +322,9 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
   - A very fast CPU today could do about 25 Mhash/sec
   - A [$1,500 video card](https://www.amazon.com/gp/product/B07GHXQTGZ/) today could do about 1 Ghash/sec (estimate based on [this](https://en.bitcoin.it/wiki/Non-specialized_hardware_comparison#Nvidia) and [this](https://gpu.userbenchmark.com/Compare/Nvidia-RTX-2080-vs-Nvidia-GeForce-GTX-590-SLI-Disabled/4026vsm8041))
     - 1 Ghash/sec is 40 times faster than a CPU
-- Consider a 1 in $4.74 \times 10^{23}$ chance of success
-- To generate $4.74 \times 10^{23}$ hashes at 1 billion (1 Ghash) per second on a fast graphics card, this will take 18.8 *million years*
-  - A CPU is 40 times longer: about 750 *million years*
+- Consider a 1 in $6.29 \times 10^{23}$ chance of success
+- To generate $6.29 \times 10^{23}$ hashes at 1 billion (1 Ghash) per second on a fast graphics card, this will take 24.9 *million years*
+  - A CPU is 40 times longer: about 1 *billion years*
   <!-- change each semester; formula: gpuyears=chance/(365.25*24*60*60*800*10^6) 
   formula: cpuyears = 40*gpuyears -->
 
@@ -336,7 +336,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 :::
 - A graphics card uses about 400 W (watts) (estimated from [here](https://en.bitcoin.it/wiki/Non-specialized_hardware_comparison#Nvidia))
 - Electricity in Charlottesville costs 15 cents per kW/h (as per [here](https://www.electricitylocal.com/states/virginia/charlottesville/))
-- This would cost about 9.9 billion dollars <!-- change each semester; formula: elecost=gpuyears*400/1000*24*365.25*0.15 -->
+- This would cost about 13.1 billion dollars <!-- change each semester; formula: elecost=gpuyears*400/1000*24*365.25*0.15 -->
 
 
 
@@ -388,12 +388,12 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 
 
 ## Reward per block
-- The current reward (as of Jan 13, 2025) is 3.125 BTC
+- The current reward (as of Jan 12, 2026) is 3.125 BTC
   <!-- change each semester -->
   - Plus transaction fees of around 0.1 BTC or so
   - The estimated date when it drops to 1.56 BTC is mid April 2028 ([source](https://www.bitcoinblockhalf.com/))
-- At a price of about $94k per block ([source](https://www.coindesk.com/price/bitcoin)), 3.225 BTC is about $303k for a properly signed block   <!-- change each semester --> <!-- formula: reward=303000 -->
-  - But if it costs almost 10 billion dollars in electricity, perhaps it's not all that worth it
+- At a price of about $91k per block ([source](https://www.coindesk.com/price/bitcoin)), 3.225 BTC is about $293k for a properly signed block   <!-- change each semester --> <!-- formula: reward=303000 -->
+  - But if it costs almost 13 billion dollars in electricity, perhaps it's not all that worth it
   - Unless you use somebody else's electricity...
 
 
@@ -416,9 +416,9 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $68,789 in November
 
 
 ## Hashes per second
-From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the entire Bitcoin network: 764 exahashes per second (exa = $10^{18}$)
+From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the entire Bitcoin network: 1.06 zetahashes per second (zeta = $10^{21}$)
 <!-- change each semester -->
-<!-- formula: hashrate=534*10^18 -->
+<!-- formula: hashrate=1.06*10^21 -->
 ![hashes per second](images/timely/btc-hashes-per-sec.webp)
 
 
@@ -429,7 +429,7 @@ From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the 
 :::
 - A whole industry has sprung up: you can find the hardware online (such as [here](https://www.bitcoinmining.com/bitcoin-mining-hardware/))
 - These devices are much faster and use much less electricity
-- Consider the [DragonX AntMiner S19k](https://www.amazon.com/dp/B0CLVJ1KH7), which costs `$`1,700 (as of Jan 13, 2025)
+- Consider the [DragonX AntMiner S19k](https://www.amazon.com/dp/B0CLVJ1KH7), which costs `$`1,000 (as of Jan 12, 2026)<!-- change each semester -->
   - It can compute 120 Thash/sec (tera), or $120 \ast 10^{12}=1.2 \ast 10^{14}$ hash/sec
   - I don't believe their numbers that they posted at that link, though
 
@@ -445,43 +445,43 @@ From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the 
 
 
 
-## [DragonX AntMiner S19](https://www.amazon.com/dp/B08ZNMGKZ1) analysis
+## [DragonX AntMiner S19k](https://www.amazon.com/dp/B0CLVJ1KH7) analysis
 <!-- change each semester -->
 - We know that:
-  - The current hash rate is about 534 EH/s
+  - The current hash rate is about 1.06 ZH/s
   - Blocks take about 10 minutes to process (actually about 9m 56s right now ([source](https://bitinfocharts.com/)))
   - The [DragonX AntMiner S19k](https://www.amazon.com/dp/B0CLVJ1KH7) claims to hash 120 TH/s <!-- formula: minerrate=120*10^12 -->
-- 764 exa / 120 tera = $764 \cdot 10^{18} / 120 \cdot 10^{12} = 4.45 \cdot 10^{6}$ or about 4.5 million <!-- formula: blockreward=hashrate/minerrate -->
-- Thus, you would expect to get one 4.5-millionth of a block's reward in a pooled setup <!-- formula: profitperblock=reward/blockreward -->
-- At `$`303k per block, that's about 6.8 *cents* per block
+- 1.06 zeta / 120 tera = $1.06 \cdot 10^{21} / 120 \cdot 10^{12} = 4.45 \cdot 10^{6}$ or about 8.83 million <!-- formula: blockreward=hashrate/minerrate -->
+- Thus, you would expect to get one 8.8-millionth of a block's reward in a pooled setup <!-- formula: profitperblock=reward/blockreward -->
+- At `$`293k per block, that's about 3.3 *cents* per block
 - (And we aren't counting electricity here)
 
 
 
-## [DragonX AntMiner S19](https://www.amazon.com/dp/B08ZNMGKZ1) analysis
+## [DragonX AntMiner S19k](https://www.amazon.com/dp/B0CLVJ1KH7) analysis
 <!-- change each semester -->
-- At `$`303 per block, that's about 6.8 cents per block
-  - Which is $9.80 per day <!-- formula: profitperday=profitperblock*24*6 -->
-    - This assumes 10 minute blocks; it's a less with 12m6s blocks
-  - You will make back your initial investment of `$`1,200 (plus tax) 192 days <!-- formula: payoffdays=1200/profitperday -->
-    - That's 6.5 months
+- At `$`293 per block, that's about 3.3 cents per block
+  - Which is $4.78 per day <!-- formula: profitperday=profitperblock*24*6 -->
+    - This assumes 10 minute blocks; it's a bit more with 9m 56s blocks
+  - You will make back your initial investment of `$`1,000 (plus tax) 250 days <!-- formula: payoffdays=1200/profitperday -->
+    - That's 8.3 months
 - This assumes that the numbers don't change!
   - And that you aren't paying for electricity
-  - And we know the reward per block will go down in late April of 2024...
-- There is also [one available](https://www.amazon.com/dp/B0CCK4RDJF/) that mines twice times as fast but costs 3.5 times as much, but uses less power
+  - And we know the reward per block will go down in late April of 2028...
+- There is also [one available](https://www.amazon.com/dp/B0DXZ6874R/) that mines twice as much but costs 3.5 times as much, and uses only 34% more power
 
 
 
-## [DragonX AntMiner S19](https://www.amazon.com/dp/B08ZNMGKZ1) analysis
+## [DragonX AntMiner S19k](https://www.amazon.com/dp/B0CLVJ1KH7) analysis
 <!-- change each semester -->
-- You will make $9.80 in BTC per day
+- You will make $4.78 in BTC per day
 - But... electricity is not free
 - Stated power usage: 2,760 W or 2.76 kW
   - Over 24 hours that's $24 * 2.76 = 66$ kWh
   - At Charlottesville's rate of 15&cent; per kWh, that's `$`9.93 per day
     - About `$`298 per month
-- So your total daily profit is: `$`9.80 - `$`9.93 or
-  - *Negative* `$`0.13 cents per day!
+- So your total daily profit is: `$`4.78 - `$`9.93 or
+  - *Negative* `$`5.15 cents per day!
 
 
 
@@ -492,7 +492,7 @@ From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the 
 - Using computers that are not your own
   - Malware, running it on another cluster, etc.
 - When done on a large scale
-  - One can make deals with power companies, locate where power is cheaper, buy miners cheaper, avoid import tariffs, etc.
+  - One can make deals with power companies, relocate where power is cheaper, buy miners cheaper, avoid import tariffs, etc.
 
 
 

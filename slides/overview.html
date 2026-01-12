@@ -341,6 +341,15 @@
     <a href="https://github.com/aaronbloomfield/ccc">@github</a> | <a href="index.html">↑</a> | <a href="?print-pdf"><img class="print" width="20" src="images/print-icon.svg" style="top:0px;vertical-align:middle;background-color:transparent;display:inline;width:30px;height:30px"></a>
   </p></div>
   <p class="titlep">&nbsp;</p>
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Contents</h2>
+<ul>
+<li><a href="#/introduction" id="/toc-introduction">Introduction</a></li>
+<li><a href="#/bitcoin-basics" id="/toc-bitcoin-basics">Bitcoin Basics</a></li>
+<li><a href="#/mining" id="/toc-mining">Mining</a></li>
+</ul>
+</nav>
 </section>
 <section>
 <section id="introduction" class="title-slide slide level1 center">
@@ -512,9 +521,9 @@ Would you pay me <code>$</code>100 then?
 <section id="cryptocurrencies" class="slide level2">
 <h2>Cryptocurrencies</h2>
 <ul>
-<li>There are 10,626 existing cryptocurrencies (that have value) <!-- change each semester -->
+<li>There are 8,992 existing cryptocurrencies (that have value) <!-- change each semester -->
 <ul>
-<li>As per <a href="https://www.investing.com/crypto/currencies">investing.com</a> (as of Jan 24, 2025)</li>
+<li>As per <a href="https://www.investing.com/crypto/currencies">investing.com</a> (as of Jan 12, 2026)</li>
 </ul></li>
 <li>One estimate is that 100 new ones are created <em>each day</em>
 <ul>
@@ -540,7 +549,7 @@ Would you pay me <code>$</code>100 then?
 <h2>A note about numbers…</h2>
 <p><a href="https://commons.wikimedia.org/wiki/File:One_bitcoin_sitting_atop_bundles_of_US_$100_notes.png"><img src="images/overview/bitcoin-coin.webp" class="right-float-img-nb-300"></a></p>
 <ul>
-<li>The data in this slide set was all updated for the current semester (as of Jan 13, 2025) <!-- change each semester --></li>
+<li>The data in this slide set was all updated for the current semester (as of Jan 12, 2026) <!-- change each semester --></li>
 <li>Bitcoin is highly volatile (the value changes so fast) that it is likely to be quite different in a day or two
 <ul>
 <li>Indeed, the value of a Bitcoin changed <em>during</em> the updating of the numbers!
@@ -568,7 +577,7 @@ Would you pay me <code>$</code>100 then?
 </section>
 <section id="bitcoin-price" class="slide level2">
 <h2>Bitcoin price</h2>
-<p>From <a href="https://blockchain.com">blockchain.com</a>; BTC peaked at $68,789 in November 2021 (<a href="https://www.blockchain.com/charts/market-price?timespan=all">source</a>) <img data-src="images/timely/btc-price.webp" alt="BTC price"> <!-- change each semester --></p>
+<p>From <a href="https://blockchain.com">blockchain.com</a>; BTC peaked at $126,032 in October 2025 (<a href="https://www.blockchain.com/charts/market-price?timespan=all">source</a>) <img data-src="images/timely/btc-price.webp" alt="BTC price"> <!-- change each semester --></p>
 <aside data-markdown="" class="notes">
 The actual record high varies by source
 <style type="text/css">
@@ -671,9 +680,9 @@ The actual record high varies by source
 <ul>
 <li>Thus, you can’t make a change to a previous block without changing all successive blocks</li>
 </ul></li>
-<li>The current blockchain (as of Jan 13, 2025) is 826,343 blocks (aka ‘height’; <a href="https://bitinfocharts.com/">source</a>)
+<li>The current blockchain (as of Jan 12, 2026) is 932,038 blocks (aka ‘height’) (<a href="https://bitinfocharts.com/">source</a>)
 <ul>
-<li>About 530 Gb in size (<a href="https://www.blockchain.com/charts/blocks-size">source</a>) <!-- change each semester (be sure to divide that number by 1024) --></li>
+<li>About 696 Gb in size (<a href="https://www.blockchain.com/charts/blocks-size">source</a>) <!-- change each semester (be sure to divide that number by 1024) --></li>
 </ul></li>
 </ul>
 </section>
@@ -758,10 +767,10 @@ The actual record high varies by source
 <h2>Difficulty</h2>
 <ul>
 <li>First target (<span class="math inline">\(ft\)</span>): 00000000ffff00000000000000 00000000000000000000000000000000000000 <!-- formula: ft=26959535291011309493156476344723991336010898738574164086137773096960 --></li>
-<li>The current target (<span class="math inline">\(ct\)</span>) is 000000000000000000028c63e000000 000000000000000000000000000000000 <!-- formula: ct=244088142064384875447319840151416852295254855034623487 -->
+<li>The current target (<span class="math inline">\(ct\)</span>) is 00000000000000000001ebf2 0000000000000000000000000000000000000000 <!-- formula: ct=184058593202179251712735660462623250929428832597311488 -->
 <ul>
-<li>As of Jan 13, 2025 and derived from <a href="https://blockstream.info">here</a> <!-- change each semester --></li>
-<li>The new target is harder than the old: specifically <span class="math inline">\(ft/ct\)</span> = 110.45 <em>trillion</em></li>
+<li>As of Jan 12, 2026 and derived from the nbits value of 0x1701EBF2 from the latest block <!-- change each semester --><!-- nbits conversion formula at mining.html#/mining-nbits --></li>
+<li>The new target is harder than the old: specifically <span class="math inline">\(ft/ct\)</span> = 146.47 <em>trillion</em></li>
 </ul></li>
 <li>This number is the bitcoin <em>difficulty</em>, and the latest value can be found <a href="https://www.coinwarz.com/mining/bitcoin/difficulty-chart">here</a> <!-- formula: diff=ft/ct --></li>
 </ul>
@@ -770,9 +779,9 @@ The actual record high varies by source
 <h2>Current hash difficulty</h2>
 <ul>
 <li>For the first target, a random nonce had a 1 in 4.3 billion chance of success</li>
-<li>The current target is 110.45 trillion times harder
+<li>The current target is 146.47 trillion times harder
 <ul>
-<li>A random nonce now has a 1 in <span class="math inline">\(4.74 \times 10^{23}\)</span> chance of success <!-- change each semester; formula: chance=diff*2^32 --></li>
+<li>A random nonce now has a 1 in <span class="math inline">\(6.29 \times 10^{23}\)</span> chance of success <!-- change each semester; formula: chance=diff*2^32 --></li>
 </ul></li>
 </ul>
 </section>
@@ -790,10 +799,10 @@ The actual record high varies by source
 <li>1 Ghash/sec is 40 times faster than a CPU</li>
 </ul></li>
 </ul></li>
-<li>Consider a 1 in <span class="math inline">\(4.74 \times 10^{23}\)</span> chance of success</li>
-<li>To generate <span class="math inline">\(4.74 \times 10^{23}\)</span> hashes at 1 billion (1 Ghash) per second on a fast graphics card, this will take 18.8 <em>million years</em>
+<li>Consider a 1 in <span class="math inline">\(6.29 \times 10^{23}\)</span> chance of success</li>
+<li>To generate <span class="math inline">\(6.29 \times 10^{23}\)</span> hashes at 1 billion (1 Ghash) per second on a fast graphics card, this will take 24.9 <em>million years</em>
 <ul>
-<li>A CPU is 40 times longer: about 750 <em>million years</em> <!-- change each semester; formula: gpuyears=chance/(365.25*24*60*60*800*10^6) 
+<li>A CPU is 40 times longer: about 1 <em>billion years</em> <!-- change each semester; formula: gpuyears=chance/(365.25*24*60*60*800*10^6) 
 formula: cpuyears = 40*gpuyears --></li>
 </ul></li>
 </ul>
@@ -806,7 +815,7 @@ formula: cpuyears = 40*gpuyears --></li>
 <ul>
 <li>A graphics card uses about 400 W (watts) (estimated from <a href="https://en.bitcoin.it/wiki/Non-specialized_hardware_comparison#Nvidia">here</a>)</li>
 <li>Electricity in Charlottesville costs 15 cents per kW/h (as per <a href="https://www.electricitylocal.com/states/virginia/charlottesville/">here</a>)</li>
-<li>This would cost about 9.9 billion dollars <!-- change each semester; formula: elecost=gpuyears*400/1000*24*365.25*0.15 --></li>
+<li>This would cost about 13.1 billion dollars <!-- change each semester; formula: elecost=gpuyears*400/1000*24*365.25*0.15 --></li>
 </ul>
 </section>
 <section id="why-so-hard" class="slide level2">
@@ -892,14 +901,14 @@ formula: cpuyears = 40*gpuyears --></li>
 <section id="reward-per-block-1" class="slide level2">
 <h2>Reward per block</h2>
 <ul>
-<li>The current reward (as of Jan 13, 2025) is 3.125 BTC <!-- change each semester -->
+<li>The current reward (as of Jan 12, 2026) is 3.125 BTC <!-- change each semester -->
 <ul>
 <li>Plus transaction fees of around 0.1 BTC or so</li>
 <li>The estimated date when it drops to 1.56 BTC is mid April 2028 (<a href="https://www.bitcoinblockhalf.com/">source</a>)</li>
 </ul></li>
-<li>At a price of about $94k per block (<a href="https://www.coindesk.com/price/bitcoin">source</a>), 3.225 BTC is about $303k for a properly signed block <!-- change each semester --> <!-- formula: reward=303000 -->
+<li>At a price of about $91k per block (<a href="https://www.coindesk.com/price/bitcoin">source</a>), 3.225 BTC is about $293k for a properly signed block <!-- change each semester --> <!-- formula: reward=303000 -->
 <ul>
-<li>But if it costs almost 10 billion dollars in electricity, perhaps it’s not all that worth it</li>
+<li>But if it costs almost 13 billion dollars in electricity, perhaps it’s not all that worth it</li>
 <li>Unless you use somebody else’s electricity…</li>
 </ul></li>
 </ul>
@@ -929,7 +938,7 @@ formula: cpuyears = 40*gpuyears --></li>
 </section>
 <section id="hashes-per-second" class="slide level2">
 <h2>Hashes per second</h2>
-<p>From <a href="https://www.blockchain.com/charts/hash-rate">blockchain.com</a>, and for the entire Bitcoin network: 764 exahashes per second (exa = <span class="math inline">\(10^{18}\)</span>) <!-- change each semester --> <!-- formula: hashrate=534*10^18 --> <img data-src="images/timely/btc-hashes-per-sec.webp" alt="hashes per second"></p>
+<p>From <a href="https://www.blockchain.com/charts/hash-rate">blockchain.com</a>, and for the entire Bitcoin network: 1.06 zetahashes per second (zeta = <span class="math inline">\(10^{21}\)</span>) <!-- change each semester --> <!-- formula: hashrate=1.06*10^21 --> <img data-src="images/timely/btc-hashes-per-sec.webp" alt="hashes per second"></p>
 </section>
 <section id="mining-hardware" class="slide level2">
 <h2>Mining hardware</h2>
@@ -939,7 +948,7 @@ formula: cpuyears = 40*gpuyears --></li>
 <ul>
 <li>A whole industry has sprung up: you can find the hardware online (such as <a href="https://www.bitcoinmining.com/bitcoin-mining-hardware/">here</a>)</li>
 <li>These devices are much faster and use much less electricity</li>
-<li>Consider the <a href="https://www.amazon.com/dp/B0CLVJ1KH7">DragonX AntMiner S19k</a>, which costs <code>$</code>1,700 (as of Jan 13, 2025)
+<li>Consider the <a href="https://www.amazon.com/dp/B0CLVJ1KH7">DragonX AntMiner S19k</a>, which costs <code>$</code>1,000 (as of Jan 12, 2026)<!-- change each semester -->
 <ul>
 <li>It can compute 120 Thash/sec (tera), or <span class="math inline">\(120 \ast 10^{12}=1.2 \ast 10^{14}\)</span> hash/sec</li>
 <li>I don’t believe their numbers that they posted at that link, though</li>
@@ -961,50 +970,50 @@ formula: cpuyears = 40*gpuyears --></li>
 <li>Keep in mind that if this were <em>really</em> profitable, then everybody would jump in on it, and the difficulty would just jump up, causing it to become suddenly less profitable</li>
 </ul>
 </section>
-<section id="dragonx-antminer-s19-analysis" class="slide level2">
-<h2><a href="https://www.amazon.com/dp/B08ZNMGKZ1">DragonX AntMiner S19</a> analysis</h2>
+<section id="dragonx-antminer-s19k-analysis" class="slide level2">
+<h2><a href="https://www.amazon.com/dp/B0CLVJ1KH7">DragonX AntMiner S19k</a> analysis</h2>
 <!-- change each semester -->
 <ul>
 <li>We know that:
 <ul>
-<li>The current hash rate is about 534 EH/s</li>
+<li>The current hash rate is about 1.06 ZH/s</li>
 <li>Blocks take about 10 minutes to process (actually about 9m 56s right now (<a href="https://bitinfocharts.com/">source</a>))</li>
 <li>The <a href="https://www.amazon.com/dp/B0CLVJ1KH7">DragonX AntMiner S19k</a> claims to hash 120 TH/s <!-- formula: minerrate=120*10^12 --></li>
 </ul></li>
-<li>764 exa / 120 tera = <span class="math inline">\(764 \cdot 10^{18} / 120 \cdot 10^{12} = 4.45 \cdot 10^{6}\)</span> or about 4.5 million <!-- formula: blockreward=hashrate/minerrate --></li>
-<li>Thus, you would expect to get one 4.5-millionth of a block’s reward in a pooled setup <!-- formula: profitperblock=reward/blockreward --></li>
-<li>At <code>$</code>303k per block, that’s about 6.8 <em>cents</em> per block</li>
+<li>1.06 zeta / 120 tera = <span class="math inline">\(1.06 \cdot 10^{21} / 120 \cdot 10^{12} = 4.45 \cdot 10^{6}\)</span> or about 8.83 million <!-- formula: blockreward=hashrate/minerrate --></li>
+<li>Thus, you would expect to get one 8.8-millionth of a block’s reward in a pooled setup <!-- formula: profitperblock=reward/blockreward --></li>
+<li>At <code>$</code>293k per block, that’s about 3.3 <em>cents</em> per block</li>
 <li>(And we aren’t counting electricity here)</li>
 </ul>
 </section>
-<section id="dragonx-antminer-s19-analysis-1" class="slide level2">
-<h2><a href="https://www.amazon.com/dp/B08ZNMGKZ1">DragonX AntMiner S19</a> analysis</h2>
+<section id="dragonx-antminer-s19k-analysis-1" class="slide level2">
+<h2><a href="https://www.amazon.com/dp/B0CLVJ1KH7">DragonX AntMiner S19k</a> analysis</h2>
 <!-- change each semester -->
 <ul>
-<li>At <code>$</code>303 per block, that’s about 6.8 cents per block
+<li>At <code>$</code>293 per block, that’s about 3.3 cents per block
 <ul>
-<li>Which is $9.80 per day <!-- formula: profitperday=profitperblock*24*6 -->
+<li>Which is $4.78 per day <!-- formula: profitperday=profitperblock*24*6 -->
 <ul>
-<li>This assumes 10 minute blocks; it’s a less with 12m6s blocks</li>
+<li>This assumes 10 minute blocks; it’s a bit more with 9m 56s blocks</li>
 </ul></li>
-<li>You will make back your initial investment of <code>$</code>1,200 (plus tax) 192 days <!-- formula: payoffdays=1200/profitperday -->
+<li>You will make back your initial investment of <code>$</code>1,000 (plus tax) 250 days <!-- formula: payoffdays=1200/profitperday -->
 <ul>
-<li>That’s 6.5 months</li>
+<li>That’s 8.3 months</li>
 </ul></li>
 </ul></li>
 <li>This assumes that the numbers don’t change!
 <ul>
 <li>And that you aren’t paying for electricity</li>
-<li>And we know the reward per block will go down in late April of 2024…</li>
+<li>And we know the reward per block will go down in late April of 2028…</li>
 </ul></li>
-<li>There is also <a href="https://www.amazon.com/dp/B0CCK4RDJF/">one available</a> that mines twice times as fast but costs 3.5 times as much, but uses less power</li>
+<li>There is also <a href="https://www.amazon.com/dp/B0DXZ6874R/">one available</a> that mines twice as much but costs 3.5 times as much, and uses only 34% more power</li>
 </ul>
 </section>
-<section id="dragonx-antminer-s19-analysis-2" class="slide level2">
-<h2><a href="https://www.amazon.com/dp/B08ZNMGKZ1">DragonX AntMiner S19</a> analysis</h2>
+<section id="dragonx-antminer-s19k-analysis-2" class="slide level2">
+<h2><a href="https://www.amazon.com/dp/B0CLVJ1KH7">DragonX AntMiner S19k</a> analysis</h2>
 <!-- change each semester -->
 <ul>
-<li>You will make $9.80 in BTC per day</li>
+<li>You will make $4.78 in BTC per day</li>
 <li>But… electricity is not free</li>
 <li>Stated power usage: 2,760 W or 2.76 kW
 <ul>
@@ -1014,9 +1023,9 @@ formula: cpuyears = 40*gpuyears --></li>
 <li>About <code>$</code>298 per month</li>
 </ul></li>
 </ul></li>
-<li>So your total daily profit is: <code>$</code>9.80 - <code>$</code>9.93 or
+<li>So your total daily profit is: <code>$</code>4.78 - <code>$</code>9.93 or
 <ul>
-<li><em>Negative</em> <code>$</code>0.13 cents per day!</li>
+<li><em>Negative</em> <code>$</code>5.15 cents per day!</li>
 </ul></li>
 </ul>
 </section>
@@ -1033,7 +1042,7 @@ formula: cpuyears = 40*gpuyears --></li>
 </ul></li>
 <li>When done on a large scale
 <ul>
-<li>One can make deals with power companies, locate where power is cheaper, buy miners cheaper, avoid import tariffs, etc.</li>
+<li>One can make deals with power companies, relocate where power is cheaper, buy miners cheaper, avoid import tariffs, etc.</li>
 </ul></li>
 </ul>
 </section>
