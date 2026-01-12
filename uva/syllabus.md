@@ -1,4 +1,4 @@
-CS 4970: Syllabus for Cryptocurrency (CCC), spring 2025
+CS 4970: Syllabus for Cryptocurrency (CCC), spring 2026
 =============================================
 
 [Go up to the CCC UVA page](index.html) ([md](index.md))
@@ -10,9 +10,9 @@ This course is a general introduction to cryptocurrencies and blockchain applica
 I realize that nobody reads these through.  So the TL;DR version:
 
 - Course staff: [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) (aaron at virginia dot edu) and a group of amazing teaching assistants
-- This course is using Canvas; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/93490)
+- This course is using Canvas; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/162075)
 - One midterm, on Wednesday, February 27th, during lecture; one final, on Friday, May 9th, from 9am - noon
-- Grades are 45% homeworks, 20% midterm, 25% final exam, and 10% participation (quizzes & attendance)
+- Grades are 35% homeworks, 25% midterm, 30% final exam, and 10% participation (quizzes & attendance)
 - Everything is going to be auto-graded, but you can submit multiple times; the grades won't be known until the late due date has passed; there is going to be a reasonable limit on how many times you can submit (currently set to 10)
 - If you encounter any rough spots in the course -- please be patient, and provide constructive feedback, and I'll do my best to get it all fixed quickly
 - You can't use any generative AI product, such as ChatGPT, to write your code that you are going to submit; it turns out it's not all that useful due to the specialized nature of the assignments in this class; you may use it to help understand topics, understand code segments, etc., but it can't be any used to generate any of the code that you submit
@@ -40,8 +40,8 @@ And now for the really long-winded version...
 
 ### Course Info ###
 
-- Lecture: Tu/Th 11:00-12:15 in Thornton A120
-- Coordination is through Canvas; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/140076)
+- Lecture: Tu/Th 9:30-10:45 in Olsson 120
+- Coordination is through Canvas; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/162075)
 - Email: the course email is listed on the Canvas landing page; please do not email the course staff directly
 - Announcements will be done through the [daily announcements slide set](daily-announcements.html#/)
 - TAs and their office hours will be posted on the Canvas landing page; all office hours start the second week of classes
@@ -73,24 +73,22 @@ The course objectives are:
 
 **Grades:** Grades will be calculated by the following formula:
 
-- Programming and written assignments (45%)
-- Midterm (20%)
-- Final exam (25%)
+- Programming and written assignments (35%)
+- Midterm (25%)
+- Final exam (30%)
 - Class attendance, reading quizzes (10%)
 
 I *expect* that grades will follow the standard decade curve: 90 and above is an A of some sort (A-, A, or A+), 80 and above is some sort of a B, etc.  **Note:** I reserve the right to modify the weighting (changing the curve, adding pop quizzes, etc.), especially if attendance drops off significantly.  In particular, if the grade averages are very high, then you will need higher than a 90 to get an A-.
 
 **Assignments:** There will be both larger programming homeworks and smaller tutorial-style homeworks.  Often one of each will be currently assigned at any given time, but their due dates will be scheduled so that they are not both due at once.  All assignments will be submitted via Gradescope.  Many assignments will require you to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission.  The link to Gradescope is in the Canvas workspace.  Due to the class size, and the limited TA support, all assignments will be auto-graded.  The programming assignments will have their source code submitted.  You will need to be familiar with the [homework policies](hw-policies.html) ([md](hw-policies.md)), as you will be bound by them on the assignments.  You may submit an assignment multiple times, but only the most recent one will count.  There will be a reasonable limit to how many times you can submit (say, 10) -- this is to prevent people from using Gradescope as a debugger.
 
-**Late policy:** There are expected to be 13 assignments this semester (12 P assignments, and 2 S assignments) -- the other few S assignments are readings and surveys.  The standard late penalty: 25% off per day (or fraction thereof).   You may submit 6 of them up to 4 days late with no penalty -- to do so, you have to fill out a form *before* the due date for this; it will be on the Canvas landing page.  After using your 6 free passes, the late penalty applies.  Note that this covers *ALL* circumstances: sick, busy, travel, dog ate your homework, family emergencies, etc.  And, generally, SDAC accommodations.  A few notes:
+**Late policy:** There are expected to be 13 assignments this semester (12 P assignments, and 2 S assignments) -- the other few S assignments are readings and surveys.  The standard late penalty: 25% off per day (or fraction thereof).   You may submit 6 of them up to 4 days late with no penalty -- to do so, you have to fill out an online system (linked to from the Canvas landing page) up to 4 days (96 hours) after the original due date.  After using your 4 free days from an extension, the standard late penalty applies (25% off per day).  Note that this covers *ALL* circumstances: sick, busy, travel, dog ate your homework, family emergencies, etc.  And, generally, SDAC accommodations.  A few notes:
 
 - There is no penalty for using all of them
 - There is no bonus for not using some of them
-- You have to submit the request (via the Google form) *BEFORE* the due date/time
 - If you use them all early, and an emergency comes up, then you do not get any more extensions
 - You can only use one per assignment
 - After 4 free days, the standard late penalty applies
-
 
 **Course rules:** You are fully responsible for all material presented in class and on the required readings. Exams and due dates are scheduled in advance. A grade of zero will be recorded for missed exams and late assignments unless prior arrangements are made (see below for details) or there are truly extenuating circumstances (which will require appropriate documentation). Assignments turned in after the due date are penalized 25% per day (or fraction thereof) late; this means a maximum of 3 days (i.e. 72 hours) late. A few assignments will allow you to choose the programming language to implement it in, but most will have a specified language that you have to use.  The Gradescope submission auto-grader will verify this upon submission (and immediately report the results back to you). Most assignments will be graded by automated testing.
 
@@ -100,8 +98,8 @@ I *expect* that grades will follow the standard decade curve: 90 and above is an
 
 **Exams:** There will be one midterm exam (worth 20% of the final grade) and one final exam (worth 25% of the final grade).
 
-- Midterm exam: Wednesday, February 27th, during lecture
-- Final exam: Friday, May 9th, from 9am - noon
+- Midterm exam: Tuesday, March 10th, during lecture
+- Final exam: Monday, May 4th, from 2pm - 5pm
 
 Under **NO** circumstances will anybody be allowed to take the final exam early.  You may **ONLY** request to take the final exam at a different time if you have a final exam **CONFLICT**, not a busy final exam schedule.  Since there are no other exams scheduled during that time, it is unlikely that you will have a conflict.
 
