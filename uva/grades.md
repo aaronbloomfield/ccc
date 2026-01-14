@@ -1,4 +1,4 @@
-CS 4970: Cryptocurrency: Course grades
+CS 4790: Cryptocurrency: Course grades
 ======================
 
 As per the [syllabus](syllabus.html) ([md](syllabus.md)), the grades were computed by:

@@ -1,7 +1,7 @@
-CS 4970: Cryptocurrency
+CS 4790: Cryptocurrency
 =======================
 
-This repository contains the course material CS 4970: Cryptocurrency, which is taught yearly at the [University of Virginia](https://www.virginia.edu/) by [Aaron Bloomfield](http://www.cs.virginia.edu/~asb2t/).  This repository can be found online at [http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc) and via its github repository at [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).
+This repository contains the course material CS 4790: Cryptocurrency, which is taught yearly at the [University of Virginia](https://www.virginia.edu/) by [Aaron Bloomfield](http://www.cs.virginia.edu/~asb2t/).  This repository can be found online at [http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc) and via its github repository at [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).
 
 Students *currently* in the course at UVA should view the [uva/index.html](uva/index.html) ([md](uva/index.md)), and may also want to view the [daily announcements](uva/daily-announcements.html#/).
 

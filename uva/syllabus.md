@@ -1,4 +1,4 @@
-CS 4970: Syllabus for Cryptocurrency (CCC), spring 2026
+CS 4790: Syllabus for Cryptocurrency (CCC), spring 2026
 =============================================
 
 [Go up to the CCC UVA page](index.html) ([md](index.md))
@@ -82,7 +82,7 @@ I *expect* that grades will follow the standard decade curve: 90 and above is an
 
 **Assignments:** There will be both larger programming homeworks and smaller tutorial-style homeworks.  Often one of each will be currently assigned at any given time, but their due dates will be scheduled so that they are not both due at once.  All assignments will be submitted via Gradescope.  Many assignments will require you to deploy your code to a private Ethereum blockchain in addition to the Gradescope submission.  The link to Gradescope is in the Canvas workspace.  Due to the class size, and the limited TA support, all assignments will be auto-graded.  The programming assignments will have their source code submitted.  You will need to be familiar with the [homework policies](hw-policies.html) ([md](hw-policies.md)), as you will be bound by them on the assignments.  You may submit an assignment multiple times, but only the most recent one will count.  There will be a reasonable limit to how many times you can submit (say, 10) -- this is to prevent people from using Gradescope as a debugger.
 
-**Late policy:** There are expected to be 13 assignments this semester (12 P assignments, and 2 S assignments) -- the other few S assignments are readings and surveys.  The standard late penalty: 25% off per day (or fraction thereof).   You may submit 6 of them up to 4 days late with no penalty -- to do so, you have to fill out an online system (linked to from the Canvas landing page) up to 4 days (96 hours) after the original due date.  After using your 4 free days from an extension, the standard late penalty applies (25% off per day).  Note that this covers *ALL* circumstances: sick, busy, travel, dog ate your homework, family emergencies, etc.  And, generally, SDAC accommodations.  A few notes:
+**Late policy:** There are expected to be 13 assignments this semester (11 P assignments, and 2 S assignments) -- the other few S assignments are readings and surveys.  The standard late penalty: 25% off per day (or fraction thereof).   You may submit 6 of them up to 4 days late with no penalty -- to do so, you have to fill out an online system (linked to from the Canvas landing page) up to 4 days (96 hours) after the original due date.  After using your 4 free days from an extension, the standard late penalty applies (25% off per day).  Note that this covers *ALL* circumstances: sick, busy, travel, dog ate your homework, family emergencies, etc.  And, generally, SDAC accommodations.  A few notes:
 
 - There is no penalty for using all of them
 - There is no bonus for not using some of them
