@@ -5,6 +5,12 @@ CCC: Old Material
 
 This page contains the relevant pages from the uva/ directory in this repository from previous semester.  While the content of those pages should all be viewable, the links therein are likely to not work properly.
 
+### Spring 2025
+
+- [Main UVa page](index-spring-2025.html) ([md](index-spring-2025.md))
+- [Course syllabus](syllabus-spring-2025.html) ([md](syllabus-spring-2025.md))
+- [Daily announcements](daily-announcements-spring-2025.html)
+
 ### Spring 2024
 
 - [Main UVa page](index-spring-2024.html) ([md](index-spring-2024.md))
