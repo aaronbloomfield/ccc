@@ -6,6 +6,7 @@ slides: $(SLIDE_SETS)
 	@echo conversion done
 
 .qmd.html:
+	@/bin/cp -f ../slides/_quarto.yml .
 	quarto render $< --to revealjs
 
 doc:

@@ -1,6 +1,6 @@
 project:
   title: CCC slides
-  lib-dir: quarto_files
+  lib-dir: ../slides/quarto_files
 format:
   revealjs: 
     html-math-method: mathjax
@@ -8,13 +8,13 @@ format:
     chalkboard: 
       buttons: true
     preview-links: auto
-    logo: images/quarto.webp
-    css: ccc.css
+    logo: ../slides/images/quarto.webp
+    css: ../slides/ccc.css
     navigation-mode: vertical
     footer: <https://github.com/aaronbloomfield/ccc>
     controls: false
     template-partials:
-      - title-slide.html
+      - ../slides/title-slide.html
     toc: true
     toc-depth: 1
     toc-title: Contents
