@@ -360,9 +360,11 @@ Any curve of the form $y^2=x^3+ax+b$
 - The only ones that were not were:
     1. Finding the initial points using square roots to determine $y$ from $y^2$
     2. Finding the 3rd root of a cubic equation when the other two roots are known
+    3. Finding the tangent of an elliptic curve at a point
 - We can perform these two with basic arithmetic by:
-    1. Being given an initial point on the curve
-    2. Taking a formulaic shortcut to find the intersection of a line and the curve
+    1. Being [given an initial point on the curve](#/secp256k1-curve-base-point)
+    2. Taking a [formulaic shortcut to find the intersection of a line and curve](#/elliptical-point-addition-1)
+    2. Taking [another, different, formulaic shortcut](#/elliptical-point-addition-2)
 
 
 ## Elliptical Curve Identities
@@ -399,7 +401,7 @@ Any curve of the form $y^2=x^3+ax+b$
 - A *field* is just a set of numbers that you can perform the basic arithmetic operations on
   - The real numbers are also a field (but not integers!)
 - An integer [finite field](https://en.wikipedia.org/wiki/Finite_field):
-  - Is defined by a (tyipcally prime) value $p$
+  - Is defined by a (typically prime) value $p$
   - All operations are mod $p$
   - Thus the possible values are the integers $0$ to $p-1$
   - Denoted as $Z_p$ (and, sometimes, $F_p$)
@@ -421,7 +423,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - $6*6 = 36 \mod 17 = 2$
 - Exponentiation: easy -- just exponentiate and mod by $p$
   - $3^3 = 27 \mod 17 = 10$
-  - There are more efficient ways to do this, not covered here
+  - There are more efficient ways to do this, discussed later
 
 
 ## Finite Field Subtraction
@@ -495,7 +497,7 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Finite Field Mult Inverse
-- To find the multipliciative inverse in $Z_p$:
+- To find the multiplicative inverse in $Z_p$:
   - $1/a = a^{-1} = a^{p-2} \mod p$
 - Example: $a=13$, $p=17$
   - $1/13 = 13^{17-2} \mod 17 = 4$
@@ -513,7 +515,7 @@ Any curve of the form $y^2=x^3+ax+b$
   - $13/5 = 13 \ast 5^{17-2} = 13 \ast 5^{15}=6$
   - Verify: $6*5=30 \mod 17 = 13$
 - ([reference](https://eng.paxos.com/blockchain-101-foundational-math))
-- The net result is that given a value $a$, we can compute $a^{-1}$
+- The net result is that given a value $a$, we can quickly and easily compute $a^{-1}$
 
 
 ## Discrete Elliptic Curves
@@ -562,7 +564,7 @@ Any curve of the form $y^2=x^3+ax+b$
 
 
 ## Elliptical Curve Arithmetic
-- Given a point $P$ on a curve, you can keep ellipticlly adding it to itself to get $R=k \otimes P$
+- Given a point $P$ on a curve, you can keep elliptically adding it to itself to get $R=k \otimes P$
   - Given $k$ and $P$, it is feasible to determine $R$ -- this is "easy"
   - But given $R$ and $P$, it is *NOT* feasible to determine $k$
 - Note we can do elliptic curve exponentiation as well:
@@ -762,7 +764,7 @@ $
 :::
 
 <aside data-markdown class="notes">
-- because we want to find the multiplicitative inverse of $k$, in order to use Fermat's little theorem, $o$ must be prime
+- because we want to find the multiplicative inverse of $k$, in order to use Fermat's little theorem, $o$ must be prime
 </aside>
 
 
@@ -1184,7 +1186,7 @@ $
 
 ## Pigeonhole principle
 - An MD5 hash is 128 bits; SHA hashes go up to 512 bits
-- There are more files possibilites of 129 bits (or 513 bits) than there are possible hashes
+- There are more files possibilities of 129 bits (or 513 bits) than there are possible hashes
 - Thus, as per the pigeonhole principle, there will be multiple inputs for a given hash
 - So how do you know how to go *back* from a hash?
   - Answer: you don't
