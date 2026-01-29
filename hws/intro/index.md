@@ -290,3 +290,4 @@ You will submit exactly three files for this assignment:
 2. `cryptomoney.sh`: the shell script, described above.
 3. `Makefile`: as described above
 
+You will submit your completed source code file to Gradescope. There will be a small set of acceptance tests that are ***NOT COMPREHENSIVE***. These acceptance tests are the test cases provided in the assignment. It's up to you to comprehensively test your code. The acceptance tests just verify that you are reading the input correctly and providing the expected output.  Note that when you submit, Gradescope will report your grade as “-/10” or “0/10” – that's a quirk of Gradescope, and is because the grading tests have not been run (and won't be run until after all submissions are in). YOu can look at the results of the individual test cases to see how your program worked.
