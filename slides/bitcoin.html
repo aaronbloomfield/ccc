@@ -519,6 +519,7 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 </code></pre>
 
 
+
 ## Bitcoin address -> hash
 - Given a Bitcoin invoice address
   - Base-58 decode it
@@ -766,7 +767,6 @@ Size: varies; how many: txn_out_count
 - A Bitcoin transaction contains scripts of various opcodes and values
   - Uses a stack
   - Only 1 byte for the opcode, so a max of 256 instructions
-  - This is like [IBCM](https://uva-cs.github.io/pdr/slides/07-ibcm.html#/)!
 - Reference: the [Script page](https://en.bitcoin.it/wiki/Script) of the Bitcoin developer wiki
 
 
@@ -1443,6 +1443,20 @@ OP_SHA1 OP_SWAP  OP_SHA1 OP_EQUAL
   - `OP_SHA1`: `s.push(SHA1(s.pop()))`
   - `OP_SWAP`: swap top two items on the stack
 - Redeemed in 2017 for 2.48 BTC
+
+
+
+## New TXN type: P2TR
+
+- The [Taproot fork](https://www.coinbase.com/learn/crypto-glossary/what-is-the-bitcoin-taproot-upgrade-and-why-is-it-important), activated in 2021, allows the use of [Schnorr signatures](https://learnmeabitcoin.com/technical/cryptography/elliptic-curve/schnorr/) (still using secp256k1)
+  - `OP_CHECKSIG` now works on Schnorr signatures as well as ECDSA signatures
+  - `OP_CHECKSIGADD` replaces `OP_CHECKMULTISIG`
+- New P2TR TXN:
+
+```
+OP_1 <32-byte x-only pubkey>
+  ```
+- Allows for better smart contracts, faster Lightning network usage, and more complicated TXNs with the Schnorr signatures
 
 
 
