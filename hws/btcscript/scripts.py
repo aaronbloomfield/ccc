@@ -305,16 +305,16 @@ def atomcswap_scriptSig_refund(sig_sender, sig_recipient):
     ]
 
 # The transaction hash received after successfully submitting part 4a
-txid_atomicswap_alice_send_tbtc = ""
+txid_atomicswap_alice_send = ""
 
 # The transaction hash received after successfully submitting part 4b
-txid_atomicswap_bob_send_bcy = ""
+txid_atomicswap_bob_send = ""
 
 # The transaction hash received after successfully submitting part 4c
-txid_atomicswap_alice_redeem_bcy = ""
+txid_atomicswap_alice_redeem = ""
 
 # The transaction hash received after successfully submitting part 4d
-txid_atomicswap_bob_redeem_tbtc = ""
+txid_atomicswap_bob_redeem = ""
 
 
 #------------------------------------------------------------

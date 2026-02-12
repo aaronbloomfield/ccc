@@ -64,7 +64,7 @@ utxo <font color="#990000">=</font> <font color="#990000">-</font><font color="#
         txid <font color="#990000">=</font> txid_split
         network <font color="#990000">=</font> <font color="#FF0000">'btc-test3'</font>
     <b><font color="#0000FF">else</font></b><font color="#990000">:</font> <i><font color="#9A1900"># split == 'splitbcy'</font></i>
-        my_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
+        my_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">))</font>
         txid <font color="#990000">=</font> txid_bob_bcy_funding
         network <font color="#990000">=</font> <font color="#FF0000">'bcy-test'</font>
     network <font color="#990000">=</font> <font color="#FF0000">'bcy-test'</font>
@@ -111,22 +111,25 @@ utxo <font color="#990000">=</font> <font color="#990000">-</font><font color="#
     tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Part 2b: puzzle TX 2:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_puzzle_txn2
     tbtc_txids<font color="#990000">[</font><font color="#FF0000">"\nPart 3a: multisig TX 1:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_multisig_txn1
     tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Part 3b: multisig TX 2:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_multisig_txn2
-    tbtc_txids<font color="#990000">[</font><font color="#FF0000">"\nPart 4a: your send TX:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_atomicswap_alice_send_tbtc
-    tbtc_txids<font color="#990000">[</font><font color="#FF0000">"Part 4d: B's redeem TX:"</font><font color="#990000">]</font> <font color="#990000">=</font> txid_atomicswap_bob_redeem_tbtc
+    <i><font color="#9A1900">#tbtc_txids["\nPart 4a: your send TX:"] = txid_atomicswap_alice_send</font></i>
+    <i><font color="#9A1900">#tbtc_txids["Part 4d: B's redeem TX:"] = txid_atomicswap_bob_redeem</font></i>
 
     <b><font color="#0000FF">for</font></b> k<font color="#990000">,</font>v <b><font color="#0000FF">in</font></b> tbtc_txids<font color="#990000">.</font><b><font color="#000000">items</font></b><font color="#990000">():</font>
         <b><font color="#0000FF">if</font></b> v <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
             <b><font color="#0000FF">print</font></b><font color="#990000">(</font>k <font color="#990000">+</font> <font color="#FF0000">"\thttps://"</font> <font color="#990000">+</font> urlbase <font color="#990000">+</font> <font color="#FF0000">"/tx/"</font> <font color="#990000">+</font> v<font color="#990000">)</font>
     <i><font color="#9A1900"># BCY wallets and transactions</font></i>
     urlbase <font color="#990000">=</font> <font color="#FF0000">"live.blockcypher.com/bcy"</font>
-    <b><font color="#0000FF">if</font></b> my_invoice_address_bcy_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
-        <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"\nYour BCY wallet:  \thttps://"</font> <font color="#990000">+</font> urlbase <font color="#990000">+</font> <font color="#FF0000">"/address/"</font> <font color="#990000">+</font> my_invoice_address_bcy_str<font color="#990000">)</font>
-    <b><font color="#0000FF">if</font></b> bob_invoice_address_bcy_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
-        <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"Bob's BCY wallet:  \thttps://"</font> <font color="#990000">+</font> urlbase <font color="#990000">+</font> <font color="#FF0000">"/address/"</font> <font color="#990000">+</font> bob_invoice_address_bcy_str<font color="#990000">)</font>
-    bcy_txids <font color="#990000">=</font> <font color="#990000">{</font><font color="#FF0000">"Bob's BCY funding TX:"</font><font color="#990000">:</font>txid_bob_bcy_funding<font color="#990000">,</font>
+    <i><font color="#9A1900">#if my_invoice_address_bcy_str != "":</font></i>
+    <i><font color="#9A1900">#    print("\nYour BCY wallet:  \thttps://" + urlbase + "/address/" + my_invoice_address_bcy_str)</font></i>
+    <i><font color="#9A1900">#if bob_invoice_address_bcy_str != "":</font></i>
+    <i><font color="#9A1900">#    print("Bob's BCY wallet:  \thttps://" + urlbase + "/address/" + bob_invoice_address_bcy_str)</font></i>
+    bcy_txids <font color="#990000">=</font> <font color="#990000">{</font>
+                 <font color="#FF0000">"\nBob's BCY funding TX:"</font><font color="#990000">:</font>txid_bob_bcy_funding<font color="#990000">,</font>
                  <font color="#FF0000">"Bob's BCY split TX:"</font><font color="#990000">:</font>txid_bob_bcy_split<font color="#990000">,</font>
-                 <font color="#FF0000">"Part 4b: B's send TX:"</font><font color="#990000">:</font>txid_atomicswap_bob_send_bcy<font color="#990000">,</font>
-                 <font color="#FF0000">"Part 4c: your redeem TX"</font><font color="#990000">:</font>txid_atomicswap_alice_redeem_bcy<font color="#990000">,</font>
+                 <font color="#FF0000">"Part 4a: your send TX"</font><font color="#990000">:</font>txid_atomicswap_alice_redeem<font color="#990000">,</font>
+                 <font color="#FF0000">"Part 4b: B's send TX:"</font><font color="#990000">:</font>txid_atomicswap_bob_send<font color="#990000">,</font>
+                 <font color="#FF0000">"Part 4c: your redeem TX"</font><font color="#990000">:</font>txid_atomicswap_alice_redeem<font color="#990000">,</font>
+                 <font color="#FF0000">"Part 4d: B's redeem TX:"</font><font color="#990000">:</font>txid_atomicswap_bob_send<font color="#990000">,</font>
                 <font color="#990000">}</font>
     <b><font color="#0000FF">for</font></b> k<font color="#990000">,</font>v <b><font color="#0000FF">in</font></b> bcy_txids<font color="#990000">.</font><b><font color="#000000">items</font></b><font color="#990000">():</font>
         <b><font color="#0000FF">if</font></b> v <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
@@ -164,13 +167,13 @@ utxo <font color="#990000">=</font> <font color="#990000">-</font><font color="#
     <b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4a"</font><font color="#990000">:</font>
         txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>sender_public_key<font color="#990000">,</font> bob_private_key<font color="#990000">.</font>pub<font color="#990000">,</font> secret_hash<font color="#990000">)</font>
     <b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4b"</font><font color="#990000">:</font>
-        bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
-        my_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>my_private_key_bcy_str<font color="#990000">))</font>
+        bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">))</font>
+        my_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>my_private_key_str<font color="#990000">))</font>
         txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>bob_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">,</font> my_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">,</font> secret_hash<font color="#990000">)</font>
     <b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4c"</font><font color="#990000">:</font>
         txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>bcy_dest_address<font color="#990000">)</font>
     <b><font color="#0000FF">else</font></b><font color="#990000">:</font> <i><font color="#9A1900"># all others: pay to the facuet address</font></i>
-        txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>tbtc_return_address<font color="#990000">)</font>
+        txout_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>bcy_dest_address<font color="#990000">)</font>
     <i><font color="#9A1900"># second transactions have to lower the send_amount to allow for fees</font></i>
     factor <font color="#990000">=</font> <font color="#993399">1.0</font>
     <b><font color="#0000FF">if</font></b> param <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'part2b'</font><font color="#990000">,</font><font color="#FF0000">'part3b'</font><font color="#990000">,</font><font color="#FF0000">'part4c'</font><font color="#990000">,</font><font color="#FF0000">'part4d'</font><font color="#990000">]:</font>
@@ -191,16 +194,16 @@ utxo <font color="#990000">=</font> <font color="#990000">-</font><font color="#
         txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_multisig_txn1<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
         txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">multisig_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">)</font>
     <b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4b"</font><font color="#990000">:</font>
-        bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
+        bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">))</font>
         bob_invoice_addr_bcy <font color="#990000">=</font> P2PKHBitcoinAddress<font color="#990000">.</font><b><font color="#000000">from_pubkey</font></b><font color="#990000">(</font>bob_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">)</font>
         txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptPubKey</font></b><font color="#990000">(</font>bob_invoice_addr_bcy<font color="#990000">)</font>
         txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_bob_bcy_split<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
         txin_scriptSig <font color="#990000">=</font> <b><font color="#000000">P2PKH_scriptSig</font></b><font color="#990000">(</font>txin<font color="#990000">,</font> txout<font color="#990000">,</font> txin_scriptPubKey<font color="#990000">,</font> bob_prikey_bcy<font color="#990000">)</font>
     <b><font color="#0000FF">elif</font></b> param <font color="#990000">==</font> <font color="#FF0000">"part4c"</font><font color="#990000">:</font> <i><font color="#9A1900"># BCY Bob -&gt; Alice</font></i>
         <i><font color="#9A1900"># re-create UTXO's pubKey script and sign it</font></i>
-        my_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>my_private_key_bcy_str<font color="#990000">))</font>
+        my_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>my_private_key_str<font color="#990000">))</font>
         my_invoice_addr_bcy <font color="#990000">=</font> P2PKHBitcoinAddress<font color="#990000">.</font><b><font color="#000000">from_pubkey</font></b><font color="#990000">(</font>my_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">)</font>
-        bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_bcy_str<font color="#990000">))</font>
+        bob_prikey_bcy <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">))</font>
         txin_scriptPubKey <font color="#990000">=</font> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>bob_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">,</font> my_prikey_bcy<font color="#990000">.</font>pub<font color="#990000">,</font> secret_hash<font color="#990000">)</font>
         txin <font color="#990000">=</font> <b><font color="#000000">CMutableTxIn</font></b><font color="#990000">(</font><b><font color="#000000">COutPoint</font></b><font color="#990000">(</font><b><font color="#000000">lx</font></b><font color="#990000">(</font>txid_atomicswap_bob_send_bcy<font color="#990000">),</font> <b><font color="#000000">get_utxo_index</font></b><font color="#990000">()))</font>
         signature <font color="#990000">=</font> <b><font color="#000000">create_CHECKSIG_signature</font></b><font color="#990000">(</font>txin<font color="#990000">,</font>txout<font color="#990000">,</font>txin_scriptPubKey<font color="#990000">,</font>my_prikey_bcy<font color="#990000">)</font>
@@ -250,8 +253,8 @@ utxo <font color="#990000">=</font> <font color="#990000">-</font><font color="#
 
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fund_bob</font></b><font color="#990000">(</font>_<font color="#990000">):</font>
     <b><font color="#0000FF">assert</font></b> blockcypher_api_token <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">,</font> <font color="#FF0000">"You must fill in the blockcypher_api_token field for this to work"</font>
-    <b><font color="#0000FF">assert</font></b> bob_invoice_address_bcy_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">,</font> <font color="#FF0000">"You must fill in the bob_invoice_address_bcy_str field for this to work"</font>
-    r <font color="#990000">=</font> requests<font color="#990000">.</font><b><font color="#000000">post</font></b><font color="#990000">(</font>f<font color="#FF0000">"https://api.blockcypher.com/v1/bcy/test/faucet?token={blockcypher_api_token}"</font><font color="#990000">,</font> json<font color="#990000">={</font><font color="#FF0000">"address"</font><font color="#990000">:</font> bob_invoice_address_bcy_str<font color="#990000">,</font> <font color="#FF0000">"amount"</font><font color="#990000">:</font> <font color="#993399">100000</font><font color="#990000">})</font>
+    <b><font color="#0000FF">assert</font></b> bob_invoice_address_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">,</font> <font color="#FF0000">"You must fill in the bob_invoice_address_bcy_str field for this to work"</font>
+    r <font color="#990000">=</font> requests<font color="#990000">.</font><b><font color="#000000">post</font></b><font color="#990000">(</font>f<font color="#FF0000">"https://api.blockcypher.com/v1/bcy/test/faucet?token={blockcypher_api_token}"</font><font color="#990000">,</font> json<font color="#990000">={</font><font color="#FF0000">"address"</font><font color="#990000">:</font> bob_invoice_address_str<font color="#990000">,</font> <font color="#FF0000">"amount"</font><font color="#990000">:</font> <font color="#993399">100000</font><font color="#990000">})</font>
     <b><font color="#0000FF">if</font></b> r<font color="#990000">.</font>status_code <font color="#990000">!=</font> <font color="#993399">200</font> <b><font color="#0000FF">and</font></b> r<font color="#990000">.</font>status_code <font color="#990000">!=</font> <font color="#993399">201</font><font color="#990000">:</font>
         <b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">"Error: the http request returned status code {r.status_code} ({r.reason}) (200 or 201 was expected), so something didn't work correctly."</font><font color="#990000">)</font>
     <b><font color="#0000FF">else</font></b><font color="#990000">:</font>
@@ -263,6 +266,7 @@ functions <font color="#990000">=</font> <font color="#990000">{</font>
     <font color="#FF0000">'genkey'</font><font color="#990000">:</font> keygen<font color="#990000">,</font>
     <font color="#FF0000">'split'</font><font color="#990000">:</font> split_coins<font color="#990000">,</font>
     <font color="#FF0000">'splitbcy'</font><font color="#990000">:</font> split_coins<font color="#990000">,</font>
+    <font color="#FF0000">'split_bob'</font><font color="#990000">:</font> split_coins<font color="#990000">,</font>
     <font color="#FF0000">'part1'</font><font color="#990000">:</font> handle_txn<font color="#990000">,</font>
     <font color="#FF0000">'part2a'</font><font color="#990000">:</font> handle_txn<font color="#990000">,</font>
     <font color="#FF0000">'part2b'</font><font color="#990000">:</font> handle_txn<font color="#990000">,</font>

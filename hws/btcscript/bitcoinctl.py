@@ -53,7 +53,7 @@ def split_coins(which):
         txid = txid_split
         network = 'btc-test3'
     else: # split == 'splitbcy'
-        my_private_key = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
+        my_private_key = CBitcoinSecret.from_secret_bytes(x(bob_private_key_str))
         txid = txid_bob_bcy_funding
         network = 'bcy-test'
     network = 'bcy-test'
@@ -100,22 +100,25 @@ def get_urls(_):
     tbtc_txids["Part 2b: puzzle TX 2:"] = txid_puzzle_txn2
     tbtc_txids["\nPart 3a: multisig TX 1:"] = txid_multisig_txn1
     tbtc_txids["Part 3b: multisig TX 2:"] = txid_multisig_txn2
-    tbtc_txids["\nPart 4a: your send TX:"] = txid_atomicswap_alice_send_tbtc
-    tbtc_txids["Part 4d: B's redeem TX:"] = txid_atomicswap_bob_redeem_tbtc
+    #tbtc_txids["\nPart 4a: your send TX:"] = txid_atomicswap_alice_send
+    #tbtc_txids["Part 4d: B's redeem TX:"] = txid_atomicswap_bob_redeem
 
     for k,v in tbtc_txids.items():
         if v != "":
             print(k + "\thttps://" + urlbase + "/tx/" + v)
     # BCY wallets and transactions
     urlbase = "live.blockcypher.com/bcy"
-    if my_invoice_address_bcy_str != "":
-        print("\nYour BCY wallet:  \thttps://" + urlbase + "/address/" + my_invoice_address_bcy_str)
-    if bob_invoice_address_bcy_str != "":
-        print("Bob's BCY wallet:  \thttps://" + urlbase + "/address/" + bob_invoice_address_bcy_str)
-    bcy_txids = {"Bob's BCY funding TX:":txid_bob_bcy_funding,
+    #if my_invoice_address_bcy_str != "":
+    #    print("\nYour BCY wallet:  \thttps://" + urlbase + "/address/" + my_invoice_address_bcy_str)
+    #if bob_invoice_address_bcy_str != "":
+    #    print("Bob's BCY wallet:  \thttps://" + urlbase + "/address/" + bob_invoice_address_bcy_str)
+    bcy_txids = {
+                 "\nBob's BCY funding TX:":txid_bob_bcy_funding,
                  "Bob's BCY split TX:":txid_bob_bcy_split,
-                 "Part 4b: B's send TX:":txid_atomicswap_bob_send_bcy,
-                 "Part 4c: your redeem TX":txid_atomicswap_alice_redeem_bcy,
+                 "Part 4a: your send TX":txid_atomicswap_alice_redeem,
+                 "Part 4b: B's send TX:":txid_atomicswap_bob_send,
+                 "Part 4c: your redeem TX":txid_atomicswap_alice_redeem,
+                 "Part 4d: B's redeem TX:":txid_atomicswap_bob_send,
                 }
     for k,v in bcy_txids.items():
         if v != "":
@@ -153,13 +156,13 @@ def handle_txn(param):
     elif param == "part4a":
         txout_scriptPubKey = atomicswap_scriptPubKey(sender_public_key, bob_private_key.pub, secret_hash)
     elif param == "part4b":
-        bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
-        my_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(my_private_key_bcy_str))
+        bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_str))
+        my_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(my_private_key_str))
         txout_scriptPubKey = atomicswap_scriptPubKey(bob_prikey_bcy.pub, my_prikey_bcy.pub, secret_hash)
     elif param == "part4c":
         txout_scriptPubKey = P2PKH_scriptPubKey(bcy_dest_address)
     else: # all others: pay to the facuet address
-        txout_scriptPubKey = P2PKH_scriptPubKey(tbtc_return_address)
+        txout_scriptPubKey = P2PKH_scriptPubKey(bcy_dest_address)
     # second transactions have to lower the send_amount to allow for fees
     factor = 1.0
     if param in ['part2b','part3b','part4c','part4d']:
@@ -180,16 +183,16 @@ def handle_txn(param):
         txin = CMutableTxIn(COutPoint(lx(txid_multisig_txn1), get_utxo_index()))
         txin_scriptSig = multisig_scriptSig(txin, txout, txin_scriptPubKey)
     elif param == "part4b":
-        bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
+        bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_str))
         bob_invoice_addr_bcy = P2PKHBitcoinAddress.from_pubkey(bob_prikey_bcy.pub)
         txin_scriptPubKey = P2PKH_scriptPubKey(bob_invoice_addr_bcy)
         txin = CMutableTxIn(COutPoint(lx(txid_bob_bcy_split), get_utxo_index()))
         txin_scriptSig = P2PKH_scriptSig(txin, txout, txin_scriptPubKey, bob_prikey_bcy)
     elif param == "part4c": # BCY Bob -> Alice
         # re-create UTXO's pubKey script and sign it
-        my_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(my_private_key_bcy_str))
+        my_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(my_private_key_str))
         my_invoice_addr_bcy = P2PKHBitcoinAddress.from_pubkey(my_prikey_bcy.pub)
-        bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_bcy_str))
+        bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_str))
         txin_scriptPubKey = atomicswap_scriptPubKey(bob_prikey_bcy.pub, my_prikey_bcy.pub, secret_hash)
         txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_bob_send_bcy), get_utxo_index()))
         signature = create_CHECKSIG_signature(txin,txout,txin_scriptPubKey,my_prikey_bcy)
@@ -239,8 +242,8 @@ def fund(_):
 
 def fund_bob(_):
     assert blockcypher_api_token != "", "You must fill in the blockcypher_api_token field for this to work"
-    assert bob_invoice_address_bcy_str != "", "You must fill in the bob_invoice_address_bcy_str field for this to work"
-    r = requests.post(f"https://api.blockcypher.com/v1/bcy/test/faucet?token={blockcypher_api_token}", json={"address": bob_invoice_address_bcy_str, "amount": 100000})
+    assert bob_invoice_address_str != "", "You must fill in the bob_invoice_address_bcy_str field for this to work"
+    r = requests.post(f"https://api.blockcypher.com/v1/bcy/test/faucet?token={blockcypher_api_token}", json={"address": bob_invoice_address_str, "amount": 100000})
     if r.status_code != 200 and r.status_code != 201:
         print(f"Error: the http request returned status code {r.status_code} ({r.reason}) (200 or 201 was expected), so something didn't work correctly.")
     else:
@@ -252,6 +255,7 @@ functions = {
     'genkey': keygen,
     'split': split_coins,
     'splitbcy': split_coins,
+    'split_bob': split_coins,
     'part1': handle_txn,
     'part2a': handle_txn,
     'part2b': handle_txn,
