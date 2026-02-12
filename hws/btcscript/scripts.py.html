@@ -28,9 +28,6 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"># ensure we are using the bitcoin testnet and not the real bitcoin network</font></i>
 <b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#FF0000">'testnet'</font><font color="#990000">)</font>
 
-<i><font color="#9A1900"># The address that we will pay our tBTC to -- do not change this!</font></i>
-tbtc_return_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'n46XTn44wkBSyjHmMZMiiwzcSw4htMbR9V'</font><font color="#990000">)</font>
-
 <i><font color="#9A1900"># The address that we will pay our BCY to -- do not change this!</font></i>
 bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#FF0000">'mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz'</font><font color="#990000">)</font>
 
@@ -49,6 +46,11 @@ broadcast_transactions <font color="#990000">=</font> True
 <i><font color="#9A1900"># Your UVA userid</font></i>
 userid <font color="#990000">=</font> <font color="#FF0000">''</font>
 
+<i><font color="#9A1900"># This is the API token obtained after creating an account on</font></i>
+<i><font color="#9A1900"># https://accounts.blockcypher.com/.  This is required for some of the</font></i>
+<i><font color="#9A1900"># functionality in bitcoinctl.py.</font></i>
+blockcypher_api_token <font color="#990000">=</font> <font color="#FF0000">""</font>
+
 <i><font color="#9A1900"># Enter the BTC private key and invoice address from the setup 'Testnet Setup'</font></i>
 <i><font color="#9A1900"># section of the assignment.  </font></i>
 my_private_key_str <font color="#990000">=</font> <font color="#FF0000">""</font>
@@ -63,7 +65,7 @@ txid_funding_list <font color="#990000">=</font> <font color="#990000">[</font><
 <i><font color="#9A1900"># These conversions are so that you can use them more easily in the functions</font></i>
 <i><font color="#9A1900"># below -- don't change these two lines.</font></i>
 <b><font color="#0000FF">if</font></b> my_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
-    my_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>my_private_key_str<font color="#990000">)</font>
+    my_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>my_private_key_str<font color="#990000">))</font>
     my_public_key <font color="#990000">=</font> my_private_key<font color="#990000">.</font>pub
 
 
@@ -87,7 +89,7 @@ txid_funding_list <font color="#990000">=</font> <font color="#990000">[</font><
 <i><font color="#9A1900"># Testnet Setup: splitting coins</font></i>
 
 <i><font color="#9A1900"># The transaction ID that is to be split -- the assumption is that it is the</font></i>
-<i><font color="#9A1900"># transaction hash, above, that funded your account with tBTC.  You may have</font></i>
+<i><font color="#9A1900"># transaction hash, above, that funded your account with BCY.  You may have</font></i>
 <i><font color="#9A1900"># to split multiple UTXOs, so if you are splitting a different faucet</font></i>
 <i><font color="#9A1900"># transaction, then change this appropriately. It must have been paid to the</font></i>
 <i><font color="#9A1900"># address that corresponds to the private key above</font></i>
@@ -109,7 +111,7 @@ split_amount_after_split <font color="#990000">=</font> <font color="#993399">0.
 <b><font color="#0000FF">assert</font></b> split_amount_to_split <font color="#990000">&gt;</font> split_amount_after_split<font color="#990000">,</font> <font color="#FF0000">"Your split_amount_to_split is less than or equal to split_amount_after_split"</font>
 split_into_n <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>split_amount_to_split<font color="#990000">/</font>split_amount_after_split<font color="#990000">)</font>
 
-<i><font color="#9A1900"># The transaction IDs obtained after successfully splitting the tBTC.</font></i>
+<i><font color="#9A1900"># The transaction IDs obtained after successfully splitting the BCY.</font></i>
 txid_split_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#FF0000">""</font><font color="#990000">]</font>
 
 
@@ -130,7 +132,7 @@ txid_utxo <font color="#990000">=</font> txid_split_list<font color="#990000">[<
 <i><font color="#9A1900"># should be set to 0.</font></i>
 utxo_index <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1</font>
 
-<i><font color="#9A1900"># How much tBTC to send -- this should be LESS THAN the amount in that</font></i>
+<i><font color="#9A1900"># How much BCY to send -- this should be LESS THAN the amount in that</font></i>
 <i><font color="#9A1900"># particular UTXO index -- if it's not less than the amount in the UTXO, then</font></i>
 <i><font color="#9A1900"># there is no miner fee, and it will not be mined into a block.  Setting it</font></i>
 <i><font color="#9A1900"># to 90% of the value of the UTXO index is reasonable.  Note that the amount</font></i>
@@ -225,11 +227,11 @@ charlie_invoice_address_str <font color="#990000">=</font> <font color="#FF0000"
 <i><font color="#9A1900"># These three lines convert the above strings into the type that is usable in</font></i>
 <i><font color="#9A1900"># a script -- you should NOT modify these lines.</font></i>
 <b><font color="#0000FF">if</font></b> alice_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
-    alice_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>alice_private_key_str<font color="#990000">)</font>
+    alice_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>alice_private_key_str<font color="#990000">))</font>
 <b><font color="#0000FF">if</font></b> bob_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
-    bob_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">)</font>
+    bob_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">))</font>
 <b><font color="#0000FF">if</font></b> charlie_private_key_str <font color="#990000">!=</font> <font color="#FF0000">""</font><font color="#990000">:</font>
-    charlie_private_key <font color="#990000">=</font> <b><font color="#000000">CBitcoinSecret</font></b><font color="#990000">(</font>charlie_private_key_str<font color="#990000">)</font>
+    charlie_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>charlie_private_key_str<font color="#990000">))</font>
 
 <i><font color="#9A1900"># This function provides the pubKey script (aka output script) that will</font></i>
 <i><font color="#9A1900"># require multiple different keys to allow redeeming this UTXO.  It MUST use</font></i>
@@ -267,17 +269,6 @@ txid_multisig_txn2 <font color="#990000">=</font> <font color="#FF0000">""</font
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Part 4: cross-chain transaction</font></i>
 
-<i><font color="#9A1900"># This is the API token obtained after creating an account on</font></i>
-<i><font color="#9A1900"># https://accounts.blockcypher.com/.  This is optional!  But you may want to</font></i>
-<i><font color="#9A1900"># keep it here so that everything is all in once place.</font></i>
-blockcypher_api_token <font color="#990000">=</font> <font color="#FF0000">""</font>
-
-<i><font color="#9A1900"># These are the private keys and invoice addresses obtained on the BCY test</font></i>
-<i><font color="#9A1900"># network.</font></i>
-my_private_key_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
-my_invoice_address_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
-bob_private_key_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
-bob_invoice_address_bcy_str <font color="#990000">=</font> <font color="#FF0000">""</font>
 
 <i><font color="#9A1900"># This is the transaction hash for the funding transaction for Bob's BCY</font></i>
 <i><font color="#9A1900"># network wallet.</font></i>
@@ -293,7 +284,7 @@ atomic_swap_secret <font color="#990000">=</font> <font color="#993399">0</font>
 
 <i><font color="#9A1900"># This function provides the pubKey script (aka output script) that will set</font></i>
 <i><font color="#9A1900"># up the atomic swap.  This function is run by both Alice (aka you) and Bob,</font></i>
-<i><font color="#9A1900"># but on different networks (tBTC for you/Alice, and BCY for Bob).  This is</font></i>
+<i><font color="#9A1900"># but on different networks (BCY for you/Alice, and BCY for Bob).  This is</font></i>
 <i><font color="#9A1900"># used to create TXNs 1 and 3, which are described at</font></i>
 <i><font color="#9A1900"># http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">atomicswap_scriptPubKey</font></b><font color="#990000">(</font>public_key_sender<font color="#990000">,</font> public_key_recipient<font color="#990000">,</font> hash_of_secret<font color="#990000">):</font>

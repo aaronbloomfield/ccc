@@ -17,9 +17,6 @@ from bitcoin.core import x
 # ensure we are using the bitcoin testnet and not the real bitcoin network
 SelectParams('testnet')
 
-# The address that we will pay our tBTC to -- do not change this!
-tbtc_return_address = CBitcoinAddress('n46XTn44wkBSyjHmMZMiiwzcSw4htMbR9V')
-
 # The address that we will pay our BCY to -- do not change this!
 bcy_dest_address = CBitcoinAddress('mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz')
 
@@ -38,6 +35,11 @@ if __name__ == '__main__':
 # Your UVA userid
 userid = ''
 
+# This is the API token obtained after creating an account on
+# https://accounts.blockcypher.com/.  This is required for some of the
+# functionality in bitcoinctl.py.
+blockcypher_api_token = ""
+
 # Enter the BTC private key and invoice address from the setup 'Testnet Setup'
 # section of the assignment.  
 my_private_key_str = ""
@@ -52,7 +54,7 @@ txid_funding_list = [""]
 # These conversions are so that you can use them more easily in the functions
 # below -- don't change these two lines.
 if my_private_key_str != "":
-    my_private_key = CBitcoinSecret(my_private_key_str)
+    my_private_key = CBitcoinSecret.from_secret_bytes(x(my_private_key_str))
     my_public_key = my_private_key.pub
 
 
@@ -76,7 +78,7 @@ def create_CHECKSIG_signature(txin, txout, txin_scriptPubKey, private_key):
 # Testnet Setup: splitting coins
 
 # The transaction ID that is to be split -- the assumption is that it is the
-# transaction hash, above, that funded your account with tBTC.  You may have
+# transaction hash, above, that funded your account with BCY.  You may have
 # to split multiple UTXOs, so if you are splitting a different faucet
 # transaction, then change this appropriately. It must have been paid to the
 # address that corresponds to the private key above
@@ -98,7 +100,7 @@ split_amount_after_split = 0.0001
 assert split_amount_to_split > split_amount_after_split, "Your split_amount_to_split is less than or equal to split_amount_after_split"
 split_into_n = int(split_amount_to_split/split_amount_after_split)
 
-# The transaction IDs obtained after successfully splitting the tBTC.
+# The transaction IDs obtained after successfully splitting the BCY.
 txid_split_list = [""]
 
 
@@ -119,7 +121,7 @@ txid_utxo = txid_split_list[0]
 # should be set to 0.
 utxo_index = -1
 
-# How much tBTC to send -- this should be LESS THAN the amount in that
+# How much BCY to send -- this should be LESS THAN the amount in that
 # particular UTXO index -- if it's not less than the amount in the UTXO, then
 # there is no miner fee, and it will not be mined into a block.  Setting it
 # to 90% of the value of the UTXO index is reasonable.  Note that the amount
@@ -214,11 +216,11 @@ charlie_invoice_address_str = ""
 # These three lines convert the above strings into the type that is usable in
 # a script -- you should NOT modify these lines.
 if alice_private_key_str != "":
-    alice_private_key = CBitcoinSecret(alice_private_key_str)
+    alice_private_key = CBitcoinSecret.from_secret_bytes(x(alice_private_key_str))
 if bob_private_key_str != "":
-    bob_private_key = CBitcoinSecret(bob_private_key_str)
+    bob_private_key = CBitcoinSecret.from_secret_bytes(x(bob_private_key_str))
 if charlie_private_key_str != "":
-    charlie_private_key = CBitcoinSecret(charlie_private_key_str)
+    charlie_private_key = CBitcoinSecret.from_secret_bytes(x(charlie_private_key_str))
 
 # This function provides the pubKey script (aka output script) that will
 # require multiple different keys to allow redeeming this UTXO.  It MUST use
@@ -256,17 +258,6 @@ txid_multisig_txn2 = ""
 #------------------------------------------------------------
 # Part 4: cross-chain transaction
 
-# This is the API token obtained after creating an account on
-# https://accounts.blockcypher.com/.  This is optional!  But you may want to
-# keep it here so that everything is all in once place.
-blockcypher_api_token = ""
-
-# These are the private keys and invoice addresses obtained on the BCY test
-# network.
-my_private_key_bcy_str = ""
-my_invoice_address_bcy_str = ""
-bob_private_key_bcy_str = ""
-bob_invoice_address_bcy_str = ""
 
 # This is the transaction hash for the funding transaction for Bob's BCY
 # network wallet.
@@ -282,7 +273,7 @@ atomic_swap_secret = 0
 
 # This function provides the pubKey script (aka output script) that will set
 # up the atomic swap.  This function is run by both Alice (aka you) and Bob,
-# but on different networks (tBTC for you/Alice, and BCY for Bob).  This is
+# but on different networks (BCY for you/Alice, and BCY for Bob).  This is
 # used to create TXNs 1 and 3, which are described at
 # http://aaronbloomfield.github.io/ccc/slides/bitcoin.html#/xchainpt1.
 def atomicswap_scriptPubKey(public_key_sender, public_key_recipient, hash_of_secret):
