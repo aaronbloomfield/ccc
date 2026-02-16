@@ -56,6 +56,7 @@
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
 <button class='tablinks' onclick="openTab(event,'tlanguages')">Languages</button>
+<button class='tablinks' onclick="openTab(event,'tpackages')">Packages</button>
 <button class='tablinks' onclick="openTab(event,'thints')">Hints</button>
 <button class='tablinks' onclick="openTab(event,'ttestnet')">Testnet</button>
 <button class='tablinks' onclick="openTab(event,'tpython-library')">Python Library</button>
@@ -72,6 +73,10 @@
 <p>You will be submitting an edited version of <a href='scripts.py.html'>scripts.py</a> (<a href='scripts.py'>src</a>).</p>
 </div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
+<ul>
+<li>Mon, Feb 16: bug fixes to <a href='bitcoinctl.py.html'>bitcoinctl.py</a> (<a href='bitcoinctl.py'>src</a>); do a <code>git pull</code> to download the new version</li>
+<li>Mon, Feb 16: Added a information about platform installation on the new “Platform” tab</li>
+</ul>
 </div><div id='tlanguages' class='tabcontent'><h3 id='languages'>Languages</h3>
 <p>This assignment uses the <a href='https://pypi.org/project/python-bitcoinlib/'>python-bitcoinlib package</a> (documentation is <a href='https://python-bitcoinlib.readthedocs.io/en/latest/'>here</a>, if you are interested, but you probably won’t need it). Thus, this assignment must be completed in Python. You can install the Python package via <code>pip install python-bitcoinlib</code> (you may need to use <code>pip3</code> on your system). Note that bitcoinlib, python-bitcoinlib, and bitcoin are all different libraries! We are specifically using python-bitcoinlib.</p>
 <p>You also will have to install the <code>requests</code> library: <code>pip install requests</code>, as one of the provided files, below, uses that library.</p>
@@ -80,6 +85,19 @@
 <li><a href='scripts.py.html'>scripts.py</a> (<a href='scripts.py'>src</a>): you will modify this file throughout this assignment. The progression of items in that file mirrors the progression of the assignment steps herein. This is the only file that you will submit. We would expect that you would be able to understand everything in this file by the end of the assignment</li>
 <li><a href='bitcoinctl.py.html'>bitcoinctl.py</a> (<a href='bitcoinctl.py'>src</a>): this is the driver file that will run the various parts of the assignment using the values in the above scripts.py. You are of course welcome to look at the details, but you are not expected to understand the code that is in that file.</li>
 </ul>
+</div><div id='tpackages' class='tabcontent'><h3 id='packages'>Packages</h3>
+<p><strong>Windows:</strong> Some people have had issues (as of February 2026) with it working natively in Windows. The suggested way on a Windows platform is to install <a href='https://learn.microsoft.com/en-us/windows/wsl/install'>WSL</a>. Run the following commands, but from a WSL prompt.</p>
+<pre><code>sudo apt update
+sudo apt install python3-pip python3-virtualenv libssl-dev</code></pre>
+<p>You then have to install the two packages (python-bitcoinlib and requests). The recommended way to do this is to create a virtual environment and use that:</p>
+<ul>
+<li><code>virtualenv venv</code> creates a new virtual environment in the <code>venv/</code> directory</li>
+<li><code>source venv/bin/activate</code> enters into the virtual environment</li>
+<li><code>pip install python-0bitcoinlib requests</code> installs the packages</li>
+</ul>
+<p>The next time you start a WSL prompt, you will just have to do the <code>source venv/bin/activate</code> line. You can also run <code>deactivate</code> to leave the virtual environment.</p>
+<p><strong>Mac OS X:</strong> This is done through <a href='https://brew.sh/'>homebrew</a>. Ensure Python, pip, and virtualenv are installed. Python and pip are probably already installed; you can install virtuanenv via <code>pip3 install virtualenv</code>. Then try the three commands above (the ones that start with <code>virtualenv</code>, <code>source</code>, and <code>pip</code>). The only complication is if it can’t find the SSL library, but that should be installed already.</p>
+<p><strong>Linux:</strong> run the three commands above (the ones that start with <code>virtualenv</code>, <code>source</code>, and <code>pip</code>), but from a normal terminal prompt.</p>
 </div><div id='thints' class='tabcontent'><h3 id='hints'>Hints</h3>
 <p>This can be a tricky assignment, and there are a lot of ways to run into problems. We include a number of hints here to try to head that off – please read through all of these!</p>
 <h4 id='development-tips'>Development Tips</h4>

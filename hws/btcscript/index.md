@@ -16,6 +16,9 @@ You will be submitting an edited version of [scripts.py](scripts.py.html) ([src]
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
+- Mon, Feb 16: bug fixes to [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)); do a `git pull` to download the new version
+- Mon, Feb 16: Added a information about platform installation on the new "Platform" tab
+
 
 ### Languages
 
@@ -27,6 +30,27 @@ We provide you with a few files to use:
 
 - [scripts.py](scripts.py.html) ([src](scripts.py)): you will modify this file throughout this assignment.  The progression of items in that file mirrors the progression of the assignment steps herein.  This is the only file that you will submit.  We would expect that you would be able to understand everything in this file by the end of the assignment
 - [bitcoinctl.py](bitcoinctl.py.html) ([src](bitcoinctl.py)): this is the driver file that will run the various parts of the assignment using the values in the above scripts.py.  You are of course welcome to look at the details, but you are not expected to understand the code that is in that file.
+
+### Packages
+
+**Windows:** Some people have had issues (as of February 2026) with it working natively in Windows.  The suggested way on a Windows platform is to install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).  Run the following commands, but from a WSL prompt.
+
+```
+sudo apt update
+sudo apt install python3-pip python3-virtualenv libssl-dev
+```
+
+You then have to install the two packages (python-bitcoinlib and requests).  The recommended way to do this is to create a virtual environment and use that:
+
+- `virtualenv venv` creates a new virtual environment in the `venv/` directory
+- `source venv/bin/activate` enters into the virtual environment
+- `pip install python-0bitcoinlib requests` installs the packages
+
+The next time you start a WSL prompt, you will just have to do the `source venv/bin/activate` line.  You can also run `deactivate` to leave the virtual environment.
+
+**Mac OS X:** This is done through [homebrew](https://brew.sh/).  Ensure Python, pip, and virtualenv are installed.  Python and pip are probably already installed; you can install virtuanenv via `pip3 install virtualenv`.  Then try the three commands above (the ones that start with `virtualenv`, `source`, and `pip`).  The only complication is if it can't find the SSL library, but that should be installed already.
+
+**Linux:** run the three commands above (the ones that start with `virtualenv`, `source`, and `pip`), but from a normal terminal prompt.
 
 ### Hints
 
