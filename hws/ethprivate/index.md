@@ -36,9 +36,19 @@ Any changes to this page will be put here for easy reference.  <!-- Typo fixes a
 
 Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.
 
-You will need to install [geth](https://geth.ethereum.org) (aka go-ethereum), which you can download from the [geth downloads page](https://geth.ethereum.org/downloads).  The instructions differ depending on your OS -- some OS'es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package.  If prompted (only on some OS'es), you don't need to install the development tools.
+You will need to install [geth](https://geth.ethereum.org) (aka go-ethereum).  ***HOWEVER*** we need to use an older version of geth -- one that allows PoA (proof of authority) and does not require a beacon chain -- the last version that supported this was geth 1.13.15.  Using a more recent version of geth would not add any more functionality, but it would add a lot more complication.
+
+The [geth downloads page](https://geth.ethereum.org/downloads) no longer lists the links to the older versions, but [this archive.org page does](https://web.archive.org/web/20240526031159/https://geth.ethereum.org/downloads).  Those links are reproduced below.  The three most common ones are also in Canvas' Files.
+
+- Windows: [geth 1.13.15 64-bit](https://gethstore.blob.core.windows.net/builds/geth-windows-amd64-1.13.15-c5ba367e.exe) (other versions:
+[32-bit](https://gethstore.blob.core.windows.net/builds/geth-windows-386-1.13.15-c5ba367e.exe), [32-bit, library only](https://gethstore.blob.core.windows.net/builds/geth-windows-386-1.13.15-c5ba367e.zip), [64-bit, library only](https://gethstore.blob.core.windows.net/builds/geth-windows-amd64-1.13.15-c5ba367e.zip))
+- MAC OS X [Apple silicon version](https://gethstore.blob.core.windows.net/builds/geth-darwin-arm64-1.13.15-c5ba367e.tar.gz) (other versions: [AMD 64-bit](https://gethstore.blob.core.windows.net/builds/geth-darwin-amd64-1.13.15-c5ba367e.tar.gz))
+- Linux: [geth-1.13.15 64-bit](https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-1.13.15-c5ba367e.tar.gz) (other versions: [32-bit](https://gethstore.blob.core.windows.net/builds/geth-linux-386-1.13.15-c5ba367e.tar.gz), [ARMv5](https://gethstore.blob.core.windows.net/builds/geth-linux-arm5-1.13.15-c5ba367e.tar.gz), [ARMv6](https://gethstore.blob.core.windows.net/builds/geth-linux-arm6-1.13.15-c5ba367e.tar.gz), [ARM64](https://gethstore.blob.core.windows.net/builds/geth-linux-arm64-1.13.15-c5ba367e.tar.gz), [ARMv7](https://gethstore.blob.core.windows.net/builds/geth-linux-arm7-1.13.15-c5ba367e.tar.gz))
+
+ The instructions differ depending on your OS -- some OS'es you have to run the installer executable, others you have to unzip (or un-tar) the downloaded package.  If prompted (only on some OS'es), you don't need to install the development tools.
 
 **WARNING:** After installation, DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and almost 2 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
+
 
 ### Part 2: Blockchain
 

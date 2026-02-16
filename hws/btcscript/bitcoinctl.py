@@ -194,14 +194,14 @@ def handle_txn(param):
         my_invoice_addr_bcy = P2PKHBitcoinAddress.from_pubkey(my_prikey_bcy.pub)
         bob_prikey_bcy = CBitcoinSecret.from_secret_bytes(x(bob_private_key_str))
         txin_scriptPubKey = atomicswap_scriptPubKey(bob_prikey_bcy.pub, my_prikey_bcy.pub, secret_hash)
-        txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_bob_send_bcy), get_utxo_index()))
+        txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_bob_send), get_utxo_index()))
         signature = create_CHECKSIG_signature(txin,txout,txin_scriptPubKey,my_prikey_bcy)
         # create our input (sigScript) script
         txin_scriptSig = atomcswap_scriptSig_redeem(signature,atomic_swap_secret)
     elif param == "part4d": # BCY Alice -> Bob
         # re-create UTXO's pubKey script and sign it
         txin_scriptPubKey = atomicswap_scriptPubKey(sender_public_key, bob_private_key.pub, secret_hash)
-        txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_alice_send_tbtc), get_utxo_index()))
+        txin = CMutableTxIn(COutPoint(lx(txid_atomicswap_alice_send), get_utxo_index()))
         signature = create_CHECKSIG_signature(txin,txout,txin_scriptPubKey,bob_private_key)
         # create our input (sigScript) script
         txin_scriptSig = atomcswap_scriptSig_redeem(signature,atomic_swap_secret)
