@@ -326,7 +326,7 @@ You do not need to save the hashes from these transactions -- we are going to ve
 
 When done, there should not be any unspent UTXOs remaining!  We are going to test this by seeing if the amount of BCY left in your wallet address is zero.
 
-You do not need to do this for the extra BCY in your account(s).
+You should do this from your main account (which is set up to do this via the P2PKH from part 1).  You do not need to do this from Bob's account.
 
 ### Submission
 

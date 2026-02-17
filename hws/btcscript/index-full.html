@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Bitcoin Scripting</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -318,7 +321,7 @@ address = P2PKHBitcoinAddress.from_pubkey(public_key)</code></pre>
 <p>Once you have completed this assignment, you should pay any unspent BCY UTXOs back to the BCY return address, which is in the the <code>bcy_dest_address</code> variable in scripts.py. You can use the script from part 1 (P2PKH) for this, as it already pays the BCY return address – just change the UTXO value and re-run it; repeat until all the UTXO indices from the BCY split transaction are spent. If you have any other inputs – perhaps you used the faucet multiple times – just change the <code>txid_split</code> variable (and the UTXO and the <code>send_amount</code>), and then call <code>python3 bitcoinctl.py part1 &lt;utxo&gt;</code>. The <code>&lt;utxo&gt;</code> field is the integer UTXO index, which is indexed from 0. But be sure to change those values back!!!</p>
 <p>You do not need to save the hashes from these transactions – we are going to verify it by checking the wallet’s balance.</p>
 <p>When done, there should not be any unspent UTXOs remaining! We are going to test this by seeing if the amount of BCY left in your wallet address is zero.</p>
-<p>You do not need to do this for the extra BCY in your account(s).</p>
+<p>You should do this from your main account (which is set up to do this via the P2PKH from part 1). You do not need to do this from Bob’s account.</p>
 <h3 id="submission">Submission</h3>
 <p><strong>NOTE:</strong> Make sure all the transactions are mined into the blockchain BEFORE you submit them. If you go to the URL for that particular transaction, as long as it has at least one confirmation, it is considered mined into the blockchain.</p>
 <p>The only file you need to submit to Gradescope is scripts.py. There will be a few sanity checks made when you submit it. Those checks are:</p>
