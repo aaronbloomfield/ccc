@@ -5,7 +5,7 @@ Connecting to the Private Ethereum Blockchain
 
 <!--
 
-    What to provide on the Canvas landing page:
+    What to provide on the Canvas assignment page:
 
     - part 2, step 2: link to genesis.json file
     - part 2, step 3: hash of genesis block (in the format used below)
@@ -27,9 +27,7 @@ As you proceed through this assignment, you will be filling in values into the [
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  <!-- Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report. -->
-
-- Fri, 2/28: You should install geth 1.13 (the latest is 1.15).  It will not work with versions newer than 1.13.
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report. 
 
 
 ### Part 1: Installation
@@ -56,7 +54,7 @@ Here we will connect to our private blockchain.
 
 **Step 1:** Create a directory to hold the blockchain info -- this can be anywhere you want, but we'll call it `/path/to/ethprivate` herein.
 
-**Step 2:** In that data directory, copy the course genesis.json file, which can be found in the Canvas Files section, and is linked to off of the Canvas landing page.  You cannot modify this file -- if you do, the genesis block will be different, which will cause the hash to be different, and then your local geth instance will not sync with the course blockchain.
+**Step 2:** In that data directory, copy the course genesis.json file, which can be found in the Canvas Files section, and is linked to off of the Canvas assignment page.  You cannot modify this file -- if you do, the genesis block will be different, which will cause the hash to be different, and then your local geth instance will not sync with the course blockchain.
 
 **Step 3:** Initialize geth with the following command, but change the path (twice) in that command before you run it:
 
@@ -79,7 +77,7 @@ INFO [07-26|09:11:07.145] Successfully wrote genesis state          database=lig
 There are two things to check to ensure that this worked correctly:
 
 - It should say "Successfully wrote genesis state (on the last line)"
-- The genesis block hash, shown above as `XXXXXX..XXXXXX`, should exactly match what is listed on the Canvas landing page; it will have an ellipsis (the "..") in the middle of it
+- The genesis block hash, shown above as `XXXXXX..XXXXXX`, should exactly match what is listed on the Canvas assignment page; it will have an ellipsis (the "..") in the middle of it
 
 **Step 4:** Copy the `geth-config-???.toml` file, in Canvas' Files, onto your computer (it will have a semester/year suffix to it); save it as `geth-config.toml`.  You can copy it anywhere, but we recommend putting it into the geth directory you created above.  You need to change two values in that file (search for "CHANGE ME"):
 
@@ -172,7 +170,7 @@ Once it is synced, here are some commands for you to try out:
 
 ### Part 4: Get ether
 
-You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas landing page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need for this course.  But if you spam that site with unnecessary requests to gain lots of funds, it will cause a slowdown of the system, and a dramatic increase in the blockchain size, which will interfere with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
+You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas assignment page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need for this course.  But if you spam that site with unnecessary requests to gain lots of funds, it will cause a slowdown of the system, and a dramatic increase in the blockchain size, which will interfere with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
 
 You should request funds once or twice for this assignment.  After you make the requests -- you'll need your full eth.coinbase account address -- you should check that your balance was updated in the geth terminal.  You can use `eth.getBalance(eth.coinbase)`, but that reports it in wei (which has 18 more zeroes).  You can also use `web3.fromWei(eth.getBalance(eth.coinbase), "ether")` to get the value in ether.
 
@@ -248,7 +246,7 @@ You can then send me 1 (fake) ETH:
 eth.sendTransaction({from:eth.coinbase, to:'0xffffffffffffffffffffffffffffffffffffffff', value:web3.toWei(1,"ether"), gas:21000});
 ```
 
-You have to replace the 'to' field with the address found on the Canvas landing page.  Note that we replaced your account address with `eth.coinbase`.  This will print out a hex string -- save it!  That's the hash of the transaction, and we'll need it shortly.  It will be something long like: 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef (it's the 256-bit SHA3 hash of the transaction).  This goes into the `send_txn_hash` field in ethprivate.py.
+You have to replace the 'to' field with the address found on the Canvas assignment page.  Note that we replaced your account address with `eth.coinbase`.  This will print out a hex string -- save it!  That's the hash of the transaction, and we'll need it shortly.  It will be something long like: 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef (it's the 256-bit SHA3 hash of the transaction).  This goes into the `send_txn_hash` field in ethprivate.py.
 
 **NOTE:** Be sure you cut-and-paste the destination account properly!  It's easy to mis-type the account, and send the ether to the wrong place where it can never be accessed again.  And it's easy to cut-and-paste that command, which sends the money to the account with all f's as the address, which will also lose the ether.
 
@@ -287,7 +285,7 @@ There isn't much you can break here -- worst case you lose your (fake) ether, an
 
 ### Part 8: Explorer
 
-We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Canvas landing page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the second to last bullet under 'Statistics').
+We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Canvas assignment page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the second to last bullet under 'Statistics').
 
 Find the web page that contains the transaction (not the block!) where you send me the 1 (fake) ETH; you will need to submit this URL.  You should also see the block number listed there as well. These go into the `send_txn_url` and `send_txn_block_number` fields in ethprivate.py.
 
@@ -303,7 +301,7 @@ You will need to fill in the various values from this assignment into the [ethpr
 
 There are *two* forms of submission for this assignment; you must do both.
 
-Submission 1: You will need to send 1 (fake) ether to the course-wide address indicated on the Canvas landing page; this was done in part 6, above.  This implies that you received ether from the faucet so that you can send that required 1 ether.
+Submission 1: You will need to send 1 (fake) ether to the course-wide address indicated on the Canvas assignment page; this was done in part 6, above.  This implies that you received ether from the faucet so that you can send that required 1 ether.
 
 Submission 2: Submit your completed `ethprivate.py` file, and ONLY that file, to Gradescope.
 
