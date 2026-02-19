@@ -883,7 +883,7 @@ contract C {
 <li>There are a lot of types we are skipping</li>
 <li>See them all in the <a href="https://docs.soliditylang.org/en/latest/types.html">Solidity types reference</a>
 <ul>
-<li>https://docs.soliditylang.org/en/latest/types.html</li>
+<li>URL is <a href="https://docs.soliditylang.org/en/latest/types.html">https://docs.soliditylang.org/en/latest/types.html</a></li>
 </ul></li>
 </ul>
 <!-- ============================================================ -->
@@ -962,21 +962,22 @@ contract C {
 <li>A compiler will issue a warning if it’s not there</li>
 <li>The actual license type is not checked, so you can also use:</li>
 </ul>
-<pre><code>// SPDX-License-Identifier: Unlicensed</code></pre>
+<pre><code>// SPDX-License-Identifier: Unlicensed
+// SPDX-License-Identifier: glurgle</code></pre>
 </section>
 <section id="pragma" class="slide level2">
 <h2>Pragma</h2>
 <ul>
 <li>We’ll only use the following Solidity version pragma:</li>
 </ul>
-<pre><code>pragma solidity ^0.8.28;</code></pre>
+<pre><code>pragma solidity ^0.8.33;</code></pre>
 <ul>
 <li>The three numbers are: major version, minor version, bugfix version</li>
 <li>By default, it forces a compiler error if the wrong compiler version is being used
 <ul>
 <li>Some platforms, such as Truffle or Remix, will try to find the right compiler version</li>
 </ul></li>
-<li>This will only compile with version 0.8.28 or later
+<li>This will only compile with version 0.8.33 or later
 <ul>
 <li>But will NOT allow compilation with version 0.9.0 or later</li>
 </ul></li>
@@ -1002,7 +1003,7 @@ contract C {
 <li>As this will compile on all of the platforms we will be using</li>
 </ul></li>
 </ul>
-<pre><code>pragma solidity ^0.8.28;</code></pre>
+<pre><code>pragma solidity ^0.8.33;</code></pre>
 </section>
 <section id="comments" class="slide level2">
 <h2>Comments</h2>
@@ -1125,7 +1126,7 @@ contract C {
 <section id="what-we-have-so-far" class="slide level2">
 <h2>What we have so far</h2>
 <pre><code>// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.33;
 
 interface IERC165 {
   // ...
@@ -1321,6 +1322,7 @@ function overridePureFunction() external pure
 <li>Only if enabled (declared)</li>
 <li>Disables the contract permanently</li>
 <li>Caller claims the ether balance</li>
+<li>Currently deprecated, to be removed “soon”</li>
 </ul></li>
 </ul>
 </section>
@@ -1332,7 +1334,7 @@ function overridePureFunction() external pure
 <li>Fields</li>
 <li>Functions</li>
 <li>A constructor and a <code>selfdestruct()</code> method</li>
-<li>A few other special-purpose methods we won’t see here</li>
+<li>A few other special-purpose functions we won’t see here</li>
 <li>Modifiers</li>
 </ul></li>
 </ul>
@@ -1511,7 +1513,7 @@ c = address(new Bar());</code></pre>
 <h2>Solidity bytecode</h2>
 <p>Consider the following Solidity smart contract:</p>
 <pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.33;
 contract MyContract {
     uint public i = 1 + 2 * 3 - 4;
 }</code></pre>
@@ -1651,7 +1653,7 @@ tag 1     contract MyContract {\n    uin...
 <h2>IPoll.sol</h2>
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.33;
 
 interface IPoll {
 
@@ -1684,7 +1686,7 @@ interface IPoll {
 <h2>Poll.sol</h2>
 <pre class="code-wrapper"><code class="hljs awk small" style="height:auto">// SPDX-License-Identifier: GPL-3.0-or-later
 
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.33;
 
 import "./IPoll.sol";
 
@@ -1746,13 +1748,13 @@ contract Poll is IPoll {
 </ul></li>
 <li>Compiled bytecode
 <ul>
-<li><a href="../hws/dappintro/Poll-normal.bin.txt">Normal</a> (5,656 bytes)
+<li><a href="../hws/dappintro/Poll-normal.bin.txt">Normal</a> (5,607 bytes)
 <ul>
-<li>Contract @ 0x8f8a7d8CCD4aEb500c1708A0f22231e3d86Fea59 (fall 2023)</li>
+<li>Contract @ 0x6C58b0ed405FD557c4F9a8Aa18525871532806F6 (spring 2026)</li>
 </ul></li>
-<li><a href="../hws/dappintro/Poll-optimized.bin.txt">Optimized</a> (3,010 bytes)
+<li><a href="../hws/dappintro/Poll-optimized.bin.txt">Optimized</a> (3,011 bytes)
 <ul>
-<li>Contract @ 0xeB08a2F5A484Cd5f1B7bE3014bDD1215C9C962Bd (fall 2023)</li>
+<li>Contract @ 0xd2Cc8a43B9987aDE3Ae74Bb33030d3EC03E5c1b7 (spring 2026)</li>
 </ul></li>
 <li>See these on the blockchain explorer as well</li>
 </ul></li>
