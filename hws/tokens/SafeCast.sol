@@ -2,7 +2,7 @@
 // OpenZeppelin Contracts (last updated v5.1.0) (utils/math/SafeCast.sol)
 // This file was procedurally generated from scripts/generate/templates/SafeCast.js.
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.34;
 
 /**
  * @dev Wrappers over Solidity's uintXX/intXX/bool casting operators with added overflow

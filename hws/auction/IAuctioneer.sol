@@ -3,7 +3,7 @@
 // This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.
 
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.34;
 
 import "./IERC165.sol";
 
