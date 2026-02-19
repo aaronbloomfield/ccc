@@ -2,7 +2,7 @@
 // OpenZeppelin Contracts (last updated v5.1.0) (utils/math/SafeCast.sol)
 // This file was procedurally generated from scripts/generate/templates/SafeCast.js.
 
-pragma solidity ^0.8.33;
+pragma solidity ^0.8.20;
 
 /**
  * @dev Wrappers over Solidity's uintXX/intXX/bool casting operators with added overflow
@@ -18,12 +18,12 @@ pragma solidity ^0.8.33;
  */
 library SafeCast {
     /**
-     * @dev Value doesn't fit in an uint of `bits` size.
+     * @dev Value doesn't fit in a uint of `bits` size.
      */
     error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value);
 
     /**
-     * @dev An int value doesn't fit in an uint of `bits` size.
+     * @dev An int value doesn't fit in a uint of `bits` size.
      */
     error SafeCastOverflowedIntToUint(int256 value);
 
@@ -33,7 +33,7 @@ library SafeCast {
     error SafeCastOverflowedIntDowncast(uint8 bits, int256 value);
 
     /**
-     * @dev An uint value doesn't fit in an int of `bits` size.
+     * @dev A uint value doesn't fit in an int of `bits` size.
      */
     error SafeCastOverflowedUintToInt(uint256 value);
 

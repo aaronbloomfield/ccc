@@ -10,11 +10,12 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.2.0) (utils/Address.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.5.0) (utils/Address.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
 import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <font color="#FF0000">"./Errors.sol"</font><font color="#990000">;</font>
+import <font color="#FF0000">{</font>LowLevelCall<font color="#FF0000">}</font> from <font color="#FF0000">"./LowLevelCall.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Collection of functions related to the address type</font></i>
@@ -45,10 +46,13 @@ import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&lt;</font> amount<font color="#990000">)</font> <font color="#FF0000">{</font>
             <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">InsufficientBalance</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance<font color="#990000">,</font> amount<font color="#990000">);</font>
         <font color="#FF0000">}</font>
-
-        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> recipient<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> amount<font color="#FF0000">}</font><font color="#990000">(</font><font color="#FF0000">""</font><font color="#990000">);</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#000000">_revert</font></b><font color="#990000">(</font>returndata<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">callNoReturn</font></b><font color="#990000">(</font>recipient<font color="#990000">,</font> amount<font color="#990000">,</font> <font color="#FF0000">""</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// call successful, nothing to do</font></i>
+            <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnDataSize</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            LowLevelCall<font color="#990000">.</font><b><font color="#000000">bubbleRevert</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
@@ -87,8 +91,16 @@ import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance <font color="#990000">&lt;</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
             <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">InsufficientBalance</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font>balance<font color="#990000">,</font> value<font color="#990000">);</font>
         <font color="#FF0000">}</font>
-        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font>call<font color="#FF0000">{</font>value<font color="#990000">:</font> value<font color="#FF0000">}</font><font color="#990000">(</font>data<font color="#990000">);</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>target<font color="#990000">,</font> success<font color="#990000">,</font> returndata<font color="#990000">);</font>
+        <font color="#009900">bool</font> success <font color="#990000">=</font> LowLevelCall<font color="#990000">.</font><b><font color="#000000">callNoReturn</font></b><font color="#990000">(</font>target<font color="#990000">,</font> value<font color="#990000">,</font> data<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnDataSize</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">||</font> target<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnData</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">AddressEmptyCode</font></b><font color="#990000">(</font>target<font color="#990000">);</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnDataSize</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            LowLevelCall<font color="#990000">.</font><b><font color="#000000">bubbleRevert</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -96,8 +108,16 @@ import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <
 <i><font color="#9A1900">     * but performing a static call.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">functionStaticCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font><b><font color="#000000">staticcall</font></b><font color="#990000">(</font>data<font color="#990000">);</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>target<font color="#990000">,</font> success<font color="#990000">,</font> returndata<font color="#990000">);</font>
+        <font color="#009900">bool</font> success <font color="#990000">=</font> LowLevelCall<font color="#990000">.</font><b><font color="#000000">staticcallNoReturn</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnDataSize</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">||</font> target<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnData</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">AddressEmptyCode</font></b><font color="#990000">(</font>target<font color="#990000">);</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnDataSize</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            LowLevelCall<font color="#990000">.</font><b><font color="#000000">bubbleRevert</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -105,29 +125,40 @@ import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <
 <i><font color="#9A1900">     * but performing a delegate call.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">functionDelegateCall</font></b><font color="#990000">(</font><font color="#008080">address</font> target<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <font color="#990000">=</font> target<font color="#990000">.</font><b><font color="#000000">delegatecall</font></b><font color="#990000">(</font>data<font color="#990000">);</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>target<font color="#990000">,</font> success<font color="#990000">,</font> returndata<font color="#990000">);</font>
+        <font color="#009900">bool</font> success <font color="#990000">=</font> LowLevelCall<font color="#990000">.</font><b><font color="#000000">delegatecallNoReturn</font></b><font color="#990000">(</font>target<font color="#990000">,</font> data<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnDataSize</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">||</font> target<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">return</font></b> LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnData</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">AddressEmptyCode</font></b><font color="#990000">(</font>target<font color="#990000">);</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>LowLevelCall<font color="#990000">.</font><b><font color="#000000">returnDataSize</font></b><font color="#990000">()</font> <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            LowLevelCall<font color="#990000">.</font><b><font color="#000000">bubbleRevert</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Tool to verify that a low level call to smart-contract was successful, and reverts if the target</font></i>
 <i><font color="#9A1900">     * was not a contract or bubbling up the revert reason (falling back to {Errors.FailedCall}) in case</font></i>
 <i><font color="#9A1900">     * of an unsuccessful call.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function is DEPRECATED and may be removed in the next major release.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">verifyCallResultFromTarget</font></b><font color="#990000">(</font>
         <font color="#008080">address</font> target<font color="#990000">,</font>
         <font color="#009900">bool</font> success<font color="#990000">,</font>
         bytes memory returndata
     <font color="#990000">)</font> internal <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#000000">_revert</font></b><font color="#990000">(</font>returndata<font color="#990000">);</font>
-        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
-            <i><font color="#9A1900">// only check if target is a contract if the call was successful and the return data is empty</font></i>
-            <i><font color="#9A1900">// otherwise we already know that it was a contract</font></i>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> target<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                <font color="#008080">revert</font> <b><font color="#000000">AddressEmptyCode</font></b><font color="#990000">(</font>target<font color="#990000">);</font>
-            <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// only check if target is a contract if the call was successful and the return data is empty</font></i>
+        <i><font color="#9A1900">// otherwise we already know that it was a contract</font></i>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success <font color="#990000">&amp;&amp;</font> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">||</font> target<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
             <b><font color="#0000FF">return</font></b> returndata<font color="#990000">;</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">AddressEmptyCode</font></b><font color="#990000">(</font>target<font color="#990000">);</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            LowLevelCall<font color="#990000">.</font><b><font color="#000000">bubbleRevert</font></b><font color="#990000">(</font>returndata<font color="#990000">);</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
@@ -136,24 +167,10 @@ import <font color="#FF0000">{</font>Errors<font color="#FF0000">}</font> from <
 <i><font color="#9A1900">     * revert reason or with a default {Errors.FailedCall} error.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">verifyCallResult</font></b><font color="#990000">(</font><font color="#009900">bool</font> success<font color="#990000">,</font> bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(!</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#000000">_revert</font></b><font color="#990000">(</font>returndata<font color="#990000">);</font>
-        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>success<font color="#990000">)</font> <font color="#FF0000">{</font>
             <b><font color="#0000FF">return</font></b> returndata<font color="#990000">;</font>
-        <font color="#FF0000">}</font>
-    <font color="#FF0000">}</font>
-
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reverts with returndata if present. Otherwise reverts with {Errors.FailedCall}.</font></i>
-<i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_revert</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> returndata<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> pure <font color="#FF0000">{</font>
-        <i><font color="#9A1900">// Look for revert reason and bubble it up if present</font></i>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-            <i><font color="#9A1900">// The easiest way to bubble the revert reason is using memory via assembly</font></i>
-            <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-                <font color="#008080">let</font> returndata_size <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>returndata<font color="#990000">)</font>
-                <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> returndata<font color="#990000">),</font> returndata_size<font color="#990000">)</font>
-            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>returndata<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            LowLevelCall<font color="#990000">.</font><b><font color="#000000">bubbleRevert</font></b><font color="#990000">(</font>returndata<font color="#990000">);</font>
         <font color="#FF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#FF0000">{</font>
             <font color="#008080">revert</font> Errors<font color="#990000">.</font><b><font color="#000000">FailedCall</font></b><font color="#990000">();</font>
         <font color="#FF0000">}</font>

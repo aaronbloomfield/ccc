@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (utils/introspection/ERC165.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.4.0) (utils/introspection/ERC165.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -29,9 +29,7 @@ import <font color="#FF0000">{</font>IERC165<font color="#FF0000">}</font> from 
 <i><font color="#9A1900"> * ```</font></i>
 <i><font color="#9A1900"> */</font></i>
 abstract contract ERC165 <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC165-supportsInterface}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC165</font></i>
     <font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC165<font color="#990000">).</font>interfaceId<font color="#990000">;</font>
     <font color="#FF0000">}</font>

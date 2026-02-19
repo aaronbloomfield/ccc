@@ -12,3 +12,9 @@ all:
 	@for f in `ls -d */` ; do \
 		cd $$f && make && cd ..; \
 	done
+
+sync:
+	cd tokens && make sync && cd ..
+	cd auction && make sync && cd ..
+	cd dex && make sync && cd ..
+	cd daoweb3 && make sync && cd ..

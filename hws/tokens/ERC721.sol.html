@@ -10,9 +10,9 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (token/ERC721/ERC721.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.5.0) (token/ERC721/ERC721.sol)</font></i>
 
-<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">24</font><font color="#990000">;</font>
 
 import <font color="#FF0000">{</font>IERC721<font color="#FF0000">}</font> from <font color="#FF0000">"./IERC721.sol"</font><font color="#990000">;</font>
 import <font color="#FF0000">{</font>IERC721Metadata<font color="#FF0000">}</font> from <font color="#FF0000">"./IERC721Metadata.sol"</font><font color="#990000">;</font>
@@ -52,9 +52,7 @@ abstract contract ERC721 <font color="#008080">is</font> Context<font color="#99
         _symbol <font color="#990000">=</font> symbol_<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC165-supportsInterface}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC165</font></i>
     <font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#0000FF">override</font></b><font color="#990000">(</font>ERC165<font color="#990000">,</font> IERC165<font color="#990000">)</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b>
             interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IERC721<font color="#990000">).</font>interfaceId <font color="#990000">||</font>
@@ -62,9 +60,7 @@ abstract contract ERC721 <font color="#008080">is</font> Context<font color="#99
             super<font color="#990000">.</font><b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font>interfaceId<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-balanceOf}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>owner <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC721InvalidOwner</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
@@ -72,30 +68,22 @@ abstract contract ERC721 <font color="#008080">is</font> Context<font color="#99
         <b><font color="#0000FF">return</font></b> _balances<font color="#990000">[</font>owner<font color="#990000">];</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-ownerOf}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">ownerOf</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">_requireOwned</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721Metadata-name}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721Metadata</font></i>
     <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _name<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721Metadata-symbol}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721Metadata</font></i>
     <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _symbol<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721Metadata-tokenURI}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721Metadata</font></i>
     <font color="#008080">function</font> <b><font color="#000000">tokenURI</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#000000">_requireOwned</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
 
@@ -112,39 +100,29 @@ abstract contract ERC721 <font color="#008080">is</font> Context<font color="#99
         <b><font color="#0000FF">return</font></b> <font color="#FF0000">""</font><font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-approve}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">_approve</font></b><font color="#990000">(</font>to<font color="#990000">,</font> tokenId<font color="#990000">,</font> <b><font color="#000000">_msgSender</font></b><font color="#990000">());</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-getApproved}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">getApproved</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#000000">_requireOwned</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
 
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">_getApproved</font></b><font color="#990000">(</font>tokenId<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-setApprovalForAll}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">setApprovalForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> approved<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">_setApprovalForAll</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> approved<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-isApprovedForAll}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">isApprovedForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _operatorApprovals<font color="#990000">[</font>owner<font color="#990000">][</font><b><font color="#0000FF">operator</font></b><font color="#990000">];</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-transferFrom}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC721InvalidReceiver</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
@@ -157,16 +135,12 @@ abstract contract ERC721 <font color="#008080">is</font> Context<font color="#99
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-safeTransferFrom}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> <font color="#FF0000">""</font><font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC721-safeTransferFrom}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC721</font></i>
     <font color="#008080">function</font> <b><font color="#000000">safeTransferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> tokenId<font color="#990000">,</font> bytes <font color="#008080">memory</font> data<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
         <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">);</font>
         ERC721Utils<font color="#990000">.</font><b><font color="#000000">checkOnERC721Received</font></b><font color="#990000">(</font><b><font color="#000000">_msgSender</font></b><font color="#990000">(),</font> from<font color="#990000">,</font> to<font color="#990000">,</font> tokenId<font color="#990000">,</font> data<font color="#990000">);</font>
@@ -444,6 +418,9 @@ abstract contract ERC721 <font color="#008080">is</font> Context<font color="#99
 <i><font color="#9A1900">     * Emits an {ApprovalForAll} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">_setApprovalForAll</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> <b><font color="#0000FF">operator</font></b><font color="#990000">,</font> <font color="#009900">bool</font> approved<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>owner <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+            <font color="#008080">revert</font> <b><font color="#000000">ERC721InvalidApprover</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
+        <font color="#FF0000">}</font>
         <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#0000FF">operator</font></b> <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC721InvalidOperator</font></b><font color="#990000">(</font><b><font color="#0000FF">operator</font></b><font color="#990000">);</font>
         <font color="#FF0000">}</font>

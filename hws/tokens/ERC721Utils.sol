@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts (last updated v5.1.0) (token/ERC721/utils/ERC721Utils.sol)
+// OpenZeppelin Contracts (last updated v5.5.0) (token/ERC721/utils/ERC721Utils.sol)
 
-pragma solidity ^0.8.33;
+pragma solidity ^0.8.20;
 
 import {IERC721Receiver} from "./IERC721Receiver.sol";
 import {IERC721Errors} from "./draft-IERC6093.sol";
 
 /**
- * @dev Library that provide common ERC-721 utility functions.
+ * @dev Library that provides common ERC-721 utility functions.
  *
  * See https://eips.ethereum.org/EIPS/eip-721[ERC-721].
  *
@@ -41,7 +41,7 @@ library ERC721Utils {
                     revert IERC721Errors.ERC721InvalidReceiver(to);
                 } else {
                     assembly ("memory-safe") {
-                        revert(add(32, reason), mload(reason))
+                        revert(add(reason, 0x20), mload(reason))
                     }
                 }
             }

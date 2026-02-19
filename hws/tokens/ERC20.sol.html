@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.2.0) (token/ERC20/ERC20.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.5.0) (token/ERC20/ERC20.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -50,8 +50,7 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Sets the values for {name} and {symbol}.</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * All two of these values are immutable: they can only be set once during</font></i>
-<i><font color="#9A1900">     * construction.</font></i>
+<i><font color="#9A1900">     * Both values are immutable: they can only be set once during construction.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <b><font color="#000000">constructor</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> name_<font color="#990000">,</font> string <font color="#008080">memory</font> symbol_<font color="#990000">)</font> <font color="#FF0000">{</font>
         _name <font color="#990000">=</font> name_<font color="#990000">;</font>
@@ -90,16 +89,12 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
         <b><font color="#0000FF">return</font></b> <font color="#993399">18</font><font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-totalSupply}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC20</font></i>
     <font color="#008080">function</font> <b><font color="#000000">totalSupply</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _totalSupply<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-balanceOf}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC20</font></i>
     <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _balances<font color="#990000">[</font>account<font color="#990000">];</font>
     <font color="#FF0000">}</font>
@@ -118,9 +113,7 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
 
-    <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See {IERC20-allowance}.</font></i>
-<i><font color="#9A1900">     */</font></i>
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@inheritdoc</font><i><font color="#9A1900"> IERC20</font></i>
     <font color="#008080">function</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> _allowances<font color="#990000">[</font>owner<font color="#990000">][</font>spender<font color="#990000">];</font>
     <font color="#FF0000">}</font>
@@ -274,10 +267,10 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Variant of {_approve} with an optional flag to enable or disable the {Approval} event.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * By default (when calling {_approve}) the flag is set to true. On the other hand, approval changes made by</font></i>
-<i><font color="#9A1900">     * `_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any</font></i>
+<i><font color="#9A1900">     * `_spendAllowance` during the `transferFrom` operation sets the flag to false. This saves gas by not emitting any</font></i>
 <i><font color="#9A1900">     * `Approval` event during `transferFrom` operations.</font></i>
 <i><font color="#9A1900">     *</font></i>
-<i><font color="#9A1900">     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to</font></i>
+<i><font color="#9A1900">     * Anyone who wishes to continue emitting `Approval` events on the `transferFrom` operation can force the flag to</font></i>
 <i><font color="#9A1900">     * true using the following override:</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * ```solidity</font></i>

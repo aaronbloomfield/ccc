@@ -10,7 +10,7 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (utils/math/Math.sol)</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.5.0) (utils/math/Math.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
@@ -145,10 +145,10 @@ import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Branchless ternary evaluation for `a ? b : c`. Gas costs are constant.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Branchless ternary evaluation for `condition ? a : b`. Gas costs are constant.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * IMPORTANT: This function may reduce bytecode size and consume less gas when used standalone.</font></i>
-<i><font color="#9A1900">     * However, the compiler may optimize Solidity ternary operations (i.e. `a ? b : c`) to only compute</font></i>
+<i><font color="#9A1900">     * However, the compiler may optimize Solidity ternary operations (i.e. `condition ? a : b`) to only compute</font></i>
 <i><font color="#9A1900">     * one branch when needed, making this function more expensive.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">ternary</font></b><font color="#990000">(</font><font color="#009900">bool</font> condition<font color="#990000">,</font> <font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
@@ -179,8 +179,10 @@ import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from
 <i><font color="#9A1900">     * zero.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">average</font></b><font color="#990000">(</font><font color="#008080">uint256</font> a<font color="#990000">,</font> <font color="#008080">uint256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
-        <i><font color="#9A1900">// (a + b) / 2 can overflow.</font></i>
-        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>a <font color="#990000">&amp;</font> b<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>a <font color="#990000">^</font> b<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">;</font>
+        unchecked <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// (a + b) / 2 can overflow.</font></i>
+            <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>a <font color="#990000">&amp;</font> b<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>a <font color="#990000">^</font> b<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
@@ -484,9 +486,14 @@ import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns whether the provided byte array is zero.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_zeroBytes</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> byteArray<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
-        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> byteArray<font color="#990000">.</font>length<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>byteArray<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_zeroBytes</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#008080">uint256</font> chunk<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> buffer<font color="#990000">.</font>length<font color="#990000">;</font> i <font color="#990000">+=</font> <font color="#993399">0x20</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <i><font color="#9A1900">// See _unsafeReadBytesOffset from utils/Bytes.sol</font></i>
+            <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                chunk <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> i<font color="#990000">))</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>chunk <font color="#990000">&gt;&gt;</font> <font color="#990000">(</font><font color="#993399">8</font> <font color="#990000">*</font> <b><font color="#000000">saturatingSub</font></b><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">0x20</font><font color="#990000">,</font> buffer<font color="#990000">.</font>length<font color="#990000">))</font> <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#FF0000">{</font>
                 <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
@@ -655,7 +662,7 @@ import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from
         <i><font color="#9A1900">// |    1110    |   14    |        table[14] = 3        |</font></i>
         <i><font color="#9A1900">// |    1111    |   15    |        table[15] = 3        |</font></i>
         <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// The lookup table is represented as a 32-byte value with the MSB positions for 0-15 in the last 16 bytes.</font></i>
+        <i><font color="#9A1900">// The lookup table is represented as a 32-byte value with the MSB positions for 0-15 in the first 16 bytes (most significant half).</font></i>
         <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
             r <font color="#990000">:=</font> <b><font color="#000000">or</font></b><font color="#990000">(</font>r<font color="#990000">,</font> <b><font color="#000000">byte</font></b><font color="#990000">(</font><b><font color="#000000">shr</font></b><font color="#990000">(</font>r<font color="#990000">,</font> x<font color="#990000">),</font> <font color="#993399">0x0000010102020202030303030303030300000000000000000000000000000000</font><font color="#990000">))</font>
         <font color="#FF0000">}</font>
@@ -756,6 +763,13 @@ import <font color="#FF0000">{</font>SafeCast<font color="#FF0000">}</font> from
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">unsignedRoundsUp</font></b><font color="#990000">(</font><font color="#008080">Rounding</font> rounding<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint8</font></b><font color="#990000">(</font>rounding<font color="#990000">)</font> <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Counts the number of leading zero bits in a uint256.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">clz</font></b><font color="#990000">(</font><font color="#008080">uint256</font> x<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">ternary</font></b><font color="#990000">(</font>x <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">256</font><font color="#990000">,</font> <font color="#993399">255</font> <font color="#990000">-</font> <b><font color="#000000">log2</font></b><font color="#990000">(</font>x<font color="#990000">));</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 </tt></pre>

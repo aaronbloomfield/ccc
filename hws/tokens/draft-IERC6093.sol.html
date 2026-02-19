@@ -10,8 +10,9 @@ http://www.gnu.org/software/src-highlite">
 </head>
 <body bgcolor="white">
 <pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
-<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (interfaces/draft-IERC6093.sol)</font></i>
-<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.5.0) (interfaces/draft-IERC6093.sol)</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">&gt;=</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">4</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Standard ERC-20 Errors</font></i>
@@ -65,7 +66,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">interface</font> IERC721Errors <font color="#FF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in ERC-20.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in ERC-721.</font></i>
 <i><font color="#9A1900">     * Used in balance queries.</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#009900">@param</font><i><font color="#9A1900"> owner Address of the current owner of a token.</font></i>
 <i><font color="#9A1900">     */</font></i>

@@ -29,12 +29,12 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"> */</font></i>
 <font color="#008080">library</font> SafeCast <font color="#FF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Value doesn't fit in an uint of `bits` size.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Value doesn't fit in a uint of `bits` size.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedUintDowncast</font></b><font color="#990000">(</font><font color="#008080">uint8</font> bits<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> An int value doesn't fit in an uint of `bits` size.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> An int value doesn't fit in a uint of `bits` size.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedIntToUint</font></b><font color="#990000">(</font><font color="#008080">int256</font> value<font color="#990000">);</font>
 
@@ -44,7 +44,7 @@ http://www.gnu.org/software/src-highlite">
     <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedIntDowncast</font></b><font color="#990000">(</font><font color="#008080">uint8</font> bits<font color="#990000">,</font> <font color="#008080">int256</font> value<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> An uint value doesn't fit in an int of `bits` size.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> A uint value doesn't fit in an int of `bits` size.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">error</font> <b><font color="#000000">SafeCastOverflowedUintToInt</font></b><font color="#990000">(</font><font color="#008080">uint256</font> value<font color="#990000">);</font>
 
