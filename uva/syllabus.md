@@ -10,7 +10,7 @@ This course is a general introduction to cryptocurrencies and blockchain applica
 I realize that nobody reads these through.  So the TL;DR version:
 
 - Course staff: [Aaron Bloomfield](https://www.cs.virginia.edu/~asb) (aaron at virginia dot edu) and a group of amazing teaching assistants
-- This course is using Canvas; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/162075)
+- This course is using Canvas via [this the Canvas workspace](https://canvas.its.virginia.edu/courses/162075)
 - One midterm, on Tuesday, March 10th, during lecture; one final, on Monday, May 4th from 2pm - 5pm
 - Grades are 35% homeworks, 25% midterm, 30% final exam, and 10% participation (quizzes & attendance)
 - Everything is going to be auto-graded, but you can submit multiple times; the grades won't be known until the late due date has passed; there is going to be a reasonable limit on how many times you can submit (currently set to 10)
@@ -41,14 +41,14 @@ And now for the really long-winded version...
 ### Course Info ###
 
 - Lecture: Tu/Th 9:30-10:45 in Olsson 120
-- Coordination is through Canvas; the Canvas workspace is [here](https://canvas.its.virginia.edu/courses/162075)
+- Coordination is through Canvas via [this the Canvas workspace](https://canvas.its.virginia.edu/courses/162075)
 - Email: the course email is listed on the Canvas landing page; please do not email the course staff directly
 - Announcements will be done through the [daily announcements slide set](daily-announcements.html#/)
 - TAs and their office hours will be posted on the Canvas landing page; all office hours start the second week of classes
 
 
-**Course content:** All the course content is available free online at 
-[http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc), which is from a public github repository: [https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).  All the source code in that repository is released under a [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and all the non-source code material in that repository is released under a [Creative Commons license](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA).  Note that this license and the public availability does NOT apply to the lecture videos.
+**Course content:** All the course content is [available free online at 
+http://aaronbloomfield.github.io/ccc](http://aaronbloomfield.github.io/ccc), which is from a [public github repository: https://github.com/aaronbloomfield/ccc](https://github.com/aaronbloomfield/ccc).  All the source code in that repository is released under a [GPL 3.0 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and all the non-source code material in that repository is released under a [Creative Commons license](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA).  Note that this license and the public availability does NOT apply to the lecture videos.
 
 **Lectures:** Lecture attendance is required.  There will be occasional attendance quizzes to verify this.  These quizzes may be online, so bring a connected device (phone is fine) to take said quizzes.
 
@@ -92,7 +92,7 @@ I *expect* that grades will follow the standard decade curve: 90 and above is an
 
 **Course rules:** You are fully responsible for all material presented in class and on the required readings. Exams and due dates are scheduled in advance. A grade of zero will be recorded for missed exams and late assignments unless prior arrangements are made (see below for details) or there are truly extenuating circumstances (which will require appropriate documentation). Assignments turned in after the due date are penalized 25% per day (or fraction thereof) late; this means a maximum of 3 days (i.e. 72 hours) late. A few assignments will allow you to choose the programming language to implement it in, but most will have a specified language that you have to use.  The Gradescope submission auto-grader will verify this upon submission (and immediately report the results back to you). Most assignments will be graded by automated testing.
 
-**Disabilities:**  The University of Virginia strives to provide accessibility to all students. If you require an accommodation to fully access this course, please contact the Student Disability Access Center (SDAC) at (434) 243-5180 or sdac@virginia.edu. If you are unsure if you require an accommodation, or to learn more about their services, you may contact the SDAC at the number above or by visiting the student health website at [https://sdac.studenthealth.virginia.edu/](https://sdac.studenthealth.virginia.edu/).  How I handle disability accommodations can be seen [here](sdac.html) ([md](sdac.md)).  If you feel that you need additional steps for your accommodations, please get in touch with me so we can discuss it.
+**Disabilities:**  The University of Virginia strives to provide accessibility to all students. If you require an accommodation to fully access this course, please contact the Student Disability Access Center (SDAC) at (434) 243-5180 or sdac@virginia.edu. If you are unsure if you require an accommodation, or to learn more about their services, you may contact the SDAC at the number above or by visiting the [student health website at https://sdac.studenthealth.virginia.edu/](https://sdac.studenthealth.virginia.edu/).  You can [see how I handle disability accommodations](sdac.html) ([md](sdac.md)).  If you feel that you need additional steps for your accommodations, please get in touch with me so we can discuss it.
 
 **Special Circumstances:** Students with special circumstances (athletics, extra time required on exams, final exam conflicts, SDAC considerations, etc.) need to let me know during the **first two weeks of class**.
 
