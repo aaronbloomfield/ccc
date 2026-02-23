@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>dApp Introduction</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -80,7 +77,7 @@
 <li><strong>Online Remix:</strong> The online site, at <a href="https://remix.ethereum.org">remix.ethereum.org</a>, is quick to use, doesn’t require installation, but does not save your changes to your local drive. The files that it saves remotely are tied to a cookie in your browser, which will mean you cannot edit those online files from a different browser (but you can copy/paste them in again if you have saved them locally). If you do want to go this route, we suggest editing your code with <a href="https://www.sublimetext.com/">sublime</a> with the <a href="https://packagecontrol.io/packages/Ethereum">Ethereum package</a> installed. And if you make edits to the file on the Remix web page, you have to cut-and-paste that back into the local file on your computer so that you have an updated local copy. In the past, people have had issues with different browsers. Chrome and Firefox are known to work, but Safari seems to have issues with deployment. For the last assignment in this course you will have to use Chrome.</li>
 <li><strong>Desktop Remix:</strong> The other option – installing Remix locally – requires going through the installation process (which is really quick), but makes it much easier to develop locally. In the past there were some bugs that caused issues, but they were solvable. To download the package for your OS, see the <a href="https://github.com/ethereum/remix-desktop/releases">Remix download page</a>. If the desktop version starts running really slowly, try restarting the application.</li>
 </ul>
-<p>We recommend to download and install the desktop version, despite the occasional issues, but the choice is yours. If you do try the desktop version, and it is not working well, you can always switch to the online version. The directions herein will apply to both options, as the user interface is the same. Remix’s source code is <a href="https://github.com/ethereum/remix-project">available on github</a>, and it is <a href="https://github.com/ethereum/remix-project/blob/master/LICENSE">released under the MIT license</a>; some of the Remix icons are included herein.</p>
+<p>We recommend to use the online version, but the choice is yours. If you do try one version, and it is not working well, you can always switch to the online version. <strong><em>NOTE:</em> if you download the desktop version, make sure you download it from a reputable site.</strong> Many cryptocurrency-related downloads are malware in disguise. The directions herein will apply to both options, as the user interface is the same. Remix’s source code is <a href="https://github.com/ethereum/remix-project">available on github</a>, and it is <a href="https://github.com/ethereum/remix-project/blob/master/LICENSE">released under the MIT license</a>; some of the Remix icons are included herein. The desktop version can be downloaded via links from that github.com site – specifically at <a href="https://github.com/remix-project-org/remix-desktop/releases">https://github.com/remix-project-org/remix-desktop/releases</a>.</p>
 <p>Remix allows you to develop, compile, and test your code on a fake blockchain it simulates with fake accounts. It cannot, all by itself, deploy to a blockchain. For that, we are going to use geth. We will connect Remix to geth for our deployment, and geth will be the conduit to deploy to the blockchain. More on this later in the assignment.</p>
 <p>There are many different tool chains that one can use to compile and deploy smart contracts – Truffle and Ganache, Hardhat / Foundry, command-line compilation with solc and deployment with geth, etc. We had to pick one, and Remix seemed the most straight-forward and realistic choice. It also is the choice that works best across all the platforms on the computers for the students in this course. We will see how to interact with the blockchain through the geth Javascript console in an in-class activity in the <a href="../../slides/solidity.html#/">Solidity lecture slide set</a>.</p>
 <p>The same process described herein can be used to deploy on the real Ethereum blockchain. The only difference is that you would run geth to connect to the real Ethereum blockchain, rather than our private course blockchain. And of course you would need real ether to pay for the gas fees. Everything else is exactly the same.</p>
@@ -302,6 +299,7 @@ contract testSuite {
 <ul>
 <li>Save the contract address – there is a copy icon to easily copy it – as you will need to submit that</li>
 </ul></li>
+<li><strong>Note:</strong> sometimes Remix will appear to hang when deploying the contract, and will not respond with a contract address. If this happens, you can view the results of the deployment via the blockchain explorer – just search for your coinbase account, and see the most recent transaction it made.</li>
 <li>You can view the information for that transaction on our blockchain explorer – the block that contained the transaction that deployed your smart contract, the transaction itself, and the account that is the contract address
 <ul>
 <li>You may have to wait up to a minute for the explorer to refresh the information from the blockchain</li>
