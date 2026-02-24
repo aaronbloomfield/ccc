@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>dApp Introduction</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -94,6 +97,7 @@
 <p><strong>Desktop Remix, yet again:</strong> As the Remix installation is not signed, the relevant operating systems (notably Windows and Mac OS X) will not want to run it after it is installed. In Mac, you can change this in the Privacy &amp; Security settings. Windows should allow you to run it after clicking through a number of dialogs. If this all makes you uncomfortable, you are always welcome to use the online version.</p>
 <p><strong>Web Remix:</strong> The web version of Remix also has issues – in particular, it saves your code on remote servers, and is tied to a cookie in your web browser. If you lose the computer, reset your cookies, or are using a different machine, then you will not be able to access your files. This means you will have to cut-and-paste the code to a locally saved file to ensure you can access it elsewhere.</p>
 <p><strong>Geth node:</strong> You will have to start a local geth node to deploy your contracts. You did this in the <a href="../ethprivate/index.html">private Ethereum Blockchain</a> (<a href="../ethprivate/index.md">md</a>) assignment. There are extra options that we will be using, but those options are already in the geth-config.toml file that you configured in <a href="../ethprivate/index.html">the last assignment</a> (<a href="../ethprivate/index.md">md</a>).</p>
+<p><strong>Remix TXNs pending:</strong> If your transactions (and contract deployments) seem to stay stuck in ‘pending’, check if your time is synced with <a href="https://time.gov">time.gov</a>, as clock skew will cause geth synchronization issues.</p>
 <h3 id="part-1-remix">Part 1: Remix</h3>
 <p>Remix is an IDE for developing Ethereum smart contracts in Solidity. Remix provides an easy way to read compiler error messages and makes it really easy to test your smart contract as you are developing it. You can either use the online editor at <a href="http://remix.ethereum.org">remix.ethereum.org</a> or you can install it locally via the <a href="https://github.com/ethereum/remix-desktop/releases">Remix download page</a>. The web interface on <a href="http://remix.ethereum.org">remix.ethereum.org</a> is designed to look just like the IDE, and you are welcome to use either – the directions herein apply the same to both, as they have the same user interface. However, if you do use the web interface, make sure you save your text file back to your computer.</p>
 <ol type="1">

@@ -77,6 +77,9 @@ There are a few very important hints that will make your life **SO MUCH** easier
 
 **Geth node:** You will have to start a local geth node to deploy your contracts.  You did this in the [private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment.  There are extra options that we will be using, but those options are already in the geth-config.toml file that you configured in [the last assignment](../ethprivate/index.html) ([md](../ethprivate/index.md)).
 
+**Remix TXNs pending:** If your transactions (and contract deployments) seem to stay stuck in 'pending', check if your time is synced with [time.gov](https://time.gov), as clock skew will cause geth synchronization issues.
+
+
 
 ### Part 1: Remix
 
