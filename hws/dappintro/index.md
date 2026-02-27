@@ -5,7 +5,7 @@ dApp Introduction
 
 <!--
 
-    What to provide on the Canvas landing page:
+    What to provide on via blockchain explorer links:
 
     - url to the blockchain explorer
     - deployed course poll contract address
@@ -303,7 +303,7 @@ Read these instructions through before starting them!
 
 ### Part 4: Web Interface
 
-We wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The code of the poll viewing web page uses the web3 Javascript library, which is what allows you to connect to the blockchain from Javascript.  In our case, we use it to connect to a node running geth that is connected to our private course blockchain.  The URL for this web page is on the Canvas landing page -- once there, enter your smart contract's contract address (with the leading `0x`) for your deployed smart contract, and it will display the choices.
+We wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The code of the poll viewing web page uses the web3 Javascript library, which is what allows you to connect to the blockchain from Javascript.  In our case, we use it to connect to a node running geth that is connected to our private course blockchain.  The URL for this web page is linked to from the blockchain explorer (in the section for this semester's links) -- once there, enter your smart contract's contract address (with the leading `0x`) for your deployed smart contract, and it will display the choices.
 
 *You are not expected to understand any of the code on that web page!*  This will be gone over in future assignments, and you will be writing multiple web pages toward the end of the semester to interact with the blockchain.  But not now.
 
@@ -314,9 +314,9 @@ How this all works is beyond the scope of this assignment, but will be something
 
 ### Part 5: Vote!
 
-I have loaded a Poll smart contract onto our private Ethereum blockchain, and you all must vote!  The only information we will tell you is that the contract address for this is on the Canvas landing page, and that it fulfills the [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) interface.  You have to figure out what the options are, and then vote for one.  This one poll cannot be viewed through the poll web page viewer.  *You will need to submit the transaction hash where you voted.*
+I have loaded a Poll smart contract onto our private Ethereum blockchain, and you all must vote!  The only information we will tell you is that the contract address for this is shown on the blockchain explorer (in the section for this semester's links), and that it fulfills the [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) interface.  You have to figure out what the options are, and then vote for one.  This one poll cannot be viewed through the poll web page viewer.  *You will need to submit the transaction hash where you voted.*
 
-In Remix, you can call a different contract *with the same codebase*.  In particular, it has to have the same ABI.  For this, you can (and should) use the IPoll.sol file.  Specifically, you should NOT use Poll.sol, as you do not know if additional functions (such as `unnecessaryFunction()`) are in the deployed contract; only that it implements the functions in IPoll.sol.  On the Canvas landing page is the address of a deployed Poll contract -- copy that address.  
+In Remix, you can call a different contract *with the same codebase*.  In particular, it has to have the same ABI.  For this, you can (and should) use the IPoll.sol file.  Specifically, you should NOT use Poll.sol, as you do not know if additional functions (such as `unnecessaryFunction()`) are in the deployed contract; only that it implements the functions in IPoll.sol.  On the blockchain explorer (the links section) is the address of a deployed Poll contract -- copy that address.  
 
 In Remix, in the Deployment pane, switch to IPoll.  Switch to the compilation pane, and click "Compile IPoll.sol".  Then switch to the deployment pane.  At the bottom, and above the "Deployed contracts" list is a blue "At Address" button -- copy the contract address there, and click that button.  This now gives us a connection to a different IPoll implementing contract.  Use this to vote.  You have to vote on the course poll.  You are welcome to vote (or not) on your fellow classmates polls; how to find their contract addresses is described above.
 
