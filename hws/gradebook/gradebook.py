@@ -26,9 +26,9 @@ eth_coinbase = ""
 # the address.
 contracts = {
 
-	# The Gradebook contract.  The address does not need to be in checksummed
-	# form.  It must have been deployed by the eth_coinbase address, above.
-	'gradebook': '',
+    # The Gradebook contract.  The address does not need to be in checksummed
+    # form.  It must have been deployed by the eth_coinbase address, above.
+    'gradebook': '',
 
 }
 
@@ -37,17 +37,22 @@ contracts = {
 # assignment.
 other = {
 	
-	# What is your (fake) average in the course gradebook?  This should be a
-	# number out of 100 with decimals.
-	'your_fake_avg': None,
+    # What is your (fake) average in the course gradebook?  This should be a
+    # number out of 100 with decimals.
+    'your_fake_avg': None,
 
-	# The maximum number of points on the assignment with index 3 in the
-	# course-wide gradebook; see the assignment write-up for details.
-	'max_points_on_3': None,
+    # The maximum number of points on the assignment with index 3 in the
+    # course-wide gradebook; see the assignment write-up for details.
+    'max_points_on_3': None,
 
-	# Your score on the assignment with index 3 in the course-wide gradebook;
-	# see the assignment write-up for details.
-	'your_score_on_3': None,
+    # Your score on the assignment with index 3 in the course-wide gradebook;
+    # see the assignment write-up for details.
+    'your_score_on_3': None,
+
+    # How useful did you find the Debug.sol library that was provided?  This
+    # is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is
+    # moderately useful, and 5 is very useful.  Integers only, please.
+    'debug_sol_usefulness': None,
 
 }
 
@@ -59,34 +64,34 @@ other = {
 # need to be changed to True (instead of False).
 sanity_checks = {
 	
-	# Did you properly deploy your gradebook contract to the blockchain?
-	'deployed_gradebook': False,
+    # Did you properly deploy your gradebook contract to the blockchain?
+    'deployed_gradebook': False,
 
-	# Can we allow ourselves to be a TA via the `requestTAAccess()` function?
-	# If not, we will be unable to grade any of the assignment, and you'll
-	# receive a 0.
-	'requestTAAccess_works': False,
+    # Can we allow ourselves to be a TA via the `requestTAAccess()` function?
+    # If not, we will be unable to grade any of the assignment, and you'll
+    # receive a 0.
+    'requestTAAccess_works': False,
 
-	# Did you make NO OTHER CALLS to your deployed Gradebook contract (the one
-	# whose address is above)?
-	'made_no_other_calls': False,
+    # Did you make NO OTHER CALLS to your deployed Gradebook contract (the one
+    # whose address is above)?
+    'made_no_other_calls': False,
 
-	# Does your constructor have only one line that states `instructor = msg.sender;`?  
-	# In particular, if you added any other lines for testing, you should
-	# remove those.
-	'constructor_has_one_line': False,
+    # Does your constructor have only one line that states `instructor = msg.sender;`?  
+    # In particular, if you added any other lines for testing, you should
+    # remove those.
+    'constructor_has_one_line': False,
 
-	# Does your `supportsInterface()` function return true for two values?  In
-	# particular, it should be exactly as specified in the homework.
-	'supportsInterface_is_correct': False,
+    # Does your `supportsInterface()` function return true for two values?  In
+    # particular, it should be exactly as specified in the homework.
+    'supportsInterface_is_correct': False,
 
-	# Is your gradebook contract opening line *exactly:*
-	# `contract Gradebook is IGradebook {`?
-	'contract_opening_line_is_correct': False,
+    # Is your gradebook contract opening line *exactly:*
+    # `contract Gradebook is IGradebook {`?
+    'contract_opening_line_is_correct': False,
 
-	# Does your gradebook index assignments starting from 0?  Thus, the first
-	# assignment created will have an index of 0, the second an index of 1, etc.
-	'assignments_index_from_0': False,
+    # Does your gradebook index assignments starting from 0?  Thus, the first
+    # assignment created will have an index of 0, the second an index of 1, etc.
+    'assignments_index_from_0': False,
 	
 }
 
@@ -95,17 +100,17 @@ sanity_checks = {
 # ones with the empty string (instead of None).
 comments = {
 
-	# How long did this assignment take, in hours?  Please format as an
-	# integer or float.
-	'time_taken': None,
+    # How long did this assignment take, in hours?  Please format as an
+    # integer or float.
+    'time_taken': None,
 
-	# Any suggestions for how to improve this assignment?  This part is
-	# completely optional.  If none, then you can have the value here be the
-	# empty string (but not None).
-	'suggestions': None,
+    # Any suggestions for how to improve this assignment?  This part is
+    # completely optional.  If none, then you can have the value here be the
+    # empty string (but not None).
+    'suggestions': None,
 
-	# Any other comments or feedback?  This part is completely optional. If
-	# none, then you can have the value here be the empty string (but not
-	# None).
-	'comments': None,
+    # Any other comments or feedback?  This part is completely optional. If
+    # none, then you can have the value here be the empty string (but not
+    # None).
+    'comments': None,
 }

@@ -37,9 +37,9 @@ eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
 <i><font color="#9A1900"># the address.</font></i>
 contracts <font color="#990000">=</font> <font color="#990000">{</font>
 
-	<i><font color="#9A1900"># The Gradebook contract.  The address does not need to be in checksummed</font></i>
-	<i><font color="#9A1900"># form.  It must have been deployed by the eth_coinbase address, above.</font></i>
-	<font color="#FF0000">'gradebook'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+    <i><font color="#9A1900"># The Gradebook contract.  The address does not need to be in checksummed</font></i>
+    <i><font color="#9A1900"># form.  It must have been deployed by the eth_coinbase address, above.</font></i>
+    <font color="#FF0000">'gradebook'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -48,17 +48,22 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># assignment.</font></i>
 other <font color="#990000">=</font> <font color="#990000">{</font>
 	
-	<i><font color="#9A1900"># What is your (fake) average in the course gradebook?  This should be a</font></i>
-	<i><font color="#9A1900"># number out of 100 with decimals.</font></i>
-	<font color="#FF0000">'your_fake_avg'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <i><font color="#9A1900"># What is your (fake) average in the course gradebook?  This should be a</font></i>
+    <i><font color="#9A1900"># number out of 100 with decimals.</font></i>
+    <font color="#FF0000">'your_fake_avg'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># The maximum number of points on the assignment with index 3 in the</font></i>
-	<i><font color="#9A1900"># course-wide gradebook; see the assignment write-up for details.</font></i>
-	<font color="#FF0000">'max_points_on_3'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <i><font color="#9A1900"># The maximum number of points on the assignment with index 3 in the</font></i>
+    <i><font color="#9A1900"># course-wide gradebook; see the assignment write-up for details.</font></i>
+    <font color="#FF0000">'max_points_on_3'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Your score on the assignment with index 3 in the course-wide gradebook;</font></i>
-	<i><font color="#9A1900"># see the assignment write-up for details.</font></i>
-	<font color="#FF0000">'your_score_on_3'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <i><font color="#9A1900"># Your score on the assignment with index 3 in the course-wide gradebook;</font></i>
+    <i><font color="#9A1900"># see the assignment write-up for details.</font></i>
+    <font color="#FF0000">'your_score_on_3'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+
+    <i><font color="#9A1900"># How useful did you find the Debug.sol library that was provided?  This</font></i>
+    <i><font color="#9A1900"># is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is</font></i>
+    <i><font color="#9A1900"># moderately useful, and 5 is very useful.  Integers only, please.</font></i>
+    <font color="#FF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -70,34 +75,34 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># need to be changed to True (instead of False).</font></i>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
-	<i><font color="#9A1900"># Did you properly deploy your gradebook contract to the blockchain?</font></i>
-	<font color="#FF0000">'deployed_gradebook'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+    <i><font color="#9A1900"># Did you properly deploy your gradebook contract to the blockchain?</font></i>
+    <font color="#FF0000">'deployed_gradebook'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Can we allow ourselves to be a TA via the `requestTAAccess()` function?</font></i>
-	<i><font color="#9A1900"># If not, we will be unable to grade any of the assignment, and you'll</font></i>
-	<i><font color="#9A1900"># receive a 0.</font></i>
-	<font color="#FF0000">'requestTAAccess_works'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+    <i><font color="#9A1900"># Can we allow ourselves to be a TA via the `requestTAAccess()` function?</font></i>
+    <i><font color="#9A1900"># If not, we will be unable to grade any of the assignment, and you'll</font></i>
+    <i><font color="#9A1900"># receive a 0.</font></i>
+    <font color="#FF0000">'requestTAAccess_works'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Did you make NO OTHER CALLS to your deployed Gradebook contract (the one</font></i>
-	<i><font color="#9A1900"># whose address is above)?</font></i>
-	<font color="#FF0000">'made_no_other_calls'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+    <i><font color="#9A1900"># Did you make NO OTHER CALLS to your deployed Gradebook contract (the one</font></i>
+    <i><font color="#9A1900"># whose address is above)?</font></i>
+    <font color="#FF0000">'made_no_other_calls'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Does your constructor have only one line that states `instructor = msg.sender;`?  </font></i>
-	<i><font color="#9A1900"># In particular, if you added any other lines for testing, you should</font></i>
-	<i><font color="#9A1900"># remove those.</font></i>
-	<font color="#FF0000">'constructor_has_one_line'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+    <i><font color="#9A1900"># Does your constructor have only one line that states `instructor = msg.sender;`?  </font></i>
+    <i><font color="#9A1900"># In particular, if you added any other lines for testing, you should</font></i>
+    <i><font color="#9A1900"># remove those.</font></i>
+    <font color="#FF0000">'constructor_has_one_line'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Does your `supportsInterface()` function return true for two values?  In</font></i>
-	<i><font color="#9A1900"># particular, it should be exactly as specified in the homework.</font></i>
-	<font color="#FF0000">'supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+    <i><font color="#9A1900"># Does your `supportsInterface()` function return true for two values?  In</font></i>
+    <i><font color="#9A1900"># particular, it should be exactly as specified in the homework.</font></i>
+    <font color="#FF0000">'supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Is your gradebook contract opening line *exactly:*</font></i>
-	<i><font color="#9A1900"># `contract Gradebook is IGradebook {`?</font></i>
-	<font color="#FF0000">'contract_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+    <i><font color="#9A1900"># Is your gradebook contract opening line *exactly:*</font></i>
+    <i><font color="#9A1900"># `contract Gradebook is IGradebook {`?</font></i>
+    <font color="#FF0000">'contract_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Does your gradebook index assignments starting from 0?  Thus, the first</font></i>
-	<i><font color="#9A1900"># assignment created will have an index of 0, the second an index of 1, etc.</font></i>
-	<font color="#FF0000">'assignments_index_from_0'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+    <i><font color="#9A1900"># Does your gradebook index assignments starting from 0?  Thus, the first</font></i>
+    <i><font color="#9A1900"># assignment created will have an index of 0, the second an index of 1, etc.</font></i>
+    <font color="#FF0000">'assignments_index_from_0'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 	
 <font color="#990000">}</font>
 
@@ -106,19 +111,19 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 <i><font color="#9A1900"># ones with the empty string (instead of None).</font></i>
 comments <font color="#990000">=</font> <font color="#990000">{</font>
 
-	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
-	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
+    <i><font color="#9A1900"># integer or float.</font></i>
+    <font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
-	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
-	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
+    <i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
+    <i><font color="#9A1900"># empty string (but not None).</font></i>
+    <font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
-	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
-	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
-	<i><font color="#9A1900"># None).</font></i>
-	<font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
+    <i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
+    <i><font color="#9A1900"># None).</font></i>
+    <font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre>
 </body>

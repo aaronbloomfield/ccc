@@ -43,7 +43,9 @@ In addition to your source code, you will submit an edited version of [gradebook
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report.
+Any changes to this page will be put here for easy reference.  <!-- Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report. -->
+
+- Thu, Mar 12: added a `debug_sol_usefulness` key in the `other` array in [gradebook.py](gradebook.py.html); if you downloaded gradebook.py before that, just put that one field in; the comments in the new [gradebook.py](gradebook.py.html) explain the scale used.
 
 
 ### Part 1: IGradebook interface
