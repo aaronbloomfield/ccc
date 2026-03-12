@@ -3,14 +3,22 @@ Ethereum Tokens
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
-<!-- to provide on the Canvas landing page:
+<!-- 
 
-	- the blockchain explorer url
-	- the URLs to upload the NFT images and the TCC logo to
-		- explain that it should then appear in the blockchain explorer
-		- mention that it puts `mst3k_` at the start of each NFT image if they don't have it there
-	- the account to send the 10.0 TCC and the NFT to
-	- the account of the course-wide NFT manager
+what to provide via the explorer's links section:
+
+- the blockchain explorer url
+- the URLs to upload the NFT images and the TCC logo to
+	- explain that it should then appear in the blockchain explorer
+	- mention that it puts `mst3k_` at the start of each NFT image if they don't have it there
+- the account to send the 10.0 TCC and the NFT to
+- the account of the course-wide NFT manager
+
+Example:
+
+- For [HW P6: Tokens](https://aaronbloomfield.github.io/ccc/hws/tokens/index.html): you can see all the Token Cryptocurrencies [here](index.php?tccs) (that last link is also on the navbar at the top)
+	- The account to send the NFT and TCC to is [here](index.php?account=0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59); viewing [that accounts page on the blockchain explorer](https://andromeda.cs.virginia.edu/explorer/index.php?account=0xD0958CECfa9Ee438C6c6B6E7A2295866065c4C59) will show you how much of your TCC that account holds.
+	- The course-wide NFTManager is at `0x0631669f07bD5B0c097F0FD9394aa2102Fe78145` ([link](index.php?account=0x0631669f07bD5B0c097F0FD9394aa2102Fe78145); that page will show you the NFTs minted by that contract.  Note that NFTs owned are not yet being shown in the explorer, but NFTs minted are.
 
 -->
 

@@ -1252,14 +1252,17 @@ OP_EQUAL
 
   <section data-markdown data-separator="^\n\n\n" id='segwit'><textarea>
 ## Solution: Witness
+
 - Defined in [BIP 141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki) from 2015
- - A *witness* is a new field in all transactions
-- A normal transaction (P2SH or P2PKH) contains the (hash of the) unlocking script (for P2SH) or public key (for P2PKH)
-  - in the pubKey script
-- This is now removed from the pubKey script, and put into a separate section
-  - Which is called the *witness*
+- A _witness_ is a new field in all transactions
+- A normal transaction (P2SH or P2PKH) contains the hash of the unlocking script (for P2SH) or hash of the public key (for P2PKH)
+  - These hashes are in the pubKey (output) script
+- The sigscript (input script) provides that information when redeeming the UTXO
+- This data is now removed from the sigscript, and put into a separate section called the _witness_
 - This separate section is separate, or segregated, from the rest of the transaction
   - Called the *segregated witness* or *segwit*
+
+
     </textarea></section>
 
   <section data-markdown data-separator="^\n\n\n"><textarea>

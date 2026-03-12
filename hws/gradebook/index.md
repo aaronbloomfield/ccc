@@ -5,11 +5,14 @@ Gradebook Smart Contract
 
 <!--
 
-    What to provide on the Canvas landing page:
+What to provide on the blockchain explorer links section:
 
-    - url to the blockchain explorer
-    - the deployed course gradebook contract address
-    - a note where to find the gradebook abi
+- the deployed course gradebook contract address
+- a note where to find the gradebook abi
+
+Example:
+
+- [HW P5: Gradebook](https://aaronbloomfield.github.io/ccc/hws/gradebook/index.html): the course-wide gradebook contract is at `0x3E48315fb23dEC9a01B4E219b162ce9177a66f54` ([link](index.php?account=0x3E48315fb23dEC9a01B4E219b162ce9177a66f54)).  The ABI for the IGradebook interface is listed in the homework, at the bottom of the 'IGradebook interface' section
 
 -->
 
@@ -175,7 +178,7 @@ On the deployed contract, you do not need to designate anybody as a TA -- we are
 
 ### Part 3: Your average
 
-I've deployed a gradebook with your (fake) grades.  The address for that smart contract is on the Canvas landing page.  You will need to find out your overall average as well as a few other items of information.  Your scores are kept by your UVA userid.  These scores are fake, and were randomly generated, so don't feel bad if your score(s) are low.
+I've deployed a gradebook with your (fake) grades.  The address for that smart contract is on the blockchain explorer (in the section for this semester's links).  You will need to find out your overall average as well as a few other items of information.  Your scores are kept by your UVA userid.  These scores are fake, and were randomly generated, so don't feel bad if your score(s) are low.
 
 There are two ways you can access the gradebook on the blockchain.  One is through Remix, like was done in the [dApp introduction assignment](../dappintro/index.html) ([md](../dappintro/index.md)) -- you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the 'At Address' text box in the deployment window.  The other way is through geth, as in the [live coding example in class](../../slides/solidity.html#/debtor) -- the geth commands start about 8 slides down in that slide column.  For this you will also need the ABI.  You can compile the IGradebook.sol interface in Remix, and then copy the ABI -- after you compile it, the copy ABI link is at the very bottom of the compilation pane.  Note that you may have to reformat that ABI a bit -- what you copy is on many lines, and you may have to reformat it to one line.
 
@@ -183,13 +186,13 @@ The steps to access the gradebook via Remix are:
 
 - In Remix, compile the IGradebook.sol file (yes, the interface file)
 - Make sure you are connected to the course blockchain via the "External Http Provider" deployment environment in Remix
-- In the Deployment pane in Remix, enter the address for the contract (on the Canvas landing page) into the text box next to the ‘At Address’ button, and click that button
+- In the Deployment pane in Remix, enter the address for the contract (on the blockchain explorer's links section) into the text box next to the ‘At Address’ button, and click that button
 - You should be able to interact with the contract this way
 
 The steps to access the gradebook via a geth terminal are (adapted from [here](../../solidity.html#/geth)):
 
-- Enter `var addr = "0xffffffffffffffffffffffffffffffffffffffff";`, but with the *real* contract address on the Canvas landing page
-- Enter `var abi = [...];`, but with the *real* ABI of IGradebook from the Canvas landing page.  Do not put this in quotes, and do not put this in extra square brackets!
+- Enter `var addr = "0xffffffffffffffffffffffffffffffffffffffff";`, but with the *real* contract address from the blockchain explorer's links section
+- Enter `var abi = [...];`, but with the *real* ABI of IGradebook from the blockchain explorer's links section.  Do not put this in quotes, and do not put this in extra square brackets!
 - Enter `var interface = eth.contract(abi);`
 - Enter `var contract = interface.at(addr);`
 - You can call a `view` or `pure` function via: `contract.function.call()`; parameters, if any, go in the parenthesis of `call()`

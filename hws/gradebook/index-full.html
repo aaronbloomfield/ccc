@@ -58,11 +58,14 @@
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>) | <a href="index.html">view tabbed version</a></p>
 <!--
 
-    What to provide on the Canvas landing page:
+What to provide on the blockchain explorer links section:
 
-    - url to the blockchain explorer
-    - the deployed course gradebook contract address
-    - a note where to find the gradebook abi
+- the deployed course gradebook contract address
+- a note where to find the gradebook abi
+
+Example:
+
+- [HW P5: Gradebook](https://aaronbloomfield.github.io/ccc/hws/gradebook/index.html): the course-wide gradebook contract is at `0x3E48315fb23dEC9a01B4E219b162ce9177a66f54` ([link](index.php?account=0x3E48315fb23dEC9a01B4E219b162ce9177a66f54)).  The ABI for the IGradebook interface is listed in the homework, at the bottom of the 'IGradebook interface' section
 
 -->
 <h3 id="overview">Overview</h3>
@@ -184,19 +187,19 @@ addGrade(&quot;mst3k&quot;,1,10);</code></pre></li>
 <p>Once done, you will need to deploy your CoruseGradebook smart contract to our private Ethereum blockchain. Save the contract address, as you will need to submit that, below. It’s okay if you deploy it multiple times (for testing, debugging, errors, etc.). Just submit the address of the last one you deployed.</p>
 <p>On the deployed contract, you do not need to designate anybody as a TA – we are going to make ourselves a TA in your gradebook via the <code>requestTAAccess()</code> function, so make sure that works properly.</p>
 <h3 id="part-3-your-average">Part 3: Your average</h3>
-<p>I’ve deployed a gradebook with your (fake) grades. The address for that smart contract is on the Canvas landing page. You will need to find out your overall average as well as a few other items of information. Your scores are kept by your UVA userid. These scores are fake, and were randomly generated, so don’t feel bad if your score(s) are low.</p>
+<p>I’ve deployed a gradebook with your (fake) grades. The address for that smart contract is on the blockchain explorer (in the section for this semester’s links). You will need to find out your overall average as well as a few other items of information. Your scores are kept by your UVA userid. These scores are fake, and were randomly generated, so don’t feel bad if your score(s) are low.</p>
 <p>There are two ways you can access the gradebook on the blockchain. One is through Remix, like was done in the <a href="../dappintro/index.html">dApp introduction assignment</a> (<a href="../dappintro/index.md">md</a>) – you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the ‘At Address’ text box in the deployment window. The other way is through geth, as in the <a href="../../slides/solidity.html#/debtor">live coding example in class</a> – the geth commands start about 8 slides down in that slide column. For this you will also need the ABI. You can compile the IGradebook.sol interface in Remix, and then copy the ABI – after you compile it, the copy ABI link is at the very bottom of the compilation pane. Note that you may have to reformat that ABI a bit – what you copy is on many lines, and you may have to reformat it to one line.</p>
 <p>The steps to access the gradebook via Remix are:</p>
 <ul>
 <li>In Remix, compile the IGradebook.sol file (yes, the interface file)</li>
 <li>Make sure you are connected to the course blockchain via the “External Http Provider” deployment environment in Remix</li>
-<li>In the Deployment pane in Remix, enter the address for the contract (on the Canvas landing page) into the text box next to the ‘At Address’ button, and click that button</li>
+<li>In the Deployment pane in Remix, enter the address for the contract (on the blockchain explorer’s links section) into the text box next to the ‘At Address’ button, and click that button</li>
 <li>You should be able to interact with the contract this way</li>
 </ul>
 <p>The steps to access the gradebook via a geth terminal are (adapted from <a href="../../solidity.html#/geth">here</a>):</p>
 <ul>
-<li>Enter <code>var addr = "0xffffffffffffffffffffffffffffffffffffffff";</code>, but with the <em>real</em> contract address on the Canvas landing page</li>
-<li>Enter <code>var abi = [...];</code>, but with the <em>real</em> ABI of IGradebook from the Canvas landing page. Do not put this in quotes, and do not put this in extra square brackets!</li>
+<li>Enter <code>var addr = "0xffffffffffffffffffffffffffffffffffffffff";</code>, but with the <em>real</em> contract address from the blockchain explorer’s links section</li>
+<li>Enter <code>var abi = [...];</code>, but with the <em>real</em> ABI of IGradebook from the blockchain explorer’s links section. Do not put this in quotes, and do not put this in extra square brackets!</li>
 <li>Enter <code>var interface = eth.contract(abi);</code></li>
 <li>Enter <code>var contract = interface.at(addr);</code></li>
 <li>You can call a <code>view</code> or <code>pure</code> function via: <code>contract.function.call()</code>; parameters, if any, go in the parenthesis of <code>call()</code></li>

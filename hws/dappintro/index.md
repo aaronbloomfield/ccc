@@ -5,11 +5,14 @@ dApp Introduction
 
 <!--
 
-    What to provide on via blockchain explorer links:
+What to provide on via blockchain explorer links:
 
-    - url to the blockchain explorer
-    - deployed course poll contract address
-    - url to poll.php
+- deployed course poll contract address
+- url to poll.php
+
+Example:
+
+- [HW S5: (dApp intro)](https://aaronbloomfield.github.io/ccc/hws/dappintro/index.html): the Poll page is at [poll.php](poll.php) the course-wide Poll contract is at `0x8f8a7d8CCD4aEb500c1708A0f22231e3d86Fea59`, found [here](index.php?account=0x8f8a7d8CCD4aEb500c1708A0f22231e3d86Fea59){target='_blank'}
 
 -->
 

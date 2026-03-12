@@ -5,15 +5,19 @@ Connecting to the Private Ethereum Blockchain
 
 <!--
 
-    What to provide on the Canvas assignment page:
+What to provide in the Canvas' assignment:
 
-    - part 2, step 2: link to genesis.json file
-    - part 2, step 3: hash of genesis block (in the format used below)
-    - part 2, step 4: link to geth-config-???.toml file
-    - part 2, step 5: course chainid / networkid
-    - part 4: faucet URL
-    - part 6: course account to send eth to
-    - part 8: blockchain explorer URL
+- part 2, step 2: link to genesis.json file
+- part 2, step 3: hash of genesis block (in the format used below)
+- part 2, step 4: link to geth-config-???.toml file
+- part 2, step 5: course chainid / networkid
+- part 4: faucet URL
+- part 6: course account to send eth to
+- part 8: blockchain explorer URL
+
+And in the blockchain explorer's links section:
+
+- [HW S4 (ethprivate)](https://aaronbloomfield.github.io/ccc/hws/ethprivate/index.html): The (fake) ether faucet is at [faucet.php](faucet.php){target='_blank'}
 
 -->
 
