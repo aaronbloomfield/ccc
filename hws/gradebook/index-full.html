@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Gradebook Smart Contract</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -99,13 +96,13 @@ pragma solidity ^0.8.24;
 
 interface IGradebook {
 
-    event assignmentCreationEvent (uint indexed _id);
+    event assignmentCreationEvent (uint indexed id, string indexed name, uint indexed max_score);
 
-    event gradeEntryEvent (uint indexed _id);
+    event gradeEntryEvent (uint indexed id, string indexed name, uint indexed score);
 
-    // The following six methods are done for you automatically -- as long as
-    // you make the appropriate variable public, then Solidity will create
-    // the getter function for you
+
+    // The following six methods are done for you automatically -- as long as you make the
+    // appropriate variable public, then Solidity will create the getter function for you
     
     function tas(address ta) external returns (bool);
 
@@ -119,6 +116,7 @@ interface IGradebook {
 
     function instructor() external returns (address);
 
+
     // The following five functions are ones you must implement
 
     function designateTA(address ta) external;
@@ -130,6 +128,7 @@ interface IGradebook {
     function getAverage(string memory student) external view returns (uint);
 
     function requestTAAccess() external;
+
 
     // The implementation for the following is provided in the HW description
 
@@ -143,8 +142,8 @@ interface IGradebook {
 }</code></pre>
 <h4 id="igradebook-abi">IGradebook ABI</h4>
 The ABI for <code>IGradebook.sol</code> is as follows, can can be copied by clicking on:
-<script>insertCopyLink('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]');</script>
-<pre><code style='white-space:initial'>[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]
+<script>insertCopyLink('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"score","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]');</script>
+<pre><code style='white-space:initial'>[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"score","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]
 </code></pre>
 <h3 id="implementation-details">Implementation details</h3>
 <ul>
@@ -168,6 +167,21 @@ The ABI for <code>IGradebook.sol</code> is as follows, can can be copied by clic
 <p>Note that Remix may complain if an Ethernet address is not <a href="../../slides/ethereum.html#/checksum">checksummed</a>. Remix will provide, in the error, the checksummed address – you can use that value (cut-and-paste it into your code) instead to silence this warning. You can also use <a href="https://ethsum.netlify.app/">ethsum.netlify.app</a> to checksum an Ethernet address.</p>
 <p>Also note that compilation warnings will appear to Gradescope as a compilation error. Thus, you will have to remove them by the time you submit your assignment.</p>
 <h3 id="part-2-testing-and-deployment">Part 2: Testing and Deployment</h3>
+<h4 id="debugging">Debugging</h4>
+<p>We have provided a <a href="../Debug.sol.html">Debug.sol</a> (<a href="../Debug.sol">src</a>) file to help with your debugging. You can call an event, and the parameter will be visible in the blockchain explorer. Viewing the page for the contract – which will limit the events displayed to only those emitted by that contract – will make it easier to find things.</p>
+<p>Once imported, you can use it as follows:</p>
+<pre><code>import &quot;./Debug.sol&quot;;
+
+...
+
+Debug.debugEventUint(42);
+Debug.debugEventInt(-42);
+string memory s = string.concat(&quot;hello&quot;,&quot; &quot;,&quot;world&quot;)
+Debug.debugString(s);
+// also:
+// Debug.debugAddress(msg.sender);</code></pre>
+<p>Then, in the explorer, you will see something similar to:</p>
+<p><img src="../../slides/images/solidity-event-debugging.png" style="width:1024px" /></p>
 <h4 id="testing">Testing</h4>
 <p>You will invariably run into issues testing and debugging your code. We have a few tips and tricks.</p>
 <ul>

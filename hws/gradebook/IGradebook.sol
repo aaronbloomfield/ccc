@@ -12,11 +12,11 @@ interface IGradebook {
 
     // This should be emitted when an assignment is created; the parameter is
     // the assignment id.
-    event assignmentCreationEvent (uint indexed _id);
+    event assignmentCreationEvent (uint indexed id, string indexed name, uint indexed max_score);
 
     // This should be emitted when a grade is updated; the parameter is the
     // assignment id.
-    event gradeEntryEvent (uint indexed _id);
+    event gradeEntryEvent (uint indexed id, string indexed name, uint indexed score);
 
     //------------------------------------------------------------
     // The following six methods are done for you automatically -- as long as

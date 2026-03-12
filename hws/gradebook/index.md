@@ -60,13 +60,13 @@ pragma solidity ^0.8.24;
 
 interface IGradebook {
 
-    event assignmentCreationEvent (uint indexed _id);
+    event assignmentCreationEvent (uint indexed id, string indexed name, uint indexed max_score);
 
-    event gradeEntryEvent (uint indexed _id);
+    event gradeEntryEvent (uint indexed id, string indexed name, uint indexed score);
 
-    // The following six methods are done for you automatically -- as long as
-    // you make the appropriate variable public, then Solidity will create
-    // the getter function for you
+
+    // The following six methods are done for you automatically -- as long as you make the
+    // appropriate variable public, then Solidity will create the getter function for you
     
     function tas(address ta) external returns (bool);
 
@@ -80,6 +80,7 @@ interface IGradebook {
 
     function instructor() external returns (address);
 
+
     // The following five functions are ones you must implement
 
     function designateTA(address ta) external;
@@ -91,6 +92,7 @@ interface IGradebook {
     function getAverage(string memory student) external view returns (uint);
 
     function requestTAAccess() external;
+
 
     // The implementation for the following is provided in the HW description
 
@@ -112,9 +114,9 @@ function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
 #### IGradebook ABI
 
 
-The ABI for `IGradebook.sol` is as follows, can can be copied by clicking on: <script>insertCopyLink('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]');</script>
+The ABI for `IGradebook.sol` is as follows, can can be copied by clicking on: <script>insertCopyLink('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"score","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]');</script>
 
-<pre><code style='white-space:initial'>[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_id","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]
+<pre><code style='white-space:initial'>[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"score","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]
 </code></pre>
 
 
@@ -148,6 +150,32 @@ Also note that compilation warnings will appear to Gradescope as a compilation e
 
 
 ### Part 2: Testing and Deployment
+
+#### Debugging
+
+We have provided a [Debug.sol](../Debug.sol.html) ([src](../Debug.sol)) file to help with your debugging.  You can call an event, and the parameter will be visible in the blockchain explorer.  Viewing the page for the contract -- which will limit the events displayed to only those emitted by that contract -- will make it easier to find things.
+
+Once imported, you can use it as follows:
+
+
+```
+import "./Debug.sol";
+
+...
+
+Debug.debugEventUint(42);
+Debug.debugEventInt(-42);
+string memory s = string.concat("hello"," ","world")
+Debug.debugString(s);
+// also:
+// Debug.debugAddress(msg.sender);
+```
+
+Then, in the explorer, you will see something similar to:
+
+![](../../slides/images/solidity-event-debugging.png){style="width:1024px"}
+
+
 
 
 #### Testing

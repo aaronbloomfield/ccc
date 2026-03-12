@@ -23,11 +23,11 @@ http://www.gnu.org/software/src-highlite">
 
     <i><font color="#9A1900">// This should be emitted when an assignment is created; the parameter is</font></i>
     <i><font color="#9A1900">// the assignment id.</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">assignmentCreationEvent</font></b> <font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">assignmentCreationEvent</font></b> <font color="#990000">(</font>uint <font color="#008080">indexed</font> id<font color="#990000">,</font> string <font color="#008080">indexed</font> name<font color="#990000">,</font> uint <font color="#008080">indexed</font> max_score<font color="#990000">);</font>
 
     <i><font color="#9A1900">// This should be emitted when a grade is updated; the parameter is the</font></i>
     <i><font color="#9A1900">// assignment id.</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">gradeEntryEvent</font></b> <font color="#990000">(</font><font color="#008080">uint</font> <font color="#008080">indexed</font> _id<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">gradeEntryEvent</font></b> <font color="#990000">(</font>uint <font color="#008080">indexed</font> id<font color="#990000">,</font> string <font color="#008080">indexed</font> name<font color="#990000">,</font> uint <font color="#008080">indexed</font> score<font color="#990000">);</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// The following six methods are done for you automatically -- as long as</font></i>

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Debug.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+
+<i><font color="#9A1900">/* Debug.sol</font></i>
+<i><font color="#9A1900"> *</font></i>
+<i><font color="#9A1900"> * This library has various functions used for debugging.  By calling the various debug*() </font></i>
+<i><font color="#9A1900"> * functions, an event is fired, and the blockchain explorer will display the parameters </font></i>
+<i><font color="#9A1900"> * for that event.  Thus, one can use it as a stand-in for a print statement.</font></i>
+<i><font color="#9A1900"> */</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
+
+<font color="#008080">library</font> Debug <font color="#FF0000">{</font>
+
+    <i><font color="#9A1900">// These functions will emit the event with the same argument type</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">debugUint</font></b><font color="#990000">(</font><font color="#008080">uint</font> s<font color="#990000">)</font> <b><font color="#0000FF">public</font></b>            <font color="#FF0000">{</font> <font color="#008080">emit</font> <b><font color="#000000">debugEventUint</font></b><font color="#990000">(</font>s<font color="#990000">);</font>    <font color="#FF0000">}</font>
+    <font color="#008080">function</font> <b><font color="#000000">debugInt</font></b><font color="#990000">(</font><font color="#009900">int</font> s<font color="#990000">)</font> <b><font color="#0000FF">public</font></b>              <font color="#FF0000">{</font> <font color="#008080">emit</font> <b><font color="#000000">debugEventInt</font></b><font color="#990000">(</font>s<font color="#990000">);</font>     <font color="#FF0000">}</font>
+    <font color="#008080">function</font> <b><font color="#000000">debugAddress</font></b><font color="#990000">(</font><font color="#008080">address</font> s<font color="#990000">)</font> <b><font color="#0000FF">public</font></b>      <font color="#FF0000">{</font> <font color="#008080">emit</font> <b><font color="#000000">debugEventAddress</font></b><font color="#990000">(</font>s<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <font color="#008080">function</font> <b><font color="#000000">debugBytes32</font></b><font color="#990000">(</font><font color="#008080">bytes32</font> s<font color="#990000">)</font> <b><font color="#0000FF">public</font></b>      <font color="#FF0000">{</font> <font color="#008080">emit</font> <b><font color="#000000">debugEventBytes32</font></b><font color="#990000">(</font>s<font color="#990000">);</font> <font color="#FF0000">}</font>
+    <font color="#008080">function</font> <b><font color="#000000">debugString</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> s<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#FF0000">{</font> <font color="#008080">emit</font> <b><font color="#000000">debugEventString</font></b><font color="#990000">(</font><b><font color="#000000">bytesToBytes32</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>s<font color="#990000">)));</font> <font color="#FF0000">}</font>
+
+
+    <i><font color="#9A1900">// These are the events that are fired from the above debug functions</font></i>
+    <font color="#008080">event</font> <b><font color="#000000">debugEventString</font></b><font color="#990000">(</font>bytes32 <font color="#008080">indexed</font> s<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">debugEventBytes32</font></b><font color="#990000">(</font>bytes32 <font color="#008080">indexed</font> b<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">debugEventUint</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> u<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">debugEventInt</font></b><font color="#990000">(</font><font color="#009900">int</font> <font color="#008080">indexed</font> i<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">debugEventAddress</font></b><font color="#990000">(</font>address <font color="#008080">indexed</font> a<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// Internal utility function to convert an array of bytes1 into a bytes32 value</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">arrayToBytes32</font></b><font color="#990000">(</font>bytes1<font color="#990000">[</font><font color="#993399">32</font><font color="#990000">]</font> <font color="#008080">memory</font> arr<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes32</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">32</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+            result <font color="#990000">|=</font> <b><font color="#000000">bytes32</font></b><font color="#990000">(</font>arr<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">&gt;&gt;</font> <font color="#990000">(</font>i <font color="#990000">*</font> <font color="#993399">8</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">// Internal utility function to convert a variable-sized bytes into bytes32; only the first 32 characters </font></i>
+    <i><font color="#9A1900">// are converted, and it is right-padded with 0 bytes if the parameter is less than 32 bytes in size</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">bytesToBytes32</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> data<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes32</font> result<font color="#990000">)</font> <font color="#FF0000">{</font>
+        bytes1<font color="#990000">[</font><font color="#993399">32</font><font color="#990000">]</font> <font color="#008080">memory</font> a<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font> <font color="#008080">uint</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> data<font color="#990000">.</font>length<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font>
+            a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> data<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font> <font color="#008080">uint</font> i <font color="#990000">=</font> data<font color="#990000">.</font>length<font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">32</font><font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font>
+            a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">arrayToBytes32</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>
