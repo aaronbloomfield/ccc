@@ -81,7 +81,7 @@ contract Debts <font color="#008080">is</font> IDebts <font color="#FF0000">{</f
         <i><font color="#9A1900">// increment the number of aliases so far</font></i>
         num_entries<font color="#990000">++;</font>
         <i><font color="#9A1900">// emit the event</font></i>
-        <font color="#008080">emit</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">();</font>
+        <font color="#008080">emit</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>_name<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
 
@@ -104,7 +104,7 @@ contract Debts <font color="#008080">is</font> IDebts <font color="#FF0000">{</f
         entries<font color="#990000">[</font>from<font color="#990000">].</font>balance <font color="#990000">+=</font> amount<font color="#990000">;</font>
         entries<font color="#990000">[</font>to<font color="#990000">].</font>balance <font color="#990000">-=</font> amount<font color="#990000">;</font>
         <i><font color="#9A1900">// emit the event</font></i>
-        <font color="#008080">emit</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">();</font>
+        <font color="#008080">emit</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>amount<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
 

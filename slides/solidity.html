@@ -1852,7 +1852,7 @@ contract Poll is IPoll {
 <h2>Start of in-class activity</h2>
 <ul>
 <li>The slides below are for the in-class activity</li>
-<li>The column to the right is not</li>
+<li>The next column of slides (to the right) is not</li>
 </ul>
 </section>
 <section id="deployment" class="slide level2">
@@ -1864,7 +1864,7 @@ contract Poll is IPoll {
 <li>But if we wanted to deploy it ourselves, you could do so from Remix by following the same steps as in the <a href="../hws/dappintro/index.html">dApp Introduction</a> assignment</li>
 </ul></li>
 <li>I’ve added an alias for me, but not for any of you</li>
-<li>On the Canvas landing page is the relevant contract address (and other information)</li>
+<li>On the blockchain explorer is the relevant contract address (and other information)</li>
 </ul>
 </section>
 <section id="blockchain-explorer" class="slide level2">
@@ -1916,7 +1916,7 @@ contract Poll is IPoll {
 <section id="relevant-information" class="slide level2">
 <h2>Relevant information</h2>
 <ul>
-<li>On the Canvas landing page, at the bottom, are a few pieces of information we will need:
+<li>On the blockchain explorer, at the top, are a few pieces of information we will need:
 <ul>
 <li>The Debts smart contract address</li>
 <li>A <a href="code/IDebts.sol.abi.txt">link to the ABI for the IDebts.sol interface</a> – you will need to copy that shortly
@@ -2161,6 +2161,96 @@ require (to_address != address(0),
 </ul></li>
 <li>Note that a subtraction on a uint that causes a negative number will revert the call</li>
 </ul>
+</section>
+<section id="new-debugging-code" class="slide level2">
+<h2>New debugging code</h2>
+<p>Consider the Debug.sol library:</p>
+<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+
+/* Debug.sol
+ *
+ * This library has various functions used for debugging.  
+ * By calling the various debug*() functions, an event is 
+ * fired, and the blockchain explorer will display the 
+ * parameters for that event.  Thus, one can use it as a 
+ * stand-in for a print statement.
+ */
+
+pragma solidity ^0.8.33;
+
+library Debug {
+
+    // These functions will emit the event with the same 
+    // argument type
+    function debugUint(uint s) public {
+      emit debugEventUint(s);
+    }
+
+    function debugInt(int s) public {
+      emit debugEventInt(s);
+    }
+
+    function debugAddress(address s) public {
+      emit debugEventAddress(s);
+    }
+
+    function debugBytes32(bytes32 s) public {
+      emit debugEventBytes32(s);
+    }
+
+    function debugString(string memory s) public {
+      emit debugEventString(bytesToBytes32(bytes(s)));
+    }
+
+
+    // These are the events that are fired from the above debug 
+    // functions
+    event debugEventString(bytes32 indexed s);
+    event debugEventBytes32(bytes32 indexed b);
+    event debugEventUint(uint indexed u);
+    event debugEventInt(int indexed i);
+    event debugEventAddress(address indexed a);
+
+    // Internal utility function to convert an array of bytes1 
+    // into a bytes32 value
+    function arrayToBytes32(bytes1[32] memory arr) internal pure 
+                                        returns (bytes32 result) {
+        for (uint i = 0; i &lt; 32; i++)
+            result |= bytes32(arr[i]) &gt;&gt; (i * 8);
+    }
+
+    // Internal utility function to convert a variable-sized bytes 
+    // into bytes32; only the first 32 characters are converted, 
+    // and it is right-padded with 0 bytes if the parameter is less 
+    // than 32 bytes in size
+    function bytesToBytes32(bytes memory data) internal pure 
+                                    returns (bytes32 result) {
+        bytes1[32] memory a;
+        for ( uint i = 0; i &lt; data.length; i++ )
+            a[i] = data[i];
+        for ( uint i = data.length; i &lt; 32; i++ )
+            a[i] = 0;
+        return arrayToBytes32(a);
+    }
+}
+
+</code></pre>
+</section>
+<section id="debug.sol-usage" class="slide level2">
+<h2>Debug.sol usage</h2>
+<pre><code>import "./Debug.sol";
+
+...
+
+Debug.debugEventUint(42);
+Debug.debugEventInt(-42);
+string memory s = string.concat("hello"," ","world")
+Debug.debugString(s);
+// also:
+// Debug.debugAddress(msg.sender);</code></pre>
+<p>Then, in the explorer:</p>
+<p><img data-src="images/solidity-event-debugging.png"></p>
+<p>This is <em>new</em>, so be patient if it is a bit buggy at first…</p>
 <div class="quarto-auto-generated-content">
 <p><img src="../slides/images/quarto.webp" class="slide-logo"></p>
 <div class="footer footer-default">

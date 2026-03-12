@@ -28,10 +28,10 @@ http://www.gnu.org/software/src-highlite">
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">// allow notification when a debt is entered</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">();</font>
+    <font color="#008080">event</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">(</font><font color="#008080">string</font> towho<font color="#990000">,</font> <font color="#009900">int</font> amount<font color="#990000">);</font>
 
     <i><font color="#9A1900">// allow notification when an alias is entered</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">();</font>
+    <font color="#008080">event</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">(</font><font color="#008080">string</font> thealias<font color="#990000">,</font> <font color="#008080">string</font> name<font color="#990000">);</font>
 
 
     <i><font color="#9A1900">// holds all the alias entry structs from above</font></i>
@@ -75,7 +75,7 @@ http://www.gnu.org/software/src-highlite">
         <i><font color="#9A1900">// increment the number of aliases so far</font></i>
         num_entries<font color="#990000">++;</font>
         <i><font color="#9A1900">// emit the event</font></i>
-        <font color="#008080">emit</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">();</font>
+        <font color="#008080">emit</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>_name<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
 
@@ -98,7 +98,7 @@ http://www.gnu.org/software/src-highlite">
         entries<font color="#990000">[</font>from<font color="#990000">].</font>balance <font color="#990000">+=</font> amount<font color="#990000">;</font>
         entries<font color="#990000">[</font>to<font color="#990000">].</font>balance <font color="#990000">-=</font> amount<font color="#990000">;</font>
         <i><font color="#9A1900">// emit the event</font></i>
-        <font color="#008080">emit</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">();</font>
+        <font color="#008080">emit</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>amount<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 
 <font color="#FF0000">}</font></tt></pre>

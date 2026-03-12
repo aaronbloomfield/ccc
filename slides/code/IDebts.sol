@@ -17,10 +17,10 @@ interface IDebts {
 	}
 
 	// allow notification when a debt is entered
-	event paidEvent();
+	event paidEvent(string towho, int amount);
 
 	// allow notification when an alias is entered
-	event aliasAddedEvent();
+	event aliasAddedEvent(string thealias, string name);
 
 
 	// holds all the alias entry structs from above; as we are going to call

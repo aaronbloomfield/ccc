@@ -17,10 +17,10 @@ contract Debts {
 	}
 
 	// allow notification when a debt is entered
-	event paidEvent();
+	event paidEvent(string towho, int amount);
 
 	// allow notification when an alias is entered
-	event aliasAddedEvent();
+	event aliasAddedEvent(string thealias, string name);
 
 
 	// holds all the alias entry structs from above
@@ -64,7 +64,7 @@ contract Debts {
 		// increment the number of aliases so far
 		num_entries++;
 		// emit the event
-		emit aliasAddedEvent();
+		emit aliasAddedEvent(_alias,_name);
 	}
 
 
@@ -87,7 +87,7 @@ contract Debts {
 		entries[from].balance += amount;
 		entries[to].balance -= amount;
 		// emit the event
-		emit paidEvent();
+		emit paidEvent(_alias,amount);
 	}
 
 }
