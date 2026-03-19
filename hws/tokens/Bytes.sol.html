@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="GNU source-highlight 3.1.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite">
+<title>Bytes.sol</title>
+</head>
+<body bgcolor="white">
+<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.6.0) (utils/Bytes.sol)</font></i>
+
+<font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">24</font><font color="#990000">;</font>
+
+import <font color="#FF0000">{</font>Math<font color="#FF0000">}</font> from <font color="#FF0000">"./math/Math.sol"</font><font color="#990000">;</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Bytes operations.</font></i>
+<i><font color="#9A1900"> */</font></i>
+<font color="#008080">library</font> Bytes <font color="#FF0000">{</font>
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Forward search for `s` in `buffer`</font></i>
+<i><font color="#9A1900">     * * If `s` is present in the buffer, returns the index of the first instance</font></i>
+<i><font color="#9A1900">     * * If `s` is not present in the buffer, returns type(uint256).max</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: replicates the behavior of </font></i><u><font color="#0000FF">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf</font></u><i><font color="#9A1900">[Javascript's `Array.indexOf`]</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">indexOf</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">bytes1</font> s<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">indexOf</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> s<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Forward search for `s` in `buffer` starting at position `pos`</font></i>
+<i><font color="#9A1900">     * * If `s` is present in the buffer (at or after `pos`), returns the index of the next instance</font></i>
+<i><font color="#9A1900">     * * If `s` is not present in the buffer (at or after `pos`), returns type(uint256).max</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: replicates the behavior of </font></i><u><font color="#0000FF">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf</font></u><i><font color="#9A1900">[Javascript's `Array.indexOf`]</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">indexOf</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">bytes1</font> s<font color="#990000">,</font> <font color="#008080">uint256</font> pos<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#008080">uint256</font> length <font color="#990000">=</font> buffer<font color="#990000">.</font>length<font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> pos<font color="#990000">;</font> i <font color="#990000">&lt;</font> length<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">bytes1</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> i<font color="#990000">))</font> <font color="#990000">==</font> s<font color="#990000">)</font> <font color="#FF0000">{</font>
+                <b><font color="#0000FF">return</font></b> i<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint256<font color="#990000">).</font>max<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Backward search for `s` in `buffer`</font></i>
+<i><font color="#9A1900">     * * If `s` is present in the buffer, returns the index of the last instance</font></i>
+<i><font color="#9A1900">     * * If `s` is not present in the buffer, returns type(uint256).max</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: replicates the behavior of </font></i><u><font color="#0000FF">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf</font></u><i><font color="#9A1900">[Javascript's `Array.lastIndexOf`]</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">lastIndexOf</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">bytes1</font> s<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">lastIndexOf</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> s<font color="#990000">,</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint256<font color="#990000">).</font>max<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Backward search for `s` in `buffer` starting at position `pos`</font></i>
+<i><font color="#9A1900">     * * If `s` is present in the buffer (at or before `pos`), returns the index of the previous instance</font></i>
+<i><font color="#9A1900">     * * If `s` is not present in the buffer (at or before `pos`), returns type(uint256).max</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: replicates the behavior of </font></i><u><font color="#0000FF">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf</font></u><i><font color="#9A1900">[Javascript's `Array.lastIndexOf`]</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">lastIndexOf</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">bytes1</font> s<font color="#990000">,</font> <font color="#008080">uint256</font> pos<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        unchecked <font color="#FF0000">{</font>
+            <font color="#008080">uint256</font> length <font color="#990000">=</font> buffer<font color="#990000">.</font>length<font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>Math<font color="#990000">.</font><b><font color="#000000">saturatingAdd</font></b><font color="#990000">(</font>pos<font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">),</font> length<font color="#990000">);</font> i <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">;</font> <font color="#990000">--</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font><b><font color="#000000">bytes1</font></b><font color="#990000">(</font><b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> i <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">))</font> <font color="#990000">==</font> s<font color="#990000">)</font> <font color="#FF0000">{</font>
+                    <b><font color="#0000FF">return</font></b> i <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint256<font color="#990000">).</font>max<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Copies the content of `buffer`, from `start` (included) to the end of `buffer` into a new bytes object in</font></i>
+<i><font color="#9A1900">     * memory.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: replicates the behavior of </font></i><u><font color="#0000FF">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice</font></u><i><font color="#9A1900">[Javascript's `Array.slice`]</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">slice</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">uint256</font> start<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">slice</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> start<font color="#990000">,</font> buffer<font color="#990000">.</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Copies the content of `buffer`, from `start` (included) to `end` (excluded) into a new bytes object in</font></i>
+<i><font color="#9A1900">     * memory. The `end` argument is truncated to the length of the `buffer`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: replicates the behavior of </font></i><u><font color="#0000FF">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice</font></u><i><font color="#9A1900">[Javascript's `Array.slice`]</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">slice</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">uint256</font> start<font color="#990000">,</font> <font color="#008080">uint256</font> end<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// sanitize</font></i>
+        end <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>end<font color="#990000">,</font> buffer<font color="#990000">.</font>length<font color="#990000">);</font>
+        start <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>start<font color="#990000">,</font> end<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// allocate and copy</font></i>
+        bytes <font color="#008080">memory</font> result <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>end <font color="#990000">-</font> start<font color="#990000">);</font>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#000000">mcopy</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>result<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> start<font color="#990000">),</font> <b><font color="#000000">sub</font></b><font color="#990000">(</font>end<font color="#990000">,</font> start<font color="#990000">))</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves the content of `buffer`, from `start` (included) to the end of `buffer` to the start of that buffer,</font></i>
+<i><font color="#9A1900">     * and shrinks the buffer length accordingly, effectively overriding the content of buffer with buffer[start:].</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function modifies the provided buffer in place. If you need to preserve the original buffer, use {slice} instead</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">splice</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">uint256</font> start<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">splice</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> start<font color="#990000">,</font> buffer<font color="#990000">.</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Moves the content of `buffer`, from `start` (included) to `end` (excluded) to the start of that buffer,</font></i>
+<i><font color="#9A1900">     * and shrinks the buffer length accordingly, effectively overriding the content of buffer with buffer[start:end].</font></i>
+<i><font color="#9A1900">     * The `end` argument is truncated to the length of the `buffer`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function modifies the provided buffer in place. If you need to preserve the original buffer, use {slice} instead</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">splice</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">uint256</font> start<font color="#990000">,</font> <font color="#008080">uint256</font> end<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// sanitize</font></i>
+        end <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>end<font color="#990000">,</font> buffer<font color="#990000">.</font>length<font color="#990000">);</font>
+        start <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>start<font color="#990000">,</font> end<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// move and resize</font></i>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#000000">mcopy</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> start<font color="#990000">),</font> <b><font color="#000000">sub</font></b><font color="#990000">(</font>end<font color="#990000">,</font> start<font color="#990000">))</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <b><font color="#000000">sub</font></b><font color="#990000">(</font>end<font color="#990000">,</font> start<font color="#990000">))</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">return</font></b> buffer<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Replaces bytes in `buffer` starting at `pos` with all bytes from `replacement`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Parameters are clamped to valid ranges (i.e. `pos` is clamped to `[0, buffer.length]`).</font></i>
+<i><font color="#9A1900">     * If `pos &gt;= buffer.length`, no replacement occurs and the buffer is returned unchanged.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function modifies the provided buffer in place.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">replace</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">uint256</font> pos<font color="#990000">,</font> bytes <font color="#008080">memory</font> replacement<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#000000">replace</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> pos<font color="#990000">,</font> replacement<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> replacement<font color="#990000">.</font>length<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Replaces bytes in `buffer` starting at `pos` with bytes from `replacement` starting at `offset`.</font></i>
+<i><font color="#9A1900">     * Copies at most `length` bytes from `replacement` to `buffer`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Parameters are clamped to valid ranges (i.e. `pos` is clamped to `[0, buffer.length]`, `offset` is</font></i>
+<i><font color="#9A1900">     * clamped to `[0, replacement.length]`, and `length` is clamped to `min(length, replacement.length - offset,</font></i>
+<i><font color="#9A1900">     * buffer.length - pos))`. If `pos &gt;= buffer.length` or `offset &gt;= replacement.length`, no replacement occurs</font></i>
+<i><font color="#9A1900">     * and the buffer is returned unchanged.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: This function modifies the provided buffer in place.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">replace</font></b><font color="#990000">(</font>
+        bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font>
+        <font color="#008080">uint256</font> pos<font color="#990000">,</font>
+        bytes <font color="#008080">memory</font> replacement<font color="#990000">,</font>
+        <font color="#008080">uint256</font> offset<font color="#990000">,</font>
+        uint256 length
+    <font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// sanitize</font></i>
+        pos <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>pos<font color="#990000">,</font> buffer<font color="#990000">.</font>length<font color="#990000">);</font>
+        offset <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>offset<font color="#990000">,</font> replacement<font color="#990000">.</font>length<font color="#990000">);</font>
+        length <font color="#990000">=</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>length<font color="#990000">,</font> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font>replacement<font color="#990000">.</font>length <font color="#990000">-</font> offset<font color="#990000">,</font> buffer<font color="#990000">.</font>length <font color="#990000">-</font> pos<font color="#990000">));</font>
+
+        <i><font color="#9A1900">// replace</font></i>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <b><font color="#000000">mcopy</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> pos<font color="#990000">),</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>replacement<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> offset<font color="#990000">),</font> length<font color="#990000">)</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">return</font></b> buffer<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Concatenate an array of bytes into a single bytes object.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * For fixed bytes types, we recommend using the solidity built-in `bytes.concat` or (equivalent)</font></i>
+<i><font color="#9A1900">     * `abi.encodePacked`.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: this could be done in assembly with a single loop that expands starting at the FMP, but that would be</font></i>
+<i><font color="#9A1900">     * significantly less readable. It might be worth benchmarking the savings of the full-assembly approach.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">concat</font></b><font color="#990000">(</font>bytes<font color="#990000">[]</font> <font color="#008080">memory</font> buffers<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <font color="#008080">uint256</font> length <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> buffers<font color="#990000">.</font>length<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            length <font color="#990000">+=</font> buffers<font color="#990000">[</font>i<font color="#990000">].</font>length<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+
+        bytes <font color="#008080">memory</font> result <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">bytes</font></b><font color="#990000">(</font>length<font color="#990000">);</font>
+
+        <font color="#008080">uint256</font> offset <font color="#990000">=</font> <font color="#993399">0x20</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> buffers<font color="#990000">.</font>length<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <font color="#FF0000">{</font>
+            bytes <font color="#008080">memory</font> input <font color="#990000">=</font> buffers<font color="#990000">[</font>i<font color="#990000">];</font>
+            <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+                <b><font color="#000000">mcopy</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>result<font color="#990000">,</font> offset<font color="#990000">),</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>input<font color="#990000">))</font>
+            <font color="#FF0000">}</font>
+            unchecked <font color="#FF0000">{</font>
+                offset <font color="#990000">+=</font> input<font color="#990000">.</font>length<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+
+        <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Split each byte in `input` into two nibbles (4 bits each)</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * Example: hex"01234567" → hex"0001020304050607"</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">toNibbles</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> input<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>bytes <font color="#008080">memory</font> output<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">let</font> length <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>input<font color="#990000">)</font>
+            output <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font><font color="#993399">0x40</font><font color="#990000">)</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font><font color="#993399">0x40</font><font color="#990000">,</font> <b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>output<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <b><font color="#000000">mul</font></b><font color="#990000">(</font>length<font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">)))</font>
+            <b><font color="#000000">mstore</font></b><font color="#990000">(</font>output<font color="#990000">,</font> <b><font color="#000000">mul</font></b><font color="#990000">(</font>length<font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">))</font>
+            <b><font color="#0000FF">for</font></b> <font color="#FF0000">{</font>
+                <font color="#008080">let</font> i <font color="#990000">:=</font> <font color="#993399">0</font>
+            <font color="#FF0000">}</font> <b><font color="#000000">lt</font></b><font color="#990000">(</font>i<font color="#990000">,</font> length<font color="#990000">)</font> <font color="#FF0000">{</font>
+                i <font color="#990000">:=</font> <b><font color="#000000">add</font></b><font color="#990000">(</font>i<font color="#990000">,</font> <font color="#993399">0x10</font><font color="#990000">)</font>
+            <font color="#FF0000">}</font> <font color="#FF0000">{</font>
+                <font color="#008080">let</font> chunk <font color="#990000">:=</font> <b><font color="#000000">shr</font></b><font color="#990000">(</font><font color="#993399">128</font><font color="#990000">,</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>input<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> i<font color="#990000">)))</font>
+                chunk <font color="#990000">:=</font> <b><font color="#000000">and</font></b><font color="#990000">(</font>
+                    <font color="#993399">0x0000000000000000ffffffffffffffff0000000000000000ffffffffffffffff</font><font color="#990000">,</font>
+                    <b><font color="#000000">or</font></b><font color="#990000">(</font><b><font color="#000000">shl</font></b><font color="#990000">(</font><font color="#993399">64</font><font color="#990000">,</font> chunk<font color="#990000">),</font> chunk<font color="#990000">)</font>
+                <font color="#990000">)</font>
+                chunk <font color="#990000">:=</font> <b><font color="#000000">and</font></b><font color="#990000">(</font>
+                    <font color="#993399">0x00000000ffffffff00000000ffffffff00000000ffffffff00000000ffffffff</font><font color="#990000">,</font>
+                    <b><font color="#000000">or</font></b><font color="#990000">(</font><b><font color="#000000">shl</font></b><font color="#990000">(</font><font color="#993399">32</font><font color="#990000">,</font> chunk<font color="#990000">),</font> chunk<font color="#990000">)</font>
+                <font color="#990000">)</font>
+                chunk <font color="#990000">:=</font> <b><font color="#000000">and</font></b><font color="#990000">(</font>
+                    <font color="#993399">0x0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff</font><font color="#990000">,</font>
+                    <b><font color="#000000">or</font></b><font color="#990000">(</font><b><font color="#000000">shl</font></b><font color="#990000">(</font><font color="#993399">16</font><font color="#990000">,</font> chunk<font color="#990000">),</font> chunk<font color="#990000">)</font>
+                <font color="#990000">)</font>
+                chunk <font color="#990000">:=</font> <b><font color="#000000">and</font></b><font color="#990000">(</font>
+                    <font color="#993399">0x00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff</font><font color="#990000">,</font>
+                    <b><font color="#000000">or</font></b><font color="#990000">(</font><b><font color="#000000">shl</font></b><font color="#990000">(</font><font color="#993399">8</font><font color="#990000">,</font> chunk<font color="#990000">),</font> chunk<font color="#990000">)</font>
+                <font color="#990000">)</font>
+                chunk <font color="#990000">:=</font> <b><font color="#000000">and</font></b><font color="#990000">(</font>
+                    <font color="#993399">0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f</font><font color="#990000">,</font>
+                    <b><font color="#000000">or</font></b><font color="#990000">(</font><b><font color="#000000">shl</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">,</font> chunk<font color="#990000">),</font> chunk<font color="#990000">)</font>
+                <font color="#990000">)</font>
+                <b><font color="#000000">mstore</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>output<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <b><font color="#000000">mul</font></b><font color="#990000">(</font>i<font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">)),</font> chunk<font color="#990000">)</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns true if the two byte buffers are equal.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">equal</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> a<font color="#990000">,</font> bytes <font color="#008080">memory</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> a<font color="#990000">.</font>length <font color="#990000">==</font> b<font color="#990000">.</font>length <font color="#990000">&amp;&amp;</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font>a<font color="#990000">)</font> <font color="#990000">==</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reverses the byte order of a bytes32 value, converting between little-endian and big-endian.</font></i>
+<i><font color="#9A1900">     * Inspired by </font></i><u><font color="#0000FF">https://graphics.stanford.edu/~seander/bithacks.html</font></u><i><font color="#9A1900">#ReverseParallel[Reverse Parallel]</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">reverseBytes32</font></b><font color="#990000">(</font><font color="#008080">bytes32</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>bytes32<font color="#990000">)</font> <font color="#FF0000">{</font>
+        value <font color="#990000">=</font> <i><font color="#9A1900">// swap bytes</font></i>
+            <font color="#990000">((</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#993399">0x00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF</font><font color="#990000">)</font> <font color="#990000">|</font>
+            <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">);</font>
+        value <font color="#990000">=</font> <i><font color="#9A1900">// swap 2-byte long pairs</font></i>
+            <font color="#990000">((</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">16</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#993399">0x0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF</font><font color="#990000">)</font> <font color="#990000">|</font>
+            <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF0000FFFF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">16</font><font color="#990000">);</font>
+        value <font color="#990000">=</font> <i><font color="#9A1900">// swap 4-byte long pairs</font></i>
+            <font color="#990000">((</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">32</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#993399">0x00000000FFFFFFFF00000000FFFFFFFF00000000FFFFFFFF00000000FFFFFFFF</font><font color="#990000">)</font> <font color="#990000">|</font>
+            <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x00000000FFFFFFFF00000000FFFFFFFF00000000FFFFFFFF00000000FFFFFFFF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">32</font><font color="#990000">);</font>
+        value <font color="#990000">=</font> <i><font color="#9A1900">// swap 8-byte long pairs</font></i>
+            <font color="#990000">((</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">64</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#993399">0x0000000000000000FFFFFFFFFFFFFFFF0000000000000000FFFFFFFFFFFFFFFF</font><font color="#990000">)</font> <font color="#990000">|</font>
+            <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x0000000000000000FFFFFFFFFFFFFFFF0000000000000000FFFFFFFFFFFFFFFF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">64</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">128</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font>value <font color="#990000">&lt;&lt;</font> <font color="#993399">128</font><font color="#990000">);</font> <i><font color="#9A1900">// swap 16-byte long pairs</font></i>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {reverseBytes32} but optimized for 128-bit values.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">reverseBytes16</font></b><font color="#990000">(</font><font color="#008080">bytes16</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>bytes16<font color="#990000">)</font> <font color="#FF0000">{</font>
+        value <font color="#990000">=</font> <i><font color="#9A1900">// swap bytes</font></i>
+            <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0xFF00FF00FF00FF00FF00FF00FF00FF00</font><font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x00FF00FF00FF00FF00FF00FF00FF00FF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">);</font>
+        value <font color="#990000">=</font> <i><font color="#9A1900">// swap 2-byte long pairs</font></i>
+            <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0xFFFF0000FFFF0000FFFF0000FFFF0000</font><font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">16</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x0000FFFF0000FFFF0000FFFF0000FFFF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">16</font><font color="#990000">);</font>
+        value <font color="#990000">=</font> <i><font color="#9A1900">// swap 4-byte long pairs</font></i>
+            <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0xFFFFFFFF00000000FFFFFFFF00000000</font><font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">32</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x00000000FFFFFFFF00000000FFFFFFFF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">32</font><font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">64</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font>value <font color="#990000">&lt;&lt;</font> <font color="#993399">64</font><font color="#990000">);</font> <i><font color="#9A1900">// swap 8-byte long pairs</font></i>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {reverseBytes32} but optimized for 64-bit values.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">reverseBytes8</font></b><font color="#990000">(</font><font color="#008080">bytes8</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>bytes8<font color="#990000">)</font> <font color="#FF0000">{</font>
+        value <font color="#990000">=</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0xFF00FF00FF00FF00</font><font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x00FF00FF00FF00FF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">);</font> <i><font color="#9A1900">// swap bytes</font></i>
+        value <font color="#990000">=</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0xFFFF0000FFFF0000</font><font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">16</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x0000FFFF0000FFFF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">16</font><font color="#990000">);</font> <i><font color="#9A1900">// swap 2-byte long pairs</font></i>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">32</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font>value <font color="#990000">&lt;&lt;</font> <font color="#993399">32</font><font color="#990000">);</font> <i><font color="#9A1900">// swap 4-byte long pairs</font></i>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {reverseBytes32} but optimized for 32-bit values.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">reverseBytes4</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>bytes4<font color="#990000">)</font> <font color="#FF0000">{</font>
+        value <font color="#990000">=</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0xFF00FF00</font><font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">((</font>value <font color="#990000">&amp;</font> <font color="#993399">0x00FF00FF</font><font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">);</font> <i><font color="#9A1900">// swap bytes</font></i>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">16</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font>value <font color="#990000">&lt;&lt;</font> <font color="#993399">16</font><font color="#990000">);</font> <i><font color="#9A1900">// swap 2-byte long pairs</font></i>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/// </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Same as {reverseBytes32} but optimized for 16-bit values.</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">reverseBytes2</font></b><font color="#990000">(</font><font color="#008080">bytes2</font> value<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>bytes2<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>value <font color="#990000">&gt;&gt;</font> <font color="#993399">8</font><font color="#990000">)</font> <font color="#990000">|</font> <font color="#990000">(</font>value <font color="#990000">&lt;&lt;</font> <font color="#993399">8</font><font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Counts the number of leading zero bits a bytes array. Returns `8 * buffer.length`</font></i>
+<i><font color="#9A1900">     * if the buffer is all zeros.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">clz</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font><font color="#008080">uint256</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> buffer<font color="#990000">.</font>length<font color="#990000">;</font> i <font color="#990000">+=</font> <font color="#993399">0x20</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            <font color="#008080">bytes32</font> chunk <font color="#990000">=</font> <b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> i<font color="#990000">);</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>chunk <font color="#990000">!=</font> <b><font color="#000000">bytes32</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#FF0000">{</font>
+                <b><font color="#0000FF">return</font></b> Math<font color="#990000">.</font><b><font color="#000000">min</font></b><font color="#990000">(</font><font color="#993399">8</font> <font color="#990000">*</font> i <font color="#990000">+</font> Math<font color="#990000">.</font><b><font color="#000000">clz</font></b><font color="#990000">(</font><b><font color="#000000">uint256</font></b><font color="#990000">(</font>chunk<font color="#990000">)),</font> <font color="#993399">8</font> <font color="#990000">*</font> buffer<font color="#990000">.</font>length<font color="#990000">);</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <font color="#993399">8</font> <font color="#990000">*</font> buffer<font color="#990000">.</font>length<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Reads a bytes32 from a bytes array without bounds checking.</font></i>
+<i><font color="#9A1900">     *</font></i>
+<i><font color="#9A1900">     * NOTE: making this function internal would mean it could be used with memory unsafe offset, and marking the</font></i>
+<i><font color="#9A1900">     * assembly block as such would prevent some optimizations.</font></i>
+<i><font color="#9A1900">     */</font></i>
+    <font color="#008080">function</font> <b><font color="#000000">_unsafeReadBytesOffset</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> buffer<font color="#990000">,</font> <font color="#008080">uint256</font> offset<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes32</font> value<font color="#990000">)</font> <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// This is not memory safe in the general case, but all calls to this private function are within bounds.</font></i>
+        <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#FF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+            value <font color="#990000">:=</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>buffer<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> offset<font color="#990000">))</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+</tt></pre>
+</body>
+</html>
