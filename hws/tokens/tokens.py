@@ -101,6 +101,11 @@ other = {
 	# If you did use a generative AI tool, which one did you use?  If you
 	# didn't, you can have this be an empty string.
 	'which_gen_ai_tool_used': None,
+
+    # How useful did you find the Debug.sol library that was provided?  This
+    # is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is
+    # moderately useful, and 5 is very useful.  Integers only, please.
+    'debug_sol_usefulness': None,
 }
 
 

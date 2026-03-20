@@ -35,12 +35,11 @@ sync:
 	$(WGET) -O Panic.sol $(BASE_ZEP_URL)/utils/Panic.sol
 	$(WGET) -O SafeCast.sol $(BASE_ZEP_URL)/utils/math/SafeCast.sol
 	$(WGET) -O ERC721Utils.sol $(BASE_ZEP_URL)/token/ERC721/utils/ERC721Utils.sol
-	$(WGET) -O Bytes.sol $(BASE_ZEP_URL)/utils/Bytes.sol
 	sed -i s_"\.\./\.\./utils/introspection"_._g ERC721.sol IERC721.sol
 	sed -i s_"\./extensions"_._g ERC20.sol ERC721.sol
 	sed -i s_"\./introspection"_._g ERC721.sol IERC721.sol
 	sed -i s_"\.\./../utils"_._g ERC20.sol ERC721.sol
-	sed -i s_"\./math"_._g Strings.sol ERC721Utils.sol Bytes.sol SafeCast.sol SignedMath.sol
+	sed -i s_"\./math"_._g Strings.sol ERC721Utils.sol SafeCast.sol SignedMath.sol
 	sed -i s_"\./utils"_._g ERC721.sol
 	sed -i s_"\.\./"_./_g IERC20Metadata.sol IERC721Metadata.sol
 	sed -i s_"\.\./../interfaces"_._g ERC20.sol ERC721.sol ERC721Utils.sol
