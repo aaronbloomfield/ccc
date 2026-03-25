@@ -9,8 +9,8 @@ tabs:
 	done
 
 all:
-	@for f in `ls -d */` ; do \
-		cd $$f && make && cd ..; \
+	for f in `/bin/ls -F | grep /` ; do \
+		echo "cd $$f && make && cd .."; \
 	done
 
 sync:
