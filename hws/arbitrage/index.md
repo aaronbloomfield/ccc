@@ -114,7 +114,7 @@ Your program will need to compute it's *holdings*, which is the dollar amount of
 
 You will first need to obtain the various information (prices, $x$/$y$/$k$ values at each DEX, etc.).  Then you will need to make a *profitable trade*.  A profitable trade is defined here as a trade where the overall value of *holdings*, in USD, increases.  You must account for gas fees when determining this!  The formula to determine if you will make a profit is whether:
 
-> $ethAmountAfter \ast ethPrice + tcAmountAfter \ast tcPrice - gasFees > ethAmountBefore \ast ethPrice + tcAmountBefore \ast tcPrice$
+> $ethAmountAfter \cdot ethPrice + tcAmountAfter \cdot tcPrice - gasFees > ethAmountBefore \cdot ethPrice + tcAmountBefore \cdot tcPrice$
 
 The *gasFees* is just the amount Ethereum charges for a transaction; DEX fees are not part of that value (the DEX pays out less, to the two amount-after variables will be less as a result, and thus will take DEX fees into account).
 
@@ -128,7 +128,7 @@ We are going to call this a *single trade*.  This is when you make one transacti
 
 <!--
 
-However, it could be that making *two* trades at once is profitable, whereas making one would not -- you must consider this possibility as well.  For example, imagine that ETH is worth $100, TC is worth $1, and you have 10 ETH and no TC, for a holdings of $1000.  We'll assume a constant exchange rate, even though our DEXes use $x \ast y = k$ to compute the exchange rate.  If a DEX 1 has a 1:100 ETH:TC exchange rate, then making that trade would not increase the holdings -- you would get $10 \ast 100 = 1,000$ TC for your 100 ETH, still worth $1000, but but the gas fees would lower that amount slightly, causing a loss of holdings.  However, if another DEX could trade that TC back for *more* ETH -- say it had a 1:50 ETH:TC exchange rate -- then you could trade that 1,000 TC for 20 ETH, making a profit.  Thus, you  must consider making two trades to make a profit as well.  We are going to call this a *double trade*.
+However, it could be that making *two* trades at once is profitable, whereas making one would not -- you must consider this possibility as well.  For example, imagine that ETH is worth $100, TC is worth $1, and you have 10 ETH and no TC, for a holdings of $1000.  We'll assume a constant exchange rate, even though our DEXes use $x \cdot y = k$ to compute the exchange rate.  If a DEX 1 has a 1:100 ETH:TC exchange rate, then making that trade would not increase the holdings -- you would get $10 \cdot 100 = 1,000$ TC for your 100 ETH, still worth $1000, but but the gas fees would lower that amount slightly, causing a loss of holdings.  However, if another DEX could trade that TC back for *more* ETH -- say it had a 1:50 ETH:TC exchange rate -- then you could trade that 1,000 TC for 20 ETH, making a profit.  Thus, you  must consider making two trades to make a profit as well.  We are going to call this a *double trade*.
 
 You can assume the number of DEXes involved, $d$, is relatively small, so you can compute $d^2$ different combinations.  We will not be testing it with more than, say, half a dozen DEXes.
 
@@ -156,15 +156,15 @@ The above values are all fixed for each time the program runs -- either from the
 
 The formulas that we need are (derivations [here](extra.html) ([md](extra.md))):
 
-- Our current holdings, in USD, are: <!-- $h_{before} = q_{e} \ast p_{e} + q_{t} \ast p_{t}$ --> <img src="formulas/formulas/img1.svg" class="formula">
-- If we trade in TC, then our holdings after (in USD) are: <!-- $h_{after} = (q_{e} + f \ast x_{d}-f \ast k_d/(y_{d}+\delta_{t})) \ast p_{e} + (q_{t}-\delta_{t}) \ast p_{t} - g \ast p_e$  --> <img src="formulas/formulas/img3.svg" class="formulabig">
-- If we trade in ETH, then our holdings after (in USD) are: <!-- $h_{after} = (q_{t} + f \ast y_{d}-f \ast k_d/(x_{d}+\delta_{e})) \ast p_{t} + (q_{e}-\delta_{e}) \ast p_{e} - g \ast p_e$  --> <img src="formulas/formulas/img5.svg" class="formulabig">
+- Our current holdings, in USD, are: $h_{before} = q_{e} \cdot p_{e} + q_{t} \cdot p_{t}$
+- If we trade in TC, then our holdings after (in USD) are: $h_{after} = (q_{e} + f \cdot x_{d}-f \cdot k_d/(y_{d}+\delta_{t})) \cdot p_{e} + (q_{t}-\delta_{t}) \cdot p_{t} - g \cdot p_e$
+- If we trade in ETH, then our holdings after (in USD) are: $h_{after} = (q_{t} + f \cdot y_{d}-f \cdot k_d/(x_{d}+\delta_{e})) \cdot p_{t} + (q_{e}-\delta_{e}) \cdot p_{e} - g \cdot p_e$
 
 For a single trade, want to find the maximum profit for the two $h_{after}$ formulas *for each DEX*.  We take the derivative, then set it equal to zero to find the roots (details [here](extra.html) ([md](extra.md)), if you are interested).  The roots will give us the maximum and/or minimum points.  This gives us:
 
-- If we traded in TC, then the maxima or minima is at: <!-- $\delta_{t}=-y_d\pm$ &#8730; $(f \ast k_d \ast p_e/p_t)$ --> <img src="formulas/formulas/img7.svg" class="formulabig">
+- If we traded in TC, then the maxima or minima is at: $\delta_{t}=-y_d\pm$ &#8730; $(f \cdot k_d \cdot p_e/p_t)$
     - Note that $p_e$ is in the numerator in that fraction, and that fraction is different than the fraction in the next formula
-- If we traded in ETH, then the maxima or minima is at: <!-- $\delta_{e}=-x_d\pm$ &#8730; $(f \ast k_d \ast p_t/p_e)$ --> <img src="formulas/formulas/img9.svg" class="formulabig">
+- If we traded in ETH, then the maxima or minima is at: $\delta_{e}=-x_d\pm$ &#8730; $(f \cdot k_d \cdot p_t/p_e)$
     - Note that $p_t$ is in the numerator in that fraction, and that fraction is different than the fraction in the previous formula
 <!-- - Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of -->
 
@@ -306,16 +306,16 @@ Which one you use must be read from the `arbitrage_config.py` file so that we ca
 
 #### Testing setup
 
-[![](img/ddc.webp){style='width:300px;float:right'}](img/ddc.webp){target='_blank'}
+[![](img/ddc.webp){style='width:300px;float:right' alt='all 6 dragon dice image'}](img/ddc.webp){target='_blank'}
 
 To help you in your testing, we have deployed six DEXes that all trade the same coin, but at different rates.  The coin is Dragon Dice Coin (DDC), whose image is shown to the right.  The six different DEXes all trade at a *fixed* exchange rate (but still uses CPAMM!) -- which means that multiple trades will *not* change their $x$, $y$, or $k$ values.  This is not realistic in a real-world situation, of course, but it is useful for testing.  The six different DEXes have the icons of different sided dice, which correspond to their exchange rates:
 
-- [![](img/d4c.webp){style='width:50px;vertical-align:middle'}](img/d4c.webp){target='_blank'} D4 exchanges at a rate of 1:4 (ETH:DDC)
-- [![](img/d6c.webp){style='width:50px;vertical-align:middle'}](img/d6c.webp){target='_blank'} D6 exchanges at a rate of 1:6 (ETH:DDC)
-- [![](img/d8c.webp){style='width:50px;vertical-align:middle'}](img/d8c.webp){target='_blank'} D8 exchanges at a rate of 1:8 (ETH:DDC)
-- [![](img/d10c.webp){style='width:50px;vertical-align:middle'}](img/d10c.webp){target='_blank'} D10 exchanges at a rate of 1:10 (ETH:DDC)
-- [![](img/d12c.webp){style='width:50px;vertical-align:middle'}](img/d12c.webp){target='_blank'} D12 exchanges at a rate of 1:12 (ETH:DDC)
-- [![](img/d20c.webp){style='width:50px;vertical-align:middle'}](img/d20c.webp){target='_blank'} D20 exchanges at a rate of 1:20 (ETH:DDC)
+- [![](img/d4c.webp){style='width:50px;vertical-align:middle' alt='d4 image'}](img/d4c.webp){target='_blank'} D4 exchanges at a rate of 1:4 (ETH:DDC)
+- [![](img/d6c.webp){style='width:50px;vertical-align:middle' alt='d6 image'}](img/d6c.webp){target='_blank'} D6 exchanges at a rate of 1:6 (ETH:DDC)
+- [![](img/d8c.webp){style='width:50px;vertical-align:middle' alt='d8 image'}](img/d8c.webp){target='_blank'} D8 exchanges at a rate of 1:8 (ETH:DDC)
+- [![](img/d10c.webp){style='width:50px;vertical-align:middle' alt='d10 image'}](img/d10c.webp){target='_blank'} D10 exchanges at a rate of 1:10 (ETH:DDC)
+- [![](img/d12c.webp){style='width:50px;vertical-align:middle' alt='d12 image'}](img/d12c.webp){target='_blank'} D12 exchanges at a rate of 1:12 (ETH:DDC)
+- [![](img/d20c.webp){style='width:50px;vertical-align:middle' alt='d20 image'}](img/d20c.webp){target='_blank'} D20 exchanges at a rate of 1:20 (ETH:DDC)
 
 Just to clarify: all six of these DEXes exchange the same DDC coin, but at different exchange rates.  The individual dice images are used for the images of the DEXes; the multi-die image to the right is the image of the coin.  The DEXes all follow the [IDEX.sol](../dex/IDEX.sol.html) ([src](../dex/IDEX.sol)) interface, and the DDC coin follows the [ITokenCC.sol](../tokens/ITokenCC.sol.html) ([src](../tokens/ITokenCC.sol)) interface.
 
