@@ -206,7 +206,7 @@ Next we add up the necessary values.  Recall that elliptic curve addition is com
   - As per the identity, seen [here in the slides](../../slides/encryption.html#/pointo), $O \oplus P=P$, so we get:
 - $1000 \otimes (12,31) = (20,3)$
 
-This mataches what the [EC multiplication website states as the answer](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=1000&px=13&py=31).
+This matches what the [EC multiplication website states as the answer](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=1000&px=13&py=31).
 
 ### Submission
 

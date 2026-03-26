@@ -587,7 +587,7 @@ uint[] public credAmt;
 - You can use `block.hash`, but...
   - That only gets the hash of the *previous* block
   - Since the hash of the current block is not known when the miners are running this code
-- `blockhash(blockNumber)` can go futher back, but not only the [last 256 blocks](https://docs.soliditylang.org/en/v0.4.24/units-and-global-variables.html#block-and-transaction-properties)
+- `blockhash(blockNumber)` can go further back, but not only the [last 256 blocks](https://docs.soliditylang.org/en/v0.4.24/units-and-global-variables.html#block-and-transaction-properties)
 - Which means that one can predict a random function that uses a known seed
 - Perhaps use block.number $\ast$ average block time
 - Blockchains aren't great for randomness!
