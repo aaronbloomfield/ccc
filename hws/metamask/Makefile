@@ -1,7 +1,15 @@
+ifeq ($(shell uname),Darwin)
+        SED=sed -i .todel
+else
+        SED=sed -i
+endif
+
 doc:
 	touch index.md
 	cd ../..; make -s
 	source-highlight -d metamask.py
+	$(SED) s/"<html>"/"<html lang='en'>"/g metamask.py.html
+	/bin/rm -f *.todel
 	../maketabs.py
 	/bin/cp -f ../tokens/IERC165.sol .
 	/bin/cp -f ../auction/IAuctioneer.sol .

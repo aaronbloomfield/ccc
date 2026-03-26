@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html>
+<html lang='en'>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
@@ -33,10 +33,10 @@ contract Debts <font color="#008080">is</font> IDebts <font color="#FF0000">{</f
 <i><font color="#9A1900">    }</font></i>
 
 <i><font color="#9A1900">    // allow notification when a debt is entered</font></i>
-<i><font color="#9A1900">    event paidEvent();</font></i>
+<i><font color="#9A1900">    event paidEvent(string towho, int amount);</font></i>
 
 <i><font color="#9A1900">    // allow notification when an alias is entered</font></i>
-<i><font color="#9A1900">    event aliasAddedEvent();</font></i>
+<i><font color="#9A1900">    event aliasAddedEvent(string thealias, string name);</font></i>
 <i><font color="#9A1900">    */</font></i>
 
     <i><font color="#9A1900">// holds all the alias entry structs from above</font></i>
