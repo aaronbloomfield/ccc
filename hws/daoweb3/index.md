@@ -443,7 +443,7 @@ logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:'latest',address:addr})
 
 You can then examine the `logs` variable by just typing `logs` in the Javascript console.  For the course-wide NFTManager from the tokens assignment, this is the result (you may see different values, but the concepts are the same):
 
-![](js-events.webp)
+![](js-events.webp){alt='image of the logs in the Javascript console'}
 
 The relevant fields are:
 

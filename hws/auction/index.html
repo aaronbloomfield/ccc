@@ -224,7 +224,7 @@ require(success, "Failed to transfer ETH");</code></pre>
 <li>Alice will call <code>startAuction()</code>; as part of this process, the auctioneer will transfer ownership of Alice’s NFT to itself, and revert if it cannot do so</li>
 </ul>
 <p>Below is a diagram of the flow of this process.</p>
-<p><img src='../../slides/images/tokens/graphs/tokens.dot.2.svg'></img></p>
+<p><img src='../../slides/images/tokens/graphs/tokens.dot.2.svg' alt='communication between an Alice account, and ERC721 contract, and a Auction contract'></img></p>
 </div><div id='ttask-3-create-auctions' class='tabcontent'><h3 id='task-3-create-auctions'>Task 3: Create auctions</h3>
 <p>You should create two auctions in your Auctioneer contract (you’ll create a third one below as well). It’s fine if you create more (such as from testing) – we will only look at the two requested here. These two auctions will use two of your three NFT images. In particular, if you have one NFT that you like more than the others, or is “better”, you will want to save it for the course-wide auction, below.</p>
 <p>Note that you can perform these calls through Remix (via calling an external contract, as described in the <a href='../dappintro/index.html'>dApp introduction</a> (<a href='../dappintro/index.md'>md</a>) assignment) or through geth calls (as described in the <a href='../../slides/solidity.html#/debtor'>Solidity slide set</a>).</p>

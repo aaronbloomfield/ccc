@@ -399,7 +399,7 @@ subscribeToChoiceEvents();</code></pre>
 <p>You can then pull up the past logs via:</p>
 <pre><code>logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:'latest',address:addr})</code></pre>
 <p>You can then examine the <code>logs</code> variable by just typing <code>logs</code> in the Javascript console. For the course-wide NFTManager from the tokens assignment, this is the result (you may see different values, but the concepts are the same):</p>
-<p><img src='js-events.webp'></img></p>
+<p><img src='js-events.webp' alt='image of the logs in the Javascript console'></img></p>
 <p>The relevant fields are:</p>
 <ul>
 <li>The <code>address</code> is the address of the contract that emitted the event</li>

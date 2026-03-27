@@ -68,7 +68,7 @@
 <h3 id="changelog">Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 <h3 id="metamask-setup">MetaMask Setup</h3>
-<p><img src="metamask-pop-up.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
+<p><img src="metamask-pop-up.webp" alt='metamask pop-up image' style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>This assignment uses the <a href="https://metamask.io/">MetaMask</a> extension to Google Chrome. Unfortunately, it does not run in any other browser; meaning you can’t use Firefox, Safari, Edge, or Internet Explorer. You have to use Chrome for this assignment.</p>
 <p>Here are the MetaMask setup steps:</p>
 <ol type="1">
@@ -84,7 +84,7 @@
 <li>The geth-config.toml file provided at the beginning of the semester causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect</li>
 <li><strong><em>NOTHING BELOW WILL WORK IF YOU ARE NOT RUNNING YOUR GETH NODE!</em></strong> The configuration that was done above – specifically, using http://localhost:8545, connects to a port on your computer, which is used to access the blockchain. That port is opened by the running of your geth node (the options for it were included in the geth-config.toml file that you used all those assignments ago).</li>
 </ul></li>
-<li>Click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box. You will see something similar to the image to the right.
+<li>Click on the MetaMask icon (<img alt='metamask fox icon' src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box. You will see something similar to the image to the right.
 <ul>
 <li>Click the network drop-down box – in the image to the right it says “localhost:8545”, but in your version it will likely say “Ethereum Mainnet”.
 <ul>
@@ -112,9 +112,9 @@
 </ul></li>
 <li>Obtain your decrypted private key for the account that you want to use. This was done in Part 4 of the <a href="../ethprivate/index.html#part-4-extract-private-key">Private Ethereum Blockchain</a> (<a href="../ethprivate/index">md</a>) assignment, and you also used that in the <a href="../arbitrage/index.html">Arbitrage trading</a> (<a href="../arbitrage/index.md">md</a>) assignment. It will be a hex value of the form <code>0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef</code></li>
 <li>Make sure that account has funds – either from before, or use the faucet to provide it funds now</li>
-<li>Configure your account in MetaMask. To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box. You will again see something similar to the image to the right, although the look does vary by platform. Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
+<li>Configure your account in MetaMask. To do so, again click on the MetaMask icon (<img alt='metamask fox icon' src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box. You will again see something similar to the image to the right, although the look does vary by platform. Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
 <ul>
-<li>Click on the circular icon in the upper-right of the MetaMask window – in the image to the right it looks like: <img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, but will likely look different in yours</li>
+<li>Click on the circular icon in the upper-right of the MetaMask window – in the image to the right it looks like: <img src="metamask-account-icon.webp" alt='metamask account icon' style="max-height:20px;vertical-align:middle">, but will likely look different in yours</li>
 <li>Click on “import account” (NOT create account!)
 <ul>
 <li>Some versions you click on the account list, then click, “add account or hardware wallet”, the “import account”</li>
@@ -167,7 +167,7 @@ function connectToMetaMask() {
 &lt;/script&gt;
 &lt;button onClick=&#39;connectToMetaMask()&#39;&gt;Enable Ethereum&lt;/button&gt;</code></pre>
 <p>Yes, there are better ways to do this in Javascript, such as adding event listeners. No, we don’t need those for this assignment – although you are welcome to do so if you are familiar with Javascript.</p>
-<p>This connection will persist through a page reload, and – on some operating systems at least – will persist thorough a browser restart. You can test if this works by connecting and then disconnecting. To disconnect, click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box, then click on the “Connected” button (to the left of the account name), and the vertical ellipsis (⋮) that appears will allow you to disconnect.</p>
+<p>This connection will persist through a page reload, and – on some operating systems at least – will persist thorough a browser restart. You can test if this works by connecting and then disconnecting. To disconnect, click on the MetaMask icon (<img alt='metamask fox icon' src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser’s address box, then click on the “Connected” button (to the left of the account name), and the vertical ellipsis (⋮) that appears will allow you to disconnect.</p>
 <p>The expectation is that any user will first click on that button to connect to MetaMask. You do not need to handle the situation when a user tries to use the rest of the page without first connecting via this button.</p>
 <h4 id="web3.js-library">Web3.js library</h4>
 <p>We could interact with MetaMask directly, but using web3.js, which we are familiar with, is going to make life much easier – it will do all the encoding of parameters into calls, etc.</p>
@@ -206,7 +206,7 @@ let web3mm = new Web3(window.ethereum);</code></pre>
   &lt;input type=&#39;button&#39; value=&quot;mint&quot; onClick=&quot;mintNFT();&quot;&gt;&lt;/p&gt;
 &lt;/form&gt;</code></pre>
 <p>This calls a <code>showReturnIntegerValue()</code> function, which is provided below.</p>
-<p><img src="metamask-confirmation.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
+<p><img src="metamask-confirmation.webp" alt='metamask confirmation image' style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>There is a lot going on here, and you will need to understand it in order to be able to adapt it for the other function calls that you need to make.</p>
 <ul>
 <li>Notice that we are using the <code>web3mm</code> connection, since we are connecting through MetaMask.</li>
@@ -253,7 +253,7 @@ function showReturnIntegerValue(w3,txnhash,desc) {
 <pre><code>showReturnIntegerValue(web3mm,txninfo[&#39;transactionHash&#39;],&quot;NFT ID&quot;);</code></pre>
 <p>This will show a pop-up alert box that states something such as “NFT ID: 12345”.</p>
 <h3 id="the-task">The Task</h3>
-<p><img src="final-web-page.webp" style="float:right;border:1px solid black;margin-left:15px"></p>
+<p><img src="final-web-page.webp" alt='final web page image' style="float:right;border:1px solid black;margin-left:15px"></p>
 <p>Finally! We can get to the whole reason for this party.</p>
 <p>Your task is to create a web interface to your Auctioneer.sol contract, which fulfills the <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) interface. The intent is that you start with the existing web page to view the auctions – the link is on the Canvas landing page – and put your modifications at the bottom of that page. Our web page looked like the image to the right; this is the bottom of our web page, and the auction table itself was above what is shown. Yours need not look the same, but it does need to be usable. Specifically, we are <em>not</em> grading on appearance, just usability.</p>
 <p>Your web page still has to display the table of auctions <em>in addition to</em> the forms to interact with the IAuctioneer. The auctions table display is intended to be copied from the auctions.php page.</p>
@@ -352,7 +352,7 @@ Once those parameters are set correctly, the last four lines in the above code w
 -->
 <h3 id="common-errors">Common Errors</h3>
 <ul>
-<li>“Invalid sender” error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly. Click on the MetaMask fox icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the “localhost:8545” network. Make sure the chain ID is set correctly; it’s on the Canvas landing page, if you forget what it is. It should be set using it’s base-10 value.</li>
+<li>“Invalid sender” error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly. Click on the MetaMask fox icon (<img src="metamask-fox.svg" alt='metamask fox icon' style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" alt='metamask account icon' style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the “localhost:8545” network. Make sure the chain ID is set correctly; it’s on the Canvas landing page, if you forget what it is. It should be set using it’s base-10 value.</li>
 <li>MetaMask RPC error / Header not found. If you get the following error: <code>"[ethjs-query] while formatting outputs from RPC '{"value":{"code":-32603,"data":{"code":-32000,"message":"header not found"}}}'"</code>, try switching your network to Mainnet and then back to localhost:8545, as some have reported that this fixes the issue.</li>
 <li>If MetaMask suddenly stops appearing to send your transactions, they may have gotten “stuck”. Each successive Ethereum transaction must have the next highest nonce. If there is a gap, then it will queue the transaction until the gap is resolved. If you send to many transactions at once, they could arrive out of order. To resolve this, since everything here is free, spam some transactions (not calls) to the blockchain. Calling <code>collectFees()</code> a bunch of times from an Auctioneer contract will do the trick.</li>
 </ul>

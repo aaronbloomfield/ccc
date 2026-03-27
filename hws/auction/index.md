@@ -196,7 +196,7 @@ The `startAuction()` method requires a bit more explanation.  The process is as 
 
 Below is a diagram of the flow of this process.
 
-![](../../slides/images/tokens/graphs/tokens.dot.2.svg)
+![](../../slides/images/tokens/graphs/tokens.dot.2.svg){alt='communication between an Alice account, and ERC721 contract, and a Auction contract'}
 
 
 ### Task 3: Create auctions

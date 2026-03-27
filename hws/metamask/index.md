@@ -28,7 +28,7 @@ Any changes to this page will be put here for easy reference.  Typo fixes and mi
 
 ### MetaMask Setup 
 
-<img src="metamask-pop-up.webp" style="float:right;border:1px solid black;margin-left:15px">
+<img src="metamask-pop-up.webp" alt='metamask pop-up image' style="float:right;border:1px solid black;margin-left:15px">
 
 This assignment uses the [MetaMask](https://metamask.io/) extension to Google Chrome.  Unfortunately, it does not run in any other browser; meaning you can't use Firefox, Safari, Edge, or Internet Explorer.  You have to use Chrome for this assignment.
 
@@ -42,7 +42,7 @@ Here are the MetaMask setup steps:
 3. Start your geth node.
    - The geth-config.toml file provided at the beginning of the semester causes geth to start listening to port 8545 on your computer (aka localhost), which is how MetaMask will connect
    - ***NOTHING BELOW WILL WORK IF YOU ARE NOT RUNNING YOUR GETH NODE!***  The configuration that was done above -- specifically, using http://localhost:8545, connects to a port on your computer, which is used to access the blockchain.  That port is opened by the running of your geth node (the options for it were included in the geth-config.toml file that you used all those assignments ago).
-4. Click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will see something similar to the image to the right.
+4. Click on the MetaMask icon (<img alt='metamask fox icon' src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will see something similar to the image to the right.
    - Click the network drop-down box -- in the image to the right it says "localhost:8545", but in your version it will likely say "Ethereum Mainnet".
       - In that drop-down list, select "add network"; this will bring up a web page
       - In the Settings column on the far left, click on Advanced
@@ -60,8 +60,8 @@ Here are the MetaMask setup steps:
     - Back in the network selection box, you should now be able to select "localhost:8545" as your network -- this is going to connect to the geth node that we will be starting in a moment
 5. Obtain your decrypted private key for the account that you want to use.  This was done in Part 4 of the [Private Ethereum Blockchain](../ethprivate/index.html#part-4-extract-private-key) ([md](../ethprivate/index)) assignment, and you also used that in the [Arbitrage trading](../arbitrage/index.html) ([md](../arbitrage/index.md)) assignment.  It will be a hex value of the form `0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef`
 6. Make sure that account has funds -- either from before, or use the faucet to provide it funds now
-7. Configure your account in MetaMask.  To do so, again click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will again see something similar to the image to the right, although the look does vary by platform.  Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
-    - Click on the circular icon in the upper-right of the MetaMask window -- in the image to the right it looks like: <img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, but will likely look different in yours
+7. Configure your account in MetaMask.  To do so, again click on the MetaMask icon (<img alt='metamask fox icon' src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box.  You will again see something similar to the image to the right, although the look does vary by platform.  Sometimes there is a noticeable delay when clicking that icon before the pop-up windows appears.
+    - Click on the circular icon in the upper-right of the MetaMask window -- in the image to the right it looks like: <img src="metamask-account-icon.webp" alt='metamask account icon' style="max-height:20px;vertical-align:middle">, but will likely look different in yours
     - Click on "import account" (NOT create account!)
         - Some versions you click on the account list, then click, "add account or hardware wallet", the "import account"
     - Paste in your decrypted private key and click on 'import'
@@ -140,7 +140,7 @@ function connectToMetaMask() {
 
 Yes, there are better ways to do this in Javascript, such as adding event listeners.  No, we don't need those for this assignment -- although you are welcome to do so if you are familiar with Javascript.
 
-This connection will persist through a page reload, and -- on some operating systems at least -- will persist thorough a browser restart.  You can test if this works by connecting and then disconnecting.  To disconnect, click on the MetaMask icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box, then click on the "Connected" button (to the left of the account name), and the vertical ellipsis (&vellip;) that appears will allow you to disconnect.
+This connection will persist through a page reload, and -- on some operating systems at least -- will persist thorough a browser restart.  You can test if this works by connecting and then disconnecting.  To disconnect, click on the MetaMask icon (<img alt='metamask fox icon' src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">) next to the browser's address box, then click on the "Connected" button (to the left of the account name), and the vertical ellipsis (&vellip;) that appears will allow you to disconnect.
 
 The expectation is that any user will first click on that button to connect to MetaMask.  You do not need to handle the situation when a user tries to use the rest of the page without first connecting via this button.
 
@@ -211,7 +211,7 @@ Below is an example HTML form and associated Javascript function.  This will cal
 
 This calls a `showReturnIntegerValue()` function, which is provided below.
 
-<img src="metamask-confirmation.webp" style="float:right;border:1px solid black;margin-left:15px">
+<img src="metamask-confirmation.webp" alt='metamask confirmation image' style="float:right;border:1px solid black;margin-left:15px">
 
 There is a lot going on here, and you will need to understand it in order to be able to adapt it for the other function calls that you need to make.
 
@@ -271,7 +271,7 @@ This will show a pop-up alert box that states something such as "NFT ID: 12345".
 
 ### The Task
 
-<img src="final-web-page.webp" style="float:right;border:1px solid black;margin-left:15px">
+<img src="final-web-page.webp" alt='final web page image' style="float:right;border:1px solid black;margin-left:15px">
 
 Finally!  We can get to the whole reason for this party.
 
@@ -381,7 +381,7 @@ Once those parameters are set correctly, the last four lines in the above code w
 
 ### Common Errors
 
-- "Invalid sender" error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly.  Click on the MetaMask fox icon (<img src="metamask-fox.svg" style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the "localhost:8545" network.  Make sure the chain ID is set correctly; it's on the Canvas landing page, if you forget what it is.  It should be set using it's base-10 value.
+- "Invalid sender" error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly.  Click on the MetaMask fox icon (<img src="metamask-fox.svg" alt='metamask fox icon' style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" alt='metamask account icon' style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the "localhost:8545" network.  Make sure the chain ID is set correctly; it's on the Canvas landing page, if you forget what it is.  It should be set using it's base-10 value.
 - MetaMask RPC error / Header not found.  If you get the following error: ` "[ethjs-query] while formatting outputs from RPC '{"value":{"code":-32603,"data":{"code":-32000,"message":"header not found"}}}'"`, try switching your network to Mainnet and then back to localhost:8545, as some have reported that this fixes the issue.
 - If MetaMask suddenly stops appearing to send your transactions, they may have gotten "stuck".  Each successive Ethereum transaction must have the next highest nonce.  If there is a gap, then it will queue the transaction until the gap is resolved.  If you send to many transactions at once, they could arrive out of order.  To resolve this, since everything here is free, spam some transactions (not calls) to the blockchain.  Calling `collectFees()` a bunch of times from an Auctioneer contract will do the trick.
 

@@ -94,7 +94,7 @@ The *only* changes made to the OpenZeppelin code above is the paths in the `impo
 
 You should look over and familiarize yourself with all this code.  The inheritance hierarchy of this code is shown below.
 
-![](inheritance.dot.1.svg)
+![](inheritance.dot.1.svg){alt='ERC20 inheritance diagram'}
 
 Note that the only new files, beyond the the OpenZeppelin implementation, are the two bottom grey nodes.  We added was the ITokenCC interface, and you have to implement the TokenCC contract.
 
@@ -206,7 +206,7 @@ Why so many files?  Three of the interfaces (IERC165, IERC721, and IERC721Metada
 
 You should look over and familiarize yourself with this code. The inheritance hierarchy of this code is shown below.  Note that two of the entries (`Address` and `Strings`) are type substitutions in `ERC721.sol`.  `IERC721Recevier` is used as a casting type.
 
-![](inheritance.dot.2.svg)
+![](inheritance.dot.2.svg){alt='ERC721 inheritance diagram'}
 
 The only new files, beyond the the OpenZeppelin implementation, are the two bottom grey nodes.  We added was the INFTManager abstract contract, and you have to implement the NFTManager contract. There are a lot of lines because of how the OpenZeppelin code is set up.
 

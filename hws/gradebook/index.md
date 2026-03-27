@@ -175,7 +175,7 @@ Debug.debugString(s);
 
 Then, in the explorer, you will see something similar to:
 
-![](../../slides/images/solidity-event-debugging.png){style="width:1024px"}
+![](../../slides/images/solidity-event-debugging.png){style="width:1024px" alt='solidity event debugging'}
 
 
 
