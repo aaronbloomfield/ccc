@@ -67,6 +67,10 @@ other = {
 	# auction.
 	'course_nft_token_id': None,
 
+    # How useful did you find the Debug.sol library that was provided?  This
+    # is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is
+    # moderately useful, and 5 is very useful.  Integers only, please.
+    'debug_sol_usefulness': None,
 }
 
 
