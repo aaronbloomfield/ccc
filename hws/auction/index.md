@@ -3,7 +3,7 @@ Decentralized NFT Auction
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
-<!-- to put on the canvas landing page:
+<!-- to put on the blockchain explorer main page:
 
 - the page to view the auctions
 - course auctioneer address and link to contract page and link to auctions.php page
@@ -175,7 +175,7 @@ Some people are having problems in Remix with determining the return value of a 
 
 Test all this thoroughly in Remix!  You will need to deploy your Auctioneer contract in Remix's Javascript environment to test everything working together.  Recall that you have to select the right contract to deploy in the "Contract" list, else Remix may not know which one to deploy.  Be sure to develop via incremental development, else you will not be able to figure out where your bug is.
 
-One it works, deploy it to our private Ethereum blockchain.  You should test it there as well.  You will need to submit the contract address of the deployed Auctioneer.  If you deploy it multiple times, just submit the most recent contract address.  Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the Canvas landing page; a link to this will also be shown on the explorer page for your Auctioneer contract.  This auctions web page will make it far easier to see what is going on with your auctions.  Note that the explorer will only display this link if it knows that the contract implements IAuctioneer, and it only knows that if your `supportsInterface()` method is written and correct.
+One it works, deploy it to our private Ethereum blockchain.  You should test it there as well.  You will need to submit the contract address of the deployed Auctioneer.  If you deploy it multiple times, just submit the most recent contract address.  Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the blockchain explorer main page; a link to this will also be shown on the explorer page for your Auctioneer contract.  This auctions web page will make it far easier to see what is going on with your auctions.  Note that the explorer will only display this link if it knows that the contract implements IAuctioneer, and it only knows that if your `supportsInterface()` method is written and correct.
 
 #### `totalFees()` versus `uncollectedFees()`
 
@@ -227,14 +227,14 @@ This auction should have a reserve of 1 ether.  Keep in mind that you have to en
 
 #### View your auctions
 
-There is a web page to view your auctions, and the URL for it is on the Canvas landing page.  You can also get a link to it from the explorer page for your deployed smart contract.  This can be used to view any auction smart contract that implements the IAuctioneer interface.  This means you can view the class auctions as well (which are done in the next section).
+There is a web page to view your auctions, and the URL for it is on the blockchain explorer main page.  You can also get a link to it from the explorer page for your deployed smart contract.  This can be used to view any auction smart contract that implements the IAuctioneer interface.  This means you can view the class auctions as well (which are done in the next section).
 
 
 ### Task 4: Class Auctions
 
 You are going to participate in a class-wide auction manager.
 
-We have deployed an auction manager, and the contract address for that Auctioneer contract is on the Canvas landing page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
+We have deployed an auction manager, and the contract address for that Auctioneer contract is on the blockchain explorer main page.  As above, you can perform these calls through Remix (via calling an external contract, as described in the [dApp introduction](../dappintro/index.html) ([md](../dappintro/index.md)) assignment) or through geth calls (as described in the [Solidity slide set](../../slides/solidity.html#/)).
 
 You should use one of your three NFTs that you didn't use in the previous section.  You should create an auction that ends *one week* after the due date of the assignment (again, we are looking for the day -- we don't care too much about the time of day).  You will need to submit the auction ID from the auction you created as well as the NFT token ID.  ***YOUR RESERVE*** should be no higher than 5 ETH.
 
