@@ -10,7 +10,7 @@ title: "Overview"
 ## What is money?
 
 ::: {.right-float-img .nopad}
-![](images/tokens/dollar-bill.webp)
+![](images/tokens/dollar-bill.webp){alt='dollar bill image'}
 :::
 
 - Four functions (Jevons, 1875):
@@ -72,7 +72,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 
 ## Consider the AaronDollar&trade;
 ::: {.no-white-img-background .max-image-height-300 .noboxshadow}
-![](images/overview/aaron-dollar.png)
+![](images/overview/aaron-dollar.png){alt='AaronDollar(TM) image'}
 :::
 - Would you pay me 1 dollar for it?  What about `$`10?  `$`100?
 <li class="fragment" data-fragment-index="1">If I told you it would buy you an A+ in this course...<ul><li>Would you pay me <code>$</code>100 then?</li></ul></li>
@@ -128,7 +128,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 # Bitcoin Basics
 
 ::: {.cclogosubtitle}
-![](images/logos/btc-coin-symbol.svg)
+![](images/logos/btc-coin-symbol.svg){alt="BTC logo"}
 :::
 
 
@@ -146,7 +146,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 ## Bitcoin
 
 ::: {.right-float-img-nb-400}
-![](https://upload.wikimedia.org/wikipedia/commons/7/77/Satoshi_Nakamoto.jpg)
+![](https://upload.wikimedia.org/wikipedia/commons/7/77/Satoshi_Nakamoto.jpg){alt='picture of satoshi nakamoto statue'}
 :::
 
 - The first viable cryptocurrency,sss it was created in 2008 by Satoshi Nakamoto
@@ -159,7 +159,7 @@ According to Jan Lansky ([source](http://si-journal.org/index.php/JSI/article/vi
 
 ## Bitcoin price
 From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October 2025 ([source](https://www.blockchain.com/charts/market-price?timespan=all))
-![BTC price](images/timely/btc-price.webp)
+![BTC price](images/timely/btc-price.webp){alt='btc price graph'}
 <!-- change each semester -->
 
 <aside data-markdown class='notes'>
@@ -181,7 +181,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 ## Wallets
 
 ::: {.right-float-img-nb-400}
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Czech_Wallet.jpg/800px-Czech_Wallet.jpg)
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Czech_Wallet.jpg/800px-Czech_Wallet.jpg){alt='image of a billfold wallet'}
 :::
 
 - You create a bitcoin *wallet*, which contains (possibly many) public/private key sets
@@ -236,7 +236,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 
 ## Simple Blockchain
 ::: {.right-float-img}
-![](images/overview/graphs/overview.dot.1.svg)
+![](images/overview/graphs/overview.dot.1.svg){alt='simple image of a blockchain'}
 :::
 - Each block is mined by somebody
   - That creates currency as a reward
@@ -250,7 +250,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 # Mining
 
 ::: {.cclogosubtitle}
-![](images/logos/btc-coin-symbol.svg)
+![](images/logos/btc-coin-symbol.svg){alt='BTC logo'}
 :::
 
 
@@ -277,7 +277,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 
 ## Target
 ::: {.right-float-img-nb-300}
-![](https://upload.wikimedia.org/wikipedia/commons/d/dc/WA_archery_target_with_arrows.jpg)
+![](https://upload.wikimedia.org/wikipedia/commons/d/dc/WA_archery_target_with_arrows.jpg){alt='picture of an archery target'}
 :::
 - The [target](https://en.bitcoin.it/wiki/Target) is the 256-bit number that a blockchain SHA-256 hash must be below
 - Goal: generate a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce) (a one-time numerical value) to add to the block that will cause the SHA-256 hash to be below the target
@@ -316,7 +316,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 
 ## How long this will take
 ::: {.right-float-img-nb-400}
-![](https://upload.wikimedia.org/wikipedia/commons/4/48/Gigabyte_GTX_970_Windforce.jpg)
+![](https://upload.wikimedia.org/wikipedia/commons/4/48/Gigabyte_GTX_970_Windforce.jpg){alt='picture of a video card'}
 :::
 - A typical CPU can do maybe 10 Mhash/sec (million hashes per second)
   - A very fast CPU today could do about 25 Mhash/sec
@@ -332,7 +332,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 
 ## Electricity usage
 ::: {.right-float-img-nb-300}
-![](https://upload.wikimedia.org/wikipedia/commons/6/6b/Electricity_pylons2.jpg)
+![](https://upload.wikimedia.org/wikipedia/commons/6/6b/Electricity_pylons2.jpg){alt='picture of electricity poles'}
 :::
 - A graphics card uses about 400 W (watts) (estimated from [here](https://en.bitcoin.it/wiki/Non-specialized_hardware_comparison#Nvidia))
 - Electricity in Charlottesville costs 15 cents per kW/h (as per [here](https://www.electricitylocal.com/states/virginia/charlottesville/))
@@ -359,7 +359,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 
 
 ## All-time difficulty graph from [blockchain.com](https://www.blockchain.com/en/charts/difficulty)
-![BTC difficulty, all time](images/timely/btc-difficulty-all-time.webp)
+![BTC difficulty, all time](images/timely/btc-difficulty-all-time.webp){alt='BTC difficulty graph'}
 <!-- change each semester -->
 
 <aside data-markdown class='notes'>
@@ -369,7 +369,7 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 
 
 ## Last 3 years difficulty graph from [blockchain.com](https://www.blockchain.com/en/charts/difficulty)
-![BTC difficulty, last 2 years](images/timely/btc-difficulty-last-3-years.webp)
+![BTC difficulty, last 2 years](images/timely/btc-difficulty-last-3-years.webp){alt='BTC difficulty graph'}
 <!-- change each semester -->
 
 <aside data-markdown class='notes'>
@@ -419,13 +419,13 @@ From [blockchain.com](https://blockchain.com); BTC peaked at $126,032 in October
 From [blockchain.com](https://www.blockchain.com/charts/hash-rate), and for the entire Bitcoin network: 1.06 zetahashes per second (zeta = $10^{21}$)
 <!-- change each semester -->
 <!-- formula: hashrate=1.06*10^21 -->
-![hashes per second](images/timely/btc-hashes-per-sec.webp)
+![hashes per second](images/timely/btc-hashes-per-sec.webp){alt='hashes per second graph'}
 
 
 
 ## Mining hardware
 ::: {.right-float-img-nb-400}
-![](https://m.media-amazon.com/images/I/61WsmRwaOaL._AC_SL1000_.jpg)
+![](https://m.media-amazon.com/images/I/61WsmRwaOaL._AC_SL1000_.jpg){alt='picture of an ASIC miner'}
 :::
 - A whole industry has sprung up: you can find the hardware online (such as [here](https://www.bitcoinmining.com/bitcoin-mining-hardware/))
 - These devices are much faster and use much less electricity

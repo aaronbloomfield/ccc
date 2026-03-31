@@ -12,10 +12,13 @@ markdown:
 
 .md.html:
 	pathprefix=`echo $< | tr -d -c '/' | sed -r 's/\//..\//g'` && \
-		pandoc --standalone --metadata lang="en" -V "pagetitle:$$(head -1 $<)" -H tabs.js -f markdown -c $$pathprefix"markdown.css" --columns=9999 -t html5 -o $@ $<
+		pandoc --template `git rev-parse --show-toplevel`/pandoc-template.html --standalone --metadata lang="en" -V "pagetitle:$$(head -1 $<)" -H tabs.js -f markdown -c $$pathprefix"markdown.css" --columns=9999 -t html5 -o $@ $<
 	@echo wrote $@
 	#$(SED) s_"</body>"_"$(LICENSE)</body>"_g $@
 	#pathprefix=`echo $< | tr -d -c '/' | sed -r 's/\//..\//g'` && \
+
+touchall:
+	find . | grep "\.md$$" | awk '{print "touch "$$1}' | bash
 
 markdownold:
 	@echo Converting markdown files to html format...

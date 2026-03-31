@@ -223,7 +223,7 @@ title: "Mining"
 
 
 ## Death to the Environment!
-[![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Alfred_Palmer_Smokestacks.jpg/1280px-Alfred_Palmer_Smokestacks.jpg)](https://commons.wikimedia.org/wiki/File:Alfred_Palmer_Smokestacks.jpg){class="right-float-img-600 no-border"}
+[![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Alfred_Palmer_Smokestacks.jpg/1280px-Alfred_Palmer_Smokestacks.jpg)](https://commons.wikimedia.org/wiki/File:Alfred_Palmer_Smokestacks.jpg){class="right-float-img-600 no-border" alt='picture of smoke stacks'}
 
 - The lower-bound estimate from the last slide is that BTC mining uses 17.4 GW ($10^{12}$W), or 416 GWh per day, or 152 TWh per year  <!-- change each semester -->
   - A [2019 estimate](https://www.sciencedirect.com/science/article/pii/S2542435119302557) was at 46 TWh per year, but the [hash rate](https://www.blockchain.com/charts/hash-rate?timespan=all) has increased significantly since then
@@ -285,7 +285,7 @@ title: "Mining"
 
 
 ## BTC mining in the US
-![](https://upload.wikimedia.org/wikipedia/commons/3/35/Texas_flag_map.svg){class="right-float-img"}
+![](https://upload.wikimedia.org/wikipedia/commons/3/35/Texas_flag_map.svg){class="right-float-img" alt='image of the Texas flag'}
 
 - [Texas is the go-to place to mine BTC](https://www.washingtonpost.com/technology/2021/07/08/bitcoin-mining-texas-electricity/)
   - Cheap energy and a business-friendly environment
@@ -548,7 +548,7 @@ title: "Mining"
 
 
 ## Proof-of-History
-- In ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo){class="cclogo-slide"} Solana ([SOL](https://coinmarketcap.com/currencies/solana/)) the block verification combines PoS and proof of history ([Solana's whitepaper](https://solana.com/solana-whitepaper.pdf))
+- In ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo){class="cclogo-slide" alt='SOL logo'} Solana ([SOL](https://coinmarketcap.com/currencies/solana/)) the block verification combines PoS and proof of history ([Solana's whitepaper](https://solana.com/solana-whitepaper.pdf))
   - Each transaction has a hash of *another* transaction
     - This proves that the TXN happened after the "other" transaction
     - This forms a chain (graph, really) of events in time
@@ -562,10 +562,10 @@ title: "Mining"
 
 
 ## PoH and block verification
-- With ![btc logo](../slides/images/logos/btc-coin-symbol.svg#cclogo){class="cclogo-slide"} Bitcoin, we have to compute the Merkle tree hash
+- With ![btc logo](../slides/images/logos/btc-coin-symbol.svg#cclogo){class="cclogo-slide" alt='BTC logo'} Bitcoin, we have to compute the Merkle tree hash
   - Given $n$ transactions, it takes $\Theta(n)$ steps to build the tree
   - Given infinite computing power, it takes $\Theta(\log n)$ steps
-- In ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo) Solana, each transaction can be verified in parallel
+- In ![sol logo](../slides/images/logos/sol-coin-symbol.svg#cclogo){alt='SOL logo'} Solana, each transaction can be verified in parallel
   - Just check that it goes one link back to another valid TXN
   - Given $n$ transactions and an infinite computing power, it can be done in $\Theta(1)$ time
 - A GPU can have 4,000 cores, and each can verify one TXN in parallel
@@ -1054,7 +1054,7 @@ Note that UTXOs are not only in the bottom level
 <!-- .slide: class="right-float-img-nb-400" -->
 ## Type 3: Hard forks
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gabel_--_2021_--_7220.jpg/800px-Gabel_--_2021_--_7220.jpg){class='right-float-img no-border' style="width:400px;height:auto"}
+![](https://upload.wikimedia.org/wikipedia/commons/3/39/Three_tines.jpg){class='right-float-img no-border' style="width:400px;height:auto" alt='picture of a tableware fork'}
 
 - A change is proposed that some users do *NOT* want to adopt
   - Or that is not backwards-compatible, so some users choose one way and some the other way

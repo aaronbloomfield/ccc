@@ -51,6 +51,7 @@
   </script>
 </head>
 <body>
+<main>
 <h1 id="bitcoin-scripting">Bitcoin Scripting</h1>
 <p><a href="../index.html">Go up to the CCC HW page</a> (<a href="../index.md">md</a>) | <a href="index.html">view tabbed version</a></p>
 <h3 id="overview">Overview</h3>
@@ -332,5 +333,6 @@ address = P2PKHBitcoinAddress.from_pubkey(public_key)</code></pre>
 </ul>
 <p><strong>Rate Limiter:</strong> The various aspects of this program are verified by checking via blockcyper.com’s API to obtain the wallet, transaction, balance, etc. As with most websites, there is a rate limiter, and if there are too many requests in too little a time period, then it will block requests to that IP address for some period. If everybody submits the assignment around the same time, this rate limiter will kick in, and the auto-grader will reports lots of errors. We will re-run the auto-grader at a later point to ensure that it is evaluated properly, but you will not see useful results when you submit your assignment. We have set up a proxy to help this issue (it caches previously made requests). However, if there are still too many requests, it will still run into the rate limiter. Unfortunately, there is nothing more we can do about this.</p>
 <p><strong>Autograder notes:</strong> As we know, a transaction is not considered valid until it is mined into the blockchain. It may be that your transaction has not yet been mined, which means it will report as not having happened. This means some of the visible tests when you submit your assignment could fail. As long as you submitted the transaction, you do not need to worry about it – we will re-run the auto-grader a day or two later to catch all these cases.</p>
+</main>
 </body>
 </html>
