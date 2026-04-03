@@ -56,18 +56,6 @@
 <main>
 <h1 id='arbitrage-trading'>Arbitrage Trading</h1>
 <p><a href='../index.html'>Go up to the CCC HW page</a> (<a href='../index.md'>md</a>) | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
-<button class='tablinks' onclick='openTab(event,'toverview')' id='defaultOpen'>Overview</button>
-<button class='tablinks' onclick='openTab(event,'tchangelog')'>Changelog</button>
-<button class='tablinks' onclick='openTab(event,'tweb3.py')'>Web3.py</button>
-<button class='tablinks' onclick='openTab(event,'tmarket-theory')'>Market Theory</button>
-<button class='tablinks' onclick='openTab(event,'tassignment')'>Assignment</button>
-<button class='tablinks' onclick='openTab(event,'ttesting')'>Testing</button>
-<button class='tablinks' onclick='openTab(event,'treal-world-profit')'>Real World Profit</button>
-<button class='tablinks' onclick='openTab(event,'tnotes-and-hints')'>Notes & Hints</button>
-<button class='tablinks' onclick='openTab(event,'texecution-runs')'>Execution Runs</button>
-<button class='tablinks' onclick='openTab(event,'tsubmission')'>Submission</button>
-</div>
-<div id='toverview' class='tabconte | <a href='index-full.html'>view one-page version</a></p><div class='tab'>
 <button class='tablinks' onclick="openTab(event,'toverview')" id='defaultOpen'>Overview</button>
 <button class='tablinks' onclick="openTab(event,'tchangelog')">Changelog</button>
 <button class='tablinks' onclick="openTab(event,'tweb3.py')">Web3.py</button>
@@ -88,13 +76,13 @@
 <li>Familiarity with the <a href='../../slides/applications.html#/arbitrage'>arbitrage trading</a> section of the lecture slides, including the <a href='https://aaronbloomfield.github.io/ccc/slides/applications.html#/cpamm'>CPAMM</a> trading method.</li>
 </ul>
 <p>In addition to your source code, you will submit an edited version of <a href='arbitrage.py.html'>arbitrage.py</a> (<a href='arbitrage.py'>src</a>).</p>
-</div><div id='tchangelog' class='tabcontent'></div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
+</div><div id='tchangelog' class='tabcontent'><h3 id='changelog'>Changelog</h3>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. &lt;~– So far there aren’t any significant changes to report. –&gt;</p>
 <ul>
 <li>Tue, 4/22: fixed sample code in web3.py section</li>
 </ul>
 
-</div><div id='tweb3.py' class='tabcontent'></div><div id='tweb3.py' class='tabcontent'><h3 id='web3.py'>Web3.py</h3>
+</div><div id='tweb3.py' class='tabcontent'><h3 id='web3.py'>Web3.py</h3>
 <p>You will need to read the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>). While you do not need to have all of that memorized, you do need to understand it all! The intent is that you will use that page as a reference while you write this assignment.</p>
 <h4 id='connecting'>Connecting</h4>
 <p>The following code will handle the connection based on the values in the <code>arbitrage_config.py</code> file, which is introduced below. After reading this part, you may want to come back to it again once the <code>arbitrage_config.py</code> file has been introduced.</p>
@@ -112,8 +100,8 @@ print(w3.is_connected())</code></pre>
 <li>If the <code>connection_is_ipc</code> value is <code>True</code>, then the <code>connection_uri</code> value will have the form <code>/path/to/geth.ipc</code></li>
 <li>If the <code>connection_is_ipc</code> value is <code>False</code>, then the <code>connection_uri</code> value will have the form <code>wss://server.univeristy.edu/path/to/geth</code></li>
 </ul>
-<p>The value for the second one is provided on the Canvas landing page, and in the provided <code>arbitrage_config.py</code> file.</p>
-</div><div id='tmarket-theory' class='tabcontent'></div><div id='tmarket-theory' class='tabcontent'><h3 id='market-theory'>Market Theory</h3>
+<p>The value for the second one is provided in the blockchain explorer’s links section, and in the provided <code>arbitrage_config.py</code> file.</p>
+</div><div id='tmarket-theory' class='tabcontent'><h3 id='market-theory'>Market Theory</h3>
 <h4 id='when-to-make-an-trade'>When to make an trade</h4>
 <p>Your program will need to compute it’s <em>holdings</em>, which is the dollar amount of all the ETH and TC that it has. You will use some fixed price for ETH (say, $100) and for TC (say, $10) for initial testing – this value is provided in the <code>arbitrage_config.py</code> file, which is described below.</p>
 <p>You will first need to obtain the various information (prices, <span class='math inline'><em>x</em></span>/<span class='math inline'><em>y</em></span>/<span class='math inline'><em>k</em></span> values at each DEX, etc.). Then you will need to make a <em>profitable trade</em>. A profitable trade is defined here as a trade where the overall value of <em>holdings</em>, in USD, increases. You must account for gas fees when determining this! The formula to determine if you will make a profit is whether:</p>
@@ -166,7 +154,7 @@ print(w3.is_connected())</code></pre>
 <li>However, the values to trade (meaning <span class='math inline'><em>δ</em><sub><em>e</em></sub></span> or <span class='math inline'><em>δ</em><sub><em>t</em></sub></span>) may be negative, and you should ignore them in that case</li>
 <li>The values to trade (meaning <span class='math inline'><em>δ</em><sub><em>e</em></sub></span> or <span class='math inline'><em>δ</em><sub><em>t</em></sub></span>) may be larger than your balance; if so, then you should consider how much profit can be made from trading in all of your balance in that case (but, if it’s ether, then you have to deduct the gas cost before you trade it all in).</li>
 </ul>
-</div><div id='tassignment' class='tabcontent'></div><div id='tassignment' class='tabcontent'><h3 id='assignment'>Assignment</h3>
+</div><div id='tassignment' class='tabcontent'><h3 id='assignment'>Assignment</h3>
 <p>Your assignment is to create a program that attempts to make a profit by arbitrage trading. For the purposes of this assignment, a <em>profit</em> means an increase in the value of your holdings in USD; the holdings are computed from the amount of ETH and TC your program controls as well as the current price of each.</p>
 <p>You must take gas estimation into account! Otherwise, if you were only to make 0.001 ETH, but it costs 0.002 ETH in gas, you are losing money. How to estimate gas fees is discussed on the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>) page – once you create a transaction, you call <code>eth.estimate_gas()</code>. The expected gas values will be in the tens of thousands of gwei – 36,000 to 65,000 is a reasonable guess, but yours may be higher or lower.</p>
 <p>When providing a transaction, you also have to supply the gasPrice. For this assignment, you should use the value is in the <code>arbitrage_config.py</code> file (described below), which will typically be set to 10 gwei. This gas estimate times the gas cost (10 gwei) will allow you to compute the cost of gas in ether, which is the <span class='math inline'><em>g</em></span> variable in the formulas above.</p>
@@ -175,7 +163,7 @@ print(w3.is_connected())</code></pre>
 <h4 id='values-to-query-the-dexes-for'>Values to query the DEXes for</h4>
 <p>Each DEX will have to be queried to get values for <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span>; from this, you can determine the exchange rate (<span class='math inline'><em>y</em>/<em>x</em></span> or <span class='math inline'><em>x</em>/<em>y</em></span>). You will also have to query the DEXes for the fee amount (<code>feeNumerator()</code> and <code>feeDenominator()</code>). Note that different DEXes, even for the same coin, can have different exchange rates and different fee amounts.</p>
 <h4 id='values-provided'>Values provided</h4>
-<p>The program will import an <code>arbitrage_config.py</code> file to provide many of the values, a sample of which is shown below. The correct file for this semester is available on the Canvas landing page.</p>
+<p>The program will import an <code>arbitrage_config.py</code> file to provide many of the values, a sample of which is shown below. The correct file for this semester is available in the blockchain explorer’s links section.</p>
 <pre><code>config = {
     # you will have to change these values for it to work
     'account_address': '0x123456789ABcdEf0123456789aBCDeF123456789',
@@ -253,11 +241,11 @@ print(w3.is_connected())</code></pre>
 <p><strong><em>YOUR FINAL PROGRAM SHOULD PRODUCE NO OTHER OUTPUT</em></strong> other than the result of calling the <code>output()</code> function, above.</p>
 <p>If there are no profitable transactions available, then pass in 0 for the first two parameters; the values of the last two parameters do not matter in this case. When a transaction is made, then one of <code>ethDelta</code> or <code>tccDelta</code> should be negative – that’s the one that is being sold. The other should be positive, and is how much of the other you received for that exchange. These values should be the amount of coin being bought or sold as a floating-point number, and without all the decimals (so 1.5 TC rather than 15000000000 TC). The prices for ETH and TC are pulled from <code>config</code> dictionary in <code>arbitrage_config.py</code>, so they do not have to be passed into this function. The <code>fees</code> and <code>holdings_after</code> parameters should be in USD.</p>
 <p>The <code>fees</code> value that you are reporting is just the USD value of the Ethereum transaction fees. The DEX fees were deducted from the amount obtained.</p>
-</div><div id='ttesting' class='tabcontent'></div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
+</div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
 <p>To see if your program makes the right decision, you can hard-code the <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span> values in your arbitrage_trading.py program and print out the results to see if it computed the correct values to trade.</p>
 <p>The geth-config.toml file that you used in the <a href='../ethprivate/index.html'>HW S4: Private Ethereum Blockchain</a> (<a href='../ethprivate/index.md'>md</a>) assignment opens up a web socket. Thus, you can connect in two ways:</p>
 <ul>
-<li>Use the course connection (which is on the Canvas landing page) or <code>ws://localhost:8546</code>; you have to set <code>connection_is_ipc</code> to <code>False</code> for this</li>
+<li>Use the course connection (which is in the blockchain explorer’s links section) or <code>ws://localhost:8546</code>; you have to set <code>connection_is_ipc</code> to <code>False</code> for this</li>
 <li>Use your geth.ipc file, but then you have to set <code>connection_is_ipc</code> to <code>True</code>.</li>
 </ul>
 <p>Which one you use must be read from the <code>arbitrage_config.py</code> file so that we can modify them when we test your submission.</p>
@@ -274,7 +262,7 @@ print(w3.is_connected())</code></pre>
 </ul>
 <p>Just to clarify: all six of these DEXes exchange the same DDC coin, but at different exchange rates. The individual dice images are used for the images of the DEXes; the multi-die image to the right is the image of the coin. The DEXes all follow the <a href='../dex/IDEX.sol.html'>IDEX.sol</a> (<a href='../dex/IDEX.sol'>src</a>) interface, and the DDC coin follows the <a href='../tokens/ITokenCC.sol.html'>ITokenCC.sol</a> (<a href='../tokens/ITokenCC.sol'>src</a>) interface.</p>
 <p><strong><em>IMPORTANT NOTE:</em></strong> These DEXes follow <a href='https://aaronbloomfield.github.io/ccc/slides/applications.html#/cpamm'>CPAMM</a>, so the amount they give you will depend on the <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span> values that they report. Thus, you will not get <em>exactly</em> a 1:4 trade from the d4 DEX, but instead will get what a <a href='https://aaronbloomfield.github.io/ccc/slides/applications.html#/cpamm'>CPAMM</a> trade will provide.</p>
-<p>The addresses of all these DEXes, as well as DDC, are on the Canvas landing page and are provided in an <code>arbitrage_config.py</code> file, which is available in Canvas’ Files.</p>
+<p>The addresses of all these DEXes, as well as DDC, are in the blockchain explorer’s links section and are provided in an <code>arbitrage_config.py</code> file, which is available in Canvas’ Files.</p>
 <h4 id='obtaining-ddc'>Obtaining DDC</h4>
 <p>The <a href='../tokens/ITokenCC.sol.html'>ITokenCC.sol</a> (<a href='../tokens/ITokenCC.sol'>src</a>) interface has a <code>requestFunds()</code> function, which you just had revert in the <a href='../tokens/index.html'>dApp Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment. For DDC, that function will pay you 100 DDC on each call. This will allow you to obtain DDC for use in your exchange testing.</p>
 <p>Of course, you can also exchange ether for DDC with any of the DEXes to obtain DDC.</p>
@@ -288,13 +276,13 @@ print(w3.is_connected())</code></pre>
 <p>These values can be changed by the course instructor, although that may take some time (i.e., it’s not instantaneous). However, you should use smaller amounts in your testing – don’t start by trading in a huge amount of ether, or all of your DDC, as this will cause you to hit your limits very quickly.</p>
 <p>Keep in mind that the difficult part of this assignment is making the calculations. During testing you can have your code make those calculations, print out the result (and lots of intermediate values), but not make the actual trade on the blockchain. Once you think you have it working, then call the code to actually make the trade.</p>
 <p>When you finally submit your solution, it should print out exactly one line, as described above, and make the trade.</p>
-<p>Lastly, these DEXes have the ability to be “turned off” so that any attempt at a transaction will revert with an appropriate error message (either “trading not currently enabled” or “this DEX has been destructed”). In the former case, it will be turned on again soon. In the latter case, the DEXes were likely replaced – check the Canvas landing page for new DEX (and DDC) addresses.</p>
+<p>Lastly, these DEXes have the ability to be “turned off” so that any attempt at a transaction will revert with an appropriate error message (either “trading not currently enabled” or “this DEX has been destructed”). In the former case, it will be turned on again soon. In the latter case, the DEXes were likely replaced – check the blockchain explorer’s links section for new DEX (and DDC) addresses.</p>
 <h4 id='usage'>Usage</h4>
-<p>The different DEX addresses are available from the Canvas landing page, in the <code>arbitrage_config.py</code> file in Canvas’ Files. The intent is for you to comment out different DEXes in that file so that you can test it with different pairs. The version of <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) in the github repo does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Canvas landing page does.</p>
+<p>The different DEX addresses are available from the blockchain explorer’s links section, in the <code>arbitrage_config.py</code> file in Canvas’ Files. The intent is for you to comment out different DEXes in that file so that you can test it with different pairs. The version of <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) in the github repo does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the blockchain explorer’s links section does.</p>
 <p>Let’s assume a standard price ratio of 1:10 (ETH:DDC). This means that the arbitrage_config.py file might have lines such as:</p>
 <pre><code>'price_eth': 100.00,
 'price_tc': 10.0, </code></pre>
-<p>This is as is provided in the arbitrage_config.py file on the Canvas landing page. Furthermore, the provided file has the <code>dex_addrs</code> list formatted as follows:</p>
+<p>This is as is provided in the arbitrage_config.py file in the blockchain explorer’s links section. Furthermore, the provided file has the <code>dex_addrs</code> list formatted as follows:</p>
 <pre><code>'dex_addrs': [
               '0x123456789abcdef0123456789abcdef123456789', # d4 dex
               '0x123456789abcdef0123456789abcdef123456789', # d6 dex
@@ -334,7 +322,7 @@ print(w3.is_connected())</code></pre>
 <li>Formally: <code>No profitable arbitrage trades available</code></li>
 </ul></li>
 </ul>
-</div><div id='treal-world-profit' class='tabcontent'></div><div id='treal-world-profit' class='tabcontent'><h3 id='real-world-profit'>Real-world profit?</h3>
+</div><div id='treal-world-profit' class='tabcontent'><h3 id='real-world-profit'>Real-world profit?</h3>
 <p>Could you use this program in the real world with real ETH?</p>
 <p>Well, sorta.</p>
 <p>The concepts are the same. But you would have to make a few changes:</p>
@@ -349,7 +337,7 @@ print(w3.is_connected())</code></pre>
 <li>You would likely be making <em>limit</em> orders instead of <em>market</em> orders (meaning you place an upper bound on the exchange rate when you place an order) – we have ignored limit orders in this course.</li>
 </ul>
 <p>But the concepts are certainly the same!</p>
-</div><div id='tnotes-and-hints' class='tabcontent'></div><div id='tnotes-and-hints' class='tabcontent'><h3 id='notes-and-hints'>Notes and Hints</h3>
+</div><div id='tnotes-and-hints' class='tabcontent'><h3 id='notes-and-hints'>Notes and Hints</h3>
 <ul>
 <li>Be sure to put the <code>chainId</code> value in <em>each</em> transaction that you call from Python – things don’t always work well otherwise. The sample transactions on the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>) page all have this value present. Be sure to set it to the correct value for the course blockchain!</li>
 <li>On Macs, there seems to be a problem using web3 via Python. When connecting to the course endpoint (the one with the <code>wss://</code> start of the URI), if you get an error such as: <code>ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED]</code>, try running going into your application/python_3.11 directory (might be different on your machine) and running the “Install Certificates.command” script</li>
@@ -361,7 +349,7 @@ print(w3.is_connected())</code></pre>
 <li>When working through the examples, and getting your code to run correctly, be sure that the amounts are all in the same unit (ether versus wei, etc.).</li>
 <li>If you are calling <code>estimate_gas()</code>, make sure you call it on the unsigned version of the transaction, not the signed version.</li>
 </ul>
-</div><div id='texecution-runs' class='tabcontent'></div><div id='texecution-runs' class='tabcontent'><h3 id='execution-runs'>Execution Runs</h3>
+</div><div id='texecution-runs' class='tabcontent'><h3 id='execution-runs'>Execution Runs</h3>
 <p>Below are some sample executions. Note that these runs print a <em>lot</em> of output so that you can understand what is going on. Your program should only print the one line via the <code>output()</code> function.</p>
 <p>For the execution runs, do not pay attention to the DEX addresses, as they will be different than what you are dealing with. Also, ignore the starting amount of ether or TCC – it is either sufficient for that transaction or zero, depending on the execution run.</p>
 <h4 id='all-dexes-sufficient-eth-no-tcc'>All DEXes, sufficient ETH, no TCC</h4>
@@ -537,7 +525,7 @@ Final ETH balance: 601.3386491876182
 Final TC balance: 350.5389517998
 Holdings before: $63,533.13 USD
 Holdings after: $63,639.25 USD</code></pre>
-</div><div id='tsubmission' class='tabcontent'></div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
+</div><div id='tsubmission' class='tabcontent'><h3 id='submission'>Submission</h3>
 <p>You will need to fill in the various values from this assignment into the <a href='arbitrage.py.html'>arbitrage.py</a> (<a href='arbitrage.py'>src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Python source code, are the only files that must be submitted. The ‘sanity_checks’ dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>The submission will take some time to run! It executes a number of runs of your program, and that can take a few minutes to complete.</p>
 <p>There is only one submission for this assignment.</p>
@@ -580,7 +568,6 @@ Holdings after: $63,639.25 USD</code></pre>
 </ul>
 <p>These should happen fairly quickly, as the Gradescope auto-grader can bypass the 60-second DEX waiting period.</p>
 </main>
-</div><script>document.getElementById('defaultOpen').click();</script></div><script>document.getElementById('defaultOpen').click();</script></body>
+</div><script>document.getElementById('defaultOpen').click();</script></body>
 </html>
-
 

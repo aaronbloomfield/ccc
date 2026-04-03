@@ -50,7 +50,7 @@ In this part, you will create a fungible token manager that follows the (enhance
 
 You can pick any name that you want.  The only restrictions are that you can not use the name of the course cryptocurrency or of an [existing cryptocurrency](https://coinmarketcap.com/).  Feel free to be funny and creative here, but please be appropriate in your selection.  Also keep in mind that, in this course, it is possible for somebody to figure out who deployed what cryptocurrency by analyzing the blockchain.  
 
-You will need to create both a name and an abbreviation.  The name can have spaces in it; only *alphanumeric* ASCII characters (this means no emojis).  Your abbreviation cannot already be taken by another student.  To see if an abbreviation has been taken, go to the URL (which is on the Canvas landing page) and try to upload an image with the appropriate name (`xyz.png`, for example).  That site will tell you if that name is already taken -- if so, then some other student has claimed that abbreviation.  To claim an abbreviation, upload such a named file.  You can put a placeholder file there while you work on the logo (below) and then upload a better image later.  Please make the file name be all lower case.
+You will need to create both a name and an abbreviation.  The name can have spaces in it; only *alphanumeric* ASCII characters (this means no emojis).  Your abbreviation cannot already be taken by another student.  To see if an abbreviation has been taken, go to the URL (which is in the blockchain explorer's links section) and try to upload an image with the appropriate name (`xyz.png`, for example).  That site will tell you if that name is already taken -- if so, then some other student has claimed that abbreviation.  To claim an abbreviation, upload such a named file.  You can put a placeholder file there while you work on the logo (below) and then upload a better image later.  Please make the file name be all lower case.
 
 Following in the precedent for currently existing cryptocurrencies, abbreviations are at most four characters, typically three, and possibly two.  You can have letters and numbers, but not symbols; the first character of the abbreviation must be a letter.  The abbreviation when representing the cryptocurrency is always rendered in upper case (i.e., "XYZ"), but the logo file name is all lower case with a ".png" extension (i.e., "xyz.png").
 
@@ -72,7 +72,7 @@ The logo itself needs to have the following requirements:
 
 We provide a [logo-template.png](logo-template.png) file as a starter file -- it is the correct size and has a transparent background outside the circle.  You can use a free program such as [GIMP](https://www.gimp.org/) to edit your program.  
 
-You will upload your logo to the URL given on the Canvas landing page.
+You will upload your logo to the URL given in the blockchain explorer's links section.
 
 #### Part 1, task 3: Review the starter code
 
@@ -141,7 +141,7 @@ Save the contract address it was deployed to, as you will need to submit those a
 
 #### Part 1, task 6: Send me some money!
 
-You need to transfer some amount of your cryptocurrency.  The address to transfer it to in on the Canvas landing page.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1,000,000,000 (which is $10 \ast 10^8$) total units.  Save the transaction hash of where you sent me your cryptocurrency, as you will need to submit that value.
+You need to transfer some amount of your cryptocurrency.  The address to transfer it to in in the blockchain explorer's links section.  This should be through the `transfer()` function (NOT `approve()`).  You should transfer me exactly 10.0 of your token cryptocurrency.  So if you have 8 decimals, then you will transfer 1,000,000,000 (which is $10 \ast 10^8$) total units.  Save the transaction hash of where you sent me your cryptocurrency, as you will need to submit that value.
 
 If you look at the blockchain explorer for the account you have to send the cryptocurrency to, it will tell you how much has been sent (formally, how much that account holds).  Note that if you deploy multiple contracts that use the same token cryptocurrency abbreviation, it will only consider the most recently deployed one -- which means if you redeploy the contract, you will have to re-send the cryptocurrency.
 
@@ -152,7 +152,7 @@ In this part, you will create a manager for non-fungible tokens (NFT) that follo
 
 #### Part 2, task 1: NFT images
 
-You will be creating three images for NFTs for this assignment.  The images should be uploaded to the URL provided on the Canvas landing page.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  Only those in this course can view those files -- but that means anybody in the course can view it.
+You will be creating three images for NFTs for this assignment.  The images should be uploaded to the URL provided in the blockchain explorer's links section.  Note that you can upload a file into that folder, but once uploaded you can not edit it or delete it -- this was done to mirror the fact that you can't delete images from the Internet once they are placed on the web.  Only those in this course can view those files -- but that means anybody in the course can view it.
 
 All image file names should start with your userid and an underscore: `mst3k_foo.jpg`.  You will need three such images.  As long as the file name starts with your userid and an underscore, we don't really care what (appropriate) alphanumeric string the rest of the file name is.  Only JPEG (.jpg), PNG (.png), and WEBP (.webp) images, please.
 
@@ -173,7 +173,7 @@ Understand this: **IN THIS COURSE, OWNING THE NFT DOES NOT IMPLY OWNERSHIP OF TH
 
 Pick some fun or funny image.  You are welcome to pick one from Wikipedia or Reddit or similar.  Or memes.  But something appropriate.  And keep in mind that, like with NFTs on the real Ethereum blockchain, anybody can download the image.  Likewise, others will be able to determine who uploaded that image, since your userid will be at the start of the image file name.
 
-You will upload three such images to the URL given on the Canvas landing page.
+You will upload three such images to the URL given in the blockchain explorer's links section.
 
 #### Part 2, task 2: Review the starter code
 
@@ -250,7 +250,7 @@ The following are the functional requirements for the development of this contra
     - Your contract also extends `Context` through ERC721, but there are no `external` or `public` methods in `Context`, so there is no interface there to support.
 - Implementation of `tokenURI()`, which is inherited from `ERC721`
 	- It should revert if an invalid token ID is provided
-	- It should return the *full* URL of the file; the first part of that URL is the base URI from the Canvas landing page, and the last part of that URL is what was passed into `mintWithURI()`
+	- It should return the *full* URL of the file; the first part of that URL is the base URI from the blockchain explorer's links section, and the last part of that URL is what was passed into `mintWithURI()`
 	- This URL base should be hard-coded into the contract itself
 	- You can override the `_baseURI()` function from `ERC721`, and use that in a similar fashion to what is shown in the `tokenURI()` function in `ERC721`
 - Implementation of the `count()` function, which is just how many NFTs have been created by this contract
@@ -267,13 +267,13 @@ Save the contract address for the deployment, as you will need to submit it at t
 
 #### Part 2, task 6: Create two NFTs, and send me one
 
-You should create two NFTs with *your* deployed contract -- they should be the two of the images that you created, above.  You need to send me one of them -- the address to transfer it to in on the Canvas landing page.  You will need to note the tokenID of the two NFTs -- the one you sent me and the one you kept for yourself -- as you will need to submit those as well.  You are welcome to create more, if you would like, as long as the images for each are unique.  But we only need two for grading.
+You should create two NFTs with *your* deployed contract -- they should be the two of the images that you created, above.  You need to send me one of them -- the address to transfer it to in in the blockchain explorer's links section.  You will need to note the tokenID of the two NFTs -- the one you sent me and the one you kept for yourself -- as you will need to submit those as well.  You are welcome to create more, if you would like, as long as the images for each are unique.  But we only need two for grading.
 
 If you look at the blockchain explorer for the account you have to send the NFT to, it will tell you that the NFT is owned by that account.  Note that if you deploy multiple contracts that use the same token NFTManager abbreviation, it will only consider the most recently deployed one -- which means if you redeploy the contract, you will have to re-send the NFT.
 
 #### Part 2, task 7: Create one NFT on the course manager
 
-Create one NFT for yourself on the course-wide NFT manager, whose address is on the Canvas landing page.  This should be the third of the three images you created.  Save the token ID received, and the transaction hash from that transaction, as you will need to submit those values.  The course-wide NFT manager also follows the INFTManager interface.
+Create one NFT for yourself on the course-wide NFT manager, whose address is in the blockchain explorer's links section.  This should be the third of the three images you created.  Save the token ID received, and the transaction hash from that transaction, as you will need to submit those values.  The course-wide NFT manager also follows the INFTManager interface.
 
 
 
@@ -294,9 +294,9 @@ There are *five* forms of submission for this assignment; you must do all five.
 
 Submission 1: You must deploy the two smart contracts to our private Ethereum blockchain.  It's fine if you deploy it a few times to test it.  The contract addresses of these deployments are in the `tokens.py` file that you submit.
 
-Submission 2: You will need to upload your cryptocurrency logo (properly named!) to URLs provided on the Canvas landing page.  Note that the logo for your cryptocurrency and the NFT images are uploaded to different URLs!
+Submission 2: You will need to upload your cryptocurrency logo (properly named!) to URLs provided in the blockchain explorer's links section.  Note that the logo for your cryptocurrency and the NFT images are uploaded to different URLs!
 
-Submission 3: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is on the Canvas landing page.  The transaction hashes of these go into the `tokens.py` file.
+Submission 3: You need to send me exactly 10.0 of your token cryptocurrency, and also one of your NFTs.  The address to send that to is in the blockchain explorer's links section.  The transaction hashes of these go into the `tokens.py` file.
 
 Submission 4: You need to create one NFT on the course-wide NFT manager, and two on your NFTManager.
 

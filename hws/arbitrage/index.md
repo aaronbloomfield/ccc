@@ -104,7 +104,7 @@ The code above will connect either through a local geth.ipc endpoint or a server
 - If the `connection_is_ipc` value is `True`, then the `connection_uri` value will have the form `/path/to/geth.ipc`
 - If the `connection_is_ipc` value is `False`, then the `connection_uri` value will have the form `wss://server.univeristy.edu/path/to/geth`
 
-The value for the second one is provided on the Canvas landing page, and in the provided `arbitrage_config.py` file.
+The value for the second one is provided in the blockchain explorer's links section, and in the provided `arbitrage_config.py` file.
 
 ### Market Theory
 
@@ -199,7 +199,7 @@ Each DEX will have to be queried to get values for $x$, $y$, and $k$; from this,
 #### Values provided
 
 
-The program will import an `arbitrage_config.py` file to provide many of the values, a sample of which is shown below.  The correct file for this semester is available on the Canvas landing page.
+The program will import an `arbitrage_config.py` file to provide many of the values, a sample of which is shown below.  The correct file for this semester is available in the blockchain explorer's links section.
 
 ```
 config = {
@@ -299,7 +299,7 @@ To see if your program makes the right decision, you can hard-code the $x$, $y$,
 
 The geth-config.toml file that you used in the [HW S4: Private Ethereum Blockchain](../ethprivate/index.html) ([md](../ethprivate/index.md)) assignment opens up a web socket.  Thus, you can connect in two ways:
 
-- Use the course connection (which is on the Canvas landing page) or `ws://localhost:8546`; you have to set `connection_is_ipc` to `False` for this
+- Use the course connection (which is in the blockchain explorer's links section) or `ws://localhost:8546`; you have to set `connection_is_ipc` to `False` for this
 - Use your geth.ipc file, but then you have to set `connection_is_ipc` to `True`.
 
 Which one you use must be read from the `arbitrage_config.py` file so that we can modify them when we test your submission.
@@ -321,7 +321,7 @@ Just to clarify: all six of these DEXes exchange the same DDC coin, but at diffe
 
 ***IMPORTANT NOTE:*** These DEXes follow [CPAMM](https://aaronbloomfield.github.io/ccc/slides/applications.html#/cpamm), so the amount they give you will depend on the $x$, $y$, and $k$ values that they report.  Thus, you will not get *exactly* a 1:4 trade from the d4 DEX, but instead will get what a [CPAMM](https://aaronbloomfield.github.io/ccc/slides/applications.html#/cpamm) trade will provide.
 
-The addresses of all these DEXes, as well as DDC, are on the Canvas landing page and are provided in an `arbitrage_config.py` file, which is available in Canvas' Files.
+The addresses of all these DEXes, as well as DDC, are in the blockchain explorer's links section and are provided in an `arbitrage_config.py` file, which is available in Canvas' Files.
 
 #### Obtaining DDC
 
@@ -343,11 +343,11 @@ Keep in mind that the difficult part of this assignment is making the calculatio
 
 When you finally submit your solution, it should print out exactly one line, as described above, and make the trade.
 
-Lastly, these DEXes have the ability to be "turned off" so that any attempt at a transaction will revert with an appropriate error message (either "trading not currently enabled" or "this DEX has been destructed").  In the former case, it will be turned on again soon.  In the latter case, the DEXes were likely replaced -- check the Canvas landing page for new DEX (and DDC) addresses.
+Lastly, these DEXes have the ability to be "turned off" so that any attempt at a transaction will revert with an appropriate error message (either "trading not currently enabled" or "this DEX has been destructed").  In the former case, it will be turned on again soon.  In the latter case, the DEXes were likely replaced -- check the blockchain explorer's links section for new DEX (and DDC) addresses.
 
 #### Usage
 
-The different DEX addresses are available from the Canvas landing page, in the `arbitrage_config.py` file in Canvas' Files.  The intent is for you to comment out different DEXes in that file so that you can test it with different pairs.  The version of [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) in the github repo does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the Canvas landing page does.
+The different DEX addresses are available from the blockchain explorer's links section, in the `arbitrage_config.py` file in Canvas' Files.  The intent is for you to comment out different DEXes in that file so that you can test it with different pairs.  The version of [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) in the github repo does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the blockchain explorer's links section does.
 
 Let's assume a standard price ratio of 1:10 (ETH:DDC).  This means that the arbitrage_config.py file might have lines such as:
 
@@ -356,7 +356,7 @@ Let's assume a standard price ratio of 1:10 (ETH:DDC).  This means that the arbi
 'price_tc': 10.0, 
 ```
 
-This is as is provided in the arbitrage_config.py file on the Canvas landing page.  Furthermore, the provided file has the `dex_addrs` list formatted as follows:
+This is as is provided in the arbitrage_config.py file in the blockchain explorer's links section.  Furthermore, the provided file has the `dex_addrs` list formatted as follows:
 
 ```
 'dex_addrs': [
