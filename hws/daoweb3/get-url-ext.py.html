@@ -9,7 +9,7 @@ http://www.gnu.org/software/src-highlite">
 <title>get-url-ext.py</title>
 </head>
 <body bgcolor="white">
-<pre><tt><i><font color="#9A1900"># to run this, first: `pip install web3 pysha3`</font></i>
+<main><pre><tt><i><font color="#9A1900"># to run this, first: `pip install web3 pysha3`</font></i>
 <b><font color="#000080">import</font></b> sys<font color="#990000">,</font> web3<font color="#990000">,</font> sha3
 
 <i><font color="#9A1900"># sanity checks</font></i>
@@ -21,6 +21,6 @@ checksummed <font color="#990000">=</font> web3<font color="#990000">.</font>Web
 hash <font color="#990000">=</font> sha3<font color="#990000">.</font><b><font color="#000000">keccak_256</font></b><font color="#990000">(</font><b><font color="#000000">bytes</font></b><font color="#990000">(</font>checksummed<font color="#990000">,</font><font color="#FF0000">'ASCII'</font><font color="#990000">))</font>
 suffix <font color="#990000">=</font> hash<font color="#990000">.</font><b><font color="#000000">hexdigest</font></b><font color="#990000">()[:</font><font color="#993399">8</font><font color="#990000">]</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"dao_"</font><font color="#990000">+</font>suffix<font color="#990000">+</font><font color="#FF0000">".html"</font><font color="#990000">)</font>
-</tt></pre>
+</tt></pre></main>
 </body>
 </html>

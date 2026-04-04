@@ -7,12 +7,12 @@ endif
 doc:
 	touch index.md
 	cd ../..; make -s
-	source-highlight -t 4 -s cpp -d *.sol
-	source-highlight -d *.py
-	$(SED) s/"<html>"/"<html lang='en'>"/g *.sol.html *.py.html
-	/bin/rm -f *.todel
 	-solc --abi IDAO.sol > IDAO.abi.txt
 	../maketabs.py
+	make source
+
+source:
+	custom-source-highlight.sh *.py *.sol
 
 sync:
 	/bin/cp -f ../tokens/IERC165.sol .

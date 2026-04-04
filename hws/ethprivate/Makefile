@@ -7,7 +7,8 @@ endif
 doc:
 	touch index.md
 	cd ../..; make -s
-	source-highlight -d ethprivate.py
-	$(SED) s/"<html>"/"<html lang='en'>"/g *.py.html
-	/bin/rm -f *.todel
 	../maketabs.py
+	make source
+
+source:
+	custom-source-highlight.sh *.py

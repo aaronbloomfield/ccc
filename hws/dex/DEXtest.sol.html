@@ -9,7 +9,7 @@ http://www.gnu.org/software/src-highlite">
 <title>DEXtest.sol</title>
 </head>
 <body bgcolor="white">
-<pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
 
 <i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repository,</font></i>
 <i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
@@ -38,8 +38,8 @@ contract DEXtest <font color="#008080">is</font> IERC20Receiver <font color="#FF
         <i><font color="#9A1900">// TCC to this contract</font></i>
     <font color="#FF0000">}</font>
 
-    <font color="#008080">function</font> <b><font color="#000000">test</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#FF0000">{</font>
-        <b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">==</font> <font color="#993399">13</font> ether<font color="#990000">,</font> <font color="#FF0000">"Must call test() with 13 ether"</font><font color="#990000">);</font>
+	<font color="#008080">function</font> <b><font color="#000000">test</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#FF0000">{</font>
+ 		<b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">==</font> <font color="#993399">13</font> ether<font color="#990000">,</font> <font color="#FF0000">"Must call test() with 13 ether"</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Step 1: deploy the ether price oracle</font></i>
         <font color="#008080">IEtherPriceOracle</font> pricer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EtherPriceOracleConstant</font></b><font color="#990000">();</font>
@@ -81,6 +81,6 @@ contract DEXtest <font color="#008080">is</font> IERC20Receiver <font color="#FF
  
     <b><font color="#000000">receive</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable <font color="#FF0000">{</font> <font color="#FF0000">}</font> <i><font color="#9A1900">// see note in the HW description</font></i>
 
-<font color="#FF0000">}</font></tt></pre>
+<font color="#FF0000">}</font></tt></pre></main>
 </body>
 </html>

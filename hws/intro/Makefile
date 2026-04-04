@@ -7,7 +7,8 @@ endif
 doc:
 	touch index.md
 	cd ../..; make -s
-	source-highlight *.sh *.py *.java
-	$(SED) s/"<html>"/"<html lang='en'>"/g *.sh.html *.py.html *.java.html
-	/bin/rm -f *.todel
 	../maketabs.py
+	make source
+
+source:
+	custom-source-highlight.sh *.py *.java *.sh

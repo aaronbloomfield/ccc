@@ -5,8 +5,9 @@ else
 endif
 
 doc:
-	source-highlight -t 4 -s cpp -d *.sol
-	$(SED) s/"<html>"/"<html lang='en'>"/g *.sol.html
-	/bin/rm -f *.todel
 	solc --abi IDebts.sol > IDebts.sol.abi
 	/bin/mv -f IDebts.sol.abi IDebts.sol.abi.txt
+	make source
+
+source:
+	custom-source-highlight.sh *.sol

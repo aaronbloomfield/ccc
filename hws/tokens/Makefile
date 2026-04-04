@@ -10,14 +10,14 @@ WGET = wget
 doc:
 	touch index.md
 	cd ../..; make -s
-	source-highlight -s cpp -d *.sol
 	dot -Tsvg -O inheritance.dot
 	/bin/mv -f inheritance.dot.svg inheritance.dot.1.svg
-	source-highlight -d tokens.py
-	$(SED) s/"<html>"/"<html lang='en'>"/g *.sol.html tokens.py.html
-	/bin/rm -f *.todel
 	-solc --abi INFTManager.sol > INFTManager.abi
 	../maketabs.py
+	make source
+
+source:
+	custom-source-highlight.sh *.py *.sol
 
 test:
 	solc ERC20.sol
@@ -53,9 +53,7 @@ sync:
 	sed -i s_"\.\./../interfaces"_._g ERC20.sol ERC721.sol ERC721Utils.sol
 	sed -i s_"\.\./\."_._g ERC20.sol ERC721Utils.sol
 	sed -i s_"\.\."_._g ERC20.sol ERC721Utils.sol Math.sol
-	source-highlight -s cpp -d *.sol
-	$(SED) s/"<html>"/"<html lang='en'>"/g *.sol.html tokens.py.html
-	/bin/rm -f *.todel
+	make source
 
 zip:
 	/bin/rm -f sol-includes.zip TokenCC.sol* NFTManager.sol* NFTmanager.sol* IERC20Receiver.sol
