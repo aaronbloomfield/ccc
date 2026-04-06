@@ -270,7 +270,7 @@ It's "cleaning" or "laundering" the money
 
 <!-- .slide: class="cclogo-slide" -->
 ## Recursive Send Attack
-- We saw this with The &ETH;AO on [![eth logo](../slides/images/logos/eth-coin-symbol.svg){alt='eth logo'}](https://coinmarketcap.com/currencies/ethereum/) Ethereum
+- We saw this with The &ETH;AO on [![eth logo](../slides/images/logos/eth-coin-symbol.svg)](https://coinmarketcap.com/currencies/ethereum/) Ethereum
   - A [recursive send](applications.html#/daobug): it zero'ed the balance *before* the amount was paid, so having the `receive()` function of a contract call it over and over causes much more ether to be paid out than intended
   - To help prevent against re-entrancy attacks, there is a limited amount of gas allowed for paying a contract or account
     - Say, 2,300 gas
