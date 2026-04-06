@@ -20,14 +20,14 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
-userid <font color="#990000">=</font> <font color="#FF0000">"mst3k"</font>
-name <font color="#990000">=</font> <font color="#FF0000">"Jane Doe"</font>
+userid <font color="#990000">=</font> <font color="#EF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#EF0000">"Jane Doe"</font>
 
 
 <i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
 <i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
 <i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
-eth_coinbase <font color="#990000">=</font> <font color="#FF0000">""</font>
+eth_coinbase <font color="#990000">=</font> <font color="#EF0000">""</font>
 
 
 <i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
@@ -41,7 +41,7 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># contract is assumed to be with this one. The address does not need to</font></i>
 	<i><font color="#9A1900"># be in checksummed form.  It must have been deployed by the eth_coinbase</font></i>
 	<i><font color="#9A1900"># address, above.</font></i>
-	<font color="#FF0000">'poll'</font><font color="#990000">:</font> <font color="#FF0000">''</font><font color="#990000">,</font>
+	<font color="#EF0000">'poll'</font><font color="#990000">:</font> <font color="#EF0000">''</font><font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -52,22 +52,22 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># This is the transaction hash where you voted on your own deployed</font></i>
 	<i><font color="#9A1900"># Polls contract in part 3 (deployment) of the assignment.</font></i>
-	<font color="#FF0000">'txn_hash_vote_yours'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#EF0000">'txn_hash_vote_yours'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the transaction hash where you voted on the course Polls</font></i>
 	<i><font color="#9A1900"># contract in part 5 (vote) of the assignment.</font></i>
-	<font color="#FF0000">'txn_hash_vote_course'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#EF0000">'txn_hash_vote_course'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Are you using the Desktop version of Remix?  If so, then True.  If you</font></i>
 	<i><font color="#9A1900"># are using the web version at https://remix.ethereum.org, then False.</font></i>
 	<i><font color="#9A1900"># This is just so we can see how many students are using each one.  If</font></i>
 	<i><font color="#9A1900"># you used both, choose this optoin based on which one you expect to use</font></i>
 	<i><font color="#9A1900"># more often in the future.</font></i>
-	<font color="#FF0000">'using_desktop_remix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#EF0000">'using_desktop_remix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># What was the purpose of your poll?  You should just copy-and-paste the</font></i>
 	<i><font color="#9A1900"># (string) value of the `purpose` variable from your Poll.sol here.</font></i>
-	<font color="#FF0000">'poll_purpose'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#EF0000">'poll_purpose'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -81,31 +81,31 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># Did you change the various choices in the `addChoice()` calls in the</font></i>
 	<i><font color="#9A1900"># constructor?  This is from the 'code base' section of the assignment.</font></i>
-	<font color="#FF0000">'make_changes_to_addchoice'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#EF0000">'make_changes_to_addchoice'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you change the value of the `purpose` variable in the code?  This</font></i>
 	<i><font color="#9A1900"># is from the 'code base' section of the assignment.</font></i>
-	<font color="#FF0000">'make_changes_to_purpose'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#EF0000">'make_changes_to_purpose'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you try out the unit testing section of the homework?  This is from</font></i>
 	<i><font color="#9A1900"># part 2 (testing) of the assignment.</font></i>
-	<font color="#FF0000">'tried_out_unit_testing'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#EF0000">'tried_out_unit_testing'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you deploy your Polls contract?  This is from part 3</font></i>
 	<i><font color="#9A1900"># (deployment) of the assignment.</font></i>
-	<font color="#FF0000">'deployed_choices_contract'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#EF0000">'deployed_choices_contract'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you vote on your own Polls contract?  This is from part 3</font></i>
 	<i><font color="#9A1900"># (deployment) of the assignment.</font></i>
-	<font color="#FF0000">'voted_on_your_poll'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#EF0000">'voted_on_your_poll'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you view the web page that reads from a Polls contract?  This is</font></i>
 	<i><font color="#9A1900"># from part 4 (web interface) of the assignment.</font></i>
-	<font color="#FF0000">'explored_web_interface'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#EF0000">'explored_web_interface'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you vote on the course-wide Polls contract?  This is from part 5</font></i>
 	<i><font color="#9A1900"># (vote) of the assignment.</font></i>
-	<font color="#FF0000">'voted_on_course_poll'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#EF0000">'voted_on_course_poll'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -116,17 +116,17 @@ comments <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
 	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#FF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#EF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
 	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
 	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#FF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#EF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
 	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
 	<i><font color="#9A1900"># None).</font></i>
-	<font color="#FF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#EF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre></main>
 </body>

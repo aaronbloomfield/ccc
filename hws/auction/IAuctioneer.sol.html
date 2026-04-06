@@ -16,7 +16,7 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
-import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">"./IERC165.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// Some general notes:</font></i>
 <i><font color="#9A1900">//</font></i>
@@ -29,10 +29,10 @@ import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font
 <i><font color="#9A1900">//   notes</font></i>
 
 
-interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
+interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#EF0000">{</font>
 
     <i><font color="#9A1900">// Holds the information for each auction</font></i>
-    <b><font color="#0000FF">struct</font></b> <font color="#008080">Auction</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">Auction</font> <font color="#EF0000">{</font>
         <font color="#008080">uint</font> id<font color="#990000">;</font>            <i><font color="#9A1900">// the auction id</font></i>
         <font color="#008080">uint</font> num_bids<font color="#990000">;</font>      <i><font color="#9A1900">// how many bids have been placed</font></i>
         <font color="#008080">string</font> data<font color="#990000">;</font>        <i><font color="#9A1900">// a text description of the auction or NFT data</font></i>
@@ -41,8 +41,8 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
         <font color="#008080">address</font> initiator<font color="#990000">;</font>  <i><font color="#9A1900">// who started the auction</font></i>
         <font color="#008080">uint</font> nftid<font color="#990000">;</font>         <i><font color="#9A1900">// the NFT token ID</font></i>
         <font color="#008080">uint</font> endTime<font color="#990000">;</font>       <i><font color="#9A1900">// when the auction ends</font></i>
-        <font color="#009900">bool</font> active<font color="#990000">;</font>        <i><font color="#9A1900">// if the auction is active</font></i>
-    <font color="#FF0000">}</font>
+        <font color="#008A00">bool</font> active<font color="#990000">;</font>        <i><font color="#9A1900">// if the auction is active</font></i>
+    <font color="#EF0000">}</font>
 
 
     <i><font color="#9A1900">// Constructor: while constructors are never listed in an interface, your</font></i>
@@ -77,7 +77,7 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
     <i><font color="#9A1900">// this be a public mapping (otherwise you run into problems</font></i>
     <i><font color="#9A1900">// with "Auction memory" versus "Auction storage")</font></i>
     <font color="#008080">function</font> <b><font color="#000000">auctions</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> external view
-            <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">,</font> uint<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> uint<font color="#990000">,</font> address<font color="#990000">,</font> address<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">);</font>
+            <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">,</font> uint<font color="#990000">,</font> <font color="#008080">string</font> memory<font color="#990000">,</font> uint<font color="#990000">,</font> address<font color="#990000">,</font> address<font color="#990000">,</font> uint<font color="#990000">,</font> uint<font color="#990000">,</font> <font color="#008A00">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">// Who is the deployer of this contract</font></i>
     <font color="#008080">function</font> <b><font color="#000000">deployer</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">);</font>
@@ -152,7 +152,7 @@ interface IAuctioneer <font color="#008080">is</font> IERC165 <font color="#FF00
     <i><font color="#9A1900">// existing highest bid; the ID is the auction ID.</font></i>
     <font color="#008080">event</font> <b><font color="#000000">higherBidEvent</font></b> <font color="#990000">(</font>uint <font color="#008080">indexed</font> id<font color="#990000">);</font>
 
-<font color="#FF0000">}</font>
+<font color="#EF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

@@ -16,10 +16,10 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
-import <font color="#FF0000">"./IPoll.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">"./IPoll.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// A smart contract to allow voting on something.</font></i>
-contract Poll <font color="#008080">is</font> IPoll <font color="#FF0000">{</font>
+contract Poll <font color="#008080">is</font> IPoll <font color="#EF0000">{</font>
 
 	<i><font color="#9A1900">// struct Choice is defined in IPoll.sol, so we can't re-define</font></i>
 	<i><font color="#9A1900">// it here, and is defined as:</font></i>
@@ -40,7 +40,7 @@ contract Poll <font color="#008080">is</font> IPoll <font color="#FF0000">{</fon
 	<i><font color="#9A1900">// means that a getter function called voted() will also be defined.  As</font></i>
 	<i><font color="#9A1900">// this voted() function is implementing the one specified in</font></i>
 	<i><font color="#9A1900">// IPoll.sol, we have to put the 'override' keyword here.</font></i>
-	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> <font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> voted<font color="#990000">;</font>
+	<b><font color="#000000">mapping</font></b> <font color="#990000">(</font>address <font color="#990000">=&gt;</font> <font color="#008A00">bool</font><font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> voted<font color="#990000">;</font>
 
 	<i><font color="#9A1900">// A mapping to store the various chioces.  Because the type of this</font></i>
 	<i><font color="#9A1900">// mapping (Chioce storage) is ever so slightly different than what is</font></i>
@@ -53,9 +53,9 @@ contract Poll <font color="#008080">is</font> IPoll <font color="#FF0000">{</fon
 	<i><font color="#9A1900">// difference (i.e., that "Choices storage" != "Choices memory").  As</font></i>
 	<i><font color="#9A1900">// this choices() function is implementing the one specified in</font></i>
 	<i><font color="#9A1900">// IPoll.sol, we have to put the 'override' keyword here.</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">choices</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Choice</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+	<font color="#008080">function</font> <b><font color="#000000">choices</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">override</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">Choice</font> memory<font color="#990000">)</font> <font color="#EF0000">{</font>
 		<b><font color="#0000FF">return</font></b> _choices<font color="#990000">[</font>i<font color="#990000">];</font>
-	<font color="#FF0000">}</font>
+	<font color="#EF0000">}</font>
 
 	<i><font color="#9A1900">// How many choices have been added?  It's public, so we get a free getter</font></i>
 	<i><font color="#9A1900">// function called num_choices().  As this num_choices() function is</font></i>
@@ -67,58 +67,58 @@ contract Poll <font color="#008080">is</font> IPoll <font color="#FF0000">{</fon
 	<i><font color="#9A1900">// public, so we get a free getter function called purpose().  As this</font></i>
 	<i><font color="#9A1900">// purpose() function is implementing the one specified in IPoll.sol, we</font></i>
 	<i><font color="#9A1900">// have to put the 'override' keyword here.</font></i>
-	string <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> <font color="#008080">constant</font> purpose <font color="#990000">=</font> <font color="#FF0000">"Vote on your favorite color"</font><font color="#990000">;</font>
+	string <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> <font color="#008080">constant</font> purpose <font color="#990000">=</font> <font color="#EF0000">"Vote on your favorite color"</font><font color="#990000">;</font>
 
 	<i><font color="#9A1900">// The constructor, which runs when it's first deployed to the blockchain;</font></i>
 	<i><font color="#9A1900">// this adds our voting choices.</font></i>
 	<i><font color="#9A1900">// YOU HAVE TO CHANGE THE CODE HEREIN -- make up your own choices</font></i>
-	<b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
-		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"red"</font><font color="#990000">);</font>
-		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"orange"</font><font color="#990000">);</font>
-		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"yellow"</font><font color="#990000">);</font>
-		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"green"</font><font color="#990000">);</font>
-		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"blue"</font><font color="#990000">);</font>
-		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#FF0000">"purple"</font><font color="#990000">);</font>
-	<font color="#FF0000">}</font>
+	<b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#EF0000">{</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#EF0000">"red"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#EF0000">"orange"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#EF0000">"yellow"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#EF0000">"green"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#EF0000">"blue"</font><font color="#990000">);</font>
+		<b><font color="#000000">addChoice</font></b><font color="#990000">(</font><font color="#EF0000">"purple"</font><font color="#990000">);</font>
+	<font color="#EF0000">}</font>
 
 	<i><font color="#9A1900">// The function that adds a choice to be voted upon.  It implements the</font></i>
 	<i><font color="#9A1900">// function of the same name from IPoll.sol, so we put</font></i>
 	<i><font color="#9A1900">// the 'override' keyword here.</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">addChoice</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
+	<font color="#008080">function</font> <b><font color="#000000">addChoice</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> <font color="#EF0000">{</font>
 		_choices<font color="#990000">[</font>num_choices<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Choice</font></b><font color="#990000">(</font>num_choices<font color="#990000">,</font> _name<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
 		<font color="#008080">emit</font> <b><font color="#000000">choiceAddedEvent</font></b><font color="#990000">(</font>num_choices<font color="#990000">);</font>
 		num_choices<font color="#990000">++;</font>
-	<font color="#FF0000">}</font>
+	<font color="#EF0000">}</font>
 
 	<i><font color="#9A1900">// The function that allows one to vote; it checks if that account has</font></i>
 	<i><font color="#9A1900">// already voted, and prevents double voting.  It implements the function</font></i>
 	<i><font color="#9A1900">// of the same name from IPoll.sol, so we put the 'override'</font></i>
 	<i><font color="#9A1900">// keyword here.</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">vote</font></b> <font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> <font color="#FF0000">{</font>
-		<b><font color="#000000">require</font></b><font color="#990000">(!</font>voted<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">],</font> <font color="#FF0000">"sender has already voted"</font><font color="#990000">);</font>
-		<b><font color="#000000">require</font></b><font color="#990000">(</font>_id <font color="#990000">&gt;=</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> _id <font color="#990000">&lt;</font> num_choices<font color="#990000">,</font> <font color="#FF0000">"invalid vote selection"</font><font color="#990000">);</font>
+	<font color="#008080">function</font> <b><font color="#000000">vote</font></b> <font color="#990000">(</font><font color="#008080">uint</font> _id<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">override</font></b> <font color="#EF0000">{</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(!</font>voted<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">],</font> <font color="#EF0000">"sender has already voted"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(</font>_id <font color="#990000">&gt;=</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> _id <font color="#990000">&lt;</font> num_choices<font color="#990000">,</font> <font color="#EF0000">"invalid vote selection"</font><font color="#990000">);</font>
 		voted<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 		_choices<font color="#990000">[</font>_id<font color="#990000">].</font>votes<font color="#990000">++;</font>
 		<font color="#008080">emit</font> <b><font color="#000000">votedEvent</font></b><font color="#990000">(</font>_id<font color="#990000">);</font>
-	<font color="#FF0000">}</font>
+	<font color="#EF0000">}</font>
 
 	<i><font color="#9A1900">// This function is, as its name implies, unnecessary; it is there to show</font></i>
 	<i><font color="#9A1900">// a read-only function -- meaning one that does not modify the state of</font></i>
 	<i><font color="#9A1900">// the object at all.  As it is not defined in IPoll.sol, we do</font></i>
 	<i><font color="#9A1900">// not need the 'override' keyword here.</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">unnecessaryFunction</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#FF0000">{</font>
+	<font color="#008080">function</font> <b><font color="#000000">unnecessaryFunction</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#EF0000">{</font>
 		<b><font color="#0000FF">return</font></b> _choices<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>name<font color="#990000">;</font>
-	<font color="#FF0000">}</font>
+	<font color="#EF0000">}</font>
 
 	<i><font color="#9A1900">// We'll see the necessity and use of this function later, when we talk</font></i>
 	<i><font color="#9A1900">// about Tokens.  For now, keep this function exactly as-is.  As it is</font></i>
 	<i><font color="#9A1900">// not defined in IPoll.sol, we do not need the 'override'</font></i>
 	<i><font color="#9A1900">// keyword here.</font></i>
-	<font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <b><font color="#0000FF">override</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+	<font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <b><font color="#0000FF">override</font></b> <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#EF0000">{</font>
 		<b><font color="#0000FF">return</font></b> interfaceId <font color="#990000">==</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>IPoll<font color="#990000">).</font>interfaceId <font color="#990000">||</font> interfaceId <font color="#990000">==</font> <font color="#993399">0x01ffc9a7</font><font color="#990000">;</font>
-	<font color="#FF0000">}</font>
+	<font color="#EF0000">}</font>
 
-<font color="#FF0000">}</font>
+<font color="#EF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

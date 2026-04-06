@@ -14,28 +14,28 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">&gt;=</font><font color="#993399">0.6</font><font color="#990000">.</font><font color="#993399">2</font><font color="#990000">;</font>
 
-import <font color="#FF0000">{</font>IERC721<font color="#FF0000">}</font> from <font color="#FF0000">"./IERC721.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">{</font>IERC721<font color="#EF0000">}</font> from <font color="#EF0000">"./IERC721.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900"> * </font></i><font color="#009900">@title</font><i><font color="#9A1900"> ERC-721 Non-Fungible Token Standard, optional metadata extension</font></i>
-<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> See </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-721</font></u>
+<i><font color="#9A1900"> * </font></i><font color="#008A00">@title</font><i><font color="#9A1900"> ERC-721 Non-Fungible Token Standard, optional metadata extension</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> See </font></i><u><font color="#0000FF">https://eips.ethereum.org/EIPS/eip-721</font></u>
 <i><font color="#9A1900"> */</font></i>
-interface IERC721Metadata <font color="#008080">is</font> IERC721 <font color="#FF0000">{</font>
+interface IERC721Metadata <font color="#008080">is</font> IERC721 <font color="#EF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the token collection name.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the token collection name.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the token collection symbol.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the token collection symbol.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
 
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Returns the Uniform Resource Identifier (URI) for `tokenId` token.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the Uniform Resource Identifier (URI) for `tokenId` token.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">tokenURI</font></b><font color="#990000">(</font><font color="#008080">uint256</font> tokenId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
-<font color="#FF0000">}</font>
+<font color="#EF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

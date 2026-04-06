@@ -16,52 +16,52 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
-import <font color="#FF0000">"./DEX.sol"</font><font color="#990000">;</font>
-import <font color="#FF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
-import <font color="#FF0000">"./EtherPriceOracleConstant.sol"</font><font color="#990000">;</font>
-import <font color="#FF0000">"./IERC20Receiver.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">"./DEX.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">"./EtherPriceOracleConstant.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">"./IERC20Receiver.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// See the homework description for how to use this program</font></i>
 
-contract DEXtest <font color="#008080">is</font> IERC20Receiver <font color="#FF0000">{</font>
+contract DEXtest <font color="#008080">is</font> IERC20Receiver <font color="#EF0000">{</font>
 
     TokenCC <font color="#008080">public</font> tc<font color="#990000">;</font>
     DEX <font color="#008080">public</font> dex<font color="#990000">;</font>
 
-    <b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#FF0000">{</font>
+    <b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#EF0000">{</font>
         tc <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">TokenCC</font></b><font color="#990000">();</font>
         dex <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">DEX</font></b><font color="#990000">();</font>
-    <font color="#FF0000">}</font>
+    <font color="#EF0000">}</font>
 
-    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">uint</font> amount<font color="#990000">,</font> <font color="#008080">address</font> erc20<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">uint</font> amount<font color="#990000">,</font> <font color="#008080">address</font> erc20<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#EF0000">{</font>
         <i><font color="#9A1900">// implement as needed; you have to put code in here if you transfer</font></i>
         <i><font color="#9A1900">// TCC to this contract</font></i>
-    <font color="#FF0000">}</font>
+    <font color="#EF0000">}</font>
 
-	<font color="#008080">function</font> <b><font color="#000000">test</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#FF0000">{</font>
- 		<b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">==</font> <font color="#993399">13</font> ether<font color="#990000">,</font> <font color="#FF0000">"Must call test() with 13 ether"</font><font color="#990000">);</font>
+	<font color="#008080">function</font> <b><font color="#000000">test</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#EF0000">{</font>
+ 		<b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">==</font> <font color="#993399">13</font> ether<font color="#990000">,</font> <font color="#EF0000">"Must call test() with 13 ether"</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Step 1: deploy the ether price oracle</font></i>
         <font color="#008080">IEtherPriceOracle</font> pricer <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EtherPriceOracleConstant</font></b><font color="#990000">();</font>
 
         <i><font color="#9A1900">// Step 1 tests: DEX is deployed</font></i>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">k</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"k value not 0 after DEX creation()"</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">x</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"x value not 0 after DEX creation()"</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">y</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#FF0000">"y value not 0 after DEX creation()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">k</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#EF0000">"k value not 0 after DEX creation()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">x</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#EF0000">"x value not 0 after DEX creation()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">y</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#EF0000">"y value not 0 after DEX creation()"</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Step 2: createPool() is called with 10 (fake) ETH and 100 TC</font></i>
-        <font color="#009900">bool</font> success <font color="#990000">=</font> tc<font color="#990000">.</font><b><font color="#000000">approve</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font>dex<font color="#990000">),</font><font color="#993399">100</font><font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">());</font>
-        <b><font color="#000000">require</font></b> <font color="#990000">(</font>success<font color="#990000">,</font><font color="#FF0000">"Failed to approve TC before createPool()"</font><font color="#990000">);</font>
-        <b><font color="#0000FF">try</font></b> dex<font color="#990000">.</font>createPool<font color="#FF0000">{</font>value<font color="#990000">:</font> <font color="#993399">10</font> ether<font color="#FF0000">}</font><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1000</font><font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>tc<font color="#990000">),</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>pricer<font color="#990000">))</font> <font color="#FF0000">{</font>
+        <font color="#008A00">bool</font> success <font color="#990000">=</font> tc<font color="#990000">.</font><b><font color="#000000">approve</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font>dex<font color="#990000">),</font><font color="#993399">100</font><font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">());</font>
+        <b><font color="#000000">require</font></b> <font color="#990000">(</font>success<font color="#990000">,</font><font color="#EF0000">"Failed to approve TC before createPool()"</font><font color="#990000">);</font>
+        <b><font color="#0000FF">try</font></b> dex<font color="#990000">.</font>createPool<font color="#EF0000">{</font>value<font color="#990000">:</font> <font color="#993399">10</font> ether<font color="#EF0000">}</font><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1000</font><font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>tc<font color="#990000">),</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>pricer<font color="#990000">))</font> <font color="#EF0000">{</font>
             <i><font color="#9A1900">// do nothing</font></i>
-        <font color="#FF0000">}</font> <b><font color="#0000FF">catch</font></b> <b><font color="#000000">Error</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> reason<font color="#990000">)</font> <font color="#FF0000">{</font>
-            <b><font color="#000000">require</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> string<font color="#990000">.</font><b><font color="#000000">concat</font></b><font color="#990000">(</font><font color="#FF0000">"createPool() call reverted: "</font><font color="#990000">,</font>reason<font color="#990000">));</font>
-        <font color="#FF0000">}</font>
+        <font color="#EF0000">}</font> <b><font color="#0000FF">catch</font></b> <b><font color="#000000">Error</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> reason<font color="#990000">)</font> <font color="#EF0000">{</font>
+            <b><font color="#000000">require</font></b> <font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font> string<font color="#990000">.</font><b><font color="#000000">concat</font></b><font color="#990000">(</font><font color="#EF0000">"createPool() call reverted: "</font><font color="#990000">,</font>reason<font color="#990000">));</font>
+        <font color="#EF0000">}</font>
         
         <i><font color="#9A1900">// Step 2 tests</font></i>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">k</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1e21</font> <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#FF0000">"k value not correct after createPool()"</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">x</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">10</font> <font color="#990000">*</font> <font color="#993399">1e18</font><font color="#990000">,</font> <font color="#FF0000">"x value not correct after createPool()"</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">y</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">100</font> <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#FF0000">"y value not correct after createPool()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">k</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1e21</font> <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#EF0000">"k value not correct after createPool()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">x</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">10</font> <font color="#990000">*</font> <font color="#993399">1e18</font><font color="#990000">,</font> <font color="#EF0000">"x value not correct after createPool()"</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>dex<font color="#990000">.</font><b><font color="#000000">y</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">100</font> <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">**</font>tc<font color="#990000">.</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> <font color="#EF0000">"y value not correct after createPool()"</font><font color="#990000">);</font>
 
         <i><font color="#9A1900">// Step 3: transaction 1, where 2.5 ETH is provided to the DEX for exchange</font></i>
 
@@ -76,11 +76,11 @@ contract DEXtest <font color="#008080">is</font> IERC20Receiver <font color="#FF
         <i><font color="#9A1900">// Step 5 tests</font></i>
 
         <i><font color="#9A1900">// finish up</font></i>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font><font color="#FF0000">"end fail"</font><font color="#990000">);</font> <i><font color="#9A1900">// huh?  see why in the homework description!</font></i>
-    <font color="#FF0000">}</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">,</font><font color="#EF0000">"end fail"</font><font color="#990000">);</font> <i><font color="#9A1900">// huh?  see why in the homework description!</font></i>
+    <font color="#EF0000">}</font>
  
-    <b><font color="#000000">receive</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable <font color="#FF0000">{</font> <font color="#FF0000">}</font> <i><font color="#9A1900">// see note in the HW description</font></i>
+    <b><font color="#000000">receive</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable <font color="#EF0000">{</font> <font color="#EF0000">}</font> <i><font color="#9A1900">// see note in the HW description</font></i>
 
-<font color="#FF0000">}</font></tt></pre></main>
+<font color="#EF0000">}</font></tt></pre></main>
 </body>
 </html>

@@ -14,29 +14,29 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repository,</font></i>
 <i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
 
-import <font color="#FF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+import <font color="#EF0000">"./IERC165.sol"</font><font color="#990000">;</font>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// This file is heavily adapted from the DAO interface at</font></i>
 <i><font color="#9A1900">// https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol</font></i>
 
-interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</font>
+interface IDAO <font color="#008080">is</font> IERC165 <font color="#EF0000">{</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// A struct to hold all of our proposal data</font></i>
 
-    <b><font color="#0000FF">struct</font></b> <font color="#008080">Proposal</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">Proposal</font> <font color="#EF0000">{</font>
         <font color="#008080">address</font> recipient<font color="#990000">;</font>      <i><font color="#9A1900">// The address where the `amount` will go to if the proposal is accepted</font></i>
         <font color="#008080">uint</font> amount<font color="#990000">;</font>            <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
         <font color="#008080">string</font> description<font color="#990000">;</font>     <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
         <font color="#008080">uint</font> votingDeadline<font color="#990000">;</font>    <i><font color="#9A1900">// A UNIX timestamp, denoting the end of the voting period</font></i>
-        <font color="#009900">bool</font> open<font color="#990000">;</font>              <i><font color="#9A1900">// True if the proposal's votes have yet to be counted, otherwise False</font></i>
-        <font color="#009900">bool</font> proposalPassed<font color="#990000">;</font>    <i><font color="#9A1900">// True if the votes have been counted, and the majority said yes</font></i>
+        <font color="#008A00">bool</font> open<font color="#990000">;</font>              <i><font color="#9A1900">// True if the proposal's votes have yet to be counted, otherwise False</font></i>
+        <font color="#008A00">bool</font> proposalPassed<font color="#990000">;</font>    <i><font color="#9A1900">// True if the votes have been counted, and the majority said yes</font></i>
         <font color="#008080">uint</font> yea<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens in favor of the proposal; updated upon each yea vote</font></i>
         <font color="#008080">uint</font> nay<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens opposed to the proposal; updated upon each nay vote</font></i>
         <font color="#008080">address</font> creator<font color="#990000">;</font>        <i><font color="#9A1900">// Address of the shareholder who created the proposal</font></i>
-    <font color="#FF0000">}</font>
+    <font color="#EF0000">}</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// These are all just public variables; some of which are set in the</font></i>
@@ -49,7 +49,7 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// @param i The proposal ID to obtain</font></i>
     <i><font color="#9A1900">// @return The proposal for that ID</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">proposals</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">,</font>uint<font color="#990000">,</font><font color="#008080">string</font> memory<font color="#990000">,</font>uint<font color="#990000">,</font><font color="#009900">bool</font><font color="#990000">,</font><font color="#009900">bool</font><font color="#990000">,</font>uint<font color="#990000">,</font>uint<font color="#990000">,</font>address<font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">proposals</font></b><font color="#990000">(</font><font color="#008080">uint</font> i<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>address<font color="#990000">,</font>uint<font color="#990000">,</font><font color="#008080">string</font> memory<font color="#990000">,</font>uint<font color="#990000">,</font><font color="#008A00">bool</font><font color="#990000">,</font><font color="#008A00">bool</font><font color="#990000">,</font>uint<font color="#990000">,</font>uint<font color="#990000">,</font>address<font color="#990000">);</font>
 
     <i><font color="#9A1900">// The minimum debate period that a generic proposal can have, in seconds;</font></i>
     <i><font color="#9A1900">// this can be set to any reasonable for testing, but should be set to 10</font></i>
@@ -74,14 +74,14 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">// @param a The address of a member who voted</font></i>
     <i><font color="#9A1900">// @param pid The proposal ID of a proposal</font></i>
     <i><font color="#9A1900">// @return Whether the passed member voted yes for the passed proposal</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">votedYes</font></b><font color="#990000">(</font><font color="#008080">address</font> a<font color="#990000">,</font> <font color="#008080">uint</font> pid<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">votedYes</font></b><font color="#990000">(</font><font color="#008080">address</font> a<font color="#990000">,</font> <font color="#008080">uint</font> pid<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">// Simple mapping to check if a shareholder has voted against it</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// @param a The address of a member who voted</font></i>
     <i><font color="#9A1900">// @param pid The proposal ID of a proposal</font></i>
     <i><font color="#9A1900">// @return Whether the passed member voted no for the passed proposal</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">votedNo</font></b><font color="#990000">(</font><font color="#008080">address</font> a<font color="#990000">,</font> <font color="#008080">uint</font> pid<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">votedNo</font></b><font color="#990000">(</font><font color="#008080">address</font> a<font color="#990000">,</font> <font color="#008080">uint</font> pid<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">// The total number of proposals ever created</font></i>
     <i><font color="#9A1900">//</font></i>
@@ -140,7 +140,7 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">// @param proposalID The proposal ID</font></i>
     <i><font color="#9A1900">// @param supportsProposal true/false as to whether in support of the</font></i>
     <i><font color="#9A1900">//        proposal</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">vote</font></b><font color="#990000">(</font><font color="#008080">uint</font> proposalID<font color="#990000">,</font> <font color="#009900">bool</font> supportsProposal<font color="#990000">)</font> external<font color="#990000">;</font>
+    <font color="#008080">function</font> <b><font color="#000000">vote</font></b><font color="#990000">(</font><font color="#008080">uint</font> proposalID<font color="#990000">,</font> <font color="#008A00">bool</font> supportsProposal<font color="#990000">)</font> external<font color="#990000">;</font>
 
     <i><font color="#9A1900">// Checks whether proposal `_proposalID` with transaction data</font></i>
     <i><font color="#9A1900">// `_transactionData` has been voted for or rejected, and transfers the</font></i>
@@ -158,7 +158,7 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// @param who An account address</font></i>
     <i><font color="#9A1900">// @return A bool as to whether the passed address is a member of this DAO</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">isMember</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">isMember</font></b><font color="#990000">(</font><font color="#008080">address</font> who<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">// Adds the passed member.  For this assignment, any current member of the</font></i>
     <i><font color="#9A1900">// DAO can add members. Membership is indicated by an NFT token, so one</font></i>
@@ -199,15 +199,15 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#FF0000">{</
     <i><font color="#9A1900">// @param proposalID Which proposal was voted upon</font></i>
     <i><font color="#9A1900">// @param position Whether they were in support of the proposal or not</font></i>
     <i><font color="#9A1900">// @param voter Who voted</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">Voted</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> proposalID<font color="#990000">,</font> <font color="#009900">bool</font> <font color="#008080">indexed</font> position<font color="#990000">,</font> address <font color="#008080">indexed</font> voter<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">Voted</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> proposalID<font color="#990000">,</font> <font color="#008A00">bool</font> <font color="#008080">indexed</font> position<font color="#990000">,</font> address <font color="#008080">indexed</font> voter<font color="#990000">);</font>
 
     <i><font color="#9A1900">// Called whenever a proposal is successfully closed via `closeProposal()`</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// @param proposalID The proposal that was closed</font></i>
     <i><font color="#9A1900">// @param result Whether the proposal was successful or not</font></i>
-    <font color="#008080">event</font> <b><font color="#000000">ProposalClosed</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> proposalID<font color="#990000">,</font> <font color="#009900">bool</font> <font color="#008080">indexed</font> result<font color="#990000">);</font>
+    <font color="#008080">event</font> <b><font color="#000000">ProposalClosed</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> proposalID<font color="#990000">,</font> <font color="#008A00">bool</font> <font color="#008080">indexed</font> result<font color="#990000">);</font>
 
-<font color="#FF0000">}</font>
+<font color="#EF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

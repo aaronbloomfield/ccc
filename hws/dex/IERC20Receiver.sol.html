@@ -14,21 +14,21 @@ http://www.gnu.org/software/src-highlite">
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900"> * </font></i><font color="#009900">@title</font><i><font color="#9A1900"> ERC20 token receiver interface</font></i>
-<i><font color="#9A1900"> * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Interface for any contract that wants to support safeTransfers</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#008A00">@title</font><i><font color="#9A1900"> ERC20 token receiver interface</font></i>
+<i><font color="#9A1900"> * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Interface for any contract that wants to support safeTransfers</font></i>
 <i><font color="#9A1900"> * from ERC20 asset contracts.  Based on the IERC721Receiver code.</font></i>
 <i><font color="#9A1900"> */</font></i>
-<font color="#008080">interface</font> IERC20Receiver <font color="#FF0000">{</font>
+<font color="#008080">interface</font> IERC20Receiver <font color="#EF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
-<i><font color="#9A1900">     * </font></i><font color="#009900">@dev</font><i><font color="#9A1900"> Whenever an {IERC20} amount is transferred to this contract from `from`, this function is called.</font></i>
+<i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Whenever an {IERC20} amount is transferred to this contract from `from`, this function is called.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * It must return true to confirm the token transfer.</font></i>
 <i><font color="#9A1900">     * If false is returned the transfer will be reverted.</font></i>
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * The selector can be obtained in Solidity with `IERC20Receiver.onERC20Received.selector`.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">uint</font> amount<font color="#990000">,</font> <font color="#008080">address</font> erc20<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
-<font color="#FF0000">}</font>
+    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">uint</font> amount<font color="#990000">,</font> <font color="#008080">address</font> erc20<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
+<font color="#EF0000">}</font>
 
 <i><font color="#9A1900">/* to use this code, put the following in your ERC-20 sub-class implementation:</font></i>
 

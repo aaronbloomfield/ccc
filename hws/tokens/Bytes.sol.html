@@ -25,14 +25,14 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
-<font color="#008080">library</font> Bytes <font color="#FF0000">{</font>
+<font color="#008080">library</font> Bytes <font color="#EF0000">{</font>
 
-    <font color="#008080">function</font> <b><font color="#000000">equal</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> a<font color="#990000">,</font> bytes <font color="#008080">memory</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">equal</font></b><font color="#990000">(</font>bytes <font color="#008080">memory</font> a<font color="#990000">,</font> bytes <font color="#008080">memory</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#EF0000">{</font>
         <i><font color="#9A1900">// The original had this one line:</font></i>
         <b><font color="#0000FF">return</font></b> a<font color="#990000">.</font>length <font color="#990000">==</font> b<font color="#990000">.</font>length <font color="#990000">&amp;&amp;</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font>a<font color="#990000">)</font> <font color="#990000">==</font> <b><font color="#000000">keccak256</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
-    <font color="#FF0000">}</font>
+    <font color="#EF0000">}</font>
 
-<font color="#FF0000">}</font>
+<font color="#EF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

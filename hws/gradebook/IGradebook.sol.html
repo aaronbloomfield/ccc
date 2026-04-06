@@ -16,7 +16,7 @@ http://www.gnu.org/software/src-highlite">
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
-<font color="#008080">interface</font> IGradebook <font color="#FF0000">{</font>
+<font color="#008080">interface</font> IGradebook <font color="#EF0000">{</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Events</font></i>
@@ -36,7 +36,7 @@ http://www.gnu.org/software/src-highlite">
     
     <i><font color="#9A1900">// Returns whether the passed address has been designated as a</font></i>
     <i><font color="#9A1900">// teaching assistant</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">tas</font></b><font color="#990000">(</font><font color="#008080">address</font> ta<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">tas</font></b><font color="#990000">(</font><font color="#008080">address</font> ta<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
 
     <i><font color="#9A1900">// Returns the max score for the given assignment</font></i>
     <font color="#008080">function</font> <b><font color="#000000">max_scores</font></b><font color="#990000">(</font><font color="#008080">uint</font> id<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint<font color="#990000">);</font>
@@ -97,9 +97,9 @@ http://www.gnu.org/software/src-highlite">
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// The implementation for the following is provided in the HW description</font></i>
 
-    <font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
 
-<font color="#FF0000">}</font>
+<font color="#EF0000">}</font>
 </tt></pre></main>
 </body>
 </html>
