@@ -1,31 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the Debts-no-interface.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>Debts-no-interface.sol</title>
+<title>Source code for Debts-no-interface.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+<main><h1>Source code for Debts-no-interface.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
 
 <i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repoistory,</font></i>
 <i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
-<font color="#008080">contract</font> Debts <font color="#EF0000">{</font>
+<font color="#008080">contract</font> Debts <font color="#DF0000">{</font>
 
 	<i><font color="#9A1900">// holds in the necessary information about each alias / entry</font></i>
-	<b><font color="#0000FF">struct</font></b> <font color="#008080">Entry</font> <font color="#EF0000">{</font>
+	<b><font color="#0000FF">struct</font></b> <font color="#008080">Entry</font> <font color="#DF0000">{</font>
 		<font color="#008080">uint</font> id<font color="#990000">;</font>			<i><font color="#9A1900">// the index in the 'entries' mapping</font></i>
 		<font color="#008080">string</font> thealias<font color="#990000">;</font>	<i><font color="#9A1900">// their string alias</font></i>
 		<font color="#008080">string</font> name<font color="#990000">;</font>		<i><font color="#9A1900">// their string name</font></i>
 		<font color="#008080">address</font> addr<font color="#990000">;</font>		<i><font color="#9A1900">// their account address</font></i>
 		<font color="#008A00">int</font> balance<font color="#990000">;</font>		<i><font color="#9A1900">// how much they owe (if negative) or are owed (if positive)</font></i>
-	<font color="#EF0000">}</font>
+	<font color="#DF0000">}</font>
 
 	<i><font color="#9A1900">// allow notification when a debt is entered</font></i>
 	<font color="#008080">event</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">(</font><font color="#008080">string</font> towho<font color="#990000">,</font> <font color="#008A00">int</font> amount<font color="#990000">);</font>
@@ -53,15 +53,15 @@ http://www.gnu.org/software/src-highlite">
 	uint <font color="#008080">public</font> num_entries<font color="#990000">;</font>
 
 
-	<b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#EF0000">{</font>
-	<font color="#EF0000">}</font>
+	<b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#DF0000">{</font>
+	<font color="#DF0000">}</font>
 
 
-	<font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#EF0000">{</font>
+	<font color="#008080">function</font> <b><font color="#000000">addAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008080">string</font> <font color="#008080">memory</font> _name<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#DF0000">{</font>
 		<i><font color="#9A1900">// ensure that the alias name does not already exist</font></i>
-		<b><font color="#000000">require</font></b><font color="#990000">(!</font>aliasHasEntry<font color="#990000">[</font>_alias<font color="#990000">],</font> <font color="#EF0000">"string entry name already exists"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(!</font>aliasHasEntry<font color="#990000">[</font>_alias<font color="#990000">],</font> <font color="#DF0000">"string entry name already exists"</font><font color="#990000">);</font>
 		<i><font color="#9A1900">// ensure that the sender doesn't already have an alias</font></i>
-		<b><font color="#000000">require</font></b><font color="#990000">(!</font>addressHasEntry<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">],</font> <font color="#EF0000">"your address already has an alias"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(!</font>addressHasEntry<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">],</font> <font color="#DF0000">"your address already has an alias"</font><font color="#990000">);</font>
 		<i><font color="#9A1900">// add an entry in the mapping of whether that string alias exists</font></i>
 		aliasHasEntry<font color="#990000">[</font>_alias<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 		<i><font color="#9A1900">// add an entry in the mapping of whether a given account address has an alias</font></i>
@@ -76,31 +76,31 @@ http://www.gnu.org/software/src-highlite">
 		num_entries<font color="#990000">++;</font>
 		<i><font color="#9A1900">// emit the event</font></i>
 		<font color="#008080">emit</font> <b><font color="#000000">aliasAddedEvent</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>_name<font color="#990000">);</font>
-	<font color="#EF0000">}</font>
+	<font color="#DF0000">}</font>
 
 
-	<font color="#008080">function</font> <b><font color="#000000">payToAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008A00">int</font> amount<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#EF0000">{</font>
+	<font color="#008080">function</font> <b><font color="#000000">payToAlias</font></b> <font color="#990000">(</font><font color="#008080">string</font> <font color="#008080">memory</font> _alias<font color="#990000">,</font> <font color="#008A00">int</font> amount<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#DF0000">{</font>
 		<i><font color="#9A1900">// limit amounts from -100 to +100</font></i>
-		<b><font color="#000000">require</font></b> <font color="#990000">(</font>amount <font color="#990000">&gt;=</font> <font color="#990000">-</font><font color="#993399">100</font> <font color="#990000">&amp;&amp;</font> amount <font color="#990000">&lt;=</font> <font color="#993399">100</font><font color="#990000">,</font> <font color="#EF0000">"Amounts must be between -100 and 100"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b> <font color="#990000">(</font>amount <font color="#990000">&gt;=</font> <font color="#990000">-</font><font color="#993399">100</font> <font color="#990000">&amp;&amp;</font> amount <font color="#990000">&lt;=</font> <font color="#993399">100</font><font color="#990000">,</font> <font color="#DF0000">"Amounts must be between -100 and 100"</font><font color="#990000">);</font>
 		<i><font color="#9A1900">// amount cannot be zero</font></i>
-		<b><font color="#000000">require</font></b> <font color="#990000">(</font>amount <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#EF0000">"amount cannot be zero"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b> <font color="#990000">(</font>amount <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#DF0000">"amount cannot be zero"</font><font color="#990000">);</font>
 		<i><font color="#9A1900">// ensure that the caller has an alias</font></i>
-		<b><font color="#000000">require</font></b><font color="#990000">(</font>addressHasEntry<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">],</font> <font color="#EF0000">"your address does not have an alias"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(</font>addressHasEntry<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">],</font> <font color="#DF0000">"your address does not have an alias"</font><font color="#990000">);</font>
 		<i><font color="#9A1900">// ensure that the 'to' has an alias entry</font></i>
-		<b><font color="#000000">require</font></b><font color="#990000">(</font>aliasHasEntry<font color="#990000">[</font>_alias<font color="#990000">],</font> <font color="#EF0000">"string entry name does not exist"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(</font>aliasHasEntry<font color="#990000">[</font>_alias<font color="#990000">],</font> <font color="#DF0000">"string entry name does not exist"</font><font color="#990000">);</font>
 		<i><font color="#9A1900">// get the alias index of who it's from, as we know they already exist</font></i>
 		<font color="#008080">uint</font> from <font color="#990000">=</font> findByAddress<font color="#990000">[</font>msg<font color="#990000">.</font>sender<font color="#990000">];</font>
 		<i><font color="#9A1900">// get who it's to as we know they already exist</font></i>
 		<font color="#008080">uint</font> to <font color="#990000">=</font> findByAlias<font color="#990000">[</font>_alias<font color="#990000">];</font>
 		<i><font color="#9A1900">// one cannot enter a debt to themselves</font></i>
-		<b><font color="#000000">require</font></b><font color="#990000">(</font>entries<font color="#990000">[</font>to<font color="#990000">].</font>addr<font color="#990000">!=</font>msg<font color="#990000">.</font>sender<font color="#990000">,</font> <font color="#EF0000">"you cannot enter a debt to yourself"</font><font color="#990000">);</font>
+		<b><font color="#000000">require</font></b><font color="#990000">(</font>entries<font color="#990000">[</font>to<font color="#990000">].</font>addr<font color="#990000">!=</font>msg<font color="#990000">.</font>sender<font color="#990000">,</font> <font color="#DF0000">"you cannot enter a debt to yourself"</font><font color="#990000">);</font>
 		<i><font color="#9A1900">// adjust amounts on both ends</font></i>
 		entries<font color="#990000">[</font>from<font color="#990000">].</font>balance <font color="#990000">+=</font> amount<font color="#990000">;</font>
 		entries<font color="#990000">[</font>to<font color="#990000">].</font>balance <font color="#990000">-=</font> amount<font color="#990000">;</font>
 		<i><font color="#9A1900">// emit the event</font></i>
 		<font color="#008080">emit</font> <b><font color="#000000">paidEvent</font></b><font color="#990000">(</font>_alias<font color="#990000">,</font>amount<font color="#990000">);</font>
-	<font color="#EF0000">}</font>
+	<font color="#DF0000">}</font>
 
-<font color="#EF0000">}</font></tt></pre></main>
+<font color="#DF0000">}</font></tt></pre></main>
 </body>
 </html>

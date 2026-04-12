@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the daoweb3.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>daoweb3.py</title>
+<title>Source code for daoweb3.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900"># Submission information for the DAO &amp; Web3 HW</font></i>
+<main><h1>Source code for daoweb3.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900"># Submission information for the DAO &amp; Web3 HW</font></i>
 <i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/daoweb3/</font></i>
 
 <i><font color="#9A1900"># The filename of this file must be 'daoweb3.py', else the submission</font></i>
@@ -20,14 +20,14 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
-userid <font color="#990000">=</font> <font color="#EF0000">"mst3k"</font>
-name <font color="#990000">=</font> <font color="#EF0000">"Jane Doe"</font>
+userid <font color="#990000">=</font> <font color="#DF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#DF0000">"Jane Doe"</font>
 
 
 <i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
 <i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
 <i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
-eth_coinbase <font color="#990000">=</font> <font color="#EF0000">""</font>
+eth_coinbase <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
@@ -41,7 +41,7 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># is assumed to be from this contract.  The address does not need to be</font></i>
 	<i><font color="#9A1900"># in checksummed form.  It must have been deployed by the eth_coinbase</font></i>
 	<i><font color="#9A1900"># address, above.</font></i>
-	<font color="#EF0000">'dao'</font><font color="#990000">:</font> <font color="#EF0000">''</font><font color="#990000">,</font>
+	<font color="#DF0000">'dao'</font><font color="#990000">:</font> <font color="#DF0000">''</font><font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -52,16 +52,16 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># The transaction hash where you voted on one of the course-wide DAO</font></i>
 	<i><font color="#9A1900"># proposals.  It doesn't matter which one you voted for or how you voted.</font></i>
-	<font color="#EF0000">'dao_vote_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'dao_vote_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># What is the 8 hex digit suffix for your dao_XXXXXXXX.html file?  Just</font></i>
 	<i><font color="#9A1900"># the 8 hex digits, please.</font></i>
-	<font color="#EF0000">'dao.html_suffix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'dao.html_suffix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
     <i><font color="#9A1900"># How useful did you find the Debug.sol library that was provided?  This</font></i>
     <i><font color="#9A1900"># is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is</font></i>
     <i><font color="#9A1900"># moderately useful, and 5 is very useful.  Integers only, please.</font></i>
-    <font color="#EF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <font color="#DF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 
 
@@ -74,37 +74,37 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># Did you compute the suffix for your dao_XXXXXXXX.html file, as per the</font></i>
 	<i><font color="#9A1900"># instructions?</font></i>
-	<font color="#EF0000">'computed_dao.html_suffix'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'computed_dao.html_suffix'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Have you ensured that the `dao.html` file (without the suffix) does NOT</font></i>
 	<i><font color="#9A1900"># exist?</font></i>
-	<font color="#EF0000">'dao.html_does_not_exist'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'dao.html_does_not_exist'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you run the `touch ~/public_html/index.html` command on portal?  </font></i>
 	<i><font color="#9A1900"># One way to check is if you view https://www.cs.virginia.edu/~mst3k </font></i>
 	<i><font color="#9A1900"># (for your userid), then you should NOT see your dao_xxxxxxxx.html file.</font></i>
-	<font color="#EF0000">'touched_index.html'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'touched_index.html'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you add the three required proposals to your DAO?  One should have</font></i>
 	<i><font color="#9A1900"># expired, one expires week after the due date, and one is your choice.</font></i>
-	<font color="#EF0000">'added_three_required_dao_proposals'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'added_three_required_dao_proposals'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you make the isntructor account a member of your DAO?  The account</font></i>
 	<i><font color="#9A1900"># address in on the Collab landing page.</font></i>
-	<font color="#EF0000">'made_instructor_dao_member'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'made_instructor_dao_member'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Is the URL of your dao.html exactly:</font></i>
 	<i><font color="#9A1900"># https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html, where 'mst3k' is</font></i>
 	<i><font color="#9A1900"># your userid?</font></i>
-	<font color="#EF0000">'dao_url_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'dao_url_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does your dao_XXXXXXXX.html web page specifically load up the information</font></i>
 	<i><font color="#9A1900"># on *your* DAO, and the latest version (that has the three proposals</font></i>
 	<i><font color="#9A1900"># mentioned above?)</font></i>
-	<font color="#EF0000">'dao_contract_addr_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'dao_contract_addr_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you join the course-wide DAO and vote on one of the proposals?</font></i>
-	<font color="#EF0000">'voted_on_course_dao'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'voted_on_course_dao'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -115,17 +115,17 @@ comments <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
 	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#EF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
 	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
 	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#EF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
 	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
 	<i><font color="#9A1900"># None).</font></i>
-	<font color="#EF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre></main>
 </body>

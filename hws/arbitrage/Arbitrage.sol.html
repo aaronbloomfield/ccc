@@ -1,27 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the Arbitrage.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>Arbitrage.sol</title>
+<title>Source code for Arbitrage.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+<main><h1>Source code for Arbitrage.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
 
 <i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repository,</font></i>
 <i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
-import <font color="#EF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
-import <font color="#EF0000">"./DEX.sol"</font><font color="#990000">;</font>
-import <font color="#EF0000">"./EtherPriceOracleConstant.sol"</font><font color="#990000">;</font>
-import <font color="#EF0000">"./IERC20Receiver.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">"./TokenCC.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">"./DEX.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">"./EtherPriceOracleConstant.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">"./IERC20Receiver.sol"</font><font color="#990000">;</font>
 
-contract Arbitrage <font color="#008080">is</font> IERC20Receiver <font color="#EF0000">{</font>
+contract Arbitrage <font color="#008080">is</font> IERC20Receiver <font color="#DF0000">{</font>
 
     <b><font color="#000000">mapping</font></b> <font color="#990000">(</font>uint <font color="#990000">=&gt;</font> <font color="#008080">address</font> payable<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> dexes<font color="#990000">;</font>
     uint <font color="#008080">public</font> num_dexes<font color="#990000">;</font>
@@ -29,61 +29,61 @@ contract Arbitrage <font color="#008080">is</font> IERC20Receiver <font color="#
     <font color="#008080">address</font> deployer<font color="#990000">;</font>
     address <font color="#008080">public</font> etherpricer<font color="#990000">;</font>
     
-    <b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#EF0000">{</font>
+    <b><font color="#000000">constructor</font></b><font color="#990000">()</font> <font color="#DF0000">{</font>
         deployer <font color="#990000">=</font> msg<font color="#990000">.</font>sender<font color="#990000">;</font>
         tokencc <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">TokenCC</font></b><font color="#990000">());</font>
         etherpricer <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">EtherPriceOracleConstant</font></b><font color="#990000">());</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">// creates the DEXes and the TokenCC, and sends the ETH and TC; to avoid</font></i>
     <i><font color="#9A1900">// this using too high gas, it can be called multiple times, each time</font></i>
     <i><font color="#9A1900">// adding more DEXes</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">setup</font></b><font color="#990000">(</font><font color="#008080">uint</font> numdex<font color="#990000">,</font> <font color="#008080">uint</font> amt_eth<font color="#990000">,</font> <font color="#008080">uint</font> amt_tc<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> payable <font color="#EF0000">{</font>
-        <b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">&gt;</font> numdex <font color="#990000">*</font> amt_eth <font color="#990000">*</font> <font color="#993399">1</font> ether<font color="#990000">,</font> <font color="#EF0000">"Must supply enough eth"</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">setup</font></b><font color="#990000">(</font><font color="#008080">uint</font> numdex<font color="#990000">,</font> <font color="#008080">uint</font> amt_eth<font color="#990000">,</font> <font color="#008080">uint</font> amt_tc<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> payable <font color="#DF0000">{</font>
+        <b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">&gt;</font> numdex <font color="#990000">*</font> amt_eth <font color="#990000">*</font> <font color="#993399">1</font> ether<font color="#990000">,</font> <font color="#DF0000">"Must supply enough eth"</font><font color="#990000">);</font>
         <i><font color="#9A1900">// create and fund the DEXes</font></i>
-        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font> <font color="#008080">uint</font> i <font color="#990000">=</font> num_dexes<font color="#990000">;</font> i <font color="#990000">&lt;</font> num_dexes<font color="#990000">+</font>numdex<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font> <font color="#EF0000">{</font>
+        <b><font color="#0000FF">for</font></b> <font color="#990000">(</font> <font color="#008080">uint</font> i <font color="#990000">=</font> num_dexes<font color="#990000">;</font> i <font color="#990000">&lt;</font> num_dexes<font color="#990000">+</font>numdex<font color="#990000">;</font> i<font color="#990000">++</font> <font color="#990000">)</font> <font color="#DF0000">{</font>
             dexes<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">payable</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">DEX</font></b><font color="#990000">()));</font>
             <b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">approve</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font>i<font color="#990000">],</font>amt_tc <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">**</font><b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">decimals</font></b><font color="#990000">());</font>
-            <b><font color="#000000">DEX</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font>i<font color="#990000">]).</font>createPool<font color="#EF0000">{</font>value<font color="#990000">:</font> amt_eth <font color="#990000">*</font> <font color="#993399">1</font> ether<font color="#EF0000">}</font><font color="#990000">(</font>amt_tc <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">**</font><b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> 
+            <b><font color="#000000">DEX</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font>i<font color="#990000">]).</font>createPool<font color="#DF0000">{</font>value<font color="#990000">:</font> amt_eth <font color="#990000">*</font> <font color="#993399">1</font> ether<font color="#DF0000">}</font><font color="#990000">(</font>amt_tc <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">**</font><b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">decimals</font></b><font color="#990000">(),</font> 
                                      <font color="#993399">3</font><font color="#990000">,</font> <font color="#993399">1000</font><font color="#990000">,</font> tokencc<font color="#990000">,</font> etherpricer<font color="#990000">);</font>
-        <font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
         num_dexes <font color="#990000">+=</font> numdex<font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">// this performs a few transactions on the DEXes; it's not done as part of</font></i>
     <i><font color="#9A1900">// setup() due to gas costs; must have created 5 DEXes else this will revert</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">configureDEXes</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#EF0000">{</font>
-        <b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">&gt;</font> <font color="#993399">10</font> ether<font color="#990000">,</font> <font color="#EF0000">"Must supply enough eth"</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">configureDEXes</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> payable <font color="#DF0000">{</font>
+        <b><font color="#000000">require</font></b> <font color="#990000">(</font>msg<font color="#990000">.</font>value <font color="#990000">&gt;</font> <font color="#993399">10</font> ether<font color="#990000">,</font> <font color="#DF0000">"Must supply enough eth"</font><font color="#990000">);</font>
         <i><font color="#9A1900">// excahnge with the DEXes</font></i>
         <font color="#008080">uint</font> balance <font color="#990000">=</font> <b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">));</font>
         <font color="#008A00">bool</font> success<font color="#990000">;</font>
-        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]).</font>call<font color="#EF0000">{</font>value<font color="#990000">:</font> <font color="#993399">1</font> ether<font color="#EF0000">}</font><font color="#990000">(</font><font color="#EF0000">""</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#EF0000">"DEX exchange call 1 didn't succeed"</font><font color="#990000">);</font>
-        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]).</font>call<font color="#EF0000">{</font>value<font color="#990000">:</font> <font color="#993399">2</font> ether<font color="#EF0000">}</font><font color="#990000">(</font><font color="#EF0000">""</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#EF0000">"DEX exchange call 2 didn't succeed"</font><font color="#990000">);</font>
-        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]).</font>call<font color="#EF0000">{</font>value<font color="#990000">:</font> <font color="#993399">3</font> ether<font color="#EF0000">}</font><font color="#990000">(</font><font color="#EF0000">""</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#EF0000">"DEX exchange call 3 didn't succeed"</font><font color="#990000">);</font>
-        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]).</font>call<font color="#EF0000">{</font>value<font color="#990000">:</font> <font color="#993399">4</font> ether<font color="#EF0000">}</font><font color="#990000">(</font><font color="#EF0000">""</font><font color="#990000">);</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#EF0000">"DEX exchange call 4 didn't succeed"</font><font color="#990000">);</font>
+        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]).</font>call<font color="#DF0000">{</font>value<font color="#990000">:</font> <font color="#993399">1</font> ether<font color="#DF0000">}</font><font color="#990000">(</font><font color="#DF0000">""</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#DF0000">"DEX exchange call 1 didn't succeed"</font><font color="#990000">);</font>
+        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]).</font>call<font color="#DF0000">{</font>value<font color="#990000">:</font> <font color="#993399">2</font> ether<font color="#DF0000">}</font><font color="#990000">(</font><font color="#DF0000">""</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#DF0000">"DEX exchange call 2 didn't succeed"</font><font color="#990000">);</font>
+        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]).</font>call<font color="#DF0000">{</font>value<font color="#990000">:</font> <font color="#993399">3</font> ether<font color="#DF0000">}</font><font color="#990000">(</font><font color="#DF0000">""</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#DF0000">"DEX exchange call 3 didn't succeed"</font><font color="#990000">);</font>
+        <font color="#990000">(</font>success<font color="#990000">,)</font> <font color="#990000">=</font> <b><font color="#000000">address</font></b><font color="#990000">(</font>dexes<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]).</font>call<font color="#DF0000">{</font>value<font color="#990000">:</font> <font color="#993399">4</font> ether<font color="#DF0000">}</font><font color="#990000">(</font><font color="#DF0000">""</font><font color="#990000">);</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>success<font color="#990000">,</font><font color="#DF0000">"DEX exchange call 4 didn't succeed"</font><font color="#990000">);</font>
         <i><font color="#9A1900">// give the sender the TC obtained</font></i>
         <font color="#008080">uint</font> xferamt <font color="#990000">=</font> <b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><b><font color="#0000FF">this</font></b><font color="#990000">))</font> <font color="#990000">-</font> balance<font color="#990000">;</font>
         <b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">transfer</font></b><font color="#990000">(</font>msg<font color="#990000">.</font>sender<font color="#990000">,</font>xferamt<font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">// this will give some TC to the deployer, since this contract owns the</font></i>
     <i><font color="#9A1900">// TokenCC contract</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">getTC</font></b><font color="#990000">(</font><font color="#008080">uint</font> amt<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#EF0000">{</font>
-        <b><font color="#000000">require</font></b><font color="#990000">(</font>deployer <font color="#990000">==</font> msg<font color="#990000">.</font>sender<font color="#990000">,</font> <font color="#EF0000">"Only the deployer can call this"</font><font color="#990000">);</font>
+    <font color="#008080">function</font> <b><font color="#000000">getTC</font></b><font color="#990000">(</font><font color="#008080">uint</font> amt<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <font color="#DF0000">{</font>
+        <b><font color="#000000">require</font></b><font color="#990000">(</font>deployer <font color="#990000">==</font> msg<font color="#990000">.</font>sender<font color="#990000">,</font> <font color="#DF0000">"Only the deployer can call this"</font><font color="#990000">);</font>
         <b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">transfer</font></b><font color="#990000">(</font>msg<font color="#990000">.</font>sender<font color="#990000">,</font>amt<font color="#990000">*</font><font color="#993399">10</font><font color="#990000">**</font><b><font color="#000000">TokenCC</font></b><font color="#990000">(</font>tokencc<font color="#990000">).</font><b><font color="#000000">decimals</font></b><font color="#990000">());</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">// this allows this contract to receive a payment</font></i>
-    <b><font color="#000000">receive</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable <font color="#EF0000">{</font> <font color="#EF0000">}</font>
+    <b><font color="#000000">receive</font></b><font color="#990000">()</font> <font color="#008080">external</font> payable <font color="#DF0000">{</font> <font color="#DF0000">}</font>
 
-    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font>address <i><font color="#9A1900">/* from */</font></i><font color="#990000">,</font> uint <i><font color="#9A1900">/* amount */</font></i><font color="#990000">,</font> address <i><font color="#9A1900">/* erc20 */</font></i><font color="#990000">)</font> external <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font>address <i><font color="#9A1900">/* from */</font></i><font color="#990000">,</font> uint <i><font color="#9A1900">/* amount */</font></i><font color="#990000">,</font> address <i><font color="#9A1900">/* erc20 */</font></i><font color="#990000">)</font> external <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <font color="#EF0000">}</font>
-<font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
+<font color="#DF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

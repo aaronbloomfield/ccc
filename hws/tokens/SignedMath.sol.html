@@ -1,25 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the SignedMath.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>SignedMath.sol</title>
+<title>Source code for SignedMath.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<main><h1>Source code for SignedMath.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
 <i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.1.0) (utils/math/SignedMath.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
-import <font color="#EF0000">{</font>SafeCast<font color="#EF0000">}</font> from <font color="#EF0000">"./SafeCast.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">{</font>SafeCast<font color="#DF0000">}</font> from <font color="#DF0000">"./SafeCast.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Standard signed math utilities missing in the Solidity language.</font></i>
 <i><font color="#9A1900"> */</font></i>
-<font color="#008080">library</font> SignedMath <font color="#EF0000">{</font>
+<font color="#008080">library</font> SignedMath <font color="#DF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Branchless ternary evaluation for `a ? b : c`. Gas costs are constant.</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -27,44 +27,44 @@ import <font color="#EF0000">{</font>SafeCast<font color="#EF0000">}</font> from
 <i><font color="#9A1900">     * However, the compiler may optimize Solidity ternary operations (i.e. `a ? b : c`) to only compute</font></i>
 <i><font color="#9A1900">     * one branch when needed, making this function more expensive.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">ternary</font></b><font color="#990000">(</font><font color="#008A00">bool</font> condition<font color="#990000">,</font> <font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#EF0000">{</font>
-        unchecked <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">ternary</font></b><font color="#990000">(</font><font color="#008A00">bool</font> condition<font color="#990000">,</font> <font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#DF0000">{</font>
+        unchecked <font color="#DF0000">{</font>
             <i><font color="#9A1900">// branchless ternary works because:</font></i>
             <i><font color="#9A1900">// b ^ (a ^ b) == a</font></i>
             <i><font color="#9A1900">// b ^ 0 == b</font></i>
             <b><font color="#0000FF">return</font></b> b <font color="#990000">^</font> <font color="#990000">((</font>a <font color="#990000">^</font> b<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">int256</font></b><font color="#990000">(</font>SafeCast<font color="#990000">.</font><b><font color="#000000">toUint</font></b><font color="#990000">(</font>condition<font color="#990000">)));</font>
-        <font color="#EF0000">}</font>
-    <font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the largest of two signed numbers.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">ternary</font></b><font color="#990000">(</font>a <font color="#990000">&gt;</font> b<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the smallest of two signed numbers.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">min</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">min</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#000000">ternary</font></b><font color="#990000">(</font>a <font color="#990000">&lt;</font> b<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the average of two signed numbers without overflow.</font></i>
 <i><font color="#9A1900">     * The result is rounded towards zero.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">average</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">average</font></b><font color="#990000">(</font><font color="#008080">int256</font> a<font color="#990000">,</font> <font color="#008080">int256</font> b<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>int256<font color="#990000">)</font> <font color="#DF0000">{</font>
         <i><font color="#9A1900">// Formula from the book "Hacker's Delight"</font></i>
         <font color="#008080">int256</font> x <font color="#990000">=</font> <font color="#990000">(</font>a <font color="#990000">&amp;</font> b<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">((</font>a <font color="#990000">^</font> b<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">1</font><font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> x <font color="#990000">+</font> <font color="#990000">(</font><b><font color="#000000">int256</font></b><font color="#990000">(</font><b><font color="#000000">uint256</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">&gt;&gt;</font> <font color="#993399">255</font><font color="#990000">)</font> <font color="#990000">&amp;</font> <font color="#990000">(</font>a <font color="#990000">^</font> b<font color="#990000">));</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the absolute unsigned value of a signed value.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><font color="#008080">int256</font> n<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#EF0000">{</font>
-        unchecked <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font><font color="#008080">int256</font> n<font color="#990000">)</font> internal <font color="#008080">pure</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#DF0000">{</font>
+        unchecked <font color="#DF0000">{</font>
             <i><font color="#9A1900">// Formula from the "Bit Twiddling Hacks" by Sean Eron Anderson.</font></i>
             <i><font color="#9A1900">// Since `n` is a signed integer, the generated bytecode will use the SAR opcode to perform the right shift,</font></i>
             <i><font color="#9A1900">// taking advantage of the most significant (or "sign" bit) in two's complement representation.</font></i>
@@ -74,9 +74,9 @@ import <font color="#EF0000">{</font>SafeCast<font color="#EF0000">}</font> from
 
             <i><font color="#9A1900">// A `bytes32(0)` mask leaves the input unchanged, while a `~bytes32(0)` mask complements it.</font></i>
             <b><font color="#0000FF">return</font></b> <b><font color="#000000">uint256</font></b><font color="#990000">((</font>n <font color="#990000">+</font> mask<font color="#990000">)</font> <font color="#990000">^</font> mask<font color="#990000">);</font>
-        <font color="#EF0000">}</font>
-    <font color="#EF0000">}</font>
-<font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
+    <font color="#DF0000">}</font>
+<font color="#DF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

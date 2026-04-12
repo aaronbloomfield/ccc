@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the scripts.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>scripts.py</title>
+<title>Source code for scripts.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">#!/usr/bin/python3</font></i>
+<main><h1>Source code for scripts.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900">#!/usr/bin/python3</font></i>
 
 <i><font color="#9A1900"># This is the homework submission file for the BTC Scripting homework, which</font></i>
 <i><font color="#9A1900"># can be found at http://aaronbloomfield.github.io/ccc/hws/btcscript.  That</font></i>
@@ -26,17 +26,17 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"># Do not touch: change nothing in this section!</font></i>
 
 <i><font color="#9A1900"># ensure we are using the bitcoin testnet and not the real bitcoin network</font></i>
-<b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#EF0000">'testnet'</font><font color="#990000">)</font>
+<b><font color="#000000">SelectParams</font></b><font color="#990000">(</font><font color="#DF0000">'testnet'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># The address that we will pay our BCY to -- do not change this!</font></i>
-bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#EF0000">'mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz'</font><font color="#990000">)</font>
+bcy_dest_address <font color="#990000">=</font> <b><font color="#000000">CBitcoinAddress</font></b><font color="#990000">(</font><font color="#DF0000">'mgBT4ViPjTTcbnLn9SFKBRfGtBGsmaqsZz'</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># Yes, we want to broadcast transactions</font></i>
 broadcast_transactions <font color="#990000">=</font> True
 
 <i><font color="#9A1900"># Ensure we don't call this directly</font></i>
-<b><font color="#0000FF">if</font></b> __name__ <font color="#990000">==</font> <font color="#EF0000">'__main__'</font><font color="#990000">:</font>
-    <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#EF0000">"This script is not meant to be called directly -- call bitcoinctl.py instead"</font><font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> __name__ <font color="#990000">==</font> <font color="#DF0000">'__main__'</font><font color="#990000">:</font>
+    <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#DF0000">"This script is not meant to be called directly -- call bitcoinctl.py instead"</font><font color="#990000">)</font>
     <b><font color="#000000">exit</font></b><font color="#990000">()</font>
 
 
@@ -44,27 +44,27 @@ broadcast_transactions <font color="#990000">=</font> True
 <i><font color="#9A1900"># Setup: your information</font></i>
 
 <i><font color="#9A1900"># Your UVA userid</font></i>
-userid <font color="#990000">=</font> <font color="#EF0000">''</font>
+userid <font color="#990000">=</font> <font color="#DF0000">''</font>
 
 <i><font color="#9A1900"># This is the API token obtained after creating an account on</font></i>
 <i><font color="#9A1900"># https://accounts.blockcypher.com/.  This is required for some of the</font></i>
 <i><font color="#9A1900"># functionality in bitcoinctl.py.</font></i>
-blockcypher_api_token <font color="#990000">=</font> <font color="#EF0000">""</font>
+blockcypher_api_token <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># Enter the BTC private key and invoice address from the setup 'Testnet Setup'</font></i>
 <i><font color="#9A1900"># section of the assignment.  </font></i>
-my_private_key_str <font color="#990000">=</font> <font color="#EF0000">""</font>
-my_invoice_address_str <font color="#990000">=</font> <font color="#EF0000">""</font>
+my_private_key_str <font color="#990000">=</font> <font color="#DF0000">""</font>
+my_invoice_address_str <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># Enter the transaction ids (TXID) from the funding part of the 'Testnet</font></i>
 <i><font color="#9A1900"># Setup' section of the assignment.  Each of these was provided from a faucet</font></i>
 <i><font color="#9A1900"># call.  And obviously replace the empty string in the list with the first</font></i>
 <i><font color="#9A1900"># one you botain..</font></i>
-txid_funding_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#EF0000">""</font><font color="#990000">]</font>
+txid_funding_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#DF0000">""</font><font color="#990000">]</font>
 
 <i><font color="#9A1900"># These conversions are so that you can use them more easily in the functions</font></i>
 <i><font color="#9A1900"># below -- don't change these two lines.</font></i>
-<b><font color="#0000FF">if</font></b> my_private_key_str <font color="#990000">!=</font> <font color="#EF0000">""</font><font color="#990000">:</font>
+<b><font color="#0000FF">if</font></b> my_private_key_str <font color="#990000">!=</font> <font color="#DF0000">""</font><font color="#990000">:</font>
     my_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>my_private_key_str<font color="#990000">))</font>
     my_public_key <font color="#990000">=</font> my_private_key<font color="#990000">.</font>pub
 
@@ -108,11 +108,11 @@ split_amount_after_split <font color="#990000">=</font> <font color="#993399">0.
 <i><font color="#9A1900"># How many UTXO indices to split it into -- you should not have to change</font></i>
 <i><font color="#9A1900"># this!  Note that it will actually split into one less, and use the last one</font></i>
 <i><font color="#9A1900"># as the transaction fee.</font></i>
-<b><font color="#0000FF">assert</font></b> split_amount_to_split <font color="#990000">&gt;</font> split_amount_after_split<font color="#990000">,</font> <font color="#EF0000">"Your split_amount_to_split is less than or equal to split_amount_after_split"</font>
+<b><font color="#0000FF">assert</font></b> split_amount_to_split <font color="#990000">&gt;</font> split_amount_after_split<font color="#990000">,</font> <font color="#DF0000">"Your split_amount_to_split is less than or equal to split_amount_after_split"</font>
 split_into_n <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>split_amount_to_split<font color="#990000">/</font>split_amount_after_split<font color="#990000">)</font>
 
 <i><font color="#9A1900"># The transaction IDs obtained after successfully splitting the BCY.</font></i>
-txid_split_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#EF0000">""</font><font color="#990000">]</font>
+txid_split_list <font color="#990000">=</font> <font color="#990000">[</font><font color="#DF0000">""</font><font color="#990000">]</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
@@ -170,7 +170,7 @@ send_amount <font color="#990000">=</font> split_amount_after_split <font color=
            <font color="#990000">]</font>
 
 <i><font color="#9A1900"># The transaction hash received after the successful execution of this part</font></i>
-txid_p2pkh <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_p2pkh <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
@@ -205,11 +205,11 @@ puzzle_txn_y <font color="#990000">=</font> <font color="#993399">0</font>
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting the first</font></i>
 <i><font color="#9A1900"># transaction above (part 2a)</font></i>
-txid_puzzle_txn1 <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_puzzle_txn1 <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting the second</font></i>
 <i><font color="#9A1900"># transaction above (part 2b)</font></i>
-txid_puzzle_txn2 <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_puzzle_txn2 <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
@@ -217,20 +217,20 @@ txid_puzzle_txn2 <font color="#990000">=</font> <font color="#EF0000">""</font>
 
 <i><font color="#9A1900"># These are the public and private keys that need to be created for alice,</font></i>
 <i><font color="#9A1900"># bob, and charlie</font></i>
-alice_private_key_str <font color="#990000">=</font> <font color="#EF0000">""</font>
-alice_invoice_address_str <font color="#990000">=</font> <font color="#EF0000">""</font>
-bob_private_key_str <font color="#990000">=</font> <font color="#EF0000">""</font>
-bob_invoice_address_str <font color="#990000">=</font> <font color="#EF0000">""</font>
-charlie_private_key_str <font color="#990000">=</font> <font color="#EF0000">""</font>
-charlie_invoice_address_str <font color="#990000">=</font> <font color="#EF0000">""</font>
+alice_private_key_str <font color="#990000">=</font> <font color="#DF0000">""</font>
+alice_invoice_address_str <font color="#990000">=</font> <font color="#DF0000">""</font>
+bob_private_key_str <font color="#990000">=</font> <font color="#DF0000">""</font>
+bob_invoice_address_str <font color="#990000">=</font> <font color="#DF0000">""</font>
+charlie_private_key_str <font color="#990000">=</font> <font color="#DF0000">""</font>
+charlie_invoice_address_str <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># These three lines convert the above strings into the type that is usable in</font></i>
 <i><font color="#9A1900"># a script -- you should NOT modify these lines.</font></i>
-<b><font color="#0000FF">if</font></b> alice_private_key_str <font color="#990000">!=</font> <font color="#EF0000">""</font><font color="#990000">:</font>
+<b><font color="#0000FF">if</font></b> alice_private_key_str <font color="#990000">!=</font> <font color="#DF0000">""</font><font color="#990000">:</font>
     alice_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>alice_private_key_str<font color="#990000">))</font>
-<b><font color="#0000FF">if</font></b> bob_private_key_str <font color="#990000">!=</font> <font color="#EF0000">""</font><font color="#990000">:</font>
+<b><font color="#0000FF">if</font></b> bob_private_key_str <font color="#990000">!=</font> <font color="#DF0000">""</font><font color="#990000">:</font>
     bob_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>bob_private_key_str<font color="#990000">))</font>
-<b><font color="#0000FF">if</font></b> charlie_private_key_str <font color="#990000">!=</font> <font color="#EF0000">""</font><font color="#990000">:</font>
+<b><font color="#0000FF">if</font></b> charlie_private_key_str <font color="#990000">!=</font> <font color="#DF0000">""</font><font color="#990000">:</font>
     charlie_private_key <font color="#990000">=</font> CBitcoinSecret<font color="#990000">.</font><b><font color="#000000">from_secret_bytes</font></b><font color="#990000">(</font><b><font color="#000000">x</font></b><font color="#990000">(</font>charlie_private_key_str<font color="#990000">))</font>
 
 <i><font color="#9A1900"># This function provides the pubKey script (aka output script) that will</font></i>
@@ -259,11 +259,11 @@ charlie_invoice_address_str <font color="#990000">=</font> <font color="#EF0000"
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting the first</font></i>
 <i><font color="#9A1900"># transaction above (part 3a)</font></i>
-txid_multisig_txn1 <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_multisig_txn1 <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting the second</font></i>
 <i><font color="#9A1900"># transaction above (part 3b)</font></i>
-txid_multisig_txn2 <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_multisig_txn2 <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>
@@ -272,11 +272,11 @@ txid_multisig_txn2 <font color="#990000">=</font> <font color="#EF0000">""</font
 
 <i><font color="#9A1900"># This is the transaction hash for the funding transaction for Bob's BCY</font></i>
 <i><font color="#9A1900"># network wallet.</font></i>
-txid_bob_bcy_funding <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_bob_bcy_funding <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># This is the transaction hash for the split transaction for the trasnaction</font></i>
 <i><font color="#9A1900"># above.</font></i>
-txid_bob_bcy_split <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_bob_bcy_split <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># This is the secret used in this atomic swap.  It needs to be between 1 million</font></i>
 <i><font color="#9A1900"># and 2 billion.</font></i>
@@ -316,16 +316,16 @@ atomic_swap_secret <font color="#990000">=</font> <font color="#993399">0</font>
     <font color="#990000">]</font>
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting part 4a</font></i>
-txid_atomicswap_alice_send <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_atomicswap_alice_send <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting part 4b</font></i>
-txid_atomicswap_bob_send <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_atomicswap_bob_send <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting part 4c</font></i>
-txid_atomicswap_alice_redeem <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_atomicswap_alice_redeem <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 <i><font color="#9A1900"># The transaction hash received after successfully submitting part 4d</font></i>
-txid_atomicswap_bob_redeem <font color="#990000">=</font> <font color="#EF0000">""</font>
+txid_atomicswap_bob_redeem <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900">#------------------------------------------------------------</font></i>

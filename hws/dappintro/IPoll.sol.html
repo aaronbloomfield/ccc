@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the IPoll.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>IPoll.sol</title>
+<title>Source code for IPoll.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+<main><h1>Source code for IPoll.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
 
 <i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repository,</font></i>
 <i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
@@ -18,16 +18,16 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900">// This is an interface that specifies a common API for a Poll contract.</font></i>
-<font color="#008080">interface</font> IPoll <font color="#EF0000">{</font>
+<font color="#008080">interface</font> IPoll <font color="#DF0000">{</font>
 
 	<i><font color="#9A1900">// the data that will be stored on the blockchain -- a tuple containing</font></i>
 	<i><font color="#9A1900">// the ID of the choice, the name of the choice, and how many votes it</font></i>
 	<i><font color="#9A1900">// has received</font></i>
-	<b><font color="#0000FF">struct</font></b> <font color="#008080">Choice</font> <font color="#EF0000">{</font>
+	<b><font color="#0000FF">struct</font></b> <font color="#008080">Choice</font> <font color="#DF0000">{</font>
 		<font color="#008080">uint</font> id<font color="#990000">;</font>
 		<font color="#008080">string</font> name<font color="#990000">;</font>
 		<font color="#008080">uint</font> votes<font color="#990000">;</font>
-	<font color="#EF0000">}</font>
+	<font color="#DF0000">}</font>
 
 	<i><font color="#9A1900">// this allows us to learn the purpose of this vote</font></i>
 	<font color="#008080">function</font> <b><font color="#000000">purpose</font></b><font color="#990000">()</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">);</font>
@@ -58,7 +58,7 @@ http://www.gnu.org/software/src-highlite">
 	<i><font color="#9A1900">// explained later in the course</font></i>
 	<font color="#008080">function</font> <b><font color="#000000">supportsInterface</font></b><font color="#990000">(</font><font color="#008080">bytes4</font> interfaceId<font color="#990000">)</font> external <font color="#008080">view</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
 
-<font color="#EF0000">}</font>
+<font color="#DF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

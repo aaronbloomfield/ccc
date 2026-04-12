@@ -1,23 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the ERC20.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>ERC20.sol</title>
+<title>Source code for ERC20.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<main><h1>Source code for ERC20.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
 <i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.5.0) (token/ERC20/ERC20.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
-import <font color="#EF0000">{</font>IERC20<font color="#EF0000">}</font> from <font color="#EF0000">"./IERC20.sol"</font><font color="#990000">;</font>
-import <font color="#EF0000">{</font>IERC20Metadata<font color="#EF0000">}</font> from <font color="#EF0000">"./IERC20Metadata.sol"</font><font color="#990000">;</font>
-import <font color="#EF0000">{</font>Context<font color="#EF0000">}</font> from <font color="#EF0000">"./Context.sol"</font><font color="#990000">;</font>
-import <font color="#EF0000">{</font>IERC20Errors<font color="#EF0000">}</font> from <font color="#EF0000">"./draft-IERC6093.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">{</font>IERC20<font color="#DF0000">}</font> from <font color="#DF0000">"./IERC20.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">{</font>IERC20Metadata<font color="#DF0000">}</font> from <font color="#DF0000">"./IERC20Metadata.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">{</font>Context<font color="#DF0000">}</font> from <font color="#DF0000">"./Context.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">{</font>IERC20Errors<font color="#DF0000">}</font> from <font color="#DF0000">"./draft-IERC6093.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Implementation of the {IERC20} interface.</font></i>
@@ -37,7 +37,7 @@ import <font color="#EF0000">{</font>IERC20Errors<font color="#EF0000">}</font> 
 <i><font color="#9A1900"> * conventional and does not conflict with the expectations of ERC-20</font></i>
 <i><font color="#9A1900"> * applications.</font></i>
 <i><font color="#9A1900"> */</font></i>
-abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20<font color="#990000">,</font> IERC20Metadata<font color="#990000">,</font> IERC20Errors <font color="#EF0000">{</font>
+abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990000">,</font> IERC20<font color="#990000">,</font> IERC20Metadata<font color="#990000">,</font> IERC20Errors <font color="#DF0000">{</font>
     <b><font color="#000000">mapping</font></b><font color="#990000">(</font><font color="#008080">address</font> account <font color="#990000">=&gt;</font> uint256<font color="#990000">)</font> <b><font color="#0000FF">private</font></b> _balances<font color="#990000">;</font>
 
     <b><font color="#000000">mapping</font></b><font color="#990000">(</font><font color="#008080">address</font> account <font color="#990000">=&gt;</font> <b><font color="#000000">mapping</font></b><font color="#990000">(</font><font color="#008080">address</font> spender <font color="#990000">=&gt;</font> uint256<font color="#990000">))</font> <b><font color="#0000FF">private</font></b> _allowances<font color="#990000">;</font>
@@ -52,25 +52,25 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Both values are immutable: they can only be set once during construction.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <b><font color="#000000">constructor</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> name_<font color="#990000">,</font> string <font color="#008080">memory</font> symbol_<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <b><font color="#000000">constructor</font></b><font color="#990000">(</font>string <font color="#008080">memory</font> name_<font color="#990000">,</font> string <font color="#008080">memory</font> symbol_<font color="#990000">)</font> <font color="#DF0000">{</font>
         _name <font color="#990000">=</font> name_<font color="#990000">;</font>
         _symbol <font color="#990000">=</font> symbol_<font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the name of the token.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">name</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> _name<font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the symbol of the token, usually a shorter version of the</font></i>
 <i><font color="#9A1900">     * name.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">symbol</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">string</font> memory<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> _symbol<font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Returns the number of decimals used to get its user representation.</font></i>
@@ -85,19 +85,19 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     * no way affects any of the arithmetic of the contract, including</font></i>
 <i><font color="#9A1900">     * {IERC20-balanceOf} and {IERC20-transfer}.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">decimals</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">decimals</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint8<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> <font color="#993399">18</font><font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/// </font></i><font color="#008A00">@inheritdoc</font><i><font color="#9A1900"> IERC20</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">totalSupply</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">totalSupply</font></b><font color="#990000">()</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> _totalSupply<font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/// </font></i><font color="#008A00">@inheritdoc</font><i><font color="#9A1900"> IERC20</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">balanceOf</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> _balances<font color="#990000">[</font>account<font color="#990000">];</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> See {IERC20-transfer}.</font></i>
@@ -107,16 +107,16 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     * - `to` cannot be the zero address.</font></i>
 <i><font color="#9A1900">     * - the caller must have a balance of at least `value`.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#DF0000">{</font>
         <font color="#008080">address</font> owner <font color="#990000">=</font> <b><font color="#000000">_msgSender</font></b><font color="#990000">();</font>
         <b><font color="#000000">_transfer</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> to<font color="#990000">,</font> value<font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/// </font></i><font color="#008A00">@inheritdoc</font><i><font color="#9A1900"> IERC20</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> view <font color="#008080">virtual</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font>uint256<font color="#990000">)</font> <font color="#DF0000">{</font>
         <b><font color="#0000FF">return</font></b> _allowances<font color="#990000">[</font>owner<font color="#990000">][</font>spender<font color="#990000">];</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> See {IERC20-approve}.</font></i>
@@ -128,11 +128,11 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * - `spender` cannot be the zero address.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">approve</font></b><font color="#990000">(</font><font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#DF0000">{</font>
         <font color="#008080">address</font> owner <font color="#990000">=</font> <b><font color="#000000">_msgSender</font></b><font color="#990000">();</font>
         <b><font color="#000000">_approve</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> spender<font color="#990000">,</font> value<font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> See {IERC20-transferFrom}.</font></i>
@@ -150,12 +150,12 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     * - the caller must have allowance for ``from``'s tokens of at least</font></i>
 <i><font color="#9A1900">     * `value`.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">transferFrom</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <b><font color="#0000FF">public</font></b> <b><font color="#0000FF">virtual</font></b> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">)</font> <font color="#DF0000">{</font>
         <font color="#008080">address</font> spender <font color="#990000">=</font> <b><font color="#000000">_msgSender</font></b><font color="#990000">();</font>
         <b><font color="#000000">_spendAllowance</font></b><font color="#990000">(</font>from<font color="#990000">,</font> spender<font color="#990000">,</font> value<font color="#990000">);</font>
         <b><font color="#000000">_transfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> value<font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Moves a `value` amount of tokens from `from` to `to`.</font></i>
@@ -167,15 +167,15 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * NOTE: This function is not virtual, {_update} should be overridden instead.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#EF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>from <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_transfer</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#DF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>from <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC20InvalidSender</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
-        <font color="#EF0000">}</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
+        <font color="#DF0000">}</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC20InvalidReceiver</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
-        <font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
         <b><font color="#000000">_update</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> value<font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`</font></i>
@@ -184,35 +184,35 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Emits a {Transfer} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_update</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#EF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>from <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_update</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">address</font> to<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#DF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>from <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
             <i><font color="#9A1900">// Overflow check required: The rest of the code assumes that totalSupply never overflows</font></i>
             _totalSupply <font color="#990000">+=</font> value<font color="#990000">;</font>
-        <font color="#EF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#EF0000">{</font>
+        <font color="#DF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#DF0000">{</font>
             <font color="#008080">uint256</font> fromBalance <font color="#990000">=</font> _balances<font color="#990000">[</font>from<font color="#990000">];</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>fromBalance <font color="#990000">&lt;</font> value<font color="#990000">)</font> <font color="#EF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>fromBalance <font color="#990000">&lt;</font> value<font color="#990000">)</font> <font color="#DF0000">{</font>
                 <font color="#008080">revert</font> <b><font color="#000000">ERC20InsufficientBalance</font></b><font color="#990000">(</font>from<font color="#990000">,</font> fromBalance<font color="#990000">,</font> value<font color="#990000">);</font>
-            <font color="#EF0000">}</font>
-            unchecked <font color="#EF0000">{</font>
+            <font color="#DF0000">}</font>
+            unchecked <font color="#DF0000">{</font>
                 <i><font color="#9A1900">// Overflow not possible: value &lt;= fromBalance &lt;= totalSupply.</font></i>
                 _balances<font color="#990000">[</font>from<font color="#990000">]</font> <font color="#990000">=</font> fromBalance <font color="#990000">-</font> value<font color="#990000">;</font>
-            <font color="#EF0000">}</font>
-        <font color="#EF0000">}</font>
+            <font color="#DF0000">}</font>
+        <font color="#DF0000">}</font>
 
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
-            unchecked <font color="#EF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
+            unchecked <font color="#DF0000">{</font>
                 <i><font color="#9A1900">// Overflow not possible: value &lt;= totalSupply or value &lt;= fromBalance &lt;= totalSupply.</font></i>
                 _totalSupply <font color="#990000">-=</font> value<font color="#990000">;</font>
-            <font color="#EF0000">}</font>
-        <font color="#EF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#EF0000">{</font>
-            unchecked <font color="#EF0000">{</font>
+            <font color="#DF0000">}</font>
+        <font color="#DF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#DF0000">{</font>
+            unchecked <font color="#DF0000">{</font>
                 <i><font color="#9A1900">// Overflow not possible: balance + value is at most totalSupply, which we know fits into a uint256.</font></i>
                 _balances<font color="#990000">[</font>to<font color="#990000">]</font> <font color="#990000">+=</font> value<font color="#990000">;</font>
-            <font color="#EF0000">}</font>
-        <font color="#EF0000">}</font>
+            <font color="#DF0000">}</font>
+        <font color="#DF0000">}</font>
 
         <font color="#008080">emit</font> <b><font color="#000000">Transfer</font></b><font color="#990000">(</font>from<font color="#990000">,</font> to<font color="#990000">,</font> value<font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Creates a `value` amount of tokens and assigns them to `account`, by transferring it from address(0).</font></i>
@@ -222,12 +222,12 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * NOTE: This function is not virtual, {_update} should be overridden instead.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_mint</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#EF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>account <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_mint</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#DF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>account <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC20InvalidReceiver</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
-        <font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
         <b><font color="#000000">_update</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> account<font color="#990000">,</font> value<font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Destroys a `value` amount of tokens from `account`, lowering the total supply.</font></i>
@@ -237,12 +237,12 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * NOTE: This function is not virtual, {_update} should be overridden instead</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_burn</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#EF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>account <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_burn</font></b><font color="#990000">(</font><font color="#008080">address</font> account<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#DF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>account <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC20InvalidSender</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
-        <font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
         <b><font color="#000000">_update</font></b><font color="#990000">(</font>account<font color="#990000">,</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">),</font> value<font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Sets `value` as the allowance of `spender` over the `owner`'s tokens.</font></i>
@@ -259,9 +259,9 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Overrides to this logic should be done to the variant with an additional `bool emitEvent` argument.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_approve</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_approve</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> internal <font color="#DF0000">{</font>
         <b><font color="#000000">_approve</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> spender<font color="#990000">,</font> value<font color="#990000">,</font> <b><font color="#0000FF">true</font></b><font color="#990000">);</font>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Variant of {_approve} with an optional flag to enable or disable the {Approval} event.</font></i>
@@ -281,18 +281,18 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Requirements are the same as {_approve}.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_approve</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008A00">bool</font> emitEvent<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#EF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>owner <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_approve</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">,</font> <font color="#008A00">bool</font> emitEvent<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#DF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>owner <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC20InvalidApprover</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
-        <font color="#EF0000">}</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>spender <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#EF0000">{</font>
+        <font color="#DF0000">}</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>spender <font color="#990000">==</font> <b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">))</font> <font color="#DF0000">{</font>
             <font color="#008080">revert</font> <b><font color="#000000">ERC20InvalidSpender</font></b><font color="#990000">(</font><b><font color="#000000">address</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">));</font>
-        <font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
         _allowances<font color="#990000">[</font>owner<font color="#990000">][</font>spender<font color="#990000">]</font> <font color="#990000">=</font> value<font color="#990000">;</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>emitEvent<font color="#990000">)</font> <font color="#EF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>emitEvent<font color="#990000">)</font> <font color="#DF0000">{</font>
             <font color="#008080">emit</font> <b><font color="#000000">Approval</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> spender<font color="#990000">,</font> value<font color="#990000">);</font>
-        <font color="#EF0000">}</font>
-    <font color="#EF0000">}</font>
+        <font color="#DF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Updates `owner`'s allowance for `spender` based on spent `value`.</font></i>
@@ -302,18 +302,18 @@ abstract contract ERC20 <font color="#008080">is</font> Context<font color="#990
 <i><font color="#9A1900">     *</font></i>
 <i><font color="#9A1900">     * Does not emit an {Approval} event.</font></i>
 <i><font color="#9A1900">     */</font></i>
-    <font color="#008080">function</font> <b><font color="#000000">_spendAllowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#EF0000">{</font>
+    <font color="#008080">function</font> <b><font color="#000000">_spendAllowance</font></b><font color="#990000">(</font><font color="#008080">address</font> owner<font color="#990000">,</font> <font color="#008080">address</font> spender<font color="#990000">,</font> <font color="#008080">uint256</font> value<font color="#990000">)</font> <font color="#008080">internal</font> <b><font color="#0000FF">virtual</font></b> <font color="#DF0000">{</font>
         <font color="#008080">uint256</font> currentAllowance <font color="#990000">=</font> <b><font color="#000000">allowance</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> spender<font color="#990000">);</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>currentAllowance <font color="#990000">&lt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint256<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#EF0000">{</font>
-            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>currentAllowance <font color="#990000">&lt;</font> value<font color="#990000">)</font> <font color="#EF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>currentAllowance <font color="#990000">&lt;</font> <b><font color="#000000">type</font></b><font color="#990000">(</font>uint256<font color="#990000">).</font>max<font color="#990000">)</font> <font color="#DF0000">{</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>currentAllowance <font color="#990000">&lt;</font> value<font color="#990000">)</font> <font color="#DF0000">{</font>
                 <font color="#008080">revert</font> <b><font color="#000000">ERC20InsufficientAllowance</font></b><font color="#990000">(</font>spender<font color="#990000">,</font> currentAllowance<font color="#990000">,</font> value<font color="#990000">);</font>
-            <font color="#EF0000">}</font>
-            unchecked <font color="#EF0000">{</font>
+            <font color="#DF0000">}</font>
+            unchecked <font color="#DF0000">{</font>
                 <b><font color="#000000">_approve</font></b><font color="#990000">(</font>owner<font color="#990000">,</font> spender<font color="#990000">,</font> currentAllowance <font color="#990000">-</font> value<font color="#990000">,</font> <b><font color="#0000FF">false</font></b><font color="#990000">);</font>
-            <font color="#EF0000">}</font>
-        <font color="#EF0000">}</font>
-    <font color="#EF0000">}</font>
-<font color="#EF0000">}</font>
+            <font color="#DF0000">}</font>
+        <font color="#DF0000">}</font>
+    <font color="#DF0000">}</font>
+<font color="#DF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

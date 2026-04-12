@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the tokens.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>tokens.py</title>
+<title>Source code for tokens.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900"># Submission information for the Ethereum Tokens HW</font></i>
+<main><h1>Source code for tokens.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900"># Submission information for the Ethereum Tokens HW</font></i>
 <i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/tokens/</font></i>
 
 <i><font color="#9A1900"># The filename of this file must be 'tokens.py', else the submission</font></i>
@@ -20,14 +20,14 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
-userid <font color="#990000">=</font> <font color="#EF0000">"mst3k"</font>
-name <font color="#990000">=</font> <font color="#EF0000">"Jane Doe"</font>
+userid <font color="#990000">=</font> <font color="#DF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#DF0000">"Jane Doe"</font>
 
 
 <i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
 <i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
 <i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
-eth_coinbase <font color="#990000">=</font> <font color="#EF0000">""</font>
+eth_coinbase <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
@@ -41,13 +41,13 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># cryptocurrencty transactions below are assumed to come from this</font></i>
 	<i><font color="#9A1900"># contract. The address does not need to be in checksummed form.  It must</font></i>
 	<i><font color="#9A1900"># have been deployed by the eth_coinbase address, above.</font></i>
-	<font color="#EF0000">'token_cc'</font><font color="#990000">:</font> <font color="#EF0000">''</font><font color="#990000">,</font>
+	<font color="#DF0000">'token_cc'</font><font color="#990000">:</font> <font color="#DF0000">''</font><font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The NFT Manager (aka ERC-721) contract.  Two of the minted NFTs, below,</font></i>
 	<i><font color="#9A1900"># are assumed to come from this contract (the third comes from the</font></i>
 	<i><font color="#9A1900"># course-wide contract).  The address does not need to be in checksummed</font></i>
 	<i><font color="#9A1900"># form.  It must have been deployed by the eth_coinbase address, above.</font></i>
-	<font color="#EF0000">'nft_manager'</font><font color="#990000">:</font> <font color="#EF0000">''</font><font color="#990000">,</font>
+	<font color="#DF0000">'nft_manager'</font><font color="#990000">:</font> <font color="#DF0000">''</font><font color="#990000">,</font>
 <font color="#990000">}</font>
 
 
@@ -60,63 +60,63 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># This is the name of your cryptocurrency.  Be creative!  But don't use</font></i>
 	<i><font color="#9A1900"># something that will get me in trouble.  This can have any printable</font></i>
 	<i><font color="#9A1900"># ASCII character (no emojis) and spaces.</font></i>
-	<font color="#EF0000">'cryptocurrency_name'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'cryptocurrency_name'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The abbreviation for your cryptocurrency: at most 4 letters.  And be</font></i>
 	<i><font color="#9A1900"># sure it is not already used (see the assignment for how to verify this).</font></i>
-	<font color="#EF0000">'cryptocurrency_abbrev'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'cryptocurrency_abbrev'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The transaction hash where you sent me 10.0 of your cryptocurrency.  It</font></i>
 	<i><font color="#9A1900"># must have been done by eth_coinbase, above.  And it must have used your</font></i>
 	<i><font color="#9A1900"># deployed TokenCC contract, above.</font></i>
-	<font color="#EF0000">'cc_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'cc_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># NFTManager fields</font></i>
 
 	<i><font color="#9A1900"># The NFT ID that you created from YOUR NFTManager (the nft_manager</font></i>
 	<i><font color="#9A1900"># contract, above) and kept (meaning you did not send to the course</font></i>
 	<i><font color="#9A1900"># instructor).  It must have been done by eth_coinbase, above.</font></i>
-	<font color="#EF0000">'nft_id_kept'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'nft_id_kept'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The NFT ID that you sent to the course instructor from YOUR NFTManager</font></i>
 	<i><font color="#9A1900"># (the nft_manager contract, above).  It must have been done by</font></i>
 	<i><font color="#9A1900"># eth_coinbase, above.</font></i>
-	<font color="#EF0000">'nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'nft_id_sent'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The transaction hash where you sent me an NFT from YOUR NFTManager</font></i>
 	<i><font color="#9A1900"># (the nft_manager contract, above).  It must have been done by</font></i>
 	<i><font color="#9A1900"># eth_coinbase, above.  And it must have used your deployed NFTManager</font></i>
 	<i><font color="#9A1900"># contract, above.</font></i>
-	<font color="#EF0000">'nft_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'nft_sent_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The NFT ID from when you created an NFT on the course-wide NFT manager.</font></i>
 	<i><font color="#9A1900"># It must have been done by eth_coinbase, above.</font></i>
-	<font color="#EF0000">'course_nft_id'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'course_nft_id'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The transaction hash from when you created an NFT on the course-wide NFT</font></i>
 	<i><font color="#9A1900"># manager.  It must have been done by eth_coinbase, above.</font></i>
-	<font color="#EF0000">'course_nft_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'course_nft_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Generative AI fields</font></i>
 
 	<i><font color="#9A1900"># Did you use generative AI when creating your cryptocurrency logo?  It's</font></i>
 	<i><font color="#9A1900"># fine if you did -- you were allowed to do so -- we just wanted to know</font></i>
 	<i><font color="#9A1900"># how many people did or did not.  This should be either True or False.</font></i>
-	<font color="#EF0000">'used_gen_ai_for_cclogo'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'used_gen_ai_for_cclogo'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you use generative AI when creating any (or all) of your NFTs?  It's</font></i>
 	<i><font color="#9A1900"># fine if you did -- you were allowed to do so -- we just wanted to know</font></i>
 	<i><font color="#9A1900"># how many people did or did not.  This should be either True or False.</font></i>
-	<font color="#EF0000">'used_gen_ai_for_nfts'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'used_gen_ai_for_nfts'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># If you did use a generative AI tool, which one did you use?  If you</font></i>
 	<i><font color="#9A1900"># didn't, you can have this be an empty string.</font></i>
-	<font color="#EF0000">'which_gen_ai_tool_used'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'which_gen_ai_tool_used'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
     <i><font color="#9A1900"># How useful did you find the Debug.sol library that was provided?  This</font></i>
     <i><font color="#9A1900"># is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is</font></i>
     <i><font color="#9A1900"># moderately useful, and 5 is very useful.  Integers only, please.</font></i>
-    <font color="#EF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <font color="#DF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 
 
@@ -134,80 +134,80 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># background outside the coin, and a non-white background in the circle</font></i>
 	<i><font color="#9A1900"># of the coin (these requirements match the template that was provided,</font></i>
 	<i><font color="#9A1900"># other than the non-white background).</font></i>
-	<font color="#EF0000">'cc_logo_image_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'cc_logo_image_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Is your cc logo named properly?  It should be 'abcd.png', where 'abcd'</font></i>
 	<i><font color="#9A1900"># is your cryptocurrency abbreviation.  The file name should be all lower</font></i>
 	<i><font color="#9A1900"># case.</font></i>
-	<font color="#EF0000">'cc_logo_name_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'cc_logo_name_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you upload your cryptocurrency logo to the 'cclogos/' directory?</font></i>
-	<font color="#EF0000">'uploaded_cc_logo'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'uploaded_cc_logo'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you mint at least 100 coins of your TokenCC?  Keep in mind that you</font></i>
 	<i><font color="#9A1900"># have to add a number of decimal places after the number of coins minted.</font></i>
-	<font color="#EF0000">'minted_at_least_100_coins'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'minted_at_least_100_coins'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send me exactly 10.0 of your token cryptocurrencty?  If your</font></i>
 	<i><font color="#9A1900"># token cryptocurrency uses 8 decimals, then that will be 1,000,000,000</font></i>
 	<i><font color="#9A1900"># total units sent.</font></i>
-	<font color="#EF0000">'sent_ten_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'sent_ten_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does your `supportsInterface()` function in TokenCC return true for the</font></i>
 	<i><font color="#9A1900"># four interfaces?</font></i>
-	<font color="#EF0000">'tokencc_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'tokencc_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Is your TokenCC contract opening line *exactly:*</font></i>
 	<i><font color="#9A1900"># `contract TokenCC is ITokenCC, ERC20 {`?</font></i>
-	<font color="#EF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'tokencc_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The constructor for your TokenCC should take in zero paramteters --</font></i>
 	<i><font color="#9A1900"># it will still call the ERC20 constructor (with hard-coded strings), of</font></i>
 	<i><font color="#9A1900"># course.</font></i>
-	<font color="#EF0000">'tokencc_constructor_takes_in_0_params'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'tokencc_constructor_takes_in_0_params'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># NFTManager sanity checks</font></i>
 
 	<i><font color="#9A1900"># Did you upload three NFT images?  They must be either .jpg, .png,</font></i>
 	<i><font color="#9A1900"># or .webp images.</font></i>
-	<font color="#EF0000">'uploaded_three_nft_images'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'uploaded_three_nft_images'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Are all three NFT images no larger than 2000x2000?</font></i>
-	<font color="#EF0000">'nft_image_sizes_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'nft_image_sizes_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you name the images correctly?  The names should start with your</font></i>
 	<i><font color="#9A1900"># userid followed by a underscore, and have the appropriate image</font></i>
 	<i><font color="#9A1900"># extension.  All filenames must be strictly less than or equal to 32</font></i>
 	<i><font color="#9A1900"># characters in length.</font></i>
-	<font color="#EF0000">'image_files_named_correctly'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'image_files_named_correctly'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Can anybody mint an NFT?  Just make sure you don't require() that the</font></i>
 	<i><font color="#9A1900"># minter is the deployer, for example.</font></i>
-	<font color="#EF0000">'anybody_can_mint_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'anybody_can_mint_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you create two NFTs on *your* NFTManager?</font></i>
-	<font color="#EF0000">'created_two_nfts_on_own'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'created_two_nfts_on_own'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send me one of your NFTs?  Which one was specified in</font></i>
 	<i><font color="#9A1900"># the 'nft_id_sent' field in the 'other' dictionary, above.</font></i>
-	<font color="#EF0000">'sent_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'sent_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does your `supportsInterface()` function in NFTManager return true for</font></i>
 	<i><font color="#9A1900"># the four interfaces?</font></i>
-	<font color="#EF0000">'nftmanager_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'nftmanager_supportsInterface_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Is your NFTManager contract opening line *exactly:*</font></i>
 	<i><font color="#9A1900"># `contract NFTManager is INFTManager, ERC721 {`?</font></i>
-	<font color="#EF0000">'nftmanager_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'nftmanager_opening_line_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># The constructor for your NFTManager should take in zero paramteters --</font></i>
 	<i><font color="#9A1900"># it will still call the ERC721 constructor (with hard-coded strings), of</font></i>
 	<i><font color="#9A1900"># course.</font></i>
-	<font color="#EF0000">'nft_manager_constructor_takes_in_0_params'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'nft_manager_constructor_takes_in_0_params'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you create a NFT on the course-wide NFT manager?  The NFT ID for</font></i>
 	<i><font color="#9A1900"># this was put into the other['course_nft_id'] field, above.</font></i>
-	<font color="#EF0000">'created_course_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'created_course_nft'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -218,17 +218,17 @@ comments <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
 	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#EF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
 	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
 	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#EF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
 	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
 	<i><font color="#9A1900"># None).</font></i>
-	<font color="#EF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre></main>
 </body>

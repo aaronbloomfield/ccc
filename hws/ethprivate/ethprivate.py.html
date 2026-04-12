@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the ethprivate.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>ethprivate.py</title>
+<title>Source code for ethprivate.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900"># Submission information for the Connecting to the Private Ethereum Blockchain HW</font></i>
+<main><h1>Source code for ethprivate.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900"># Submission information for the Connecting to the Private Ethereum Blockchain HW</font></i>
 <i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/ethprivate/</font></i>
 
 <i><font color="#9A1900"># The filename of this file must be 'ethprivate.py', else the submission</font></i>
@@ -20,14 +20,14 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
-userid <font color="#990000">=</font> <font color="#EF0000">"mst3k"</font>
-name <font color="#990000">=</font> <font color="#EF0000">"Jane Doe"</font>
+userid <font color="#990000">=</font> <font color="#DF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#DF0000">"Jane Doe"</font>
 
 
 <i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
 <i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
 <i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
-eth_coinbase <font color="#990000">=</font> <font color="#EF0000">""</font>
+eth_coinbase <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
@@ -49,32 +49,32 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># This is the block number that contains the transaction where you</font></i>
 	<i><font color="#9A1900"># received ether from the faucet (if you did this multiple times, pick</font></i>
 	<i><font color="#9A1900"># one); it should be an integer.</font></i>
-	<font color="#EF0000">'faucet_txn_block_number'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'faucet_txn_block_number'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the transaction hash where you received ether from the faucet;</font></i>
 	<i><font color="#9A1900"># if you did this multiple times, use the same one as in the field above.</font></i>
 	<i><font color="#9A1900"># Be sure to include the leading '0x'; case does not matter.</font></i>
-	<font color="#EF0000">'faucet_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'faucet_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the URL on the blockchain explorer that resolves to the</font></i>
 	<i><font color="#9A1900"># transaction (not the block!) indicated by the above transaction hash.</font></i>
 	<i><font color="#9A1900"># You see the blockchain explorer when you get to part 8 of the</font></i>
 	<i><font color="#9A1900"># assignment, and this can be filled in then.</font></i>
-	<font color="#EF0000">'faucet_txn_url'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'faucet_txn_url'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the block number that contains the transaction where you sent me</font></i>
 	<i><font color="#9A1900"># 1 (fake) ETH; it should be an integer.</font></i>
-	<font color="#EF0000">'send_txn_block_number'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'send_txn_block_number'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the transaction hash where you sent me 1 (fake) ETH.  Be sure to</font></i>
 	<i><font color="#9A1900"># include the leading '0x'; case does not matter.</font></i>
-	<font color="#EF0000">'send_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'send_txn_hash'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># This is the URL on the blockchain explorer that resolves to the</font></i>
 	<i><font color="#9A1900"># transaction (not the block!) indicated by the above transaction hash.</font></i>
 	<i><font color="#9A1900"># You see the blockchain explorer when you get to part 8 of the</font></i>
 	<i><font color="#9A1900"># assignment, and this can be filled in then.</font></i>
-	<font color="#EF0000">'send_txn_url'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'send_txn_url'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -87,19 +87,19 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># Did you explore geth on your own?</font></i>
-	<font color="#EF0000">'explored_geth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'explored_geth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you extract the private key for your the above eth_coinbase account?</font></i>
 	<i><font color="#9A1900"># We are not asking for that information here, since that is private</font></i>
 	<i><font color="#9A1900"># information.  Only the public key (aka eth_conibase, above) is what is</font></i>
 	<i><font color="#9A1900"># to be included in this file.</font></i>
-	<font color="#EF0000">'extracted_private_key'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'extracted_private_key'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send one (fake) ETH to the course address?</font></i>
-	<font color="#EF0000">'sent_1_fake_eth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'sent_1_fake_eth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you close down geth when you were done?</font></i>
-	<font color="#EF0000">'closed_down_geth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'closed_down_geth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -110,17 +110,17 @@ comments <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
 	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#EF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
 	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
 	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#EF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
 	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
 	<i><font color="#9A1900"># None).</font></i>
-	<font color="#EF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre></main>
 </body>

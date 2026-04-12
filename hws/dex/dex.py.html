@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the dex.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>dex.py</title>
+<title>Source code for dex.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900"># Submission information for the Decentralized Exchange (DEX) HW</font></i>
+<main><h1>Source code for dex.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900"># Submission information for the Decentralized Exchange (DEX) HW</font></i>
 <i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/dex/</font></i>
 
 <i><font color="#9A1900"># The filename of this file must be 'dex.py', else the submission</font></i>
@@ -20,14 +20,14 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
-userid <font color="#990000">=</font> <font color="#EF0000">"mst3k"</font>
-name <font color="#990000">=</font> <font color="#EF0000">"Jane Doe"</font>
+userid <font color="#990000">=</font> <font color="#DF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#DF0000">"Jane Doe"</font>
 
 
 <i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
 <i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
 <i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
-eth_coinbase <font color="#990000">=</font> <font color="#EF0000">""</font>
+eth_coinbase <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
@@ -41,12 +41,12 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># you will have had to re-deploy it for this assignment.  The address</font></i>
 	<i><font color="#9A1900"># does not need to be in checksummed form.  It must have been deployed by</font></i>
 	<i><font color="#9A1900"># the eth_coinbase address, above.</font></i>
-	<font color="#EF0000">'token_cc'</font><font color="#990000">:</font> <font color="#EF0000">''</font><font color="#990000">,</font>
+	<font color="#DF0000">'token_cc'</font><font color="#990000">:</font> <font color="#DF0000">''</font><font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Your DEX contract.  All of the actions in this file are assumed to be</font></i>
 	<i><font color="#9A1900"># from this contract.  The address does not need to be in checksummed</font></i>
 	<i><font color="#9A1900"># form.  It must have been deployed by the eth_coinbase address, above.</font></i>
-	<font color="#EF0000">'dex'</font><font color="#990000">:</font> <font color="#EF0000">''</font><font color="#990000">,</font>
+	<font color="#DF0000">'dex'</font><font color="#990000">:</font> <font color="#DF0000">''</font><font color="#990000">,</font>
 <font color="#990000">}</font>
 
 
@@ -57,12 +57,12 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># This is the transaction hash from when you called createPool() on the</font></i>
 	<i><font color="#9A1900"># deployed DEX, above, with exactly 100 ether and at least 10.0 TC.  This</font></i>
 	<i><font color="#9A1900"># should be a string.</font></i>
-	<font color="#EF0000">'createpool_call_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'createpool_call_txn'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
     <i><font color="#9A1900"># How useful did you find the Debug.sol library that was provided?  This</font></i>
     <i><font color="#9A1900"># is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is</font></i>
     <i><font color="#9A1900"># moderately useful, and 5 is very useful.  Integers only, please.</font></i>
-    <font color="#EF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <font color="#DF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 
 
@@ -76,41 +76,41 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># For the TokenCC that you are using for this assignment, did you make the</font></i>
 	<i><font color="#9A1900"># changes required in the DEX homework?  This is adding the</font></i>
 	<i><font color="#9A1900"># `afterTokenTransfer()` function.</font></i>
-	<font color="#EF0000">'modified_tokencc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'modified_tokencc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does the `symbol()` function in your DEX contract return the symbol for</font></i>
 	<i><font color="#9A1900"># your token cryptocurrency?</font></i>
-	<font color="#EF0000">'dex_symbol_returns_tcc_symbol'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'dex_symbol_returns_tcc_symbol'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you register your DEX with the course dex.php web page? This implies</font></i>
 	<i><font color="#9A1900"># that you deployed both TokenDEX and TokenCC to the private Ethereum</font></i>
 	<i><font color="#9A1900"># blockchain.</font></i>
-	<font color="#EF0000">'registered_dex_with_course_page'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'registered_dex_with_course_page'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you call createPool() on your DEX with *exactly* 100 (fake) ETH? </font></i>
-	<font color="#EF0000">'called_createpoool_with_100_eth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'called_createpoool_with_100_eth'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># When you called createPool(), did you send in at least 10.0 of your TC?</font></i>
 	<i><font color="#9A1900"># You can use more, if you would like.</font></i>
-	<font color="#EF0000">'called_createpoool_with_10_or_more_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'called_createpoool_with_10_or_more_tc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Is your DEX initialized with the *variable* EtherPricer contract?</font></i>
-	<font color="#EF0000">'initialized_dex_with_variable_etherpriceoracle'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'initialized_dex_with_variable_etherpriceoracle'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you send me exactly 10.0 of your token cryptocurrencty?  If your</font></i>
 	<i><font color="#9A1900"># token cryptocurrency uses 8 decimals, then that will be 1,000,000,000</font></i>
 	<i><font color="#9A1900"># total units sent.  This is from the TokenCC that you deployed in</font></i>
 	<i><font color="#9A1900"># the 'contracts' section, above.</font></i>
-	<font color="#EF0000">'sent_me_10_of_your_cc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'sent_me_10_of_your_cc'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you, or will you, make 4 exchanges on somebody else's DEX?  These</font></i>
 	<i><font color="#9A1900"># bids are due 24 hours after the assignment due date</font></i>
-	<font color="#EF0000">'made_4_exchanges_on_other_dexes'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'made_4_exchanges_on_other_dexes'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Your createPool() needs to trasnfer the ERC20 tokens to itself via</font></i>
 	<i><font color="#9A1900"># `transferFrom()`, otherwise nothing is going to work correctly.  Did</font></i>
 	<i><font color="#9A1900"># you call `transferFrom()` in your `createPool()`?</font></i>
-	<font color="#EF0000">'called_transferFrom_in_createPool'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'called_transferFrom_in_createPool'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -121,17 +121,17 @@ comments <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
 	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#EF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
 	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
 	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#EF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
 	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
 	<i><font color="#9A1900"># None).</font></i>
-	<font color="#EF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre></main>
 </body>

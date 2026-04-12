@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the ERC721Utils.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>ERC721Utils.sol</title>
+<title>Source code for ERC721Utils.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
+<main><h1>Source code for ERC721Utils.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: MIT</font></i>
 <i><font color="#9A1900">// OpenZeppelin Contracts (last updated v5.5.0) (token/ERC721/utils/ERC721Utils.sol)</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">20</font><font color="#990000">;</font>
 
-import <font color="#EF0000">{</font>IERC721Receiver<font color="#EF0000">}</font> from <font color="#EF0000">"./IERC721Receiver.sol"</font><font color="#990000">;</font>
-import <font color="#EF0000">{</font>IERC721Errors<font color="#EF0000">}</font> from <font color="#EF0000">"./draft-IERC6093.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">{</font>IERC721Receiver<font color="#DF0000">}</font> from <font color="#DF0000">"./IERC721Receiver.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">{</font>IERC721Errors<font color="#DF0000">}</font> from <font color="#DF0000">"./draft-IERC6093.sol"</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900"> * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Library that provides common ERC-721 utility functions.</font></i>
@@ -24,7 +24,7 @@ import <font color="#EF0000">{</font>IERC721Errors<font color="#EF0000">}</font>
 <i><font color="#9A1900"> *</font></i>
 <i><font color="#9A1900"> * _Available since v5.1._</font></i>
 <i><font color="#9A1900"> */</font></i>
-<font color="#008080">library</font> ERC721Utils <font color="#EF0000">{</font>
+<font color="#008080">library</font> ERC721Utils <font color="#DF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Performs an acceptance check for the provided `operator` by calling {IERC721Receiver-onERC721Received}</font></i>
 <i><font color="#9A1900">     * on the `to` address. The `operator` is generally the address that initiated the token transfer (i.e. `msg.sender`).</font></i>
@@ -39,26 +39,26 @@ import <font color="#EF0000">{</font>IERC721Errors<font color="#EF0000">}</font>
         <font color="#008080">address</font> to<font color="#990000">,</font>
         <font color="#008080">uint256</font> tokenId<font color="#990000">,</font>
         bytes memory data
-    <font color="#990000">)</font> internal <font color="#EF0000">{</font>
-        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#EF0000">{</font>
-            <b><font color="#0000FF">try</font></b> <b><font color="#000000">IERC721Receiver</font></b><font color="#990000">(</font>to<font color="#990000">).</font><b><font color="#000000">onERC721Received</font></b><font color="#990000">(</font><b><font color="#0000FF">operator</font></b><font color="#990000">,</font> from<font color="#990000">,</font> tokenId<font color="#990000">,</font> data<font color="#990000">)</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes4</font> retval<font color="#990000">)</font> <font color="#EF0000">{</font>
-                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>retval <font color="#990000">!=</font> IERC721Receiver<font color="#990000">.</font>onERC721Received<font color="#990000">.</font>selector<font color="#990000">)</font> <font color="#EF0000">{</font>
+    <font color="#990000">)</font> internal <font color="#DF0000">{</font>
+        <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>to<font color="#990000">.</font>code<font color="#990000">.</font>length <font color="#990000">&gt;</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#DF0000">{</font>
+            <b><font color="#0000FF">try</font></b> <b><font color="#000000">IERC721Receiver</font></b><font color="#990000">(</font>to<font color="#990000">).</font><b><font color="#000000">onERC721Received</font></b><font color="#990000">(</font><b><font color="#0000FF">operator</font></b><font color="#990000">,</font> from<font color="#990000">,</font> tokenId<font color="#990000">,</font> data<font color="#990000">)</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008080">bytes4</font> retval<font color="#990000">)</font> <font color="#DF0000">{</font>
+                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>retval <font color="#990000">!=</font> IERC721Receiver<font color="#990000">.</font>onERC721Received<font color="#990000">.</font>selector<font color="#990000">)</font> <font color="#DF0000">{</font>
                     <i><font color="#9A1900">// Token rejected</font></i>
                     <font color="#008080">revert</font> IERC721Errors<font color="#990000">.</font><b><font color="#000000">ERC721InvalidReceiver</font></b><font color="#990000">(</font>to<font color="#990000">);</font>
-                <font color="#EF0000">}</font>
-            <font color="#EF0000">}</font> <b><font color="#0000FF">catch</font></b> <font color="#990000">(</font>bytes <font color="#008080">memory</font> reason<font color="#990000">)</font> <font color="#EF0000">{</font>
-                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>reason<font color="#990000">.</font>length <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#EF0000">{</font>
+                <font color="#DF0000">}</font>
+            <font color="#DF0000">}</font> <b><font color="#0000FF">catch</font></b> <font color="#990000">(</font>bytes <font color="#008080">memory</font> reason<font color="#990000">)</font> <font color="#DF0000">{</font>
+                <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>reason<font color="#990000">.</font>length <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">)</font> <font color="#DF0000">{</font>
                     <i><font color="#9A1900">// non-IERC721Receiver implementer</font></i>
                     <font color="#008080">revert</font> IERC721Errors<font color="#990000">.</font><b><font color="#000000">ERC721InvalidReceiver</font></b><font color="#990000">(</font>to<font color="#990000">);</font>
-                <font color="#EF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#EF0000">{</font>
-                    <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#EF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#EF0000">{</font>
+                <font color="#DF0000">}</font> <b><font color="#0000FF">else</font></b> <font color="#DF0000">{</font>
+                    <b><font color="#000000">assembly</font></b> <font color="#990000">(</font><font color="#DF0000">"memory-safe"</font><font color="#990000">)</font> <font color="#DF0000">{</font>
                         <b><font color="#000000">revert</font></b><font color="#990000">(</font><b><font color="#000000">add</font></b><font color="#990000">(</font>reason<font color="#990000">,</font> <font color="#993399">0x20</font><font color="#990000">),</font> <b><font color="#000000">mload</font></b><font color="#990000">(</font>reason<font color="#990000">))</font>
-                    <font color="#EF0000">}</font>
-                <font color="#EF0000">}</font>
-            <font color="#EF0000">}</font>
-        <font color="#EF0000">}</font>
-    <font color="#EF0000">}</font>
-<font color="#EF0000">}</font>
+                    <font color="#DF0000">}</font>
+                <font color="#DF0000">}</font>
+            <font color="#DF0000">}</font>
+        <font color="#DF0000">}</font>
+    <font color="#DF0000">}</font>
+<font color="#DF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

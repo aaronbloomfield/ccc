@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the IERC20Receiver.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>IERC20Receiver.sol</title>
+<title>Source code for IERC20Receiver.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+<main><h1>Source code for IERC20Receiver.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
@@ -18,7 +18,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900"> * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Interface for any contract that wants to support safeTransfers</font></i>
 <i><font color="#9A1900"> * from ERC20 asset contracts.  Based on the IERC721Receiver code.</font></i>
 <i><font color="#9A1900"> */</font></i>
-<font color="#008080">interface</font> IERC20Receiver <font color="#EF0000">{</font>
+<font color="#008080">interface</font> IERC20Receiver <font color="#DF0000">{</font>
     <i><font color="#9A1900">/**</font></i>
 <i><font color="#9A1900">     * </font></i><font color="#008A00">@dev</font><i><font color="#9A1900"> Whenever an {IERC20} amount is transferred to this contract from `from`, this function is called.</font></i>
 <i><font color="#9A1900">     *</font></i>
@@ -28,7 +28,7 @@ http://www.gnu.org/software/src-highlite">
 <i><font color="#9A1900">     * The selector can be obtained in Solidity with `IERC20Receiver.onERC20Received.selector`.</font></i>
 <i><font color="#9A1900">     */</font></i>
     <font color="#008080">function</font> <b><font color="#000000">onERC20Received</font></b><font color="#990000">(</font><font color="#008080">address</font> from<font color="#990000">,</font> <font color="#008080">uint</font> amount<font color="#990000">,</font> <font color="#008080">address</font> erc20<font color="#990000">)</font> <font color="#008080">external</font> <b><font color="#000000">returns</font></b> <font color="#990000">(</font><font color="#008A00">bool</font><font color="#990000">);</font>
-<font color="#EF0000">}</font>
+<font color="#DF0000">}</font>
 
 <i><font color="#9A1900">/* to use this code, put the following in your ERC-20 sub-class implementation:</font></i>
 

@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the metamask.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>metamask.py</title>
+<title>Source code for metamask.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900"># Submission information for the Metamask HW</font></i>
+<main><h1>Source code for metamask.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900"># Submission information for the Metamask HW</font></i>
 <i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/metamask/</font></i>
 
 <i><font color="#9A1900"># The filename of this file must be 'metamask.py', else the submission</font></i>
@@ -20,14 +20,14 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
-userid <font color="#990000">=</font> <font color="#EF0000">"mst3k"</font>
-name <font color="#990000">=</font> <font color="#EF0000">"Jane Doe"</font>
+userid <font color="#990000">=</font> <font color="#DF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#DF0000">"Jane Doe"</font>
 
 
 <i><font color="#9A1900"># eth.coinbase: this is the account that you deployed the smart contracts</font></i>
 <i><font color="#9A1900"># (and performed any necessary transactions) for this assignment.  Be sure to</font></i>
 <i><font color="#9A1900"># include the leading '0x' in the address.</font></i>
-eth_coinbase <font color="#990000">=</font> <font color="#EF0000">""</font>
+eth_coinbase <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
@@ -42,7 +42,7 @@ contracts <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># checksummed form.  It must have been deployed by the eth_coinbase</font></i>
 	<i><font color="#9A1900"># address, above.  This can be re-deployed for this assignment, or the</font></i>
 	<i><font color="#9A1900"># same one as for your auctions assignment.</font></i>
-	<font color="#EF0000">'auctioneer'</font><font color="#990000">:</font> <font color="#EF0000">''</font><font color="#990000">,</font>
+	<font color="#DF0000">'auctioneer'</font><font color="#990000">:</font> <font color="#DF0000">''</font><font color="#990000">,</font>
 
 	<i><font color="#9A1900"># We do not need the contract address of your NFTManager, as we can call</font></i>
 	<i><font color="#9A1900"># the `nftmanager()` function on your Auctioneer contract to get that.</font></i>
@@ -58,12 +58,12 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Just the 8 hex digits, please.  This is computed the exact same way as</font></i>
 	<i><font color="#9A1900"># in the DAO&amp;web3 assignment.  If you are using the same eth.coinbase,</font></i>
 	<i><font color="#9A1900"># you can use the same value here.</font></i>
-	<font color="#EF0000">'metamask.html_suffix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'metamask.html_suffix'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
     <i><font color="#9A1900"># How useful did you find the Debug.sol library that was provided?  This</font></i>
     <i><font color="#9A1900"># is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is</font></i>
     <i><font color="#9A1900"># moderately useful, and 5 is very useful.  Integers only, please.</font></i>
-    <font color="#EF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <font color="#DF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 
 
@@ -76,33 +76,33 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	
 	<i><font color="#9A1900"># Did you compute the suffix for your metamask_XXXXXXXX.html file, as per the</font></i>
 	<i><font color="#9A1900"># instructions?</font></i>
-	<font color="#EF0000">'computed_metamask.html_suffix'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'computed_metamask.html_suffix'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Have you ensured that the `metamask.html` file (without the suffix) does NOT</font></i>
 	<i><font color="#9A1900"># exist?</font></i>
-	<font color="#EF0000">'metamask.html_does_not_exist'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'metamask.html_does_not_exist'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you run `touch ~/public_html/index.html (or similar) on the</font></i>
 	<i><font color="#9A1900"># departmental server, or otherwise prevent directory viewing?</font></i>
-	<font color="#EF0000">'ran_touch_index.html'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'ran_touch_index.html'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does your web page display the table of auctions (copied over from</font></i>
 	<i><font color="#9A1900"># auctions.php) IN ADDITION TO the web forms that you created?</font></i>
-	<font color="#EF0000">'displays_auctions_table'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'displays_auctions_table'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Is the URL of your metamask_xxxxxxxx.html exactly:</font></i>
 	<i><font color="#9A1900"># https://www.cs.virginia.edu/~mst3k/metamask_xxxxxxxx.html</font></i>
 	<i><font color="#9A1900"># where 'mst3k' is your userid?</font></i>
-	<font color="#EF0000">'auctions_url_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'auctions_url_is_correct'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Did you add three auctions to your metamask_xxxxxxxx.html page?  There</font></i>
 	<i><font color="#9A1900"># is no requirement for the start/end dates/times for these.  They should</font></i>
 	<i><font color="#9A1900"># be for your three NFTs that you created in the Tokens assignment.</font></i>
-	<font color="#EF0000">'added_three_auctions'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'added_three_auctions'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Can somebody ELSE mint an NFT and start / bid on / close an auction?  If</font></i>
 	<i><font color="#9A1900"># we can't do that, then we won't be able to grade it. </font></i>
-	<font color="#EF0000">'somebody_else_can_mint'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'somebody_else_can_mint'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -113,17 +113,17 @@ comments <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
 	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#EF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
 	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
 	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#EF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
 	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
 	<i><font color="#9A1900"># None).</font></i>
-	<font color="#EF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre></main>
 </body>

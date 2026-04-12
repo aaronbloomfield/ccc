@@ -1,32 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the IDAO.sol file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>IDAO.sol</title>
+<title>Source code for IDAO.sol (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
+<main><h1>Source code for IDAO.sol (via source-highlight)</h1><pre><tt><i><font color="#9A1900">// SPDX-License-Identifier: GPL-3.0-or-later</font></i>
 
 <i><font color="#9A1900">// This file is part of the http://github.com/aaronbloomfield/ccc repository,</font></i>
 <i><font color="#9A1900">// and is released under the GPL 3.0 license.</font></i>
 
-import <font color="#EF0000">"./IERC165.sol"</font><font color="#990000">;</font>
+import <font color="#DF0000">"./IERC165.sol"</font><font color="#990000">;</font>
 
 <font color="#008080">pragma</font> solidity <font color="#990000">^</font><font color="#993399">0.8</font><font color="#990000">.</font><font color="#993399">33</font><font color="#990000">;</font>
 
 <i><font color="#9A1900">// This file is heavily adapted from the DAO interface at</font></i>
 <i><font color="#9A1900">// https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol</font></i>
 
-interface IDAO <font color="#008080">is</font> IERC165 <font color="#EF0000">{</font>
+interface IDAO <font color="#008080">is</font> IERC165 <font color="#DF0000">{</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// A struct to hold all of our proposal data</font></i>
 
-    <b><font color="#0000FF">struct</font></b> <font color="#008080">Proposal</font> <font color="#EF0000">{</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">Proposal</font> <font color="#DF0000">{</font>
         <font color="#008080">address</font> recipient<font color="#990000">;</font>      <i><font color="#9A1900">// The address where the `amount` will go to if the proposal is accepted</font></i>
         <font color="#008080">uint</font> amount<font color="#990000">;</font>            <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
         <font color="#008080">string</font> description<font color="#990000">;</font>     <i><font color="#9A1900">// The amount to transfer to `recipient` if the proposal is accepted.</font></i>
@@ -36,7 +36,7 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#EF0000">{</
         <font color="#008080">uint</font> yea<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens in favor of the proposal; updated upon each yea vote</font></i>
         <font color="#008080">uint</font> nay<font color="#990000">;</font>               <i><font color="#9A1900">// Number of Tokens opposed to the proposal; updated upon each nay vote</font></i>
         <font color="#008080">address</font> creator<font color="#990000">;</font>        <i><font color="#9A1900">// Address of the shareholder who created the proposal</font></i>
-    <font color="#EF0000">}</font>
+    <font color="#DF0000">}</font>
 
     <i><font color="#9A1900">//------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// These are all just public variables; some of which are set in the</font></i>
@@ -207,7 +207,7 @@ interface IDAO <font color="#008080">is</font> IERC165 <font color="#EF0000">{</
     <i><font color="#9A1900">// @param result Whether the proposal was successful or not</font></i>
     <font color="#008080">event</font> <b><font color="#000000">ProposalClosed</font></b><font color="#990000">(</font>uint <font color="#008080">indexed</font> proposalID<font color="#990000">,</font> <font color="#008A00">bool</font> <font color="#008080">indexed</font> result<font color="#990000">);</font>
 
-<font color="#EF0000">}</font>
+<font color="#DF0000">}</font>
 </tt></pre></main>
 </body>
 </html>

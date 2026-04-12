@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the check_genesis_json.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>check_genesis_json.py</title>
+<title>Source code for check_genesis_json.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900">#!/usr/bin/python3</font></i>
+<main><h1>Source code for check_genesis_json.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900">#!/usr/bin/python3</font></i>
 
 <b><font color="#000080">import</font></b> sys<font color="#990000">,</font> json
 
@@ -26,29 +26,29 @@ http://www.gnu.org/software/src-highlite">
 json <font color="#990000">=</font> json<font color="#990000">.</font><b><font color="#000000">load</font></b><font color="#990000">(</font><b><font color="#000000">open</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]))</font>
 
 <i><font color="#9A1900"># checking the block list</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#EF0000">'blocks'</font> <b><font color="#0000FF">in</font></b> json<font color="#990000">)</font> <i><font color="#9A1900"># needs to be present</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">isinstance</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#EF0000">'blocks'</font><font color="#990000">],</font>list<font color="#990000">))</font> <i><font color="#9A1900"># needs to be a list</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#EF0000">'blocks'</font><font color="#990000">])</font> <font color="#990000">&gt;=</font> <font color="#993399">1</font><font color="#990000">)</font> <i><font color="#9A1900"># only one block is listed, but you are allowed an empty "trailing" block</font></i>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#DF0000">'blocks'</font> <b><font color="#0000FF">in</font></b> json<font color="#990000">)</font> <i><font color="#9A1900"># needs to be present</font></i>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">isinstance</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#DF0000">'blocks'</font><font color="#990000">],</font>list<font color="#990000">))</font> <i><font color="#9A1900"># needs to be a list</font></i>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#DF0000">'blocks'</font><font color="#990000">])</font> <font color="#990000">&gt;=</font> <font color="#993399">1</font><font color="#990000">)</font> <i><font color="#9A1900"># only one block is listed, but you are allowed an empty "trailing" block</font></i>
 
 <i><font color="#9A1900"># checking the height</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#EF0000">'height'</font> <b><font color="#0000FF">in</font></b> json<font color="#990000">)</font> <i><font color="#9A1900"># needs to be present</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">isinstance</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#EF0000">'height'</font><font color="#990000">],</font>int<font color="#990000">))</font> <i><font color="#9A1900"># needs to be an int</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#EF0000">'height'</font><font color="#990000">]==</font><font color="#993399">1</font><font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#DF0000">'height'</font> <b><font color="#0000FF">in</font></b> json<font color="#990000">)</font> <i><font color="#9A1900"># needs to be present</font></i>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">isinstance</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#DF0000">'height'</font><font color="#990000">],</font>int<font color="#990000">))</font> <i><font color="#9A1900"># needs to be an int</font></i>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>json<font color="#990000">[</font><font color="#DF0000">'height'</font><font color="#990000">]==</font><font color="#993399">1</font><font color="#990000">)</font>
 
 <i><font color="#9A1900"># get the first (and only) block</font></i>
-block <font color="#990000">=</font> json<font color="#990000">[</font><font color="#EF0000">'blocks'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
+block <font color="#990000">=</font> json<font color="#990000">[</font><font color="#DF0000">'blocks'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
 
 <i><font color="#9A1900"># block data: check that the keys are present, are the right types, and have</font></i>
 <i><font color="#9A1900"># the right values</font></i>
 header <font color="#990000">=</font> <font color="#990000">{</font>
-	<font color="#EF0000">"height"</font><font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">,</font>
-	<font color="#EF0000">"version"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
-	<font color="#EF0000">"previous_hash"</font><font color="#990000">:</font> <font color="#EF0000">"0000000000000000000000000000000000000000000000000000000000000000"</font><font color="#990000">,</font>
-	<font color="#EF0000">"merkle_hash"</font><font color="#990000">:</font> <font color="#EF0000">"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"</font><font color="#990000">,</font>
-	<font color="#EF0000">"timestamp"</font><font color="#990000">:</font> <font color="#993399">1231006505</font><font color="#990000">,</font>
-	<font color="#EF0000">"nbits"</font><font color="#990000">:</font> <font color="#EF0000">"1d00ffff"</font><font color="#990000">,</font>
-	<font color="#EF0000">"nonce"</font><font color="#990000">:</font> <font color="#993399">2083236893</font><font color="#990000">,</font>
-	<font color="#EF0000">"txn_count"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
+	<font color="#DF0000">"height"</font><font color="#990000">:</font> <font color="#993399">0</font><font color="#990000">,</font>
+	<font color="#DF0000">"version"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
+	<font color="#DF0000">"previous_hash"</font><font color="#990000">:</font> <font color="#DF0000">"0000000000000000000000000000000000000000000000000000000000000000"</font><font color="#990000">,</font>
+	<font color="#DF0000">"merkle_hash"</font><font color="#990000">:</font> <font color="#DF0000">"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"</font><font color="#990000">,</font>
+	<font color="#DF0000">"timestamp"</font><font color="#990000">:</font> <font color="#993399">1231006505</font><font color="#990000">,</font>
+	<font color="#DF0000">"nbits"</font><font color="#990000">:</font> <font color="#DF0000">"1d00ffff"</font><font color="#990000">,</font>
+	<font color="#DF0000">"nonce"</font><font color="#990000">:</font> <font color="#993399">2083236893</font><font color="#990000">,</font>
+	<font color="#DF0000">"txn_count"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
 <font color="#990000">}</font>
 <b><font color="#0000FF">for</font></b> k<font color="#990000">,</font>v <b><font color="#0000FF">in</font></b> header<font color="#990000">.</font><b><font color="#000000">items</font></b><font color="#990000">():</font>
 	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>k <b><font color="#0000FF">in</font></b> block<font color="#990000">)</font>
@@ -56,17 +56,17 @@ header <font color="#990000">=</font> <font color="#990000">{</font>
 	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>header<font color="#990000">[</font>k<font color="#990000">]==</font>block<font color="#990000">[</font>k<font color="#990000">])</font>
 
 <i><font color="#9A1900"># check that the transactions is present</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#EF0000">'transactions'</font> <b><font color="#0000FF">in</font></b> block<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">isinstance</font></b><font color="#990000">(</font>block<font color="#990000">[</font><font color="#EF0000">'transactions'</font><font color="#990000">],</font>list<font color="#990000">))</font>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>block<font color="#990000">[</font><font color="#EF0000">'transactions'</font><font color="#990000">])==</font><font color="#993399">1</font><font color="#990000">)</font>
-txn <font color="#990000">=</font> block<font color="#990000">[</font><font color="#EF0000">'transactions'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#DF0000">'transactions'</font> <b><font color="#0000FF">in</font></b> block<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">isinstance</font></b><font color="#990000">(</font>block<font color="#990000">[</font><font color="#DF0000">'transactions'</font><font color="#990000">],</font>list<font color="#990000">))</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>block<font color="#990000">[</font><font color="#DF0000">'transactions'</font><font color="#990000">])==</font><font color="#993399">1</font><font color="#990000">)</font>
+txn <font color="#990000">=</font> block<font color="#990000">[</font><font color="#DF0000">'transactions'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
 
 <i><font color="#9A1900"># check everything other than the txn_inputs and txn_outputs</font></i>
 txn_data <font color="#990000">=</font> <font color="#990000">{</font>
-	<font color="#EF0000">"version"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
-	<font color="#EF0000">"txn_in_count"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
-	<font color="#EF0000">"txn_out_count"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
-	<font color="#EF0000">"lock_time"</font><font color="#990000">:</font> <font color="#993399">0</font>
+	<font color="#DF0000">"version"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
+	<font color="#DF0000">"txn_in_count"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
+	<font color="#DF0000">"txn_out_count"</font><font color="#990000">:</font> <font color="#993399">1</font><font color="#990000">,</font>
+	<font color="#DF0000">"lock_time"</font><font color="#990000">:</font> <font color="#993399">0</font>
 <font color="#990000">}</font>
 <b><font color="#0000FF">for</font></b> k<font color="#990000">,</font>v <b><font color="#0000FF">in</font></b> txn_data<font color="#990000">.</font><b><font color="#000000">items</font></b><font color="#990000">():</font>
 	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>k <b><font color="#0000FF">in</font></b> txn<font color="#990000">)</font>
@@ -74,15 +74,15 @@ txn_data <font color="#990000">=</font> <font color="#990000">{</font>
 	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>txn_data<font color="#990000">[</font>k<font color="#990000">]==</font>txn<font color="#990000">[</font>k<font color="#990000">])</font>
 
 <i><font color="#9A1900"># check the txn inputs</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#EF0000">'txn_inputs'</font> <b><font color="#0000FF">in</font></b> txn<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>txn<font color="#990000">[</font><font color="#EF0000">'txn_inputs'</font><font color="#990000">])==</font><font color="#993399">1</font><font color="#990000">)</font>
-txninput <font color="#990000">=</font> txn<font color="#990000">[</font><font color="#EF0000">'txn_inputs'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#DF0000">'txn_inputs'</font> <b><font color="#0000FF">in</font></b> txn<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>txn<font color="#990000">[</font><font color="#DF0000">'txn_inputs'</font><font color="#990000">])==</font><font color="#993399">1</font><font color="#990000">)</font>
+txninput <font color="#990000">=</font> txn<font color="#990000">[</font><font color="#DF0000">'txn_inputs'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
 txn_in_data <font color="#990000">=</font> <font color="#990000">{</font>
-	<font color="#EF0000">"txn_hash"</font><font color="#990000">:</font> <font color="#EF0000">"0000000000000000000000000000000000000000000000000000000000000000"</font><font color="#990000">,</font>
-	<font color="#EF0000">"index"</font><font color="#990000">:</font> <font color="#993399">4294967295</font><font color="#990000">,</font>
-	<font color="#EF0000">"input_script_size"</font><font color="#990000">:</font> <font color="#993399">77</font><font color="#990000">,</font>
-	<font color="#EF0000">"input_script_bytes"</font><font color="#990000">:</font> <font color="#EF0000">"04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73"</font><font color="#990000">,</font>
-	<font color="#EF0000">"sequence"</font><font color="#990000">:</font> <font color="#993399">4294967295</font>
+	<font color="#DF0000">"txn_hash"</font><font color="#990000">:</font> <font color="#DF0000">"0000000000000000000000000000000000000000000000000000000000000000"</font><font color="#990000">,</font>
+	<font color="#DF0000">"index"</font><font color="#990000">:</font> <font color="#993399">4294967295</font><font color="#990000">,</font>
+	<font color="#DF0000">"input_script_size"</font><font color="#990000">:</font> <font color="#993399">77</font><font color="#990000">,</font>
+	<font color="#DF0000">"input_script_bytes"</font><font color="#990000">:</font> <font color="#DF0000">"04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73"</font><font color="#990000">,</font>
+	<font color="#DF0000">"sequence"</font><font color="#990000">:</font> <font color="#993399">4294967295</font>
 <font color="#990000">}</font>
 <b><font color="#0000FF">for</font></b> k<font color="#990000">,</font>v <b><font color="#0000FF">in</font></b> txn_in_data<font color="#990000">.</font><b><font color="#000000">items</font></b><font color="#990000">():</font>
 	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>k <b><font color="#0000FF">in</font></b> txninput<font color="#990000">)</font>
@@ -90,13 +90,13 @@ txn_in_data <font color="#990000">=</font> <font color="#990000">{</font>
 	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>txn_in_data<font color="#990000">[</font>k<font color="#990000">]==</font>txninput<font color="#990000">[</font>k<font color="#990000">])</font>
 
 <i><font color="#9A1900"># check the txn outputs</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#EF0000">'txn_outputs'</font> <b><font color="#0000FF">in</font></b> txn<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>txn<font color="#990000">[</font><font color="#EF0000">'txn_outputs'</font><font color="#990000">])==</font><font color="#993399">1</font><font color="#990000">)</font>
-txnoutput <font color="#990000">=</font> txn<font color="#990000">[</font><font color="#EF0000">'txn_outputs'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><font color="#DF0000">'txn_outputs'</font> <b><font color="#0000FF">in</font></b> txn<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>txn<font color="#990000">[</font><font color="#DF0000">'txn_outputs'</font><font color="#990000">])==</font><font color="#993399">1</font><font color="#990000">)</font>
+txnoutput <font color="#990000">=</font> txn<font color="#990000">[</font><font color="#DF0000">'txn_outputs'</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
 txn_out_data <font color="#990000">=</font> <font color="#990000">{</font>
-	<font color="#EF0000">"satoshis"</font><font color="#990000">:</font> <font color="#993399">5000000000</font><font color="#990000">,</font>
-	<font color="#EF0000">"output_script_size"</font><font color="#990000">:</font> <font color="#993399">67</font><font color="#990000">,</font>
-	<font color="#EF0000">"output_script_bytes"</font><font color="#990000">:</font> <font color="#EF0000">"4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac"</font>
+	<font color="#DF0000">"satoshis"</font><font color="#990000">:</font> <font color="#993399">5000000000</font><font color="#990000">,</font>
+	<font color="#DF0000">"output_script_size"</font><font color="#990000">:</font> <font color="#993399">67</font><font color="#990000">,</font>
+	<font color="#DF0000">"output_script_bytes"</font><font color="#990000">:</font> <font color="#DF0000">"4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac"</font>
 <font color="#990000">}</font>
 <b><font color="#0000FF">for</font></b> k<font color="#990000">,</font>v <b><font color="#0000FF">in</font></b> txn_out_data<font color="#990000">.</font><b><font color="#000000">items</font></b><font color="#990000">():</font>
 	<b><font color="#0000FF">assert</font></b><font color="#990000">(</font>k <b><font color="#0000FF">in</font></b> txnoutput<font color="#990000">)</font>

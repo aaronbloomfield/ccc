@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html lang='en'>
-<head>
+<head><meta name='description' content='This page contains the source code for the arbitrage.py file'>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="GENERATOR" content="GNU source-highlight 3.1.9
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite">
-<title>arbitrage.py</title>
+<title>Source code for arbitrage.py (via source-highlight)</title>
 </head>
 <body bgcolor="white">
-<main><pre><tt><i><font color="#9A1900"># Submission information for the Arbitrage HW</font></i>
+<main><h1>Source code for arbitrage.py (via source-highlight)</h1><pre><tt><i><font color="#9A1900"># Submission information for the Arbitrage HW</font></i>
 <i><font color="#9A1900"># https://aaronbloomfield.github.io/ccc/hws/arbitrage/</font></i>
 
 <i><font color="#9A1900"># The filename of this file must be 'arbitrage.py', else the submission</font></i>
@@ -20,14 +20,14 @@ http://www.gnu.org/software/src-highlite">
 
 
 <i><font color="#9A1900"># Who are you?  Name and UVA userid.  The name can be in any human-readable format.</font></i>
-userid <font color="#990000">=</font> <font color="#EF0000">"mst3k"</font>
-name <font color="#990000">=</font> <font color="#EF0000">"Jane Doe"</font>
+userid <font color="#990000">=</font> <font color="#DF0000">"mst3k"</font>
+name <font color="#990000">=</font> <font color="#DF0000">"Jane Doe"</font>
 
 
 <i><font color="#9A1900"># eth.coinbase: not really required for this assignment, but the Gradescope</font></i>
 <i><font color="#9A1900"># checking program wants to see it anyway, so submit your eth_coinbase from a</font></i>
 <i><font color="#9A1900"># previous assignment.</font></i>
-eth_coinbase <font color="#990000">=</font> <font color="#EF0000">""</font>
+eth_coinbase <font color="#990000">=</font> <font color="#DF0000">""</font>
 
 
 <i><font color="#9A1900"># This dictionary contains the contract addresses of the various contracts</font></i>
@@ -49,7 +49,7 @@ other <font color="#990000">=</font> <font color="#990000">{</font>
     <i><font color="#9A1900"># How useful did you find the Debug.sol library that was provided?  This</font></i>
     <i><font color="#9A1900"># is on a scale of 1-5: 1 means not all or that you didn't use it, 3 is</font></i>
     <i><font color="#9A1900"># moderately useful, and 5 is very useful.  Integers only, please.</font></i>
-    <font color="#EF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+    <font color="#DF0000">'debug_sol_usefulness'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 
 
@@ -63,15 +63,15 @@ sanity_checks <font color="#990000">=</font> <font color="#990000">{</font>
 	<i><font color="#9A1900"># Can your code handle *both* types of URI connections:</font></i>
 	<i><font color="#9A1900"># whether 'connection_is_ipc' (in arbitrage_config.py) is both True and</font></i>
 	<i><font color="#9A1900"># False?</font></i>
-	<font color="#EF0000">'can_handle_both_types_of_connections'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'can_handle_both_types_of_connections'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Does your program produce NO other output other than one call to the</font></i>
 	<i><font color="#9A1900"># output() function?</font></i>
-	<font color="#EF0000">'no_output_other_than_output_call'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'no_output_other_than_output_call'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># In your transactions, do you always set the gasPrice to a fixed value of</font></i>
 	<i><font color="#9A1900"># 10 gwei?</font></i>
-	<font color="#EF0000">'gasprice_set_to_10_gwei'</font><font color="#990000">:</font> False<font color="#990000">,</font>
+	<font color="#DF0000">'gasprice_set_to_10_gwei'</font><font color="#990000">:</font> False<font color="#990000">,</font>
 
 <font color="#990000">}</font>
 
@@ -82,17 +82,17 @@ comments <font color="#990000">=</font> <font color="#990000">{</font>
 
 	<i><font color="#9A1900"># How long did this assignment take, in hours?  Please format as an</font></i>
 	<i><font color="#9A1900"># integer or float.</font></i>
-	<font color="#EF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'time_taken'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any suggestions for how to improve this assignment?  This part is</font></i>
 	<i><font color="#9A1900"># completely optional.  If none, then you can have the value here be the</font></i>
 	<i><font color="#9A1900"># empty string (but not None).</font></i>
-	<font color="#EF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'suggestions'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 
 	<i><font color="#9A1900"># Any other comments or feedback?  This part is completely optional. If</font></i>
 	<i><font color="#9A1900"># none, then you can have the value here be the empty string (but not</font></i>
 	<i><font color="#9A1900"># None).</font></i>
-	<font color="#EF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
+	<font color="#DF0000">'comments'</font><font color="#990000">:</font> None<font color="#990000">,</font>
 <font color="#990000">}</font>
 </tt></pre></main>
 </body>
