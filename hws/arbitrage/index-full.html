@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Arbitrage Trading</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
@@ -181,16 +179,16 @@ You can assume the number of DEXes involved, $d$, is relatively small, so you ca
 <p>The formulas that we need are (derivations <a href="extra.html">here</a> (<a href="extra.md">md</a>)):</p>
 <ul>
 <li>Our current holdings, in USD, are: <span class="math inline"><em>h</em><sub><em>b</em><em>e</em><em>f</em><em>o</em><em>r</em><em>e</em></sub> = <em>q</em><sub><em>e</em></sub> ⋅ <em>p</em><sub><em>e</em></sub> + <em>q</em><sub><em>t</em></sub> ⋅ <em>p</em><sub><em>t</em></sub></span></li>
-<li>If we trade in TC, then our holdings after (in USD) are: <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>e</em></sub> + <em>f</em> ⋅ <em>x</em><sub><em>d</em></sub> − <em>f</em> ⋅ <em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub> + <em>δ</em><sub><em>t</em></sub>)) ⋅ <em>p</em><sub><em>e</em></sub> + (<em>q</em><sub><em>t</em></sub> − <em>δ</em><sub><em>t</em></sub>) ⋅ <em>p</em><sub><em>t</em></sub> − <em>g</em> ⋅ <em>p</em><sub><em>e</em></sub></span></li>
-<li>If we trade in ETH, then our holdings after (in USD) are: <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>t</em></sub> + <em>f</em> ⋅ <em>y</em><sub><em>d</em></sub> − <em>f</em> ⋅ <em>k</em><sub><em>d</em></sub>/(<em>x</em><sub><em>d</em></sub> + <em>δ</em><sub><em>e</em></sub>)) ⋅ <em>p</em><sub><em>t</em></sub> + (<em>q</em><sub><em>e</em></sub> − <em>δ</em><sub><em>e</em></sub>) ⋅ <em>p</em><sub><em>e</em></sub> − <em>g</em> ⋅ <em>p</em><sub><em>e</em></sub></span></li>
+<li>If we trade in TC, then our holdings after (in USD) are: <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>e</em></sub>+<em>f</em>⋅<em>x</em><sub><em>d</em></sub>−<em>f</em>⋅<em>k</em><sub><em>d</em></sub>/(<em>y</em><sub><em>d</em></sub>+<em>δ</em><sub><em>t</em></sub>)) ⋅ <em>p</em><sub><em>e</em></sub> + (<em>q</em><sub><em>t</em></sub>−<em>δ</em><sub><em>t</em></sub>) ⋅ <em>p</em><sub><em>t</em></sub> − <em>g</em> ⋅ <em>p</em><sub><em>e</em></sub></span></li>
+<li>If we trade in ETH, then our holdings after (in USD) are: <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub> = (<em>q</em><sub><em>t</em></sub>+<em>f</em>⋅<em>y</em><sub><em>d</em></sub>−<em>f</em>⋅<em>k</em><sub><em>d</em></sub>/(<em>x</em><sub><em>d</em></sub>+<em>δ</em><sub><em>e</em></sub>)) ⋅ <em>p</em><sub><em>t</em></sub> + (<em>q</em><sub><em>e</em></sub>−<em>δ</em><sub><em>e</em></sub>) ⋅ <em>p</em><sub><em>e</em></sub> − <em>g</em> ⋅ <em>p</em><sub><em>e</em></sub></span></li>
 </ul>
 <p>For a single trade, want to find the maximum profit for the two <span class="math inline"><em>h</em><sub><em>a</em><em>f</em><em>t</em><em>e</em><em>r</em></sub></span> formulas <em>for each DEX</em>. We take the derivative, then set it equal to zero to find the roots (details <a href="extra.html">here</a> (<a href="extra.md">md</a>), if you are interested). The roots will give us the maximum and/or minimum points. This gives us:</p>
 <ul>
-<li>If we traded in TC, then the maxima or minima is at: <span class="math inline"><em>δ</em><sub><em>t</em></sub> = −<em>y</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em> ⋅ <em>k</em><sub><em>d</em></sub> ⋅ <em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span>
+<li>If we traded in TC, then the maxima or minima is at: <span class="math inline"><em>δ</em><sub><em>t</em></sub> =  − <em>y</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em>⋅<em>k</em><sub><em>d</em></sub>⋅<em>p</em><sub><em>e</em></sub>/<em>p</em><sub><em>t</em></sub>)</span>
 <ul>
 <li>Note that <span class="math inline"><em>p</em><sub><em>e</em></sub></span> is in the numerator in that fraction, and that fraction is different than the fraction in the next formula</li>
 </ul></li>
-<li>If we traded in ETH, then the maxima or minima is at: <span class="math inline"><em>δ</em><sub><em>e</em></sub> = −<em>x</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em> ⋅ <em>k</em><sub><em>d</em></sub> ⋅ <em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span>
+<li>If we traded in ETH, then the maxima or minima is at: <span class="math inline"><em>δ</em><sub><em>e</em></sub> =  − <em>x</em><sub><em>d</em></sub>±</span> √ <span class="math inline">(<em>f</em>⋅<em>k</em><sub><em>d</em></sub>⋅<em>p</em><sub><em>t</em></sub>/<em>p</em><sub><em>e</em></sub>)</span>
 <ul>
 <li>Note that <span class="math inline"><em>p</em><sub><em>t</em></sub></span> is in the numerator in that fraction, and that fraction is different than the fraction in the previous formula <!-- - Those two formulas do not render well in HTML, but the entire parenthetical is what we take the square root of --></li>
 </ul></li>
