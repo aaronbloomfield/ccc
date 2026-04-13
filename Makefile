@@ -43,3 +43,5 @@ all-source-highlight:
 	cd hws/dex/ && make source && cd ..
 	cd hws/tokens/ && make source && cd ..
 	cd hws/dappintro/ && make source && cd ..
+	custom-source-highlight.sh hws/Debug.sol
+	
