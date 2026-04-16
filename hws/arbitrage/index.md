@@ -18,9 +18,7 @@ In addition to your source code, you will submit an edited version of [arbitrage
 
 ### Changelog
 
-Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  <~-- So far there aren't any significant changes to report. -->
-
-- Tue, 4/22: fixed sample code in web3.py section
+Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 <!--
 
