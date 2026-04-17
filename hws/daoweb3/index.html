@@ -83,7 +83,7 @@
 <p>As far as this assignment is concerned, we are not concerned as to <em>what</em> your DAO is for, only that it works.</p>
 <p>Your contract must implement the provided IDAO interface below. Your contract opening line must be: <code>contract DAO is IDAO {</code>. This interface was adapted from the <a href='https://github.com/blockchainsllc/DAO/blob/develop/DAO.sol'>open-source code for The ÐAO</a>, but was heavily modified to both work with current versions of Solidity and to fit better with this assignment. In particular, we removed a number of features, since this assignment is really about Web3; what was removed included splitting off a sub-DAO, including transaction data in the proposal, anything relating to quorum or quorum modifications, blocking members, vote freezes, etc. In a real DAO, these would need to be implemented as well.</p>
 <p>The file is <a href='IDAO.sol.html'>IDAO.sol</a> (<a href='IDAO.sol'>src</a>). That file has many comments to explain how it works; those comments are not shown below.</p>
-<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+<pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
 import "./IERC165.sol";
 
@@ -180,7 +180,7 @@ interface IDAO is IERC165 {
 <h4 id='unique-uris-in-nftmanager'>Unique URIs in NFTManager</h4>
 <p>Your NFTManager, from the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment, should have required a unique URI for each NFT minted. For this assignment we don’t care <em>what</em> the URI is, only that they have a NFT. In particular, for this assignment, the URI does not need to resolve to an actual image. This also means that you don’t have to change the <code>_baseURI()</code> function from what you wrote in the previous assignment. For that matter, you don’t have to change anything in your NFTManager.sol file at all for this assignment (assuming you got it working).</p>
 <p>However, you still have to have a unique URI for each one. One way to do this is to use their account address. The <a href='../tokens/Strings.sol.html'>Strings.sol</a> (<a href='../tokens/Strings.sol'>src</a>) file was used in the <a href='../tokens/index.html'>Ethereum Tokens</a> (<a href='../tokens/index.md'>md</a>) assignment (it was imported by <a href='../tokens/ERC721.sol.html'>ERC721.sol</a> (<a href='../tokens/ERC721.sol'>src</a>)). You will also need <a href='../tokens/Math.sol.html'>Math.sol</a> (<a href='../tokens/Math.sol'>src</a>) for Strings.sol to compile. Strings.sol has a <code>toHexString()</code> function that takes in an <code>address</code> as a parameter. This function will convert the address into an ASCII hex string with the leading ‘0x’. However, this hex string will be 42 characters long, and our NFTManager doesn’t allow more than 32 character strings. You can use the following <code>substring()</code> method to reduce it to a 32 character string:</p>
-<pre><code>function substring(string memory str, uint startIndex, uint endIndex) public pure returns (string memory) {
+<pre class='widget' tabindex='0'><code>function substring(string memory str, uint startIndex, uint endIndex) public pure returns (string memory) {
     bytes memory strBytes = bytes(str);
     bytes memory result = new bytes(endIndex-startIndex);
     for(uint i = startIndex; i &lt; endIndex; i++)
@@ -188,7 +188,7 @@ interface IDAO is IERC165 {
     return string(result);
 }</code></pre>
 <p>You would call it such as:</p>
-<pre><code>string memory uri = substring(Strings.toHexString(addr),2,34);</code></pre>
+<pre class='widget' tabindex='0'><code>string memory uri = substring(Strings.toHexString(addr),2,34);</code></pre>
 </div><div id='tyour-url' class='tabcontent'><h3 id='your-url'>Your URL</h3>
 <p>Everybody is going to have a different URL. To lessen the temptation, you have to put a (mostly) secret suffix as part of your URL.</p>
 <p>We realize this part is going to be rather annoying, but we all have to do it.</p>
@@ -210,7 +210,7 @@ interface IDAO is IERC165 {
 </ul>
 <p>When submitting the file, the auto-grader will check the suffix as well.</p>
 <p>The following code, contained in <a href='get-url-ext.py.html'>get-url-ext.py</a> (<a href='get-url-ext.py'>src</a>) will compute this value as well. You have to pip install both <code>web3</code> and <code>pysha3</code> for this code to work.</p>
-<pre><code># to run this, first: `pip install web3 pysha3`
+<pre class='widget' tabindex='0'><code># to run this, first: `pip install web3 pysha3`
 import sys, web3, sha3
 
 # sanity checks
@@ -224,7 +224,7 @@ suffix = hash.hexdigest()[:8]
 print("dao_"+suffix+".html")</code></pre>
 <p>You do not need to understand how that code works for this homework – you’ll be seeing all that code, and more, in the next homework.</p>
 <p>Usage:</p>
-<pre><code>$ python3 get-url-ext.py 0xd0958cecfa9ee438c6c6b6e7a2295866065c4c59
+<pre class='widget' tabindex='0'><code>$ python3 get-url-ext.py 0xd0958cecfa9ee438c6c6b6e7a2295866065c4c59
 dao_fe2a2995.html
 $</code></pre>
 </div><div id='tweb3-introduction' class='tabcontent'><h3 id='web3-introduction'>Web3 Introduction</h3>
@@ -248,7 +248,7 @@ $</code></pre>
 </ul></li>
 <li><p>View the web page at <code>https://www.cs.virginia.edu/~mst3k/dao_XXXXXXXX.html</code>, changing <code>mst3k</code> for your userid</p></li>
 <li><p>Copy a few files over: while all of <em>your</em> code must be in a single file, you are going to include the <code>web3.js</code> library. To put that into the correct place on portal, execute the following commands <strong>ON portal.cs</strong>:</p>
-<pre><code>mkdir -p ~/public_html/
+<pre class='widget' tabindex='0'><code>mkdir -p ~/public_html/
 cd ~/public_html/
 chmod 711 .
 wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js
@@ -271,7 +271,7 @@ wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js.map</co
 <h4 id='async-and-await'><code>async</code> and <code>await</code></h4>
 <p>Most function calls execute quickly. But some, such as those querying a blockchain, can take some time to return a value. In Javascript, these are called <code>async</code> functions. While <code>async</code> functions might execute quickly, Javascript assumes they will take some time. You have two options here – you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return. If you choose the first option, it will hang until that <code>async</code> call completes. If you choose the second option, it will move on, and later (in another thread) execute that code block when the <code>async</code> call does finally complete.</p>
 <p>Consider the following Javascript code; this is from poll.php, which was used to display the Poll of your smart contract from the <a href='../dappintro/index.html'>dApp Introduction</a> (<a href='../dappintro/index.md'>md</a>) assignment.</p>
-<pre><code>var contractAddress = '0x01234567890abcdef01234567890abcdef012345';
+<pre class='widget' tabindex='0'><code>var contractAddress = '0x01234567890abcdef01234567890abcdef012345';
 
 let web3 = new Web3('URL');
 
@@ -310,7 +310,7 @@ const setChoiceInfo = async(i) =&gt; {
 <li><code>setChoiceInfo()</code> is a function that takes in one parameter, the choice ID – that parameter is indicated in the parenthesis after the <code>async</code> keyword. This function calls <code>getChoiceInfo()</code> to get the Choice fields from the smart contract. You will notice the <code>.then(</code> part – we are specifying the code block to execute when the async call returns. This function will not block – it kicks off the call to <code>getChoiceInfo()</code>, and immediately returns. Once <code>getChoiceInfo()</code> does return the data (remember: a list containing the name and votes of the choice), it will execute the code block. Note the <code>l =&gt;</code> part – this is binding the return value from <code>getChoiceInfo()</code>, which is a list, to the variable <code>l</code>, which is then used in the code block. The details of the code block will be discussed below, but it basically updates a few fields of the HTML page.</li>
 </ul>
 <p>To call this code, we use the following:</p>
-<pre><code>function loadTable() {
+<pre class='widget' tabindex='0'><code>function loadTable() {
     // The "main" part of this script -- once we know how many choices there are.
     document.getElementById("total_votes").innerHTML = "0";
     getNumChoices().then(val =&gt; {
@@ -341,7 +341,7 @@ loadTable();</code></pre>
 </div><div id='thtml-and-css' class='tabcontent'><h3 id='html-and-css'>HTML and CSS</h3>
 <p>We assume you are familiar with the basics of HTML. If not, you can quickly come up to speed with <a href='https://duckduckgo.com/?q=html+tutorial'>an appropriate web search</a>.</p>
 <p>Below is some sample HTML code to start with:</p>
-<pre><code>&lt;!DOCTYPE HTML&gt;
+<pre class='widget' tabindex='0'><code>&lt;!DOCTYPE HTML&gt;
 &lt;html lang="en"&gt;
     &lt;head&gt;
         &lt;title&gt;DAO Information&lt;/title&gt;
@@ -371,7 +371,7 @@ loadTable();</code></pre>
 <p>There are multiple ways to see when <em>something</em> happens on a blockchain, and they all involve listening for events that were emitted by the contracts (or the EVM itself).</p>
 <h4 id='subscriptions'>Subscriptions</h4>
 <p>A web3 <em>subscription</em> is when the web3 library is listening for an event or multiple events. To do so, we specify the specific contract that we are listening to. Consider the following code:</p>
-<pre><code>function subscribeToPollEvents() {
+<pre class='widget' tabindex='0'><code>function subscribeToPollEvents() {
     var options = { address: '0x01234567890abcdef01234567890abcdef012345' };
     var sub = web3.eth.subscribe('logs', options, function(err,event) {
         if ( !err )
@@ -396,9 +396,9 @@ subscribeToChoiceEvents();</code></pre>
 <p>This part is not required at all for this assignment, but was included for completeness. Feel free to skip it if you are not interested.</p>
 <p>You can find all the past events that a contract (or many contracts) emitted. The blockchain explorer uses this to find when an NFT was minted or transferred, or when a TokenCC is minted or transferred; both emit the <code>Transfer()</code> event (this is done in the ERC20.sol or ERC721.sol contract). In Javascript, you use the <code>getPastLogs()</code> function.</p>
 <p>As an example, we will examine a NFTManager contract. Pick any deployed NFTManager, and get it’s address. Go to any of the .php pages that <em>already</em> load up the web3 Javascript library. Load up the Javascript console (ctrl-shift-C). Enter the following commands, putting in the appropriate value (the address of the NFTManager we are getting the events of):</p>
-<pre><code>var addr='0x01234567890abcdef01234567890abcdef012345'</code></pre>
+<pre class='widget' tabindex='0'><code>var addr='0x01234567890abcdef01234567890abcdef012345'</code></pre>
 <p>You can then pull up the past logs via:</p>
-<pre><code>logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:'latest',address:addr})</code></pre>
+<pre class='widget' tabindex='0'><code>logs = await web3.eth.getPastLogs({fromBlock:0,toBlock:'latest',address:addr})</code></pre>
 <p>You can then examine the <code>logs</code> variable by just typing <code>logs</code> in the Javascript console. For the course-wide NFTManager from the tokens assignment, this is the result (you may see different values, but the concepts are the same):</p>
 <p><img src='js-events.webp' alt='image of the logs in the Javascript console'></img></p>
 <p>The relevant fields are:</p>
@@ -415,7 +415,7 @@ subscribeToChoiceEvents();</code></pre>
 </ul>
 <p>The <code>logs</code> variable is a list of these entries, and one can quickly go through them in a <code>for</code> loop to examine what events were emitted.</p>
 <p>Lastly, this can be done in the geth terminal as well. However, the version of Javascript in geth is quite old, and doesn’t have the <code>async</code> functionality, so we have to use different syntax:</p>
-<pre><code>var addr="0x01234567890abcdef01234567890abcdef012345"
+<pre class='widget' tabindex='0'><code>var addr="0x01234567890abcdef01234567890abcdef012345"
 filter=web3.eth.filter({fromBlock:0,toBlock:'latest',address:addr})
 eth.getLogs(filter.options)</code></pre>
 <p>The result, though, is (more or less) the same.</p>

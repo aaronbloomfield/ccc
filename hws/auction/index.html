@@ -137,9 +137,9 @@
 </div><div id='ttask-2-iauctioneer-interface' class='tabcontent'><h3 id='task-2-iauctioneer-interface'>Task 2: IAuctioneer interface</h3>
 <p>This task is to understand the IAuctioneer interface. Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file has more comments for this interface. There is a lot that some of these funcctions have to do, and that is specified in the comments in the IAuctioneer.sol file.</p>
 <p>Your contract line must be <em>exactly</em>:</p>
-<pre><code>contract Auctioneer is IAuctioneer {</code></pre>
+<pre class='widget' tabindex='0'><code>contract Auctioneer is IAuctioneer {</code></pre>
 <p>The interface is as follows. There are much more detailed comments in the <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file.</p>
-<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+<pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
 pragma solidity ^0.8.24;
 
@@ -207,7 +207,7 @@ interface IAuctioneer is IERC165 {
 }</code></pre>
 <p>This interface is provided in the <a href='IAuctioneer.sol.html'>IAuctioneer.sol</a> (<a href='IAuctioneer.sol'>src</a>) file. This interface extends the <a href='IERC165.sol.html'>IERC165.sol</a> (<a href='IERC165.sol'>src</a>) interface, which requires the implementation of a <code>supportsInterface()</code> function – your Auctioneer class thus supports two interfaces (IAuctioneer and IERC165).</p>
 <p>For a contract to transfer ETH to another account, you can use code such as the following; this was also <a href='../../slides/solidity.html#/payeth'>discussed in the Solidity slide set</a>. Note that the address to pay to is in variable <code>a</code>, and the value – in wei – is in <code>v</code>:</p>
-<pre><code>(bool success, ) = payable(a).call{value: v}("");
+<pre class='widget' tabindex='0'><code>(bool success, ) = payable(a).call{value: v}("");
 require(success, "Failed to transfer ETH");</code></pre>
 <p>As you are testing it, you will notice in Remix that the button for <code>placeBid()</code> is red – that is because this is a <code>payable</code> function. When you call this function, after setting the correct auction ID as the parameter, you will need to transfer some ETH along with the call. In the deployment pane in Remix, just enter a numerical value in the ‘Value’ box, and select the right denomination (wei, gwei, ether, etc.). That amount of ETH will be transferred along with the function call. If the call reverts, then you get that money back (minus the gas fees, if it tried to send the transaction to the blockchain). If you have a mistake in your function code, you will likely lose that ETH – this is why we are testing this on the Javascript deployment environment in Remix and then on a private blockchain where the ETH has no value.</p>
 
@@ -264,7 +264,7 @@ require(success, "Failed to transfer ETH");</code></pre>
 <p>In Remix, any call – meaning a <code>view</code> or <code>pure</code> function, which shows up in Remix as a blue button – will display the return value underneath that button when called. But Remix has a harder time determining the return value of <em>transactions</em> (orange buttons), which also include <code>payable</code> functions. Sometimes Remix can determine the return value, and it is in the JSON data shown in the console window (the window below where you edit the code). Other times, Remix cannot determine the return value of transactions. But the explorer can – so if you are expecting a return value, and Remix does not display it, view the transaction in the explorer, and that will have the return value. This is the case when trying to find the NFT ID of a newly minted NFT.</p>
 <h4 id='block.timestamp-behavior'><code>block.timestamp</code> behavior</h4>
 <p><code>block.timestamp</code> behaves differently on the Javascript blockchain in Remix and on the course blockchain. Consider the following contract:</p>
-<pre><code>// SPDX-License-Identifier: Unlicensed
+<pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: Unlicensed
 pragma solidity ^0.8.24;
 contract BlockTimestamp {
     function getTimestamp() public view returns (uint) {

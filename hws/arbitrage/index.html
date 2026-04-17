@@ -81,7 +81,7 @@
 <p>You will need to read the <a href='../../docs/web3py.html'>introduction to web3.py</a> (<a href='../../docs/web3py.md'>md</a>). While you do not need to have all of that memorized, you do need to understand it all! The intent is that you will use that page as a reference while you write this assignment.</p>
 <h4 id='connecting'>Connecting</h4>
 <p>The following code will handle the connection based on the values in the <code>arbitrage_config.py</code> file, which is introduced below. After reading this part, you may want to come back to it again once the <code>arbitrage_config.py</code> file has been introduced.</p>
-<pre><code>from web3 import Web3
+<pre class='widget' tabindex='0'><code>from web3 import Web3
 from web3.middleware import ExtraDataToPOAMiddleware
 import arbitrage_config
 if arbitrage_config.config['connection_is_ipc']:
@@ -159,7 +159,7 @@ print(w3.is_connected())</code></pre>
 <p>Each DEX will have to be queried to get values for <span class='math inline'><em>x</em></span>, <span class='math inline'><em>y</em></span>, and <span class='math inline'><em>k</em></span>; from this, you can determine the exchange rate (<span class='math inline'><em>y</em>/<em>x</em></span> or <span class='math inline'><em>x</em>/<em>y</em></span>). You will also have to query the DEXes for the fee amount (<code>feeNumerator()</code> and <code>feeDenominator()</code>). Note that different DEXes, even for the same coin, can have different exchange rates and different fee amounts.</p>
 <h4 id='values-provided'>Values provided</h4>
 <p>The program will import an <code>arbitrage_config.py</code> file to provide many of the values, a sample of which is shown below. The correct file for this semester is available in the blockchain explorer’s links section.</p>
-<pre><code>config = {
+<pre class='widget' tabindex='0'><code>config = {
     # you will have to change these values for it to work
     'account_address': '0x123456789ABcdEf0123456789aBCDeF123456789',
     'account_private_key': hexbytes.HexBytes('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'),
@@ -219,10 +219,10 @@ print(w3.is_connected())</code></pre>
 <p>We provide a few other things in arbitrage_config.py: the ABI for IDEX and ITokenCC for you to use. We also provide a function called <code>getTXNResult()</code> that will attempt to figure out what happened on a transaction function call (the return value or revert reason). You can see these in the <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) file.</p>
 <h4 id='output'>Output</h4>
 <p>Your program will analyze the various values at the different DEXes, and make a change (or not). Your output must be in the exact format shown below. If no profitable trades are possible, then you should output <code>No profitable arbitrage trades available</code>. If an trade is made, then the output should be of the exact form:</p>
-<pre><code>Exchanged -123.0000 ETH for 2.3400 TC; fees: 1.23 USD; prices: ETH 12.30 USD, TC: 1.23 USD; holdings: 34.30 USD</code></pre>
+<pre class='widget' tabindex='0'><code>Exchanged -123.0000 ETH for 2.3400 TC; fees: 1.23 USD; prices: ETH 12.30 USD, TC: 1.23 USD; holdings: 34.30 USD</code></pre>
 
 <p>To ensure you output in the correct format, we provide a function that will print the appropriate lines in the required format. This function is also provided in the <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) file.</p>
-<pre><code>def output(ethDelta, tccDelta, fees, holdings_after):
+<pre class='widget' tabindex='0'><code>def output(ethDelta, tccDelta, fees, holdings_after):
     if ethDelta == 0 and tccDelta == 0:
         print("No profitable arbitrage trades available")
         return
@@ -275,10 +275,10 @@ print(w3.is_connected())</code></pre>
 <h4 id='usage'>Usage</h4>
 <p>The different DEX addresses are available from the blockchain explorer’s links section, in the <code>arbitrage_config.py</code> file in Canvas’ Files. The intent is for you to comment out different DEXes in that file so that you can test it with different pairs. The version of <a href='arbitrage_config.py.html'>arbitrage_config.py</a> (<a href='arbitrage_config.py'>src</a>) in the github repo does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the blockchain explorer’s links section does.</p>
 <p>Let’s assume a standard price ratio of 1:10 (ETH:DDC). This means that the arbitrage_config.py file might have lines such as:</p>
-<pre><code>'price_eth': 100.00,
+<pre class='widget' tabindex='0'><code>'price_eth': 100.00,
 'price_tc': 10.0, </code></pre>
 <p>This is as is provided in the arbitrage_config.py file in the blockchain explorer’s links section. Furthermore, the provided file has the <code>dex_addrs</code> list formatted as follows:</p>
-<pre><code>'dex_addrs': [
+<pre class='widget' tabindex='0'><code>'dex_addrs': [
               '0x123456789abcdef0123456789abcdef123456789', # d4 dex
               '0x123456789abcdef0123456789abcdef123456789', # d6 dex
               '0x123456789abcdef0123456789abcdef123456789', # d8 dex
@@ -349,7 +349,7 @@ print(w3.is_connected())</code></pre>
 <p>For the execution runs, do not pay attention to the DEX addresses, as they will be different than what you are dealing with. Also, ignore the starting amount of ether or TCC – it is either sufficient for that transaction or zero, depending on the execution run.</p>
 <h4 id='all-dexes-sufficient-eth-no-tcc'>All DEXes, sufficient ETH, no TCC</h4>
 <p>If all DEXes are enabled, and the account has sufficient ether but no TCC, the following is an example execution run. In particular, given sufficient funds and the availability of the D20 DEX, it will always choose that to exchange.</p>
-<pre><code>Connected: True
+<pre class='widget' tabindex='0'><code>Connected: True
 Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
 TokenCC decimals: 10
 
@@ -413,7 +413,7 @@ Holdings before: $60,116.29 USD
 Holdings after: $60,925.27 USD</code></pre>
 <h4 id='lower-dexes-sufficient-eth-tcc'>Lower DEXes, sufficient ETH & TCC</h4>
 <p>If only the lower three DEXes are available (D4, D6, and D8), and there is sufficient TCC, then the trade will be TCC -&gt; ETH.</p>
-<pre><code>Connected: True
+<pre class='widget' tabindex='0'><code>Connected: True
 Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
 TokenCC decimals: 10
 
@@ -459,7 +459,7 @@ Holdings before: $62,543.25 USD
 Holdings after: $63,533.13 USD</code></pre>
 <h4 id='only-d10-dex-sufficient-eth-tcc'>Only D10 DEX, sufficient ETH & TCC</h4>
 <p>The D10 DEX exchanges the assets at the same amount as the price ratio (1:10 for the DEX, and the default prices are 10:100 USD), so with gas fees, there cannot be a profitable trade.</p>
-<pre><code>Connected: True
+<pre class='widget' tabindex='0'><code>Connected: True
 Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
 TokenCC decimals: 10
 
@@ -478,7 +478,7 @@ Best transaction: DEX # 0, trading in ETH: 0, ETH transacted: 0, TCC transacted:
 No profitable arbitrage trades available</code></pre>
 <h4 id='middle-dexes-sufficient-eth-tcc'>Middle DEXes, sufficient ETH & TCC</h4>
 <p>If the middle DEXes are available (D8, D10, and D12), and there is sufficient ETH and TCC, it will exchange TCC for ETH at the D8 DEX. However, the maxima is not at 100 TCC, but a bit less.</p>
-<pre><code>Connected: True
+<pre class='widget' tabindex='0'><code>Connected: True
 Account: 0x15b6d9ACa8b6B09745653F36b193c612a824d16D
 TokenCC decimals: 10
 

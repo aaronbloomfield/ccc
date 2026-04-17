@@ -89,7 +89,7 @@
 </ul>
 <p>When generating the next block, you can assume that the previous block file exists. This means that we will generate the genesis block <code>block_0.txt</code> from the <code>genesis</code> command (below) before validating the first block.</p>
 <p>Below is a sample block. Note that we put blank lines between the parts – that’s fine if you want to do that as well, but it is not necessary.</p>
-<pre><code>81d5d3bf8c93ac07d4b4654b9e7f06dee3285444a57de4191650eacf1b105a2e
+<pre class='widget' tabindex='0'><code>81d5d3bf8c93ac07d4b4654b9e7f06dee3285444a57de4191650eacf1b105a2e
 
 bigfoot transferred 100 to a3e47443b0f3bc76 on Tue Apr 02 23:09:13 EDT 2019
 bigfoot transferred 100 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019
@@ -102,14 +102,14 @@ nonce: 120</code></pre>
 <p>The blocks described above represent transactions that have been completed and mined into the blockchain. Pending transaction lines are to be placed in the mempool, which we will appropriately call <code>mempool.txt</code>. One of the functionalities that you have to implement is the transfer of the transaction lines in the mempool into a block in the blockchain through mining.</p>
 <p>Each line in the mempool will have the same one-line format described above (<code>S transferred x to D on w</code>). You are welcome to use present tense (transfers) or past tense (transferred); it doesn’t matter to us which tense you use. You can have a reasonable amount of additional information after the required text, but it must all be on the same line. This is important – each transaction line in the mempool must be exactly one line!</p>
 <p>Below is an example of a line from the mempool. This line is a <em>transaction line</em>, which is described next.</p>
-<pre><code>a3e47443b0f3bc76 transferred 12 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019</code></pre>
+<pre class='widget' tabindex='0'><code>a3e47443b0f3bc76 transferred 12 to 48adadf4fb921fca on Tue Apr 02 23:09:14 EDT 2019</code></pre>
 <p>Note that this is the second-to-last line in the block shown above.</p>
 <p><strong>Transaction statement versus transaction line</strong></p>
 <p>A transaction <em>statement</em> is a multi-line text file that contains the sender, the recipient, the amount, and ends with a digital signature. Each transaction statement will be in its own file; one is shown below.</p>
 <p>A transaction <em>line</em> is a single line in a mempool (and, later, in a block in the blockchain) that contains similar information, but on a single line. The one-line example above, in the mempool section, is a transaction line. Note that a transaction line does not contain a signature, whereas the transaction statement does.</p>
 <p>Another of the functionalities that you will have to implement is the verification of a transaction statement (checking it’s signature and that there are enough funds), which will then insert a single transaction line for that transaction into the mempool. This is the <code>verify</code> functionality, described below, and converts a transaction statement into a transaction line.</p>
 <p>As an example, below is one of the transaction statements that was generated from the script provided (specifically the <code>./cryptomoney.sh transfer alice.wallet.txt $bob 12 03-alice-to-bob.txt</code> line); that shell script is provided below. Note that you don’t have to have the same format! This is just what we used. However, it must contain the same five pieces of information: from, to, amount, date, and the signature. The one-line entry from the mempool, above, is the corresponding transaction line for this transaction statement.</p>
-<pre><code>From: a3e47443b0f3bc76
+<pre class='widget' tabindex='0'><code>From: a3e47443b0f3bc76
 To: 48adadf4fb921fca
 Amount: 12
 Date: Tue Apr 02 23:09:13 EDT 2019
@@ -216,28 +216,28 @@ Date: Tue Apr 02 23:09:13 EDT 2019
 </div><div id='tother-files' class='tabcontent'><h3 id='other-files'>Other files</h3>
 <h4 id='shell-script'>Shell script</h4>
 <p>Since different programming languages can be used, and you may name your file differently, we are going to have you submit a shell script called <code>cryptomoney.sh</code> that we will use to test your code. All it does is pass the command-line parameters on to your program. If you are using Python, then your shell script would look like the following:</p>
-<pre><code>#!/bin/bash
+<pre class='widget' tabindex='0'><code>#!/bin/bash
 python3 cmoney.py $@</code></pre>
 <p>Be sure to call <code>python3</code>, not <code>python</code> in your shell script! Otherwise it will not work. And change <code>cmoney.py</code> to the name of your program file.</p>
 <p>If you are using Java, then your shell script would look like the following:</p>
-<pre><code>#!/bin/bash
+<pre class='widget' tabindex='0'><code>#!/bin/bash
 java CMoney $@</code></pre>
 <p>Change <code>CMoney</code> to the name of your <code>public</code> Java class.</p>
 <p>Save the two lines above to a text file called <code>cryptomoney.sh</code>; change the name of the file as appropriate to your code. Then run <code>chmod 755 cryptomoney.sh</code>. You should then be able to run your program through the shell script. Examples of how to call the shell script are given below, but it uses the same command line parameters described above.</p>
 <h4 id='makefile'>Makefile</h4>
 <p>Separately from the shell script, you will also need a Makefile. This will allow your program to be compiled prior to execution (if your program needs compilation). For languages that do not need compilation (such as Python), just put in a single <code>echo</code> statement so that <code>make</code> still runs properly.</p>
 <p>If you are using Python, your Makefile will look like the following:</p>
-<pre><code>main:
+<pre class='widget' tabindex='0'><code>main:
      echo hello world</code></pre>
 <p>Note that the indentation is a tab, not spaces! Makefiles are very strict on that.</p>
 <p>If you are using Java, your Makefile will look like the following:</p>
-<pre><code>main:
+<pre class='widget' tabindex='0'><code>main:
      javac CMoney.java</code></pre>
 <p>Note that the indentation is a tab, not spaces! Makefiles are very strict on that. And change the Java file name as appropriate for your source code.</p>
 </div><div id='tsample-execution' class='tabcontent'><h3 id='sample-execution'>Sample execution</h3>
 <p>This is just meant to show the syntax – it is not meant to be a full fledged testing suite of your homework. However, it does call each of the commands listed above, and makes the calls via the shell script. Note that the lines with the equals signs are setting shell variables to be used later on. The commands used here are in the <a href='basic-test.sh'>basic-test.sh</a> (<a href='basic-test.sh.html'>html</a>) script. Note that you will have to run <code>chmod 755 basic-test.sh</code> before you can run the shell script. You would run it as: <code>./basic-test.sh</code>. Also note that this shell script takes the SHA-256 sum of one of the block files via the <code>sha256sum</code> command – if you don’t have this command on your computer, you can remove that line.</p>
 <p><strong><em>NOTE:</em></strong> We provide these commands in the <a href='basic-test.sh'>basic-test.sh</a> (<a href='basic-test.sh.html'>html</a>) script above! No need to cut-and-paste.</p>
-<pre><code>$ ./cryptomoney.sh name
+<pre class='widget' tabindex='0'><code>$ ./cryptomoney.sh name
 AaronDollar(TM)
 $ ./cryptomoney.sh genesis
 Genesis block created in 'block_0.txt'

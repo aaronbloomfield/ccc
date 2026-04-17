@@ -81,7 +81,7 @@
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
 </div><div id='teth-price' class='tabcontent'><h3 id='eth-price'>ETH price</h3>
 <p>To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH. Both of these contracts fulfill the <a href='IEtherPriceOracle.sol.html'>IEtherPriceOracle.sol</a> (<a href='IEtherPriceOracle.sol'>src</a>) interface:</p>
-<pre><code>interface IEtherPriceOracle is IERC165 {
+<pre class='widget' tabindex='0'><code>interface IEtherPriceOracle is IERC165 {
 
     // The name (really a description) of the implementing contract
     function name() external pure returns (string memory);
@@ -99,7 +99,7 @@
 }</code></pre>
 <p>The <code>price()</code> function will return the current price in cents. Thus, if the price is $99.23 per (fake) ETH, it would return <code>9923</code>.</p>
 <p>There are two deployed contracts that implemented this interface, the contract addresses of which are in the blockchain explorer’s links section. The first is a constant implementation, which always returns $100.00 (formally: <code>10000</code>) as the price. The implementation for this is in <a href='EtherPriceOracleConstant.sol.html'>EtherPriceOracleConstant.sol</a> (<a href='EtherPriceOracleConstant.sol'>src</a>), and shown below. You can use this file for debugging or on the Javascript development environment in Remix, as it always returns the same value.</p>
-<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+<pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.24;
 import "./IEtherPriceOracle.sol";
 
@@ -120,7 +120,7 @@ contract EtherPriceOracleConstant is IEtherPriceOracle {
 <p>When tokens are transferred to any contract address, we are going to have our TokenCC code attempt to call an <code>onERC20Received()</code> function on that contract, ignoring the error if the contract does not implement the <code>IERC20Receiver</code> interface. Calling this method will also not be attempted on an owned account.</p>
 <p>The first change is that you will have to import the <a href='IERC20Receiver.sol.html'>IERC20Receiver.sol</a> (<a href='IERC20Receiver.sol'>src</a>) file. This file defines the <code>IERC20Receiver</code> interface which defines only one function: <code>onERC20Received()</code>. Our TokenCC contracts are going to call this function any time tokens are transferred to another contract. There is a similar concept for ERC-721 contracts, but not (yet) for ERC-20 contracts. Note that your TokenCC contract does NOT implement this interface; it just needs to know about it so it can call a function (<code>onERC20Received()</code>) on <em>another</em> contract that implements this interface.</p>
 <p>The second change is that we have to include the following two functions, adapted from <a href='https://stackoverflow.com/questions/73630656/how-to-make-onrecivederc20-function'>here</a>, in our TokenCC.sol file:</p>
-<pre><code>// This overrides the _update() function in ERC20.sol -- first we call the
+<pre class='widget' tabindex='0'><code>// This overrides the _update() function in ERC20.sol -- first we call the
 // overridden function, then we call afterTokenTransfer().  Note that this is
 // called on a mint, burn, or transfer.
 function _update(address from, address to, uint256 value) internal override virtual {
@@ -160,14 +160,14 @@ function afterTokenTransfer(address from, address to, uint256 amount) internal {
 <h4 id='receive'><code>receive()</code></h4>
 <p>A contract can receive either in one of two ways. The first is to have a <code>payable</code> function is called along with some ether transfer. This was done in the <code>placeBid()</code> function in the <a href='../auction/index.html'>dApp Auction</a> (<a href='../auction/index.md'>md</a>) assignment.</p>
 <p>To receive ether without a function call – meaning to receive a regular ether transfer – a special function called <code>receive()</code> must be present. It doesn’t have to <em>do</em> anything, necessarily, but it does have to be declared. Note that, in this assignment, our <code>receive()</code> function is going to have to do quite a bit. This function has a special form:</p>
-<pre><code>receive() payable external { // might need 'override' also
+<pre class='widget' tabindex='0'><code>receive() payable external { // might need 'override' also
     // ...
 }</code></pre>
 <p>Note that there is no <code>function</code> keyword! Other than the different syntax, and the special case when it is called, it operates like any other function. It can take any action, including reverting (which will abort the transfer). In our case, this is how we are going to exchange ether for TCC. To initiate an exchange of ether for TCC, we transfer ether in, which will call <code>receive()</code>, and the TCC will be transferred back to the caller. As our <code>receive()</code> function is overriding what is in an interface (described below), we also put the <code>override</code> keyword there.</p>
 <p>In Remix, you can invoke the <code>receive()</code> function by sending some ether without a function call. To do this, put the amount in the “Value” box of the Deployment pane, set the right unit (ether, gwei, or wei), and then click on the “Transact” button at the very bottom of the contract (below the “Low level interactions” header). This is just like transferring ether in geth. Note that the Javascript environment seems to hang on some platforms when doing this, but if you are connected to the course blockchain, then it seems to work fine.</p>
 <h4 id='transferring-ether'>Transferring ether</h4>
 <p>To transfer ether to an address <code>a</code>, you could use the following:</p>
-<pre><code>(bool success, ) = payable(a).call{value: amount}("");
+<pre class='widget' tabindex='0'><code>(bool success, ) = payable(a).call{value: amount}("");
 require (success, "payment didn't work");</code></pre>
 <p>A bunch of notes on this:</p>
 <ul>
@@ -188,7 +188,7 @@ require (success, "payment didn't work");</code></pre>
 </div><div id='tinterface' class='tabcontent'><h3 id='interface'>Interface</h3>
 <p>Formally, you must implement a <code>DEX</code> contract that implements the <a href='IDEX.sol.html'>IDEX.sol</a> (<a href='IDEX.sol'>src</a>) interface. Your contract opening line MUST be: <code>contract DEX is IDEX</code>. Note that the <code>IDEX</code> interface extends the <a href='IERC165.sol.html'>IERC165</a> (<a href='IERC165.sol'>src</a>) interface, so you will have to implement the <code>supportsInterface()</code> function as well. It also implements the <a href='IERC20Receiver.sol.html'>IERC20Receiver.sol</a> (<a href='IERC20Receiver.sol'>src</a>) interface, which means implementing the <code>onERC20Received()</code> function. The functions in this interface are shown below, and much more detail is provided in the comments in the <a href='IDEX.sol.html'>IDEX.sol</a> (<a href='IDEX.sol'>src</a>) file.</p>
 <p>Note that many of these functions are just the getter functions from <code>public</code> variables; which ones are described in the full source file and also below. Also note that <span class='math inline'><em>x</em></span> is the amount of ether liquidity (with 18 decimals) and <span class='math inline'><em>y</em></span> is the amount of token liquidity (with 8-12 decimals).</p>
-<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+<pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
 pragma solidity ^0.8.24;
 
@@ -383,11 +383,11 @@ interface IDEX is IERC165, IERC20Receiver {
 </div><div id='ttesting' class='tabcontent'><h3 id='testing'>Testing</h3>
 <h4 id='handling-reversions-on-payment'>Handling reversions on payment</h4>
 <p>When paying out to another address, your Solidity code is going to look like the following:</p>
-<pre><code>(bool success, ) = payable(a).call{value: v}("");
+<pre class='widget' tabindex='0'><code>(bool success, ) = payable(a).call{value: v}("");
 require(success, "Failed to transfer ETH");</code></pre>
 <p>If that call fails (by returning false), then it will stop on that require. However, if that call fails by reverting – such as when the receiving contract reverts in <code>receive()</code> – then we have to do a bit more work to get (and display) the reversion reason.</p>
 <p>The following function will decode the reversion reason:</p>
-<pre><code>// From https://ethereum.stackexchange.com/questions/83528/how-can-i-get-the-revert-reason-of-a-call-in-solidity-so-that-i-can-use-it-in-th
+<pre class='widget' tabindex='0'><code>// From https://ethereum.stackexchange.com/questions/83528/how-can-i-get-the-revert-reason-of-a-call-in-solidity-so-that-i-can-use-it-in-th
 function getRevertMsg(bytes memory _returnData) internal pure returns (string memory) {
     // If the _res length is less than 68, then the transaction failed silently (without a revert message)
     if (_returnData.length &lt; 68)
@@ -400,11 +400,11 @@ function getRevertMsg(bytes memory _returnData) internal pure returns (string me
     return abi.decode(_returnData, (string)); // All that remains is the revert string
 }</code></pre>
 <p>However, in order to use that function, we have to get the encoded reversion reason. We will use the following code to pay from a contract – it captures the (encoded) reversion reason in the second part of the tuple (<code>result</code>).</p>
-<pre><code>(bool success, bytes memory result) = payable(address(dex)).call{value:amtEther * 1 ether}("");
+<pre class='widget' tabindex='0'><code>(bool success, bytes memory result) = payable(address(dex)).call{value:amtEther * 1 ether}("");
 require (success, string.concat("Payment to DEX didn't work: ", getRevertMsg(result)));</code></pre>
 <h4 id='dextest-testing-contract'>DEXtest testing contract</h4>
 <p>To help you test your code, below is a method that will test the first case from the example above – the <code>createPool()</code> step. This is intended to be done on the Javascript development environment in Remix and NOT on the course blockchain. This file is saved as <a href='DEXtest.sol.html'>DEXtest.sol</a> (<a href='DEXtest.sol'>src</a>).</p>
-<pre><code>// SPDX-License-Identifier: GPL-3.0-or-later
+<pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: GPL-3.0-or-later
 
 // This file is part of the http://github.com/aaronbloomfield/ccc repository,
 // and is released under the GPL 3.0 license.

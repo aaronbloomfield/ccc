@@ -154,7 +154,7 @@
 <p>The <a href='../daoweb3/index.html'>DAO & web3 assignment</a> (<a href='../daoweb3/index.md'>md</a>) goes over the basics of HTML web pages and Javascript functions.</p>
 <h4 id='ensure-metamask-is-installed-and-enabled'>Ensure MetaMask is installed and enabled</h4>
 <p>We want to ensure that any viewer of this web page has MetaMask properly installed. The following code will do that:</p>
-<pre><code>&lt;script&gt;
+<pre class='widget' tabindex='0'><code>&lt;script&gt;
   if ( window.ethereum === undefined )
     window.alert("Please install MetaMask; this page will not work properly without that extension installed");
 &lt;/script&gt;</code></pre>
@@ -162,7 +162,7 @@
 <p>Beyond what is shown in the code above, you do not need to handle the situation where a user tries to use this page when not using Chrome with MetaMask installed.</p>
 <h4 id='connecting-to-metamask'>Connecting to MetaMask</h4>
 <p>The first thing a user has to do is enable the MetaMask extension to use the site; this is usually phrased as “connecting to MetaMask”. To do this, we add the following code to our HTML file (adapted from <a href='https://docs.metamask.io/guide/getting-started.html#connecting-to-metamask'>here</a>).</p>
-<pre><code>&lt;script&gt;
+<pre class='widget' tabindex='0'><code>&lt;script&gt;
 function connectToMetaMask() {
     ethereum.request({ method: 'eth_requestAccounts' });
 }
@@ -174,23 +174,23 @@ function connectToMetaMask() {
 <h4 id='web3.js-library'>Web3.js library</h4>
 <p>We could interact with MetaMask directly, but using web3.js, which we are familiar with, is going to make life much easier – it will do all the encoding of parameters into calls, etc.</p>
 <p>Previously, we defined the <code>web3</code> variable as such (The value for <code>URL</code> is in the blockchain explorer’s links section):</p>
-<pre><code>let web3 = new Web3('URL');</code></pre>
+<pre class='widget' tabindex='0'><code>let web3 = new Web3('URL');</code></pre>
 <p>We are now going to <em>add</em> a line:</p>
-<pre><code>let web3 = new Web3('URL');
+<pre class='widget' tabindex='0'><code>let web3 = new Web3('URL');
 let web3mm = new Web3(window.ethereum);</code></pre>
 <p>You will notice that we are creating <em>TWO</em> connections to the blockchain. The first connection is through the normal URL as was done in the <a href='../daoweb3/index.html'>DAO & web3</a> (<a href='../daoweb3/index.md'>md</a>) assignment and as is done in the auctions.php page that you are basing your code off of; that URL is in the blockchain explorer’s links section. This first connection is <em>read-only</em>. The second connection is through MetaMask, which injects the <code>window.ethereum</code> object, and Web3.js can just connect via that. We will be able to send transactions through the second connection.</p>
 <p>The reason we are doing two connections is because the first one supports subscriptions, which is what allows the table to be updated upon an event emission – you did that in the <a href='../daoweb3/index.html'>DAO & web3</a> (<a href='../daoweb3/index.md'>md</a>) assignment, and the auctions.php does that as well. However, that first connection does not allow sending transactions to the blockchain. The second connection, which is through MetaMask, does not support subscriptions (so no automatic updating of the tables), but does allow sending transactions to the blockchain.</p>
 <p>As both are wrapped in the Web3 constructor, you interact with them in the same way.</p>
 <p>As a general rule, any one Javascript function should use only one of those connections, as they may be slightly out of sync with each other (the MetaMask one has about a 5 second delay, for example). If you are sending transactions to the blockchain, you have to use the <code>web3mm</code> connection. Otherwise, use the <code>web3</code> connection. As you will only be writing five functions that send transactions to the blockchain, only those five will use <code>web3mm</code>.</p>
 <p>Likewise, we need an auction contract interface that connects through the <code>web3mm</code> connection. Currently there is this line of code in the HTML file:</p>
-<pre><code>auctionContract = new web3.eth.Contract(auctioneerAbi,auctioneerContractAddress);</code></pre>
+<pre class='widget' tabindex='0'><code>auctionContract = new web3.eth.Contract(auctioneerAbi,auctioneerContractAddress);</code></pre>
 <p>We are going to <em>add</em> a line:</p>
-<pre><code>auctionContractmm = new web3mm.eth.Contract(auctioneerAbi,auctioneerContractAddress);</code></pre>
+<pre class='widget' tabindex='0'><code>auctionContractmm = new web3mm.eth.Contract(auctioneerAbi,auctioneerContractAddress);</code></pre>
 <p>If a function is using the <code>web3mm</code> connection, then it should use the <code>auctionContractmm</code> contract interface.</p>
 <p>You will have to do something similar with your connection the NFTManager.</p>
 </div><div id='thtml-and-js' class='tabcontent'><h3 id='html-and-js'>HTML and JS</h3>
 <p>Below is an example HTML form and associated Javascript function. This will call the <code>mintWithURI()</code> function on your NFTManager smart contract.</p>
-<pre><code>&lt;h4&gt;Mint NFT&lt;/h4&gt;
+<pre class='widget' tabindex='0'><code>&lt;h4&gt;Mint NFT&lt;/h4&gt;
 &lt;script&gt;
   const mintNFT = async() =&gt; {
     try {
@@ -234,7 +234,7 @@ let web3mm = new Web3(window.ethereum);</code></pre>
 <h4 id='getting-the-return-value-of-a-transaction'>Getting the return value of a transaction</h4>
 <p>It is surprisingly hard to get the return value of a transaction. Getting one from a call is easy – but for a transaction you have to have the EVM re-run the transaction and then save the return value. You also have to tell it what state to run the EVM in (meaning what block number to assume is the top block). To save you the hassle of figuring out the syntax for all of this, below is a Javascript function you can use.</p>
 <p>When you call a transaction, your code will be something like what was above: <code>const txninfo = await nftContractmm.methods.mintWithURI(str).send(...)</code>. The <code>txninfo</code> has <em>some</em> information about the transaction, but not a lot, since it may have not been mined yet (sometimes it returns before it was mined, sometimes after). You can access the transaction hash via <code>txninfo['transactionHash']</code>.</p>
-<pre><code>async function sleepms(time_ms) {
+<pre class='widget' tabindex='0'><code>async function sleepms(time_ms) {
   await new Promise(resolve =&gt; setTimeout(resolve, time_ms));
 }
 
@@ -252,7 +252,7 @@ function showReturnIntegerValue(w3,txnhash,desc) {
   });
 }</code></pre>
 <p>The <code>showReturnIntegerValue()</code> function will display an alert box (and print it to the Javascript console, as long NFT IDs are hard to copy from an alert box) the return value from the transaction. This assumes that it did not revert (your call to <code>startAuction()</code> should be a try-catch block), and that the smart contract function return value is an integer. So this function is intended for both minting an NFT (which returns the <code>uint</code> of the NFT ID) and starting an auction (which returns the ID of the auction). The first parameter is the web3 connection (use the MetaMask one), the second parameter is the transaction hash to get the return value of, and the third parameter is a descriptive message. For example:</p>
-<pre><code>showReturnIntegerValue(web3mm,txninfo['transactionHash'],"NFT ID");</code></pre>
+<pre class='widget' tabindex='0'><code>showReturnIntegerValue(web3mm,txninfo['transactionHash'],"NFT ID");</code></pre>
 <p>This will show a pop-up alert box that states something such as “NFT ID: 12345”.</p>
 </div><div id='tthe-task' class='tabcontent'><h3 id='the-task'>The Task</h3>
 <p><img src='final-web-page.webp' alt='final web page image' style='float:right;border:1px solid black;margin-left:15px'></p>

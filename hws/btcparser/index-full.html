@@ -92,19 +92,19 @@
 <h3 id="other-files">Other files</h3>
 <h4 id="shell-script">Shell script</h4>
 <p>As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a <code>parse.sh</code> shell script for us to call. Such a file for C or C++ might look like:</p>
-<pre><code>#!/bin/bash
+<pre class='widget' tabindex='0'><code>#!/bin/bash
 ./a.out $@</code></pre>
 <p>The first line must be there exactly as shown (pound sign, then exclamation point, then <code>/bin/bash</code>). For the second line, replace <code>./a.out</code> with how to run your (compiled) program: <code>java BTCBlockChain</code> or <code>python3 btc-parse.py</code> (use <code>python3</code>, not <code>python</code>). Be sure to put the <code>$@</code> on that line as well.</p>
 <p>Once created, you will have to ensure it can be executed: <code>chmod 755 parse.sh</code>. You should then be able to run your program via: <code>./parse.sh blk00000.blk</code>.</p>
 <p>The following might be what it would look like for Python:</p>
-<pre><code>#!/bin/bash
+<pre class='widget' tabindex='0'><code>#!/bin/bash
 python3 btc-parse.py $@</code></pre>
 <p>Be sure to call <code>python3</code>, not <code>python</code> in your shell script! Otherwise it will not work.</p>
 <p>And for Java:</p>
-<pre><code>#!/bin/bash
+<pre class='widget' tabindex='0'><code>#!/bin/bash
 java BTCParse $@</code></pre>
 <p>Note that you may have to add a flag to modify the class path if you are using the suggested JSON library in Java, as described in the Languages section above. If so, your parse.sh file may look something like this:</p>
-<pre><code>#!/bin/bash
+<pre class='widget' tabindex='0'><code>#!/bin/bash
 java -cp json-simple-1.1.1.jar:. BTCParse $@</code></pre>
 <h4 id="makefile">Makefile</h4>
 <p>You will also have to submit a <code>Makefile</code> that will be used to compile your program, if needed. For languages that do not need compilation (such as Python), just put in a single <code>echo</code> statement so that <code>make</code> still runs properly. This is the same as in the <a href="../intro/index.html">previous assignments</a> (<a href="../intro/index.md">md</a>).</p>
@@ -113,7 +113,7 @@ java -cp json-simple-1.1.1.jar:. BTCParse $@</code></pre>
 <h4 id="block-group-file-format">Block group file format</h4>
 <p>The blocks to be verified are grouped together in a file – this file is from the Bitcoin system, and if you were to launch a Bitcoin node and have it sync the blockchain, you would have those files on your machine as well. The largest file we provide contains block 0 (the genesis block) through block 119,340.</p>
 <p>To see the contents of a binary file, run it through <code>hexdump -C</code> on a Linux / UNIX system. Make sure you use the <code>-C</code> parameter! This will print a LOT of text, so we will pipe it through <code>head</code>, as shown below. Each block is preceded by 8 bytes of data. The first 4 bytes are the magic number, and the second four bytes are the block size. Both are in little-Endian format in the file. The output of the genesis block, when run through <code>hexdump -C</code>, is:</p>
-<pre><code>$ hexdump -C blk00000-f10.blk | head -13
+<pre class='widget' tabindex='0'><code>$ hexdump -C blk00000-f10.blk | head -13
 00000000  f9 be b4 d9 1d 01 00 00  01 00 00 00 00 00 00 00  |................|
 00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
 00000020  00 00 00 00 00 00 00 00  00 00 00 00 3b a3 ed fd  |............;...|
@@ -131,7 +131,7 @@ $</code></pre>
 <p>The file specified on the command line in the execution above has the first 10 blocks, and would create 145 lines of output; we only want the beginning, so we pipe it through <code>head -13</code> to get the first 13 lines of the hexdump output.</p>
 <p>Each line displays 16 bytes from the file. The columns in hexdump shows the address of the first byte in the row (in hex), the hex values of the 16 bytes, and an ASCII representation of those 16 bytes (if they are printable characters; a period is used if they are not printable characters). You can see, at the bottom of the hexdump display above, the text included in the genesis block for Bitcoin (“The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”). You may want to save the hexdump output to a file (<code>hexdump -C blk00000.blk &gt; blk00000.blk.txt</code>). If you do this with some of the larger blockchain files, be aware that the hexdump output can be quite large – up to 631 Mb for the largest file we provide in this assignment.</p>
 <p>The first four bytes (<code>f9 be b4 d9</code>) is the so-called “magic number” which identifies the start of a block in a file. The value is 0xd9b4bef9, or 0xf9beb4d9 in little-Endian. The next four bytes (<code>1d 01 00 00</code>) are the size. That’s in little-Endian, so converted to big-Endian it’s 0x0000011d = 285. The next 285 bytes are the contents of block 0 (the genesis block). Block 1 thus starts at byte 285+8=293 (0x125 in hex) in the file. You can see this later in the hexdump output (not shown above because of the <code>head -13</code> pipe):</p>
-<pre><code>00000110  5c 38 4d f7 ba 0b 8d 57  8a 4c 70 2b 6b f1 1d 5f  |\8M....W.Lp+k.._|
+<pre class='widget' tabindex='0'><code>00000110  5c 38 4d f7 ba 0b 8d 57  8a 4c 70 2b 6b f1 1d 5f  |\8M....W.Lp+k.._|
 00000120  ac 00 00 00 00 f9 be b4  d9 d7 00 00 00 01 00 00  |................|
 00000130  00 6f e2 8c 0a b6 f1 b3  72 c1 a6 a2 46 ae 63 f7  |.o......r...F.c.|</code></pre>
 <p>On the second line, the magic number (<code>f9 be b4 d9</code>) of the second block (block index 1) starts on the 6th byte.</p>
@@ -176,19 +176,19 @@ $</code></pre>
 <p>Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the “no errors X blocks” or “error 5 block 17” line – we’ll get rid of the other output in the next section.</p>
 <h3 id="testing">Testing</h3>
 <p>To test each error, you should try to change one byte in the file – specifically, a byte in the particular field you are checking for errors. For example, if you want to modify the magic number, you would change one of the first 4 bytes; as bytes are indexed from zero, that’s bytes 0, 1, 2, or 3. To do that, you can use the following Python program, which you can save as <code>change_byte.py</code>:</p>
-<pre><code>#!/usr/bin/python3
+<pre class='widget' tabindex='0'><code>#!/usr/bin/python3
 import sys
 assert (len(sys.argv)==3)
 data = bytearray(sys.stdin.buffer.read())
 data[int(sys.argv[1])] = int(sys.argv[2])
 sys.stdout.buffer.write(bytes(data))</code></pre>
 <p>This can also be downloaded via <a href="change_byte.py.html">change_byte.py</a> (<a href="change_byte.py">src</a>). Yes, this program could be compacted more, but then it would be even more unreadable. This program will read in binary data from standard input, change the one byte specified via the command line arguments, and write the resulting data to standard output. It thus takes in two command-line parameters: the byte number to change, and the value to change it to, in that order; both are base-10 integers. There is no error checking in this program! You would use it as such (this changes byte 2 (the third byte in the file, since we index from 0) to value 0 (hex 0x00)):</p>
-<pre><code>$ cat blk00000-f10.blk | ./change_byte.py 2 0 &gt; test.blk
+<pre class='widget' tabindex='0'><code>$ cat blk00000-f10.blk | ./change_byte.py 2 0 &gt; test.blk
 $ ./parse.sh test.blk
 error 1 block 0
 $</code></pre>
 <p>The first line may be different on your machine (especially if you use Windows), and it may be invoked slightly differently than what is shown below. Here are a few more execution runs to show you both successful execution runs and runs with some errors. You should test it beyond these! We are certainly going to when we grade your assignment.</p>
-<pre><code>$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-b0.blk 
+<pre class='widget' tabindex='0'><code>$ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-b0.blk 
 no errors 1 blocks
 $ ./parse.sh ~/Dropbox/git/ccc/hws/btcparser/blk00000-f10.blk 
 no errors 10 blocks
@@ -243,7 +243,7 @@ $</code></pre>
 <h4 id="merkle-tree-example-1-txn">Merkle tree example (1 TXN)</h4>
 <p>To help you ensure that you are computing the Merkle tree hash properly, here is a worked-out example. The code below is Python, but can be reproduced in any language. The intermediate values shown below will help you ensure each step works in whatever language you are developing this assignment in.</p>
 <p>This is the data from the genesis block:</p>
-<pre><code>$ hexdump -C blk00000-b0.blk
+<pre class='widget' tabindex='0'><code>$ hexdump -C blk00000-b0.blk
 00000000  f9 be b4 d9 1d 01 00 00  01 00 00 00 00 00 00 00  |................| 
 00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................| 
 00000020  00 00 00 00 00 00 00 00  00 00 00 00 3b a3 ed fd  |............;...| 
@@ -267,10 +267,10 @@ $</code></pre>
 $</code></pre>
 <p>There is only one transaction in this block. With a preamble of 8 bytes, a header of 80 bytes, and a transaction count of 1 byte (since it’s a compactSize unsigned integer with value of 1), the transaction has to start at byte 89 (0x59). This is the row with address 0x00000050, and the start of the transaction is the last 7 bytes on that line (<code>01 00 00 00 01 00 00</code>), and continues until the end of the block.</p>
 <p>Putting all those bytes together gives us the (ASCII) hex of the transaction, which we store in a <code>txn</code> variable:</p>
-<pre><code>txn=&quot;01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000&quot;</code></pre>
+<pre class='widget' tabindex='0'><code>txn=&quot;01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000&quot;</code></pre>
 <p>In binary, the transaction is 204 bytes long. As the hex representation above uses two characters for one (binary) byte, the string above is 408 characters long.</p>
 <p>Because there is only one transaction, the hash of the hash of that transaction is also the Merkle tree root. So we get the sha256(sha256()) hash of that data, which we have to convert to binary form first:</p>
-<pre><code>$ python3
+<pre class='widget' tabindex='0'><code>$ python3
 &gt;&gt;&gt; # enter txn = ... as above
 &gt;&gt;&gt; from hashlib import sha256 
 &gt;&gt;&gt; txn_data = bytes.fromhex(txn) 
@@ -281,11 +281,11 @@ $</code></pre>
 &gt;&gt;&gt;</code></pre>
 <p>In Python, given a hash, the <code>.digest()</code> method returns it in binary format, and the <code>.hexdigest()</code> method returns it in an ASCII hex representation.</p>
 <p>The Merkle tree root value of <code>3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a</code> can be seen in the block data itself; the relevant snippet of the hexdump of the block data is:</p>
-<pre><code>00000020                                       3b a3 ed fd  |            ;...| 
+<pre class='widget' tabindex='0'><code>00000020                                       3b a3 ed fd  |            ;...| 
 00000030  7a 7b 12 b2 7a c7 2c 3e  67 76 8f 61 7f c8 1b c3  |z{..z.,&gt;gv.a....| 
 00000040  88 8a 51 32 3a 9f b8 aa  4b 1e 5e 4a              |..Q2:...K.^J    | </code></pre>
 <p>Most sites, such as <a href="https://en.bitcoin.it/wiki/Genesis_block">this one</a>, display these hash values in the <em>other</em> Endian format. So we can un-reverse (?) it. Note that in the code below we are recomputing <code>hash2</code> with <code>.digest()</code>, rather than <code>.hexdigest()</code>, to get it’s value in binary:</p>
-<pre><code>&gt;&gt;&gt; hash2 = sha256(hash1).digest() 
+<pre class='widget' tabindex='0'><code>&gt;&gt;&gt; hash2 = sha256(hash1).digest() 
 &gt;&gt;&gt; hash2ba = bytearray(hash2) 
 &gt;&gt;&gt; hash2ba.reverse() 
 &gt;&gt;&gt; hash = &#39;&#39;.join(format(x, &#39;02x&#39;) for x in hash2ba)       
@@ -294,7 +294,7 @@ $</code></pre>
 &gt;&gt;&gt;</code></pre>
 <p>Now that the hash is in little-Endian format, the hex of the hash exactly matches what is listed in the <a href="https://en.bitcoin.it/wiki/Genesis_block">genesis block</a>.</p>
 <p>And then we can get all fancy and do all that in one line:</p>
-<pre><code>&gt;&gt;&gt; # enter txn = ... as above
+<pre class='widget' tabindex='0'><code>&gt;&gt;&gt; # enter txn = ... as above
 &gt;&gt;&gt; from hashlib import sha256 
 &gt;&gt;&gt; &#39;&#39;.join(format(x, &#39;02x&#39;) for x in reversed(bytearray(sha256(sha256(bytes.fromhex(txn)).digest()).digest())))
 &#39;4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b&#39; 
@@ -303,7 +303,7 @@ $</code></pre>
 <h4 id="merkle-tree-example-2-txns">Merkle tree example (2 TXNs)</h4>
 <p>This example is to show how to join multiple hashes of transactions to form the Merkle tree root hash. It assumes you can compute the hash of a single transaction as in the above example.</p>
 <p>Consider <a href="blk00000-b170.blk">block 170</a>, which is the first block that has two transactions. The <code>hexdump -C</code> of the block is:</p>
-<pre><code>00000000  f9 be b4 d9 ea 01 00 00  01 00 00 00 55 bd 84 0a  |............U...|
+<pre class='widget' tabindex='0'><code>00000000  f9 be b4 d9 ea 01 00 00  01 00 00 00 55 bd 84 0a  |............U...|
 00000010  78 79 8a d0 da 85 3f 68  97 4f 3d 18 3e 2b d1 db  |xy....?h.O=.&gt;+..|
 00000020  6a 84 2c 1f ee cf 22 2a  00 00 00 00 ff 10 4c cb  |j.,...&quot;*......L.|
 00000030  05 42 1a b9 3e 63 f8 c3  ce 5c 2c 2e 9d bb 37 de  |.B..&gt;c...\,...7.|
@@ -348,10 +348,10 @@ $</code></pre>
 <li>Transaction 2 starts on the next byte (byte number 0xdf), and is 275 bytes long; the last byte is byte 0x1f1</li>
 </ul>
 <p>We can save the hex of the transactions into Python strings, like we did above:</p>
-<pre><code>txn1=&quot;01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0102ffffffff0100f2052a01000000434104d46c4968bde02899d2aa0963367c7a6ce34eec332b32e42e5f3407e052d64ac625da6f0718e7b302140434bd725706957c092db53805b821a85b23a7ac61725bac00000000&quot;
+<pre class='widget' tabindex='0'><code>txn1=&quot;01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0102ffffffff0100f2052a01000000434104d46c4968bde02899d2aa0963367c7a6ce34eec332b32e42e5f3407e052d64ac625da6f0718e7b302140434bd725706957c092db53805b821a85b23a7ac61725bac00000000&quot;
 txn2=&quot;0100000001c997a5e56e104102fa209c6a852dd90660a20b2d9c352423edce25857fcd3704000000004847304402204e45e16932b8af514961a1d3a1a25fdf3f4f7732e9d624c6c61548ab5fb8cd410220181522ec8eca07de4860a4acdd12909d831cc56cbbac4622082221a8768d1d0901ffffffff0200ca9a3b00000000434104ae1a62fe09c5f51b13905f07f06b99a2f7159b2225f374cd378d71302fa28414e7aab37397f554a7df5f142c21c1b7303b8a0626f1baded5c72a704f7e6cd84cac00286bee0000000043410411db93e1dcdb8a016b49840f8c53bc1eb68a382e97b1482ecad7b148a6909a5cb2e0eaddfb84ccf9744464f82e160bfa9b8b64f9d4c03f999b8643f656b412a3ac00000000&quot;</code></pre>
 <p>In Python, we can then compute the hashes of the transactions as we did above:</p>
-<pre><code>$ python3
+<pre class='widget' tabindex='0'><code>$ python3
 &gt;&gt;&gt; # enter txn1=... and txn2=... as above
 &gt;&gt;&gt; from hashlib import sha256
 &gt;&gt;&gt; txn1_data = bytes.fromhex(txn1)
@@ -366,13 +366,13 @@ txn2=&quot;0100000001c997a5e56e104102fa209c6a852dd90660a20b2d9c352423edce25857fc
 &#39;169e1e83e930853391bc6f35f605c6754cfead57cf8387639d3b4096c54f18f4&#39;
 &gt;&gt;&gt; </code></pre>
 <p>To compute next node up in the Merkle tree, we concatenate the <em>binary</em> versions of the hashes together, and then take the (double) hash of that:</p>
-<pre><code>&gt;&gt;&gt; parent_hash_bin=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).digest()
+<pre class='widget' tabindex='0'><code>&gt;&gt;&gt; parent_hash_bin=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).digest()
 &gt;&gt;&gt; parent_hash_hex=sha256(sha256(txn1_hash_bin+txn2_hash_bin).digest()).hexdigest()
 &gt;&gt;&gt; parent_hash_hex
 &#39;ff104ccb05421ab93e63f8c3ce5c2c2e9dbb37de2764b3a3175c8166562cac7d&#39;
 &gt;&gt;&gt; </code></pre>
 <p>Lastly, we need to un-reverse that to ensure it matches what we find online. We’ll do this as we did above:</p>
-<pre><code>&gt;&gt;&gt; tmp = bytearray(parent_hash_bin)
+<pre class='widget' tabindex='0'><code>&gt;&gt;&gt; tmp = bytearray(parent_hash_bin)
 &gt;&gt;&gt; tmp.reverse()
 &gt;&gt;&gt; hash = &#39;&#39;.join(format(x, &#39;02x&#39;) for x in tmp)
 &gt;&gt;&gt; hash
@@ -388,7 +388,7 @@ txn2=&quot;0100000001c997a5e56e104102fa209c6a852dd90660a20b2d9c352423edce25857fc
 <p>Your program must output the blockchain in JSON format to a file. The file name is the same as the input file with “.json” appended to it. So if you are using the genesis block (file blk00000-b0.blk), the output file name is blk00000-b0.blk.json. You can read about <a href="https://en.wikipedia.org/wiki/JSON">JSON on Wikipedia</a>. The format must be as described below, but your whitespace doesn’t matter. We are going to check it via a JSON parser.</p>
 <p>You SHOULD be using the JSON library that comes with your programming language! No need to reinvent the wheel here. It is VERY tedious to hand-code JSON output. See the Languages section, above, for how to do this.</p>
 <p>Your output for the genesis block (file blk00000-b0.blk), which is saved to a file, should look like the following:</p>
-<pre><code>{
+<pre class='widget' tabindex='0'><code>{
     &quot;blocks&quot;: [
         {
             &quot;height&quot;: 0,
@@ -445,7 +445,7 @@ txn2=&quot;0100000001c997a5e56e104102fa209c6a852dd90660a20b2d9c352423edce25857fc
 </ul>
 <p>In particular, this JSON output need to be written to a file, NOT to standard output. The file name will just append “.json” to the input file name. If you are writing this file as you go, and you encounter an error, it’s fine if you have a partially written JSON file – we aren’t going to check it if there are errors.</p>
 <p>You can verify that it is valid JSON by running it through JSON’s lint: <code>jsonlint-php blk00000-first10.blk.json</code>. You can search for how to install that program on your operating system, or use online sites such as <a href="https://jsonlint.com/">these</a>. You can also use a one-line Python command to test it:</p>
-<pre><code>$ cat blk00000-b0.blk.json | python3 -c &quot;import json,sys; json.load(sys.stdin)&quot;
+<pre class='widget' tabindex='0'><code>$ cat blk00000-b0.blk.json | python3 -c &quot;import json,sys; json.load(sys.stdin)&quot;
 $</code></pre>
 <p>If there is no output (specifically, no error output), then it was parsed correctly.</p>
 <p>Make sure you test it with multiple blocks! However, the online site will probably not like you trying to upload a huge JSON file.</p>

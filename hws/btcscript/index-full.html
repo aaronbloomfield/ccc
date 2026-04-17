@@ -74,7 +74,7 @@
 </ul>
 <h3 id="packages">Packages</h3>
 <p><strong>Windows:</strong> Some people have had issues (as of February 2026) with it working natively in Windows. The suggested way on a Windows platform is to install <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a>. Run the following commands, but from a WSL prompt.</p>
-<pre><code>sudo apt update
+<pre class='widget' tabindex='0'><code>sudo apt update
 sudo apt install python3-pip python3-virtualenv libssl-dev</code></pre>
 <p>You then have to install the two packages (python-bitcoinlib and requests). The recommended way to do this is to create a virtual environment and use that:</p>
 <ul>
@@ -174,7 +174,7 @@ sudo apt install python3-pip python3-virtualenv libssl-dev</code></pre>
 <ul>
 <li><p>Creating a Bitcoin script is really just putting everything into a Python list. All the opcodes are named the same as on the <a href="https://en.bitcoin.it/wiki/Script">Bitcoin Script page</a>. For example, here is the the <a href="../../slides/bitcoin.html#/unspendable">provably unspendable transaction</a> discussed in the lecture slides: <code>[ OP_RETURN ]</code>. Other things that go into scripts – signatures and public key hashes – are also just included in such a list. Assuming you got the types correct, then the library will create the full script from such a list.</p></li>
 <li><p>You entered your private key into scripts.py as a string. To convert it to the private key format that the library uses, you create a CBitcoinSecret object out of it as such: <code>CBitcoinSecret.from_secret_bytes(x(my_private_key_str))</code> (that’s from line 57 of scripts.py); the <code>x()</code> function converts a hex string into binary. The object returned has a <code>.pub</code> field, which is the public key (the type of that public key is <code>CPubKey</code>). And that public key can be converted into a Bitcoin address by calling <code>P2PKHBitcoinAddress.from_pubkey(public_key)</code>. Here is an example as to how to convert your keys:</p>
-<pre><code>my_private_key_str=&quot;...&quot; # fill this in
+<pre class='widget' tabindex='0'><code>my_private_key_str=&quot;...&quot; # fill this in
 from bitcoin.wallet import CBitcoinSecret, P2PKHBitcoinAddress
 from bitcoin import SelectParams
 SelectParams(&#39;testnet&#39;)

@@ -180,7 +180,7 @@ Example:
 <li>Let’s make the existing tests pass. In the <code>checkFailure()</code> function, change <code>Assert.notEqual()</code> to <code>Assert.equal()</code>, and re-run the tests. They should all pass now.</li>
 <li>Add the following method to the Poll_test class:</li>
 </ol>
-<pre><code>function checkChioceCreation() public {
+<pre class='widget' tabindex='0'><code>function checkChioceCreation() public {
       Poll p = new Poll();
       p.addChoice(&quot;test1&quot;);
       Assert.equal(uint(p.num_choices()),uint(7),&quot;Choice not added&quot;);
@@ -194,7 +194,7 @@ Example:
 </ol>
 <p>You do not need to submit the Poll_test.sol file. The purpose of this section was to show you how to start writing unit tests. You will need this when you start developing Solidity applications in the next assignment.</p>
 <p>The Poll_test.sol file that was auto-generated from the default Poll.sol file is as follows. You do not need to read through this code; it’s only here as a reference.</p>
-<pre><code>// SPDX-License-Identifier: GPL-3.0
+<pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: GPL-3.0
         
 pragma solidity &gt;=0.4.22 &lt;0.9.0;
 

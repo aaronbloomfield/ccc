@@ -1,7 +1,7 @@
 .SUFFIXES: .md .html
 LICENSE = <p>Released under a CC BY-SA <img src='slides/images/cc-by-sa-icon.svg' /></p>
 ifeq ($(shell uname),Darwin)
-	SED=sed -i bak
+	SED=sed -i .todel
 else
 	SED=sed -i
 endif
@@ -14,6 +14,8 @@ markdown:
 	pathprefix=`echo $< | tr -d -c '/' | sed -r 's/\//..\//g'` && \
 		pandoc --template `git rev-parse --show-toplevel`/pandoc-template.html --standalone --metadata lang="en" -V "pagetitle:$$(head -1 $<)" -H tabs.js -f markdown -c $$pathprefix"markdown.css" --columns=9999 -t html5 -o $@ $<
 	@echo wrote $@
+	$(SED) s_"<pre>"_"<pre class='widget' tabindex='0'>"_g $@
+	/bin/rm -f $@.todel
 	#$(SED) s_"</body>"_"$(LICENSE)</body>"_g $@
 	#pathprefix=`echo $< | tr -d -c '/' | sed -r 's/\//..\//g'` && \
 
