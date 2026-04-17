@@ -1,4 +1,4 @@
-SLIDE_SETS: introduction.html overview.html encryption.html mining.html solidity.html
+SLIDE_SETS: introduction.html overview.html encryption.html mining.html solidity.html sigcse2025.html
 .SUFFIXES: .qmd .html
 .PHONY: slides all clean
 
@@ -14,6 +14,10 @@ slides: $(SLIDE_SETS)
 .qmd.html:
 	quarto render $< --to revealjs
 	@$(SED) s/", maximum-scale=1.0, user-scalable=no, minimal-ui"// $@
+	@/bin/rm -rf $@.todel
+	@$(SED) s/'<img class="print"'/'<img tabindex="0" class="print" alt="print icon"'/ $@
+	@/bin/rm -rf $@.todel
+	@$(SED) s+'<img src="../slides/images/quarto.webp" class="slide-logo">'+'<img src="../slides/images/quarto.webp" alt="quarto logo" class="slide-logo">'+ $@
 	@/bin/rm -rf $@.todel
 
 clean:
