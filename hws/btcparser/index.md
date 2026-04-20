@@ -3,7 +3,7 @@ Bitcoin Blockchain Parser
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
-### Overview
+## Overview
 
 In this assignment you will read in, validate, and then output the Bitcoin blockchain.
 
@@ -16,12 +16,12 @@ The Bitcoin block format that is being parsed for this assignment is the initial
 You will need to be familiar with the [Bitcoin slide set](../../slides/bitcoin.html#/), specifically the first four sections: on [Merkle trees](../../slides/bitcoin.html#/merkle), [data types used](../../slides/bitcoin.html#/datatypes), [Bitcoin concepts and terminology](../../slides/bitcoin.html#/concepts), and the [blockchain description](../../slides/bitcoin.html#/blockchain).
 
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Languages
+## Languages
 
 In theory, this can be implemented in any language.  In practice, though, it needs to be a language that the auto-graders can compile and run, and that the skeleton code is written for.  Four languages that can currently be used: C (using `gcc`), C++ (using `g++`), Java (using OpenJDK 11), and Python (using Python 3.10.x).  If you want to use a different language, let's have a chat about it, as it will take some time to ensure that the grading system can handle it.  You will have to let us know at least two days before the submission deadline so that we can configure it in time.
 
@@ -31,7 +31,7 @@ This assignment specifically is intended for you to use packages that handle the
 
 **Java:** In Java, a number of tutorials ([1](https://www.javatpoint.com/java-json-example), [2](https://www.tutorialspoint.com/json/json_java_example.htm), [3](https://www.geeksforgeeks.org/working-with-json-data-in-java/), etc.) recommend using the [json-simple](https://github.com/fangyidong/json-simple) package from [json.org](https://www.json.org/json-en.html); you can download the .jar file from [here](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/json-simple/json-simple-1.1.1.jar).  Version 1.1.1 of that file (`json-simple-1.1.1.jar`) will be put into the directory along with your source code; thus, you should NOT include it in the files that you submit.  To use it you will need to update your classpath on both the compilation (`javac -cp json-simple-1.1.1.jar:. BTCParse.java`) and execution (`java -cp json-simple-1.1.1.jar:. BTCParse`); these updates will have to be made to the Makefile and parse.sh files, respectively, that you submit.  The first of those tutorials ([this one](https://www.javatpoint.com/java-json-example)) has example code that outputs in JSON using this library.  Lastly, it's fine if the compilation line complains about a deprecated API, as long as the compilation result is still successful.
 
-### Provided files
+## Provided files
 
 We have a number of files of the blockchain itself.  Blockchain block counting is indexed from 0 (the genesis block), so a file that contains the first 10 blocks will contain blocks 0-9.  Note that not all of the files below contain the genesis block!
 
@@ -48,9 +48,9 @@ We have a number of files of the blockchain itself.  Blockchain block counting i
     - [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) will help you ensure that your JSON output is correct -- see the comments in the file for a description of how to use it
     - [change_byte.py](change_byte.py.html) ([src](change_byte.py)) will help with checking for blockchain errors -- see below for how to use it
 
-### Other files
+## Other files
 
-#### Shell script
+### Shell script
 
 As we do not know what language your program will be written in, nor what you will name your executable, you will need to submit a `parse.sh` shell script for us to call.  Such a file for C or C++ might look like:
 
@@ -87,17 +87,17 @@ java -cp json-simple-1.1.1.jar:. BTCParse $@
 ```
 
 
-#### Makefile
+### Makefile
 
 You will also have to submit a `Makefile` that will be used to compile your program, if needed.  For languages that do not need compilation (such as Python), just put in a single `echo` statement so that `make` still runs properly.  This is the same as in the [previous assignments](../intro/index.html) ([md](../intro/index.md)).
 
 
-### Part 1: Parsing
+## Part 1: Parsing
 
 Your program will take in exactly one command-line parameter: the file to read in.  You can assume that there will always be one command line parameter provided, that that file will exist, and that it will be non-zero in size.  Sample files are provided above -- both large and small.
 
 
-#### Block group file format
+### Block group file format
 
 The blocks to be verified are grouped together in a file -- this file is from the Bitcoin system, and if you were to launch a Bitcoin node and have it sync the blockchain, you would have those files on your machine as well.  The largest file we provide contains block 0 (the genesis block) through block 119,340.
 
@@ -135,7 +135,7 @@ The first four bytes (`f9 be b4 d9`) is the so-called "magic number" which ident
 
 On the second line, the magic number (`f9 be b4 d9`) of the second block (block index 1) starts on the 6th byte.
 
-#### Reading in the blockchain
+### Reading in the blockchain
 
 Your task is to read in the blockchain.  The format for the blockchain can be found in the [Bitcoin lecture slides](../../slides/bitcoin.html#/), specifically starting [here](../../slides/bitcoin.html#/blockchain).  You will need to read in the file in binary format.
 
@@ -150,7 +150,7 @@ Some useful hints:
 If you can read in all of the input files -- especially the large one -- without any errors, then you've successfully completed this part.  Note that you may want to redirect your output to a file, since that's a lot of text to be output to the screen.
 
 
-### Part 2a: Validation
+## Part 2a: Validation
 
 Now that you can read in valid blockchain, your program should be extended to check for errors in the blockchain.  Once an error is encountered, the program should output the error number and exit.  The errors below are what should be checked for -- note that these are not all the possible errors, but a selection of errors to check for in this assignment.
 
@@ -180,7 +180,7 @@ Test this well!  We are going to provide all sorts of messed-up files to your pr
 
 Note that if you are printing out the blockchain data to standard output from the previous section, you should just terminate the program with the "no errors X blocks" or "error 5 block 17" line -- we'll get rid of the other output in the next section.
 
-### Testing
+## Testing
 
 To test each error, you should try to change one byte in the file -- specifically, a byte in the particular field you are checking for errors.  For example, if you want to modify the magic number, you would change one of the first 4 bytes; as bytes are indexed from zero, that's bytes 0, 1, 2, or 3. To do that, you can use the following Python program, which you can save as `change_byte.py`:
 
@@ -240,7 +240,7 @@ $
 
 These test are by no means comprehensive!  But some of these examples will be used for the visible tests when you submit the file to Gradescope.  The hidden tests, which your grade will be based on similar tests different than the ones shown above.
 
-### Part 2b: Merkle Trees
+## Part 2b: Merkle Trees
 
 Validating the Merkle Tree hashes is likely the hardest part of the assignment.  Work on this last, as you can still get partial credit if this part is not implemented.  In particular, you may want to ensure that the JSON output, below, is working first before you complete this part.
 
@@ -264,7 +264,7 @@ For testing the Merkle tree hashes, we provide a few particular blocks that have
 - [Block 49,820](https://www.blockchain.com/btc/block/49820), in file [blk00000-b49820.blk](blk00000-b49820.blk), is the first block with 7 transactions
 - [Block 53,066](https://www.blockchain.com/btc/block/53066), in file [blk00000-b53066.blk](blk00000-b53066.blk), is the first block with 8 transactions
 
-#### Merkle tree example (1 TXN)
+### Merkle tree example (1 TXN)
 
 To help you ensure that you are computing the Merkle tree hash properly, here is a worked-out example.  The code below is Python, but can be reproduced in any language.  The intermediate values shown below will help you ensure each step works in whatever language you are developing this assignment in.
 
@@ -355,7 +355,7 @@ And then we can get all fancy and do all that in one line:
 
 Got that?  Good.
 
-#### Merkle tree example (2 TXNs)
+### Merkle tree example (2 TXNs)
 
 This example is to show how to join multiple hashes of transactions to form the Merkle tree root hash.  It assumes you can compute the hash of a single transaction as in the above example.
 
@@ -456,11 +456,11 @@ This hex value, 0x7dac2c5666815c17a3b36427de37bb9d2e2c5ccec3f8633eb91a4205cb4c10
 
 
 
-### Part 3: Output
+## Part 3: Output
 
 There are two types of output: the output printed to standard output regrading the parsing result (errors or not) of the run, and the JSON output file.  If there are errors, then the status of the JSON file does not matter (complete, missing, partially written, etc.), as it will not be checked.
 
-#### Standard Output
+### Standard Output
 
 There should be ***ONE LINE*** printed to standard output via `print()` in Python or `System.out.println()` in Java.  There should always be exactly one line of output regardless of the result of the parsing.
 
@@ -468,7 +468,7 @@ If no errors are detected, it should output: `no errors X blocks`, where `X` is 
 
 If an error is found, it should output: `error 1 block 3`.  This counts the blocks in the file, and the first block is block 0.  As mentioned above, if there are multiple errors, then the first one found should be reported, and then the program should terminate.
 
-#### JSON file
+### JSON file
 
 Your program must output the blockchain in JSON format to a file.  The file name is the same as the input file with ".json" appended to it.  So if you are using the genesis block (file blk00000-b0.blk), the output file name is blk00000-b0.blk.json.  You can read about [JSON on Wikipedia](https://en.wikipedia.org/wiki/JSON).  The format must be as described below, but your whitespace doesn't matter.  We are going to check it via a JSON parser.  
 
@@ -549,7 +549,7 @@ Make sure you test it with multiple blocks!  However, the online site will proba
 
 You should also use the [check_genesis_json.py](check_genesis_json.py.html) ([src](check_genesis_json.py)) program to ensure that your JSON is in the right format AND ALSO that the values are correct.  This is intended to ensure that you have the right fields for when we grade the assignment.  It just has a bunch of `assert()` calls to ensure that the format is what is shown above.  Remember that white space doesn't matter, so you are welcome to use any spacing that you want.  And you can add fields, if you would like.  This program will also be used as one of the visible submission tests in Gradescope.
 
-### Submission
+## Submission
 
 You must submit three files:
 

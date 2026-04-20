@@ -13,7 +13,7 @@ to put in the blockchain explorer's links section:
 
 -->
 
-### Overview
+## Overview
 
 In this assignment you are going to create a Decentralized Cryptocurrency Exchange (hereafter: DEX) for your token cryptocurrency (hereafter: TCC) that you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  Once deployed, anybody will be able to exchange (fake) ETH for your token cryptocurrency.  The DEX will use the 
 [Constant Product Automated Market Maker (CPAMM)](../../slides/applications.html#/cpamm) method for determining the exchange rates.
@@ -30,12 +30,12 @@ You will also need to be familiar with the [Ethereum slide set](../../slides/eth
 
 In addition to your source code, you will submit an edited version of [dex.py](dex.py.html) ([src](dex.py)).
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### ETH price
+## ETH price
 
 To simulate changing market conditions, we have deployed two smart contracts to help one determine the price of our (fake) ETH.  Both of these contracts fulfill the [IEtherPriceOracle.sol](IEtherPriceOracle.sol.html) ([src](IEtherPriceOracle.sol)) interface:
 
@@ -84,7 +84,7 @@ The second deployed contract is a variable version, whose price ranges greatly, 
 You should use the first (constant) one while you are debugging your code.  You will need to use the second (variable) one when you make your final deployment.  The current variable price of our (fake) ETH is shown on the DEX web page, which is described below.  The addresses for these two contracts (constant and variable) are in the blockchain explorer's links section.
 
 
-### TokenCC
+## TokenCC
 
 You will be using your TokenCC contract from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  However, you will need to make two changes to your contract.  These are to your TokenCC.sol file, *NOT* to the interface.
 
@@ -128,21 +128,21 @@ The next section describes a way to "turn off" the functionality of the `onERC20
 
 Lastly, you will need to send me 10.0 of your TCC.  But do this from the final deployment -- we remind you about that below.
 
-### Background
+## Background
 
-#### Exchange method
+### Exchange method
 
 Your DEX must follow the [CPAMM (Constant Product Automated Market Maker](../../slides/applications.html#/cpamm) method as discussed in the lecture slides.  Once deployed, there will be some liquidity that must be added to the DEX before trading can start.  Anybody can then exchange some of our (fake) ETH for your token cryptocurrency.  This, combined with the varying price of our (fake) ETH, will cause the price of your token cryptocurrency to fluctuate significantly.  At the end of the assignment you will register your DEX with the course-wide DEX web page so that the entire class can see all of the exchangeable token cryptocurrencies.
 
-#### Number of DEXes
+### Number of DEXes
 
 As far as this assignment is concerned, there will only be *one* DEX for each token cryptocurrency.  You may have deployed multiple ones to test your code, but for our class trading we will only be using the one DEX that you register with the DEX web page, described below.  Thus, for this assignment, [arbitrage trading](../../slides/applications.html#/arbitrage) is not possible, since that requires trading between two or more exchanges that exchange the same pairs of tokens.  Furthermore, we are not going to be implementing [routing](../../slides/applications.html#/routing).
 
-#### Obtaining a balance
+### Obtaining a balance
 
 To get the ether balance of a given account, you just use the `balance` property.  You may have to cast it as a `address` first, as such: `address(a).balance`.  This reports the ether balance in wei.  To get the ERC-20 balance, you call the `balanceOf()` function on the TokenCC contract, which reports it with as many decimals as the ERC-20 contract uses (call `decimals()` to find out how many).
 
-#### Initiating an exchange
+### Initiating an exchange
 
 To initiate an exchange, you just transfer the appropriate cryptocurrency to the DEX.
 
@@ -150,7 +150,7 @@ To exchange ether for TCC, you transfer some amount of ether to the DEX.  This w
 
 To exchange TCC for ether, you transfer the TCC to the DEX via your TokenCC contract; based on the modifications done above, this will call the `onERC20Received()` function, which will handle the payout of the ether back to the caller (aka `msg.sender`).
 
-#### `receive()`
+### `receive()`
 
 A contract can receive either in one of two ways.  The first is to have a `payable` function is called along with some ether transfer.  This was done in the `placeBid()` function in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.
 
@@ -166,7 +166,7 @@ Note that there is no `function` keyword!  Other than the different syntax, and 
 
 In Remix, you can invoke the `receive()` function by sending some ether without a function call.  To do this, put the amount in the "Value" box of the Deployment pane, set the right unit (ether, gwei, or wei), and then click on the "Transact" button at the very bottom of the contract (below the "Low level interactions" header).  This is just like transferring ether in geth.  Note that the Javascript environment seems to hang on some platforms when doing this, but if you are connected to the course blockchain, then it seems to work fine.
 
-#### Transferring ether
+### Transferring ether
 
 To transfer ether to an address `a`, you could use the following:
 
@@ -186,12 +186,12 @@ A bunch of notes on this:
 If this causes a reversion -- for example, the receiving contract reverts in `receive()` -- then look in the Testing section, below, for how to decode the reversion reason.
 
 
-#### Receiving ether
+### Receiving ether
 
 In any function, the `msg.value` contains how much ether was sent in with the function call.  It's in wei, so 1 ether would have a `msg.value` value of $10^{18}$.  Non-`payable` functions will always have `msg.value` equal to zero.  You can't check the balance of `msg.sender`, as they do not have that amount of ether during the function call (they sent it in with the call).
 
 
-#### `onERC20Received()`
+### `onERC20Received()`
 
 The `onERC20Received()` function will be called any time TCC is transferred to a contract.  We are going to use this to initiate an exchange of TCC for ether -- one just has to transfer the TCC to the DEX, and then the DEX will compute the amount of ether to send back.
 
@@ -201,7 +201,7 @@ However, there are some times where we may NOT want `onERC20Received()` to do an
 
 ***IMPORTANT NOTE:*** Your `onERC20Received()` MUST check that the address passed in as the third parameter is the same address as the contract it is part of; `require(erc20==erc20Address,"witty error message");` will do this.  Otherwise, somebody could call that function with a *different* ERC-20 contract and drain all the TCC from your contract.
 
-### Interface
+## Interface
 
 Formally, you must implement a `DEX` contract that implements the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) interface.  Your contract opening line MUST be: `contract DEX is IDEX`.  Note that the `IDEX` interface extends the [IERC165](IERC165.sol.html) ([src](IERC165.sol)) interface, so you will have to implement the `supportsInterface()` function as well.  It also implements the [IERC20Receiver.sol](IERC20Receiver.sol.html) ([src](IERC20Receiver.sol)) interface, which means implementing the `onERC20Received()` function.  The functions in this interface are shown below, and much more detail is provided in the comments in the [IDEX.sol](IDEX.sol.html) ([src](IDEX.sol)) file.
 
@@ -297,7 +297,7 @@ When you want to test your program, this is the expected flow to get it started,
 
 As far this this assignment is concerned, the exchange rate between our (fake) ETH and your token cryptocurrency is initially set based on the ratio of what you send in via `createPool()`.  The overall value of the DEX is based on the current (fake) ETH price.  So if you have 100 (fake) ETH, and the price of the (fake) ETH is $99.23, then the ETH liquidity is $9,923; the value of the DEX is twice that, or $19,846.
 
-### Fees
+## Fees
 
 Each transaction will have fees deducted.  Fees are always deducted from the amount the DEX pays out (either ether or token) -- it just pays that much less.  Reasonable fees are a fraction of a percent -- between 0.2% and 0.5%, for example.  Thus, if you were trading some amount of ETH and getting 100 TCC, with 0.2% fees, you would trade the same amount of (fake) ETH, but receive 99.8 TCC; the other 0.2 TCC are the fees.  When fees are withheld, the amount that is withheld is added to the `feesEther` and `feesToken` variables.  These variables accumulate the *total* amount of fees that the DEX has accumulated over time.
 
@@ -307,7 +307,7 @@ Managing fee payout to the liquidity providers is quite complicated -- one has t
 
 For this assignment, we are not going to handle distributing fees back to the liquidity providers -- we are just going to accumulate them into the `feesEther` and `feesToken` variables.  It adds a lot of complexity to compute who is owned what part of the fees based on the amount of liquidity they have in the DEX and for how long they have had it.  This means that this inability to retrieve the fees will result in lost ETH and TCC.  That's fine for this assignment, even if it would not be realistic in a real world situation.
 
-### Example
+## Example
 
 To help you debug your program, here is a worked-out example of how the values in the DEX change as various transactions occur.  This is assuming a constant (fake) ETH price of $100.  For reasons we will see below, we are only putting in 10 (fake) ETH in this example, whereas you will have put in 100 when you deploy it at the end of the assignment.
 
@@ -378,9 +378,9 @@ To help you debug your program, here is a worked-out example of how the values i
     - The value of the DEX is $1,200
 
 
-### Testing
+## Testing
 
-#### Handling reversions on payment
+### Handling reversions on payment
 
 When paying out to another address, your Solidity code is going to look like the following:
 
@@ -415,7 +415,7 @@ However, in order to use that function, we have to get the encoded reversion rea
 require (success, string.concat("Payment to DEX didn't work: ", getRevertMsg(result)));
 ```
 
-#### DEXtest testing contract
+### DEXtest testing contract
 
 To help you test your code, below is a method that will test the first case from the example above -- the `createPool()` step.  This is intended to be done on the Javascript development environment in Remix and NOT on the course blockchain.  This file is saved as [DEXtest.sol](DEXtest.sol.html) ([src](DEXtest.sol)).
 
@@ -487,7 +487,7 @@ contract DEXtest {
 }
 ```
 
-#### Using DEXtest
+### Using DEXtest
 
 To use this file, deploy it and then call `test()` with with 13 ether.  There are a few new concepts here, and various notes as well:
 
@@ -511,7 +511,7 @@ To use this file, deploy it and then call `test()` with with 13 ether.  There ar
 
 
 
-#### General debugging hints
+### General debugging hints
 
 We have collected a number of debugging hints here.
 
@@ -522,7 +522,7 @@ We have collected a number of debugging hints here.
 - Don't you wish you had gdb or lldb to help debug all this?
 - Did you turn off the functionality of `onERC20Received()` via a contract variable, as described above?  Otherwise, adding or removing liquidity will call the `onERC20Received()` function, which is probably not what you want to do.
 
-### Deployment
+## Deployment
 
 This part has three different steps.  This may require a few runs to get it right -- that's fine, just be sure to submit the various values (contract addresses and transaction hashes) from the most recent deployment.
 
@@ -542,7 +542,7 @@ Step 2: Deploy your DEX smart contract to the private Ethereum blockchain.  So t
 Step 3: You need to register your DEX with the course-wide exchange board website; the URL for this is in the blockchain explorer's links section.  To register your DEX, fill out the contract address form at the bottom of that page.  You will see your DEX values populate one of the table rows -- make sure they are correct.  Note that the current ETH price is listed at the top of the page.
 
 
-#### Exchanges
+### Exchanges
 
 Now that your exchange is registered, you can view all the exchanges.  You should see your exchange in there, along with your cryptocurrency's logo.  The stats of each exchange are listed in that table.
 
@@ -551,7 +551,7 @@ You need to make 4 total exchanges with DEXes other than you own (meaning four o
 Depending on when you submit your assignment, there may not be other DEXes to interact with.  That's fine – you don't have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the Google form does not ask for the transaction hashes of the exchanges. We are going to check whether you exchange for the other token cryptocurrencies by looking if your eth.coinbase account, the address of which you will submit below, initiated exchanges on any one of your classmate's submitted DEX addresses by a few days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.
 
 
-### Submission
+## Submission
 
 You will need to fill in the various values from this assignment into the [dex.py](dex.py.html) ([src](dex.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 

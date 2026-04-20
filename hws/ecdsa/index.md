@@ -3,7 +3,7 @@ ECDSA Implementation
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
-### Overview
+## Overview
 
 In this homework you will implement the ECDSA algorithm.
 
@@ -14,18 +14,18 @@ In this homework, it is critical to carefully test each stage of the assignment.
 You will need to be familiar with the [Encryption slide set](../../slides/encryption.html#/), specifically the three sections that deal with the content in this assignment: [elliptic curves](../../slides/encryption.html#/elliptic), [finite fields](../../slides/encryption.html#/fields), and [ECDSA](../../slides/encryption.html#/ecdsa).  What this assignment is asking for will make no sense if you are not familiar with that material.
 
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
-### Languages
+## Languages
 
 The recommended language to write this in is Python.  If you want to use a different language, please speak to me first.  The intent is for you to write all this code yourself -- you can NOT use any libraries that do field arithmetic, elliptic curve arithmetic, etc.  This includes any hashing functions (such as hashlib in Python); note that you never have to take a hash in this assignment.  We expect you to only need the most common standard libraries as a result.
 
 We realize that the default random number generators in most (all?) programming languages are not cryptographically secure random number generators, but that's fine for this assignment.
 
 
-### Other files
+## Other files
 
 We are going to call your program by calling an `ecdsa.sh` shell script.  Any parameters passed to the shell script will be passed as-is to your program.  This is what your ecdsa.sh script should look like if you are using Python:
 
@@ -48,7 +48,7 @@ Of course, you should change the second line to match the file/class names that 
 You will also have to submit a `Makefile` that will be used to compile your program, if needed.  For languages that do not need compilation (such as Python), just put in a single `echo` statement so that `make` still runs properly.  This is the same as in the [last assignment](../intro/index.html) ([md](../intro/index.md)).
 
 
-### Step 1: Finite Fields
+## Step 1: Finite Fields
 
 The first step is to ensure that you have all the finite field arithmetic functions that are necessary.  Some of these are easy -- addition and multiplication, for example.  Others are a bit more challenging, such as division.  You will likely want to reference the [finite field section of the lecture slides](../../slides/encryption.html#/fields).  In addition to the four standard arithmetic operations, you will likely also need exponentiation, obtaining the additive inverse, and obtaining the multiplicative inverse.  Some functions will likely use others -- division of $a$ by $x$ is just multiplying $a$ by the multiplicative inverse of $x$, for example.
 
@@ -56,7 +56,7 @@ For ease of the development of later steps, the field size should be a parameter
 
 Test these well to ensure that they work!  You can test your operations by using the arithmetic identities: if $x$ is the multiplicative inverse of $y$, then $x \ast y = 1$, for example.
 
-### Step 2: EC operations
+## Step 2: EC operations
 
 There are three elliptic curve point operations that will be needed:
 
@@ -73,7 +73,7 @@ You can test your functions by using two websites: one that does [elliptic curve
 
 There are some corner cases to test as well.  Given $P=(x,y)$, it's reflection is $P'=(x,-y)$.  Within the field $Z_p$, that reflection is $P'=(x,p-y)$.  Adding a point and its reflection together gets $O$ (or $0$), the point at infinity, which is also the identity element.  Your code should be able to compute $P \oplus P' = O$, for however you represent $O$.  It should also be able to compute $O+P=P$.  You can see that [here in the slides](../../slides/encryption.html#/pointo).
 
-### Step 3: Signatures
+## Step 3: Signatures
 
 One the previous two steps are completed (and tested!), you can proceed to generate the signature and then validate it; this is discussed in the [ECDSA section](../../slides/encryption.html#/ecdsa) of the encryption slide set.
 
@@ -93,7 +93,7 @@ Your program will need to be able to perform three primary functions, listed bel
   - Assure that the $r$ from the signature matches the $x$-coordinate of $R$
 
 
-### Step 4: Correct I/O
+## Step 4: Correct I/O
 
 Your program will take in a number of command line parameters.  You can always assume that the number and format of command line parameters will be correct, as specified below -- you do not need to error check the parameters (neither the number nor the format).  You may also assume that any points provided (such as $G$ or $Q$) will always lie on the curve.  Your program will only use the secp256k1 curve for all execution runs, so you can globally set $a=0$ and $b=7$; these two values will not be passed to the program.
 
@@ -135,7 +135,7 @@ Note: please do not print out any other output for those modes, else your progra
 
 Your code may occasionally incorrectly verify a invalid signature!  The computation of $s$ is computed mod $o$, which -- in this example -- is only 31.  This means about 1 in 31 random but invalid signatures would be expected to verify as true.  (In reality, with secp256k1, $o \approx 1.16 \ast 10^{77}$, the chance of an invalid signature returning true is quite small).  If you do get an invalid signature (or two or three) to return true, just try some other values.
 
-### Example
+## Example
 
 To help you understand the previous example, below is the complete formulaic work-up of the values that were computed above in the three execution runs.  All elliptic point computations can be verified [here for addition](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43) and [here for multiplication](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43); verification links are them are also provided below.  Note that some of the values used (specifically $d$ and $k$) are randomly generated, so we would expect them to be different in your execution runs.
 
@@ -159,7 +159,7 @@ To verify the correct signature (where $h=30$), we need to compute $R=s^{−1} \
 
 The second execution run had the incorrect hash ($h=29$).  The process is the same as the above -- we compute $R=s^{−1} \ast h \otimes G \oplus s^{−1} \ast r \otimes Q$.  As $h$ is different the coefficient in front of $G$ changes: $R = 638 \otimes G \oplus 264 \otimes Q = 18 \otimes G \oplus 16 \otimes Q = (7,36) \oplus (29,31) = (21,18)$; (verifications [1](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=18&px=25&py=25), [2](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=16&px=37&py=36), and [3](https://andrea.corbellini.name/ecc/interactive/modk-add.html?a=0&b=7&p=43&px=7&py=36&qx=29&qy=31)).  As the $x$-value of that computed $R$, specifically the value 21, does not equal the $r=12$ provided with the signature, the signature is not valid.
 
-### Testing
+## Testing
 
 One type of test that we are going to perform is whether your program can verify a signature that your code signs; another is whether it can indicate as invalid a signature that you did not sign.  We will be trying different prime field sizes; all of the ones listed below also have a prime order size.  Here are a few examples you can use.
 
@@ -172,7 +172,7 @@ You are certainly welcome to come up with your own examples to test it with as w
 
 Note that if you enter the curve of $a=0$ and $b=7$ into [this site](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43), and enter a different $p$ value, it will tell you the order below the boxes ("The curve has ... points").  You can pick any valid point on that curve as $G$; we just arbitrarily picked one for the examples above.
 
-#### Corner cases and EC multiplication
+### Corner cases and EC multiplication
 
 Let's imagine that you wanted to compute $1000 \otimes (12,31)$ in $Z_{43}$.  We can see that the answer is $(20,3)$ ([verification](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=1000&px=13&py=31)).  But to compute it ourselves, first you we compute the powers of 2 that add to 1,000: $1000=512+256+128+64+32+8$.
 
@@ -208,7 +208,7 @@ Next we add up the necessary values.  Recall that elliptic curve addition is com
 
 This matches what the [EC multiplication website states as the answer](https://andrea.corbellini.name/ecc/interactive/modk-mul.html?a=0&b=7&p=43&n=1000&px=13&py=31).
 
-### Submission
+## Submission
 
 You have to submit three files:
 

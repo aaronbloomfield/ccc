@@ -61,7 +61,7 @@
 - when one week after the due date is
 
 -->
-<h3 id="overview">Overview</h3>
+<h2 id="overview">Overview</h2>
 <p>In this assignment you will write a smart contract, in Solidity, to handle auctions for NFTs. The NFTs will be ERC-721 tokens.</p>
 <p>Once deployed to our private Ethereum blockchain, anybody should be able to mint an NFT and then initiate an auction. Anybody could then submit a bid to the auction. To prevent somebody from placing a bid and then not paying, one has to transfer ETH to the smart contract when a bid is placed – it is the transfer of this ETH (along with the associated function call) that actually places the bid. Anybody who is outbid will have their ETH returned, and they can choose (or not) to place a higher bid. Once the auction is completed, the ETH from the winning bid is transferred to the person who initiated the auction (minus some fees), and the NFT is transferred to the winning bidder.</p>
 <p>Writing this homework will require completion of the following assignments:</p>
@@ -73,9 +73,9 @@
 <p>The intent is that you are going to re-use the three NFT images that you created in the Tokens assignment. You can also create new images, if you would like, as long as you follow the guidelines in that assignment (public domain, nothing that will get me in trouble, file naming, in the <code>ipfs/</code> directory, etc.). As before, in this course, owning the NFT does NOT imply ownership of the image – the assumption is that you don’t actually own the original image, since it’s in the public domain.</p>
 <p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a>, the <a href="../../slides/solidity.html#/">Solidity slide set</a>, and the <a href="../../slides/tokens.html#/">Tokens slide set</a></p>
 <p>In addition to your source code, you will submit an edited version of <a href="auction.py.html">auction.py</a> (<a href="auction.py">src</a>).</p>
-<h3 id="changelog">Changelog</h3>
+<h2 id="changelog">Changelog</h2>
 <p>Any changes to this page will be put here for easy reference. Typo fixes and minor clarifications are not listed here. So far there aren’t any significant changes to report.</p>
-<h3 id="task-1-auction-contract">Task 1: Auction contract</h3>
+<h2 id="task-1-auction-contract">Task 1: Auction contract</h2>
 <p>You are going to create and deploy a decentralized auction smart contract. The contract you will be creating will allow for a decentralized auction for NFTs.</p>
 <p>This section is meant as a high-level overview of the process; the detailed specifications are in the next two sections.</p>
 <ul>
@@ -132,7 +132,7 @@
 <li><code>higherBidEvent()</code>: when a new (and higher) bid is placed on an NFT via <code>placebid()</code></li>
 </ul></li>
 </ul>
-<h3 id="task-2-iauctioneer-interface">Task 2: IAuctioneer interface</h3>
+<h2 id="task-2-iauctioneer-interface">Task 2: IAuctioneer interface</h2>
 <p>This task is to understand the IAuctioneer interface. Formally the task is to develop an <code>Auctioneer</code> contract that implements the following <code>IAuctioneer</code> interface below. The provided <a href="IAuctioneer.sol.html">IAuctioneer.sol</a> (<a href="IAuctioneer.sol">src</a>) file has more comments for this interface. There is a lot that some of these funcctions have to do, and that is specified in the comments in the IAuctioneer.sol file.</p>
 <p>Your contract line must be <em>exactly</em>:</p>
 <pre class='widget' tabindex='0'><code>contract Auctioneer is IAuctioneer {</code></pre>
@@ -213,11 +213,11 @@ Some people are having problems in Remix with determining the return value of a 
 -->
 <p>Test all this thoroughly in Remix! You will need to deploy your Auctioneer contract in Remix’s Javascript environment to test everything working together. Recall that you have to select the right contract to deploy in the “Contract” list, else Remix may not know which one to deploy. Be sure to develop via incremental development, else you will not be able to figure out where your bug is.</p>
 <p>One it works, deploy it to our private Ethereum blockchain. You should test it there as well. You will need to submit the contract address of the deployed Auctioneer. If you deploy it multiple times, just submit the most recent contract address. Once it is deployed to our private Ethereum blockchain, you can view it on the auctions page, the URL of which is on the blockchain explorer main page; a link to this will also be shown on the explorer page for your Auctioneer contract. This auctions web page will make it far easier to see what is going on with your auctions. Note that the explorer will only display this link if it knows that the contract implements IAuctioneer, and it only knows that if your <code>supportsInterface()</code> method is written and correct.</p>
-<h4 id="totalfees-versus-uncollectedfees"><code>totalFees()</code> versus <code>uncollectedFees()</code></h4>
+<h2 id="totalfees-versus-uncollectedfees"><code>totalFees()</code> versus <code>uncollectedFees()</code></h2>
 <p>Fees accumulate during the life of the auction contract – 1% of <em>successful</em> auctions is saved as fees. The deployer of the contract can then obtain all the fees collected so far by calling <code>collectFees()</code>. All amounts return values in wei.</p>
 <p><code>totalFees()</code> is the total amount of fees that have been collected over the life of the auction contract. <code>uncollectedFees()</code> is the amount that can currently be paid out.</p>
 <p>As an example, imagine there are two successful auctions that accumulate a total of 2 ether in fees. Both <code>totalFees()</code> and <code>uncollectedFees()</code> will return 2 ether (really <span class="math inline">2 * 10<sup>18</sup></span> wei). <code>collectFees()</code> is called, and the 2 ether is paid to the deployer (minus gas fees, of course). Now <code>totalFees()</code> still reports 2 ether, since that is how much has been accumulated over the life of the contract. But <code>uncollectedFees()</code> will return 0, since there are no more fees that can be paid to the deployer. If more auctions accumulate 1 ether in additional fees, then <code>totalFees()</code> will return 3 ether (really <span class="math inline">3 * 10<sup>18</sup></span> wei) and <code>uncollectedFees()</code> will return 1 ether (really <span class="math inline">1 * 10<sup>18</sup></span> wei).</p>
-<h4 id="startauction-method"><code>startAuction()</code> method</h4>
+<h2 id="startauction-method"><code>startAuction()</code> method</h2>
 <p>The <code>startAuction()</code> method requires a bit more explanation. The process is as follows:</p>
 <ul>
 <li>Alice will first mint an NFT with the NFT manager of this auction contract</li>
@@ -226,11 +226,11 @@ Some people are having problems in Remix with determining the return value of a 
 </ul>
 <p>Below is a diagram of the flow of this process.</p>
 <p><img src="../../slides/images/tokens/graphs/tokens.dot.2.svg" alt="communication between an Alice account, and ERC721 contract, and a Auction contract" /></p>
-<h3 id="task-3-create-auctions">Task 3: Create auctions</h3>
+<h2 id="task-3-create-auctions">Task 3: Create auctions</h2>
 <p>You should create two auctions in your Auctioneer contract (you’ll create a third one below as well). It’s fine if you create more (such as from testing) – we will only look at the two requested here. These two auctions will use two of your three NFT images. In particular, if you have one NFT that you like more than the others, or is “better”, you will want to save it for the course-wide auction, below.</p>
 <p>Note that you can perform these calls through Remix (via calling an external contract, as described in the <a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>) assignment) or through geth calls (as described in the <a href="../../slides/solidity.html#/debtor">Solidity slide set</a>).</p>
 <p>If you screw up one of these auctions, you can always just create more. We don’t care how many auctions you have created on your contract, as long as the two that are required below fulfill those requirements.</p>
-<h4 id="auction-1">Auction 1</h4>
+<h2 id="auction-1">Auction 1</h2>
 <p>The first one should be an auction that has fully ended by due date/time of the assignment. Basically, we want it to be a closed auction. There should be a few bids on this auction. You can create multiple accounts for this – just call <code>personal.newAccount()</code> a few more times – each account is in the <code>eth.accounts</code> list, and you will have to unlock each one with <code>personal.unlockAccount()</code>. To get ether into those other accounts you can:</p>
 <ul>
 <li>Transfer ETH to that account (see the <a href="../ethprivate/index.html">Connecting to the private Ethereum blockchain</a> (<a href="../ethprivate/index.md">md</a>) assignment for how to transfer ETH)</li>
@@ -238,18 +238,18 @@ Some people are having problems in Remix with determining the return value of a 
 </ul>
 <p>You can also get classmates to bid on your auction, although that is not required. This auction will use the first of your (three) NFTs. You will be submitting the auction ID for this auction as well as the NFT token ID.</p>
 <p>You <em>SHOULD</em> call <code>closeAuction()</code> on this auction.</p>
-<h4 id="auction-2">Auction 2</h4>
+<h2 id="auction-2">Auction 2</h2>
 <p>The second auction should end <em>one week</em> after the assignment is due. Just get it on the day one week later – we don’t really care about the time, as long as the date is 7 days after the assignment due date. Basically, we want to see an active auction. This, also, should have a few bids on it. This auction use the second of your (three) NFTs. You will be submitting the auction ID for this auction as well as the NFT token ID.</p>
 <p>This auction should have a reserve of 1 ether. Keep in mind that you have to enter this in wei in the Remix function call box, which means a reserve value of 1 ether is entered as 1000000000000000000 (wei).</p>
-<h4 id="view-your-auctions">View your auctions</h4>
+<h2 id="view-your-auctions">View your auctions</h2>
 <p>There is a web page to view your auctions, and the URL for it is on the blockchain explorer main page. You can also get a link to it from the explorer page for your deployed smart contract. This can be used to view any auction smart contract that implements the IAuctioneer interface. This means you can view the class auctions as well (which are done in the next section).</p>
-<h3 id="task-4-class-auctions">Task 4: Class Auctions</h3>
+<h2 id="task-4-class-auctions">Task 4: Class Auctions</h2>
 <p>You are going to participate in a class-wide auction manager.</p>
 <p>We have deployed an auction manager, and the contract address for that Auctioneer contract is on the blockchain explorer main page. As above, you can perform these calls through Remix (via calling an external contract, as described in the <a href="../dappintro/index.html">dApp introduction</a> (<a href="../dappintro/index.md">md</a>) assignment) or through geth calls (as described in the <a href="../../slides/solidity.html#/">Solidity slide set</a>).</p>
 <p>You should use one of your three NFTs that you didn’t use in the previous section. You should create an auction that ends <em>one week</em> after the due date of the assignment (again, we are looking for the day – we don’t care too much about the time of day). You will need to submit the auction ID from the auction you created as well as the NFT token ID. <strong><em>YOUR RESERVE</em></strong> should be no higher than 5 ETH.</p>
 <p>Lastly, bid on at least <em>three</em> auctions that are not your own. Depending on when you submit your assignment, there may not be any (or any interesting) auctions available to bid on. That’s fine – you don’t have to have those bids completed by the time the assignment is due; you have an extra few days to place your bids. We are going to judge lateness on this assignment by the Gradescope submission time, and the information you have to submit does not include the transaction hashes of the bids. We are going to check whether you bid on the auctions by looking if your <code>eth.coinbase</code> account, the address of which you will submit below, initiated bids on any one of your classmate’s submitted NFT manager addresses by two days after the due date. Note that you have to place the bid via Remix or geth; the course website just displays the auctions.</p>
 <p><strong>MAKE YOUR BIDS REASONABLE!!!</strong> If the current highest bid is 0.5 ETH, don’t suddenly bid 5,000 ETH. Doing so is going to require others who need to bid on that NFT to have to obtain a lot more ETH, which will increase the blockchain size and the difficulty, which will make it harder for everybody else in the class. This will make me very cranky. Any successive bid should be no more than about 1 ETH more than the previous bid.</p>
-<h3 id="notes-and-hints">Notes and Hints</h3>
+<h2 id="notes-and-hints">Notes and Hints</h2>
 <ul>
 <li>We are going to grade this by creating a very short auction – a minute or so. In your <code>startAuction()</code>, only one of the time parameters must be non-zero.</li>
 <li>When a successful auction finishes, you will have to transfer the NFT to the winning bidder; you should use <code>transferFrom()</code>. <!-- instead of `transferFrom()` (see [here](https://ethereum.stackexchange.com/questions/120996/what-is-the-difference-between-safetransferfrom-and-transferfrom-functions-i) for details) --></li>
@@ -258,11 +258,11 @@ Some people are having problems in Remix with determining the return value of a 
 <li>To get the current time in a contract, use <code>block.timestamp</code> – it returns a UNIX timestamp. Likely you should keep track of all your times this way. You can search online for UNIX timestamp converters, if you need them. Note that the <code>now</code> keyword, which was used in lieu of <code>block.timestamp</code>, is deprecated, and you should use <code>block.timestamp</code> instead.</li>
 <li>In order for the auctions.php web page to work, you have to start numbering your auction IDs from 0.</li>
 </ul>
-<h4 id="paying-the-null-address">Paying the null address</h4>
+<h2 id="paying-the-null-address">Paying the null address</h2>
 <p>An easy way to implement the reserve is to set the <code>highestBid</code> field to the reserve, and the <code>winner</code> to the null address (meaning: <code>address(0)</code>). That’s fine, but be sure to put in a check if the winning bidder is the null address. If, on a higher bid, you pay the previously highest bidder, and that is the null address, you will forever lose that ether. While we don’t really care about losing ether on our blockchain, this will deplete the balance of the Auctioneer contract, which means it will not be able to pay out the winners of the successful auctions. This will cause your contract to not work properly.</p>
-<h4 id="return-values-from-transactions">Return values from transactions</h4>
+<h2 id="return-values-from-transactions">Return values from transactions</h2>
 <p>In Remix, any call – meaning a <code>view</code> or <code>pure</code> function, which shows up in Remix as a blue button – will display the return value underneath that button when called. But Remix has a harder time determining the return value of <em>transactions</em> (orange buttons), which also include <code>payable</code> functions. Sometimes Remix can determine the return value, and it is in the JSON data shown in the console window (the window below where you edit the code). Other times, Remix cannot determine the return value of transactions. But the explorer can – so if you are expecting a return value, and Remix does not display it, view the transaction in the explorer, and that will have the return value. This is the case when trying to find the NFT ID of a newly minted NFT.</p>
-<h4 id="block.timestamp-behavior"><code>block.timestamp</code> behavior</h4>
+<h2 id="block.timestamp-behavior"><code>block.timestamp</code> behavior</h2>
 <p><code>block.timestamp</code> behaves differently on the Javascript blockchain in Remix and on the course blockchain. Consider the following contract:</p>
 <pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: Unlicensed
 pragma solidity ^0.8.24;
@@ -274,7 +274,7 @@ contract BlockTimestamp {
 <p>On the Javascript blockchain in Remix, this will always return the current time as per the system clock; this means it will give a different value every second. On the course blockchain, it will always return the time of the <em>last block</em>. If you click the button and then wait 10 seconds, the first one (Javascript) will show a new timestamp, whereas the second one (course blockchain) will not show any update unless a new block was added to the blockchain in that time.</p>
 <p>This has implications for calling <code>closeAuction()</code>. Let’s assume you have some code therein such as: <code>require (auctions[id].endTime &lt; block.timestamp, "...");</code>. This will revert if the current time is not yet after the auction end time. So let’s assume that the current time is <em>after</em> the auction end time. In the Javascript environment, this will work fine, since <code>block.timestamp</code> is always the current system time. If you are trying to call this on the course blockchain, Remix will try to guess <code>block.timestamp</code> based on the last block (<em>not</em> the block it is about to be created for the transaction). If there are no other blocks on the blockchain that were added after the auction end time, Remix will predict that this transaction will revert, since it thinks that the require condition will evaluate to false based on it’s estimate of <code>block.timestamp</code> from the last block. What will really happen is that the transaction will be put into a new block, whose timestamp will be (we are assuming) after the auction end time, and the <code>require()</code> will pass this test.</p>
 <p>Putting in the <code>require()</code> shown above is completely acceptable. This section is just explaining the difference in behavior that you will see, and that Remix will state that it is going to revert when, in this one case, it will not.</p>
-<h3 id="submission">Submission</h3>
+<h2 id="submission">Submission</h2>
 <p>You will need to fill in the various values from this assignment into the <a href="auction.py.html">auction.py</a> (<a href="auction.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only files that must be submitted. The <code>sanity_checks</code> dictionary is intended to be a checklist to ensure that you perform the various other requirements to ensure this assignment is fully submitted.</p>
 <p>There are <em>three</em> forms of submission for this assignment; you must do all three.</p>
 <p>Submission 1: You must deploy you <code>Auctioneer</code> smart contract (which will deploy its own <code>NFTmanager</code> contract) to our private Ethereum blockchain. It’s fine if you deploy it a few times to test it. But the final deployment for the <code>Auctioneer</code> should only have the auctions specified in task 3, above. Save the contract addresses of that deployment, as it will go in the auction.py file that you submit below.</p>

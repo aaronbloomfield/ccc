@@ -16,7 +16,7 @@ Example:
 
 -->
 
-### Overview
+## Overview
 
 This homework will take you through the process of compiling, deploying, and running a decentralized application (dApp) on our private Ethereum blockchain.  This assignment does not focus on the programming aspects of Solidity -- that's in a future assignment, as well as the lectures.
 
@@ -30,12 +30,12 @@ Giving credit where credit is due: The particular smart contract being used here
 In addition to your source code, you will submit an edited version of [dappintro.py](dappintro.py.html) ([src](dappintro.py)).
 
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Introduction
+## Introduction
 
 To deploy and run a smart contract, you need to be able to the standard development tasks -- editing, compilation, testing, and deployment.  The third one -- testing -- is tricky, as you have to be running in an environment that simulates a blockchain and (fake) accounts with (fake) ETH.  Once it's compiled, you have to then be able to load it onto the blockchain, whether that blockchain is simulated (for testing) or real (for deployment).
 
@@ -53,7 +53,7 @@ There are many different tool chains that one can use to compile and deploy smar
 The same process described herein can be used to deploy on the real Ethereum blockchain.  The only difference is that you would run geth to connect to the real Ethereum blockchain, rather than our private course blockchain.  And of course you would need real ether to pay for the gas fees.  Everything else is exactly the same.
 
 
-### Code
+## Code
 
 For this assignment we will be providing the Solidity code to use: the interface [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) and a smart contract that implements that interface: [Poll.sol](Poll.sol.html) ([src](Poll.sol)).  The code will allow voting for *something* via the blockchain -- an election, your favorite color, or anything else.  Election dApps are fairly common as first examples of Solidity programs.  Note that while you should be able to gain a rough idea of what is going on in the code, the tasks herein are not to necessarily understand the code, but to be able to compile and deploy it.  Understanding the code, and writing your own, is in the next assignment and upcoming course lectures.
 
@@ -64,7 +64,7 @@ While we provide the necessary code, you will need to make two small modificatio
 In addition to your Poll.sol source file, you will have to submit the [dappintro.py](dappintro.py.html) ([src](dappintro.py)) file.  This file will contain the various transaction hashes and account information that you will be generating as you work through this assignment.
 
 
-### Hints
+## Hints
 
 There are a few very important hints that will make your life **SO MUCH** easier if you follow them throughout the semester.
 
@@ -84,7 +84,7 @@ There are a few very important hints that will make your life **SO MUCH** easier
 
 
 
-### Part 1: Remix
+## Part 1: Remix
 
 Remix is an IDE for developing Ethereum smart contracts in Solidity.  Remix provides an easy way to read compiler error messages and makes it really easy to test your smart contract as you are developing it.  You can either use the online editor at [remix.ethereum.org](http://remix.ethereum.org) or you can install it locally via the [Remix download page](https://github.com/ethereum/remix-desktop/releases).  The web interface on [remix.ethereum.org](http://remix.ethereum.org) is designed to look just like the IDE, and you are welcome to use either -- the directions herein apply the same to both, as they have the same user interface.  However, if you do use the web interface, make sure you save your text file back to your computer.
 
@@ -128,7 +128,7 @@ Remix is an IDE for developing Ethereum smart contracts in Solidity.  Remix prov
 10. Explore Remix on your own.  You are going to be spending a lot of time developing smart contracts in Remix. Spending a bit of time learning how it works, and becoming comfortable with the interface, will save you a lot of time in the future.
 
 
-### Part 2: Testing
+## Part 2: Testing
 
 Testing a blockchain application is very counter-intuitive.  There are no print statements and no viable debuggers.  We can deploy it and then try it out, but that's not a great way to test.
 
@@ -210,7 +210,7 @@ contract testSuite {
 ```
 
 
-### EVM Version
+## EVM Version
 
 There are many versions of the Ethereum Virtual Machine (EVM) -- the part of the Ethereum node that runs the opcodes when executing a smart contract.  As new updates to Ethereum come out, they release updated EVM versions.  All EVM versions are named after cities (London, Paris, Shanghai, etc.), and there are over a dozen EVM versions so far.
 
@@ -227,11 +227,11 @@ The difference matters on the course blockchain -- that is only set to London, a
 Why not use the latest version?  Because the latest version (Shanghai) requires a lot of additional configuration, as it uses something called the Beacon Chain, which is a second blockchain.  The London version does not use this, so the configuration on our end is much easier.  If we were to use Shanghai, we would have to set up another program, similar to geth, to sync another blockchain that geth would then interact with.  The functionality for running smart contracts is the exact same -- there is no difference in the code it can compile.
 
 
-### Part 3: Deployment
+## Part 3: Deployment
 
 At this point we can edit, compile, and test our program on Remix.  We have also made changes to the `addChoice()` calls in the Poll.sol constructor, as well as to the `purpose` string.  Now we are going to use Remix to deploy to our private Ethereum blockchain.
 
-#### Start geth
+### Start geth
 
 We need to start geth, as we did in the [connecting to the private Ethereum blockchain](../ethprivate/index.html) assignment.  
 
@@ -241,7 +241,7 @@ Now that geth is started, we have to attach to it IN A SEPARATE WINDOW via `geth
 
 Just to check: at this point, you should have TWO geth processes running in separate windows.  The first is the full node with the five or six additional flags as above. The second is a geth terminal via `geth attach`.
 
-#### Configure Remix
+### Configure Remix
 
 You should have Poll.sol loaded into Remix, and you should have made the modifications to the `addChoice()` calls in the constructor and the value of the `purpose` string.  You should have compiled it WITHOUT optimizations.
 
@@ -304,7 +304,7 @@ Read these instructions through before starting them!
     - You are going to need it open and with the Poll.sol compiled, for task 5, below
 
 
-### Part 4: Web Interface
+## Part 4: Web Interface
 
 We wanted to show you that you can create a web page to interact with a smart contract on the blockchain.  The code of the poll viewing web page uses the web3 Javascript library, which is what allows you to connect to the blockchain from Javascript.  In our case, we use it to connect to a node running geth that is connected to our private course blockchain.  The URL for this web page is linked to from the blockchain explorer (in the section for this semester's links) -- once there, enter your smart contract's contract address (with the leading `0x`) for your deployed smart contract, and it will display the choices.
 
@@ -315,7 +315,7 @@ On the course blockchain explorer, you can find other contract addresses -- look
 How this all works is beyond the scope of this assignment, but will be something we will be going over later in the semester.  Feel free to look over the Javascript code in that web page -- the only other requirement is that a local geth node has to be running on the server with some additional configuration parameters in geth-config.toml to allow the web page to connect to it (we have not seen those flags yet).  One can also have a web page initiate a transaction onto the blockchain, such as casting a vote -- we will see that in a future assignment as well; that requires a browser plugin, such as [MetaMask](https://metamask.io/), that allows for posting of transactions to a web page using a specific Ethereum account.
 
 
-### Part 5: Vote!
+## Part 5: Vote!
 
 I have loaded a Poll smart contract onto our private Ethereum blockchain, and you all must vote!  The only information we will tell you is that the contract address for this is shown on the blockchain explorer (in the section for this semester's links), and that it fulfills the [IPoll.sol](IPoll.sol.html) ([src](IPoll.sol)) interface.  You have to figure out what the options are, and then vote for one.  This one poll cannot be viewed through the poll web page viewer.  *You will need to submit the transaction hash where you voted.*
 
@@ -327,11 +327,11 @@ Note that Remix may complain if an Ethernet address is not [checksummed](../../s
 
 The assumption is that the account you will vote with is your `eth.coinbase` account.  It's fine if you want to use a different account address than you used in the last assignment, but when you submit your information at the end of this assignment, be sure to submit the account that you used for the deployment and voting herein.  As your account information will be in the `voted` mapping, we will be able to determine who has voted and who has not.  You get credit for this part as along as you vote on the course smart contract; it does not matter what choice you vote for.
 
-### Part 6: Closing down
+## Part 6: Closing down
 
 Please turn off your geth node when you are done with this assignment.  You can always turn it back on again when needed.
 
-### Submission
+## Submission
 
 You will need to fill in the various values from this assignment into the [dappintro.py](dappintro.py.html) ([src](dappintro.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code (only Poll.sol), are the only files that must be submitted.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 

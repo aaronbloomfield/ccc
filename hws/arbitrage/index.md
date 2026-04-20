@@ -3,7 +3,7 @@ Arbitrage Trading
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
-### Overview
+## Overview
 
 In this assignment you are going to create a Python program to perform [arbitrage trading](../../slides/applications.html#/arbitrage) on the blockchain.  Your trading will be between a number of different DEX instances from the [DEX](../dex/index.html) ([md](../dex/index.md)) assignment.  This program must be written in Python in a file called `arbitrage_trading.py`.  We provide a number of DEXes for you to use on the course blockchain.
 
@@ -16,13 +16,13 @@ Beyond general experience with programming Solidity (which you have at this poin
 In addition to your source code, you will submit an edited version of [arbitrage.py](arbitrage.py.html) ([src](arbitrage.py)).
 
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 <!--
 
-### DEX
+## DEX
 
 *This section is only if you want to use your own DEXes.  If you plan on using the ones on the course blockchain, you can skip this section.  You should initially use the provided DEXes, and then come back to this section if you want to try it with yours.*
 
@@ -77,11 +77,11 @@ In addition to your TokenCC.sol and DEX.sol files (and any supporting files so t
 
 -->
 
-### Web3.py
+## Web3.py
 
 You will need to read the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)).  While you do not need to have all of that memorized, you do need to understand it all!  The intent is that you will use that page as a reference while you write this assignment.
 
-#### Connecting
+### Connecting
 
 The following code will handle the connection based on the values in the `arbitrage_config.py` file, which is introduced below.  After reading this part, you may want to come back to it again once the `arbitrage_config.py` file has been introduced.
 
@@ -104,9 +104,9 @@ The code above will connect either through a local geth.ipc endpoint or a server
 
 The value for the second one is provided in the blockchain explorer's links section, and in the provided `arbitrage_config.py` file.
 
-### Market Theory
+## Market Theory
 
-#### When to make an trade
+### When to make an trade
 
 Your program will need to compute it's *holdings*, which is the dollar amount of all the ETH and TC that it has.  You will use some fixed price for ETH (say, $100) and for TC (say, $10) for initial testing -- this value is provided in the `arbitrage_config.py` file, which is described below.
 
@@ -132,14 +132,14 @@ You can assume the number of DEXes involved, $d$, is relatively small, so you ca
 
 -->
 
-#### Arbitrage goal
+### Arbitrage goal
 
 For each DEX, and for each of the two directions (ETH -> TC and TC -> ETH), find the (DEX,currency,amount) combination that maximizes your profit.  
 
 Consider the most profitable such transaction among all the available DEXes.  If that transaction increases your holdings in USD, then take that action.  It's also possible that a *double trade* would yield a profit, where as a single trade would not (for example, exchanging some ETH for some TC in one DEX, and then trading that TC back for more ETH at a different DEX).  We are not considering double trades for this assignment.
 
 
-#### How much to trade
+### How much to trade
 
 We can formulaically determine how much to trade.  The full derivation of the formulas in this section is being omitted here, but you can see that full derivation [here](extra.html) ([md](extra.md)).  First we need to define a number of variables:
 
@@ -176,7 +176,7 @@ A few notes on those:
 - The values to trade (meaning $\delta_e$ or $\delta_t$) may be larger than your balance; if so, then you should consider how much profit can be made from trading in all of your balance in that case (but, if it's ether, then you have to deduct the gas cost before you trade it all in).
 
 
-### Assignment
+## Assignment
 
 Your assignment is to create a program that attempts to make a profit by arbitrage trading.  For the purposes of this assignment, a *profit* means an increase in the value of your holdings in USD; the holdings are computed from the amount of ETH and TC your program controls as well as the current price of each.  
 
@@ -189,12 +189,12 @@ Your program must be in Python.  It must be named `arbitrage_trading.py`.
 In practice, your program would listen for events from any of the DEXes, and any time the exchange rate of any of the DEXes changed, it would re-run the analysis.  In order to make this assignment gradable, we are going to ignore events, and your program will consider all trade possibilities each time it is run.
 
 
-#### Values to query the DEXes for
+### Values to query the DEXes for
 
 Each DEX will have to be queried to get values for $x$, $y$, and $k$; from this, you can determine the exchange rate ($y/x$ or $x/y$).  You will also have to query the DEXes for the fee amount (`feeNumerator()` and `feeDenominator()`).  Note that different DEXes, even for the same coin, can have different exchange rates and different fee amounts.
 
 
-#### Values provided
+### Values provided
 
 
 The program will import an `arbitrage_config.py` file to provide many of the values, a sample of which is shown below.  The correct file for this semester is available in the blockchain explorer's links section.
@@ -254,7 +254,7 @@ You will need to edit some those values in arbitrage_config.py for your particul
 We provide a few other things in arbitrage_config.py: the ABI for IDEX and ITokenCC for you to use.  We also provide a function called `getTXNResult()` that will attempt to figure out what happened on a transaction function call (the return value or revert reason).  You can see these in the [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) file.
 
 
-#### Output
+### Output
 
 Your program will analyze the various values at the different DEXes, and make a change (or not).  Your output must be in the exact format shown below.  If no profitable trades are possible, then you should output `No profitable arbitrage trades available`.  If an trade is made, then the output should be of the exact form:
 
@@ -291,7 +291,7 @@ If there are no profitable transactions available, then pass in 0 for the first 
 The `fees` value that you are reporting is just the USD value of the Ethereum transaction fees.  The DEX fees were deducted from the amount obtained.
 
 
-### Testing
+## Testing
 
 To see if your program makes the right decision, you can hard-code the $x$, $y$, and $k$ values in your arbitrage_trading.py program and print out the results to see if it computed the correct values to trade.
 
@@ -302,7 +302,7 @@ The geth-config.toml file that you used in the [HW S4: Private Ethereum Blockcha
 
 Which one you use must be read from the `arbitrage_config.py` file so that we can modify them when we test your submission.
 
-#### Testing setup
+### Testing setup
 
 [![](img/ddc.webp){style='width:300px;float:right' alt='all 6 dragon dice image'}](img/ddc.webp){target='_blank'}
 
@@ -321,13 +321,13 @@ Just to clarify: all six of these DEXes exchange the same DDC coin, but at diffe
 
 The addresses of all these DEXes, as well as DDC, are in the blockchain explorer's links section and are provided in an `arbitrage_config.py` file, which is available in Canvas' Files.
 
-#### Obtaining DDC
+### Obtaining DDC
 
 The [ITokenCC.sol](../tokens/ITokenCC.sol.html) ([src](../tokens/ITokenCC.sol)) interface has a `requestFunds()` function, which you just had revert in the [dApp Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment.  For DDC, that function will pay you 100 DDC on each call.  This will allow you to obtain DDC for use in your exchange testing.
 
 Of course, you can also exchange ether for DDC with any of the DEXes to obtain DDC.
 
-#### Limiters
+### Limiters
 
 The problem with fixed exchange rates is that it is easy to deplete the DEX of funds -- one could exchange 1 ETH for 20 TC via the D20 DEX, then back for 5 ETH via the D4 DEX, and repeat forever.  This would deplete the reserves of the DEXes and also cause the blockchain size to balloon.  It would also prevent other students from using the DEXes.  For this reason, there are three limiters in effect for DDC and these DEXes:
 
@@ -343,7 +343,7 @@ When you finally submit your solution, it should print out exactly one line, as 
 
 Lastly, these DEXes have the ability to be "turned off" so that any attempt at a transaction will revert with an appropriate error message (either "trading not currently enabled" or "this DEX has been destructed").  In the former case, it will be turned on again soon.  In the latter case, the DEXes were likely replaced -- check the blockchain explorer's links section for new DEX (and DDC) addresses.
 
-#### Usage
+### Usage
 
 The different DEX addresses are available from the blockchain explorer's links section, in the `arbitrage_config.py` file in Canvas' Files.  The intent is for you to comment out different DEXes in that file so that you can test it with different pairs.  The version of [arbitrage_config.py](arbitrage_config.py.html) ([src](arbitrage_config.py)) in the github repo does not have the addresses of the six DEXes deployed on the course-wide blockchain, but the version linked to from the blockchain explorer's links section does.
 
@@ -375,7 +375,7 @@ You can easily comment out different DEXes for your testing.  The following thre
 - The d10 DEX is never profitable if the price ratio is also 1:10.  It exchanges at the same rate as the current prices, but once fees (both DEX and gas) are subtracted, money will be lost.
 .
 
-#### Specific Examples
+### Specific Examples
 
 We assume that the prices in `arbitrage_config.py` are set to the standard 100 for ether and 10 for TC.  There are four specific examples below; these are the visible Gradescope submission tests.  These examples were from an account that started with 11 ether, but was not allowed to trade for than 10 ether (as per the `arbitrage_config.py` file).
 
@@ -391,7 +391,7 @@ We assume that the prices in `arbitrage_config.py` are set to the standard 100 f
     - Formally: `No profitable arbitrage trades available`
 
 
-### Real-world profit?
+## Real-world profit?
 
 Could you use this program in the real world with real ETH?
 
@@ -410,7 +410,7 @@ The concepts are the same.  But you would have to make a few changes:
 
 But the concepts are certainly the same!
 
-### Notes and Hints
+## Notes and Hints
 
 - Be sure to put the `chainId` value in *each* transaction that you call from Python -- things don't always work well otherwise.  The sample transactions on the [introduction to web3.py](../../docs/web3py.html) ([md](../../docs/web3py.md)) page all have this value present.  Be sure to set it to the correct value for the course blockchain!
 - On Macs, there seems to be a problem using web3 via Python.  When connecting to the course endpoint (the one with the `wss://` start of the URI), if you get an error such as: `ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED]`, try running going into your application/python_3.11 directory (might be different on your machine) and running the "Install Certificates.command" script
@@ -422,14 +422,14 @@ But the concepts are certainly the same!
 - When working through the examples, and getting your code to run correctly, be sure that the amounts are all in the same unit (ether versus wei, etc.).
 - If you are calling `estimate_gas()`, make sure you call it on the unsigned version of the transaction, not the signed version.
 
-### Execution Runs
+## Execution Runs
 
 Below are some sample executions.  Note that these runs print a *lot* of output so that you can understand what is going on.  Your program should only print the one line via the `output()` function.
 
 For the execution runs, do not pay attention to the DEX addresses, as they will be different than what you are dealing with.  Also, ignore the starting amount of ether or TCC -- it is either sufficient for that transaction or zero, depending on the execution run.
 
 
-#### All DEXes, sufficient ETH, no TCC
+### All DEXes, sufficient ETH, no TCC
 
 If all DEXes are enabled, and the account has sufficient ether but no TCC, the following is an example execution run.  In particular, given sufficient funds and the availability of the D20 DEX, it will always choose that to exchange.
 
@@ -498,7 +498,7 @@ Holdings before: $60,116.29 USD
 Holdings after: $60,925.27 USD
 ```
 
-#### Lower DEXes, sufficient ETH & TCC
+### Lower DEXes, sufficient ETH & TCC
 
 If only the lower three DEXes are available (D4, D6, and D8), and there is sufficient TCC, then the trade will be TCC -> ETH.
 
@@ -549,7 +549,7 @@ Holdings before: $62,543.25 USD
 Holdings after: $63,533.13 USD
 ```
 
-#### Only D10 DEX, sufficient ETH & TCC
+### Only D10 DEX, sufficient ETH & TCC
 
 The D10 DEX exchanges the assets at the same amount as the price ratio (1:10 for the DEX, and the default prices are 10:100 USD), so with gas fees, there cannot be a profitable trade.
 
@@ -574,7 +574,7 @@ No profitable arbitrage trades available
 ```
 
 
-#### Middle DEXes, sufficient ETH & TCC
+### Middle DEXes, sufficient ETH & TCC
 
 If the middle DEXes are available (D8, D10, and D12), and there is sufficient ETH and TCC, it will exchange TCC for ETH at the D8 DEX.  However, the maxima is not at 100 TCC, but a bit less.
 
@@ -625,7 +625,7 @@ Holdings after: $63,639.25 USD
 ```
 
 
-### Submission
+## Submission
 
 You will need to fill in the various values from this assignment into the [arbitrage.py](arbitrage.py.html) ([src](arbitrage.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Python source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 
@@ -637,7 +637,7 @@ Submission 1: Submit your `arbitrage_trading.py` source code file, along with yo
 
 
 
-#### Execution runs
+### Execution runs
 
 The submission will make three execution runs, all on the same account.  The account will start with 10 ether and 0 TCC.  For all the execution runs, the following value are set:
 

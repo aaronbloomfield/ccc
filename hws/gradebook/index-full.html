@@ -66,7 +66,7 @@ Example:
 - [HW P5: Gradebook](https://aaronbloomfield.github.io/ccc/hws/gradebook/index.html): the course-wide gradebook contract is at `0x3E48315fb23dEC9a01B4E219b162ce9177a66f54` ([link](index.php?account=0x3E48315fb23dEC9a01B4E219b162ce9177a66f54)).  The ABI for the IGradebook interface is listed in the homework, at the bottom of the 'IGradebook interface' section
 
 -->
-<h3 id="overview">Overview</h3>
+<h2 id="overview">Overview</h2>
 <p>I need a new gradebook! Because Canvas and my favorite spreadsheet programs are just not doing the job anymore. So I’ve decided to keep everybody’s grades in a public blockchain. Your task is to implement this gradebook for me.</p>
 <p>Admittedly, keeping a gradebook of private grades on a public blockchain is not the most realistic use of smart contracts. But it will introduce you to the concepts involved in developing more complicated smart contracts. And there are many very similar applications that would only require a few tweaks to the gradebook contract. For example, there are organizations that coordinate through blockchains, and they have to keep some information on members; while not grades, it involves the same concepts.</p>
 <p>The gradebook will need to have the following functionalities:</p>
@@ -85,13 +85,13 @@ Example:
 </ul>
 <p>You will also need to be familiar with the <a href="../../slides/ethereum.html#/">Ethereum slide set</a> and the <a href="../../slides/solidity.html#/">Solidity slide set</a>.</p>
 <p>In addition to your source code, you will submit an edited version of <a href="gradebook.py.html">gradebook.py</a> (<a href="gradebook.py">src</a>).</p>
-<h3 id="changelog">Changelog</h3>
+<h2 id="changelog">Changelog</h2>
 <p>Any changes to this page will be put here for easy reference. <!-- Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report. --></p>
 <ul>
 <li>Thu, Mar 12: added a <code>debug_sol_usefulness</code> key in the <code>other</code> array in <a href="gradebook.py.html">gradebook.py</a>; if you downloaded gradebook.py before that, just put that one field in; the comments in the new <a href="gradebook.py.html">gradebook.py</a> explain the scale used.</li>
 </ul>
-<h3 id="part-1-igradebook-interface">Part 1: IGradebook interface</h3>
-<h4 id="igradebook-interface">IGradebook Interface</h4>
+<h2 id="part-1-igradebook-interface">Part 1: IGradebook interface</h2>
+<h3 id="igradebook-interface">IGradebook Interface</h3>
 <p>Formally, your contract will need to be named <code>Gradebook</code>, and saved in a file named <code>Gradebook.sol</code>. It will need to implement the <a href="IGradebook.sol.html">IGradebook.sol</a> (<a href="IGradebook.sol">src</a>) interface, which is as follows. <strong>NOTE:</strong> the interface file itself has many more details and specifications in the comments; most of the comments were stripped from what is shown below.</p>
 <pre class='widget' tabindex='0'><code>// SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.24;
@@ -139,17 +139,17 @@ interface IGradebook {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 
 }</code></pre>
-<h4 id="the-supportsinterface-function">The <code>supportsInterface()</code> function</h4>
+<h3 id="the-supportsinterface-function">The <code>supportsInterface()</code> function</h3>
 <p>We will see the use of <code>supportsInterface()</code> in a future lecture and in a future assignment. For now, you should use this <em>exact</em> implementation:</p>
 <pre class='widget' tabindex='0'><code>function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return interfaceId == type(IGradebook).interfaceId || interfaceId == 0x01ffc9a7;
 }</code></pre>
-<h4 id="igradebook-abi">IGradebook ABI</h4>
+<h3 id="igradebook-abi">IGradebook ABI</h3>
 The ABI for <code>IGradebook.sol</code> is as follows, can can be copied by clicking on:
 <script>insertCopyLink('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"score","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]');</script>
 <pre class='widget' tabindex='0'><code style='white-space:initial'>[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"score","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]
 </code></pre>
-<h3 id="implementation-details">Implementation details</h3>
+<h2 id="implementation-details">Implementation details</h2>
 <ul>
 <li>Students are all identified by a single string; we’ll use UVA userids (you can make fake, but believable, UVA userids for your testing)</li>
 <li>All entered grades are unsigned integers</li>
@@ -167,11 +167,11 @@ The ABI for <code>IGradebook.sol</code> is as follows, can can be copied by clic
 </ul>
 <p>The first six methods (after the two events) in the <a href="IGradebook.sol.html">IGradebook.sol</a> (<a href="IGradebook.sol">src</a>) interface are getter functions. As long as you set the visibility of the field in the contract as <code>public</code>, then the getter method is created for you, as <a href="../../slides/solidity.html#/getters">discussed in the lecture slides</a>. For example, for the getter function <code>function num_assignments() external returns (uint)</code>, the appropriate field declaration would be <code>uint public override num_assignments;</code>. The lecture slide set explains this a bit more.</p>
 <p>The two events, listed at the top of the interface, should be emitted at the appropriate time. The <code>addAssignment()</code> function should emit the <code>assignmentCreationEvent()</code> event upon successful completion, and the <code>addGrade()</code> function should emit the <code>gradeEntryEvent()</code> event upon successful completion. It’s a good idea to emit the events <em>after</em> any <code>require()</code> calls! It is often the case (but not required) that the event emission is done at the very end of the function.</p>
-<h4 id="address-checksums">Address checksums</h4>
+<h3 id="address-checksums">Address checksums</h3>
 <p>Note that Remix may complain if an Ethernet address is not <a href="../../slides/ethereum.html#/checksum">checksummed</a>. Remix will provide, in the error, the checksummed address – you can use that value (cut-and-paste it into your code) instead to silence this warning. You can also use <a href="https://ethsum.netlify.app/">ethsum.netlify.app</a> to checksum an Ethernet address.</p>
 <p>Also note that compilation warnings will appear to Gradescope as a compilation error. Thus, you will have to remove them by the time you submit your assignment.</p>
-<h3 id="part-2-testing-and-deployment">Part 2: Testing and Deployment</h3>
-<h4 id="debugging">Debugging</h4>
+<h2 id="part-2-testing-and-deployment">Part 2: Testing and Deployment</h2>
+<h3 id="debugging">Debugging</h3>
 <p>We have provided a <a href="../Debug.sol.html">Debug.sol</a> (<a href="../Debug.sol">src</a>) file to help with your debugging. You can call an event, and the parameter will be visible in the blockchain explorer. Viewing the page for the contract – which will limit the events displayed to only those emitted by that contract – will make it easier to find things.</p>
 <p>Once imported, you can use it as follows:</p>
 <pre class='widget' tabindex='0'><code>import &quot;./Debug.sol&quot;;
@@ -186,7 +186,7 @@ Debug.debugString(s);
 // Debug.debugAddress(msg.sender);</code></pre>
 <p>Then, in the explorer, you will see something similar to:</p>
 <p><img src="../../slides/images/solidity-event-debugging.png" style="width:1024px" alt="solidity event debugging" /></p>
-<h4 id="testing">Testing</h4>
+<h3 id="testing">Testing</h3>
 <p>You will invariably run into issues testing and debugging your code. We have a few tips and tricks.</p>
 <ul>
 <li><p>Use <code>require()</code>. A lot. And be sure to use the <a href="../../slides/solidity.html#/require">two-parameter version of <code>require()</code></a>.</p></li>
@@ -201,10 +201,10 @@ addGrade(&quot;mst3k&quot;,0,5);
 addGrade(&quot;mst3k&quot;,1,10);</code></pre></li>
 <li><p>Another option is to put those calls in a separate function called <code>setup()</code> (or similar). This way, with one click, all of your contract setup will occur, and you don’t have to pollute the constructor.</p></li>
 </ul>
-<h4 id="deployment">Deployment</h4>
+<h3 id="deployment">Deployment</h3>
 <p>Once done, you will need to deploy your CoruseGradebook smart contract to our private Ethereum blockchain. Save the contract address, as you will need to submit that, below. It’s okay if you deploy it multiple times (for testing, debugging, errors, etc.). Just submit the address of the last one you deployed.</p>
 <p>On the deployed contract, you do not need to designate anybody as a TA – we are going to make ourselves a TA in your gradebook via the <code>requestTAAccess()</code> function, so make sure that works properly.</p>
-<h3 id="part-3-your-average">Part 3: Your average</h3>
+<h2 id="part-3-your-average">Part 3: Your average</h2>
 <p>I’ve deployed a gradebook with your (fake) grades. The address for that smart contract is on the blockchain explorer (in the section for this semester’s links). You will need to find out your overall average as well as a few other items of information. Your scores are kept by your UVA userid. These scores are fake, and were randomly generated, so don’t feel bad if your score(s) are low.</p>
 <p>There are two ways you can access the gradebook on the blockchain. One is through Remix, like was done in the <a href="../dappintro/index.html">dApp introduction assignment</a> (<a href="../dappintro/index.md">md</a>) – you load the IGradebook.sol interface, and then enter the address of the deployed Gradebook contract into the ‘At Address’ text box in the deployment window. The other way is through geth, as in the <a href="../../slides/solidity.html#/debtor">live coding example in class</a> – the geth commands start about 8 slides down in that slide column. For this you will also need the ABI. You can compile the IGradebook.sol interface in Remix, and then copy the ABI – after you compile it, the copy ABI link is at the very bottom of the compilation pane. Note that you may have to reformat that ABI a bit – what you copy is on many lines, and you may have to reformat it to one line.</p>
 <p>The steps to access the gradebook via Remix are:</p>
@@ -237,7 +237,7 @@ addGrade(&quot;mst3k&quot;,1,10);</code></pre></li>
 <li>What are the maximum number of points on the assignment with index 3?</li>
 <li>What is YOUR score on the assignment with index 3?</li>
 </ul>
-<h3 id="submission">Submission</h3>
+<h2 id="submission">Submission</h2>
 <p>You will need to fill in the various values from this assignment into the <a href="gradebook.py.html">gradebook.py</a> (<a href="gradebook.py">src</a>) file. That file clearly indicates all the values that need to be filled in. That file, along with your Solidity source code, are the only two files that must be submitted. The <code>sanity_checks</code> dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.</p>
 <p>There are <em>two</em> forms of submission for this assignment; you must do both.</p>
 <p>Submission 1: You must deploy your smart contract to our private Ethereum blockchain – this was probably done above. It’s fine if you deploy it a few times because you were testing it, messed something up, or whatever. But the final deployment should not have any other transactions to the deployed contract.</p>

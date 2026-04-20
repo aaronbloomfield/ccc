@@ -3,7 +3,7 @@ DAOs and Web3
 
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
-### Overview
+## Overview
 
 In this assignment you are going to create a Decentralized Autonomous Organization (DAO).  The DAO will issue NFT tokens (that you created in the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment) to keep track of who are members, allow members to submit proposals, and allow voting on those proposals.  For the purposes of this assignment, a proposal consists of a reason (which can be any string), an amount to pay, and an account address to pay it to.  You will then make a Web3 interface for this DAO that will allow anybody with a standard web browser to see the status of the DAO and the proposals.  The web page will only read from the blockchain using the web3.js library.
 
@@ -17,12 +17,12 @@ In addition to your source code, you will submit an edited version of [daoweb3.p
 
 **NOTE:** The Javascript code you develop herein does not work for all browsers.  We know it works on Firefox and Chrome, and that it does not work fully on Safari.  Note that you will need Chrome for the Metamask homework.
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report.
 
 
-### Create the DAO
+## Create the DAO
 
 A [Decentralized Autonomous Organization (DAO)](../../slides/applications.html#/daos) allows members to submit and vote on proposals.  For the purposes of this assignment, these proposals always have some amount of ether associated with them.  A proposal is whether to pay the amount of ether to a particular account address, which is also specified in the proposal.  One example of what to use a DAO for is a charity organization that focuses on one particular type of area (education, environment, etc.): members vote on what to donate money to (and how much to donate), and a successful proposal means that organization receives the amount of ether specified in the proposal.
 
@@ -115,7 +115,7 @@ The requirements on this section are intentionally vague -- the intent is to let
 
 Don't overthink this!  The intent is just for you to get a working DAO.  It doesn't have to be perfect.  In fact, this is the easier part of this homework, since we've all written a bunch of Solidity programs by now.  The longest methods here are 8 lines.
 
-#### DAO Notes
+### DAO Notes
 
 - A proposal passes if it receives more yes votes than no votes.  Many voting systems have a quorum -- a minimum number of total voters needed to vote; we are not implementing this.  Nor are we implementing abstention votes.  Thus, for our purposes, 1 yes vote and 0 no votes will cause a proposal to pass, even if there are a million members.
 - Ether does not necessarily have to be transferred in along with the `newProposal()` call.  However, that function must ensure that the DAO has enough ether for the proposal.  One can imagine a number of calls to fund the DAO (a noraml ether transfer, which kicks off `receive()`), followed by a `newProposal()` that does not have any ether transferred in along with it.  Alternatively, one can send in ether with a `newProposal()` call as well.
@@ -126,7 +126,7 @@ Don't overthink this!  The intent is just for you to get a working DAO.  It does
 
 
 
-#### Solidity Notes
+### Solidity Notes
 
 
 - You can create a `constant` variable if the value is not going to change.  This is done via `uint constant public override minProposalDebatePeriod = 600;`.  This saves gas versus not having it be a constant
@@ -138,7 +138,7 @@ Don't overthink this!  The intent is just for you to get a working DAO.  It does
 - You have to specify a recipient for each proposal -- you can create additional accounts (via `personal.newAccount()` in geth) to use as recipients.  Or send it to a classmate's account.  Or send it to the faucet account.  Any of those is fine.
 - For reasons you will see below, it will make it *much* easier if your DAO creates proposals IDs starting at 0; this way your web page can use other DAOs that follow the IDAO interface.
 
-#### Unique URIs in NFTManager
+### Unique URIs in NFTManager
 
 Your NFTManager, from the [Ethereum Tokens](../tokens/index.html) ([md](../tokens/index.md)) assignment, should have required a unique URI for each NFT minted.  For this assignment we don't care *what* the URI is, only that they have a NFT.  In particular, for this assignment, the URI does not need to resolve to an actual image.  This also means that you don't have to change the `_baseURI()` function from what you wrote in the previous assignment.  For that matter, you don't have to change anything in your NFTManager.sol file at all for this assignment (assuming you got it working).
 
@@ -161,7 +161,7 @@ string memory uri = substring(Strings.toHexString(addr),2,34);
 ```
 
 
-### Your URL
+## Your URL
 
 Everybody is going to have a different URL.  To lessen the temptation, you have to put a (mostly) secret suffix as part of your URL.
 
@@ -214,7 +214,7 @@ $
 
 
 
-### Web3 Introduction
+## Web3 Introduction
 
 You are going to write a web interface that shows the status of your DAO and the proposals therein.  This web page will only read from the blockchain.
 
@@ -222,7 +222,7 @@ There are a few strict requirements for this section: *all* of your code -- both
 
 This is not a class on user interfaces, so we are not expecting an amazing looking website -- we are going to grade it on the functionality, not the appearance.  That being said, it needs to be readable and navigable.
 
-#### Setup
+### Setup
 
 - Log into your CS server account.  You can try using ssh from the command line: `ssh mst3k@portal.cs.virginia.edu` (works in Linux, Mac OS X, and Windows Subsystem for Linux).  You can also download [SecureCRT](https://virginia.service-now.com/its/?id=itsweb_kb_article&sys_id=65a00a3cdb11db404f32fb671d9619bb), which is a GUI ssh client.
     - Don't know your password, or you never received it?  Follow the reset password link on the CS computing page (a link to which  is in the blockchain explorer's links section)
@@ -241,14 +241,14 @@ wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js
 wget https://raw.githubusercontent.com/web3/web3.js/1.x/dist/web3.min.js.map
 ```
 
-#### Preventing directory viewing
+### Preventing directory viewing
 
 If you go to your home page on the departmental viewer, you can see all the files in the directory listing that shows up.  To prevent this, we are going to create a default (and empty) index.html file.  On the departmetnal server, you can just run `touch ~/public_html/index.html`.
 
 **NOTE:** If you already have a web page present, or otherwise have prevented (intentional or not) directory viewing, then no further steps are needed.
 
 
-#### Background
+### Background
 
 You are *encouraged* to look at the examples of web3 usage provided so far in class, and to copy/adapt the code therein.  Note that you can copy from the materials provided by the course, NOT your classmates!  The ones we have seen are:
 
@@ -261,10 +261,10 @@ The links to all of these are in the blockchain explorer's links section.
 
 You are welcome to look at the blockchain explorer code as well, but that won't be as useful for this assignment -- there is no web3 done by the explorer web page.  When you go to each of the pages listed above (and, if necessary, enter a valid smart contract address), you can view the page source to see what is going on.  Loading up the developer console make make it easier to view the code, and -- later on -- see any Javascript errors.  Note that while these example URLs have an extension of .php, what you are viewing is still HTML and Javascript.
 
-### Javascript
+## Javascript
 
 
-#### `async` and `await`
+### `async` and `await`
 
 Most function calls execute quickly.  But some, such as those querying a blockchain, can take some time to return a value.  In Javascript, these are called `async` functions.  While `async` functions might execute quickly, Javascript assumes they will take some time.  You have two options here -- you can either tell Javascript to wait for the call to return, or give it a code block to execute whenever it does return.  If you choose the first option, it will hang until that `async` call completes.  If you choose the second option, it will move on, and later (in another thread) execute that code block when the `async` call does finally complete.
 
@@ -347,12 +347,12 @@ We'll get to `document.getElementById()` shortly, but it's just updating part of
 As mentioned above, you are *encouraged* to use the code provided in the pages that the course has used so far.  A number of Javascript functions therein will be of use in formatting your display -- in particular, `convertTimestamp()`, `short_hash()`, and `copy_link()`.
 
 
-#### Debugging Javascript
+### Debugging Javascript
 
 Your web browser can load up the developer window (ctrl-shift-C, perhaps).  This window has a Console tab, which is quite useful for debugging Javascript.  You will likely have to reload the page *after* you have opened up the developer window.  This console is just like the geth console -- you can type Javascript commands into it, and access variables that were defined in the `<script>` sections of your webpage.  In your Javascript code, you can use `console.log()` to print out values to this Javascript console.  This is useful in debugging, and can be called from regular and `async` functions.
 
 
-### HTML and CSS
+## HTML and CSS
 
 We assume you are familiar with the basics of HTML.  If not, you can quickly come up to speed with [an appropriate web search](https://duckduckgo.com/?q=html+tutorial).
 
@@ -389,11 +389,11 @@ A few notes:
 - The 'total proposals' line does not have a value.  Once that value is determined (done in a function analogous to the `getNumChoices()` function), you can update that value via the code `document.getElementById('total_proposals').innerHTML = var;`, where `var` is the Javascript variable that holds the number of proposals.  This looks for the element with the id of `total_proposals`, which is the `<span>` element on line 12, and updates the value inside (meaning it replaces "loading...").
 
 
-### Events
+## Events
 
 There are multiple ways to see when *something* happens on a blockchain, and they all involve listening for events that were emitted by the contracts (or the EVM itself).
 
-#### Subscriptions
+### Subscriptions
 
 A web3 *subscription* is when the web3 library is listening for an event or multiple events.  To do so, we specify the specific contract that we are listening to.  Consider the following code:
 
@@ -423,7 +423,7 @@ There are a number of things going on here:
 There are a number of aspects of events that we are not covering in this assignment -- in particular, one can listen for specific events, or specific events with specific parameters; see the first answer [here](https://ethereum.stackexchange.com/questions/35997/how-to-listen-to-events-using-web3-v1-0) for an example.  One can also listen for the mining of a block -- the dex.php code does this, as that is how it knows to update the (fake) ETH price (to see how, search for "newBlockHeaders" in the source code for dex.php).  The dex.php also updates a single row when a transaction occurs.
 
 
-#### Past Events
+### Past Events
 
 This part is not required at all for this assignment, but was included for completeness.  Feel free to skip it if you are not interested.
 
@@ -468,7 +468,7 @@ eth.getLogs(filter.options)
 The result, though, is (more or less) the same.
 
 
-### Web page
+## Web page
 
 Your task is to create a `dao_XXXXXXXX.html` web page to display all the relevant information about the DAO's proposals and balance.  It should update every time an event is received; it can update the entire table rather than a specific row.  A screen shot of the information we are looking for is below.  Note that you should display this information, but the exact formatting is up to you.  And if you want to display more, that's fine too.  A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.
 
@@ -481,14 +481,14 @@ Once deployed, the DAO contract for your final submission should contain at leas
 As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO -- just change the address in your dao_XXXXXXXX.html file.  But be sure to change it back to your own DAO!  Note that it needs to work on your DAO by the time you submit it!  The address for the course-wide DAO is in the blockchain explorer's links section.
 
 
-### Course DAO
+## Course DAO
 
 You need to join the course-wide DAO and vote on one of the proposals.  The address for the course-wide DAO is in the blockchain explorer's links section.  This DAO also follows the [IDAO.sol](IDAO.sol.html) ([src](IDAO.sol)) interface.
 
 To join, you can just call `requestMembership()`, which will add you as a member.  You then need to vote on one of the proposals.  It doesn't matter which proposal you vote on, or how you vote.  Save the transaction hash from when you voted, as you will have to submit that.
 
 
-### Submission
+## Submission
 
 You will need to fill in the various values from this assignment into the [daoweb3.py](daoweb3.py.html) ([src](daoweb3.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 

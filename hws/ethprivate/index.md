@@ -21,7 +21,7 @@ And in the blockchain explorer's links section:
 
 -->
 
-### Overview
+## Overview
 
 We will shortly be developing applications for the Ethereum blockchain.  We won't be using the actual Ethereum blockchain for a number of reasons (cost, legal issues, speed, etc.).  Instead, we are going to use a private Ethereum blockchain -- a test network -- that has been set up for this class.  This assignment is to connect to it, explore it, and perform a few operations.
 
@@ -29,12 +29,12 @@ This document assumes that you have a recent version of Python 3 installed, and 
 
 As you proceed through this assignment, you will be filling in values into the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file, which is the only file you will submit at the end.
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here.  So far there aren't any significant changes to report. 
 
 
-### Part 1: Installation
+## Part 1: Installation
 
 Geth is the program we will be using to connect to the blockchain. Geth, which stands for Go Ethereum (an Ethereum client written in the Go programming language), is a command-line interface to run an Ethereum node.
 
@@ -52,7 +52,7 @@ The [geth downloads page](https://geth.ethereum.org/downloads) no longer lists t
 **WARNING:** After installation, DO NOT JUST RUN `geth`!  Doing so will connect to the default Ethereum network, and will proceed to download the ENTIRE Ethereum blockchain, which is around 500 Gb for a "light" node and almost 2 Tb for a "full" node.  It also takes a full week (at least) to synchronize all that data.
 
 
-### Part 2: Blockchain
+## Part 2: Blockchain
 
 Here we will connect to our private blockchain.
 
@@ -103,11 +103,11 @@ There is lots of output when it is running, and we will verify that it has conne
 
 This is running the *node*, and we are going to run geth (again) in a moment to connect to that node.
 
-### Part 3: Geth
+## Part 3: Geth
 
 What is running from the previous part is the Ethereum node, but that is not interactive.  You must leave it running while you perform the next few parts of this assignment.
 
-#### Attach to the geth node
+### Attach to the geth node
 
 To enter commands via the keyboard, you have to "attach" to the local Ethereum node.  You do this by entering the following command:
 
@@ -141,7 +141,7 @@ To exit, press ctrl-d or type exit
 > 
 ```
 
-#### Interacting with geth
+### Interacting with geth
 
 First, let's wait for it to sync.  Since you have saved the geth-config.toml file, it should connect to the course server and start downloading all the blocks in the blockchain.  This may take some time, but hopefully less than 5 minutes.
 
@@ -172,7 +172,7 @@ Once it is synced, here are some commands for you to try out:
   - Or try: `eth.getBalance(eth.coinbase)` or `eth.getBalance(eth.accounts[0])`
 
 
-### Part 4: Get ether
+## Part 4: Get ether
 
 You cannot mine on this blockchain -- it has been set up to automatically mine any transaction to the blockchain for you.  In order to obtain some funds, you should go to the course Ethereum Faucet, the URL of which is listed on the Canvas assignment page.  Each time you use this faucet you will obtain 100 (fake) ETH.  **USE THIS RESPONSIBLY!!!**  The intent of the faucet is for you to obtain as much funds as you need for this course.  But if you spam that site with unnecessary requests to gain lots of funds, it will cause a slowdown of the system, and a dramatic increase in the blockchain size, which will interfere with your classmates ability to do their work.  This will make me cranky.  If you request funds a few dozen times throughout the semester, that's totally fine.  Even a hundred requests this semester would be fine.  But if you are making the requests thousands of times, that's going to be a problem.
 
@@ -183,7 +183,7 @@ You will determine the transaction hash and the block number for this transactio
 To verify that you did this part, we are going to check that you have a non-zero balance in your eth.coinbase account.
 
 
-### Part 5: Extract key
+## Part 5: Extract key
 
 We need to get the private key of the account you created, as we will need that for our dApp development in future assignments.  The private key is encrypted in a .json file in the `keystore/` sub-directory of your geth data directory.  The file will have a name like: UTC--2022-01-08T19-53-08.823103866Z--0123456789abcdef0123456789abcdef01234567.  Note that the last part of that name ("0123456789abcdef0123456789abcdef01234567") matches the Ethereum address we obtained and that is returned from `eth.coinbase`.
 
@@ -232,7 +232,7 @@ $
 The decoded private key is the hex line at the end.  Save this decoded private key somewhere, as you will need it in future assignments.  Normally we would never save this in plaintext, but the (fake) ETH on this system are still worth $0.  You are welcome to put it in the ethprivate.py file -- just create a new field.  Again, since the ether on this blockchain is worth nothing, we can bypass what would otherwise be a security problem by listing our private key in plain text.
 
 
-### Part 6: Send ether
+## Part 6: Send ether
 
 Next you are going to send me some money via the geth command line.  We are done with Python for this assignment, and have to go back to the geth prompt (via `geth attach /path/to/ethprivate/geth.ipc`) for this.
 
@@ -266,7 +266,7 @@ Further steps to do in the geth console:
 We can verify that you did this part by checking if your eth.coinbase account sent 1 ETH to the specified course account.  You will need to submit both the transaction hash and the block number from when you sent 1 ether.
 
 
-### Part 7: Explore geth
+## Part 7: Explore geth
 
 You should explore geth on your own.  When you start geth (via `geth attach geth.ipc`), it lists the modules available:
 
@@ -287,7 +287,7 @@ Your geth version number may be more recent.  The modules are listed on the 7th 
 There isn't much you can break here -- worst case you lose your (fake) ether, and then you can just request more for the faucet.  This course blockchain is for you to use and learn from, so feel free to play around if you would like.
 
 
-### Part 8: Explorer
+## Part 8: Explorer
 
 We have a web-based blockchain explorer for our private Ethereum blockchain.  The link to that is on the Canvas assignment page.  Browse that site, and play around with the search functionality.  Directions for how to use it are on the main page.  Note that the site updates every minute, so if you make a transaction, it will not be immediately visible there -- the time of the last update is listed on the main page (the second to last bullet under 'Statistics').
 
@@ -295,11 +295,11 @@ Find the web page that contains the transaction (not the block!) where you send 
 
 For the transaction where you received funds from the faucet, from part 4 of this assignment, you will need to determine the transaction hash, block number, and URL in the explorer.  You can look for your specific eth.coinbase account address -- either on the page of all addresses, or use the search box in the upper right.  The very first transaction (which will be on the bottom of the list) is likely the faucet transaction.  Copy the transaction hash (not the 'from' or 'to'), and note the block number.  You can copy the transaction hash by clicking on the copy icon (<img src="copy.svg" style="width:18px;vertical-align:middle" alt='copy icon'>) in the explorer.  Also click on that transaction to get the URL in the explorer.  These three will have to entered into the respective fields in the `other` dictionary (`faucet_txn_block_number`, `faucet_txn_hash`, `faucet_txn_url`).  
 
-### Closing down
+## Closing down
 
 If you are not actively using it, you should shut your geth node down.  UVA ITS has given permission to do all this, but they do perform port scans on all machines, so no need to raise their hackles by keeping a geth node up and running when we aren't using it.  You can easily re-launch it when you need it again for a future assignment.  Likewise for the console from part (3); if you close down the geth node, the console won't work.
 
-### Submission
+## Submission
 
 You will need to fill in the various values from this assignment into the [ethprivate.py](ethprivate.py.html) ([src](ethprivate.py)) file.  That file clearly indicates all the values that need to be filled in.  That file is the only file that must be submitted for this assignment; future assignments will have additional Solidity source code submitted as well.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 

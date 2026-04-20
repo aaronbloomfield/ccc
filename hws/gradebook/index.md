@@ -17,7 +17,7 @@ Example:
 -->
 
 
-### Overview
+## Overview
 
 I need a new gradebook!  Because Canvas and my favorite spreadsheet programs are just not doing the job anymore.  So I've decided to keep everybody's grades in a public blockchain.  Your task is to implement this gradebook for me.
 
@@ -41,16 +41,16 @@ You will also need to be familiar with the [Ethereum slide set](../../slides/eth
 
 In addition to your source code, you will submit an edited version of [gradebook.py](gradebook.py.html) ([src](gradebook.py)).
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  <!-- Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report. -->
 
 - Thu, Mar 12: added a `debug_sol_usefulness` key in the `other` array in [gradebook.py](gradebook.py.html); if you downloaded gradebook.py before that, just put that one field in; the comments in the new [gradebook.py](gradebook.py.html) explain the scale used.
 
 
-### Part 1: IGradebook interface
+## Part 1: IGradebook interface
 
-#### IGradebook Interface
+### IGradebook Interface
 
 Formally, your contract will need to be named `Gradebook`, and saved in a file named `Gradebook.sol`.  It will need to implement the [IGradebook.sol](IGradebook.sol.html) ([src](IGradebook.sol)) interface, which is as follows.  **NOTE:** the interface file itself has many more details and specifications in the comments; most of the comments were stripped from what is shown below.
 
@@ -103,7 +103,7 @@ interface IGradebook {
 }
 ```
 
-#### The `supportsInterface()` function
+### The `supportsInterface()` function
 
 We will see the use of `supportsInterface()` in a future lecture and in a future assignment.  For now, you should use this *exact* implementation:
 
@@ -113,7 +113,7 @@ function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
 }
 ```
 
-#### IGradebook ABI
+### IGradebook ABI
 
 
 The ABI for `IGradebook.sol` is as follows, can can be copied by clicking on: <script>insertCopyLink('[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"assignmentCreationEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"uint256","name":"score","type":"uint256"}],"name":"gradeEntryEvent","type":"event"},{"inputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"max_score","type":"uint256"}],"name":"addAssignment","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"},{"internalType":"uint256","name":"assignment","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"}],"name":"addGrade","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"assignment_names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"designateTA","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"student","type":"string"}],"name":"getAverage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"instructor","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"}],"name":"max_scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"num_assignments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestTAAccess","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"userid","type":"string"}],"name":"scores","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ta","type":"address"}],"name":"tas","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}]');</script>
@@ -124,7 +124,7 @@ The ABI for `IGradebook.sol` is as follows, can can be copied by clicking on: <s
 
 
 
-### Implementation details
+## Implementation details
 
 - Students are all identified by a single string; we'll use UVA userids (you can make fake, but believable, UVA userids for your testing)
 - All entered grades are unsigned integers
@@ -144,16 +144,16 @@ The first six methods (after the two events) in the [IGradebook.sol](IGradebook.
 
 The two events, listed at the top of the interface, should be emitted at the appropriate time.  The `addAssignment()` function should emit the `assignmentCreationEvent()` event upon successful completion, and the `addGrade()` function should emit the `gradeEntryEvent()` event upon successful completion.  It's a good idea to emit the events *after* any `require()` calls!  It is often the case (but not required) that the event emission is done at the very end of the function.
 
-#### Address checksums
+### Address checksums
 
 Note that Remix may complain if an Ethernet address is not [checksummed](../../slides/ethereum.html#/checksum).  Remix will provide, in the error, the checksummed address -- you can use that value (cut-and-paste it into your code) instead to silence this warning.  You can also use [ethsum.netlify.app](https://ethsum.netlify.app/) to checksum an Ethernet address.
 
 Also note that compilation warnings will appear to Gradescope as a compilation error.  Thus, you will have to remove them by the time you submit your assignment.
 
 
-### Part 2: Testing and Deployment
+## Part 2: Testing and Deployment
 
-#### Debugging
+### Debugging
 
 We have provided a [Debug.sol](../Debug.sol.html) ([src](../Debug.sol)) file to help with your debugging.  You can call an event, and the parameter will be visible in the blockchain explorer.  Viewing the page for the contract -- which will limit the events displayed to only those emitted by that contract -- will make it easier to find things.
 
@@ -180,7 +180,7 @@ Then, in the explorer, you will see something similar to:
 
 
 
-#### Testing
+### Testing
 
 You will invariably run into issues testing and debugging your code.  We have a few tips and tricks.
 
@@ -199,14 +199,14 @@ You will invariably run into issues testing and debugging your code.  We have a 
 - Another option is to put those calls in a separate function called `setup()` (or similar).  This way, with one click, all of your contract setup will occur, and you don't have to pollute the constructor.
 
 
-#### Deployment
+### Deployment
 
 Once done, you will need to deploy your CoruseGradebook smart contract to our private Ethereum blockchain. Save the contract address, as you will need to submit that, below.  It's okay if you deploy it multiple times (for testing, debugging, errors, etc.).  Just submit the address of the last one you deployed.
 
 On the deployed contract, you do not need to designate anybody as a TA -- we are going to make ourselves a TA in your gradebook via the `requestTAAccess()` function, so make sure that works properly.
 
 
-### Part 3: Your average
+## Part 3: Your average
 
 I've deployed a gradebook with your (fake) grades.  The address for that smart contract is on the blockchain explorer (in the section for this semester's links).  You will need to find out your overall average as well as a few other items of information.  Your scores are kept by your UVA userid.  These scores are fake, and were randomly generated, so don't feel bad if your score(s) are low.
 
@@ -238,7 +238,7 @@ The information you need to obtain is:
 - What are the maximum number of points on the assignment with index 3?
 - What is YOUR score on the assignment with index 3?
 
-### Submission
+## Submission
 
 You will need to fill in the various values from this assignment into the [gradebook.py](gradebook.py.html) ([src](gradebook.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only two files that must be submitted.  The `sanity_checks` dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 

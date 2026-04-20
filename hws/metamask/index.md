@@ -4,7 +4,7 @@ MetaMask Assignment
 [Go up to the CCC HW page](../index.html) ([md](../index.md))
 
 
-### Overview
+## Overview
 
 You are going to create a web interface for the Auctioneer contract you created in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  This web interface will allow for the creation of NFTs and the ability to start and stop auctions, as well as bidding on running auctions.  The web page you create will reside on the departmental servers, just like with the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  This assignment will allow *writing* to the blockchain as well as reading from it.
 
@@ -21,12 +21,12 @@ We are going to use your Auctioneer contract, from the [dApp Auction](../auction
 
 In addition to your source code, you will submit an edited version of [metamask.py](metamask.py.html) ([src](metamask.py)).
 
-### Changelog
+## Changelog
 
 Any changes to this page will be put here for easy reference.  Typo fixes and minor clarifications are not listed here. So far there aren't any significant changes to report.
 
 
-### MetaMask Setup 
+## MetaMask Setup 
 
 <img src="metamask-pop-up.webp" alt='metamask pop-up image' style="float:right;border:1px solid black;margin-left:15px">
 
@@ -76,7 +76,7 @@ If you are having problems with this setup, you can also have Metamask create a 
 
 <!---
 
-### Background: Function Call Encoding
+## Background: Function Call Encoding
 
 We are going to be reading from the blockchain using the web3.js library that you used in the [DAO & web3](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  In fact, you are encouraged to start with the code of the NFT auction manager web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment.  The intent of this current assignment is to add features to that web page.
 
@@ -88,13 +88,13 @@ The catch: in order to be able to call a smart contract that is a *transaction*,
 
 -->
 
-### Your URL
+## Your URL
 
 This part is similar to what was in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment -- you are going to add a `_xxxxxxxx` suffix on your metamask.html file name. so your filename will be of the form `metamask_xxxxxxxx.html`.  **HOWEVER,** you also have to run `touch ~/public_html/index.html` (or similar) on the departmental server -- see the "Preventing directory viewing" section. below.
 
 You can determine your URL suffix as you did in the [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) assignment.  Thus, your file name on the departmental server is going to be of the form `metamask_xxxxxxxx.html`.
 
-#### Preventing directory viewing
+### Preventing directory viewing
 
 (If you did this in the DAO&web3 assignment, no need to repeat it here).
 
@@ -103,14 +103,14 @@ If you go to your home page on the departmental viewer, you can see all the file
 **NOTE:** If you already have a web page present, or otherwise have prevented (intentional or not) directory viewing, then no further steps are needed.
 
 
-### Web3.js
+## Web3.js
 
 The intent is for you to start with the web site that was provided to you in the [dApp Auction](../auction/index.html) ([md](../auction/index.md)) assignment, and add some features.  The URL of that web site is in the blockchain explorer's links section -- you can just save that as a new HTML file, which you will want to name `metamask_xxxxxxxx.html`.  Note: you have to view that page with an Auctioneer contract address else most of the relevant Javascript code will not be shown.  The link to that page with an address is also in the blockchain explorer's links section.  You are going to create a few web forms, each of which will call a different Javascript function.  Those forms -- and the paired Javascript functions -- will perform the various actions that we need to perform on the Auctioneer: minting new NFTs, starting a new auction, closing an auction, and bidding on an auction.
 
 The [DAO & web3 assignment](../daoweb3/index.html) ([md](../daoweb3/index.md)) goes over the basics of HTML web pages and Javascript functions.
 
 
-#### Ensure MetaMask is installed and enabled
+### Ensure MetaMask is installed and enabled
 
 We want to ensure that any viewer of this web page has MetaMask properly installed.  The following code will do that:
 
@@ -125,7 +125,7 @@ This is useful as it will give a warning to those using other browsers, or those
 
 Beyond what is shown in the code above, you do not need to handle the situation where a user tries to use this page when not using Chrome with MetaMask installed.
 
-#### Connecting to MetaMask
+### Connecting to MetaMask
 
 The first thing a user has to do is enable the MetaMask extension to use the site; this is usually phrased as "connecting to MetaMask".  To do this, we add the following code to our HTML file (adapted from [here](https://docs.metamask.io/guide/getting-started.html#connecting-to-metamask)).
 
@@ -144,7 +144,7 @@ This connection will persist through a page reload, and -- on some operating sys
 
 The expectation is that any user will first click on that button to connect to MetaMask.  You do not need to handle the situation when a user tries to use the rest of the page without first connecting via this button.
 
-#### Web3.js library
+### Web3.js library
 
 We could interact with MetaMask directly, but using web3.js, which we are familiar with, is going to make life much easier -- it will do all the encoding of parameters into calls, etc.
 
@@ -185,7 +185,7 @@ If a function is using the `web3mm` connection, then it should use the `auctionC
 
 You will have to do something similar with your connection the NFTManager.
 
-### HTML and JS
+## HTML and JS
 
 Below is an example HTML form and associated Javascript function.  This will call the `mintWithURI()` function on your NFTManager smart contract.
 
@@ -235,7 +235,7 @@ When this Javascript function is called, MetaMask will pop up a window, such as 
 
 Once it is confirmed, it will take a second or so for the transaction to reach the P2P network, and then a second or two for it to be auto-mined into the blockchain.  However, MetaMask can take a while (5-10 seconds) to realize that the transaction has occurred.  So it can easily take a while for the pop-up window to appear, and then for the result of the transaction to be displayed.
 
-#### Getting the return value of a transaction
+### Getting the return value of a transaction
 
 It is surprisingly hard to get the return value of a transaction.  Getting one from a call is easy -- but for a transaction you have to have the EVM re-run the transaction and then save the return value.  You also have to tell it what state to run the EVM in (meaning what block number to assume is the top block).  To save you the hassle of figuring out the syntax for all of this, below is a Javascript function you can use.
 
@@ -269,7 +269,7 @@ showReturnIntegerValue(web3mm,txninfo['transactionHash'],"NFT ID");
 
 This will show a pop-up alert box that states something such as "NFT ID: 12345".
 
-### The Task
+## The Task
 
 <img src="final-web-page.webp" alt='final web page image' style="float:right;border:1px solid black;margin-left:15px">
 
@@ -293,7 +293,7 @@ When this assignment is complete, anybody should be able to create NFTs, initiat
 
 <br clear='all'>
 
-### Web page setup
+## Web page setup
 
 To get the metamask_xxxxxxxx.html web page set up:
 
@@ -314,9 +314,9 @@ To get the metamask_xxxxxxxx.html web page set up:
     - The code for the Javascript function and the form
 - Redeploy and then reload the page, and mint a new NFT -- it should mint it properly, and without any errors.  You should be able to view that transaction on the explorer (look at the list of transactions for your account).
 
-### Hints
+## Hints
 
-#### Javascript developer console
+### Javascript developer console
 
 - You will need to use the Javascript console in the developer tools.  There is no other way to debug this.
 - Use `console.log()` to print out the values of various variables are you are debugging your code.
@@ -326,7 +326,7 @@ To get the metamask_xxxxxxxx.html web page set up:
 - In the Javascript console, to ensure you are connected, you can check if the `eth.coinbase` addresses are available: `await web3mm.eth.getAccounts()`.
 
 
-#### Web3.js programming
+### Web3.js programming
 
 - If you need to checksum an address in Javascript via web3.js, call `web3.utils.toChecksumAddress()`.  All addresses will have to be checksummed, else it will give you an 'invalid sender' error.  This includes any `to` or `from` addresses in any and all transaction calls.
 - Be sure to set your gas correctly, else it will revert because of insufficient gas (the explorer can detect when it reverts for this reason). The gas price should be set to 1 gwei ($10^9$ wei).  The most expensive operation you are going to perform is likely `startAuction()`, which could use 250k gas.  So set your startGas amounts to 1 million, and you'll be fine.
@@ -337,7 +337,7 @@ To get the metamask_xxxxxxxx.html web page set up:
 
 <!--
 
-### Calling a smart contract function
+## Calling a smart contract function
 
 Unlike web3.js, it's more difficult (read: annoying) to call a function via MetaMask.  Consider this Javascript code from the [MetaMask page on sending transactions](https://docs.metamask.io/guide/sending-transactions.html#example):
 
@@ -379,18 +379,18 @@ Once those parameters are set correctly, the last four lines in the above code w
 
 -->
 
-### Common Errors
+## Common Errors
 
 - "Invalid sender" error when you are submitting a transaction: while there are lots of things that could cause this, you will want to check that your chain ID is set correctly.  Click on the MetaMask fox icon (<img src="metamask-fox.svg" alt='metamask fox icon' style="max-height:20px;vertical-align:middle">), then the circular account icon in the top right (<img src="metamask-account-icon.webp" alt='metamask account icon' style="max-height:20px;vertical-align:middle">, although your may look different), then Settings, then Networks, then click on the "localhost:8545" network.  Make sure the chain ID is set correctly; it's in the blockchain explorer's links section, if you forget what it is.  It should be set using it's base-10 value.
 - MetaMask RPC error / Header not found.  If you get the following error: ` "[ethjs-query] while formatting outputs from RPC '{"value":{"code":-32603,"data":{"code":-32000,"message":"header not found"}}}'"`, try switching your network to Mainnet and then back to localhost:8545, as some have reported that this fixes the issue.
 - If MetaMask suddenly stops appearing to send your transactions, they may have gotten "stuck".  Each successive Ethereum transaction must have the next highest nonce.  If there is a gap, then it will queue the transaction until the gap is resolved.  If you send to many transactions at once, they could arrive out of order.  To resolve this, since everything here is free, spam some transactions (not calls) to the blockchain.  Calling `collectFees()` a bunch of times from an Auctioneer contract will do the trick.
 
 
-### Grading
+## Grading
 
 The grades on this are going to be rather binary -- if it works, then full (or close to full) credit.  If it doesn't work, then very little or no credit.  In particular, there will be very little partial credit awarded on this assignment.  This assignment is graded by a human; it cannot be auto-graded.
 
-### Submission
+## Submission
 
 You will need to fill in the various values from this assignment into the [metamask.py](metamask.py.html) ([src](metamask.py)) file.  That file clearly indicates all the values that need to be filled in.  That file, along with your Solidity source code, are the only files that must be submitted.  The 'sanity_checks' dictionary is intended to be a checklist to ensure that you perform the various other aspects to ensure this assignment is fully submitted.
 

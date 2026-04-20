@@ -3,7 +3,7 @@ Arbitrage Trading Formula Derivations
 
 [Go up to the main HW page](index.html) ([md](index.md))
 
-### How much to trade formula derivation
+## How much to trade formula derivation
 
 Let's define some variables, all of which are known quantities.
 
