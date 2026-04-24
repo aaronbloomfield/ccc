@@ -46,7 +46,7 @@
 
 ## Bitcoin
 
-<a href='https://coinmarketcap.com/currencies/bitcoin/'><img src="../slides/images/logos/btc-coin-symbol.svg" class="cclogomed" style="float:none;margin-left:auto !important;margin-right:auto !important"></a>
+<a href='https://coinmarketcap.com/currencies/bitcoin/'><img src="../slides/images/logos/btc-coin-symbol.svg" alt="BTC symbol" class="cclogomed" style="float:none;margin-left:auto !important;margin-right:auto !important"></a>
 	</textarea></section>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -104,7 +104,7 @@
 
 ## Merkle Tree use in practice
 
-<img src='images/bitcoin/Hash_Tree.svg' style="width:300px;float:right;background:white;border-radius:10px">
+<img src='images/bitcoin/Hash_Tree.svg' style="width:300px;float:right;background:white;border-radius:10px" alt="a Merkle tree">
 <ul class=".reveal" style="width:unset;margin-top:20px">
 <li>No need to actually build the tree</li>
 <li>Pair up leafs to get 2nd level hashes
@@ -121,11 +121,11 @@
 <h2>Merkle Tree use in practice</h2>
 <!-- the SVGs don't render properly, so we have to use PNGs for this slide -->
 <p>Consider an array of 10 leaf elements of a Merkle tree</p>
-<img src='images/bitcoin/merkle/merkle.dot.5.png' class='fragment' data-fragment-index='5'>
-<img src='images/bitcoin/merkle/merkle.dot.4.png' class='fragment' data-fragment-index='4'>
-<img src='images/bitcoin/merkle/merkle.dot.3.png' class='fragment' data-fragment-index='3'>
-<img src='images/bitcoin/merkle/merkle.dot.2.png' class='fragment' data-fragment-index='2'>
-<img src='images/bitcoin/merkle/merkle.dot.1.png'>
+<img src='images/bitcoin/merkle/merkle.dot.5.png' class='fragment' data-fragment-index='5' alt="increasing levels of Merkle tree construction">
+<img src='images/bitcoin/merkle/merkle.dot.4.png' class='fragment' data-fragment-index='4' alt="increasing levels of Merkle tree construction">
+<img src='images/bitcoin/merkle/merkle.dot.3.png' class='fragment' data-fragment-index='3' alt="increasing levels of Merkle tree construction">
+<img src='images/bitcoin/merkle/merkle.dot.2.png' class='fragment' data-fragment-index='2' alt="increasing levels of Merkle tree construction">
+<img src='images/bitcoin/merkle/merkle.dot.1.png' alt="increasing levels of Merkle tree construction">
 <p class='fragment' data-fragment-index='6'>Requires $n-1$ or $\Theta(n)$ hashes</p>
 
 
@@ -133,7 +133,7 @@
 ## However...
 Given a Merkle tree:
 
-<img src='images/bitcoin/Hash_Tree.svg' style="width:500px;background:white;border-radius:10px">
+<img src='images/bitcoin/Hash_Tree.svg' style="width:500px;background:white;border-radius:10px" alt="a Merkle tree">
 
 - If L1 changes, we only want to change the hashes up to the root
   - That's a logarithmic length path
@@ -143,7 +143,7 @@ Given a Merkle tree:
     <section>
 <h2>Merkle Trees in Arrays</h2>
 <table class="transparent">
-<tr><td class="top"><img alt="heap 8" src="images/bitcoin/merkle/perfect-tree.svg"></td>
+<tr><td class="top"><img alt="heap 8" src="images/bitcoin/merkle/perfect-tree.svg" alt="a perfectly balanced binary tree"></td>
 <td>
 <p>Just like binary heaps!</p>
 <p>From node <i>i</i>:</p>
@@ -311,7 +311,7 @@ System.out.println(d);
 ## Genesis block
 - Created on January 3, 2009 ([hi-res version](https://upload.wikimedia.org/wikipedia/commons/2/2e/Bitcoin-Genesis-block.jpg))
 
-<img class='stretch' style="padding:0" src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Bitcoin-Genesis-block.jpg/1024px-Bitcoin-Genesis-block.jpg'>
+<img class='stretch' style="padding:0" src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Bitcoin-Genesis-block.jpg/1024px-Bitcoin-Genesis-block.jpg' alt="the Bitcoin genesis block">
 
 Text: "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
 
@@ -621,12 +621,12 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 <table class='transparent'>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.1.svg" style="border-radius:10px;margin-top:0;margin-bottom:0">
+      <img src="images/bitcoin/blocks/blocks.dot.1.svg" style="border-radius:10px;margin-top:0;margin-bottom:0" alt="a diagram of part of the bitcoin header">
     </td>
   </tr>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.2.svg" class='fragment' data-fragment-index='1' style="border-radius:10px;margin-top:0">
+      <img src="images/bitcoin/blocks/blocks.dot.2.svg" class='fragment' data-fragment-index='1' style="border-radius:10px;margin-top:0" alt="a diagram of part of the bitcoin header">
     </td>
   </tr>
 </table>
@@ -638,7 +638,7 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
   <tr><td colspan='2'><h2>Overview</h2></td></tr>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.3.svg" class='fragment' data-fragment-index='2' style="border-radius:10px">
+      <img src="images/bitcoin/blocks/blocks.dot.3.svg" class='fragment' data-fragment-index='2' style="border-radius:10px" alt="a diagram of part of the bitcoin header">
     </td>
   </tr>
 </table>
@@ -649,12 +649,12 @@ Example is from [here](https://en.bitcoin.it/wiki/Technical_background_of_versio
 <table class='transparent'>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.4.svg" class='fragment' data-fragment-index='3' style="border-radius:10px">
+      <img src="images/bitcoin/blocks/blocks.dot.4.svg" class='fragment' data-fragment-index='3' style="border-radius:10px" alt="a diagram of part of the bitcoin header">
     </td>
   </tr>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.5.svg" class='fragment' data-fragment-index='4' style="border-radius:10px">
+      <img src="images/bitcoin/blocks/blocks.dot.5.svg" class='fragment' data-fragment-index='4' style="border-radius:10px" alt="a diagram of part of the bitcoin header">
     </td>
   </tr>
 </table>
@@ -941,13 +941,13 @@ OP_CHECKSIG
       <tr>
         <td style="vertical-align:top">
           <div style="position:relative;left:0;top:0">
-            <img class="fragment fade-out" data-fragment-index="2" data-fragment-index="2" src="images/bitcoin/p2pkh/p2pkh.dot.1.svg" style="padding-top:20px;margin-left:0">
-            <span class="fragment fade-out" data-fragment-index="4"><img alt="stack animation" class="fragment" data-fragment-index="2" src="images/bitcoin/p2pkh/p2pkh.dot.2.svg" style="position:absolute;left:0;top:0"></span>
-            <span class="fragment fade-out" data-fragment-index="6"><img alt="stack animation" class="fragment" data-fragment-index="4" src="images/bitcoin/p2pkh/p2pkh.dot.3.svg" style="position:absolute;left:0;top:0"></span>
-            <span class="fragment fade-out" data-fragment-index="8"><img alt="stack animation" class="fragment" data-fragment-index="6" src="images/bitcoin/p2pkh/p2pkh.dot.4.svg" style="position:absolute;left:0;top:0"></span>
-            <span class="fragment fade-out" data-fragment-index="10"><img alt="stack animation" class="fragment" data-fragment-index="8" src="images/bitcoin/p2pkh/p2pkh.dot.5.svg" style="position:absolute;left:0;top:0"></span>
-            <span class="fragment fade-out" data-fragment-index="12"><img alt="stack animation" class="fragment" data-fragment-index="10" src="images/bitcoin/p2pkh/p2pkh.dot.6.svg" style="position:absolute;left:0;top:0"></span>
-            <span class="fragment fade-out" data-fragment-index="14"><img alt="stack animation" class="fragment" data-fragment-index="12" src="images/bitcoin/p2pkh/p2pkh.dot.3.svg" style="position:absolute;left:0;top:0"></span>
+            <img class="fragment fade-out" data-fragment-index="2" data-fragment-index="2" src="images/bitcoin/p2pkh/p2pkh.dot.1.svg" style="padding-top:20px;margin-left:0" alt="steps in the execution of a P2PKH script">
+            <span class="fragment fade-out" data-fragment-index="4"><img alt="stack animation" class="fragment" data-fragment-index="2" src="images/bitcoin/p2pkh/p2pkh.dot.2.svg" style="position:absolute;left:0;top:0" alt="steps in the execution of a P2PKH script"></span>
+            <span class="fragment fade-out" data-fragment-index="6"><img alt="stack animation" class="fragment" data-fragment-index="4" src="images/bitcoin/p2pkh/p2pkh.dot.3.svg" style="position:absolute;left:0;top:0" alt="steps in the execution of a P2PKH script"></span>
+            <span class="fragment fade-out" data-fragment-index="8"><img alt="stack animation" class="fragment" data-fragment-index="6" src="images/bitcoin/p2pkh/p2pkh.dot.4.svg" style="position:absolute;left:0;top:0" alt="steps in the execution of a P2PKH script"></span>
+            <span class="fragment fade-out" data-fragment-index="10"><img alt="stack animation" class="fragment" data-fragment-index="8" src="images/bitcoin/p2pkh/p2pkh.dot.5.svg" style="position:absolute;left:0;top:0" alt="steps in the execution of a P2PKH script"></span>
+            <span class="fragment fade-out" data-fragment-index="12"><img alt="stack animation" class="fragment" data-fragment-index="10" src="images/bitcoin/p2pkh/p2pkh.dot.6.svg" style="position:absolute;left:0;top:0" alt="steps in the execution of a P2PKH script"></span>
+            <span class="fragment fade-out" data-fragment-index="14"><img alt="stack animation" class="fragment" data-fragment-index="12" src="images/bitcoin/p2pkh/p2pkh.dot.3.svg" style="position:absolute;left:0;top:0" alt="steps in the execution of a P2PKH script"></span>
             <img alt="stack animation" class="fragment" data-fragment-index="14" src="images/bitcoin/p2pkh/p2pkh.dot.7.svg" style="position:absolute;left:0;top:0">
           </div>
         </td>
@@ -1071,17 +1071,17 @@ As the top of the stack has true at the end, the script is verified and the tran
   <tr>
     <td style="vertical-align:top;">
       <div style="position:relative;width:110px;height:260px">
-        <img src='images/bitcoin/multisig/multisig.dot.5.svg' style="position: absolute;z-index:6">
-        <img src='images/bitcoin/multisig/multisig.dot.4.svg' style="position: absolute;z-index:7" class="fragment fade-out" data-fragment-index="13">
-        <img src='images/bitcoin/multisig/multisig.dot.3.svg' style="position: absolute;z-index:8" class="fragment fade-out" data-fragment-index="11">
-        <img src='images/bitcoin/multisig/multisig.dot.2.svg' style="position: absolute;z-index:8" class="fragment fade-out" data-fragment-index="8">
-        <img src='images/bitcoin/multisig/multisig.dot.4.svg' style="position: absolute;z-index:9" class="fragment fade-out" data-fragment-index="5">
-        <img src='images/bitcoin/multisig/multisig.dot.2.svg' style="position: absolute;z-index:10" class="fragment fade-out" data-fragment-index="3">
+        <img src='images/bitcoin/multisig/multisig.dot.5.svg' style="position: absolute;z-index:6" alt="steps in the execution of a OP_CHECKMULTISIG opcode">
+        <img src='images/bitcoin/multisig/multisig.dot.4.svg' style="position: absolute;z-index:7" class="fragment fade-out" data-fragment-index="13" alt="steps in the execution of a OP_CHECKMULTISIG opcode">
+        <img src='images/bitcoin/multisig/multisig.dot.3.svg' style="position: absolute;z-index:8" class="fragment fade-out" data-fragment-index="11" alt="steps in the execution of a OP_CHECKMULTISIG opcode">
+        <img src='images/bitcoin/multisig/multisig.dot.2.svg' style="position: absolute;z-index:8" class="fragment fade-out" data-fragment-index="8" alt="steps in the execution of a OP_CHECKMULTISIG opcode">
+        <img src='images/bitcoin/multisig/multisig.dot.4.svg' style="position: absolute;z-index:9" class="fragment fade-out" data-fragment-index="5" alt="steps in the execution of a OP_CHECKMULTISIG opcode">
+        <img src='images/bitcoin/multisig/multisig.dot.2.svg' style="position: absolute;z-index:10" class="fragment fade-out" data-fragment-index="3" alt="steps in the execution of a OP_CHECKMULTISIG opcode">
       </div>
     </td>
     <td style="vertical-align:top;">
       <div style="position:relative;width:206px;height:260px">
-        <img src='images/bitcoin/multisig/multisig.dot.1.svg' style="position:relative;left:0;top:0px">
+        <img src='images/bitcoin/multisig/multisig.dot.1.svg' style="position:relative;left:0;top:0px" alt="steps in the execution of a OP_CHECKMULTISIG opcode">
       </div>
       <p>(<a href='https://en.bitcoin.it/wiki/OP_CHECKMULTISIG'>reference</a>)</p>
 
@@ -1271,13 +1271,13 @@ OP_EQUAL
 <table class='transparent'>
   <tr>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.3.svg" style="border-radius:10px;margin-top:0;margin-bottom:0;width:80%">
+      <img src="images/bitcoin/blocks/blocks.dot.3.svg" style="border-radius:10px;margin-top:0;margin-bottom:0;width:80%" alt="Bitcoin Witness structure">
     </td>
     <td style="vertical-align: middle;">
       <p style="text-align: center;">... becomes ...<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>(new parts<br>are colored<br>differently)<br>&nbsp;<br>&nbsp;<br>&nbsp;</p>
     </td>
     <td>
-      <img src="images/bitcoin/blocks/blocks.dot.6.svg" style="border-radius:10px;margin-top:0;width:80%">
+      <img src="images/bitcoin/blocks/blocks.dot.6.svg" style="border-radius:10px;margin-top:0;width:80%" alt="Bitcoin Witness structure">
     </td>
   </tr>
 </table>

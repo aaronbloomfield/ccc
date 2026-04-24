@@ -472,7 +472,7 @@ The result, though, is (more or less) the same.
 
 Your task is to create a `dao_XXXXXXXX.html` web page to display all the relevant information about the DAO's proposals and balance.  It should update every time an event is received; it can update the entire table rather than a specific row.  A screen shot of the information we are looking for is below.  Note that you should display this information, but the exact formatting is up to you.  And if you want to display more, that's fine too.  A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.
 
-<img src="dao-screenshot.webp" style="border:1px solid black">
+<img src="dao-screenshot.webp" style="border:1px solid black" alt="a screenshot of what the final DAO web page might look like">
 
 You don't have to implement the copy link in the Creator column.  Note that ***ALL*** of your HTML, CSS, and Javascript code must in the dao_XXXXXXXX.html file.  The *only* thing that can be separate is the web3.js file, which is included in the HTML template above.
 

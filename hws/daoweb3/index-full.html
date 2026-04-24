@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>DAOs and Web3</title>
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
@@ -409,7 +411,7 @@ eth.getLogs(filter.options)</code></pre>
 <p>The result, though, is (more or less) the same.</p>
 <h2 id="web-page">Web page</h2>
 <p>Your task is to create a <code>dao_XXXXXXXX.html</code> web page to display all the relevant information about the DAO’s proposals and balance. It should update every time an event is received; it can update the entire table rather than a specific row. A screen shot of the information we are looking for is below. Note that you should display this information, but the exact formatting is up to you. And if you want to display more, that’s fine too. A human is going to check this part of the assignment, so there is more leeway because it is not being auto-graded.</p>
-<p><img src="dao-screenshot.webp" style="border:1px solid black"></p>
+<p><img src="dao-screenshot.webp" style="border:1px solid black" alt="a screenshot of what the final DAO web page might look like"></p>
 <p>You don’t have to implement the copy link in the Creator column. Note that <strong><em>ALL</em></strong> of your HTML, CSS, and Javascript code must in the dao_XXXXXXXX.html file. The <em>only</em> thing that can be separate is the web3.js file, which is included in the HTML template above.</p>
 <p>Once deployed, the DAO contract for your final submission should contain at least three proposals: one of which should have expired by the time the assignment is due AND ALSO called <code>closeProposal()</code> on it, and one which will stay open for one week after the assignment (just get the right date; we don’t care what time on that day). The third one is up to you.</p>
 <p>As long as your web page starts the proposal IDs from 0, and increments them for each new proposal, you can view the deployed course-wide DAO to test your web page, as well as your own deployed DAO – just change the address in your dao_XXXXXXXX.html file. But be sure to change it back to your own DAO! Note that it needs to work on your DAO by the time you submit it! The address for the course-wide DAO is in the blockchain explorer’s links section.</p>
