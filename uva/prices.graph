@@ -9,7 +9,7 @@
 # - gas fees in (USD, float)
 #
 # - to generate the data, run (on Linux, not a Mac):
-#   `grep gwei daily-announcements.html  | grep ETH | sed s/[\`,\;\$]//g | awk '{print 43-NR" "$3" "$5" "$8" "$11}' > prices.data`
+#   `grep gwei daily-announcements.html  | grep ETH | sed s/"[\>\;]"/\ /g | sed s/,//g  | awk '{print 27-NR" "$8" "$15" "$21" "$26}' > prices.data`
 # - then clean it up, fixing the lecture number (the first value of each
 #   line), adjusting the scales (below in this file) as necessary, and change the date axis
 # - change the other fields below (semester, dates, etc.)
@@ -21,8 +21,8 @@ set key left top
 # for a M-W-F semester:
 #set xtics ( "Jan 19" 2, "Jan 31" 7, "Feb 12" 12, "Feb 23" 17, "Mar 13" 22, "Mar 25" 27, "Apr 5 6" 32, "Apr 17" 37, "Apr 29" 42 )
 # for a Tu-Th semester:
-set xtics ( "Jan 16" 2, "Feb 13" 10, "Mar 27" 20, "Apr 29" 29 )
-set title "BTC and ETH prices & fees, spring 2025"
+set xtics ( "Jan 14" 1, "Feb 9" 7, "Mar 11" 13, "Apr 1" 19, "Apr 27" 26 )
+set title "BTC and ETH prices & fees, spring 2026"
 set xlabel "Date"
 set ylabel "Price (USD)"
 set terminal svg size 1000,500 background rgb 'white'
